@@ -1,12 +1,17 @@
 package com.wonders.xlab.pci;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.wonders.xlab.common.viewpager.ScrollableViewPager;
 
@@ -23,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton mFab;
     @Bind(R.id.tl_main)
     TabLayout mTabLayout;
+    @Bind(R.id.tv_main_my_doctor)
+    TextView mTvMyDoctor;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
 
         mTabLayout.addTab(mTabLayout.newTab().setText("首页"));
         mTabLayout.addTab(mTabLayout.newTab().setText("档案"));
+
+        String tmp = "我的医生";
+        SpannableString sp = new SpannableString(tmp);
+        //设置斜体
+        sp.setSpan(new StyleSpan(Typeface.ITALIC), 0, tmp.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
+        mTvMyDoctor.setText(sp);
     }
 
     @Override
