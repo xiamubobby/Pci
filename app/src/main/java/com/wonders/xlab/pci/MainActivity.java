@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.wonders.xlab.common.viewpager.ScrollableViewPager;
+import com.wonders.xlab.pci.mvn.model.LoginModel;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     TabLayout mTabLayout;
     @Bind(R.id.tv_main_my_doctor)
     TextView mTvMyDoctor;
+
+    private LoginModel mLoginModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
         //设置斜体
         sp.setSpan(new StyleSpan(Typeface.ITALIC), 0, tmp.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         mTvMyDoctor.setText(sp);
+
+        mLoginModel = new LoginModel();
+        mLoginModel.login();
     }
 
     @Override

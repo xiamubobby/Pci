@@ -20,7 +20,7 @@
             android:background="?attr/colorPrimary"
             app:navigationIcon="@mipmap/ic_launcher"
             app:popupTheme="@style/AppTheme.Light.PopupOverlay"
-            app:title="首页"
+            app:title="登录/注册"
             app:titleTextColor="@android:color/white"/>
 
     </android.support.design.widget.AppBarLayout>
