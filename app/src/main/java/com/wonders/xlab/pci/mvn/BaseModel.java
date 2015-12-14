@@ -51,6 +51,7 @@ public abstract class BaseModel<T extends BaseEntity> {
                     @Override
                     public void onStart() {
                         super.onStart();
+                        BaseModel.this.onStart();
                         setRequesting(true);
                     }
 
@@ -117,6 +118,10 @@ public abstract class BaseModel<T extends BaseEntity> {
 
     protected String getErrorMessage() {
         return "获取数据出错！";
+    }
+
+    protected void onStart() {
+
     }
 
     protected abstract void onSuccess(@NonNull T response);

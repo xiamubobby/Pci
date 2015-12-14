@@ -3,7 +3,7 @@ package com.wonders.xlab.pci.mvn;
 /**
  * Created by hua on 15/12/3.
  */
-public class BaseEntity {
+public abstract class BaseEntity{
     private int ret_code;
     private String message;
 

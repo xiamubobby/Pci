@@ -9,15 +9,24 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.jakewharton.rxbinding.view.RxView;
 import com.wonders.xlab.common.viewpager.ScrollableViewPager;
+import com.wonders.xlab.pci.module.common.adapter.VPAdapter;
+import com.wonders.xlab.pci.module.home.HomeFragment;
+import com.wonders.xlab.pci.module.record.RecordFragment;
 import com.wonders.xlab.pci.mvn.model.LoginModel;
+
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.tv_main_my_doctor)
     TextView mTvMyDoctor;
 
+    private VPAdapter mVPAdapter;
+
     private LoginModel mLoginModel;
 
     @Override
@@ -43,6 +54,32 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        mVPAdapter = new VPAdapter(getFragmentManager());
+        mVPAdapter.addFragment(new HomeFragment());
+        mVPAdapter.addFragment(new RecordFragment());
+        mVpMain.setOffscreenPageLimit(2);
+        mVpMain.setAdapter(mVPAdapter);
+
+        initBottomTab();
+
+        mLoginModel = new LoginModel();
+        mLoginModel.login();
+
+        RxView.clicks(mFab)
+                .throttleFirst(1000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        Log.d("MainActivity", "click");
+                    }
+                });
+
+    }
+
+    private void initBottomTab() {
+        mTabLayout.setupWithViewPager(mVpMain);
+        mTabLayout.removeAllTabs();
+
         mTabLayout.addTab(mTabLayout.newTab().setText("首页"));
         mTabLayout.addTab(mTabLayout.newTab().setText("档案"));
 
@@ -51,9 +88,6 @@ public class MainActivity extends AppCompatActivity {
         //设置斜体
         sp.setSpan(new StyleSpan(Typeface.ITALIC), 0, tmp.length(), Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         mTvMyDoctor.setText(sp);
-
-        mLoginModel = new LoginModel();
-        mLoginModel.login();
     }
 
     @Override
@@ -71,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_main_task) {
             return true;
         }
 
