@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.wonders.xlab.common.viewpager.ScrollableViewPager;
-import com.wonders.xlab.pci.module.common.adapter.VPAdapter;
+import com.wonders.xlab.pci.module.common.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.module.home.HomeFragment;
 import com.wonders.xlab.pci.module.record.RecordFragment;
 import com.wonders.xlab.pci.mvn.model.LoginModel;
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.tv_main_my_doctor)
     TextView mTvMyDoctor;
 
-    private VPAdapter mVPAdapter;
+    private FragmentVPAdapter mFragmentVPAdapter;
 
     private LoginModel mLoginModel;
 
@@ -54,11 +54,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mVPAdapter = new VPAdapter(getFragmentManager());
-        mVPAdapter.addFragment(new HomeFragment());
-        mVPAdapter.addFragment(new RecordFragment());
+        mFragmentVPAdapter = new FragmentVPAdapter(getFragmentManager());
+        mFragmentVPAdapter.addFragment(new HomeFragment());
+        mFragmentVPAdapter.addFragment(new RecordFragment());
         mVpMain.setOffscreenPageLimit(2);
-        mVpMain.setAdapter(mVPAdapter);
+        mVpMain.setAdapter(mFragmentVPAdapter);
 
         initBottomTab();
 
@@ -110,5 +110,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

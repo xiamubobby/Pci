@@ -1,0 +1,39 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/tv_report_after"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#8aa991"
+        android:gravity="center"
+        android:text="术后病例"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/tv_report_now"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#8a9aa9"
+        android:gravity="center"
+        android:text="术中病例"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/tv_report_before"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#958aa9"
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:paddingBottom="@dimen/clip_bottom"
+        android:text="术前病例"
+        android:textColor="@android:color/white"/>
+</LinearLayout>

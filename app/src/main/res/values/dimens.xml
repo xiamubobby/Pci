@@ -5,4 +5,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="item_interval">8dp</dimen>
     <dimen name="item_interval_large">24dp</dimen>
+    <dimen name="clip_bottom">60dp</dimen>
 </resources>

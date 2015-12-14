@@ -1,8 +1,8 @@
 package com.wonders.xlab.pci.module.record;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +10,13 @@ import android.view.ViewGroup;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 
-import butterknife.ButterKnife;
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MonitorFragment extends BaseFragment {
+public class HealthPlanFragment extends BaseFragment {
 
 
-    public MonitorFragment() {
+    public HealthPlanFragment() {
         // Required empty public constructor
     }
 
@@ -27,14 +25,7 @@ public class MonitorFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_monitor, container, false);
-        ButterKnife.bind(this,view);
-        return view;
+        return inflater.inflate(R.layout.fragment_health_plan, container, false);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
 }

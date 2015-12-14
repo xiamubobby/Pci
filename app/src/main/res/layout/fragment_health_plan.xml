@@ -2,13 +2,12 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.wonders.xlab.pci.module.home.HomeFragment">
+             tools:context="com.wonders.xlab.pci.module.record.HealthPlanFragment">
 
-    <com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView
-        android:id="@+id/rv_home"
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/clip_bottom"/>
+        android:text="@string/hello_blank_fragment"/>
 
 </FrameLayout>
