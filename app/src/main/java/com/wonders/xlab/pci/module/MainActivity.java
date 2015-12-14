@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci;
+package com.wonders.xlab.pci.module;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -16,10 +16,10 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.wonders.xlab.common.viewpager.ScrollableViewPager;
+import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.common.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.module.home.HomeFragment;
 import com.wonders.xlab.pci.module.record.RecordFragment;
-import com.wonders.xlab.pci.mvn.model.LoginModel;
 
 import java.util.concurrent.TimeUnit;
 
@@ -43,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
     private FragmentVPAdapter mFragmentVPAdapter;
 
-    private LoginModel mLoginModel;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +59,6 @@ public class MainActivity extends AppCompatActivity {
         mVpMain.setAdapter(mFragmentVPAdapter);
 
         initBottomTab();
-
-        mLoginModel = new LoginModel();
-        mLoginModel.login();
 
         RxView.clicks(mFab)
                 .throttleFirst(1000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
@@ -99,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
+        // Handle action bar item_report_detail clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();

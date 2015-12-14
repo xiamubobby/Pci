@@ -4,8 +4,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.wonders.xlab.common.adapter.recyclerview.MultiViewHolder;
 import com.wonders.xlab.common.utils.DateUtil;
+import com.wonders.xlab.common.utils.GlideCircleTransform;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
 
@@ -41,6 +43,13 @@ public class TodayTaskViewHolder extends MultiViewHolder<TodayTaskBean> {
         mTvTitle.setText(data.getTitle());
         mTvTime.setText(DateUtil.format(data.getUpdateTime(), "yyyy-MM-dd hh:mm"));
         mTvName.setText(data.getName());
-//        Glide.with()
+        Glide.with(getContextWeakReference().get())
+                .load(data.getPortrait())
+                .transform(new GlideCircleTransform(getContextWeakReference().get()))
+                .placeholder(R.drawable.user_avatar_default)
+                .centerCrop()
+                .crossFade()
+                .into(mIvPortrait);
+
     }
 }

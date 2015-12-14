@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +21,8 @@ public abstract class MultiRVAdapter<bean extends BaseBean> extends RecyclerView
 
     private OnItemClickListener onItemClickListener;
 
-    public MultiRVAdapter(Context context) {
-        this.mInflater = LayoutInflater.from(context);
+    public MultiRVAdapter(WeakReference<Context> contextWeakReference) {
+        this.mInflater = LayoutInflater.from(contextWeakReference.get());
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

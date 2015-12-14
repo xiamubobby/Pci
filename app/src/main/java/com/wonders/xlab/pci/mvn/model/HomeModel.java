@@ -3,7 +3,6 @@ package com.wonders.xlab.pci.mvn.model;
 import android.support.annotation.NonNull;
 
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
-import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.home.bean.YesterdayTaskBean;
 import com.wonders.xlab.pci.mvn.BaseModel;
 import com.wonders.xlab.pci.mvn.api.HomeAPI;
@@ -11,7 +10,6 @@ import com.wonders.xlab.pci.mvn.entity.home.HomeEntity;
 import com.wonders.xlab.pci.mvn.view.HomeView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -27,31 +25,34 @@ public class HomeModel extends BaseModel<HomeEntity> {
     }
 
     public void getHomeList() {
-//        setObservable(mHomeAPI.getHomeList());
-        onSuccess(null);
+        setObservable(mHomeAPI.getHomeList());
+//        onSuccess(null);
     }
 
     @Override
     protected void onSuccess(@NonNull HomeEntity response) {
+        mHomeView.hideLoading();
+        HomeEntity.RetValuesEntity valuesEntity = response.getRet_values();
+
+        if (valuesEntity == null) {
+            return;
+        }
+        List<HomeEntity.RetValuesEntity.ContentEntity> content = valuesEntity.getContent();
+        if (content == null) {
+            return;
+        }
 
         List<HomeTaskBean> beanList = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
-            if (i % 2 == 0) {
-                TodayTaskBean todayTaskBean = new TodayTaskBean();
-                todayTaskBean.setTitle("今日任务(早晨)");
-                todayTaskBean.setUpdateTime(Calendar.getInstance().getTimeInMillis());
-                todayTaskBean.setName("刘医生");
+        for (HomeEntity.RetValuesEntity.ContentEntity contentEntity : content) {
 
-                beanList.add(todayTaskBean);
-            } else {
-                YesterdayTaskBean yesterdayTaskBean = new YesterdayTaskBean();
-                yesterdayTaskBean.setContent("jlsajdlfkjasldkfjlaksjdlkfjalskjdlfjslakdjf\nalksjdflka");
-                yesterdayTaskBean.setTitle("昨日健康任务小结");
-                yesterdayTaskBean.setUpdateTime(Calendar.getInstance().getTimeInMillis());
-                yesterdayTaskBean.setName("刘医生");
-                beanList.add(yesterdayTaskBean);
-            }
+            YesterdayTaskBean yesterdayTaskBean = new YesterdayTaskBean();
+            yesterdayTaskBean.setContent(contentEntity.getContent());
+            yesterdayTaskBean.setTitle(contentEntity.getTitle());
+            yesterdayTaskBean.setUpdateTime(contentEntity.getLastModifiedDate());
+            yesterdayTaskBean.setName(contentEntity.getName());
+            yesterdayTaskBean.setPortrait(contentEntity.getPortrait());
+            beanList.add(yesterdayTaskBean);
 
         }
         mHomeView.showHomeList(beanList);

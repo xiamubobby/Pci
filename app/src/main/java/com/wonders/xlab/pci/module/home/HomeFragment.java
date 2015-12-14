@@ -1,6 +1,7 @@
 package com.wonders.xlab.pci.module.home;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
 import com.wonders.xlab.pci.mvn.model.HomeModel;
 import com.wonders.xlab.pci.mvn.view.HomeView;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.Bind;
@@ -68,7 +70,7 @@ public class HomeFragment extends BaseFragment implements HomeView{
     @Override
     public void showHomeList(List<HomeTaskBean> beanList) {
         if (mHomeRVAdapter == null) {
-            mHomeRVAdapter = new HomeRVAdapter(getActivity());
+            mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
             mRvHome.setAdapter(mHomeRVAdapter);
         }
         mHomeRVAdapter.setDatas(beanList);

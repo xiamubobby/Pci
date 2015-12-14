@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci;
+package com.wonders.xlab.pci.application;
 
 import android.app.Application;
 

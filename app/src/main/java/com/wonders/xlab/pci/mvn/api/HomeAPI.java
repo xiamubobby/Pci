@@ -9,6 +9,6 @@ import rx.Observable;
  * Created by hua on 15/12/14.
  */
 public interface HomeAPI {
-    @GET("home")
+    @GET("homePage/listHomePage/1")
     Observable<HomeEntity> getHomeList();
 }

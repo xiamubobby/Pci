@@ -9,12 +9,17 @@ import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
 import com.wonders.xlab.pci.module.home.viewholder.TodayTaskViewHolder;
 import com.wonders.xlab.pci.module.home.viewholder.YesterdayTaskViewHolder;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by hua on 15/12/14.
  */
 public class HomeRVAdapter extends MultiRVAdapter {
-    public HomeRVAdapter(Context context) {
+    private WeakReference<Context> mContextWeakReference;
+
+    public HomeRVAdapter(WeakReference<Context> context) {
         super(context);
+        mContextWeakReference = context;
     }
 
     @Override
@@ -30,6 +35,7 @@ public class HomeRVAdapter extends MultiRVAdapter {
             default:
                 throw new IllegalArgumentException("you must set your layout in HomeTaskBean.ITEM_YESTERDAY and HomeTaskBean.ITEM_TODAY as your viewType");
         }
+        holder.setContext(mContextWeakReference);
         return holder;
     }
 
