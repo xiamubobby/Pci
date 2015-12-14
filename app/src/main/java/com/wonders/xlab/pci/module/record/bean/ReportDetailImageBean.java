@@ -1,0 +1,25 @@
+package com.wonders.xlab.pci.module.record.bean;
+
+/**
+ * Created by hua on 15/12/14.
+ */
+public class ReportDetailImageBean {
+    private String name;
+    private String portraitUrl;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPortraitUrl() {
+        return portraitUrl;
+    }
+
+    public void setPortraitUrl(String portraitUrl) {
+        this.portraitUrl = portraitUrl;
+    }
+}

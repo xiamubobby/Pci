@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="24dp"
+            android:background="#4f767e"/>
+
+        <View
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/shape_dot"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#4f767e"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/item_interval_large"
         android:background="@drawable/chat_room_doctor_msg_bg"
         android:orientation="vertical">
 
@@ -18,7 +41,6 @@
             android:layout_marginBottom="@dimen/item_interval"
             android:layout_marginTop="@dimen/item_interval"
             android:singleLine="true"
-            android:text="1212"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <include layout="@layout/divider_vertical"/>

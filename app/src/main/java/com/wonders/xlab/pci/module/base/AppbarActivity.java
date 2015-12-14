@@ -1,7 +1,6 @@
-package com.wonders.xlab.common.activity;
+package com.wonders.xlab.pci.module.base;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +11,7 @@ import xlab.wonders.com.common.R;
  * Created by hua on 15/12/1.
  * 在布局中include  layout/appbar即可
  */
-public abstract class AppbarActivity extends AppCompatActivity {
+public abstract class AppbarActivity extends BaseActivity {
     public View mContentView;
 
     private Toolbar mToolbar;

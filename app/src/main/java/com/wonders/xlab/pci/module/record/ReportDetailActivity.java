@@ -1,18 +1,26 @@
 package com.wonders.xlab.pci.module.record;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.jakewharton.rxbinding.view.RxView;
-import com.wonders.xlab.common.activity.AppbarActivity;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.ToastManager;
+import com.wonders.xlab.pci.module.base.AppbarActivity;
+import com.wonders.xlab.pci.module.record.adapter.ReportDetailRVAdapter;
+import com.wonders.xlab.pci.module.record.bean.ReportDetailBean;
+import com.wonders.xlab.pci.mvn.model.ReportDetailModel;
+import com.wonders.xlab.pci.mvn.view.ReportDetailView;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
@@ -22,13 +30,17 @@ import me.iwf.photopicker.utils.PhotoPickerIntent;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class ReportDetailActivity extends AppbarActivity {
+public class ReportDetailActivity extends AppbarActivity implements ReportDetailView {
     private final int REQUEST_CODE = 11231;
 
     @Bind(R.id.rv_report_detail)
     RecyclerView mRvReportDetail;
     @Bind(R.id.fab_report_detail)
     FloatingActionButton mFabReportDetail;
+
+    private ReportDetailRVAdapter mRvAdapter;
+
+    private ReportDetailModel detailModel;
 
     @Override
     public int getContentLayout() {
@@ -44,6 +56,9 @@ public class ReportDetailActivity extends AppbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+
+        detailModel = new ReportDetailModel(this);
+        addModel(detailModel);
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -69,6 +84,9 @@ public class ReportDetailActivity extends AppbarActivity {
                         startActivityForResult(intent, REQUEST_CODE);
                     }
                 });
+
+        mRvReportDetail.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        detailModel.getReportDetails();
     }
 
     @Override
@@ -99,8 +117,38 @@ public class ReportDetailActivity extends AppbarActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void showReportList(List<ReportDetailBean> detailBeanList) {
+        if (mRvAdapter == null) {
+            mRvAdapter = new ReportDetailRVAdapter(new WeakReference<Context>(this));
+            mRvReportDetail.setAdapter(mRvAdapter);
+        }
+        mRvAdapter.setDatas(detailBeanList);
+    }
+
+    @Override
+    public void appendReportList(List<ReportDetailBean> detailBeanList) {
+        if (mRvAdapter == null) {
+            mRvAdapter = new ReportDetailRVAdapter(new WeakReference<Context>(this));
+            mRvReportDetail.setAdapter(mRvAdapter);
+        } else {
+            mRvAdapter.clear();
+        }
+        mRvAdapter.setDatas(detailBeanList);
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
     }
 }

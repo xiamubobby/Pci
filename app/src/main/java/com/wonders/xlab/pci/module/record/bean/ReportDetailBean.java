@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class ReportDetailBean {
     private String title;
-    private List<String> picUrlList;
+    private List<ReportDetailImageBean> picUrlList;
 
     public String getTitle() {
         return title;
@@ -17,11 +17,11 @@ public class ReportDetailBean {
         this.title = title;
     }
 
-    public List<String> getPicUrlList() {
+    public List<ReportDetailImageBean> getPicUrlList() {
         return picUrlList;
     }
 
-    public void setPicUrlList(List<String> picUrlList) {
+    public void setPicUrlList(List<ReportDetailImageBean> picUrlList) {
         this.picUrlList = picUrlList;
     }
 }

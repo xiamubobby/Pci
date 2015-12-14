@@ -69,6 +69,13 @@ public abstract class SimpleRVAdapter<Bean> extends RecyclerView.Adapter<Recycle
         }
     }
 
+    public void clear() {
+        if (mBeanList != null ) {
+            mBeanList.clear();
+            notifyDataSetChanged();
+        }
+    }
+
     /**
      * 因为这里需要有移动的动画效果，所以采用了遍历的方式来交换位置
      * @param fromPosition
