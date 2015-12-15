@@ -141,7 +141,6 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-        mSubscription.unsubscribe();
     }
 
     @Override
