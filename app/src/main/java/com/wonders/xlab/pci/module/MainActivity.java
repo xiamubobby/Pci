@@ -1,5 +1,6 @@
 package com.wonders.xlab.pci.module;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -20,6 +20,7 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.common.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.module.home.HomeFragment;
 import com.wonders.xlab.pci.module.record.RecordFragment;
+import com.wonders.xlab.pci.module.task.DailyTaskActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -59,14 +60,12 @@ public class MainActivity extends AppCompatActivity {
         initBottomTab();
 
         RxView.clicks(mFab)
-                .throttleFirst(1000, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
-                        Log.d("MainActivity", "click");
                     }
                 });
-
     }
 
     private void initBottomTab() {
@@ -99,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.menu_main_task) {
+            startActivity(new Intent(this, DailyTaskActivity.class));
             return true;
         }
 

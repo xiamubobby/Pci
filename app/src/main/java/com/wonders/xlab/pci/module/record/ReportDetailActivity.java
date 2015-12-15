@@ -35,6 +35,8 @@ import rx.subscriptions.CompositeSubscription;
 
 public class ReportDetailActivity extends AppbarActivity implements ReportDetailView {
     private final int REQUEST_CODE = 11231;
+    public final static String EXTRA_TITLE = "extra_title";
+
 
     @Bind(R.id.rv_report_detail)
     RecyclerView mRvReportDetail;
@@ -72,13 +74,8 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
             paramError();
             return;
         }
-        Bundle data = intent.getExtras();
-        if (data == null) {
-            paramError();
-            return;
-        }
 
-        setTitle(data.getString("title", "病例报告"));
+        setTitle(intent.getStringExtra(EXTRA_TITLE));
 
         RxView.clicks(mFabReportDetail)
                 .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())

@@ -62,9 +62,7 @@ public class ReportFragment extends BaseFragment {
                     public void call(Void aVoid) {
 
                         Intent intent = new Intent(getActivity(), ReportDetailActivity.class);
-                        Bundle data = new Bundle();
-                        data.putString("title", textView.getText().toString());
-                        intent.putExtras(data);
+                        intent.putExtra(ReportDetailActivity.EXTRA_TITLE, textView.getText().toString());
                         startActivity(intent);
                     }
                 });
