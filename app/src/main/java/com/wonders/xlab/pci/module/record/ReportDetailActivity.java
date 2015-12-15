@@ -62,7 +62,7 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        setupRxBus();
+//        setupRxBus();
 
         detailModel = new ReportDetailModel(this);
         addModel(detailModel);

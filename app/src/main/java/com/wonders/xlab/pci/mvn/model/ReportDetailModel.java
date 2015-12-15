@@ -39,6 +39,7 @@ public class ReportDetailModel extends BaseModel<ReportDetailEntity> {
             for (int j = 0; j < 5; j++) {
                 ReportDetailImageBean imageBean = new ReportDetailImageBean();
                 imageBean.setName("image" + i + ":" + j);
+                imageBean.setPosition(j);
                 imageBean.setPortraitUrl("http://i0.wp.com/www.gottabemobile.com/wp-content/uploads/2015/08/Android-6.0-official.png");
                 detailImageBeanList.add(imageBean);
             }

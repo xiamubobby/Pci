@@ -1,6 +1,7 @@
 package com.wonders.xlab.pci.module.record.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,16 +13,16 @@ import com.bumptech.glide.Glide;
 import com.wonders.xlab.common.adapter.recyclerview.SimpleRVAdapter;
 import com.wonders.xlab.common.utils.GlideCircleTransform;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.record.bean.ReportDetailBean;
 import com.wonders.xlab.pci.module.record.bean.ReportDetailImageBean;
-import com.wonders.xlab.pci.module.record.rxbus.ReportDetailBus;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.iwf.photopicker.PhotoPagerActivity;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -86,7 +87,16 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
                                 view.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        RxBus.getRxBusSingleton().send(new ReportDetailBus(imageBean.getImageBean().getPortraitUrl(), imageBean.getImageBean().getName()));
+                                        ArrayList<String> picUrls = new ArrayList<>();
+                                        for (ReportDetailImageBean detailBean : getBean(position).getPicUrlList()) {
+                                            picUrls.add(detailBean.getPortraitUrl());
+                                        }
+                                        Intent intent = new Intent(mContext.get(), PhotoPagerActivity.class);
+                                        intent.putExtra(PhotoPagerActivity.EXTRA_CURRENT_ITEM, imageBean.getImageBean().getPosition());
+                                        intent.putExtra(PhotoPagerActivity.EXTRA_PHOTOS, picUrls);
+                                        mContext.get().startActivity(intent);
+
+//                                        RxBus.getRxBusSingleton().send(new ReportDetailBus(imageBean.getImageBean().getPortraitUrl(), imageBean.getImageBean().getName()));
                                     }
                                 });
                                 viewHolder.mFlItemReportDetail.addView(view);
@@ -98,7 +108,7 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
         //setup inner recyclerview
         /*viewHolder.mRv.setLayoutManager(new GridLayoutManager(mContext.get(), 3, LinearLayoutManager.VERTICAL, false));
         InnerImageRVAdapter imageRVAdapter = new InnerImageRVAdapter();
-        imageRVAdapter.setDatas(getBean(position).getPicUrlList());
+        imageRVAdapter.setDatas(getBean(mPosition).getPicUrlList());
         viewHolder.mRv.setAdapter(imageRVAdapter);*/
     }
 
@@ -113,10 +123,6 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
 
         public View getView() {
             return mView;
-        }
-
-        public void setView(View view) {
-            this.mView = view;
         }
 
         public ReportDetailImageBean getImageBean() {
