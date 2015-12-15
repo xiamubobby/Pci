@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding.view.RxView;
 import com.wonders.xlab.common.viewpager.ScrollableViewPager;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.module.common.adapter.FragmentVPAdapter;
+import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.module.home.HomeFragment;
 import com.wonders.xlab.pci.module.record.RecordFragment;
 import com.wonders.xlab.pci.module.task.DailyTaskActivity;

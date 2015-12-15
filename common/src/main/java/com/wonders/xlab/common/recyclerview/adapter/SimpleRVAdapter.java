@@ -1,4 +1,4 @@
-package com.wonders.xlab.common.adapter.recyclerview;
+package com.wonders.xlab.common.recyclerview.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

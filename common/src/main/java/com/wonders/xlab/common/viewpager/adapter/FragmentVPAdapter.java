@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.module.common.adapter;
+package com.wonders.xlab.common.viewpager.adapter;
 
 
 import android.app.Fragment;

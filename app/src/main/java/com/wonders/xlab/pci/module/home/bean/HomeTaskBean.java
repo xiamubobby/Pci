@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.module.home.bean;
 
-import com.wonders.xlab.common.adapter.recyclerview.BaseBean;
+import com.wonders.xlab.common.recyclerview.adapter.BaseBean;
 import com.wonders.xlab.pci.R;
 
 /**

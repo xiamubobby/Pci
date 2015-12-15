@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.base.BaseFragment;
-import com.wonders.xlab.pci.module.common.adapter.FragmentVPAdapter;
+import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

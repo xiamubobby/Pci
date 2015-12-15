@@ -3,8 +3,8 @@ package com.wonders.xlab.pci.module.home.adapter;
 import android.content.Context;
 import android.view.View;
 
-import com.wonders.xlab.common.adapter.recyclerview.MultiRVAdapter;
-import com.wonders.xlab.common.adapter.recyclerview.MultiViewHolder;
+import com.wonders.xlab.common.recyclerview.adapter.MultiRVAdapter;
+import com.wonders.xlab.common.recyclerview.adapter.MultiViewHolder;
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
 import com.wonders.xlab.pci.module.home.viewholder.TodayTaskViewHolder;
 import com.wonders.xlab.pci.module.home.viewholder.YesterdayTaskViewHolder;

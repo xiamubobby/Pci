@@ -20,20 +20,24 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DateFragment extends BaseFragment {
+public class WeekViewFragment extends BaseFragment {
 
-    private long time;
+    private long mFirstDayOfWeekInMonth;
+    private long mToday;
 
     @Bind(R.id.ll_fragment_date)
     LinearLayout mLlFragmentDate;
 
-    public DateFragment newInstance(long time) {
+    private Calendar calendar = Calendar.getInstance();
+
+    public static WeekViewFragment newInstance(long firstDayOfWeekInMonth, Long today) {
         // Required empty public constructor
-        DateFragment dateFragment = new DateFragment();
+        WeekViewFragment weekViewFragment = new WeekViewFragment();
         Bundle data = new Bundle();
-        data.putLong("time", time);
-        dateFragment.setArguments(data);
-        return dateFragment;
+        data.putLong("firstDayOfWeekInMonth", firstDayOfWeekInMonth);
+        data.putLong("today", today);
+        weekViewFragment.setArguments(data);
+        return weekViewFragment;
     }
 
     @Override
@@ -43,7 +47,8 @@ public class DateFragment extends BaseFragment {
         if (data == null) {
             throw new IllegalArgumentException("you must set the time argument");
         }
-        time = data.getLong("time");
+        mFirstDayOfWeekInMonth = data.getLong("firstDayOfWeekInMonth");
+        mToday = data.getLong("today", calendar.getTimeInMillis());
     }
 
     @Override
@@ -53,15 +58,13 @@ public class DateFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_date, container, false);
         ButterKnife.bind(this, view);
 
-        setupDate(time);
+        setupDate(mFirstDayOfWeekInMonth);
         return view;
     }
 
     private void setupDate(long time) {
-        Calendar calendar = Calendar.getInstance();
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
         calendar.setTimeInMillis(time);
-        int today = calendar.get(Calendar.DAY_OF_MONTH);
 
         while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
             calendar.add(Calendar.DATE, -1);
@@ -80,8 +83,10 @@ public class DateFragment extends BaseFragment {
             }
             TextView mTvDate = (TextView) itemView.findViewById(R.id.tv_item_daily_task_date);
             mTvDate.setText(String.valueOf(dayOfWeek));
+            mTvDate.setTag(calendar.getTimeInMillis());
             itemView.setLayoutParams(layoutParams);
-            if (today == dayOfWeek) {
+
+            if (mToday == calendar.getTimeInMillis()) {
                 mTvDate.setSelected(true);
             } else {
                 mTvDate.setSelected(false);
