@@ -49,6 +49,7 @@ public class UserInfoRVAdapter extends SimpleRVAdapter<UserInfoBean> {
         public ItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+
         }
     }
 

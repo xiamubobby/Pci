@@ -30,8 +30,6 @@ import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
     @Bind(R.id.vp_main)
     ScrollableViewPager mVpMain;
     @Bind(R.id.fab_main)

@@ -60,6 +60,7 @@ public class ReportFragment extends BaseFragment {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
+
                         Intent intent = new Intent(getActivity(), ReportDetailActivity.class);
                         Bundle data = new Bundle();
                         data.putString("title", textView.getText().toString());
