@@ -12,8 +12,10 @@ import com.bumptech.glide.Glide;
 import com.wonders.xlab.common.adapter.recyclerview.SimpleRVAdapter;
 import com.wonders.xlab.common.utils.GlideCircleTransform;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.record.bean.ReportDetailBean;
 import com.wonders.xlab.pci.module.record.bean.ReportDetailImageBean;
+import com.wonders.xlab.pci.module.record.rxbus.ReportDetailBus;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.lang.ref.WeakReference;
@@ -69,7 +71,7 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Action1<InnerImageBean>() {
                             @Override
-                            public void call(InnerImageBean imageBean) {
+                            public void call(final InnerImageBean imageBean) {
                                 View view = imageBean.getView();
                                 ImageView mTvImg = (ImageView) view.findViewById(R.id.tv_item_report_detail_image_img);
                                 TextView mTvName = (TextView) view.findViewById(R.id.tv_item_report_detail_image_name);
@@ -81,7 +83,12 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
                                         .placeholder(R.drawable.user_avatar_default)
                                         .crossFade()
                                         .into(mTvImg);
-
+                                view.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        RxBus.getRxBusSingleton().send(new ReportDetailBus(imageBean.getImageBean().getPortraitUrl(), imageBean.getImageBean().getName()));
+                                    }
+                                });
                                 viewHolder.mFlItemReportDetail.addView(view);
                             }
                         });
@@ -120,7 +127,7 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
     class ItemViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.tv_item_report_detail_title)
         TextView mTvTitle;
-//        @Bind(R.id.rv_item_report_detail)
+        //        @Bind(R.id.rv_item_report_detail)
 //        RecyclerView mRv;
         @Bind(R.id.fl_item_report_detail)
         FlowLayout mFlItemReportDetail;

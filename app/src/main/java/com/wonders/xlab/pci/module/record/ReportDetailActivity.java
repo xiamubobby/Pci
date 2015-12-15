@@ -10,10 +10,12 @@ import android.support.v7.widget.RecyclerView;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.application.ToastManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.record.adapter.ReportDetailRVAdapter;
 import com.wonders.xlab.pci.module.record.bean.ReportDetailBean;
+import com.wonders.xlab.pci.module.record.rxbus.ReportDetailBus;
 import com.wonders.xlab.pci.mvn.model.ReportDetailModel;
 import com.wonders.xlab.pci.mvn.view.ReportDetailView;
 
@@ -29,6 +31,7 @@ import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 
 public class ReportDetailActivity extends AppbarActivity implements ReportDetailView {
     private final int REQUEST_CODE = 11231;
@@ -41,6 +44,8 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
     private ReportDetailRVAdapter mRvAdapter;
 
     private ReportDetailModel detailModel;
+
+    private CompositeSubscription mSubscription;
 
     @Override
     public int getContentLayout() {
@@ -56,6 +61,8 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+
+        setupRxBus();
 
         detailModel = new ReportDetailModel(this);
         addModel(detailModel);
@@ -85,7 +92,7 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
                     }
                 });
 
-        mRvReportDetail.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        mRvReportDetail.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         detailModel.getReportDetails();
     }
 
@@ -111,6 +118,20 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
         }
     }
 
+    private void setupRxBus() {
+        mSubscription = new CompositeSubscription();
+
+        mSubscription.add(RxBus.getRxBusSingleton().toObserverable().subscribe(new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                if (o instanceof ReportDetailBus) {
+                    ReportDetailBus reportDetailBus = (ReportDetailBus) o;
+                    ToastManager.showToast(ReportDetailActivity.this, reportDetailBus.getPicName());
+                }
+            }
+        }));
+    }
+
     private void paramError() {
         ToastManager.showToast(this, "参数错误，请重试！");
         finish();
@@ -120,6 +141,7 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        mSubscription.unsubscribe();
     }
 
     @Override
