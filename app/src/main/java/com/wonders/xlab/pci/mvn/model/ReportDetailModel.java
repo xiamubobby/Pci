@@ -34,11 +34,11 @@ public class ReportDetailModel extends BaseModel<ReportDetailEntity> {
         List<ReportDetailBean> reportDetailBeanList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             ReportDetailBean detailBean = new ReportDetailBean();
-            detailBean.setTitle("病历单");
+            detailBean.setTitle("病历单" + i);
             List<ReportDetailImageBean> detailImageBeanList = new ArrayList<>();
             for (int j = 0; j < 5; j++) {
                 ReportDetailImageBean imageBean = new ReportDetailImageBean();
-                imageBean.setName("image"+j);
+                imageBean.setName("image" + i + ":" + j);
                 imageBean.setPortraitUrl("http://i0.wp.com/www.gottabemobile.com/wp-content/uploads/2015/08/Android-6.0-official.png");
                 detailImageBeanList.add(imageBean);
             }
