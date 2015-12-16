@@ -3,7 +3,6 @@ package com.wonders.xlab.pci.module.task;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -17,7 +16,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.wonders.xlab.common.utils.DateUtil;
-import com.wonders.xlab.common.viewpager.XViewPager;
+import com.wonders.xlab.common.viewpager.WrapHeightViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.RxBus;
@@ -54,11 +53,11 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
     @Bind(R.id.et_daily_task_wine)
     EditText mEtDailyTaskWine;
     @Bind(R.id.vp_daily_task_date)
-    ViewPager mVpDailyTaskDate;
+    WrapHeightViewPager mVpDailyTaskDate;
     @Bind(R.id.tv_daily_task_date)
     TextView mTvDailyTaskDate;
     @Bind(R.id.vp_daily_task_medicine)
-    XViewPager mVpDailyTaskMedicine;
+    WrapHeightViewPager mVpDailyTaskMedicine;
     @Bind(R.id.lc_daily_task_bp)
     LineChart mLineChartBp;
     @Bind(R.id.lc_daily_task_bs)
@@ -181,6 +180,10 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
         mTabMedicine.setupWithViewPager(mVpDailyTaskMedicine);
     }
 
+    /**
+     * 主诉症状
+     * @param beanList
+     */
     @Override
     public void initSymptomView(List<SymptomBean> beanList) {
         mFlSymptom.removeAllViews();
@@ -205,6 +208,10 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
         mFlSymptom.addView(addView);
     }
 
+    /**
+     * 血压测量
+     * @param beanList
+     */
     @Override
     public void initBloodPressure(List<BloodPressureBean> beanList) {
         if (beanList == null || beanList.size() <= 0) {
@@ -239,11 +246,15 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
         LineData data = new LineData(xVals, dataSets);
         data.setValueTextColor(Color.WHITE);
         data.setValueTextSize(9f);
-        
+
         mLineChartBp.setData(data);
 
     }
 
+    /**
+     * 血糖测量
+     * @param beanList
+     */
     @Override
     public void initBloodSugar(List<BloodSugarBean> beanList) {
         if (beanList == null || beanList.size() <= 0) {
@@ -299,5 +310,8 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
+        }
     }
 }

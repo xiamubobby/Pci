@@ -7,12 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
-import com.zhy.view.flowlayout.FlowLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import me.drakeet.labelview.LabelView;
 
 public class MedicineRecordFragment extends BaseFragment {
     private static final String ARG_MEDICINE = "medicine";
-    private FlowLayout flowLayout;
+    private LinearLayout mLinearLayout;
     private List<MedicineRecordBean> mBeanList;
 
     public MedicineRecordFragment() {
@@ -51,7 +51,7 @@ public class MedicineRecordFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View itemView = inflater.inflate(R.layout.fragment_medicine_record, container, false);
-        flowLayout = (FlowLayout) itemView;
+        mLinearLayout = (LinearLayout) itemView;
         ButterKnife.bind(this, itemView);
         return itemView;
     }
@@ -60,22 +60,9 @@ public class MedicineRecordFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-        flowLayout.removeAllViews();
+        mLinearLayout.removeAllViews();
         for (final MedicineRecordBean bean : mBeanList) {
             final View itemView = layoutInflater.inflate(R.layout.item_task_medicine_record, null, false);
-            flowLayout.post(new Runnable() {
-                @Override
-                public void run() {
-                    int width = flowLayout.getMeasuredWidth();
-                    ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) itemView.getLayoutParams();
-                    if (lp == null) {
-                        lp = new ViewGroup.MarginLayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT);
-                    } else {
-                        lp.width = width;
-                    }
-                    itemView.setLayoutParams(lp);
-                }
-            });
             CheckBox mCbName = (CheckBox) itemView.findViewById(R.id.cb_item_task_medicine_record_name);
             LabelView mTvDosage = (LabelView) itemView.findViewById(R.id.tv_item_task_medicine_record_dosage);
             mCbName.setText(bean.getMedicineName());
@@ -86,7 +73,7 @@ public class MedicineRecordFragment extends BaseFragment {
                     RxBus.getRxBusSingleton().send(bean);
                 }
             });
-            flowLayout.addView(itemView);
+            mLinearLayout.addView(itemView);
         }
     }
 

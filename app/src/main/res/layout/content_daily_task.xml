@@ -117,7 +117,7 @@
                 />
         </LinearLayout>
 
-        <com.wonders.xlab.common.viewpager.XViewPager
+        <com.wonders.xlab.common.viewpager.WrapHeightViewPager
             android:id="@+id/vp_daily_task_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
 
             <include layout="@layout/divider_vertical"/>
 
-            <com.wonders.xlab.common.viewpager.XViewPager
+            <com.wonders.xlab.common.viewpager.WrapHeightViewPager
                 android:id="@+id/vp_daily_task_medicine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -219,35 +219,12 @@
                 android:text="吸烟情况"
                 android:textSize="@dimen/text_size_normal"/>
 
-            <LinearLayout
+            <LinearLayout android:id="@+id/ll_daily_task_smoke"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="截止到现在已抽"
-                    android:textSize="@dimen/text_size_normal"/>
-
-                <EditText
-                    android:id="@+id/et_daily_task_cigarette"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="4"
-                    android:minWidth="35dp"
-                    android:singleLine="true"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="根烟"
-                    android:textSize="@dimen/text_size_normal"/>
-            </LinearLayout>
+                android:orientation="vertical"/>
 
             <TextView
                 android:layout_width="match_parent"

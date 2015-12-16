@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.mvn.model;
 
 import android.support.annotation.NonNull;
 
+import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.module.record.bean.ReportDetailBean;
 import com.wonders.xlab.pci.module.record.bean.ReportDetailImageBean;
 import com.wonders.xlab.pci.mvn.BaseModel;
@@ -40,7 +41,7 @@ public class ReportDetailModel extends BaseModel<ReportDetailEntity> {
                 ReportDetailImageBean imageBean = new ReportDetailImageBean();
                 imageBean.setName("image" + i + ":" + j);
                 imageBean.setPosition(j);
-                imageBean.setPortraitUrl("http://i0.wp.com/www.gottabemobile.com/wp-content/uploads/2015/08/Android-6.0-official.png");
+                imageBean.setPortraitUrl(Constant.TEST_PORTRAIT);
                 detailImageBeanList.add(imageBean);
             }
             detailBean.setPicUrlList(detailImageBeanList);
