@@ -10,7 +10,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseFragment;
+import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
 
 import java.util.Calendar;
 
@@ -74,6 +76,8 @@ public class WeekViewFragment extends BaseFragment {
 
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         for (int i = 0; i < 7; i++) {
+            String showDate;
+
             View itemView = inflater.inflate(R.layout.item_daily_task_date, null, false);
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) itemView.getLayoutParams();
             if (layoutParams == null) {
@@ -81,10 +85,27 @@ public class WeekViewFragment extends BaseFragment {
             } else {
                 layoutParams.weight = 1;
             }
+
             TextView mTvDate = (TextView) itemView.findViewById(R.id.tv_item_daily_task_date);
-            mTvDate.setText(String.valueOf(dayOfWeek));
             mTvDate.setTag(calendar.getTimeInMillis());
             itemView.setLayoutParams(layoutParams);
+
+            if (dayOfWeek == 1) {
+                showDate = (calendar.get(Calendar.MONTH) + 1) + "\n月";
+                mTvDate.setTextSize(8);
+            } else {
+                showDate = String.valueOf(dayOfWeek);
+            }
+
+            mTvDate.setText(showDate);
+
+            final int finalDayOfWeek = dayOfWeek;
+            mTvDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RxBus.getRxBusSingleton().send(new WeekViewClickBus((Long) v.getTag(), finalDayOfWeek));
+                }
+            });
 
             if (mToday == calendar.getTimeInMillis()) {
                 mTvDate.setSelected(true);

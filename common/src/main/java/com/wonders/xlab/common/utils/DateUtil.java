@@ -9,7 +9,7 @@ import java.util.Locale;
 
 public class DateUtil {
 
-    public static final String DEFAULT_FORMAT = "yyyy/MM/dd";
+    public static final String DEFAULT_FORMAT = "yyyy-MM-dd";
 
     public static String format(Date date) {
         return format(date, DEFAULT_FORMAT);

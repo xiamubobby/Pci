@@ -20,7 +20,7 @@
         android:paddingBottom="@dimen/item_interval"
         android:paddingTop="@dimen/item_interval">
 
-        <TextView
+        <TextView android:id="@+id/tv_daily_task_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2015-12-01"

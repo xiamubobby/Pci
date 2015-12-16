@@ -12,15 +12,20 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.task.adapter.WeekViewVPAdapter;
+import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 
 public class DailyTaskActivity extends AppbarActivity {
 
@@ -44,10 +49,16 @@ public class DailyTaskActivity extends AppbarActivity {
     EditText mEtDailyTaskWine;
     @Bind(R.id.vp_daily_task_date)
     ViewPager mVpDailyTaskDate;
+    @Bind(R.id.tv_daily_task_date)
+    TextView mTvDailyTaskDate;
 
     private WeekViewVPAdapter mWeekViewVPAdapter;
 
     private Calendar calendar = Calendar.getInstance();
+
+    private CompositeSubscription mSubscription;
+
+    private long mToday;
 
     @Override
     public int getContentLayout() {
@@ -64,12 +75,15 @@ public class DailyTaskActivity extends AppbarActivity {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
+        mToday = calendar.getTimeInMillis();
+
         getToolbar().inflateMenu(R.menu.menu_daily_task);
         getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_daily_task_today:
+                        mTvDailyTaskDate.setText(DateUtil.format(mToday, DateUtil.DEFAULT_FORMAT));
                         if (mVpDailyTaskDate != null && mWeekViewVPAdapter != null && mWeekViewVPAdapter.getCount() > WeekViewVPAdapter.INITIAL_POSITION) {
                             mVpDailyTaskDate.setCurrentItem(WeekViewVPAdapter.INITIAL_POSITION);
                         }
@@ -78,11 +92,25 @@ public class DailyTaskActivity extends AppbarActivity {
                 return false;
             }
         });
-        mWeekViewVPAdapter = new WeekViewVPAdapter(getFragmentManager(), calendar.getTimeInMillis());
+        mWeekViewVPAdapter = new WeekViewVPAdapter(getFragmentManager(), mToday);
         mVpDailyTaskDate.setAdapter(mWeekViewVPAdapter);
         mVpDailyTaskDate.setCurrentItem(WeekViewVPAdapter.INITIAL_POSITION);
+        onDateClick();
     }
 
+    private void onDateClick() {
+        mSubscription = new CompositeSubscription();
+
+        mSubscription.add(RxBus.getRxBusSingleton().toObserverable().subscribe(new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                if (o instanceof WeekViewClickBus) {
+                    WeekViewClickBus weekViewClickBus = (WeekViewClickBus) o;
+                    mTvDailyTaskDate.setText(DateUtil.format(weekViewClickBus.getTime(), DateUtil.DEFAULT_FORMAT));
+                }
+            }
+        }));
+    }
 
     private void setupDate(long time) {
         int today = calendar.get(Calendar.DAY_OF_MONTH);
