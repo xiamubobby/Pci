@@ -3,4 +3,9 @@
     <color name="colorPrimary">#249a4b</color>
     <color name="colorPrimaryDark">#c7249a4b</color>
     <color name="colorAccent">#ae249a5b</color>
+
+    <color name="half_black">#808080</color>
+    <color name="white">#fafafa</color>
+    <color name="white_pressed">#f1f1f1</color>
+    <color name="black_semi_transparent">#B2000000</color>
 </resources>

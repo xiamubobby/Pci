@@ -48,8 +48,6 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
     TabLayout mTabMedicine;
     @Bind(R.id.fl_daily_task_symptom)
     FlowLayout mFlSymptom;
-    @Bind(R.id.et_daily_task_cigarette)
-    EditText mEtDailyTaskCigarette;
     @Bind(R.id.et_daily_task_wine)
     EditText mEtDailyTaskWine;
     @Bind(R.id.vp_daily_task_date)
@@ -194,18 +192,6 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
             symptom.setText(bean.getSymptom());
             mFlSymptom.addView(itemView);
         }
-
-        final View addView = mInflater.inflate(R.layout.item_task_symptom_add_new, null, false);
-
-        TextView addTv = (TextView) addView.findViewById(R.id.tv_item_task_symptom_add_new);
-        addTv.setText("点击纪录");
-        addView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        mFlSymptom.addView(addView);
     }
 
     /**

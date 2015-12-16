@@ -207,6 +207,7 @@
                 android:gravity="center_vertical|right"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:text="记录血压"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearance"
                 android:textColor="@android:color/holo_red_light"
                 android:textSize="@dimen/text_size_normal"/>
@@ -247,6 +248,7 @@
                 android:clickable="true"
                 android:gravity="center_vertical|right"
                 android:paddingRight="@dimen/activity_horizontal_margin"
+                android:visibility="gone"
                 android:text="记录血糖"
                 android:textAppearance="?android:attr/textAppearance"
                 android:textColor="@android:color/holo_red_light"
