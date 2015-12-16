@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_gray"
+    android:background="@android:color/white"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.wonders.xlab.pci.module.task.DailyTaskActivity"
@@ -149,6 +149,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/bg_gray"
                 android:padding="@dimen/item_interval"
                 android:text="药物记录"
                 android:textSize="@dimen/text_size_normal"/>
@@ -157,9 +158,9 @@
                 android:id="@+id/tab_daily_task_time_period_medicine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@android:color/white"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:background="@android:color/white"/>
+                android:paddingRight="@dimen/activity_horizontal_margin"/>
 
             <include layout="@layout/divider_vertical"/>
 
@@ -173,6 +174,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/bg_gray"
                 android:padding="@dimen/item_interval"
                 android:text="主诉症状"
                 android:textSize="@dimen/text_size_normal"/>
@@ -186,33 +188,33 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/bg_gray"
                 android:padding="@dimen/item_interval"
                 android:text="血压测量"
                 android:textSize="@dimen/text_size_normal"/>
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tab_daily_task_time_period_bp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:visibility="gone"
-                android:background="@android:color/white"/>
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lc_daily_task_bp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="180dp"/>
 
-            <com.wonders.xlab.common.viewpager.XViewPager
-                android:id="@+id/vp_daily_task_bp"
+            <TextView
+                android:id="@+id/tv_daily_task_add_bp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/item_interval"
-                android:gravity="center"/>
+                android:layout_height="?listPreferredItemHeightSmall"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center_vertical|right"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:text="记录血压"
+                android:textAppearance="?android:attr/textAppearance"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="@dimen/text_size_normal"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/bg_gray"
                 android:padding="@dimen/item_interval"
                 android:text="吸烟情况"
                 android:textSize="@dimen/text_size_normal"/>
@@ -250,28 +252,33 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/bg_gray"
                 android:padding="@dimen/item_interval"
                 android:text="血糖测量"
                 android:textSize="@dimen/text_size_normal"/>
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tab_daily_task_time_period_bs"
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lc_daily_task_bs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:background="@android:color/white"/>
+                android:layout_height="180dp"/>
 
-            <com.wonders.xlab.common.viewpager.XViewPager
-                android:id="@+id/vp_daily_task_bs"
+            <TextView
+                android:id="@+id/tv_daily_task_add_bs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/item_interval"
-                android:gravity="center"/>
+                android:layout_height="?listPreferredItemHeightSmall"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:gravity="center_vertical|right"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:text="记录血糖"
+                android:textAppearance="?android:attr/textAppearance"
+                android:textColor="@android:color/holo_red_light"
+                android:textSize="@dimen/text_size_normal"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/bg_gray"
                 android:padding="@dimen/item_interval"
                 android:text="控酒情况"
                 android:textSize="@dimen/text_size_normal"/>

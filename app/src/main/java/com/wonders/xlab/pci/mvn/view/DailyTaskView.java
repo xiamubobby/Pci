@@ -1,6 +1,7 @@
 package com.wonders.xlab.pci.mvn.view;
 
 import com.wonders.xlab.pci.module.task.bean.BloodPressureBean;
+import com.wonders.xlab.pci.module.task.bean.BloodSugarBean;
 import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
 import com.wonders.xlab.pci.mvn.BaseView;
@@ -18,4 +19,6 @@ public interface DailyTaskView extends BaseView{
     void initSymptomView(List<SymptomBean> beanList);
 
     void initBloodPressure(List<BloodPressureBean> beanList);
+
+    void initBloodSugar(List<BloodSugarBean> beanList);
 }

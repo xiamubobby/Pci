@@ -1,5 +1,6 @@
 package com.wonders.xlab.pci.module.task;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -11,6 +12,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
@@ -19,6 +24,7 @@ import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.task.adapter.WeekViewVPAdapter;
 import com.wonders.xlab.pci.module.task.bean.BloodPressureBean;
+import com.wonders.xlab.pci.module.task.bean.BloodSugarBean;
 import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
 import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
@@ -26,6 +32,7 @@ import com.wonders.xlab.pci.mvn.model.DailyTaskModel;
 import com.wonders.xlab.pci.mvn.view.DailyTaskView;
 import com.zhy.view.flowlayout.FlowLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -42,12 +49,8 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
     TabLayout mTabMedicine;
     @Bind(R.id.fl_daily_task_symptom)
     FlowLayout mFlSymptom;
-    @Bind(R.id.tab_daily_task_time_period_bp)
-    TabLayout mTabDailyTaskTimePeriodBp;
     @Bind(R.id.et_daily_task_cigarette)
     EditText mEtDailyTaskCigarette;
-    @Bind(R.id.tab_daily_task_time_period_bs)
-    TabLayout mTabDailyTaskTimePeriodBs;
     @Bind(R.id.et_daily_task_wine)
     EditText mEtDailyTaskWine;
     @Bind(R.id.vp_daily_task_date)
@@ -56,12 +59,10 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
     TextView mTvDailyTaskDate;
     @Bind(R.id.vp_daily_task_medicine)
     XViewPager mVpDailyTaskMedicine;
-    @Bind(R.id.vp_daily_task_bp)
-    XViewPager mVpDailyTaskBp;
-    @Bind(R.id.vp_daily_task_bs)
-    XViewPager mVpDailyTaskBs;
     @Bind(R.id.lc_daily_task_bp)
     LineChart mLineChartBp;
+    @Bind(R.id.lc_daily_task_bs)
+    LineChart mLineChartBs;
 
     private WeekViewVPAdapter mWeekViewVPAdapter;
 
@@ -92,6 +93,8 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
         ButterKnife.bind(this);
         mInflater = LayoutInflater.from(this);
 
+        init();
+
         mDailyTaskModel = new DailyTaskModel(this);
         addModel(mDailyTaskModel);
 
@@ -99,6 +102,18 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
         initRxBusEvent();
 
         mDailyTaskModel.fetchData();
+    }
+
+    private void init() {
+        mLineChartBp.setNoDataText("");
+        mLineChartBp.setNoDataTextDescription("暂无数据，点击下方记录新数据");
+        mLineChartBp.setDescription("血压");
+        mLineChartBp.setScaleEnabled(false);
+
+        mLineChartBs.setNoDataText("");
+        mLineChartBs.setNoDataTextDescription("暂无数据，点击下方记录新数据");
+        mLineChartBs.setDescription("血糖(mol/L)");
+        mLineChartBs.setScaleEnabled(false);
     }
 
     private void initToolbar() {
@@ -192,8 +207,82 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
 
     @Override
     public void initBloodPressure(List<BloodPressureBean> beanList) {
-        LineChart lineChart = new LineChart(this);
+        if (beanList == null || beanList.size() <= 0) {
+            return;
+        }
+        ArrayList<String> xVals = new ArrayList<>();
+        ArrayList<Entry> spVals = new ArrayList<>();
+        ArrayList<Entry> dpVals = new ArrayList<>();
+        ArrayList<Entry> bpVals = new ArrayList<>();
 
+
+        for (int i = 0; i < beanList.size(); i++) {
+            BloodPressureBean bean = beanList.get(i);
+
+            xVals.add(DateUtil.format(bean.getTime(), "HH:mm"));
+            spVals.add(new Entry(bean.getSystolicPressure(), i));
+            dpVals.add(new Entry(bean.getDiastolicPressure(), i));
+            bpVals.add(new Entry(bean.getBloodPressure(), i));
+        }
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<>();
+        LineDataSet spDataSet = new LineDataSet(spVals, "收缩压");
+        LineDataSet dpDataSet = new LineDataSet(dpVals, "舒张压");
+        LineDataSet bpDataSet = new LineDataSet(bpVals, "血压");
+        initLineDataSet(spDataSet, Color.RED);
+        initLineDataSet(dpDataSet, Color.GREEN);
+        initLineDataSet(bpDataSet, Color.BLUE);
+        dataSets.add(spDataSet);
+        dataSets.add(dpDataSet);
+        dataSets.add(bpDataSet);
+
+        LineData data = new LineData(xVals, dataSets);
+        data.setValueTextColor(Color.WHITE);
+        data.setValueTextSize(9f);
+        
+        mLineChartBp.setData(data);
+
+    }
+
+    @Override
+    public void initBloodSugar(List<BloodSugarBean> beanList) {
+        if (beanList == null || beanList.size() <= 0) {
+            return;
+        }
+        ArrayList<String> xVals = new ArrayList<>();
+        ArrayList<Entry> sbsVals = new ArrayList<>();
+
+
+        for (int i = 0; i < beanList.size(); i++) {
+            BloodSugarBean bean = beanList.get(i);
+
+            xVals.add(DateUtil.format(bean.getTime(), "HH:mm"));
+            sbsVals.add(new Entry(bean.getBloodSugar(), i));
+        }
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<>();
+        LineDataSet spDataSet = new LineDataSet(sbsVals, "血糖");
+        initLineDataSet(spDataSet, Color.GREEN);
+        dataSets.add(spDataSet);
+
+        LineData data = new LineData(xVals, dataSets);
+        data.setValueTextColor(Color.WHITE);
+        data.setValueTextSize(9f);
+
+        mLineChartBs.setData(data);
+    }
+
+    private void initLineDataSet(LineDataSet dataSet, int color) {
+        dataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
+        dataSet.setColor(color);
+        dataSet.setDrawValues(false);
+        dataSet.setValueTextColor(Color.BLACK);
+        dataSet.setCircleColor(Color.WHITE);
+        dataSet.setFillAlpha(65);
+        dataSet.setFillColor(Color.RED);
+        dataSet.setDrawCircleHole(false);
+        dataSet.setHighlightEnabled(false);
+        dataSet.setHighLightColor(Color.RED);
     }
 
     @Override
