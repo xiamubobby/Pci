@@ -38,6 +38,7 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
     private LayoutInflater mInflater;
 
     public ReportDetailRVAdapter(WeakReference<Context> contextWeakReference) {
+        super(contextWeakReference);
         mContext = contextWeakReference;
         mInflater = LayoutInflater.from(mContext.get());
     }
@@ -145,6 +146,10 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
     }
 
     class InnerImageRVAdapter extends SimpleRVAdapter<ReportDetailImageBean> {
+
+        public InnerImageRVAdapter(WeakReference<Context> contextWeakReference) {
+            super(contextWeakReference);
+        }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

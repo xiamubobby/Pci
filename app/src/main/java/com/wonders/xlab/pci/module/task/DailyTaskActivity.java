@@ -7,58 +7,74 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.LineChart;
 import com.wonders.xlab.common.utils.DateUtil;
+import com.wonders.xlab.common.viewpager.XViewPager;
+import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.task.adapter.WeekViewVPAdapter;
+import com.wonders.xlab.pci.module.task.bean.BloodPressureBean;
+import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
+import com.wonders.xlab.pci.module.task.bean.SymptomBean;
 import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
+import com.wonders.xlab.pci.mvn.model.DailyTaskModel;
+import com.wonders.xlab.pci.mvn.view.DailyTaskView;
 import com.zhy.view.flowlayout.FlowLayout;
 
-import java.util.Calendar;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.drakeet.labelview.LabelView;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
-public class DailyTaskActivity extends AppbarActivity {
+public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
 
-    @Bind(R.id.ll_daily_task_date)
-    LinearLayout mLlDailyTaskDate;
     @Bind(R.id.tv_daily_task_title)
     TextView mTvDailyTaskTitle;
-    @Bind(R.id.tl_daily_task_time_period_medicine)
-    TabLayout mTlDailyTaskTimePeriodMedicine;
-    @Bind(R.id.fl_daily_task_medicine)
-    FlowLayout mFlDailyTaskMedicine;
+    @Bind(R.id.tab_daily_task_time_period_medicine)
+    TabLayout mTabMedicine;
     @Bind(R.id.fl_daily_task_symptom)
-    FlowLayout mFlDailyTaskSymptom;
-    @Bind(R.id.tl_daily_task_time_period_bp)
-    TabLayout mTlDailyTaskTimePeriodBp;
+    FlowLayout mFlSymptom;
+    @Bind(R.id.tab_daily_task_time_period_bp)
+    TabLayout mTabDailyTaskTimePeriodBp;
     @Bind(R.id.et_daily_task_cigarette)
     EditText mEtDailyTaskCigarette;
-    @Bind(R.id.tl_daily_task_time_period_bs)
-    TabLayout mTlDailyTaskTimePeriodBs;
+    @Bind(R.id.tab_daily_task_time_period_bs)
+    TabLayout mTabDailyTaskTimePeriodBs;
     @Bind(R.id.et_daily_task_wine)
     EditText mEtDailyTaskWine;
     @Bind(R.id.vp_daily_task_date)
     ViewPager mVpDailyTaskDate;
     @Bind(R.id.tv_daily_task_date)
     TextView mTvDailyTaskDate;
+    @Bind(R.id.vp_daily_task_medicine)
+    XViewPager mVpDailyTaskMedicine;
+    @Bind(R.id.vp_daily_task_bp)
+    XViewPager mVpDailyTaskBp;
+    @Bind(R.id.vp_daily_task_bs)
+    XViewPager mVpDailyTaskBs;
+    @Bind(R.id.lc_daily_task_bp)
+    LineChart mLineChartBp;
 
     private WeekViewVPAdapter mWeekViewVPAdapter;
 
-    private Calendar calendar = Calendar.getInstance();
+    private FragmentVPAdapter mMedicineVPAdapter;
 
     private CompositeSubscription mSubscription;
 
     private long mToday;
+
+    private DailyTaskModel mDailyTaskModel;
+
+    private LayoutInflater mInflater;
+
 
     @Override
     public int getContentLayout() {
@@ -74,9 +90,18 @@ public class DailyTaskActivity extends AppbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        mInflater = LayoutInflater.from(this);
 
-        mToday = calendar.getTimeInMillis();
+        mDailyTaskModel = new DailyTaskModel(this);
+        addModel(mDailyTaskModel);
 
+        initToolbar();
+        initRxBusEvent();
+
+        mDailyTaskModel.fetchData();
+    }
+
+    private void initToolbar() {
         getToolbar().inflateMenu(R.menu.menu_daily_task);
         getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -92,67 +117,93 @@ public class DailyTaskActivity extends AppbarActivity {
                 return false;
             }
         });
-        mWeekViewVPAdapter = new WeekViewVPAdapter(getFragmentManager(), mToday);
-        mVpDailyTaskDate.setAdapter(mWeekViewVPAdapter);
-        mVpDailyTaskDate.setCurrentItem(WeekViewVPAdapter.INITIAL_POSITION);
-        onDateClick();
     }
 
-    private void onDateClick() {
+    /**
+     * 接收事件
+     */
+    private void initRxBusEvent() {
         mSubscription = new CompositeSubscription();
 
         mSubscription.add(RxBus.getRxBusSingleton().toObserverable().subscribe(new Action1<Object>() {
             @Override
             public void call(Object o) {
                 if (o instanceof WeekViewClickBus) {
+                    //点击日期
                     WeekViewClickBus weekViewClickBus = (WeekViewClickBus) o;
                     mTvDailyTaskDate.setText(DateUtil.format(weekViewClickBus.getTime(), DateUtil.DEFAULT_FORMAT));
+                } else if (o instanceof MedicineRecordBean) {
+                    //选中药物记录
+
                 }
             }
         }));
     }
 
-    private void setupDate(long time) {
-        int today = calendar.get(Calendar.DAY_OF_MONTH);
-
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.setTimeInMillis(time);
-        while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
-            calendar.add(Calendar.DATE, -1);
-        }
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_MONTH);
-
-        LayoutInflater inflater = LayoutInflater.from(this);
-        for (int i = 0; i < 7; i++) {
-            View itemView = inflater.inflate(R.layout.item_daily_task_date, null, false);
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) itemView.getLayoutParams();
-            if (layoutParams == null) {
-                layoutParams = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1);
-            } else {
-                layoutParams.weight = 1;
-            }
-            TextView mTvDate = (TextView) itemView.findViewById(R.id.tv_item_daily_task_date);
-            mTvDate.setText(String.valueOf(dayOfWeek));
-            itemView.setLayoutParams(layoutParams);
-            if (today == dayOfWeek) {
-                mTvDate.setSelected(true);
-            } else {
-                mTvDate.setSelected(false);
-            }
-            mLlDailyTaskDate.addView(itemView);
-
-            calendar.add(Calendar.DATE, 1);
-            dayOfWeek = calendar.get(Calendar.DAY_OF_MONTH);
-        }
+    @Override
+    public void initWeekView(long today) {
+        mToday = today;
+        mWeekViewVPAdapter = new WeekViewVPAdapter(getFragmentManager(), today);
+        mVpDailyTaskDate.setAdapter(mWeekViewVPAdapter);
+        mVpDailyTaskDate.setCurrentItem(WeekViewVPAdapter.INITIAL_POSITION);
     }
 
-    private long calculateFirstDayOfWeekInMonth(long time) {
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.setTimeInMillis(time);
-        while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
-            calendar.add(Calendar.DATE, -1);
+    /**
+     * TODO 正式的要分 早中晚
+     *
+     * @param recordBeanList
+     */
+    @Override
+    public void initMedicineRecordView(List<MedicineRecordBean> recordBeanList) {
+        if (mMedicineVPAdapter == null) {
+            mMedicineVPAdapter = new FragmentVPAdapter(getFragmentManager());
         }
-        return calendar.getTimeInMillis();
+
+        mMedicineVPAdapter.addFragment(MedicineRecordFragment.newInstance(recordBeanList), getString(R.string.morning));
+        mMedicineVPAdapter.addFragment(MedicineRecordFragment.newInstance(recordBeanList), getString(R.string.afternoon));
+        mMedicineVPAdapter.addFragment(MedicineRecordFragment.newInstance(recordBeanList), getString(R.string.night));
+        mVpDailyTaskMedicine.setAdapter(mMedicineVPAdapter);
+        mTabMedicine.setupWithViewPager(mVpDailyTaskMedicine);
+    }
+
+    @Override
+    public void initSymptomView(List<SymptomBean> beanList) {
+        mFlSymptom.removeAllViews();
+        for (SymptomBean bean : beanList) {
+            final View itemView = mInflater.inflate(R.layout.item_task_symptom_label, null, false);
+
+            LabelView symptom = (LabelView) itemView.findViewById(R.id.tv_item_task_symptom);
+            symptom.setText(bean.getSymptom());
+            mFlSymptom.addView(itemView);
+        }
+
+        final View addView = mInflater.inflate(R.layout.item_task_symptom_add_new, null, false);
+
+        TextView addTv = (TextView) addView.findViewById(R.id.tv_item_task_symptom_add_new);
+        addTv.setText("点击纪录");
+        addView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        mFlSymptom.addView(addView);
+    }
+
+    @Override
+    public void initBloodPressure(List<BloodPressureBean> beanList) {
+        LineChart lineChart = new LineChart(this);
+
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
     }
 
     @Override

@@ -20,7 +20,8 @@
         android:paddingBottom="@dimen/item_interval"
         android:paddingTop="@dimen/item_interval">
 
-        <TextView android:id="@+id/tv_daily_task_date"
+        <TextView
+            android:id="@+id/tv_daily_task_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2015-12-01"
@@ -116,22 +117,13 @@
                 />
         </LinearLayout>
 
-        <android.support.v4.view.ViewPager
+        <com.wonders.xlab.common.viewpager.XViewPager
             android:id="@+id/vp_daily_task_date"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:gravity="center"
-            android:layout_marginBottom="@dimen/item_interval"/>
-        <LinearLayout
-            android:id="@+id/ll_daily_task_date"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:visibility="gone"
             android:layout_marginBottom="@dimen/item_interval"
-            android:orientation="horizontal">
+            android:gravity="center"/>
 
-        </LinearLayout>
     </LinearLayout>
 
     <include layout="@layout/divider_vertical"/>
@@ -162,18 +154,21 @@
                 android:textSize="@dimen/text_size_normal"/>
 
             <android.support.design.widget.TabLayout
-                android:id="@+id/tl_daily_task_time_period_medicine"
+                android:id="@+id/tab_daily_task_time_period_medicine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:background="@android:color/white"/>
 
             <include layout="@layout/divider_vertical"/>
 
-            <com.zhy.view.flowlayout.FlowLayout
-                android:id="@+id/fl_daily_task_medicine"
+            <com.wonders.xlab.common.viewpager.XViewPager
+                android:id="@+id/vp_daily_task_medicine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"/>
+                android:layout_marginBottom="@dimen/item_interval"
+                android:gravity="center"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -196,10 +191,24 @@
                 android:textSize="@dimen/text_size_normal"/>
 
             <android.support.design.widget.TabLayout
-                android:id="@+id/tl_daily_task_time_period_bp"
+                android:id="@+id/tab_daily_task_time_period_bp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:visibility="gone"
                 android:background="@android:color/white"/>
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lc_daily_task_bp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.wonders.xlab.common.viewpager.XViewPager
+                android:id="@+id/vp_daily_task_bp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/item_interval"
+                android:gravity="center"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -221,7 +230,8 @@
                     android:text="截止到现在已抽"
                     android:textSize="@dimen/text_size_normal"/>
 
-                <EditText android:id="@+id/et_daily_task_cigarette"
+                <EditText
+                    android:id="@+id/et_daily_task_cigarette"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -245,10 +255,19 @@
                 android:textSize="@dimen/text_size_normal"/>
 
             <android.support.design.widget.TabLayout
-                android:id="@+id/tl_daily_task_time_period_bs"
+                android:id="@+id/tab_daily_task_time_period_bs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:background="@android:color/white"/>
+
+            <com.wonders.xlab.common.viewpager.XViewPager
+                android:id="@+id/vp_daily_task_bs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/item_interval"
+                android:gravity="center"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -279,7 +298,8 @@
                     android:text="截止到现在已喝"
                     android:textSize="@dimen/text_size_normal"/>
 
-                <EditText android:id="@+id/et_daily_task_wine"
+                <EditText
+                    android:id="@+id/et_daily_task_wine"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"

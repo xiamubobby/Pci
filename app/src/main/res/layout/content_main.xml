@@ -9,7 +9,7 @@
     tools:context=".module.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <com.wonders.xlab.common.viewpager.ScrollableViewPager
+    <com.wonders.xlab.common.viewpager.XViewPager
         android:id="@+id/vp_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

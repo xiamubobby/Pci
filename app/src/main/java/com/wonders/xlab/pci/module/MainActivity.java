@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
-import com.wonders.xlab.common.viewpager.ScrollableViewPager;
+import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.module.home.HomeFragment;
@@ -32,7 +32,7 @@ import rx.functions.Action1;
 public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.vp_main)
-    ScrollableViewPager mVpMain;
+    XViewPager mVpMain;
     @Bind(R.id.fab_main)
     FloatingActionButton mFab;
     @Bind(R.id.tl_main)
