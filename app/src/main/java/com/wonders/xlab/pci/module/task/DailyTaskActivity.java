@@ -348,7 +348,16 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
 
     @OnClick(R.id.fam_daily_task_bp)
     public void onRecordBpClick() {
-        startActivity(new Intent(this,AddBloodPressureActivity.class));
+        recordNewData(AddBloodPressureActivity.class);
+    }
+
+    @OnClick(R.id.fam_daily_task_bs)
+    public void onRecordBsClick() {
+        recordNewData(AddBloodSugarActivity.class);
+    }
+
+    private void recordNewData(Class targetActivity) {
+        startActivity(new Intent(this, targetActivity));
         mFamDailyTask.collapse();
     }
 

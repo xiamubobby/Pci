@@ -31,11 +31,11 @@
                 android:text="测量日期"
                 android:textSize="@dimen/text_size_normal"/>
 
-            <TextView android:id="@+id/tv_add_bp_date"
+            <TextView
+                android:id="@+id/tv_add_bp_date"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
-                android:text="2015-01-01"
                 android:textSize="@dimen/text_size_normal"/>
         </LinearLayout>
 
@@ -53,11 +53,11 @@
                 android:text="测量时间"
                 android:textSize="@dimen/text_size_normal"/>
 
-            <TextView android:id="@+id/tv_add_bp_time"
+            <TextView
+                android:id="@+id/tv_add_bp_time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
-                android:text="08:12"
                 android:textSize="@dimen/text_size_normal"/>
         </LinearLayout>
 
@@ -75,14 +75,16 @@
                 android:text="收缩压"
                 android:textSize="@dimen/text_size_normal"/>
 
-            <EditText android:id="@+id/ev_add_bp_ssy"
+            <EditText
+                android:id="@+id/et_add_bp_ssy"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical|right"
+                android:inputType="number"
                 android:maxLength="3"
                 android:singleLine="true"
-                android:text="1"
+                android:hint="0"
                 android:textSize="@dimen/text_size_normal"/>
         </LinearLayout>
 
@@ -100,14 +102,16 @@
                 android:text="舒张压"
                 android:textSize="@dimen/text_size_normal"/>
 
-            <EditText android:id="@+id/ev_add_bp_szy"
+            <EditText
+                android:id="@+id/et_add_bp_szy"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical|right"
+                android:inputType="number"
                 android:maxLength="3"
                 android:singleLine="true"
-                android:text="1"
+                android:hint="0"
                 android:textSize="@dimen/text_size_normal"/>
         </LinearLayout>
 
@@ -125,14 +129,16 @@
                 android:text="心率"
                 android:textSize="@dimen/text_size_normal"/>
 
-            <EditText android:id="@+id/ev_add_bp_rate"
+            <EditText
+                android:id="@+id/et_add_bp_rate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical|right"
+                android:inputType="number"
                 android:maxLength="3"
                 android:singleLine="true"
-                android:text="1"
+                android:hint="0"
                 android:textSize="@dimen/text_size_normal"/>
         </LinearLayout>
 

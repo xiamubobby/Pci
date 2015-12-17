@@ -57,6 +57,7 @@
         <activity
             android:name=".module.task.AddBloodSugarActivity"
             android:label="@string/title_activity_add_blood_sugar"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:theme="@style/AppTheme">
         </activity>
     </application>

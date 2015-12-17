@@ -10,14 +10,17 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.wonders.xlab.common.viewpager.XViewPager;
-import com.wonders.xlab.pci.R;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
+import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.home.HomeFragment;
 import com.wonders.xlab.pci.module.record.RecordFragment;
 import com.wonders.xlab.pci.module.task.DailyTaskActivity;
@@ -72,9 +75,51 @@ public class MainActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mVpMain);
         mTabLayout.removeAllTabs();
 
-        mTabLayout.addTab(mTabLayout.newTab().setText("首页"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("档案"));
+        LayoutInflater inflater = LayoutInflater.from(this);
 
+        View home = inflater.inflate(R.layout.tab_main_home, mTabLayout, false);
+        View record = inflater.inflate(R.layout.tab_main_record, mTabLayout, false);
+
+        mTabLayout.addTab(mTabLayout.newTab().setCustomView(home));
+        mTabLayout.addTab(mTabLayout.newTab().setCustomView(record));
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                View view = tab.getCustomView();
+                ImageView imageView = (ImageView) view.findViewById(R.id.iv_tab_main);
+                TextView textView = (TextView) view.findViewById(R.id.tv_tab_main);
+                textView.setTextColor(getResources().getColor(R.color.colorAccent));
+                switch (tab.getPosition()) {
+                    case 0:
+                        imageView.setImageResource(R.drawable.ic_home_pressed);
+                        break;
+                    case 1:
+                        imageView.setImageResource(R.drawable.ic_record_pressed);
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                View view = tab.getCustomView();
+                ImageView imageView = (ImageView) view.findViewById(R.id.iv_tab_main);
+                TextView textView = (TextView) view.findViewById(R.id.tv_tab_main);
+                textView.setTextColor(getResources().getColor(android.R.color.darker_gray));
+                switch (tab.getPosition()) {
+                    case 0:
+                        imageView.setImageResource(R.drawable.ic_home_normal);
+                        break;
+                    case 1:
+                        imageView.setImageResource(R.drawable.ic_record_normal);
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         String tmp = "我的医生";
         SpannableString sp = new SpannableString(tmp);
         //设置斜体
