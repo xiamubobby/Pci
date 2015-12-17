@@ -11,4 +11,6 @@ import java.util.List;
 public interface ReportDetailView extends BaseView {
     void showReportList(List<ReportDetailBean> detailBeanList);
     void appendReportList(List<ReportDetailBean> detailBeanList);
+
+    void getReportsFailed(String message);
 }

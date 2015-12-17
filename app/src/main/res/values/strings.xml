@@ -12,4 +12,5 @@
     <string name="night">晚</string>
     <string name="task_empty_tip">暂无数据，请点击右下角加号添加</string>
     <string name="title_activity_add_blood_pressure">AddBloodPressureActivity</string>
+    <string name="title_activity_add_blood_sugar">AddBloodSugarActivity</string>
 </resources>
