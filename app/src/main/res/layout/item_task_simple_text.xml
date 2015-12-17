@@ -10,7 +10,6 @@
         android:id="@+id/tv_item_task_simple_text_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2015-01-01"
         android:textAppearance="?android:attr/textAppearance"
         android:textSize="@dimen/text_size_normal"/>
 
@@ -19,7 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="1根"
         android:textAppearance="?android:attr/textAppearance"
         android:textSize="@dimen/text_size_normal"/>
 

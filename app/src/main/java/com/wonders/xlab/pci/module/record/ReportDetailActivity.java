@@ -118,7 +118,7 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
     private void setupRxBus() {
         mSubscription = new CompositeSubscription();
 
-        mSubscription.add(RxBus.getRxBusSingleton().toObserverable().subscribe(new Action1<Object>() {
+        mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
             @Override
             public void call(Object o) {
                 if (o instanceof ReportDetailBus) {

@@ -10,5 +10,8 @@ import java.util.List;
  */
 public interface HomeView extends BaseView {
     void showHomeList(List<HomeTaskBean> beanList);
+
     void appendHomeList(List<HomeTaskBean> beanList);
+
+    void showError(String message);
 }

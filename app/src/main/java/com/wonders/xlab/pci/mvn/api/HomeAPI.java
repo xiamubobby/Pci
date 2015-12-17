@@ -2,13 +2,16 @@ package com.wonders.xlab.pci.mvn.api;
 
 import com.wonders.xlab.pci.mvn.entity.home.HomeEntity;
 
-import retrofit.http.GET;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
+import retrofit.http.POST;
 import rx.Observable;
 
 /**
  * Created by hua on 15/12/14.
  */
 public interface HomeAPI {
-    @GET("homePage/listHomePage/1")
-    Observable<HomeEntity> getHomeList();
+    @FormUrlEncoded
+    @POST("homePage/listHomePage")
+    Observable<HomeEntity> getHomeList(@Field("userId") String userId,@Field("page") int page);
 }

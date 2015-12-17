@@ -4,14 +4,19 @@
     android:layout_height="match_parent"
     android:background="@color/bg_gray">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_user_info"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_user_info"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/item_interval"
-        android:layout_marginRight="@dimen/item_interval"
-        android:layout_marginTop="@dimen/item_interval"
-        android:background="@drawable/shape_rectangle_corner"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/clip_bottom"/>
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_user_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/clip_bottom"
+            android:paddingTop="@dimen/item_interval"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>

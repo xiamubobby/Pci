@@ -1,8 +1,12 @@
 package com.wonders.xlab.pci.mvn.api;
 
-import com.wonders.xlab.pci.mvn.BaseEntity;
+import com.wonders.xlab.pci.mvn.entity.LoginEntity;
 
-import retrofit.http.GET;
+import java.util.HashMap;
+
+import retrofit.http.FieldMap;
+import retrofit.http.FormUrlEncoded;
+import retrofit.http.POST;
 import rx.Observable;
 
 /**
@@ -10,6 +14,7 @@ import rx.Observable;
  */
 public interface LoginAPI {
 
-    @GET("users/memberInfo/99")
-    Observable<BaseEntity> login();
+    @FormUrlEncoded
+    @POST("user/login")
+    Observable<LoginEntity> login(@FieldMap HashMap<String,String> body);
 }

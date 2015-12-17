@@ -1,5 +1,6 @@
 package com.wonders.xlab.pci.module.task;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -38,6 +41,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.drakeet.labelview.LabelView;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
@@ -68,6 +72,18 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
     TextView mTvEmptyWine;
     @Bind(R.id.container_daily_task_wine)
     LinearLayout mContainerWine;
+    @Bind(R.id.fam_daily_task_symptom)
+    FloatingActionButton mFamDailyTaskSymptom;
+    @Bind(R.id.fam_daily_task_bp)
+    FloatingActionButton mFamDailyTaskBp;
+    @Bind(R.id.fam_daily_task_smoke)
+    FloatingActionButton mFamDailyTaskSmoke;
+    @Bind(R.id.fam_daily_task_bs)
+    FloatingActionButton mFamDailyTaskBs;
+    @Bind(R.id.fam_daily_task_wine)
+    FloatingActionButton mFamDailyTaskWine;
+    @Bind(R.id.fam_daily_task)
+    FloatingActionsMenu mFamDailyTask;
 
     private WeekViewVPAdapter mWeekViewVPAdapter;
 
@@ -145,7 +161,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
     private void initRxBusEvent() {
         mSubscription = new CompositeSubscription();
 
-        mSubscription.add(RxBus.getRxBusSingleton().toObserverable().subscribe(new Action1<Object>() {
+        mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
             @Override
             public void call(Object o) {
                 if (o instanceof WeekViewClickBus) {
@@ -287,7 +303,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
             View view = mInflater.inflate(R.layout.item_task_simple_text, null, false);
             TextView tvTime = (TextView) view.findViewById(R.id.tv_item_task_simple_text_time);
             TextView tvValue = (TextView) view.findViewById(R.id.tv_item_task_simple_text_value);
-            tvTime.setText(DateUtil.format(bean.getTime(),DateUtil.DEFAULT_FORMAT));
+            tvTime.setText(DateUtil.format(bean.getTime(), DateUtil.DEFAULT_FORMAT));
             tvValue.setText(bean.getValue());
             mContainerSmoke.addView(view);
         }
@@ -301,7 +317,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
             TextView tvTime = (TextView) view.findViewById(R.id.tv_item_task_simple_text_time);
             TextView tvValue = (TextView) view.findViewById(R.id.tv_item_task_simple_text_value);
 
-            tvTime.setText(DateUtil.format(bean.getTime(),DateUtil.DEFAULT_FORMAT));
+            tvTime.setText(DateUtil.format(bean.getTime(), DateUtil.DEFAULT_FORMAT));
             tvValue.setText(bean.getValue());
             mContainerWine.addView(view);
         }
@@ -328,6 +344,12 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
     @Override
     public void hideLoading() {
 
+    }
+
+    @OnClick(R.id.fam_daily_task_bp)
+    public void onRecordBpClick() {
+        startActivity(new Intent(this,AddBloodPressureActivity.class));
+        mFamDailyTask.collapse();
     }
 
     @Override

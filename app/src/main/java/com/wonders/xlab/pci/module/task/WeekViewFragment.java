@@ -103,7 +103,7 @@ public class WeekViewFragment extends BaseFragment {
             mTvDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    RxBus.getRxBusSingleton().send(new WeekViewClickBus((Long) v.getTag(), finalDayOfWeek));
+                    RxBus.getInstance().send(new WeekViewClickBus((Long) v.getTag(), finalDayOfWeek));
                 }
             });
 

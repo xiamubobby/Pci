@@ -3,6 +3,7 @@ package com.wonders.xlab.pci.module.home;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
@@ -58,7 +60,18 @@ public class HomeFragment extends BaseFragment implements HomeView{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRvHome.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,true));
-        mHomeModel.getHomeList();
+        mRvHome.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMoreToBottom() {
+
+            }
+
+            @Override
+            public void loadMoreToTop() {
+                mHomeModel.getHomeList(AIManager.getInstance(getActivity()).getUserId());
+            }
+        });
+        mHomeModel.getHomeList(AIManager.getInstance(getActivity()).getUserId());
     }
 
     @Override
@@ -72,18 +85,28 @@ public class HomeFragment extends BaseFragment implements HomeView{
         if (mHomeRVAdapter == null) {
             mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
             mRvHome.setAdapter(mHomeRVAdapter);
+        } else {
+            mHomeRVAdapter.clear();
         }
         mHomeRVAdapter.setDatas(beanList);
     }
 
     @Override
     public void appendHomeList(List<HomeTaskBean> beanList) {
+        if (mHomeRVAdapter == null) {
+            mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
+            mRvHome.setAdapter(mHomeRVAdapter);
+        }
+        mHomeRVAdapter.appendDatas(beanList);
+    }
 
+    @Override
+    public void showError(String message) {
+        Snackbar.make(mRvHome, message, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
     public void showLoading() {
-
     }
 
     @Override
