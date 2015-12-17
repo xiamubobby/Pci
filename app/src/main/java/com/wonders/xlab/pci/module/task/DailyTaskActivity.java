@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -25,7 +25,9 @@ import com.wonders.xlab.pci.module.task.adapter.WeekViewVPAdapter;
 import com.wonders.xlab.pci.module.task.bean.BloodPressureBean;
 import com.wonders.xlab.pci.module.task.bean.BloodSugarBean;
 import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
+import com.wonders.xlab.pci.module.task.bean.SmokeBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
+import com.wonders.xlab.pci.module.task.bean.WineBean;
 import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
 import com.wonders.xlab.pci.mvn.model.DailyTaskModel;
 import com.wonders.xlab.pci.mvn.view.DailyTaskView;
@@ -48,8 +50,6 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
     TabLayout mTabMedicine;
     @Bind(R.id.fl_daily_task_symptom)
     FlowLayout mFlSymptom;
-    @Bind(R.id.et_daily_task_wine)
-    EditText mEtDailyTaskWine;
     @Bind(R.id.vp_daily_task_date)
     WrapHeightViewPager mVpDailyTaskDate;
     @Bind(R.id.tv_daily_task_date)
@@ -60,6 +60,14 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
     LineChart mLineChartBp;
     @Bind(R.id.lc_daily_task_bs)
     LineChart mLineChartBs;
+    @Bind(R.id.tv_empty_smoke)
+    TextView mTvEmptySmoke;
+    @Bind(R.id.container_daily_task_smoke)
+    LinearLayout mContainerSmoke;
+    @Bind(R.id.tv_empty_wine)
+    TextView mTvEmptyWine;
+    @Bind(R.id.container_daily_task_wine)
+    LinearLayout mContainerWine;
 
     private WeekViewVPAdapter mWeekViewVPAdapter;
 
@@ -103,12 +111,12 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
 
     private void init() {
         mLineChartBp.setNoDataText("");
-        mLineChartBp.setNoDataTextDescription("暂无数据，点击下方记录新数据");
+        mLineChartBp.setNoDataTextDescription(getResources().getString(R.string.task_empty_tip));
         mLineChartBp.setDescription("血压");
         mLineChartBp.setScaleEnabled(false);
 
         mLineChartBs.setNoDataText("");
-        mLineChartBs.setNoDataTextDescription("暂无数据，点击下方记录新数据");
+        mLineChartBs.setNoDataTextDescription(getResources().getString(R.string.task_empty_tip));
         mLineChartBs.setDescription("血糖(mol/L)");
         mLineChartBs.setScaleEnabled(false);
     }
@@ -180,6 +188,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
 
     /**
      * 主诉症状
+     *
      * @param beanList
      */
     @Override
@@ -196,6 +205,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
 
     /**
      * 血压测量
+     *
      * @param beanList
      */
     @Override
@@ -239,6 +249,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
 
     /**
      * 血糖测量
+     *
      * @param beanList
      */
     @Override
@@ -267,6 +278,33 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
         data.setValueTextSize(9f);
 
         mLineChartBs.setData(data);
+    }
+
+    @Override
+    public void initSmokeView(List<SmokeBean> beanList) {
+        mContainerSmoke.removeAllViews();
+        for (SmokeBean bean : beanList) {
+            View view = mInflater.inflate(R.layout.item_task_simple_text, null, false);
+            TextView tvTime = (TextView) view.findViewById(R.id.tv_item_task_simple_text_time);
+            TextView tvValue = (TextView) view.findViewById(R.id.tv_item_task_simple_text_value);
+            tvTime.setText(DateUtil.format(bean.getTime(),DateUtil.DEFAULT_FORMAT));
+            tvValue.setText(bean.getValue());
+            mContainerSmoke.addView(view);
+        }
+    }
+
+    @Override
+    public void initWineView(List<WineBean> beanList) {
+        mContainerWine.removeAllViews();
+        for (WineBean bean : beanList) {
+            View view = mInflater.inflate(R.layout.item_task_simple_text, null, false);
+            TextView tvTime = (TextView) view.findViewById(R.id.tv_item_task_simple_text_time);
+            TextView tvValue = (TextView) view.findViewById(R.id.tv_item_task_simple_text_value);
+
+            tvTime.setText(DateUtil.format(bean.getTime(),DateUtil.DEFAULT_FORMAT));
+            tvValue.setText(bean.getValue());
+            mContainerWine.addView(view);
+        }
     }
 
     private void initLineDataSet(LineDataSet dataSet, int color) {

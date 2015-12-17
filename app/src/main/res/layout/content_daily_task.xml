@@ -199,20 +199,6 @@
                 android:layout_height="180dp"/>
 
             <TextView
-                android:id="@+id/tv_daily_task_add_bp"
-                android:layout_width="match_parent"
-                android:layout_height="?listPreferredItemHeightSmall"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center_vertical|right"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:text="记录血压"
-                android:visibility="gone"
-                android:textAppearance="?android:attr/textAppearance"
-                android:textColor="@android:color/holo_red_light"
-                android:textSize="@dimen/text_size_normal"/>
-
-            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/bg_gray"
@@ -220,12 +206,22 @@
                 android:text="吸烟情况"
                 android:textSize="@dimen/text_size_normal"/>
 
-            <LinearLayout android:id="@+id/ll_daily_task_smoke"
+            <LinearLayout
+                android:id="@+id/container_daily_task_smoke"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 android:gravity="center"
-                android:orientation="vertical"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_empty_smoke"
+                    android:layout_width="wrap_content"
+                    android:layout_height="?listPreferredItemHeightSmall"
+                    android:gravity="center"
+                    android:text="@string/task_empty_tip"
+                    android:textColor="@color/empty_notice"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -239,20 +235,6 @@
                 android:id="@+id/lc_daily_task_bs"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"/>
-
-            <TextView
-                android:id="@+id/tv_daily_task_add_bs"
-                android:layout_width="match_parent"
-                android:layout_height="?listPreferredItemHeightSmall"
-                android:background="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:gravity="center_vertical|right"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:visibility="gone"
-                android:text="记录血糖"
-                android:textAppearance="?android:attr/textAppearance"
-                android:textColor="@android:color/holo_red_light"
-                android:textSize="@dimen/text_size_normal"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -269,36 +251,24 @@
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:text="每天酒量控制范围：1个单位=1两白酒=3两红酒=1听啤酒"
-                android:textColor="@android:color/holo_red_light"/>
+                android:textColor="@android:color/holo_red_light"
+                android:visibility="gone"/>
 
             <LinearLayout
+                android:id="@+id/container_daily_task_wine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/tv_empty_wine"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="截止到现在已喝"
-                    android:textSize="@dimen/text_size_normal"/>
-
-                <EditText
-                    android:id="@+id/et_daily_task_wine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="?listPreferredItemHeightSmall"
                     android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="4"
-                    android:minWidth="35dp"
-                    android:singleLine="true"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="两 白酒/红酒/黄酒"
-                    android:textSize="@dimen/text_size_normal"/>
+                    android:text="@string/task_empty_tip"
+                    android:textColor="@color/empty_notice"/>
             </LinearLayout>
         </LinearLayout>
 

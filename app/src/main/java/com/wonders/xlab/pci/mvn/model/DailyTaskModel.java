@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 import com.wonders.xlab.pci.module.task.bean.BloodPressureBean;
 import com.wonders.xlab.pci.module.task.bean.BloodSugarBean;
 import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
+import com.wonders.xlab.pci.module.task.bean.SmokeBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
+import com.wonders.xlab.pci.module.task.bean.WineBean;
 import com.wonders.xlab.pci.mvn.BaseModel;
 import com.wonders.xlab.pci.mvn.entity.DailyTaskEntity;
 import com.wonders.xlab.pci.mvn.view.DailyTaskView;
@@ -55,7 +57,7 @@ public class DailyTaskModel extends BaseModel<DailyTaskEntity> {
         //血压
         List<BloodPressureBean> pressureBeanList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            BloodPressureBean bean = new BloodPressureBean((float) Math.random() * 150, (float) Math.random() * 150, (float) Math.random() * 150, (nowTime + i * 100000));
+            BloodPressureBean bean = new BloodPressureBean((float) Math.random() * 150, (float) Math.random() * 150, (float) Math.random() * 150, (nowTime + i * 60000));
             pressureBeanList.add(bean);
         }
         mDailyTaskView.initBloodPressure(pressureBeanList);
@@ -63,10 +65,25 @@ public class DailyTaskModel extends BaseModel<DailyTaskEntity> {
         //血糖
         List<BloodSugarBean> bloodSugarBeen = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            BloodSugarBean bean = new BloodSugarBean((float) Math.random() * 150, (nowTime + i * 100000));
+            BloodSugarBean bean = new BloodSugarBean((float) Math.random() * 150, (nowTime + i * 60000));
             bloodSugarBeen.add(bean);
         }
         mDailyTaskView.initBloodSugar(bloodSugarBeen);
+
+        //吸烟
+        List<SmokeBean> smokeBeanList = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            SmokeBean bean = new SmokeBean(calendar.getTimeInMillis(), i + "根香烟");
+            smokeBeanList.add(bean);
+        }
+        mDailyTaskView.initSmokeView(smokeBeanList);
+        //喝酒
+        List<WineBean> wineBeanList = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            WineBean bean = new WineBean(calendar.getTimeInMillis(), i + "杯白酒");
+            wineBeanList.add(bean);
+        }
+        mDailyTaskView.initWineView(wineBeanList);
     }
 
     @Override

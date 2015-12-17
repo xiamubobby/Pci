@@ -10,4 +10,5 @@
     <string name="morning">早</string>
     <string name="afternoon">午</string>
     <string name="night">晚</string>
+    <string name="task_empty_tip">暂无数据，请点击右下角加号添加</string>
 </resources>
