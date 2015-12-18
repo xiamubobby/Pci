@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
     private void initBottomTab() {
         mTabLayout.setupWithViewPager(mVpMain);
         mTabLayout.removeAllTabs();
-
         LayoutInflater inflater = LayoutInflater.from(this);
 
         View home = inflater.inflate(R.layout.tab_main_home, mTabLayout, false);
@@ -91,9 +90,11 @@ public class MainActivity extends AppCompatActivity {
                 textView.setTextColor(getResources().getColor(R.color.colorAccent));
                 switch (tab.getPosition()) {
                     case 0:
+                        mVpMain.setCurrentItem(0);
                         imageView.setImageResource(R.drawable.ic_home_pressed);
                         break;
                     case 1:
+                        mVpMain.setCurrentItem(1);
                         imageView.setImageResource(R.drawable.ic_record_pressed);
                         break;
                 }
@@ -129,19 +130,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item_report_detail clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.menu_main_task) {
             startActivity(new Intent(this, DailyTaskActivity.class));
             return true;

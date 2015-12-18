@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.mvn.model;
+package com.wonders.xlab.pci.mvn.model.task;
 
 import android.support.annotation.NonNull;
 
@@ -9,8 +9,8 @@ import com.wonders.xlab.pci.module.task.bean.SmokeBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
 import com.wonders.xlab.pci.module.task.bean.WineBean;
 import com.wonders.xlab.pci.mvn.BaseModel;
-import com.wonders.xlab.pci.mvn.entity.DailyTaskEntity;
-import com.wonders.xlab.pci.mvn.view.DailyTaskView;
+import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity;
+import com.wonders.xlab.pci.mvn.view.task.DailyTaskView;
 
 import java.util.ArrayList;
 import java.util.Calendar;

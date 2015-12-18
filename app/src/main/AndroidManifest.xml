@@ -57,7 +57,24 @@
         <activity
             android:name=".module.task.AddBloodSugarActivity"
             android:label="@string/title_activity_add_blood_sugar"
-            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity
+            android:name=".module.task.AddCigaretteActivity"
+            android:label="@string/title_activity_add_cigarette"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity
+            android:name=".module.task.AddWineActivity"
+            android:label="@string/title_activity_add_wine"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+        </activity>
+        <activity
+            android:name=".module.task.AddSymptomActivity"
+            android:label="@string/title_activity_add_symptom"
             android:theme="@style/AppTheme">
         </activity>
     </application>

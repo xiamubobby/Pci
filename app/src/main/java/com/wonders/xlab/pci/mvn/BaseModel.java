@@ -128,7 +128,7 @@ public abstract class BaseModel<T extends BaseEntity> {
 
     }
 
-    protected abstract void onSuccess(@NonNull T response);
+    protected abstract void onSuccess( T response);
 
     /**
      * 请求成功，但是ret_code为-1等错误信息标记

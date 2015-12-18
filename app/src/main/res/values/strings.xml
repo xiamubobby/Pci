@@ -13,4 +13,7 @@
     <string name="task_empty_tip">暂无数据，请点击右下角加号添加</string>
     <string name="title_activity_add_blood_pressure">AddBloodPressureActivity</string>
     <string name="title_activity_add_blood_sugar">AddBloodSugarActivity</string>
+    <string name="title_activity_add_cigarette">AddCigaretteActivity</string>
+    <string name="title_activity_add_wine">AddWineActivity</string>
+    <string name="title_activity_add_symptom">AddSymptomActivity</string>
 </resources>
