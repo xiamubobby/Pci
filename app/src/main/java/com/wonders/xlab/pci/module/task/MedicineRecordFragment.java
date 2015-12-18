@@ -70,7 +70,7 @@ public class MedicineRecordFragment extends BaseFragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    RxBus.getRxBusSingleton().send(bean);
+                    RxBus.getInstance().send(bean);
                 }
             });
             mLinearLayout.addView(itemView);

@@ -18,15 +18,19 @@ import java.util.List;
 public class HomeModel extends BaseModel<HomeEntity> {
     private HomeView mHomeView;
     private HomeAPI mHomeAPI;
+    private int page;
+    private boolean isLastPage = false;
 
     public HomeModel(HomeView homeView) {
         mHomeView = homeView;
         mHomeAPI = mRetrofit.create(HomeAPI.class);
+        page = -1;
     }
 
-    public void getHomeList() {
-        setObservable(mHomeAPI.getHomeList());
-//        onSuccess(null);
+    public void getHomeList(String userId) {
+        if (!isLastPage) {
+            setObservable(mHomeAPI.getHomeList(userId,page + 1));
+        }
     }
 
     @Override
@@ -35,10 +39,16 @@ public class HomeModel extends BaseModel<HomeEntity> {
         HomeEntity.RetValuesEntity valuesEntity = response.getRet_values();
 
         if (valuesEntity == null) {
+            mHomeView.showError("获取数据失败，请重试！");
             return;
         }
+
+        page = valuesEntity.getNumber();
+        isLastPage = valuesEntity.isLast();
+
         List<HomeEntity.RetValuesEntity.ContentEntity> content = valuesEntity.getContent();
         if (content == null) {
+            mHomeView.showError("获取数据失败，请重试！");
             return;
         }
 
@@ -55,11 +65,16 @@ public class HomeModel extends BaseModel<HomeEntity> {
             beanList.add(yesterdayTaskBean);
 
         }
-        mHomeView.showHomeList(beanList);
+        if (page > 0) {
+            mHomeView.appendHomeList(beanList);
+        } else {
+            mHomeView.showHomeList(beanList);
+        }
     }
 
     @Override
     protected void onFailed(String message) {
-
+        mHomeView.hideLoading();
+        mHomeView.showError(message);
     }
 }

@@ -98,7 +98,7 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
                                         intent.putExtra(PhotoPagerActivity.EXTRA_PHOTOS, picUrls);
                                         mContext.get().startActivity(intent);
 
-//                                        RxBus.getRxBusSingleton().send(new ReportDetailBus(imageBean.getImageBean().getPortraitUrl(), imageBean.getImageBean().getName()));
+//                                        RxBus.getInstance().send(new ReportDetailBus(imageBean.getImageBean().getPortraitUrl(), imageBean.getImageBean().getName()));
                                     }
                                 });
                                 viewHolder.mFlItemReportDetail.addView(view);

@@ -6,5 +6,6 @@
         android:id="@+id/menu_main_task"
         android:orderInCategory="100"
         android:title="任务"
+        android:icon="@drawable/ic_task"
         app:showAsAction="always"/>
 </menu>

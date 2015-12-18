@@ -6,6 +6,8 @@ import com.squareup.okhttp.OkHttpClient;
 import com.wonders.xlab.common.retrofit.HttpLoggingInterceptor;
 import com.wonders.xlab.pci.Constant;
 
+import java.util.concurrent.TimeUnit;
+
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
@@ -33,7 +35,9 @@ public abstract class BaseModel<T extends BaseEntity> {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         client.interceptors().add(logging);
-
+        client.setConnectTimeout(30, TimeUnit.SECONDS);
+        client.setWriteTimeout(30, TimeUnit.SECONDS);
+        client.setReadTimeout(30, TimeUnit.SECONDS);
         mRetrofit = new Retrofit.Builder().baseUrl(Constant.BASE_FEED)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//必须加上

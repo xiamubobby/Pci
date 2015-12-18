@@ -13,7 +13,7 @@
     <include layout="@layout/content_daily_task"/>
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
-        android:id="@+id/multiple_actions"
+        android:id="@+id/fam_daily_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
@@ -26,7 +26,7 @@
         fab:fab_labelStyle="@style/menu_labels_style">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_a"
+            android:id="@+id/fam_daily_task_symptom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_size="mini"
@@ -35,7 +35,7 @@
             fab:fab_title="主诉症状"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/action_b"
+            android:id="@+id/fam_daily_task_bp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_size="mini"
@@ -44,6 +44,7 @@
             fab:fab_title="血压测量"
             />
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fam_daily_task_smoke"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_size="mini"
@@ -53,6 +54,7 @@
             />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fam_daily_task_bs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_size="mini"
@@ -62,6 +64,7 @@
             />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fam_daily_task_wine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_size="mini"

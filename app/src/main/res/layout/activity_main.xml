@@ -18,9 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:navigationIcon="@mipmap/ic_launcher"
+            app:navigationIcon="@drawable/ic_portrait_man"
             app:popupTheme="@style/AppTheme.Light.PopupOverlay"
-            app:title="登录/注册"
+            app:title="@string/app_name"
             app:titleTextColor="@android:color/white"/>
 
     </android.support.design.widget.AppBarLayout>

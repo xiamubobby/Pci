@@ -5,7 +5,11 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="item_interval">8dp</dimen>
     <dimen name="item_interval_large">24dp</dimen>
-    <dimen name="clip_bottom">60dp</dimen>
+
+    <dimen name="main_bottom">55dp</dimen>
+    <dimen name="main_bottom_margin_bottom">10dp</dimen>
+    <dimen name="clip_bottom">65dp</dimen>
+
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="text_size_normal">15sp</dimen>
     <dimen name="text_size_large">22sp</dimen>

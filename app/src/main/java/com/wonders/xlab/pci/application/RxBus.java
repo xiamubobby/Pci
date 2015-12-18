@@ -11,7 +11,7 @@ import rx.subjects.Subject;
 public class RxBus {
     private static RxBus _rxBus;
 
-    public static RxBus getRxBusSingleton() {
+    public static RxBus getInstance() {
         if (_rxBus == null) {
             synchronized (RxBus.class) {
                 if (_rxBus == null) {
