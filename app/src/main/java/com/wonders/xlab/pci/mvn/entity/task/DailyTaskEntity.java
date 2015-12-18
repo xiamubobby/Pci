@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.mvn.entity;
+package com.wonders.xlab.pci.mvn.entity.task;
 
 import com.wonders.xlab.pci.mvn.BaseEntity;
 

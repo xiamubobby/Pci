@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.mvn.view;
+package com.wonders.xlab.pci.mvn.view.task;
 
 import com.wonders.xlab.pci.module.task.bean.BloodPressureBean;
 import com.wonders.xlab.pci.module.task.bean.BloodSugarBean;

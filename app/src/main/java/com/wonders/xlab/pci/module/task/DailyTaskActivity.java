@@ -32,8 +32,8 @@ import com.wonders.xlab.pci.module.task.bean.SmokeBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
 import com.wonders.xlab.pci.module.task.bean.WineBean;
 import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
-import com.wonders.xlab.pci.mvn.model.DailyTaskModel;
-import com.wonders.xlab.pci.mvn.view.DailyTaskView;
+import com.wonders.xlab.pci.mvn.model.task.DailyTaskModel;
+import com.wonders.xlab.pci.mvn.view.task.DailyTaskView;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.util.ArrayList;
@@ -354,6 +354,21 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
     @OnClick(R.id.fam_daily_task_bs)
     public void onRecordBsClick() {
         recordNewData(AddBloodSugarActivity.class);
+    }
+
+    @OnClick(R.id.fam_daily_task_smoke)
+    public void onRecordCigaretteClick() {
+        recordNewData(AddCigaretteActivity.class);
+    }
+
+    @OnClick(R.id.fam_daily_task_wine)
+    public void onRecordWineClick() {
+        recordNewData(AddWineActivity.class);
+    }
+
+    @OnClick(R.id.fam_daily_task_symptom)
+    public void onRecordSymptomClick() {
+        recordNewData(AddSymptomActivity.class);
     }
 
     private void recordNewData(Class targetActivity) {
