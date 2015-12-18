@@ -11,6 +11,8 @@ public class DateUtil {
 
     public static final String DEFAULT_FORMAT = "yyyy-MM-dd";
 
+    public static final String DEFAULT_FORMAT_FULL = "yyyy-MM-dd HH:mm";
+
     public static String format(Date date) {
         return format(date, DEFAULT_FORMAT);
     }
@@ -58,6 +60,16 @@ public class DateUtil {
         }
 
         return null;
+    }
+
+    public static long parseToLong(String dateString, String format) {
+
+        Date date = parse(dateString, format);
+        if (date == null) {
+            return 0;
+        } else {
+            return date.getTime();
+        }
     }
 
 }

@@ -49,13 +49,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.task.AddBloodPressureActivity"
+            android:name=".module.task.AddBPActivity"
             android:label="@string/title_activity_add_blood_pressure"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         <activity
-            android:name=".module.task.AddBloodSugarActivity"
+            android:name=".module.task.AddBSActivity"
             android:label="@string/title_activity_add_blood_sugar"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -75,6 +75,11 @@
         <activity
             android:name=".module.task.AddSymptomActivity"
             android:label="@string/title_activity_add_symptom"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name=".module.MyDoctorActivity"
+            android:label="@string/title_activity_my_doctor"
             android:theme="@style/AppTheme">
         </activity>
     </application>

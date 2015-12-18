@@ -27,7 +27,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@mipmap/ic_launcher"
+                android:drawablePadding="@dimen/item_interval"
+                android:drawableTop="@drawable/pic_blood_pressure"
                 android:gravity="center"
                 android:paddingBottom="@dimen/item_interval_large"
                 android:paddingTop="@dimen/item_interval_large"
@@ -37,11 +38,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@mipmap/ic_launcher"
+                android:drawablePadding="@dimen/item_interval"
+                android:drawableTop="@drawable/pic_blood_sugar"
                 android:gravity="center"
                 android:paddingBottom="@dimen/item_interval_large"
                 android:paddingTop="@dimen/item_interval_large"
-                android:text="血压"/>
+                android:text="血糖"/>
         </LinearLayout>
 
         <TextView
@@ -61,7 +63,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@mipmap/ic_launcher"
+                android:drawablePadding="@dimen/item_interval"
+                android:drawableTop="@drawable/pic_medicine"
                 android:gravity="center"
                 android:paddingBottom="@dimen/item_interval_large"
                 android:paddingTop="@dimen/item_interval_large"
@@ -71,7 +74,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:drawableTop="@mipmap/ic_launcher"
+                android:drawablePadding="@dimen/item_interval"
+                android:drawableTop="@drawable/pic_symptom"
                 android:gravity="center"
                 android:paddingBottom="@dimen/item_interval_large"
                 android:paddingTop="@dimen/item_interval_large"

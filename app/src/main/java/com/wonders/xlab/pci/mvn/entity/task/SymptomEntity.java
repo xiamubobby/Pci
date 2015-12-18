@@ -9,9 +9,10 @@ import java.util.List;
  */
 public class SymptomEntity extends BaseEntity {
 
+
     /**
-     * title : title
-     * content : ["content1"]
+     * name : 今天是否有以下症状
+     * symptoms : [{"id":1,"name":"感冒"},{"id":2,"name":"发热"}]
      */
 
     private List<RetValuesEntity> ret_values;
@@ -25,23 +26,49 @@ public class SymptomEntity extends BaseEntity {
     }
 
     public static class RetValuesEntity {
-        private String title;
-        private List<String> content;
+        private String name;
+        /**
+         * id : 1
+         * name : 感冒
+         */
 
-        public void setTitle(String title) {
-            this.title = title;
+        private List<SymptomsEntity> symptoms;
+
+        public void setName(String name) {
+            this.name = name;
         }
 
-        public void setContent(List<String> content) {
-            this.content = content;
+        public void setSymptoms(List<SymptomsEntity> symptoms) {
+            this.symptoms = symptoms;
         }
 
-        public String getTitle() {
-            return title;
+        public String getName() {
+            return name;
         }
 
-        public List<String> getContent() {
-            return content;
+        public List<SymptomsEntity> getSymptoms() {
+            return symptoms;
+        }
+
+        public static class SymptomsEntity {
+            private int id;
+            private String name;
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public String getName() {
+                return name;
+            }
         }
     }
 }

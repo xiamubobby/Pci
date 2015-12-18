@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -21,42 +22,42 @@ import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.mvn.model.task.AddRecordModel;
 import com.wonders.xlab.pci.mvn.view.SimpleView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddCigaretteActivity extends AppbarActivity implements SimpleView {
+public class AddBPActivity extends AppbarActivity implements SimpleView {
 
-    @Bind(R.id.fab_add_cigarette)
-    FloatingActionButton mFab;
-    @Bind(R.id.et_add_cigarette)
-    EditText mEtAddCigarette;
-    @Bind(R.id.tv_add_date)
-    TextView mTvAddDate;
-    @Bind(R.id.tv_add_time)
-    TextView mTvAddTime;
+    @Bind(R.id.tv_add_bp_date)
+    TextView mTvAddBpDate;
+    @Bind(R.id.tv_add_bp_time)
+    TextView mTvAddBpTime;
+    @Bind(R.id.et_add_bp_ssy)
+    EditText mEtAddBpSsy;
+    @Bind(R.id.et_add_bp_szy)
+    EditText mEtAddBpSzy;
+    @Bind(R.id.et_add_bp_rate)
+    EditText mEtAddBpRate;
+    @Bind(R.id.fab_add_bp)
+    FloatingActionButton mFabAddBp;
     @Bind(R.id.coordinator)
     CoordinatorLayout mCoordinator;
 
     private Calendar mCalendar = Calendar.getInstance();
 
-    private List<HashMap<String, Integer>> counts = new ArrayList<>();
-
     private AddRecordModel mAddRecordModel;
+    private ProgressDialog dialog;
 
     @Override
     public int getContentLayout() {
-        return R.layout.activity_add_cigarette;
+        return R.layout.activity_add_blood_pressure;
     }
 
     @Override
     public String getToolbarTitle() {
-        return "吸烟";
+        return "血压";
     }
 
     @Override
@@ -71,40 +72,55 @@ public class AddCigaretteActivity extends AppbarActivity implements SimpleView {
     }
 
     private void initView() {
-        mTvAddDate.setText(String.format("%s-%s-%s", mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH) + 1, mCalendar.get(Calendar.DAY_OF_MONTH)));
-        mTvAddTime.setText(String.format("%s:%s", mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE)));
+        mTvAddBpDate.setText(String.format("%s-%s-%s", mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH) + 1, mCalendar.get(Calendar.DAY_OF_MONTH)));
+        mTvAddBpTime.setText(String.format("%s:%s", mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE)));
     }
 
-    @OnClick(R.id.fab_add_cigarette)
+    @OnClick(R.id.fab_add_bp)
     public void save() {
-        mFab.setClickable(false);
-        String cigaretteCounts = mEtAddCigarette.getText().toString();
-        if (TextUtils.isEmpty(cigaretteCounts)) {
-            showSnackbar(mCoordinator, "请输入抽烟数!");
-            mFab.setClickable(true);
+        mFabAddBp.setClickable(false);
+
+        KeyboardUtil.hide(this, mContentView.getWindowToken());
+
+        String systolicPressure, diastolicPressure;
+
+        String heartRate = mEtAddBpRate.getText().toString();
+        if (TextUtils.isEmpty(heartRate)) {
+            Snackbar.make(mContentView, "请输入心率", Snackbar.LENGTH_SHORT).show();
+            mFabAddBp.setClickable(true);
             return;
-        }else if (Integer.parseInt(cigaretteCounts) <= 0) {
-            showSnackbar(mCoordinator, "吸烟根数必须大于0");
-            mFab.setClickable(true);
+        }
+
+        systolicPressure = mEtAddBpSsy.getText().toString();
+        if (TextUtils.isEmpty(systolicPressure)) {
+            showSnackbar(mCoordinator, "请输入收缩压");
+            mFabAddBp.setClickable(true);
+            return;
+        }
+        diastolicPressure = mEtAddBpSzy.getText().toString();
+        if (TextUtils.isEmpty(diastolicPressure)) {
+            showSnackbar(mCoordinator, "请输入舒张压");
+            mFabAddBp.setClickable(true);
             return;
         }
 
         KeyboardUtil.hide(this, mContentView.getWindowToken());
 
-        String dateStr = mTvAddDate.getText().toString();
-        String timeStr = mTvAddTime.getText().toString();
+        String dateStr = mTvAddBpDate.getText().toString();
+        String timeStr = mTvAddBpTime.getText().toString();
 
         long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), DateUtil.DEFAULT_FORMAT_FULL);
-        mAddRecordModel.saveCigarette(AIManager.getInstance(this).getUserId(), date, Integer.valueOf(cigaretteCounts));
+
+        mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(), date, Integer.valueOf(heartRate), Integer.valueOf(systolicPressure), Integer.valueOf(diastolicPressure));
     }
 
-    @OnClick(R.id.tv_add_date)
+    @OnClick(R.id.tv_add_bp_date)
     public void onDateClick() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        mTvAddDate.setText(String.format("%s-%s-%s", year, monthOfYear + 1, dayOfMonth));
+                        mTvAddBpDate.setText(String.format("%s-%s-%s", year, monthOfYear + 1, dayOfMonth));
                     }
                 },
                 mCalendar.get(Calendar.YEAR),
@@ -114,13 +130,13 @@ public class AddCigaretteActivity extends AppbarActivity implements SimpleView {
         datePickerDialog.show();
     }
 
-    @OnClick(R.id.tv_add_time)
+    @OnClick(R.id.tv_add_bp_time)
     public void onTimeClick() {
         TimePickerDialog dialog = new TimePickerDialog(this,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        mTvAddTime.setText(String.format("%s:%s", hourOfDay, minute));
+                        mTvAddBpTime.setText(String.format("%s:%s", hourOfDay, minute));
                     }
                 },
                 mCalendar.get(Calendar.HOUR_OF_DAY),
@@ -133,12 +149,15 @@ public class AddCigaretteActivity extends AppbarActivity implements SimpleView {
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 
     @Override
     public void svSuccess() {
-        mFab.setClickable(false);
-        showSnackbar(mCoordinator,"数据保存成功");
+        mFabAddBp.setClickable(false);
+        showSnackbar(mCoordinator, "数据保存成功");
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -149,11 +168,8 @@ public class AddCigaretteActivity extends AppbarActivity implements SimpleView {
 
     @Override
     public void svFailed(String message) {
-        mFab.setClickable(true);
-        showSnackbar(mCoordinator,message);
+        mFabAddBp.setClickable(true);
     }
-
-    private ProgressDialog dialog;
 
     @Override
     public void svShowLoading() {

@@ -9,6 +9,7 @@ import com.wonders.xlab.pci.module.task.bean.SmokeBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
 import com.wonders.xlab.pci.module.task.bean.WineBean;
 import com.wonders.xlab.pci.mvn.BaseModel;
+import com.wonders.xlab.pci.mvn.api.task.DailyTaskAPI;
 import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity;
 import com.wonders.xlab.pci.mvn.view.task.DailyTaskView;
 
@@ -21,18 +22,23 @@ import java.util.List;
  */
 public class DailyTaskModel extends BaseModel<DailyTaskEntity> {
     private DailyTaskView mDailyTaskView;
+    private DailyTaskAPI mDailyTaskAPI;
 
     public DailyTaskModel(DailyTaskView dailyTaskView) {
         mDailyTaskView = dailyTaskView;
+        mDailyTaskAPI = mRetrofit.create(DailyTaskAPI.class);
     }
 
-    public void fetchData() {
-        onSuccess(new DailyTaskEntity());
+    public void fetchData(String userId,long date) {
+        mDailyTaskAPI.getDailyTask(userId, date);
     }
 
     @Override
     protected void onSuccess(@NonNull DailyTaskEntity response) {
-
+        mDailyTaskView.hideLoading();
+        if (response.getRet_values() == null) {
+            return;
+        }
         //日期
         mDailyTaskView.initWeekView(Calendar.getInstance().getTimeInMillis());
 

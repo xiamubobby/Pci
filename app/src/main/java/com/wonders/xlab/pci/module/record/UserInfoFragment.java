@@ -65,7 +65,6 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mUserInfoModel.getUserInfo(AIManager.getInstance(getActivity()).getUserId());
 
         mRvUserInfo.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -74,6 +73,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
                 mUserInfoModel.getUserInfo(AIManager.getInstance(getActivity()).getUserId());
             }
         });
+        mUserInfoModel.getUserInfo(AIManager.getInstance(getActivity()).getUserId());
     }
 
     @Override
@@ -96,7 +96,9 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
 
     @Override
     public void hideLoading() {
-        mRefresh.setRefreshing(false);
+        if (mRefresh != null) {
+            mRefresh.setRefreshing(false);
+        }
     }
 
     @Override
@@ -130,5 +132,8 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
     @Override
     public void onFailed(String message) {
 
+        if (mRefresh != null) {
+            mRefresh.setRefreshing(false);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.wonders.xlab.pci.module.base;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -64,5 +65,9 @@ public abstract class AppbarActivity extends BaseActivity {
 
     public Toolbar getToolbar() {
         return mToolbar;
+    }
+
+    public void showSnackbar(View view, String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
     }
 }
