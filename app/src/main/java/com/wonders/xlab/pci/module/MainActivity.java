@@ -5,7 +5,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -21,6 +20,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.module.base.BaseActivity;
 import com.wonders.xlab.pci.module.home.HomeFragment;
 import com.wonders.xlab.pci.module.record.RecordFragment;
 import com.wonders.xlab.pci.module.task.DailyTaskActivity;
@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Bind(R.id.vp_main)
     XViewPager mVpMain;
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
     }

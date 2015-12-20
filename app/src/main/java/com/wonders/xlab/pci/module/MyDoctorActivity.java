@@ -3,13 +3,13 @@ package com.wonders.xlab.pci.module;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.module.base.BaseActivity;
 
-public class MyDoctorActivity extends AppCompatActivity {
+public class MyDoctorActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

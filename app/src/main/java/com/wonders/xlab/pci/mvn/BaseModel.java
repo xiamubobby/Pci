@@ -1,12 +1,11 @@
 package com.wonders.xlab.pci.mvn;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.wonders.xlab.common.retrofit.HttpLoggingInterceptor;
 import com.wonders.xlab.pci.Constant;
-
-import java.util.concurrent.TimeUnit;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
@@ -22,6 +21,7 @@ import rx.schedulers.Schedulers;
 public abstract class BaseModel<T extends BaseEntity> {
     protected Retrofit mRetrofit;
     private Observable<T> mObservable;
+    private Subscriber mSubscriber;
 
     private boolean isRequesting = false;
 
@@ -35,55 +35,60 @@ public abstract class BaseModel<T extends BaseEntity> {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         client.interceptors().add(logging);
-        client.setConnectTimeout(30, TimeUnit.SECONDS);
-        client.setWriteTimeout(30, TimeUnit.SECONDS);
-        client.setReadTimeout(30, TimeUnit.SECONDS);
+//        client.setConnectTimeout(30, TimeUnit.SECONDS);
+//        client.setWriteTimeout(30, TimeUnit.SECONDS);
+//        client.setReadTimeout(30, TimeUnit.SECONDS);
         mRetrofit = new Retrofit.Builder().baseUrl(Constant.BASE_FEED)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//必须加上
                 .client(client)
                 .build();
+
+        if (mSubscriber == null) {
+            mSubscriber = new Subscriber<T>() {
+                @Override
+                public void onStart() {
+                    super.onStart();
+                    BaseModel.this.onStart();
+                    setRequesting(true);
+                }
+
+                @Override
+                public void onCompleted() {
+                    setRequesting(false);
+                }
+
+                @Override
+                public void onError(Throwable e) {
+                    setRequesting(false);
+                    onFailed(e.getMessage());
+                }
+
+                @Override
+                public void onNext(T result) {
+                    setRequesting(false);
+                    if (result != null) {
+                        if (result.getRet_code() == 0) {
+                            onSuccess(result);
+                        } else {
+                            onFailed(result.getMessage());
+                        }
+                    } else {
+                        onFailed(getErrorMessage());
+                    }
+                }
+            };
+        }
     }
 
     private synchronized void fetchData() {
         if (mObservable == null) {
             throw new IllegalArgumentException("mObservable cannot be null, must call setObservable first!");
         }
+
         mObservable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<T>() {
-                    @Override
-                    public void onStart() {
-                        super.onStart();
-                        BaseModel.this.onStart();
-                        setRequesting(true);
-                    }
-
-                    @Override
-                    public void onCompleted() {
-                        setRequesting(false);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        setRequesting(false);
-                        onFailed(e.getMessage());
-                    }
-
-                    @Override
-                    public void onNext(T result) {
-                        setRequesting(false);
-                        if (result != null) {
-                            if (result.getRet_code() == 0) {
-                                onSuccess(result);
-                            } else {
-                                onFailed(result.getMessage());
-                            }
-                        } else {
-                            onFailed(getErrorMessage());
-                        }
-                    }
-                });
+                .subscribe(mSubscriber);
 
     }
 
@@ -96,7 +101,10 @@ public abstract class BaseModel<T extends BaseEntity> {
     }
 
     public synchronized void cancel() {
-        if (mObservable != null && isRequesting) {
+        if (mSubscriber != null) {
+            mSubscriber.unsubscribe();
+        }
+        if (mObservable != null) {
             mObservable.unsubscribeOn(AndroidSchedulers.mainThread());
             mObservable = null;
         }
@@ -128,7 +136,7 @@ public abstract class BaseModel<T extends BaseEntity> {
 
     }
 
-    protected abstract void onSuccess( T response);
+    protected abstract void onSuccess(T response);
 
     /**
      * 请求成功，但是ret_code为-1等错误信息标记
