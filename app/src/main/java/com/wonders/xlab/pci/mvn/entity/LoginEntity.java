@@ -7,6 +7,7 @@ import com.wonders.xlab.pci.mvn.BaseEntity;
  */
 public class LoginEntity extends BaseEntity{
 
+
     /**
      * id : 1
      * createdDate : 1450317211000
