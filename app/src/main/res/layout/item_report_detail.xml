@@ -51,14 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            app:max_select="9"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_item_report_detail"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
             android:layout_marginTop="@dimen/item_interval"
-            android:visibility="gone"/>
+            app:max_select="9"/>
     </LinearLayout>
 
 </LinearLayout>
