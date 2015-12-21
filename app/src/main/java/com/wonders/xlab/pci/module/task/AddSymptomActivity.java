@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.mvn.entity.task.SymptomEntity;
 import com.wonders.xlab.pci.mvn.model.task.AddRecordModel;
@@ -20,6 +21,7 @@ import com.wonders.xlab.pci.mvn.view.SimpleView;
 import com.wonders.xlab.pci.mvn.view.task.SymptomView;
 import com.zhy.view.flowlayout.FlowLayout;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
@@ -41,9 +43,11 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, S
 
     private SymptomModel mSymptomModel;
 
+    private AddRecordModel mAddRecordModel;
+
     private LayoutInflater mInflater;
 
-    private AddRecordModel mAddRecordModel;
+    private HashMap<String, String> mSelectedSymptomMap = new HashMap<>();
 
 
     @Override
@@ -82,7 +86,15 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, S
 
     @OnClick(R.id.fab_add_symptom)
     public void save() {
-
+        if (mSelectedSymptomMap.size() > 0) {
+            String[] symptomStrs = new String[mSelectedSymptomMap.size()];
+            for (int i = 0; i < mSelectedSymptomMap.values().size(); i++) {
+                symptomStrs[i] = mSelectedSymptomMap.values().toArray()[i].toString();
+            }
+            mAddRecordModel.saveSymptom(AIManager.getInstance(this).getUserId(), symptomStrs);
+        } else {
+            showSnackbar(mCoordinator, "请选择您的症状");
+        }
     }
 
     @Override
@@ -109,6 +121,12 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, S
                 labelView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (!labelView.isSelected()) {
+                            mSelectedSymptomMap.put(v.getTag().toString(), v.getTag().toString());
+                        } else {
+                            mSelectedSymptomMap.remove(v.getTag().toString());
+                        }
+
                         labelView.setSelected(!labelView.isSelected());
                     }
                 });
@@ -171,7 +189,7 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, S
     @Override
     public void showLoading() {
         if (mRefresh != null) {
-            mRefresh.setRefreshing(false);
+            mRefresh.setRefreshing(true);
         }
         mEmpty.setVisibility(View.GONE);
     }
@@ -182,7 +200,7 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, S
             @Override
             public void run() {
                 if (mRefresh != null) {
-                    mRefresh.setRefreshing(true);
+                    mRefresh.setRefreshing(false);
                 }
             }
         });

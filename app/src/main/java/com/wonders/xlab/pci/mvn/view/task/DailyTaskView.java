@@ -16,9 +16,9 @@ import java.util.List;
 public interface DailyTaskView extends BaseView {
     void getTaskFailed(String message);
 
-    void initWeekView(long today);
+    void initWeekView(long today, String week);
 
-    void initMedicineRecordView(List<MedicineRecordBean> recordBeanList);
+    void initMedicineRecordView(List<MedicineRecordBean> morningMedicine, List<MedicineRecordBean> noonMedicine, List<MedicineRecordBean> nightMedicine);
 
     void initSymptomView(List<SymptomBean> beanList);
 

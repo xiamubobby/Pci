@@ -40,6 +40,10 @@ public class AddRecordModel extends BaseModel<SimpleEntity> {
         setObservable(mAddRecordAPI.saveWine(userId, date, wineCount, wineIndex));
     }
 
+    public void saveSymptom(String userId, String[] symptomIdsStr) {
+        setObservable(mAddRecordAPI.saveSymptom(userId, symptomIdsStr));
+    }
+
     @Override
     protected void onStart() {
         super.onStart();

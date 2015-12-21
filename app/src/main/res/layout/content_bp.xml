@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.wonders.xlab.pci.module.record.monitor.BPActivity"
+    tools:showIn="@layout/activity_bp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/item_interval"
+        android:layout_marginTop="@dimen/item_interval"
+        android:text="本次血压检测"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_size_small"/>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pie_bp_current"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_gray"
+        android:paddingBottom="@dimen/item_interval"
+        android:paddingTop="@dimen/item_interval">
+
+        <com.flyco.tablayout.SegmentTabLayout
+            android:id="@+id/stl_bp_time_filter"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:paddingLeft="@dimen/item_interval_large"
+            android:paddingRight="@dimen/item_interval_large"
+            app:tl_indicator_color="@color/colorPrimary"
+            app:tl_tab_padding="20dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/item_interval"
+        android:layout_marginTop="@dimen/item_interval"
+        android:text="11月25日-12月1日"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_size_small"/>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/line_bp_history"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+</LinearLayout>

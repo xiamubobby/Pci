@@ -29,7 +29,7 @@ public interface AddRecordAPI {
 
     @FormUrlEncoded
     @POST("userSymptom/saveUserSymptom")
-    Observable<SimpleEntity> saveSymptom(@Field("userId") String userId, @Field("date") long date, @Field("wineCount") int wineCount, @Field("wineIndex") int wineIndex);
+    Observable<SimpleEntity> saveSymptom(@Field("userId") String userId, @Field("symptomIdsStr") String[] symptomIdsStr);
 
 
 }

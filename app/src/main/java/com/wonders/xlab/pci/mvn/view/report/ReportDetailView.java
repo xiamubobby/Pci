@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.mvn.view;
+package com.wonders.xlab.pci.mvn.view.report;
 
 import com.wonders.xlab.pci.module.record.bean.ReportDetailBean;
 import com.wonders.xlab.pci.mvn.BaseView;

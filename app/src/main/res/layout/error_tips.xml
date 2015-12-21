@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+              android:layout_height="match_parent"
+              android:gravity="center"
               android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="?listPreferredItemHeightSmall"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="@string/task_empty_tip"
-        android:textColor="@color/empty_notice"
+        android:layout_height="wrap_content"
+        android:text="出问题了，下拉重试下说不定就好了！"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_size_small"/>
 </LinearLayout>

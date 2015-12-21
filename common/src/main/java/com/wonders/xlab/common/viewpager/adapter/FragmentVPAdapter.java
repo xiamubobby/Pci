@@ -16,6 +16,17 @@ public class FragmentVPAdapter extends FragmentPagerAdapter {
     private List<Fragment> mFragmentList;
     private List<String> mTitleList;
 
+    public void clear() {
+        if (mFragmentList != null) {
+            mFragmentList.clear();
+        }
+        if (mTitleList != null) {
+            mTitleList.clear();
+        }
+
+        notifyDataSetChanged();
+    }
+
     public void setFragmentList(@NonNull List<Fragment> fragments) {
         if (mFragmentList == null) {
             mFragmentList = new ArrayList<>();
@@ -79,5 +90,10 @@ public class FragmentVPAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return mTitleList == null || mTitleList.size() <= 0 ? "" : mTitleList.get(position);
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
     }
 }

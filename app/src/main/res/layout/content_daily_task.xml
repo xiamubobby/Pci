@@ -24,15 +24,14 @@
             android:id="@+id/tv_daily_task_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2015-12-01"
             android:textAppearance="?android:attr/textAppearance"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/text_size_large"/>
 
         <TextView
+            android:id="@+id/tv_daily_task_week"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="术后第50周"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_size_small"/>
     </LinearLayout>
@@ -135,7 +134,8 @@
         android:background="@android:color/white"
         android:gravity="center"
         android:text="今日任务(0/5)"
-        android:textSize="@dimen/text_size_normal"/>
+        android:textSize="@dimen/text_size_normal"
+        android:visibility="gone"/>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -158,9 +158,10 @@
                 android:id="@+id/tab_daily_task_time_period_medicine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:background="@android:color/white"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"/>
+                app:tabMode="fixed"/>
 
             <include layout="@layout/divider_vertical"/>
 
@@ -183,7 +184,10 @@
                 android:id="@+id/fl_daily_task_symptom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"/>
+                android:background="@android:color/white">
+
+                <include layout="@layout/empty_tips"/>
+            </com.zhy.view.flowlayout.FlowLayout>
 
             <TextView
                 android:layout_width="match_parent"
@@ -214,13 +218,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_empty_smoke"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?listPreferredItemHeightSmall"
-                    android:gravity="center"
-                    android:text="@string/task_empty_tip"
-                    android:textColor="@color/empty_notice"/>
+                <include layout="@layout/empty_tips"/>
             </LinearLayout>
 
             <TextView
@@ -262,13 +260,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_empty_wine"
-                    android:layout_width="wrap_content"
-                    android:layout_height="?listPreferredItemHeightSmall"
-                    android:gravity="center"
-                    android:text="@string/task_empty_tip"
-                    android:textColor="@color/empty_notice"/>
+                <include layout="@layout/empty_tips"/>
             </LinearLayout>
         </LinearLayout>
 
