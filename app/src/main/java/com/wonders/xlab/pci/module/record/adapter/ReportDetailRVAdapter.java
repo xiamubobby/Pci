@@ -103,7 +103,6 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
                         });
             }
         });
-
     }
 
     class InnerImageBean {
