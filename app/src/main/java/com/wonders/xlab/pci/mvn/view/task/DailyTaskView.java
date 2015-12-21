@@ -14,6 +14,8 @@ import java.util.List;
  * Created by hua on 15/12/16.
  */
 public interface DailyTaskView extends BaseView {
+    void getTaskFailed(String message);
+
     void initWeekView(long today);
 
     void initMedicineRecordView(List<MedicineRecordBean> recordBeanList);

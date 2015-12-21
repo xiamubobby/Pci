@@ -16,4 +16,12 @@
     <string name="title_activity_add_cigarette">AddCigaretteActivity</string>
     <string name="title_activity_add_wine">AddWineActivity</string>
     <string name="title_activity_add_symptom">AddSymptomActivity</string>
+    <string name="title_activity_my_doctor">MyDoctorActivity</string>
+    <string name="meal_before_breakfast">早餐前</string>
+    <string name="meal_after_breakfast">早餐后</string>
+    <string name="meal_after_lunch">午餐后</string>
+    <string name="meal_before_lunch">午餐前</string>
+    <string name="meal_before_dinner">晚餐前</string>
+    <string name="meal_after_dinner">晚餐后</string>
+    <string name="meal_before_sleep">睡前</string>
 </resources>

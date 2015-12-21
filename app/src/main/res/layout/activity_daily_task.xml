@@ -29,27 +29,31 @@
             android:id="@+id/fam_daily_task_symptom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_size="mini"
+            android:src="@drawable/ic_fab_symptom"
             fab:fab_colorNormal="@color/white"
             fab:fab_colorPressed="@color/white_pressed"
+            fab:fab_size="mini"
             fab:fab_title="主诉症状"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fam_daily_task_bp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_size="mini"
+            android:src="@drawable/ic_fab_bp"
             fab:fab_colorNormal="@color/white"
             fab:fab_colorPressed="@color/white_pressed"
+            fab:fab_size="mini"
             fab:fab_title="血压测量"
             />
+
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fam_daily_task_smoke"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_size="mini"
+            android:src="@drawable/ic_fab_cigarette"
             fab:fab_colorNormal="@color/white"
             fab:fab_colorPressed="@color/white_pressed"
+            fab:fab_size="mini"
             fab:fab_title="吸烟情况"
             />
 
@@ -57,9 +61,10 @@
             android:id="@+id/fam_daily_task_bs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_size="mini"
+            android:src="@drawable/ic_fab_bs"
             fab:fab_colorNormal="@color/white"
             fab:fab_colorPressed="@color/white_pressed"
+            fab:fab_size="mini"
             fab:fab_title="血糖测量"
             />
 
@@ -67,9 +72,10 @@
             android:id="@+id/fam_daily_task_wine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_size="mini"
+            android:src="@drawable/ic_fab_wine"
             fab:fab_colorNormal="@color/white"
             fab:fab_colorPressed="@color/white_pressed"
+            fab:fab_size="mini"
             fab:fab_title="控酒情况"
             />
 

@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="早餐前"/>
+        android:title="@string/meal_before_breakfast"/>
     <item
-        android:title="早餐后"/>
+        android:title="@string/meal_after_breakfast"/>
     <item
-        android:title="午餐前"/>
+        android:title="@string/meal_before_lunch"/>
     <item
-        android:title="午餐后"/>
+        android:title="@string/meal_after_lunch"/>
     <item
-        android:title="晚餐前"/>
+        android:title="@string/meal_before_dinner"/>
     <item
-        android:title="晚餐后"/>
+        android:title="@string/meal_after_dinner"/>
     <item
-        android:title="空腹"/>
+        android:title="@string/meal_before_sleep"/>
 </menu>

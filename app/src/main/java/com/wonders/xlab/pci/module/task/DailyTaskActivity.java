@@ -22,6 +22,7 @@ import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.common.viewpager.WrapHeightViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.task.adapter.WeekViewVPAdapter;
@@ -122,7 +123,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
         initToolbar();
         initRxBusEvent();
 
-        mDailyTaskModel.fetchData();
+        mDailyTaskModel.fetchData(AIManager.getInstance(this).getUserId(),11111);
     }
 
     private void init() {
@@ -174,6 +175,11 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
                 }
             }
         }));
+    }
+
+    @Override
+    public void getTaskFailed(String message) {
+
     }
 
     @Override
@@ -348,12 +354,12 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView {
 
     @OnClick(R.id.fam_daily_task_bp)
     public void onRecordBpClick() {
-        recordNewData(AddBloodPressureActivity.class);
+        recordNewData(AddBPActivity.class);
     }
 
     @OnClick(R.id.fam_daily_task_bs)
     public void onRecordBsClick() {
-        recordNewData(AddBloodSugarActivity.class);
+        recordNewData(AddBSActivity.class);
     }
 
     @OnClick(R.id.fam_daily_task_smoke)
