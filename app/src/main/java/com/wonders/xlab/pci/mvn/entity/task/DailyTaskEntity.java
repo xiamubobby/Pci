@@ -10,16 +10,17 @@ import java.util.List;
 public class DailyTaskEntity extends BaseEntity {
 
     /**
-     * currentDate : 1450430760000
+     * currentDate : 1450682365951
      * weekCount : 0
-     * userActivityDtos : []
-     * userMedicineMap : {}
-     * userBloodPressures : [{"id":4,"heartRate":55,"systolicPressure":121,"diastolicPressure":55,"recordTime":1450430820000}]
-     * userBloodSugars : [{"id":4,"bloodSuger":123,"bloodSugarTime":0,"recordTime":1450368000000},{"id":5,"bloodSuger":123,"bloodSugarTime":0,"recordTime":1450368000000},{"id":6,"bloodSuger":111,"bloodSugarTime":0,"recordTime":1450368000000},{"id":7,"bloodSuger":12,"bloodSugarTime":0,"recordTime":1450368000000},{"id":8,"bloodSuger":23,"bloodSugarTime":0,"recordTime":1450368000000},{"id":9,"bloodSuger":555,"bloodSugarTime":4,"recordTime":1450368000000},{"id":3,"bloodSuger":22,"bloodSugarTime":1,"recordTime":1450425326000},{"id":12,"bloodSuger":122,"bloodSugarTime":0,"recordTime":1450430760000}]
-     * userSmokeDtos : [{"value":"12根香烟","recordTime":1450433040000}]
-     * smokeStr : 今日一共抽了12根烟
-     * userWineDtos : [{"value":"12杯啤酒","recordTime":null}]
-     * wineStr : 今日一共饮了12两酒
+     * userActivityDtos : [{"currentDay":1450627200000,"names":["复诊1","复诊2"]}]
+     * userMedicineMap : {"Morning":[{"id":1,"medicineName":"头痛药","measurement":"20","medicineSchedule":"Morning","take":true}],"Noon":[{"id":2,"medicineName":"头痛药1","measurement":"30","medicineSchedule":"Noon","take":true}],"Evening":[{"id":3,"medicineName":"头痛药3","measurement":"20","medicineSchedule":"Evening","take":false}]}
+     * userBloodPressures : [{"id":3,"heartRate":123,"systolicPressure":23,"diastolicPressure":233,"recordTime":1450686600000},{"id":4,"heartRate":55,"systolicPressure":121,"diastolicPressure":55,"recordTime":1450690020000}]
+     * userBloodSugars : [{"id":12,"bloodSuger":122,"bloodSugarTime":0,"recordTime":1450689960000},{"id":11,"bloodSuger":369,"bloodSugarTime":4,"recordTime":1450694640000}]
+     * userSmokeDtos : [{"value":"15根香烟","recordTime":1450674060000},{"value":"12根香烟","recordTime":1450692240000}]
+     * smokeStr : 今日一共抽了27根烟
+     * userWineDtos : [{"value":"12杯白酒","recordTime":null},{"value":"12杯啤酒","recordTime":null}]
+     * wineStr : 今日一共饮了24两酒
+     * symptoms : ["感冒 3次","发热 1次","胸闷 1次"]
      */
 
     private RetValuesEntity ret_values;
@@ -35,38 +36,45 @@ public class DailyTaskEntity extends BaseEntity {
     public static class RetValuesEntity {
         private long currentDate;
         private int weekCount;
+        private UserMedicineMapEntity userMedicineMap;
         private String smokeStr;
         private String wineStr;
-        private List<?> userActivityDtos;
         /**
-         * id : 4
-         * heartRate : 55
-         * systolicPressure : 121
-         * diastolicPressure : 55
-         * recordTime : 1450430820000
+         * currentDay : 1450627200000
+         * names : ["复诊1","复诊2"]
+         */
+
+        private List<UserActivityDtosEntity> userActivityDtos;
+        /**
+         * id : 3
+         * heartRate : 123
+         * systolicPressure : 23
+         * diastolicPressure : 233
+         * recordTime : 1450686600000
          */
 
         private List<UserBloodPressuresEntity> userBloodPressures;
         /**
-         * id : 4
-         * bloodSuger : 123.0
+         * id : 12
+         * bloodSuger : 122.0
          * bloodSugarTime : 0
-         * recordTime : 1450368000000
+         * recordTime : 1450689960000
          */
 
         private List<UserBloodSugarsEntity> userBloodSugars;
         /**
-         * value : 12根香烟
-         * recordTime : 1450433040000
+         * value : 15根香烟
+         * recordTime : 1450674060000
          */
 
         private List<UserSmokeDtosEntity> userSmokeDtos;
         /**
-         * value : 12杯啤酒
+         * value : 12杯白酒
          * recordTime : null
          */
 
         private List<UserWineDtosEntity> userWineDtos;
+        private List<String> symptoms;
 
         public void setCurrentDate(long currentDate) {
             this.currentDate = currentDate;
@@ -74,6 +82,10 @@ public class DailyTaskEntity extends BaseEntity {
 
         public void setWeekCount(int weekCount) {
             this.weekCount = weekCount;
+        }
+
+        public void setUserMedicineMap(UserMedicineMapEntity userMedicineMap) {
+            this.userMedicineMap = userMedicineMap;
         }
 
         public void setSmokeStr(String smokeStr) {
@@ -84,7 +96,7 @@ public class DailyTaskEntity extends BaseEntity {
             this.wineStr = wineStr;
         }
 
-        public void setUserActivityDtos(List<?> userActivityDtos) {
+        public void setUserActivityDtos(List<UserActivityDtosEntity> userActivityDtos) {
             this.userActivityDtos = userActivityDtos;
         }
 
@@ -104,12 +116,20 @@ public class DailyTaskEntity extends BaseEntity {
             this.userWineDtos = userWineDtos;
         }
 
+        public void setSymptoms(List<String> symptoms) {
+            this.symptoms = symptoms;
+        }
+
         public long getCurrentDate() {
             return currentDate;
         }
 
         public int getWeekCount() {
             return weekCount;
+        }
+
+        public UserMedicineMapEntity getUserMedicineMap() {
+            return userMedicineMap;
         }
 
         public String getSmokeStr() {
@@ -120,7 +140,7 @@ public class DailyTaskEntity extends BaseEntity {
             return wineStr;
         }
 
-        public List<?> getUserActivityDtos() {
+        public List<UserActivityDtosEntity> getUserActivityDtos() {
             return userActivityDtos;
         }
 
@@ -138,6 +158,229 @@ public class DailyTaskEntity extends BaseEntity {
 
         public List<UserWineDtosEntity> getUserWineDtos() {
             return userWineDtos;
+        }
+
+        public List<String> getSymptoms() {
+            return symptoms;
+        }
+
+        public static class UserMedicineMapEntity {
+            /**
+             * id : 1
+             * medicineName : 头痛药
+             * measurement : 20
+             * medicineSchedule : Morning
+             * take : true
+             */
+
+            private List<MorningEntity> Morning;
+            /**
+             * id : 2
+             * medicineName : 头痛药1
+             * measurement : 30
+             * medicineSchedule : Noon
+             * take : true
+             */
+
+            private List<NoonEntity> Noon;
+            /**
+             * id : 3
+             * medicineName : 头痛药3
+             * measurement : 20
+             * medicineSchedule : Evening
+             * take : false
+             */
+
+            private List<EveningEntity> Evening;
+
+            public void setMorning(List<MorningEntity> Morning) {
+                this.Morning = Morning;
+            }
+
+            public void setNoon(List<NoonEntity> Noon) {
+                this.Noon = Noon;
+            }
+
+            public void setEvening(List<EveningEntity> Evening) {
+                this.Evening = Evening;
+            }
+
+            public List<MorningEntity> getMorning() {
+                return Morning;
+            }
+
+            public List<NoonEntity> getNoon() {
+                return Noon;
+            }
+
+            public List<EveningEntity> getEvening() {
+                return Evening;
+            }
+
+            public static class MorningEntity {
+                private int id;
+                private String medicineName;
+                private String measurement;
+                private String medicineSchedule;
+                private boolean take;
+
+                public void setId(int id) {
+                    this.id = id;
+                }
+
+                public void setMedicineName(String medicineName) {
+                    this.medicineName = medicineName;
+                }
+
+                public void setMeasurement(String measurement) {
+                    this.measurement = measurement;
+                }
+
+                public void setMedicineSchedule(String medicineSchedule) {
+                    this.medicineSchedule = medicineSchedule;
+                }
+
+                public void setTake(boolean take) {
+                    this.take = take;
+                }
+
+                public int getId() {
+                    return id;
+                }
+
+                public String getMedicineName() {
+                    return medicineName;
+                }
+
+                public String getMeasurement() {
+                    return measurement;
+                }
+
+                public String getMedicineSchedule() {
+                    return medicineSchedule;
+                }
+
+                public boolean isTake() {
+                    return take;
+                }
+            }
+
+            public static class NoonEntity {
+                private int id;
+                private String medicineName;
+                private String measurement;
+                private String medicineSchedule;
+                private boolean take;
+
+                public void setId(int id) {
+                    this.id = id;
+                }
+
+                public void setMedicineName(String medicineName) {
+                    this.medicineName = medicineName;
+                }
+
+                public void setMeasurement(String measurement) {
+                    this.measurement = measurement;
+                }
+
+                public void setMedicineSchedule(String medicineSchedule) {
+                    this.medicineSchedule = medicineSchedule;
+                }
+
+                public void setTake(boolean take) {
+                    this.take = take;
+                }
+
+                public int getId() {
+                    return id;
+                }
+
+                public String getMedicineName() {
+                    return medicineName;
+                }
+
+                public String getMeasurement() {
+                    return measurement;
+                }
+
+                public String getMedicineSchedule() {
+                    return medicineSchedule;
+                }
+
+                public boolean isTake() {
+                    return take;
+                }
+            }
+
+            public static class EveningEntity {
+                private int id;
+                private String medicineName;
+                private String measurement;
+                private String medicineSchedule;
+                private boolean take;
+
+                public void setId(int id) {
+                    this.id = id;
+                }
+
+                public void setMedicineName(String medicineName) {
+                    this.medicineName = medicineName;
+                }
+
+                public void setMeasurement(String measurement) {
+                    this.measurement = measurement;
+                }
+
+                public void setMedicineSchedule(String medicineSchedule) {
+                    this.medicineSchedule = medicineSchedule;
+                }
+
+                public void setTake(boolean take) {
+                    this.take = take;
+                }
+
+                public int getId() {
+                    return id;
+                }
+
+                public String getMedicineName() {
+                    return medicineName;
+                }
+
+                public String getMeasurement() {
+                    return measurement;
+                }
+
+                public String getMedicineSchedule() {
+                    return medicineSchedule;
+                }
+
+                public boolean isTake() {
+                    return take;
+                }
+            }
+        }
+
+        public static class UserActivityDtosEntity {
+            private long currentDay;
+            private List<String> names;
+
+            public void setCurrentDay(long currentDay) {
+                this.currentDay = currentDay;
+            }
+
+            public void setNames(List<String> names) {
+                this.names = names;
+            }
+
+            public long getCurrentDay() {
+                return currentDay;
+            }
+
+            public List<String> getNames() {
+                return names;
+            }
         }
 
         public static class UserBloodPressuresEntity {
@@ -190,7 +433,7 @@ public class DailyTaskEntity extends BaseEntity {
 
         public static class UserBloodSugarsEntity {
             private int id;
-            private double bloodSuger;
+            private float bloodSuger;
             private int bloodSugarTime;
             private long recordTime;
 
@@ -198,7 +441,7 @@ public class DailyTaskEntity extends BaseEntity {
                 this.id = id;
             }
 
-            public void setBloodSuger(double bloodSuger) {
+            public void setBloodSuger(float bloodSuger) {
                 this.bloodSuger = bloodSuger;
             }
 
@@ -214,7 +457,7 @@ public class DailyTaskEntity extends BaseEntity {
                 return id;
             }
 
-            public double getBloodSuger() {
+            public float getBloodSuger() {
                 return bloodSuger;
             }
 
@@ -250,13 +493,13 @@ public class DailyTaskEntity extends BaseEntity {
 
         public static class UserWineDtosEntity {
             private String value;
-            private Object recordTime;
+            private long recordTime;
 
             public void setValue(String value) {
                 this.value = value;
             }
 
-            public void setRecordTime(Object recordTime) {
+            public void setRecordTime(long recordTime) {
                 this.recordTime = recordTime;
             }
 
@@ -264,7 +507,7 @@ public class DailyTaskEntity extends BaseEntity {
                 return value;
             }
 
-            public Object getRecordTime() {
+            public long getRecordTime() {
                 return recordTime;
             }
         }

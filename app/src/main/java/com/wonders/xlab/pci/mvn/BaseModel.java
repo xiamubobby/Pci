@@ -1,7 +1,6 @@
 package com.wonders.xlab.pci.mvn;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.wonders.xlab.common.retrofit.HttpLoggingInterceptor;
@@ -44,47 +43,50 @@ public abstract class BaseModel<T extends BaseEntity> {
                 .client(client)
                 .build();
 
-        if (mSubscriber == null) {
-            mSubscriber = new Subscriber<T>() {
-                @Override
-                public void onStart() {
-                    super.onStart();
-                    BaseModel.this.onStart();
-                    setRequesting(true);
-                }
 
-                @Override
-                public void onCompleted() {
-                    setRequesting(false);
-                }
-
-                @Override
-                public void onError(Throwable e) {
-                    setRequesting(false);
-                    onFailed(e.getMessage());
-                }
-
-                @Override
-                public void onNext(T result) {
-                    setRequesting(false);
-                    if (result != null) {
-                        if (result.getRet_code() == 0) {
-                            onSuccess(result);
-                        } else {
-                            onFailed(result.getMessage());
-                        }
-                    } else {
-                        onFailed(getErrorMessage());
-                    }
-                }
-            };
-        }
     }
 
     private synchronized void fetchData() {
         if (mObservable == null) {
             throw new IllegalArgumentException("mObservable cannot be null, must call setObservable first!");
         }
+        if (mSubscriber != null) {
+            mSubscriber.unsubscribe();
+            mSubscriber = null;
+        }
+        mSubscriber = new Subscriber<T>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                BaseModel.this.onStart();
+                setRequesting(true);
+            }
+
+            @Override
+            public void onCompleted() {
+                setRequesting(false);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                setRequesting(false);
+                onFailed(e.getMessage());
+            }
+
+            @Override
+            public void onNext(T result) {
+                setRequesting(false);
+                if (result != null) {
+                    if (result.getRet_code() == 0) {
+                        onSuccess(result);
+                    } else {
+                        onFailed(result.getMessage());
+                    }
+                } else {
+                    onFailed(getErrorMessage());
+                }
+            }
+        };
 
         mObservable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
                 .observeOn(AndroidSchedulers.mainThread())
@@ -103,6 +105,7 @@ public abstract class BaseModel<T extends BaseEntity> {
     public synchronized void cancel() {
         if (mSubscriber != null) {
             mSubscriber.unsubscribe();
+            mSubscriber = null;
         }
         if (mObservable != null) {
             mObservable.unsubscribeOn(AndroidSchedulers.mainThread());

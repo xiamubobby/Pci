@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.module.record;
+package com.wonders.xlab.pci.module.record.report;
 
 
 import android.content.Intent;

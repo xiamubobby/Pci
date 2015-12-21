@@ -7,28 +7,47 @@ import android.os.Parcelable;
  * Created by hua on 15/12/16.
  */
 public class MedicineRecordBean implements Parcelable {
-    private String mMedicineName;
-    private String mMedicineDosage;
+    private String medicineId;
+    private String medicineName;
+    private String medicineDosage;
+    private boolean isChecked;
 
-    public MedicineRecordBean(String medicineName, String medicineDosage) {
-        mMedicineName = medicineName;
-        mMedicineDosage = medicineDosage;
+    public MedicineRecordBean(String medicineId,String medicineName, String medicineDosage) {
+        this.medicineId = medicineId;
+        this.medicineName = medicineName;
+        this.medicineDosage = medicineDosage;
     }
 
     public String getMedicineName() {
-        return mMedicineName;
+        return medicineName;
     }
 
     public void setMedicineName(String medicineName) {
-        mMedicineName = medicineName;
+        this.medicineName = medicineName;
     }
 
     public String getMedicineDosage() {
-        return mMedicineDosage;
+        return medicineDosage;
     }
 
     public void setMedicineDosage(String medicineDosage) {
-        mMedicineDosage = medicineDosage;
+        this.medicineDosage = medicineDosage;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
+    public String getMedicineId() {
+        return medicineId;
+    }
+
+    public void setMedicineId(String medicineId) {
+        this.medicineId = medicineId;
     }
 
 
@@ -39,13 +58,17 @@ public class MedicineRecordBean implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.mMedicineName);
-        dest.writeString(this.mMedicineDosage);
+        dest.writeString(this.medicineId);
+        dest.writeString(this.medicineName);
+        dest.writeString(this.medicineDosage);
+        dest.writeByte(isChecked ? (byte) 1 : (byte) 0);
     }
 
     protected MedicineRecordBean(Parcel in) {
-        this.mMedicineName = in.readString();
-        this.mMedicineDosage = in.readString();
+        this.medicineId = in.readString();
+        this.medicineName = in.readString();
+        this.medicineDosage = in.readString();
+        this.isChecked = in.readByte() != 0;
     }
 
     public static final Creator<MedicineRecordBean> CREATOR = new Creator<MedicineRecordBean>() {

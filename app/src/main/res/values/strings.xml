@@ -10,7 +10,7 @@
     <string name="morning">早</string>
     <string name="afternoon">午</string>
     <string name="night">晚</string>
-    <string name="task_empty_tip">暂无数据，请点击右下角加号添加</string>
+    <string name="task_empty_tip">暂无数据</string>
     <string name="title_activity_add_blood_pressure">AddBloodPressureActivity</string>
     <string name="title_activity_add_blood_sugar">AddBloodSugarActivity</string>
     <string name="title_activity_add_cigarette">AddCigaretteActivity</string>
@@ -24,4 +24,8 @@
     <string name="meal_before_dinner">晚餐前</string>
     <string name="meal_after_dinner">晚餐后</string>
     <string name="meal_before_sleep">睡前</string>
+    <string name="title_activity_bp">BPActivity</string>
+    <string name="daily_task_week">术后第%s周</string>
+
+    <string name="daily_task_mg">%smg</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.wonders.xlab.pci.mvn.api.task;
 
+import com.wonders.xlab.pci.mvn.entity.SimpleEntity;
 import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity;
 
 import retrofit.http.Field;
@@ -14,5 +15,9 @@ public interface DailyTaskAPI {
 
     @FormUrlEncoded
     @POST("dailyHealthTask/listDailyHealthTask")
-    Observable<DailyTaskEntity> getDailyTask(@Field("userId") String userId,@Field("date") long date);
+    Observable<DailyTaskEntity> getDailyTask(@Field("userId") String userId,@Field("date") Long date);
+
+    @FormUrlEncoded
+    @POST("userMedicine/takeMedicine")
+    Observable<SimpleEntity> takeMedicine(@Field("medicineId") String medicineId);
 }

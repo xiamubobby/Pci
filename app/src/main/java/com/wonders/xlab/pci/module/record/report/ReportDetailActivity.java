@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.module.record;
+package com.wonders.xlab.pci.module.record.report;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,7 +21,7 @@ import com.wonders.xlab.pci.module.record.bean.ReportDetailBean;
 import com.wonders.xlab.pci.module.record.rxbus.ReportDetailBus;
 import com.wonders.xlab.pci.mvn.model.ReportDetailModel;
 import com.wonders.xlab.pci.mvn.model.UploadPicModel;
-import com.wonders.xlab.pci.mvn.view.ReportDetailView;
+import com.wonders.xlab.pci.mvn.view.report.ReportDetailView;
 import com.wonders.xlab.pci.mvn.view.UploadPicView;
 
 import java.io.File;

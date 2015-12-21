@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:orientation="vertical"
               android:padding="@dimen/item_interval">
 
-    <me.drakeet.labelview.LabelView
+    <TextView
         android:id="@+id/tv_item_task_symptom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,6 +13,5 @@
         android:padding="@dimen/item_interval"
         android:singleLine="true"
         android:textAppearance="?android:attr/textAppearance"
-        android:textSize="@dimen/text_size_small"
-        app:rightText="次"/>
+        android:textSize="@dimen/text_size_small"/>
 </LinearLayout>

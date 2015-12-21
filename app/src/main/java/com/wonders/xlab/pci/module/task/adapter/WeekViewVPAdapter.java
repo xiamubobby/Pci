@@ -19,6 +19,14 @@ public class WeekViewVPAdapter extends FragmentPagerAdapter {
     private List<Long> times = new ArrayList<>();
     private long mToday;
 
+    public Long getTime(int position) {
+        if (times != null && times.size() > position) {
+            return times.get(position);
+        } else {
+            return -1l;
+        }
+    }
+
     public WeekViewVPAdapter(FragmentManager fm, long today) {
         super(fm);
         mToday = today;

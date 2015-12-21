@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
-import com.wonders.xlab.common.utils.GlideCircleTransform;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.record.bean.ReportDetailBean;
 import com.wonders.xlab.pci.module.record.bean.ReportDetailImageBean;
@@ -82,7 +81,6 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
                                 Glide.with(mContext.get())
                                         .load(imageBean.getImageBean().getPortraitUrl())
                                         .centerCrop()
-                                        .transform(new GlideCircleTransform(mContext.get()))
                                         .placeholder(R.drawable.user_avatar_default)
                                         .crossFade()
                                         .into(mTvImg);
@@ -98,7 +96,6 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
                                         intent.putExtra(PhotoPagerActivity.EXTRA_PHOTOS, picUrls);
                                         mContext.get().startActivity(intent);
 
-//                                        RxBus.getInstance().send(new ReportDetailBus(imageBean.getImageBean().getPortraitUrl(), imageBean.getImageBean().getName()));
                                     }
                                 });
                                 viewHolder.mFlItemReportDetail.addView(view);
@@ -107,11 +104,6 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
             }
         });
 
-        //setup inner recyclerview
-        /*viewHolder.mRv.setLayoutManager(new GridLayoutManager(mContext.get(), 3, LinearLayoutManager.VERTICAL, false));
-        InnerImageRVAdapter imageRVAdapter = new InnerImageRVAdapter();
-        imageRVAdapter.setDatas(getBean(mPosition).getPicUrlList());
-        viewHolder.mRv.setAdapter(imageRVAdapter);*/
     }
 
     class InnerImageBean {
@@ -135,8 +127,6 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
     class ItemViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.tv_item_report_detail_title)
         TextView mTvTitle;
-        //        @Bind(R.id.rv_item_report_detail)
-//        RecyclerView mRv;
         @Bind(R.id.fl_item_report_detail)
         FlowLayout mFlItemReportDetail;
 
@@ -144,45 +134,6 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-    }
-
-    class InnerImageRVAdapter extends SimpleRVAdapter<ReportDetailImageBean> {
-
-        public InnerImageRVAdapter(WeakReference<Context> contextWeakReference) {
-            super(contextWeakReference);
-        }
-
-        @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ItemImageViewHolder(mInflater.inflate(R.layout.item_report_detail_image, parent, false));
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            super.onBindViewHolder(holder, position);
-            ItemImageViewHolder viewHolder = (ItemImageViewHolder) holder;
-            viewHolder.mTvName.setText(getBean(position).getName());
-            Glide.with(mContext.get())
-                    .load(getBean(position).getPortraitUrl())
-                    .centerCrop()
-                    .transform(new GlideCircleTransform(mContext.get()))
-                    .placeholder(R.drawable.user_avatar_default)
-                    .crossFade()
-                    .into(viewHolder.mTvImg);
-        }
-
-        class ItemImageViewHolder extends RecyclerView.ViewHolder {
-            @Bind(R.id.tv_item_report_detail_image_img)
-            ImageView mTvImg;
-            @Bind(R.id.tv_item_report_detail_image_name)
-            TextView mTvName;
-
-            public ItemImageViewHolder(View itemView) {
-                super(itemView);
-                ButterKnife.bind(this, itemView);
-            }
-        }
-
     }
 
 
