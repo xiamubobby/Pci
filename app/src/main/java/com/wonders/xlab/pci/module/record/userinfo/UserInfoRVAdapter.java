@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.module.record.adapter;
+package com.wonders.xlab.pci.module.record.userinfo;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.module.record.bean.UserInfoBean;
 
 import java.lang.ref.WeakReference;
 

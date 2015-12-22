@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.module.record.bean;
+package com.wonders.xlab.pci.module.record.userinfo;
 
 /**
  * Created by hua on 15/12/14.

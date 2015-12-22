@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.module.record.adapter;
+package com.wonders.xlab.pci.module.record.monitor.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.module.record.bean.BpBean;
+import com.wonders.xlab.pci.module.record.monitor.bean.BpBean;
 
 import java.lang.ref.WeakReference;
 

@@ -1,31 +1,28 @@
 package com.wonders.xlab.pci.module;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.module.base.BaseActivity;
+import com.wonders.xlab.pci.module.base.AppbarActivity;
 
-public class MyDoctorActivity extends BaseActivity {
+import butterknife.ButterKnife;
+
+public class MyDoctorActivity extends AppbarActivity {
+
+    @Override
+    public int getContentLayout() {
+        return R.layout.activity_my_doctor;
+    }
+
+    @Override
+    public String getToolbarTitle() {
+        return "我的医生";
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_doctor);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        ButterKnife.bind(this);
     }
 
 }

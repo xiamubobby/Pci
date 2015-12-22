@@ -30,20 +30,24 @@ public class MonitorFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_monitor, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         return view;
     }
 
     @OnClick(R.id.tv_monitor_bp)
     public void onBPClick() {
-        startActivity(new Intent(getActivity(),BPActivity.class));
+        startActivity(new Intent(getActivity(), BPActivity.class));
     }
 
     @OnClick(R.id.tv_monitor_symptom)
     public void onSymptomClick() {
-        startActivity(new Intent(getActivity(),SymptomActivity.class));
+        startActivity(new Intent(getActivity(), SymptomActivity.class));
     }
 
+    @OnClick(R.id.tv_monitor_medicine)
+    public void onMedicineClick() {
+        startActivity(new Intent(getActivity(), MedicineActivity.class));
+    }
 
     @Override
     public void onDestroyView() {

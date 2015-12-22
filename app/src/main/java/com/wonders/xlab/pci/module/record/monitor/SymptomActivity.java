@@ -39,8 +39,6 @@ public class SymptomActivity extends AppbarActivity implements SymptomView {
     RecyclerView mRvSymptomAdvice;
     @Bind(R.id.refresh_symptom)
     SwipeRefreshLayout mRefreshSymptom;
-    @Bind(R.id.tv_symptom_after_date)
-    TextView mTvSymptomAfterDate;
 
     private SymptomRVAdapter mSymptomRVAdapter;
 

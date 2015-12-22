@@ -30,4 +30,5 @@
     <string name="daily_task_mg">%smg</string>
     <string name="title_activity_symptom">SymptomActivity</string>
     <string name="less_then"><![CDATA[<]]></string>
+    <string name="title_activity_medicine">MedicineActivity</string>
 </resources>

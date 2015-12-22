@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity {
 
     @Bind(R.id.vp_main)
     XViewPager mVpMain;
-    @Bind(R.id.fab_main)
+    @Bind(R.id.fab_main_my_doctor)
     FloatingActionButton mFab;
     @Bind(R.id.tl_main)
     TabLayout mTabLayout;
@@ -67,6 +67,7 @@ public class MainActivity extends BaseActivity {
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
+                        startActivity(new Intent(MainActivity.this, MyDoctorActivity.class));
                     }
                 });
     }
