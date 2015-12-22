@@ -72,4 +72,10 @@ public class DateUtil {
         }
     }
 
+    public static boolean isTheSameYear(long oldDate,long currentDate) {
+        String old = format(oldDate,"yyyy");
+        String current = format(currentDate,"yyyy");
+
+        return old.equals(current);
+    }
 }
