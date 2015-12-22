@@ -72,6 +72,13 @@ public class DateUtil {
         }
     }
 
+    public static boolean isTheSameDay(long oldDate,long currentDate) {
+        String old = format(oldDate,"yyyy-MM-dd");
+        String current = format(currentDate,"yyyy-MM-dd");
+
+        return old.equals(current);
+    }
+
     public static boolean isTheSameYear(long oldDate,long currentDate) {
         String old = format(oldDate,"yyyy");
         String current = format(currentDate,"yyyy");
