@@ -208,7 +208,8 @@
                 android:background="@color/bg_gray"
                 android:padding="@dimen/item_interval"
                 android:text="吸烟情况"
-                android:textSize="@dimen/text_size_normal"/>
+                android:textSize="@dimen/text_size_normal"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:id="@+id/container_daily_task_smoke"
@@ -216,7 +217,8 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <include layout="@layout/empty_tips"/>
             </LinearLayout>
@@ -240,16 +242,7 @@
                 android:background="@color/bg_gray"
                 android:padding="@dimen/item_interval"
                 android:text="控酒情况"
-                android:textSize="@dimen/text_size_normal"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:text="每天酒量控制范围：1个单位=1两白酒=3两红酒=1听啤酒"
-                android:textColor="@android:color/holo_red_light"
+                android:textSize="@dimen/text_size_normal"
                 android:visibility="gone"/>
 
             <LinearLayout
@@ -258,7 +251,8 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <include layout="@layout/empty_tips"/>
             </LinearLayout>
