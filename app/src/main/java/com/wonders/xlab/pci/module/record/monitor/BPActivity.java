@@ -1,6 +1,7 @@
 package com.wonders.xlab.pci.module.record.monitor;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.flyco.tablayout.SegmentTabLayout;
@@ -18,12 +19,11 @@ public class BPActivity extends AppbarActivity implements BPView {
 
     private final String[] TIME_FILTER_NAME = new String[]{"周", "月", "年"};
 
-    @Bind(R.id.pie_bp_current)
-    PieChart mPieBpCurrent;
+
     @Bind(R.id.stl_bp_time_filter)
     SegmentTabLayout mStlBpTimeFilter;
-    @Bind(R.id.line_bp_history)
-    LineChart mLineBpHistory;
+    @Bind(R.id.ry_bp_history)
+    RecyclerView mRyBpHistroy;
 
     @Override
     public int getContentLayout() {
@@ -56,11 +56,6 @@ public class BPActivity extends AppbarActivity implements BPView {
 
             }
         });
-    }
-
-    @Override
-    public void showCurrentBPPieChart() {
-
     }
 
     @Override
