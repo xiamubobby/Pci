@@ -103,11 +103,10 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical|right"
                 android:hint="0"
-                android:maxLength="3"
                 android:singleLine="true"
                 android:textSize="@dimen/text_size_normal"/>
 

@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
 import com.wonders.xlab.pci.module.home.bean.YesterdayTaskBean;
-import com.wonders.xlab.pci.mvn.BaseModel;
+import com.wonders.xlab.pci.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.home.mvn.api.HomeAPI;
 import com.wonders.xlab.pci.module.home.mvn.entity.HomeEntity;
 import com.wonders.xlab.pci.module.home.mvn.view.HomeView;

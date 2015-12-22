@@ -1,6 +1,9 @@
 package com.wonders.xlab.pci.module.record.monitor.mvn.view;
 
-import com.wonders.xlab.pci.mvn.BaseView;
+import com.wonders.xlab.pci.module.record.monitor.mvn.entity.SymptomEntity;
+import com.wonders.xlab.pci.mvn.view.BaseView;
+
+import java.util.List;
 
 /**
  * Created by hua on 15/12/22.
@@ -8,7 +11,7 @@ import com.wonders.xlab.pci.mvn.BaseView;
 public interface SymptomView extends BaseView {
     void onFailed(String message);
 
-    void showSymptomLabels();
+    void showSymptomLabels(List<String> symptomList);
 
-    void showSymptomAdvices();
+    void showSymptomAdvices(List<SymptomEntity.RetValuesEntity.UserSymptomAdvicesEntity> symptomAdviceList);
 }

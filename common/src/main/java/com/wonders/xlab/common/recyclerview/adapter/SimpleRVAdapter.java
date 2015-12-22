@@ -14,6 +14,7 @@ import java.util.List;
  * Created by hua on 15/11/30.
  */
 public abstract class SimpleRVAdapter<Bean> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private WeakReference<Context> mContextWeakReference;
     protected LayoutInflater mInflater;
 
     private List<Bean> mBeanList;
@@ -21,11 +22,16 @@ public abstract class SimpleRVAdapter<Bean> extends RecyclerView.Adapter<Recycle
     private OnItemClickListener mOnItemClickListener;
 
     public SimpleRVAdapter(WeakReference<Context> contextWeakReference) {
+        mContextWeakReference = contextWeakReference;
         this.mInflater = LayoutInflater.from(contextWeakReference.get());
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
+    }
+
+    public WeakReference<Context> getContextWeakReference() {
+        return mContextWeakReference;
     }
 
     public interface OnItemClickListener {

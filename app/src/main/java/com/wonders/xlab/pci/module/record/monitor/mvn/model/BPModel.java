@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.module.record.monitor.mvn.model;
 
-import com.wonders.xlab.pci.mvn.BaseModel;
+import com.wonders.xlab.pci.mvn.model.BaseModel;
 import com.wonders.xlab.pci.mvn.entity.SimpleEntity;
 
 /**

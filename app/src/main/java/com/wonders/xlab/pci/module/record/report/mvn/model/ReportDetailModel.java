@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.wonders.xlab.pci.module.record.bean.ReportDetailBean;
 import com.wonders.xlab.pci.module.record.bean.ReportDetailImageBean;
-import com.wonders.xlab.pci.mvn.BaseModel;
+import com.wonders.xlab.pci.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.record.report.mvn.api.ReportDetailAPI;
 import com.wonders.xlab.pci.module.record.report.mvn.entity.ReportDetailEntity;
 import com.wonders.xlab.pci.module.record.report.mvn.view.ReportDetailView;

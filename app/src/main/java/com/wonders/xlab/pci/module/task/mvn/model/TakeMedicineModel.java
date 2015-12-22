@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.module.task.mvn.model;
 
-import com.wonders.xlab.pci.mvn.BaseModel;
+import com.wonders.xlab.pci.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.task.mvn.api.DailyTaskAPI;
 import com.wonders.xlab.pci.mvn.entity.SimpleEntity;
 import com.wonders.xlab.pci.module.task.mvn.view.TakeMedicineView;

@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.module.record.monitor.mvn.view;
 
-import com.wonders.xlab.pci.mvn.BaseView;
+import com.wonders.xlab.pci.mvn.view.BaseView;
 
 /**
  * Created by hua on 15/12/21.

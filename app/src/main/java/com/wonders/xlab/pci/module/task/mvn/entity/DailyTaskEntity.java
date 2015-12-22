@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.module.task.mvn.entity;
 
-import com.wonders.xlab.pci.mvn.BaseEntity;
+import com.wonders.xlab.pci.mvn.entity.BaseEntity;
 
 import java.util.List;
 

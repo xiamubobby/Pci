@@ -15,12 +15,13 @@
     <TextView
         android:id="@+id/tv_symptom_date"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="wrap_content"
         android:background="@color/bg_gray"
         android:gravity="center"
+        android:padding="@dimen/item_interval"
         android:text="12-01"
         android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_size_normal"/>
+        android:textSize="@dimen/text_size_large"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -53,7 +54,7 @@
             android:textSize="@dimen/text_size_small"/>
     </RelativeLayout>
 
-    <com.zhy.view.flowlayout.FlowLayout
+    <com.zhy.view.flowlayout.TagFlowLayout
         android:id="@+id/fl_symptom_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

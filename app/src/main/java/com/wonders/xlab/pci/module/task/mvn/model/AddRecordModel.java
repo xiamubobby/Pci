@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.module.task.mvn.model;
 
-import com.wonders.xlab.pci.mvn.BaseModel;
+import com.wonders.xlab.pci.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.task.mvn.api.AddRecordAPI;
 import com.wonders.xlab.pci.mvn.entity.SimpleEntity;
 import com.wonders.xlab.pci.mvn.view.SimpleView;
@@ -17,7 +17,7 @@ public class AddRecordModel extends BaseModel<SimpleEntity> {
         mAddRecordAPI = mRetrofit.create(AddRecordAPI.class);
     }
 
-    public void saveBS(String userId, long date, int timeIndex, double bloodSugarValue) {
+    public void saveBS(String userId, long date, int timeIndex, float bloodSugarValue) {
         setObservable(mAddRecordAPI.saveBS(userId, date, timeIndex, bloodSugarValue));
     }
 
@@ -28,7 +28,7 @@ public class AddRecordModel extends BaseModel<SimpleEntity> {
      * @param systolicPressure  收缩压
      * @param diastolicPressure 舒张压
      */
-    public void saveBP(String userId, long date, int heartRate, int systolicPressure, int diastolicPressure) {
+    public void saveBP(String userId, long date, float heartRate, float systolicPressure, float diastolicPressure) {
         setObservable(mAddRecordAPI.saveBP(userId, date, heartRate, systolicPressure, diastolicPressure));
     }
 

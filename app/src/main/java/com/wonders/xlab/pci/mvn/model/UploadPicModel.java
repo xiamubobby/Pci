@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.RequestBody;
-import com.wonders.xlab.pci.mvn.BaseModel;
 import com.wonders.xlab.pci.mvn.api.UploadPicAPI;
 import com.wonders.xlab.pci.mvn.entity.SimpleEntity;
 import com.wonders.xlab.pci.mvn.view.UploadPicView;

@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 
 import com.bugtags.library.Bugtags;
-import com.wonders.xlab.pci.mvn.BaseModel;
+import com.wonders.xlab.pci.mvn.model.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;

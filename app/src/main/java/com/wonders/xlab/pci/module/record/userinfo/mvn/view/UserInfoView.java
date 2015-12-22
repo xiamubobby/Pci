@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.module.record.userinfo.mvn.view;
 
-import com.wonders.xlab.pci.mvn.BaseView;
+import com.wonders.xlab.pci.mvn.view.BaseView;
 import com.wonders.xlab.pci.module.record.userinfo.mvn.entity.UserInfoEntity;
 
 /**

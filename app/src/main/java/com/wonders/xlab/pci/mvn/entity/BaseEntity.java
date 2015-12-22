@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.mvn;
+package com.wonders.xlab.pci.mvn.entity;
 
 /**
  * Created by hua on 15/12/3.
