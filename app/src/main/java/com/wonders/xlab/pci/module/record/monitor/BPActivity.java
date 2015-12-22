@@ -10,7 +10,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
-import com.wonders.xlab.pci.mvn.view.report.BPView;
+import com.wonders.xlab.pci.module.record.monitor.mvn.view.BPView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

@@ -14,11 +14,11 @@ import android.widget.TextView;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
-import com.wonders.xlab.pci.mvn.entity.task.SymptomEntity;
-import com.wonders.xlab.pci.mvn.model.task.AddRecordModel;
-import com.wonders.xlab.pci.mvn.model.task.SymptomModel;
+import com.wonders.xlab.pci.module.task.mvn.entity.SymptomEntity;
+import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
+import com.wonders.xlab.pci.module.task.mvn.model.SymptomModel;
 import com.wonders.xlab.pci.mvn.view.SimpleView;
-import com.wonders.xlab.pci.mvn.view.task.SymptomView;
+import com.wonders.xlab.pci.module.task.mvn.view.SymptomView;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.util.HashMap;

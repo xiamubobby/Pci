@@ -19,7 +19,7 @@ import com.wonders.xlab.common.utils.KeyboardUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
-import com.wonders.xlab.pci.mvn.model.task.AddRecordModel;
+import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
 import com.wonders.xlab.pci.mvn.view.SimpleView;
 
 import java.util.Calendar;

@@ -39,6 +39,11 @@ public class MonitorFragment extends BaseFragment {
         startActivity(new Intent(getActivity(),BPActivity.class));
     }
 
+    @OnClick(R.id.tv_monitor_symptom)
+    public void onSymptomClick() {
+        startActivity(new Intent(getActivity(),SymptomActivity.class));
+    }
+
 
     @Override
     public void onDestroyView() {

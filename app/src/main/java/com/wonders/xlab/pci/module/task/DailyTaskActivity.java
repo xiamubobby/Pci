@@ -33,10 +33,10 @@ import com.wonders.xlab.pci.module.task.bean.SmokeBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
 import com.wonders.xlab.pci.module.task.bean.WineBean;
 import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
-import com.wonders.xlab.pci.mvn.model.task.DailyTaskModel;
-import com.wonders.xlab.pci.mvn.model.task.TakeMedicineModel;
-import com.wonders.xlab.pci.mvn.view.task.DailyTaskView;
-import com.wonders.xlab.pci.mvn.view.task.TakeMedicineView;
+import com.wonders.xlab.pci.module.task.mvn.model.DailyTaskModel;
+import com.wonders.xlab.pci.module.task.mvn.model.TakeMedicineModel;
+import com.wonders.xlab.pci.module.task.mvn.view.DailyTaskView;
+import com.wonders.xlab.pci.module.task.mvn.view.TakeMedicineView;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.util.ArrayList;
