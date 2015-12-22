@@ -63,7 +63,8 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
                             public InnerImageBean call(ReportDetailImageBean reportDetailImageBean) {
                                 int width = viewHolder.mFlItemReportDetail.getMeasuredWidth();
                                 final View view = mInflater.inflate(R.layout.item_report_detail_image, null, false);
-                                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) (view.getLayoutParams() == null ? new ViewGroup.MarginLayoutParams(width / 2, ViewGroup.LayoutParams.WRAP_CONTENT) : view.getLayoutParams());
+                                ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams)
+                                        (view.getLayoutParams() == null ? new ViewGroup.MarginLayoutParams(width / 2, ViewGroup.LayoutParams.WRAP_CONTENT) : view.getLayoutParams());
                                 view.setLayoutParams(layoutParams);
                                 return new InnerImageBean(view, reportDetailImageBean);
                             }

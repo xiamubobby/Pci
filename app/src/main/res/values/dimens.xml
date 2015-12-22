@@ -5,7 +5,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="item_interval">8dp</dimen>
     <dimen name="item_interval_large">24dp</dimen>
-
     <dimen name="main_bottom">55dp</dimen>
     <dimen name="main_bottom_margin_bottom">10dp</dimen>
     <dimen name="clip_bottom">65dp</dimen>
