@@ -15,8 +15,8 @@ import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
-import com.wonders.xlab.pci.mvn.model.HomeModel;
-import com.wonders.xlab.pci.mvn.view.HomeView;
+import com.wonders.xlab.pci.module.home.mvn.model.HomeModel;
+import com.wonders.xlab.pci.module.home.mvn.view.HomeView;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
