@@ -13,6 +13,9 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.record.bean.BpBean;
 
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,21 +37,27 @@ public class BpAdapter  extends SimpleRVAdapter<BpBean> implements StickyRecycle
     public void onBindViewHolder(RecyclerView.ViewHolder holder,final int position) {
         super.onBindViewHolder(holder, position);
         final ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        viewHolder.bpDate.setText("");
-        viewHolder.bpNum.setText("");
-        viewHolder.bpNum.setText("");
+        Long time = getBean(position).getRecordTime();
+        //int week =(int)(time - (4*24*3600000))%(7*24*3600000);
+        Date d = new Date(time);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        viewHolder.bpDate.setText(sdf.format(d));
+        viewHolder.bpNum.setText(getBean(position).getSystolicPressure()+"/"+getBean(position).getDiastolicPressure());
+        viewHolder.bpRate.setText(getBean(position).getHeartRate());
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView =mInflater.inflate(R.layout.content_bp,parent,false);
+        View itemView = mInflater.inflate(R.layout.item_bp,parent,false);
         return new ItemViewHolder(itemView);
 
     }
 
     @Override
     public long getHeaderId(int position) {
-        return 0;
+        Long time = getBean(position).getRecordTime();
+        int week =(int)(time - (4*24*3600000))%(7*24*3600000);
+        return week;
     }
 
     @Override
@@ -69,7 +78,9 @@ public class BpAdapter  extends SimpleRVAdapter<BpBean> implements StickyRecycle
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
         final TitleViewHolder viewHolder = (TitleViewHolder) holder;
-            viewHolder.bpTitle.setText("");
+        Long time = getBean(position).getRecordTime();
+        int week =(int)(time - (4*24*3600000))%(7*24*3600000);
+            viewHolder.bpTitle.setText(week);
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder{
