@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.mvn.entity.report;
+package com.wonders.xlab.pci.module.record.monitor.mvn.entity;
 
 import com.wonders.xlab.pci.mvn.BaseEntity;
 
