@@ -8,8 +8,8 @@
     android:background="@android:color/white"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.wonders.xlab.pci.module.record.monitor.BPActivity"
-    tools:showIn="@layout/activity_bp">
+    tools:context="com.wonders.xlab.pci.module.record.monitor.BSActivity"
+    tools:showIn="@layout/activity_bs">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         android:paddingBottom="@dimen/item_interval"
         android:paddingTop="@dimen/item_interval">
         <com.flyco.tablayout.SegmentTabLayout
-            android:id="@+id/stl_bp_time_filter"
+            android:id="@+id/stl_bs_time_filter"
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:paddingLeft="@dimen/item_interval_large"
@@ -25,31 +25,31 @@
             app:tl_indicator_color="@color/colorPrimary"
             app:tl_tab_padding="20dp"/>
     </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <Button
-        android:id="@+id/btn_left"
-        android:onClick="btnClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/tv_bp_day"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/item_interval"
-        android:layout_marginTop="@dimen/item_interval"
-        android:text="12月21日-12月27日"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_size_small"/>
-    <Button
-        android:id="@+id/btn_right"
-        android:onClick="btnClick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_bs_left"
+            android:onClick="btnClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/tv_bs_week"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/item_interval"
+            android:layout_marginTop="@dimen/item_interval"
+            android:text="12月21日-12月27日"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_small"/>
+        <Button
+            android:id="@+id/btn_bs_right"
+            android:onClick="btnClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,25 +58,19 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="时间"
+            android:text="时段"
             />
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="血压值"
-            />
-        <TextView
-            android:text="心率"
+            android:text="血糖值"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content" />
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-            android:id="@+id/ry_bp_history"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        android:id="@+id/ry_bs_history"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         ></android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

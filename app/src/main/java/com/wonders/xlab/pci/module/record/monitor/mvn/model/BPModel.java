@@ -10,6 +10,7 @@ import com.wonders.xlab.pci.mvn.model.BaseModel;
 import com.wonders.xlab.pci.mvn.entity.SimpleEntity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,9 +26,10 @@ public class BPModel extends BaseModel<BPEntity> {
         mBpView = bpView;
         mBpAPI = mRetrofit.create(BpAPI.class);
     }
-    public void getBpData(String userId){
+    public void getBpData(String userId,Long startDate,Long endDate){
         if(!isLast){
-            setObservable(mBpAPI.getBp(userId));
+
+            setObservable(mBpAPI.getBp(userId, startDate,endDate));
         }
     }
 
@@ -39,6 +41,7 @@ public class BPModel extends BaseModel<BPEntity> {
             return;
         }
         isLast = entity.isLast();
+        long headerId = 0;
         List<BpBean> list = new ArrayList<BpBean>();
         for (BPEntity.RetValuesEntity.ContentEntity contentEntity: entity.getContent()){
             BpBean bpBean = new BpBean();
@@ -47,20 +50,9 @@ public class BPModel extends BaseModel<BPEntity> {
             bpBean.setHeartRate(contentEntity.getHeartRate() + "");
             bpBean.setUserId(contentEntity.getId() + "");
             bpBean.setRecordTime(contentEntity.getRecordTime());
-            list.add(bpBean);
-        }
-        long headerId = 0;
-        for(int i = 0;i<20;i++){
-            Long num = 1450690020000L-i*24*3600000;
-            BpBean bpBean = new BpBean();
-            bpBean.setDiastolicPressure("");
-            bpBean.setSystolicPressure("");
-            bpBean.setHeartRate("");
-            bpBean.setUserId("");
-            bpBean.setRecordTime(num);
             if (list != null) {
                 for (BpBean bean : list) {
-                    if (DateUtil.isTheSameDay(num, bean.getRecordTime())) {
+                    if (DateUtil.isTheSameDay(contentEntity.getRecordTime(), bean.getRecordTime())) {
                         bpBean.setHeaderId(bean.getHeaderId());
                         break;
                     } else {
@@ -78,10 +70,12 @@ public class BPModel extends BaseModel<BPEntity> {
             if(headerId == 7){
                 headerId = 0;
             }
+
             list.add(bpBean);
         }
         mBpView.showBplist(list);
     }
+
 
     @Override
     protected void onFailed(String message) {
