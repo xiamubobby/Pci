@@ -9,26 +9,29 @@
               android:padding="@dimen/item_interval">
 
     <TextView
+        android:id="@+id/tv_item_medicine_category_child_time"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="left"
         android:layout_weight="1"
+        android:gravity="left"
         android:singleLine="true"
         android:text="2015-01-01"/>
 
     <TextView
+        android:id="@+id/tv_item_medicine_category_child_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="left"
         android:layout_weight="1"
+        android:gravity="left"
         android:singleLine="true"
         android:text="75"/>
 
     <TextView
+        android:id="@+id/tv_item_medicine_category_child_counts"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="left"
         android:layout_weight="1"
+        android:gravity="left"
         android:singleLine="true"
         android:text="1"/>
 
