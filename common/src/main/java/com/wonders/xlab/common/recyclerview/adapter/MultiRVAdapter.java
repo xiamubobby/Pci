@@ -32,6 +32,7 @@ public abstract class MultiRVAdapter<bean extends BaseBean> extends RecyclerView
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
+
     /**
      * 设置数据，会先清除原来的数据
      *
@@ -67,13 +68,27 @@ public abstract class MultiRVAdapter<bean extends BaseBean> extends RecyclerView
      *
      * @param bean
      */
-    public void addOneData(bean bean) {
+    public void appendData(bean bean) {
         if (this.mDatas == null) {
             this.mDatas = new ArrayList<>();
         }
         this.mDatas.add(bean);
 
         notifyItemInserted(this.mDatas.size() - 1);
+    }
+
+    /**
+     * 添加一条新数据到原来数据的 开始
+     *
+     * @param bean
+     */
+    public void addToTop(bean bean) {
+        if (this.mDatas == null) {
+            this.mDatas = new ArrayList<>();
+        }
+        this.mDatas.add(0, bean);
+
+        notifyItemInserted(0);
     }
 
     public void clear() {
@@ -92,7 +107,7 @@ public abstract class MultiRVAdapter<bean extends BaseBean> extends RecyclerView
 
     @Override
     public MultiViewHolder<bean> onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = this.mInflater.inflate(viewType, parent,false);
+        View view = this.mInflater.inflate(viewType, parent, false);
         return createViewHolder(view, viewType);
     }
 

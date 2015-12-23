@@ -22,7 +22,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':common')
-    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'me.iwf.photopicker:PhotoPicker:0.2.8@aar'

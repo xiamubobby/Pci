@@ -31,4 +31,5 @@
     <string name="title_activity_symptom">SymptomActivity</string>
     <string name="less_then"><![CDATA[<]]></string>
     <string name="title_activity_medicine">MedicineActivity</string>
+    <string name="title_activity_user_center">UserCenterActivity</string>
 </resources>

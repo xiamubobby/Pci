@@ -5,23 +5,12 @@
                                             android:background="@color/divider"
                                             tools:context="com.wonders.xlab.pci.module.record.RecordFragment">
 
-    <LinearLayout
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".module.record.monitor.MonitorFragment">
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/item_interval"
-            android:text="自我监测"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:orientation="horizontal">
+        <TableRow android:divider="@color/bg_gray">
 
             <TextView
                 android:id="@+id/tv_monitor_bp"
@@ -50,20 +39,9 @@
                 android:paddingBottom="@dimen/item_interval_large"
                 android:paddingTop="@dimen/item_interval_large"
                 android:text="血糖"/>
-        </LinearLayout>
+        </TableRow>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval_large"
-            android:padding="@dimen/item_interval"
-            android:text="主要体征"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:orientation="horizontal">
+        <TableRow>
 
             <TextView
                 android:id="@+id/tv_monitor_medicine"
@@ -92,8 +70,7 @@
                 android:paddingBottom="@dimen/item_interval_large"
                 android:paddingTop="@dimen/item_interval_large"
                 android:text="主诉症状"/>
-        </LinearLayout>
-
-    </LinearLayout>
+        </TableRow>
+    </TableLayout>
 
 </android.support.v4.widget.NestedScrollView>

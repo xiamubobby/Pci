@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
 import com.wonders.xlab.pci.module.task.WeekViewFragment;
+import com.wonders.xlab.pci.module.task.mvn.entity.DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,6 +18,7 @@ public class WeekViewVPAdapter extends FragmentPagerAdapter {
     public final static int INITIAL_POSITION = 100;
     private Calendar mCalendar = Calendar.getInstance();
     private List<Long> times = new ArrayList<>();
+    private List<UserActivityDtosEntity> mRemindList;
     private long mToday;
 
     public Long getTime(int position) {
@@ -27,9 +29,23 @@ public class WeekViewVPAdapter extends FragmentPagerAdapter {
         }
     }
 
-    public WeekViewVPAdapter(FragmentManager fm, long today) {
+    /*public void setRemindList(List<UserActivityDtosEntity> remindList) {
+        if (mRemindList == null) {
+            mRemindList = new ArrayList<>();
+        } else {
+            mRemindList.clear();
+        }
+        mRemindList.addAll(remindList);
+        for (int i = 0; i < getCount(); i++) {
+            ((WeekViewFragment) getItem(i)).setRemindList(mRemindList);
+        }
+        notifyDataSetChanged();
+    }*/
+
+    public WeekViewVPAdapter(FragmentManager fm, long today, List<UserActivityDtosEntity> remindList) {
         super(fm);
         mToday = today;
+        this.mRemindList = remindList;
         long first = calculateFirstDayOfWeekInMonth(today);
         for (int i = -INITIAL_POSITION; i <= 0; i++) {
             mCalendar.setTimeInMillis(first);
@@ -40,7 +56,7 @@ public class WeekViewVPAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return WeekViewFragment.newInstance(times.get(position), mToday);
+        return WeekViewFragment.newInstance(times.get(position), mToday, mRemindList);
     }
 
     @Override

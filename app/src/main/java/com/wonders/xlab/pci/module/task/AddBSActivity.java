@@ -21,8 +21,10 @@ import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.common.utils.KeyboardUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
+import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
+import com.wonders.xlab.pci.module.task.rxbus.TaskRefreshBus;
 import com.wonders.xlab.pci.mvn.view.SimpleView;
 
 import java.util.Calendar;
@@ -185,6 +187,7 @@ public class AddBSActivity extends AppbarActivity implements SimpleView {
     public void svSuccess() {
         mFabAddBs.setClickable(false);
         showSnackbar(mCoordinator,"数据保存成功");
+        RxBus.getInstance().send(new TaskRefreshBus());
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

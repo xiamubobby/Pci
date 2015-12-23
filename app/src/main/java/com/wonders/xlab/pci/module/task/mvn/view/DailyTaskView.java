@@ -6,6 +6,7 @@ import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
 import com.wonders.xlab.pci.module.task.bean.SmokeBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
 import com.wonders.xlab.pci.module.task.bean.WineBean;
+import com.wonders.xlab.pci.module.task.mvn.entity.DailyTaskEntity;
 import com.wonders.xlab.pci.mvn.view.BaseView;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 public interface DailyTaskView extends BaseView {
     void getTaskFailed(String message);
 
-    void initWeekView(long today, String week);
+    void initWeekView(long today, String week,List<DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity> remindList);
 
     void initMedicineRecordView(List<MedicineRecordBean> morningMedicine, List<MedicineRecordBean> noonMedicine, List<MedicineRecordBean> nightMedicine);
 
