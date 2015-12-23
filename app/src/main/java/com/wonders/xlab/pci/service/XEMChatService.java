@@ -24,16 +24,16 @@ public class XEMChatService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("XEMChatService", "emchat service started");
-        msgReceiver = new EMChatMessageBroadcastReceiver();
-        IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
-        intentFilter.setPriority(3);
-        registerReceiver(msgReceiver, intentFilter);
+        if (msgReceiver == null) {
+            msgReceiver = new EMChatMessageBroadcastReceiver();
+            IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
+            intentFilter.setPriority(3);
+            registerReceiver(msgReceiver, intentFilter);
+        }
 
         EMChatManager.getInstance().login("doctor13248227958", "13248227958", new EMCallBack() {//回调
             @Override
             public void onSuccess() {
-                Log.d("XEMChatService", "登陆聊天服务器成功！");
 
             }
 
@@ -44,7 +44,7 @@ public class XEMChatService extends Service {
 
             @Override
             public void onError(int code, String message) {
-                Log.d("XEMChatService", "登陆聊天服务器失败！");
+                Log.e("XEMChatService", "登陆聊天服务器失败！");
             }
         });
 
@@ -54,9 +54,9 @@ public class XEMChatService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.d("XEMChatService", "emchat service destroy");
         if (msgReceiver != null) {
             unregisterReceiver(msgReceiver);
+            msgReceiver = null;
         }
         EMChatManager.getInstance().logout();//此方法为同步方法
     }

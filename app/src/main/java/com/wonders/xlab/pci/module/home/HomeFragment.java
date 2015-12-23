@@ -8,20 +8,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView;
+import com.wonders.xlab.common.recyclerview.adapter.BaseBean;
+import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
+import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.home.mvn.model.HomeModel;
 import com.wonders.xlab.pci.module.home.mvn.view.HomeView;
 import com.wonders.xlab.pci.module.home.rxbus.NewEMChatMessageBus;
 
 import java.lang.ref.WeakReference;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
@@ -79,10 +82,10 @@ public class HomeFragment extends BaseFragment implements HomeView {
         });
         mHomeModel.getHomeList(AIManager.getInstance(getActivity()).getUserId());
 
-        initRxBus();
+        initRxBusListener();
     }
 
-    private void initRxBus() {
+    private void initRxBusListener() {
         mSubscription = new CompositeSubscription();
 
         mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
@@ -90,7 +93,21 @@ public class HomeFragment extends BaseFragment implements HomeView {
             public void call(Object o) {
                 if (o instanceof NewEMChatMessageBus) {
                     NewEMChatMessageBus bus = (NewEMChatMessageBus) o;
-                    Toast.makeText(getActivity(), bus.getTitle(), Toast.LENGTH_SHORT).show();
+
+                    BaseBean itemData = mHomeRVAdapter.getItemData(0);
+                    if (itemData.getItemLayout() == HomeTaskBean.ITEM_TODAY) {
+                        TodayTaskBean todayTaskBean = (TodayTaskBean) itemData;
+                        todayTaskBean.setTitle(bus.getTitle());
+                        mHomeRVAdapter.notifyDataSetChanged();
+                    } else {
+                        TodayTaskBean todayTaskBean = new TodayTaskBean();
+                        todayTaskBean.setName("六二");
+                        todayTaskBean.setTitle(bus.getTitle());
+                        todayTaskBean.setUpdateTime(Calendar.getInstance().getTimeInMillis());
+                        todayTaskBean.setPortrait(Constant.TEST_PORTRAIT);
+
+                        mHomeRVAdapter.addToTop(todayTaskBean);
+                    }
                 }
             }
         }));

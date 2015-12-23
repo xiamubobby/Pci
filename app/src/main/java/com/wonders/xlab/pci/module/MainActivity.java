@@ -1,6 +1,8 @@
 package com.wonders.xlab.pci.module;
 
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,10 +22,13 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseActivity;
 import com.wonders.xlab.pci.module.home.HomeFragment;
 import com.wonders.xlab.pci.module.record.RecordFragment;
+import com.wonders.xlab.pci.module.rxbus.ExitBus;
 import com.wonders.xlab.pci.module.task.DailyTaskActivity;
+import com.wonders.xlab.pci.service.XEMChatService;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,6 +36,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 
 public class MainActivity extends BaseActivity {
 
@@ -44,10 +50,14 @@ public class MainActivity extends BaseActivity {
     TextView mTvMyDoctor;
 
     private FragmentVPAdapter mFragmentVPAdapter;
+    private CompositeSubscription mSubscription;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        startService(new Intent(this, XEMChatService.class));
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -65,7 +75,7 @@ public class MainActivity extends BaseActivity {
         mFragmentVPAdapter.addFragment(new RecordFragment());
         mVpMain.setOffscreenPageLimit(2);
         mVpMain.setAdapter(mFragmentVPAdapter);
-
+        initRxBus();
         initBottomTab();
 
         RxView.clicks(mFab)
@@ -76,6 +86,40 @@ public class MainActivity extends BaseActivity {
                         startActivity(new Intent(MainActivity.this, MyDoctorActivity.class));
                     }
                 });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        initAutoStart();
+    }
+
+    /**
+     * 开机自启动
+     */
+    private void initAutoStart() {
+        final PackageManager pm = getPackageManager();
+        final ComponentName cn = new ComponentName(getPackageName(), getPackageName() + ".receiver.BootstrapReceiver");
+        final int state = pm.getComponentEnabledSetting(cn);
+        int newstate;
+        if (state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED) {
+            newstate = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
+            pm.setComponentEnabledSetting(cn, newstate, PackageManager.DONT_KILL_APP);
+        }
+
+    }
+
+    private void initRxBus() {
+        mSubscription = new CompositeSubscription();
+
+        mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                if (o instanceof ExitBus) {
+                    MainActivity.this.finish();
+                }
+            }
+        }));
     }
 
     private void initBottomTab() {
@@ -157,5 +201,8 @@ public class MainActivity extends BaseActivity {
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
+        }
     }
 }

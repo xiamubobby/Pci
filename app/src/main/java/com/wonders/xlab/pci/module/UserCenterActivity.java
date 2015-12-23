@@ -5,9 +5,11 @@ import android.os.Bundle;
 
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
+import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.application.SPManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.login.LoginActivity;
+import com.wonders.xlab.pci.module.rxbus.ExitBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -43,6 +45,7 @@ public class UserCenterActivity extends AppbarActivity {
     public void exit() {
         SPManager.get(this).clear();
         startActivity(new Intent(this, LoginActivity.class));
+        RxBus.getInstance().send(new ExitBus());
         finish();
     }
 }

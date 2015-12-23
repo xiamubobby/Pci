@@ -8,9 +8,11 @@ import android.util.Log;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
+import com.easemob.chat.TextMessageBody;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.home.rxbus.NewEMChatMessageBus;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 
 public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
@@ -39,6 +41,10 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             return;
         }
 
-        RxBus.getInstance().send(new NewEMChatMessageBus(username, Calendar.getInstance().getTimeInMillis()));
+        try {
+            RxBus.getInstance().send(new NewEMChatMessageBus(new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8"), Calendar.getInstance().getTimeInMillis()));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.wonders.xlab.pci.module.record.monitor;
 
-
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +22,6 @@ public class MonitorFragment extends BaseFragment {
     public MonitorFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
