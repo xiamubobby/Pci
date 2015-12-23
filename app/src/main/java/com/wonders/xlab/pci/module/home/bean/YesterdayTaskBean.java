@@ -1,13 +1,26 @@
 package com.wonders.xlab.pci.module.home.bean;
 
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 /**
  * Created by hua on 15/12/14.
  */
+@Table(name = "YesterdayTaskBean")
 public class YesterdayTaskBean extends HomeTaskBean {
+    @Column(name = "portrait")
     private String portrait;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "content")
     private String content;
+
+    @Column(name = "updateTime")
     private long updateTime;
 
     @Override

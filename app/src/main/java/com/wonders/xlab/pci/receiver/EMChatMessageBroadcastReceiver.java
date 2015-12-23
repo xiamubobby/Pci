@@ -5,12 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.activeandroid.query.Delete;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.TextMessageBody;
+import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.application.RxBus;
-import com.wonders.xlab.pci.module.home.rxbus.NewEMChatMessageBus;
+import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
@@ -31,6 +33,9 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         String username = intent.getStringExtra("from");
         // 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
         EMMessage message = EMChatManager.getInstance().getMessage(msgId);
+        if (message == null) {
+            return;
+        }
         EMConversation conversation = EMChatManager.getInstance().getConversation(username);
         // 如果是群聊消息，获取到group id
         if (message.getChatType() == EMMessage.ChatType.GroupChat) {
@@ -41,8 +46,18 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             return;
         }
 
+        new Delete().from(TodayTaskBean.class).execute();
+
         try {
-            RxBus.getInstance().send(new NewEMChatMessageBus(new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8"), Calendar.getInstance().getTimeInMillis()));
+            TodayTaskBean todayTaskBean = new TodayTaskBean();
+            todayTaskBean.setTitle(new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8"));
+            todayTaskBean.setUpdateTime(Calendar.getInstance().getTimeInMillis());
+            todayTaskBean.setName("六二");
+            todayTaskBean.setPortrait(Constant.TEST_PORTRAIT);
+
+            todayTaskBean.save();
+
+            RxBus.getInstance().send(todayTaskBean);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }

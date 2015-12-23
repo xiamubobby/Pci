@@ -1,8 +1,6 @@
 package com.wonders.xlab.pci.module;
 
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -87,16 +85,11 @@ public class MainActivity extends BaseActivity {
                     }
                 });
     }
+    /*
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        initAutoStart();
-    }
-
-    /**
+    *//**
      * 开机自启动
-     */
+     *//*
     private void initAutoStart() {
         final PackageManager pm = getPackageManager();
         final ComponentName cn = new ComponentName(getPackageName(), getPackageName() + ".receiver.BootstrapReceiver");
@@ -107,7 +100,7 @@ public class MainActivity extends BaseActivity {
             pm.setComponentEnabledSetting(cn, newstate, PackageManager.DONT_KILL_APP);
         }
 
-    }
+    }*/
 
     private void initRxBus() {
         mSubscription = new CompositeSubscription();

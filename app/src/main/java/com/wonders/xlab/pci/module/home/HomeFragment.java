@@ -9,9 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
 import com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView;
 import com.wonders.xlab.common.recyclerview.adapter.BaseBean;
-import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
@@ -21,10 +22,8 @@ import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.home.mvn.model.HomeModel;
 import com.wonders.xlab.pci.module.home.mvn.view.HomeView;
-import com.wonders.xlab.pci.module.home.rxbus.NewEMChatMessageBus;
 
 import java.lang.ref.WeakReference;
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
@@ -91,22 +90,17 @@ public class HomeFragment extends BaseFragment implements HomeView {
         mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
             @Override
             public void call(Object o) {
-                if (o instanceof NewEMChatMessageBus) {
-                    NewEMChatMessageBus bus = (NewEMChatMessageBus) o;
+                if (o instanceof TodayTaskBean) {
+                    TodayTaskBean bus = (TodayTaskBean) o;
 
                     BaseBean itemData = mHomeRVAdapter.getItemData(0);
                     if (itemData.getItemLayout() == HomeTaskBean.ITEM_TODAY) {
                         TodayTaskBean todayTaskBean = (TodayTaskBean) itemData;
                         todayTaskBean.setTitle(bus.getTitle());
+                        todayTaskBean.setUpdateTime(bus.getUpdateTime());
                         mHomeRVAdapter.notifyDataSetChanged();
                     } else {
-                        TodayTaskBean todayTaskBean = new TodayTaskBean();
-                        todayTaskBean.setName("六二");
-                        todayTaskBean.setTitle(bus.getTitle());
-                        todayTaskBean.setUpdateTime(Calendar.getInstance().getTimeInMillis());
-                        todayTaskBean.setPortrait(Constant.TEST_PORTRAIT);
-
-                        mHomeRVAdapter.addToTop(todayTaskBean);
+                        mHomeRVAdapter.addToTop(bus);
                     }
                 }
             }
@@ -130,7 +124,22 @@ public class HomeFragment extends BaseFragment implements HomeView {
         } else {
             mHomeRVAdapter.clear();
         }
+
+        TodayTaskBean cache = new Select().from(TodayTaskBean.class).executeSingle();
+
+        if (cache != null) {
+            TodayTaskBean notice = new TodayTaskBean();
+            notice.setUpdateTime(cache.getUpdateTime());
+            notice.setName(cache.getName());
+            notice.setTitle(cache.getTitle());
+            notice.setPortrait(cache.getPortrait());
+
+            beanList.add(0, notice);
+        }
+
         mHomeRVAdapter.setDatas(beanList);
+
+        new Delete().from(TodayTaskBean.class).execute();
     }
 
     @Override

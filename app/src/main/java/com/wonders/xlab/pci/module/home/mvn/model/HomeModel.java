@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.module.home.mvn.model;
 
 import android.support.annotation.NonNull;
 
+import com.activeandroid.query.Delete;
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
 import com.wonders.xlab.pci.module.home.bean.YesterdayTaskBean;
 import com.wonders.xlab.pci.module.home.mvn.api.HomeAPI;
@@ -52,6 +53,9 @@ public class HomeModel extends BaseModel<HomeEntity> {
             return;
         }
 
+        //delete cache first
+        new Delete().from(YesterdayTaskBean.class).execute();
+
         List<HomeTaskBean> beanList = new ArrayList<>();
 
         for (HomeEntity.RetValuesEntity.ContentEntity contentEntity : content) {
@@ -63,6 +67,8 @@ public class HomeModel extends BaseModel<HomeEntity> {
             yesterdayTaskBean.setName(contentEntity.getName());
             yesterdayTaskBean.setPortrait(contentEntity.getPortrait());
             beanList.add(yesterdayTaskBean);
+
+            yesterdayTaskBean.save();
 
         }
 
