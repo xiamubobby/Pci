@@ -14,5 +14,5 @@ import retrofit.http.POST;
 public interface BpAPI {
     @FormUrlEncoded
     @POST("userBloodPressure/listUserPressure")
-    Observable<BPEntity> getBp(@Field("userId") String userId);
+    Observable<BPEntity> getBp(@Field("userId") String userId,@Field("startDate") Long startDate,@Field("endDate") Long endDate);
 }
