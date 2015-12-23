@@ -53,6 +53,12 @@ public class MainActivity extends BaseActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,UserCenterActivity.class));
+            }
+        });
 
         mFragmentVPAdapter = new FragmentVPAdapter(getFragmentManager());
         mFragmentVPAdapter.addFragment(new HomeFragment());

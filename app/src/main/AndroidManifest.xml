@@ -97,6 +97,11 @@
             android:label="@string/title_activity_medicine"
             android:theme="@style/AppTheme">
         </activity>
+        <activity
+            android:name=".module.UserCenterActivity"
+            android:label="@string/title_activity_user_center"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>
