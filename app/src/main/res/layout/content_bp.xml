@@ -35,6 +35,29 @@
         android:text="11月25日-12月1日"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_size_small"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="时间"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="血压值"
+            />
+        <TextView
+            android:text="心率"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
             android:id="@+id/ry_bp_history"
             android:layout_width="match_parent"
