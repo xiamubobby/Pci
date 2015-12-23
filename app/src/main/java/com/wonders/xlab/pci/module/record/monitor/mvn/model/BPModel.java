@@ -1,10 +1,13 @@
 package com.wonders.xlab.pci.module.record.monitor.mvn.model;
 
-import com.wonders.xlab.pci.module.record.bean.BpBean;
+
+import com.wonders.xlab.common.utils.DateUtil;
+import com.wonders.xlab.pci.module.record.monitor.bean.BpBean;
 import com.wonders.xlab.pci.module.record.monitor.mvn.api.BpAPI;
 import com.wonders.xlab.pci.module.record.monitor.mvn.entity.BPEntity;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.BPView;
-import com.wonders.xlab.pci.mvn.BaseModel;
+import com.wonders.xlab.pci.mvn.model.BaseModel;
+import com.wonders.xlab.pci.mvn.entity.SimpleEntity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +49,8 @@ public class BPModel extends BaseModel<BPEntity> {
             bpBean.setRecordTime(contentEntity.getRecordTime());
             list.add(bpBean);
         }
-        for(int i = 0;i<10;i++){
+        long headerId = 0;
+        for(int i = 0;i<20;i++){
             Long num = 1450690020000L-i*24*3600000;
             BpBean bpBean = new BpBean();
             bpBean.setDiastolicPressure("");
@@ -54,6 +58,26 @@ public class BPModel extends BaseModel<BPEntity> {
             bpBean.setHeartRate("");
             bpBean.setUserId("");
             bpBean.setRecordTime(num);
+            if (list != null) {
+                for (BpBean bean : list) {
+                    if (DateUtil.isTheSameDay(num, bean.getRecordTime())) {
+                        bpBean.setHeaderId(bean.getHeaderId());
+                        break;
+                    } else {
+                        if(headerId == 6){
+                            bpBean.setHeaderId(0);
+                        }else {
+                            bpBean.setHeaderId(headerId + 1);
+                        }
+                    }
+                }
+            } else {
+                bpBean.setHeaderId(headerId);
+            }
+            headerId++;
+            if(headerId == 7){
+                headerId = 0;
+            }
             list.add(bpBean);
         }
         mBpView.showBplist(list);

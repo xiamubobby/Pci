@@ -1,10 +1,11 @@
-package com.wonders.xlab.pci.mvn;
+package com.wonders.xlab.pci.mvn.model;
 
 import android.support.annotation.NonNull;
 
 import com.squareup.okhttp.OkHttpClient;
 import com.wonders.xlab.common.retrofit.HttpLoggingInterceptor;
 import com.wonders.xlab.pci.Constant;
+import com.wonders.xlab.pci.mvn.entity.BaseEntity;
 
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;

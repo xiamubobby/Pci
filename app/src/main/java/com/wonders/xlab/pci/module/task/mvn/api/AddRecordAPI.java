@@ -13,11 +13,11 @@ import rx.Observable;
 public interface AddRecordAPI {
     @FormUrlEncoded
     @POST("userBloodSugar/saveUserBloodSugar")
-    Observable<SimpleEntity> saveBS(@Field("userId") String userId, @Field("date") long date, @Field("timeIndex") int timeIndex, @Field("bloodSugarValue") double bloodSugarValue);
+    Observable<SimpleEntity> saveBS(@Field("userId") String userId, @Field("date") long date, @Field("timeIndex") int timeIndex, @Field("bloodSugarValue") float bloodSugarValue);
 
     @FormUrlEncoded
     @POST("userBloodPressure/saveUserPressure")
-    Observable<SimpleEntity> saveBP(@Field("userId") String userId, @Field("date") long date, @Field("heartRate") int heartRate, @Field("systolicPressure") int systolicPressure, @Field("diastolicPressure") int diastolicPressure);
+    Observable<SimpleEntity> saveBP(@Field("userId") String userId, @Field("date") long date, @Field("heartRate") float heartRate, @Field("systolicPressure") float systolicPressure, @Field("diastolicPressure") float diastolicPressure);
 
     @FormUrlEncoded
     @POST("smoke/saveUserSmoke")

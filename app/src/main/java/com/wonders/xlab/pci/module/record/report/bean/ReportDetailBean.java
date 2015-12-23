@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.module.record.bean;
+package com.wonders.xlab.pci.module.record.report.bean;
 
 import java.util.List;
 

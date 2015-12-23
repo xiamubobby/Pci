@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.module.record.adapter;
+package com.wonders.xlab.pci.module.record.report;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.module.record.bean.ReportDetailBean;
-import com.wonders.xlab.pci.module.record.bean.ReportDetailImageBean;
+import com.wonders.xlab.pci.module.record.report.bean.ReportDetailBean;
+import com.wonders.xlab.pci.module.record.report.bean.ReportDetailImageBean;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.lang.ref.WeakReference;

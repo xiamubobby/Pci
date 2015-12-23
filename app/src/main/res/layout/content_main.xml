@@ -49,12 +49,13 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab_main"
+                android:id="@+id/fab_main_my_doctor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginTop="3dp"
+                android:clickable="true"
                 android:src="@drawable/ic_fab_doctor"
                 app:fabSize="mini"
                 app:rippleColor="@color/colorPrimary"/>

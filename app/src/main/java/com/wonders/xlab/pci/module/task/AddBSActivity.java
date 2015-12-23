@@ -122,7 +122,7 @@ public class AddBSActivity extends AppbarActivity implements SimpleView {
                 periodIndex = 0;
         }
 
-        mAddRecordModel.saveBS(AIManager.getInstance(this).getUserId(), date, periodIndex, Double.parseDouble(bloodSugar));
+        mAddRecordModel.saveBS(AIManager.getInstance(this).getUserId(), date, periodIndex, Float.parseFloat(bloodSugar));
     }
 
     @OnClick(R.id.tv_add_date)

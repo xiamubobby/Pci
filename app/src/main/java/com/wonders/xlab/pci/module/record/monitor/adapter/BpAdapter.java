@@ -1,7 +1,8 @@
-package com.wonders.xlab.pci.module.record.adapter;
+package com.wonders.xlab.pci.module.record.monitor.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,9 @@ import android.widget.TextView;
 
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
+import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.module.record.bean.BpBean;
+import com.wonders.xlab.pci.module.record.monitor.bean.BpBean;
 
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
@@ -38,9 +40,8 @@ public class BpAdapter  extends SimpleRVAdapter<BpBean> implements StickyRecycle
         super.onBindViewHolder(holder, position);
         final ItemViewHolder viewHolder = (ItemViewHolder) holder;
         Long time = getBean(position).getRecordTime();
-        //int week =(int)(time - (4*24*3600000))%(7*24*3600000);
         Date d = new Date(time);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-HH-mm-ss");
         viewHolder.bpDate.setText(sdf.format(d));
         viewHolder.bpNum.setText(getBean(position).getSystolicPressure()+"/"+getBean(position).getDiastolicPressure());
         viewHolder.bpRate.setText(getBean(position).getHeartRate());
@@ -55,9 +56,7 @@ public class BpAdapter  extends SimpleRVAdapter<BpBean> implements StickyRecycle
 
     @Override
     public long getHeaderId(int position) {
-        Long time = getBean(position).getRecordTime();
-        int week =(int)(time - (4*24*3600000))%(7*24*3600000);
-        return week;
+        return getBean(position).getHeaderId();
     }
 
     @Override
@@ -78,9 +77,9 @@ public class BpAdapter  extends SimpleRVAdapter<BpBean> implements StickyRecycle
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
         final TitleViewHolder viewHolder = (TitleViewHolder) holder;
-        Long time = getBean(position).getRecordTime();
-        int week =(int)(time - (4*24*3600000))%(7*24*3600000);
-            viewHolder.bpTitle.setText(week);
+        long time = getBean(position).getRecordTime();
+            String[] week ={"星期一","星期二","星期三","星期四","星期五","星期六","星期日"};
+            viewHolder.bpTitle.setText(week[(int)getBean(position).getHeaderId()]);
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder{
@@ -96,4 +95,8 @@ public class BpAdapter  extends SimpleRVAdapter<BpBean> implements StickyRecycle
         }
     }
 
+    @Override
+    public int getItemCount() {
+        return super.getItemCount();
+    }
 }

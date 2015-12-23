@@ -2,7 +2,7 @@ package com.wonders.xlab.pci.module.base;
 
 import android.app.Fragment;
 
-import com.wonders.xlab.pci.mvn.BaseModel;
+import com.wonders.xlab.pci.mvn.model.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;

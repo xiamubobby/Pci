@@ -9,5 +9,4 @@
     android:clickable="true"
     android:padding="@dimen/item_interval"
     android:textColor="@drawable/selector_text_color_selected_white"
-    android:text="12"
-    android:textSize="@dimen/text_size_normal"/>
+    android:textSize="@dimen/text_size_small"/>

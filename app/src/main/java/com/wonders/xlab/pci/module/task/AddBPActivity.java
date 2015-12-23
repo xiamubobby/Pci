@@ -111,7 +111,7 @@ public class AddBPActivity extends AppbarActivity implements SimpleView {
 
         long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), DateUtil.DEFAULT_FORMAT_FULL);
 
-        mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(), date, Integer.valueOf(heartRate), Integer.valueOf(systolicPressure), Integer.valueOf(diastolicPressure));
+        mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(), date, Float.valueOf(heartRate), Float.valueOf(systolicPressure), Float.valueOf(diastolicPressure));
     }
 
     @OnClick(R.id.tv_add_bp_date)

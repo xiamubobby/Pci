@@ -14,9 +14,8 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
-import com.wonders.xlab.pci.module.record.adapter.BpAdapter;
-import com.wonders.xlab.pci.module.record.adapter.ReportDetailRVAdapter;
-import com.wonders.xlab.pci.module.record.bean.BpBean;
+import com.wonders.xlab.pci.module.record.monitor.adapter.BpAdapter;
+import com.wonders.xlab.pci.module.record.monitor.bean.BpBean;
 import com.wonders.xlab.pci.module.record.monitor.mvn.model.BPModel;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.BPView;
 
@@ -73,14 +72,13 @@ public class BPActivity extends AppbarActivity implements BPView {
         });
         mRyBpHistroy.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         bpModel.getBpData(AIManager.getInstance(this).getUserId());
-      //  mRyBpHistroy.addItemDecoration(new StickyRecyclerHeadersDecoration(mBpAdapter));
     }
-
 
     @Override
     public void showBplist(List<BpBean> bpBeanList) {
         if (mBpAdapter == null) {
             mBpAdapter = new BpAdapter(new WeakReference<Context>(this));
+            mRyBpHistroy.addItemDecoration(new StickyRecyclerHeadersDecoration(mBpAdapter));
             mRyBpHistroy.setAdapter(mBpAdapter);
         }
         mBpAdapter.setDatas(bpBeanList);

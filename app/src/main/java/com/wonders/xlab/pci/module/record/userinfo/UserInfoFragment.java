@@ -15,8 +15,6 @@ import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.BaseFragment;
-import com.wonders.xlab.pci.module.record.adapter.UserInfoRVAdapter;
-import com.wonders.xlab.pci.module.record.bean.UserInfoBean;
 import com.wonders.xlab.pci.module.record.userinfo.mvn.entity.UserInfoEntity;
 import com.wonders.xlab.pci.module.record.userinfo.mvn.model.UserInfoModel;
 import com.wonders.xlab.pci.module.record.userinfo.mvn.view.UserInfoView;
