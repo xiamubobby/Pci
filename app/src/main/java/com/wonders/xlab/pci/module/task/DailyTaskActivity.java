@@ -32,11 +32,13 @@ import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
 import com.wonders.xlab.pci.module.task.bean.SmokeBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
 import com.wonders.xlab.pci.module.task.bean.WineBean;
-import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
+import com.wonders.xlab.pci.module.task.mvn.entity.DailyTaskEntity;
 import com.wonders.xlab.pci.module.task.mvn.model.DailyTaskModel;
 import com.wonders.xlab.pci.module.task.mvn.model.TakeMedicineModel;
 import com.wonders.xlab.pci.module.task.mvn.view.DailyTaskView;
 import com.wonders.xlab.pci.module.task.mvn.view.TakeMedicineView;
+import com.wonders.xlab.pci.module.task.rxbus.TaskRefreshBus;
+import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.util.ArrayList;
@@ -124,7 +126,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
     }
 
     private void init() {
-        mVpDailyTaskDate.setOffscreenPageLimit(3);
+        mVpDailyTaskDate.setOffscreenPageLimit(0);
         mLineChartBp.setNoDataText("");
         mLineChartBp.setNoDataTextDescription(getResources().getString(R.string.task_empty_tip));
         mLineChartBp.setDescription("血压");
@@ -148,7 +150,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
                         mTvDailyTaskDate.setText(DateUtil.format(mToday, DateUtil.DEFAULT_FORMAT));
                         if (mVpDailyTaskDate != null && mWeekViewVPAdapter != null && mWeekViewVPAdapter.getCount() > WeekViewVPAdapter.INITIAL_POSITION) {
                             mVpDailyTaskDate.setCurrentItem(WeekViewVPAdapter.INITIAL_POSITION);
-                            mDailyTaskModel.fetchData(AIManager.getInstance(DailyTaskActivity.this).getUserId(), mWeekViewVPAdapter.getTime(WeekViewVPAdapter.INITIAL_POSITION));
+                            mDailyTaskModel.fetchData(AIManager.getInstance(DailyTaskActivity.this).getUserId(), null);
                         }
                         break;
                 }
@@ -175,6 +177,8 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
                     //选中药物记录
                     MedicineRecordBean medicine = (MedicineRecordBean) o;
                     mTakeMedicineModel.takeMedicine(medicine.getMedicineId());
+                } else if (o instanceof TaskRefreshBus) {
+                    mDailyTaskModel.fetchData(AIManager.getInstance(DailyTaskActivity.this).getUserId(), null);
                 }
             }
         }));
@@ -186,7 +190,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
     }
 
     @Override
-    public void initWeekView(long today, String week) {
+    public void initWeekView(long today, String week,List<DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity> mRemindList) {
         if (mToday == -1) {
             mToday = today;
         }
@@ -195,10 +199,11 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
         mTvDailyTaskDate.setText(DateUtil.format(today, DateUtil.DEFAULT_FORMAT));
         mTvDailyTaskWeek.setText(getResources().getString(R.string.daily_task_week, week));
         if (mWeekViewVPAdapter == null) {
-            mWeekViewVPAdapter = new WeekViewVPAdapter(getFragmentManager(), mToday);
+            mWeekViewVPAdapter = new WeekViewVPAdapter(getFragmentManager(), mToday,mRemindList);
             mVpDailyTaskDate.setAdapter(mWeekViewVPAdapter);
             mVpDailyTaskDate.setCurrentItem(WeekViewVPAdapter.INITIAL_POSITION);
         }
+//        mWeekViewVPAdapter.setRemindList(mRemindList);
     }
 
     /**
@@ -294,6 +299,9 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
         initLineDataSet(spDataSet, Color.RED);
         initLineDataSet(dpDataSet, Color.GREEN);
         initLineDataSet(bpDataSet, Color.BLUE);
+        spDataSet.setCircleColor(R.color.colorPrimary);
+        dpDataSet.setCircleColor(R.color.colorPrimary);
+        bpDataSet.setCircleColor(R.color.colorPrimary);
         dataSets.add(spDataSet);
         dataSets.add(dpDataSet);
         dataSets.add(bpDataSet);
@@ -332,6 +340,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
         LineDataSet spDataSet = new LineDataSet(sbsVals, "血糖");
         initLineDataSet(spDataSet, Color.GREEN);
         dataSets.add(spDataSet);
+        spDataSet.setCircleColor(R.color.colorPrimary);
 
         LineData data = new LineData(xVals, dataSets);
         data.setValueTextColor(Color.WHITE);

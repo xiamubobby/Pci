@@ -18,8 +18,10 @@ import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.common.utils.KeyboardUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
+import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
+import com.wonders.xlab.pci.module.task.rxbus.TaskRefreshBus;
 import com.wonders.xlab.pci.mvn.view.SimpleView;
 
 import java.util.Calendar;
@@ -111,7 +113,7 @@ public class AddBPActivity extends AppbarActivity implements SimpleView {
 
         long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), DateUtil.DEFAULT_FORMAT_FULL);
 
-        mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(), date, Float.valueOf(heartRate), Float.valueOf(systolicPressure), Float.valueOf(diastolicPressure));
+        mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(), date, Integer.valueOf(heartRate), Integer.valueOf(systolicPressure), Integer.valueOf(diastolicPressure));
     }
 
     @OnClick(R.id.tv_add_bp_date)
@@ -158,6 +160,7 @@ public class AddBPActivity extends AppbarActivity implements SimpleView {
     public void svSuccess() {
         mFabAddBp.setClickable(false);
         showSnackbar(mCoordinator, "数据保存成功");
+        RxBus.getInstance().send(new TaskRefreshBus());
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

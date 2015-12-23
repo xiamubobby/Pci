@@ -1,20 +1,27 @@
 package com.wonders.xlab.pci.module.task;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseFragment;
+import com.wonders.xlab.pci.module.task.mvn.entity.DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity;
 import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,18 +33,31 @@ public class WeekViewFragment extends BaseFragment {
 
     private long mFirstDayOfWeekInMonth;
     private long mToday;
+    private int today;
+    private List<UserActivityDtosEntity> mRemindList;
+    private LayoutInflater mInflater;
 
     @Bind(R.id.ll_fragment_date)
     LinearLayout mLlFragmentDate;
 
     private Calendar calendar = Calendar.getInstance();
 
-    public static WeekViewFragment newInstance(long firstDayOfWeekInMonth, Long today) {
+    public void setRemindList(List<UserActivityDtosEntity> remindList) {
+        if (mRemindList == null) {
+            mRemindList = new ArrayList<>();
+        } else {
+            mRemindList.clear();
+        }
+        mRemindList.addAll(remindList);
+    }
+
+    public static WeekViewFragment newInstance(long firstDayOfWeekInMonth, Long today, List<UserActivityDtosEntity> remindList) {
         // Required empty public constructor
         WeekViewFragment weekViewFragment = new WeekViewFragment();
         Bundle data = new Bundle();
         data.putLong("firstDayOfWeekInMonth", firstDayOfWeekInMonth);
         data.putLong("today", today);
+        data.putParcelableArrayList("remindList", (ArrayList<? extends Parcelable>) remindList);
         weekViewFragment.setArguments(data);
         return weekViewFragment;
     }
@@ -51,6 +71,8 @@ public class WeekViewFragment extends BaseFragment {
         }
         mFirstDayOfWeekInMonth = data.getLong("firstDayOfWeekInMonth");
         mToday = data.getLong("today", calendar.getTimeInMillis());
+        mRemindList = data.getParcelableArrayList("remindList");
+        today = Integer.parseInt(DateUtil.format(mToday, "dd"));
     }
 
     @Override
@@ -62,6 +84,12 @@ public class WeekViewFragment extends BaseFragment {
 
         setupDate(mFirstDayOfWeekInMonth);
         return view;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mInflater = LayoutInflater.from(context);
     }
 
     private void setupDate(long time) {
@@ -103,9 +131,22 @@ public class WeekViewFragment extends BaseFragment {
             mTvDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    RxBus.getInstance().send(new WeekViewClickBus((Long) v.getTag(), finalDayOfWeek));
+                    for (UserActivityDtosEntity entity : mRemindList) {
+                        if (DateUtil.isTheSameDay(entity.getCurrentDay(), (Long) v.getTag())) {
+                            PopupMenu popupMenu = new PopupMenu(getActivity(), v);
+                            for (String name : entity.getNames()) {
+                                popupMenu.getMenu().add(name);
+                            }
+                            popupMenu.show();
+                            break;
+                        }
+                    }
+                    if (finalDayOfWeek <= today) {
+                        RxBus.getInstance().send(new WeekViewClickBus((Long) v.getTag(), finalDayOfWeek));
+                    }
                 }
             });
+
 
             if (mToday == calendar.getTimeInMillis()) {
                 mTvDate.setSelected(true);

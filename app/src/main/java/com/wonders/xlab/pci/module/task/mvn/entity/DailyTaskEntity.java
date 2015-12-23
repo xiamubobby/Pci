@@ -1,5 +1,8 @@
 package com.wonders.xlab.pci.module.task.mvn.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.wonders.xlab.pci.mvn.entity.BaseEntity;
 
 import java.util.List;
@@ -362,7 +365,7 @@ public class DailyTaskEntity extends BaseEntity {
             }
         }
 
-        public static class UserActivityDtosEntity {
+        public static class UserActivityDtosEntity implements Parcelable{
             private long currentDay;
             private List<String> names;
 
@@ -381,6 +384,36 @@ public class DailyTaskEntity extends BaseEntity {
             public List<String> getNames() {
                 return names;
             }
+
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeLong(this.currentDay);
+                dest.writeStringList(this.names);
+            }
+
+            public UserActivityDtosEntity() {
+            }
+
+            protected UserActivityDtosEntity(Parcel in) {
+                this.currentDay = in.readLong();
+                this.names = in.createStringArrayList();
+            }
+
+            public static final Creator<UserActivityDtosEntity> CREATOR = new Creator<UserActivityDtosEntity>() {
+                public UserActivityDtosEntity createFromParcel(Parcel source) {
+                    return new UserActivityDtosEntity(source);
+                }
+
+                public UserActivityDtosEntity[] newArray(int size) {
+                    return new UserActivityDtosEntity[size];
+                }
+            };
         }
 
         public static class UserBloodPressuresEntity {

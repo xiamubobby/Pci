@@ -15,6 +15,7 @@ import com.wonders.xlab.pci.module.record.monitor.bean.MedicineCategoryBean;
 import com.wonders.xlab.pci.module.record.monitor.bean.MedicineCategoryChildBean;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,6 +41,14 @@ public class MedicineRVAdapter extends ExpandableRecyclerAdapter<MedicineCategor
     }
 
     public void setDatas(@NonNull List<? extends ParentListItem> parentItemList) {
+        List datas = getParentItemList();
+        if (datas == null) {
+            datas = new ArrayList<>();
+        } else {
+            datas.clear();
+        }
+        datas.addAll(parentItemList);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -71,8 +80,8 @@ public class MedicineRVAdapter extends ExpandableRecyclerAdapter<MedicineCategor
 
         if (bean.isTitle()) {
             childViewHolder.mTvTime.setText("时间");
-            childViewHolder.mTvValue.setText("剂量");
-            childViewHolder.mTvCounts.setText("次数");
+            childViewHolder.mTvValue.setText("剂量(mg)");
+            childViewHolder.mTvCounts.setText("次数(mg/天)");
         } else {
             childViewHolder.mTvTime.setText(DateUtil.format(bean.getTime(), "yyyy-MM-dd"));
             childViewHolder.mTvValue.setText(bean.getValue());

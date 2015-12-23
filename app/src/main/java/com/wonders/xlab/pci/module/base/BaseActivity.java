@@ -1,10 +1,14 @@
 package com.wonders.xlab.pci.module.base;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 
 import com.bugtags.library.Bugtags;
 import com.wonders.xlab.pci.mvn.model.BaseModel;
+import com.wonders.xlab.pci.service.XEMChatService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +25,12 @@ public class BaseActivity extends AppCompatActivity {
             mBaseModelList = new ArrayList<>();
         }
         mBaseModelList.add(model);
+    }
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        startService(new Intent(this, XEMChatService.class));
     }
 
     @Override

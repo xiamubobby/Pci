@@ -41,7 +41,7 @@ public class DailyTaskModel extends BaseModel<DailyTaskEntity> {
             return;
         }
         //日期
-        mDailyTaskView.initWeekView(valuesEntity.getCurrentDate(), String.valueOf(valuesEntity.getWeekCount()));
+        mDailyTaskView.initWeekView(valuesEntity.getCurrentDate(), String.valueOf(valuesEntity.getWeekCount()),valuesEntity.getUserActivityDtos());
 
         DailyTaskEntity.RetValuesEntity.UserMedicineMapEntity medicineEntity = valuesEntity.getUserMedicineMap();
         if (medicineEntity != null) {

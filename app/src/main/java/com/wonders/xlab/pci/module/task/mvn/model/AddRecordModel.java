@@ -28,7 +28,7 @@ public class AddRecordModel extends BaseModel<SimpleEntity> {
      * @param systolicPressure  收缩压
      * @param diastolicPressure 舒张压
      */
-    public void saveBP(String userId, long date, float heartRate, float systolicPressure, float diastolicPressure) {
+    public void saveBP(String userId, long date, int heartRate, int systolicPressure, int diastolicPressure) {
         setObservable(mAddRecordAPI.saveBP(userId, date, heartRate, systolicPressure, diastolicPressure));
     }
 

@@ -10,4 +10,6 @@ import java.util.List;
  */
 public interface MedicineView extends BaseView {
     void showMedicineRecords(List<MedicineCategoryBean> categoryBeanList);
+
+    void onFailed(String message);
 }

@@ -2,14 +2,17 @@ package com.wonders.xlab.pci.module.home.mvn.model;
 
 import android.support.annotation.NonNull;
 
+import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
+import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.home.bean.YesterdayTaskBean;
-import com.wonders.xlab.pci.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.home.mvn.api.HomeAPI;
 import com.wonders.xlab.pci.module.home.mvn.entity.HomeEntity;
 import com.wonders.xlab.pci.module.home.mvn.view.HomeView;
+import com.wonders.xlab.pci.mvn.model.BaseModel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -54,6 +57,14 @@ public class HomeModel extends BaseModel<HomeEntity> {
 
         List<HomeTaskBean> beanList = new ArrayList<>();
 
+        TodayTaskBean todayTaskBean = new TodayTaskBean();
+        todayTaskBean.setName("六二");
+        todayTaskBean.setTitle("提醒");
+        todayTaskBean.setUpdateTime(Calendar.getInstance().getTimeInMillis());
+        todayTaskBean.setPortrait(Constant.TEST_PORTRAIT);
+
+        beanList.add(todayTaskBean);
+
         for (HomeEntity.RetValuesEntity.ContentEntity contentEntity : content) {
 
             YesterdayTaskBean yesterdayTaskBean = new YesterdayTaskBean();
@@ -65,6 +76,7 @@ public class HomeModel extends BaseModel<HomeEntity> {
             beanList.add(yesterdayTaskBean);
 
         }
+
         if (page > 0) {
             mHomeView.appendHomeList(beanList);
         } else {
