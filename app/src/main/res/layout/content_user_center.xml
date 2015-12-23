@@ -27,7 +27,7 @@
     <include layout="@layout/divider_vertical"/>
 
     <me.drakeet.labelview.LabelView
-        android:id="@+id/tv_user_center_medi"
+        android:id="@+id/tv_user_center_medicare_card"
         android:layout_width="match_parent"
         android:layout_height="?listPreferredItemHeightSmall"
         android:gravity="left|center_vertical"
