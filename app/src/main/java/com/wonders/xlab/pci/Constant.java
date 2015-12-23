@@ -9,4 +9,6 @@ public class Constant {
 //    public final static String BASE_FEED = "http://172.16.76.185:8080/";
     public static String BASE_FEED = "http://172.16.74.6:8080/pci-user/";
 
+    public static String HEALTH_PLAN_URL = "http://172.16.74.6:8080/pci-user/pci-health-scheme.html?userId=";
+
 }

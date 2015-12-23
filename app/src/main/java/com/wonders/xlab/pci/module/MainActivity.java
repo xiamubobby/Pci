@@ -46,6 +46,8 @@ public class MainActivity extends BaseActivity {
     TabLayout mTabLayout;
     @Bind(R.id.tv_main_my_doctor)
     TextView mTvMyDoctor;
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
 
     private FragmentVPAdapter mFragmentVPAdapter;
     private CompositeSubscription mSubscription;
@@ -54,24 +56,27 @@ public class MainActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        startService(new Intent(this, XEMChatService.class));
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                startService(new Intent(MainActivity.this, XEMChatService.class));
+            }
+        }).start();
+        
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        setSupportActionBar(mToolbar);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,UserCenterActivity.class));
+                startActivity(new Intent(MainActivity.this, UserCenterActivity.class));
             }
         });
 
         mFragmentVPAdapter = new FragmentVPAdapter(getFragmentManager());
         mFragmentVPAdapter.addFragment(new HomeFragment());
         mFragmentVPAdapter.addFragment(new RecordFragment());
-        mVpMain.setOffscreenPageLimit(2);
         mVpMain.setAdapter(mFragmentVPAdapter);
         initRxBus();
         initBottomTab();
@@ -87,7 +92,9 @@ public class MainActivity extends BaseActivity {
     }
     /*
 
-    *//**
+    */
+
+    /**
      * 开机自启动
      *//*
     private void initAutoStart() {
@@ -101,7 +108,6 @@ public class MainActivity extends BaseActivity {
         }
 
     }*/
-
     private void initRxBus() {
         mSubscription = new CompositeSubscription();
 
