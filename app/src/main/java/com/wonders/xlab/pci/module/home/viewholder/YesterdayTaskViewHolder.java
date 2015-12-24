@@ -38,7 +38,7 @@ public class YesterdayTaskViewHolder extends MultiViewHolder<YesterdayTaskBean> 
     public void onBindViewHolder(YesterdayTaskBean data) {
         mTvTitle.setText(data.getTitle());
         mTvContent.setText(data.getContent());
-        mTvTime.setText(DateUtil.format(data.getUpdateTime(), "yyyy-MM-dd hh:mm"));
+        mTvTime.setText(DateUtil.format(data.getUpdateTime(), "yyyy-MM-dd HH:mm"));
         mTvName.setText(data.getName());
         Glide.with(getContextWeakReference().get())
                 .load(data.getPortrait())

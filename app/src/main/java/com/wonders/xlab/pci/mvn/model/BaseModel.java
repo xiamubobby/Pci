@@ -35,7 +35,7 @@ public abstract class BaseModel<T extends BaseEntity> {
          */
         OkHttpClient client = new OkHttpClient();
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logging.setLevel(HttpLoggingInterceptor.Level.NONE);
         client.interceptors().add(logging);
 //        client.setConnectTimeout(30, TimeUnit.SECONDS);
 //        client.setWriteTimeout(30, TimeUnit.SECONDS);
@@ -77,7 +77,7 @@ public abstract class BaseModel<T extends BaseEntity> {
                     @Override
                     public void onError(Throwable e) {
                         setRequesting(false);
-                        onFailed(e.getMessage());
+                        onFailed("请求失败，请重试！");
                     }
 
                     @Override
@@ -94,7 +94,6 @@ public abstract class BaseModel<T extends BaseEntity> {
                         }
                     }
                 });
-
     }
 
     private synchronized void setRequesting(boolean isRequesting) {

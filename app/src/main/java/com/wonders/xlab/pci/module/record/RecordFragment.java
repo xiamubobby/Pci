@@ -47,7 +47,7 @@ public class RecordFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mVpRecord.setOffscreenPageLimit(2);
+        mVpRecord.setOffscreenPageLimit(0);
         mVPAdapter = new FragmentVPAdapter(getFragmentManager());
         mVPAdapter.addFragment(new MonitorFragment(),"身体体征");
         mVPAdapter.addFragment(new ReportFragment(),"病历报告");

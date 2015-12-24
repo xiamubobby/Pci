@@ -7,10 +7,15 @@ import android.os.IBinder;
 import android.text.TextUtils;
 
 import com.easemob.EMCallBack;
+import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.wonders.xlab.common.utils.MD5Util;
+import com.wonders.xlab.common.utils.NotifyUtil;
+import com.wonders.xlab.pci.Constant;
+import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
+import com.wonders.xlab.pci.module.MainActivity;
 import com.wonders.xlab.pci.module.rxbus.ExitBus;
 import com.wonders.xlab.pci.receiver.EMChatMessageBroadcastReceiver;
 
@@ -22,6 +27,9 @@ public class XEMChatService extends Service {
     private EMChatMessageBroadcastReceiver msgReceiver;
 
     public XEMChatService() {
+        EMChat.getInstance().setAutoLogin(false);
+        EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);//不发通知，而是走广播
+
         mSubscription = new CompositeSubscription();
 
         mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
@@ -42,6 +50,8 @@ public class XEMChatService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        new NotifyUtil().showNotification(getApplicationContext(), Constant.NOTIFY_ID, getApplicationContext().getResources().getString(R.string.app_name), "正在运行", MainActivity.class, R.mipmap.ic_launcher, false);
 
         login();
 
@@ -64,7 +74,9 @@ public class XEMChatService extends Service {
         EMChatManager.getInstance().login(tel, new MD5Util().encrypt("pci_user" + tel).toLowerCase(), new EMCallBack() {//回调
             @Override
             public void onSuccess() {
-
+                EMChat.getInstance().setAppInited();
+//                EMGroupManager.getInstance().loadAllGroups();
+//                EMChatManager.getInstance().loadAllConversations();
             }
 
             @Override

@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView;
 import com.wonders.xlab.common.recyclerview.adapter.BaseBean;
@@ -84,6 +83,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        AIManager.getInstance(getActivity()).saveHomeShowing(true);
+
         mRvHome.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true));
         mRvHome.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
@@ -146,15 +147,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-        if (mSubscription != null) {
-            mSubscription.unsubscribe();
-        }
-    }
-
-    @Override
     public void showHomeList(List<HomeTaskBean> beanList) {
         if (mHomeRVAdapter == null) {
             mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
@@ -174,10 +166,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
             beanList.add(0, notice);
         }
-
         mHomeRVAdapter.setDatas(beanList);
-
-        new Delete().from(TodayTaskBean.class).execute();
     }
 
     @Override
@@ -202,4 +191,16 @@ public class HomeFragment extends BaseFragment implements HomeView {
     public void hideLoading() {
 
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
+        AIManager.getInstance(getActivity()).saveHomeShowing(false);
+
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
+        }
+    }
+
 }

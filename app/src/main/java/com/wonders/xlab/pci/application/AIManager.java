@@ -14,6 +14,7 @@ public class AIManager {
     public final static String PRE_USER_ID = "userId";
     public final static String PRE_USER_TEL = "userTel";
     public final static String PRE_USER_MEDICARE_CARD = "userMedicareCard";
+    public final static String PRE_IS_HOME_SHOWING = "isShowingHome";
 
     private static AIManager aiManager;
     private static SPManager spManager;
@@ -50,6 +51,10 @@ public class AIManager {
         return spManager.getString(PRE_USER_MEDICARE_CARD, "");
     }
 
+    public boolean isHomeShowing() {
+        return spManager.getBoolean(PRE_IS_HOME_SHOWING, false);
+    }
+
     public void saveUserInfo(String userId, String tel, String medicareCard) {
         saveUserId(userId);
         saveUserTel(tel);
@@ -66,5 +71,9 @@ public class AIManager {
 
     public void saveMedicareCard(String medicareCard) {
         spManager.putString(PRE_USER_MEDICARE_CARD, medicareCard);
+    }
+
+    public void saveHomeShowing(boolean isShowing) {
+        spManager.putBoolean(PRE_IS_HOME_SHOWING, isShowing);
     }
 }

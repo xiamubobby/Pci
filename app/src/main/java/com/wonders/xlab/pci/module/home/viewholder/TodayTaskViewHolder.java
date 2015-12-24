@@ -52,7 +52,7 @@ public class TodayTaskViewHolder extends MultiViewHolder<TodayTaskBean> {
     @Override
     public void onBindViewHolder(TodayTaskBean data) {
         mTvTitle.setText(data.getTitle());
-        mTvTime.setText(DateUtil.format(data.getUpdateTime(), "yyyy-MM-dd hh:mm"));
+        mTvTime.setText(DateUtil.format(data.getUpdateTime(), "yyyy-MM-dd HH:mm"));
         mTvName.setText(data.getName());
         RxView.clicks(mTvMedicine)
                 .throttleFirst(500, TimeUnit.MILLISECONDS)
