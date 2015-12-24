@@ -93,13 +93,21 @@ public class HomeFragment extends BaseFragment implements HomeView {
                 if (o instanceof TodayTaskBean) {
                     TodayTaskBean bus = (TodayTaskBean) o;
 
-                    BaseBean itemData = mHomeRVAdapter.getItemData(0);
-                    if (itemData.getItemLayout() == HomeTaskBean.ITEM_TODAY) {
-                        TodayTaskBean todayTaskBean = (TodayTaskBean) itemData;
-                        todayTaskBean.setTitle(bus.getTitle());
-                        todayTaskBean.setUpdateTime(bus.getUpdateTime());
-                        mHomeRVAdapter.notifyDataSetChanged();
+                    if (mHomeRVAdapter != null) {
+                        if (mHomeRVAdapter.getItemCount() > 0) {
+                            BaseBean itemData = mHomeRVAdapter.getItemData(0);
+                            if (itemData.getItemLayout() == HomeTaskBean.ITEM_TODAY) {
+                                TodayTaskBean todayTaskBean = (TodayTaskBean) itemData;
+                                todayTaskBean.setTitle(bus.getTitle());
+                                todayTaskBean.setUpdateTime(bus.getUpdateTime());
+                                mHomeRVAdapter.notifyDataSetChanged();
+                            }
+                        } else {
+                            mHomeRVAdapter.addToTop(bus);
+                        }
                     } else {
+                        mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
+                        mRvHome.setAdapter(mHomeRVAdapter);
                         mHomeRVAdapter.addToTop(bus);
                     }
                 }
