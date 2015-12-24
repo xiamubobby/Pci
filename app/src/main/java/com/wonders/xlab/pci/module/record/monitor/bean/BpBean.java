@@ -4,7 +4,13 @@ package com.wonders.xlab.pci.module.record.monitor.bean;
  * Created by sjy on 2015/12/22.
  */
 public class BpBean{
+    /**
+     * 舒张压
+     */
     private String diastolicPressure;
+    /**
+     * 收缩压
+     */
     private String  systolicPressure;
     private String userId;
     private String heartRate;
@@ -52,6 +58,14 @@ public class BpBean{
         this.userId = userId;
     }
 
+    public long getHeaderId() {
+        return headerId;
+    }
+
+    public void setHeaderId(long headerId) {
+        this.headerId = headerId;
+    }
+
     @Override
     public String toString() {
         return "BpBean{" +
@@ -59,15 +73,8 @@ public class BpBean{
                 ", systolicPressure='" + systolicPressure + '\'' +
                 ", userId='" + userId + '\'' +
                 ", heartRate='" + heartRate + '\'' +
-                ", recordTime='" + recordTime + '\'' +
+                ", recordTime=" + recordTime +
+                ", headerId=" + headerId +
                 '}';
-    }
-
-    public long getHeaderId() {
-        return headerId;
-    }
-
-    public void setHeaderId(long headerId) {
-        this.headerId = headerId;
     }
 }

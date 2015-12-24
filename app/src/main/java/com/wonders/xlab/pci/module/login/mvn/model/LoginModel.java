@@ -1,11 +1,12 @@
 package com.wonders.xlab.pci.module.login.mvn.model;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
-import com.wonders.xlab.pci.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.login.mvn.api.LoginAPI;
 import com.wonders.xlab.pci.module.login.mvn.entity.LoginEntity;
 import com.wonders.xlab.pci.module.login.mvn.view.LoginView;
+import com.wonders.xlab.pci.mvn.model.BaseModel;
 
 import java.util.HashMap;
 
@@ -48,6 +49,6 @@ public class LoginModel extends BaseModel<LoginEntity> {
     @Override
     protected void onFailed(String message) {
         mLoginView.hideLoading();
-        mLoginView.loginFailed(message);
+        mLoginView.loginFailed(TextUtils.isEmpty(message) ? "登录失败，请重试！" : message);
     }
 }

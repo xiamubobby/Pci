@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
+import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.module.task.WeekViewFragment;
 import com.wonders.xlab.pci.module.task.mvn.entity.DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity;
 
@@ -46,7 +47,7 @@ public class WeekViewVPAdapter extends FragmentPagerAdapter {
         super(fm);
         mToday = today;
         this.mRemindList = remindList;
-        long first = calculateFirstDayOfWeekInMonth(today);
+        long first = DateUtil.calculateFirstDayOfWeek(today);
         for (int i = -INITIAL_POSITION; i <= 0; i++) {
             mCalendar.setTimeInMillis(first);
             mCalendar.add(Calendar.DATE, i * 7);
@@ -64,12 +65,4 @@ public class WeekViewVPAdapter extends FragmentPagerAdapter {
         return times.size();
     }
 
-    private long calculateFirstDayOfWeekInMonth(long time) {
-        mCalendar.setFirstDayOfWeek(Calendar.MONDAY);
-        mCalendar.setTimeInMillis(time);
-        while (mCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
-            mCalendar.add(Calendar.DATE, -1);
-        }
-        return mCalendar.getTimeInMillis();
-    }
 }

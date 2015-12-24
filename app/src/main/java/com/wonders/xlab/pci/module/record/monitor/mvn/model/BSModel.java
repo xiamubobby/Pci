@@ -1,7 +1,6 @@
 package com.wonders.xlab.pci.module.record.monitor.mvn.model;
 
 import com.wonders.xlab.pci.module.record.monitor.mvn.api.BSAPI;
-import com.wonders.xlab.pci.module.record.monitor.mvn.api.BpAPI;
 import com.wonders.xlab.pci.module.record.monitor.mvn.entity.BSEntity;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.BSView;
 import com.wonders.xlab.pci.mvn.model.BaseModel;

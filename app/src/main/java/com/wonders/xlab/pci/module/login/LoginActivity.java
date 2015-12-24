@@ -40,15 +40,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-
-        if (AIManager.getInstance(this).hasLogin()) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-        } else {
-            mLoginModel = new LoginModel(this);
-            addModel(mLoginModel);
-        }
-
+        mLoginModel = new LoginModel(this);
+        addModel(mLoginModel);
     }
 
     @OnClick(R.id.btn_login)

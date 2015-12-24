@@ -4,12 +4,15 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
 import com.wonders.xlab.common.utils.MD5Util;
 import com.wonders.xlab.pci.application.AIManager;
+import com.wonders.xlab.pci.application.RxBus;
+import com.wonders.xlab.pci.module.rxbus.ExitBus;
 import com.wonders.xlab.pci.receiver.EMChatMessageBroadcastReceiver;
 
 public class XEMChatService extends Service {
@@ -26,6 +29,14 @@ public class XEMChatService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        String tel = AIManager.getInstance(this).getUserTel();
+        if (TextUtils.isEmpty(tel)) {
+            RxBus.getInstance().send(new ExitBus());
+            stopSelf();
+            return 0;
+        }
+
         if (msgReceiver == null) {
             msgReceiver = new EMChatMessageBroadcastReceiver();
             IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
@@ -33,7 +44,6 @@ public class XEMChatService extends Service {
             registerReceiver(msgReceiver, intentFilter);
         }
 
-        String tel = AIManager.getInstance(this).getUserTel();
         EMChatManager.getInstance().login(tel, new MD5Util().encrypt("pci_user" + tel).toLowerCase(), new EMCallBack() {//回调
             @Override
             public void onSuccess() {

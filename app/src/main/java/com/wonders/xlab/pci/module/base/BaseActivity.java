@@ -1,9 +1,12 @@
 package com.wonders.xlab.pci.module.base;
 
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 
 import com.bugtags.library.Bugtags;
+import com.umeng.update.UmengUpdateAgent;
 import com.wonders.xlab.pci.mvn.model.BaseModel;
 
 import java.util.ArrayList;
@@ -21,6 +24,12 @@ public class BaseActivity extends AppCompatActivity {
             mBaseModelList = new ArrayList<>();
         }
         mBaseModelList.add(model);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        UmengUpdateAgent.update(this);
     }
 
     @Override

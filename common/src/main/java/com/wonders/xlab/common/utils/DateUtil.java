@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -12,6 +13,7 @@ public class DateUtil {
     public static final String DEFAULT_FORMAT = "yyyy-MM-dd";
 
     public static final String DEFAULT_FORMAT_FULL = "yyyy-MM-dd HH:mm";
+    private static Calendar mCalendar = Calendar.getInstance();
 
     public static String format(Date date) {
         return format(date, DEFAULT_FORMAT);
@@ -36,7 +38,7 @@ public class DateUtil {
 
         StringBuilder str = new StringBuilder();
 
-        SimpleDateFormat ft = new SimpleDateFormat(format,Locale.CHINESE);
+        SimpleDateFormat ft = new SimpleDateFormat(format, Locale.CHINESE);
 
         str.append(ft.format(date));
 
@@ -72,17 +74,127 @@ public class DateUtil {
         }
     }
 
-    public static boolean isTheSameDay(long oldDate,long currentDate) {
-        String old = format(oldDate,"yyyy-MM-dd");
-        String current = format(currentDate,"yyyy-MM-dd");
+    public static boolean isTheSameDay(long oldDate, long currentDate) {
+        String old = format(oldDate, "yyyy-MM-dd");
+        String current = format(currentDate, "yyyy-MM-dd");
 
         return old.equals(current);
     }
 
-    public static boolean isTheSameYear(long oldDate,long currentDate) {
-        String old = format(oldDate,"yyyy");
-        String current = format(currentDate,"yyyy");
+    public static boolean isTheSameYear(long oldDate, long currentDate) {
+        String old = format(oldDate, "yyyy");
+        String current = format(currentDate, "yyyy");
 
         return old.equals(current);
+    }
+
+    /**
+     * time所在周，周一的日期
+     *
+     * @param time
+     * @return
+     */
+    public static long calculateFirstDayOfWeek(long time) {
+        mCalendar.setFirstDayOfWeek(Calendar.MONDAY);
+        mCalendar.setTimeInMillis(time);
+        mCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        mCalendar.set(Calendar.MINUTE, 0);
+        mCalendar.set(Calendar.SECOND, 0);
+        while (mCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+            mCalendar.add(Calendar.DATE, -1);
+        }
+        return mCalendar.getTimeInMillis();
+    }
+
+    /**
+     * time所在周，周日的日期
+     *
+     * @param time
+     * @return
+     */
+    public static long calculateLastDayOfWeek(long time) {
+        mCalendar.setFirstDayOfWeek(Calendar.MONDAY);
+        mCalendar.setTimeInMillis(time);
+        mCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        mCalendar.set(Calendar.MINUTE, 0);
+        mCalendar.set(Calendar.SECOND, 0);
+        while (mCalendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY) {
+            mCalendar.add(Calendar.DATE, 1);
+        }
+        return mCalendar.getTimeInMillis();
+    }
+
+    /**
+     * time所在月的第一天日期
+     *
+     * @param time
+     * @return
+     */
+    public static long calculateFirstDayOfMonth(long time) {
+        mCalendar.setFirstDayOfWeek(Calendar.MONDAY);
+        mCalendar.setTimeInMillis(time);
+        mCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        mCalendar.set(Calendar.MINUTE, 0);
+        mCalendar.set(Calendar.SECOND, 0);
+        mCalendar.set(Calendar.DAY_OF_MONTH, 1);
+        return mCalendar.getTimeInMillis();
+    }
+
+    /**
+     * time所在月的最后一天日期
+     *
+     * @param time
+     * @return
+     */
+    public static long calculateLastDayOfMonth(long time) {
+        mCalendar.setFirstDayOfWeek(Calendar.MONDAY);
+        mCalendar.setTimeInMillis(time);
+        mCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        mCalendar.set(Calendar.MINUTE, 0);
+        mCalendar.set(Calendar.SECOND, 0);
+
+        mCalendar.add(Calendar.MONTH, 1);
+        mCalendar.set(Calendar.DAY_OF_MONTH, 1);
+        mCalendar.add(Calendar.DAY_OF_MONTH, -1);
+
+        return mCalendar.getTimeInMillis();
+    }
+
+    /**
+     * time所在月的第一天日期
+     *
+     * @param time
+     * @return
+     */
+    public static long calculateFirstDayOfYear(long time) {
+        mCalendar.setFirstDayOfWeek(Calendar.MONDAY);
+        mCalendar.setTimeInMillis(time);
+        mCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        mCalendar.set(Calendar.MINUTE, 0);
+        mCalendar.set(Calendar.SECOND, 0);
+        mCalendar.set(Calendar.MONTH, Calendar.JANUARY);
+        mCalendar.set(Calendar.DAY_OF_MONTH, 1);
+        return mCalendar.getTimeInMillis();
+    }
+
+    /**
+     * time所在月的最后一天日期
+     *
+     * @param time
+     * @return
+     */
+    public static long calculateLastDayOfYear(long time) {
+        mCalendar.setFirstDayOfWeek(Calendar.MONDAY);
+        mCalendar.setTimeInMillis(time);
+        mCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        mCalendar.set(Calendar.MINUTE, 0);
+        mCalendar.set(Calendar.SECOND, 0);
+
+        mCalendar.add(Calendar.YEAR, 1);
+        mCalendar.set(Calendar.MONTH, Calendar.JANUARY);
+        mCalendar.set(Calendar.DAY_OF_MONTH, 1);
+        mCalendar.add(Calendar.DAY_OF_MONTH, -1);
+
+        return mCalendar.getTimeInMillis();
     }
 }

@@ -148,7 +148,7 @@ public class WeekViewFragment extends BaseFragment {
             });
 
 
-            if (mToday == calendar.getTimeInMillis()) {
+            if (DateUtil.isTheSameDay(mToday, calendar.getTimeInMillis())) {
                 mTvDate.setSelected(true);
             } else {
                 mTvDate.setSelected(false);

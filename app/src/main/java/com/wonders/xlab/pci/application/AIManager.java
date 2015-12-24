@@ -39,7 +39,7 @@ public class AIManager {
     }
 
     public String getUserId() {
-        return spManager.getString(PRE_USER_ID, "2");
+        return spManager.getString(PRE_USER_ID, "");
     }
 
     public String getUserTel() {
