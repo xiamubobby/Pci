@@ -55,15 +55,16 @@ public class XEMChatService extends Service {
             stopSelf();
             return;
         }
+        if (msgReceiver == null) {
+            msgReceiver = new EMChatMessageBroadcastReceiver();
+            IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
+            intentFilter.setPriority(13);
+            registerReceiver(msgReceiver, intentFilter);
+        }
         EMChatManager.getInstance().login(tel, new MD5Util().encrypt("pci_user" + tel).toLowerCase(), new EMCallBack() {//回调
             @Override
             public void onSuccess() {
-                if (msgReceiver == null) {
-                    msgReceiver = new EMChatMessageBroadcastReceiver();
-                    IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
-                    intentFilter.setPriority(13);
-                    registerReceiver(msgReceiver, intentFilter);
-                }
+
             }
 
             @Override

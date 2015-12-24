@@ -6,7 +6,6 @@ import android.content.Intent;
 
 import com.activeandroid.query.Delete;
 import com.easemob.chat.EMChatManager;
-import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.TextMessageBody;
 import com.wonders.xlab.pci.Constant;
@@ -34,14 +33,13 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         if (message == null) {
             return;
         }
-        EMConversation conversation = EMChatManager.getInstance().getConversation(username);
+//        EMConversation conversation = EMChatManager.getInstance().getConversation(username);
         // 如果是群聊消息，获取到group id
         if (message.getChatType() == EMMessage.ChatType.GroupChat) {
-            username = message.getTo();
-        }
-        if (!username.equals(username)) {
-            // 消息不是发给当前会话，return
-            return;
+            if (!message.getTo().equals(username)) {
+                // 消息不是发给当前会话，return
+                return;
+            }
         }
 
         new Delete().from(TodayTaskBean.class).execute();

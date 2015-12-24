@@ -109,7 +109,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
             public void call(Object o) {
                 if (o instanceof TodayTaskBean) {
                     TodayTaskBean bus = (TodayTaskBean) o;
-
                     if (mHomeRVAdapter != null) {
                         if (mHomeRVAdapter.getItemCount() > 0) {
                             BaseBean itemData = mHomeRVAdapter.getItemData(0);
@@ -118,6 +117,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
                                 todayTaskBean.setTitle(bus.getTitle());
                                 todayTaskBean.setUpdateTime(bus.getUpdateTime());
                                 mHomeRVAdapter.notifyDataSetChanged();
+                            } else {
+                                mHomeRVAdapter.addToTop(bus);
                             }
                         } else {
                             mHomeRVAdapter.addToTop(bus);
