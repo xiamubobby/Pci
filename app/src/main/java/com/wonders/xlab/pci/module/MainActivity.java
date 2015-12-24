@@ -62,7 +62,7 @@ public class MainActivity extends BaseActivity {
                 startService(new Intent(MainActivity.this, XEMChatService.class));
             }
         }).start();
-        
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 

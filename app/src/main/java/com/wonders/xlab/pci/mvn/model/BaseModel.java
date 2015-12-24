@@ -12,6 +12,7 @@ import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -21,7 +22,8 @@ import rx.schedulers.Schedulers;
 public abstract class BaseModel<T extends BaseEntity> {
     protected Retrofit mRetrofit;
     private Observable<T> mObservable;
-    private Subscriber mSubscriber;
+    private Subscription subscribe;
+
 
     private boolean isRequesting = false;
 
@@ -51,47 +53,47 @@ public abstract class BaseModel<T extends BaseEntity> {
         if (mObservable == null) {
             throw new IllegalArgumentException("mObservable cannot be null, must call setObservable first!");
         }
-        if (mSubscriber != null) {
-            mSubscriber.unsubscribe();
-            mSubscriber = null;
+
+        if (subscribe != null) {
+            subscribe.unsubscribe();
+            subscribe = null;
         }
-        mSubscriber = new Subscriber<T>() {
-            @Override
-            public void onStart() {
-                super.onStart();
-                BaseModel.this.onStart();
-                setRequesting(true);
-            }
 
-            @Override
-            public void onCompleted() {
-                setRequesting(false);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                setRequesting(false);
-                onFailed(e.getMessage());
-            }
-
-            @Override
-            public void onNext(T result) {
-                setRequesting(false);
-                if (result != null) {
-                    if (result.getRet_code() == 0) {
-                        onSuccess(result);
-                    } else {
-                        onFailed(result.getMessage());
-                    }
-                } else {
-                    onFailed(getErrorMessage());
-                }
-            }
-        };
-
-        mObservable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
+        subscribe = mObservable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mSubscriber);
+                .subscribe(new Subscriber<T>() {
+                    @Override
+                    public void onStart() {
+                        super.onStart();
+                        BaseModel.this.onStart();
+                        setRequesting(true);
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        setRequesting(false);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        setRequesting(false);
+                        onFailed(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(T result) {
+                        setRequesting(false);
+                        if (result != null) {
+                            if (result.getRet_code() == 0) {
+                                onSuccess(result);
+                            } else {
+                                onFailed(result.getMessage());
+                            }
+                        } else {
+                            onFailed(getErrorMessage());
+                        }
+                    }
+                });
 
     }
 
@@ -104,9 +106,9 @@ public abstract class BaseModel<T extends BaseEntity> {
     }
 
     public synchronized void cancel() {
-        if (mSubscriber != null) {
-            mSubscriber.unsubscribe();
-            mSubscriber = null;
+        if (subscribe != null) {
+            subscribe.unsubscribe();
+            subscribe = null;
         }
         if (mObservable != null) {
             mObservable.unsubscribeOn(AndroidSchedulers.mainThread());
