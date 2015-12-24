@@ -75,8 +75,6 @@ public class XEMChatService extends Service {
             @Override
             public void onSuccess() {
                 EMChat.getInstance().setAppInited();
-//                EMGroupManager.getInstance().loadAllGroups();
-//                EMChatManager.getInstance().loadAllConversations();
             }
 
             @Override

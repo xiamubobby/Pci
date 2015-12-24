@@ -36,4 +36,9 @@ public class NotifyUtil {
         //notification.defaults |= Notification.FLAG_ONGOING_EVENT;
         notificationManager.notify(id, notification);
     }
+
+    public void cancelAll(Context context) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+    }
 }

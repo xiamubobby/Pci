@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.module;
 
 import android.os.Bundle;
 
+import com.wonders.xlab.common.utils.NotifyUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
@@ -41,6 +42,7 @@ public class UserCenterActivity extends AppbarActivity {
 
     @OnClick(R.id.btn_user_center_exit)
     public void exit() {
+        new NotifyUtil().cancelAll(this);
         SPManager.get(this).clear();
         RxBus.getInstance().send(new ExitBus());
         finish();
