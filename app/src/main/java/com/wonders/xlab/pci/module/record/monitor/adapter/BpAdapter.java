@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.module.record.monitor.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.record.monitor.bean.BpBean;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,6 +31,12 @@ public class BpAdapter extends SimpleRVAdapter<BpBean> implements StickyRecycler
         super(contextWeakReference);
         mContext = contextWeakReference;
         mInflater = LayoutInflater.from(mContext.get());
+    }
+
+    @Override
+    public void setDatas(List<BpBean> mBeanList) {
+        super.setDatas(mBeanList);
+
     }
 
     @Override
@@ -49,13 +57,7 @@ public class BpAdapter extends SimpleRVAdapter<BpBean> implements StickyRecycler
     }
 
     @Override
-    public int getItemCount() {
-        return super.getItemCount();
-    }
-
-    @Override
     public long getHeaderId(int position) {
-
         return getBean(position).getHeaderId();
     }
 
@@ -68,18 +70,19 @@ public class BpAdapter extends SimpleRVAdapter<BpBean> implements StickyRecycler
 
     /**
      * @param holder
-     * @param position this position don't equal to the datas position
+     * @param position this position is not equal to the datas position
      */
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
         final TitleViewHolder viewHolder = (TitleViewHolder) holder;
         long time = 0;
         for (int i = 0; i < getItemCount(); i++) {
-            if (position == getHeaderId(i)) {
+            if (getBean(i).getHeaderId() == getHeaderId(position)) {
                 time = getBean(i).getRecordTime();
                 break;
             }
         }
+        Log.d("BPModel1", DateUtil.format(time, "yyyy-MM-dd"));
         viewHolder.bpTitle.setText(DateUtil.format(time, "yyyy-MM-dd"));
     }
 

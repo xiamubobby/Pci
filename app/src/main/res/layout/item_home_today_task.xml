@@ -58,7 +58,7 @@
             android:text="记录服药"/>
 
         <TextView
-            android:id="@+id/tv_item_home_today_measure"
+            android:id="@+id/tv_item_home_today_bp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_interval"
@@ -70,7 +70,22 @@
             android:paddingLeft="@dimen/item_interval_large"
             android:paddingRight="@dimen/item_interval_large"
             android:paddingTop="@dimen/item_interval"
-            android:text="指数测量"/>
+            android:text="血压测量"/>
+
+        <TextView
+            android:id="@+id/tv_item_home_today_bs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_interval"
+            android:background="@color/bg_gray"
+            android:drawablePadding="@dimen/item_interval_large"
+            android:drawableRight="@drawable/ic_home_item_measure"
+            android:gravity="center"
+            android:paddingBottom="@dimen/item_interval"
+            android:paddingLeft="@dimen/item_interval_large"
+            android:paddingRight="@dimen/item_interval_large"
+            android:paddingTop="@dimen/item_interval"
+            android:text="血糖测量"/>
 
         <TextView
             android:id="@+id/tv_item_home_today_symptom"

@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.module.home;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,14 @@ import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.home.mvn.model.HomeModel;
 import com.wonders.xlab.pci.module.home.mvn.view.HomeView;
+import com.wonders.xlab.pci.module.home.rxbus.BPClickBus;
+import com.wonders.xlab.pci.module.home.rxbus.BSClickBus;
+import com.wonders.xlab.pci.module.home.rxbus.MedicineClickBus;
+import com.wonders.xlab.pci.module.home.rxbus.SymptomClickBus;
+import com.wonders.xlab.pci.module.task.AddBPActivity;
+import com.wonders.xlab.pci.module.task.AddBSActivity;
+import com.wonders.xlab.pci.module.task.AddSymptomActivity;
+import com.wonders.xlab.pci.module.task.DailyTaskActivity;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -110,6 +119,18 @@ public class HomeFragment extends BaseFragment implements HomeView {
                         mRvHome.setAdapter(mHomeRVAdapter);
                         mHomeRVAdapter.addToTop(bus);
                     }
+                } else if (o instanceof MedicineClickBus) {
+                    //服药
+                    getActivity().startActivity(new Intent(getActivity(), DailyTaskActivity.class));
+                } else if (o instanceof BPClickBus) {
+                    //测血压
+                    getActivity().startActivity(new Intent(getActivity(), AddBPActivity.class));
+                } else if (o instanceof BSClickBus) {
+                    //测血糖
+                    getActivity().startActivity(new Intent(getActivity(), AddBSActivity.class));
+                } else if (o instanceof SymptomClickBus) {
+                    //不良症状
+                    getActivity().startActivity(new Intent(getActivity(), AddSymptomActivity.class));
                 }
             }
         }));

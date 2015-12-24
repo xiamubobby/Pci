@@ -32,8 +32,8 @@ public class BPActivity extends AppbarActivity implements BPView {
 
     @Bind(R.id.stl_bp_time_filter)
     SegmentTabLayout mStlBpTimeFilter;
-    @Bind(R.id.ry_bp_history)
-    RecyclerView mRyBpHistory;
+    @Bind(R.id.rv_bp_history)
+    RecyclerView mRVBpHistory;
     @Bind(R.id.tv_bp_date)
     TextView tvBpDay;
     private BPModel bpModel;
@@ -66,12 +66,11 @@ public class BPActivity extends AppbarActivity implements BPView {
         addModel(bpModel);
 
         initView();
+        bpModel.getBpData(AIManager.getInstance(this).getUserId(), DateUtil.parseToLong(getStartTime(), "yyyy-MM-dd"), DateUtil.parseToLong(getEndTime(), "yyyy-MM-dd"));
     }
 
     private void initView() {
         tvBpDay.setText(String.format("%s~%s", getStartTime(), getEndTime()));
-
-        bpModel.getBpData(AIManager.getInstance(this).getUserId(), DateUtil.parseToLong(getStartTime(), "yyyy-MM-dd"), DateUtil.parseToLong(getEndTime(), "yyyy-MM-dd"));
 
         mStlBpTimeFilter.setTabData(TIME_FILTER_NAME);
         mStlBpTimeFilter.setOnTabSelectListener(new OnTabSelectListener() {
@@ -100,15 +99,21 @@ public class BPActivity extends AppbarActivity implements BPView {
             }
         });
 
-        mRyBpHistory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRVBpHistory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
     @Override
     public void showBplist(List<BpBean> bpBeanList) {
         if (mBpAdapter == null) {
             mBpAdapter = new BpAdapter(new WeakReference<Context>(this));
-            mRyBpHistory.addItemDecoration(new StickyRecyclerHeadersDecoration(mBpAdapter));
-            mRyBpHistory.setAdapter(mBpAdapter);
+            mRVBpHistory.setAdapter(mBpAdapter);
+            final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(mBpAdapter);
+            mRVBpHistory.addItemDecoration(decoration);
+            mBpAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override public void onChanged() {
+                    decoration.invalidateHeaders();
+                }
+            });
         }
         mBpAdapter.setDatas(bpBeanList);
 
@@ -143,7 +148,7 @@ public class BPActivity extends AppbarActivity implements BPView {
 
     @Override
     public void onFailed(String message) {
-        showSnackbar(mRyBpHistory, message);
+        showSnackbar(mRVBpHistory, message);
     }
 
     @Override
