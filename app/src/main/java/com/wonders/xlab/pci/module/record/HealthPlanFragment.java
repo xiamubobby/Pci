@@ -49,12 +49,12 @@ public class HealthPlanFragment extends BaseFragment {
 
     private void initWebView(final String url) {
 
-        mWvHealthPlan.getSettings().setJavaScriptEnabled(true);
+//        mWvHealthPlan.getSettings().setJavaScriptEnabled(true);
         mWvHealthPlan.getSettings().setDomStorageEnabled(true);
         mWvHealthPlan.getSettings().setDatabaseEnabled(true);
         mWvHealthPlan.getSettings().setAppCacheEnabled(false);
         mWvHealthPlan.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        mWvHealthPlan.getSettings().setAllowFileAccess(true);
+//        mWvHealthPlan.getSettings().setAllowFileAccess(true);
 
         if (Build.VERSION.SDK_INT >= 16) {
             mWvHealthPlan.getSettings().setAllowUniversalAccessFromFileURLs(true);

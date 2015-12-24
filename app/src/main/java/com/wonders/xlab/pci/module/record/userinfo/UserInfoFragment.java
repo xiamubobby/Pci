@@ -75,12 +75,6 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
-    @Override
     public void showLoading() {
         mRefresh.post(new Runnable() {
             @Override
@@ -104,8 +98,6 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
         if (mUserInfoRVAdapter == null) {
             mUserInfoRVAdapter = new UserInfoRVAdapter(new WeakReference<Context>(getActivity()));
             mRvUserInfo.setAdapter(mUserInfoRVAdapter);
-        } else {
-            mUserInfoRVAdapter.clear();
         }
         List<UserInfoBean> userInfoBeanList = new ArrayList<>();
         userInfoBeanList.add(new UserInfoBean(UserInfoRVAdapter.VIEW_TYPE_DIVIDER, "个人历史", ""));
@@ -133,5 +125,15 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
         if (mRefresh != null) {
             mRefresh.setRefreshing(false);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (mUserInfoRVAdapter != null) {
+            mUserInfoRVAdapter.clear();
+            mUserInfoRVAdapter = null;
+        }
+        ButterKnife.unbind(this);
     }
 }

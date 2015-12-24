@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#8aa991"
+        android:background="#ffd0b4"
         android:gravity="center"
         android:text="术后病例"
         android:textColor="@android:color/white"/>
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#8a9aa9"
+        android:background="#fb967b"
         android:gravity="center"
         android:text="术中病例"
         android:textColor="@android:color/white"/>
