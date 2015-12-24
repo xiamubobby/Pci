@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.module.record.monitor.mvn.api;
 
-import com.wonders.xlab.pci.module.record.monitor.mvn.entity.BSEntity;
+import com.wonders.xlab.pci.mvn.entity.record.monitor.BSEntity;
 
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
@@ -12,7 +12,7 @@ import rx.Observable;
  */
 public interface BSAPI {
     @FormUrlEncoded
-    @POST("userBloodSugar/listUserBloodSugar")
-    Observable<BSEntity> getBp(@Field("userId") String userId);
+    @POST("userBloodSugar/listUserBloodSugarByDate")
+    Observable<BSEntity> getBS(@Field("userId") String userId, @Field("startDate") long startDate, @Field("endDate") long endDate);
 
 }

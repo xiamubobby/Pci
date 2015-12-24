@@ -10,7 +10,6 @@
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.GET_TASKS"/>
@@ -67,8 +66,7 @@
             android:name=".module.record.report.ReportDetailActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_report_detail"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:configChanges="orientation|screenSize"
@@ -98,71 +96,65 @@
             android:excludeFromRecents="true"
             android:label="@string/title_activity_add_blood_pressure"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".module.task.AddBSActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_add_blood_sugar"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".module.task.AddCigaretteActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_add_cigarette"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".module.task.AddWineActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_add_wine"
             android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize">
-        </activity>
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".module.task.AddSymptomActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_add_symptom"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".module.MyDoctorActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_my_doctor"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".module.record.monitor.BPActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_bp"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".module.record.monitor.BSActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/title_activity_bp"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".module.record.monitor.SymptomActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_symptom"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".module.record.monitor.MedicineActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_medicine"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".module.UserCenterActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_user_center"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"/>
 
         <service
             android:name=".service.XEMChatService"
             android:enabled="true"
-            android:exported="true">
-        </service>
+            android:exported="true"/>
 
         <receiver
             android:name=".receiver.BootstrapReceiver"
@@ -175,18 +167,15 @@
         <receiver
             android:name=".receiver.EMChatMessageBroadcastReceiver"
             android:enabled="true"
-            android:exported="true">
-        </receiver>
+            android:exported="true"/>
 
         <!--umeng-->
         <service
             android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService">
-        </service>
+            android:process=":DownloadingService"/>
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar">
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
     </application>
 
 </manifest>

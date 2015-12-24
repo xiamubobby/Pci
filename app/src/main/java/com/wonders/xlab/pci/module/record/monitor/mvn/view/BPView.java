@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.module.record.monitor.mvn.view;
 
-import com.wonders.xlab.pci.module.record.monitor.bean.BpBean;
+import com.wonders.xlab.pci.module.record.monitor.bean.BPBean;
 import com.wonders.xlab.pci.mvn.view.BaseView;
 
 import java.util.List;
@@ -10,8 +10,7 @@ import java.util.List;
  */
 public interface BPView extends BaseView {
 
-
-    void showBplist(List<BpBean> bpBeanList);
+    void showBPlist(List<BPBean> bpBeanList);
 
     void onFailed(String message);
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
@@ -15,10 +14,24 @@ import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.rxbus.ExitBus;
 import com.wonders.xlab.pci.receiver.EMChatMessageBroadcastReceiver;
 
+import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
+
 public class XEMChatService extends Service {
+    private final CompositeSubscription mSubscription;
     private EMChatMessageBroadcastReceiver msgReceiver;
 
     public XEMChatService() {
+        mSubscription = new CompositeSubscription();
+
+        mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
+            @Override
+            public void call(Object o) {
+                if (o instanceof ExitBus) {
+                    stopSelf();
+                }
+            }
+        }));
     }
 
     @Override
@@ -30,24 +43,27 @@ public class XEMChatService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        login();
+
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void login() {
         String tel = AIManager.getInstance(this).getUserTel();
         if (TextUtils.isEmpty(tel)) {
             RxBus.getInstance().send(new ExitBus());
             stopSelf();
-            return 0;
+            return;
         }
-
-        if (msgReceiver == null) {
-            msgReceiver = new EMChatMessageBroadcastReceiver();
-            IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
-            intentFilter.setPriority(3);
-            registerReceiver(msgReceiver, intentFilter);
-        }
-
         EMChatManager.getInstance().login(tel, new MD5Util().encrypt("pci_user" + tel).toLowerCase(), new EMCallBack() {//回调
             @Override
             public void onSuccess() {
-
+                if (msgReceiver == null) {
+                    msgReceiver = new EMChatMessageBroadcastReceiver();
+                    IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
+                    intentFilter.setPriority(13);
+                    registerReceiver(msgReceiver, intentFilter);
+                }
             }
 
             @Override
@@ -57,11 +73,9 @@ public class XEMChatService extends Service {
 
             @Override
             public void onError(int code, String message) {
-                Log.e("XEMChatService", "登陆聊天服务器失败！");
+                login();
             }
         });
-
-        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
@@ -70,6 +84,9 @@ public class XEMChatService extends Service {
         if (msgReceiver != null) {
             unregisterReceiver(msgReceiver);
             msgReceiver = null;
+        }
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
         }
         EMChatManager.getInstance().logout();//此方法为同步方法
     }

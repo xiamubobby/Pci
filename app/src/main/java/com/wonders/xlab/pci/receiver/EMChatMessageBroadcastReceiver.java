@@ -3,7 +3,6 @@ package com.wonders.xlab.pci.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.activeandroid.query.Delete;
 import com.easemob.chat.EMChatManager;
@@ -23,7 +22,6 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("EMChatMessageBroadcastR", "get a message");
         // 注销广播
         abortBroadcast();
 
@@ -52,7 +50,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             TodayTaskBean todayTaskBean = new TodayTaskBean();
             todayTaskBean.setTitle(new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8"));
             todayTaskBean.setUpdateTime(Calendar.getInstance().getTimeInMillis());
-            todayTaskBean.setName("六二");
+            todayTaskBean.setName("");
             todayTaskBean.setPortrait(Constant.TEST_PORTRAIT);
 
             todayTaskBean.save();

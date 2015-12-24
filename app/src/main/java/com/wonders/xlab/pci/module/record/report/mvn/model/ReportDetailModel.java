@@ -6,7 +6,7 @@ import com.wonders.xlab.pci.module.record.report.bean.ReportDetailBean;
 import com.wonders.xlab.pci.module.record.report.bean.ReportDetailImageBean;
 import com.wonders.xlab.pci.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.record.report.mvn.api.ReportDetailAPI;
-import com.wonders.xlab.pci.module.record.report.mvn.entity.ReportDetailEntity;
+import com.wonders.xlab.pci.mvn.entity.record.report.ReportDetailEntity;
 import com.wonders.xlab.pci.module.record.report.mvn.view.ReportDetailView;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.module.record.userinfo.mvn.entity;
+package com.wonders.xlab.pci.mvn.entity.record.userinfo;
 
 import com.wonders.xlab.pci.mvn.entity.BaseEntity;
 

@@ -3,7 +3,7 @@ package com.wonders.xlab.pci.module.record.monitor.bean;
 /**
  * Created by sjy on 2015/12/22.
  */
-public class BpBean{
+public class BPBean {
     /**
      * 舒张压
      */
@@ -12,7 +12,6 @@ public class BpBean{
      * 收缩压
      */
     private String  systolicPressure;
-    private String userId;
     private String heartRate;
     private Long recordTime;
     private long headerId;
@@ -50,31 +49,11 @@ public class BpBean{
         this.systolicPressure = systolicPressure;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public long getHeaderId() {
         return headerId;
     }
 
     public void setHeaderId(long headerId) {
         this.headerId = headerId;
-    }
-
-    @Override
-    public String toString() {
-        return "BpBean{" +
-                "diastolicPressure='" + diastolicPressure + '\'' +
-                ", systolicPressure='" + systolicPressure + '\'' +
-                ", userId='" + userId + '\'' +
-                ", heartRate='" + heartRate + '\'' +
-                ", recordTime=" + recordTime +
-                ", headerId=" + headerId +
-                '}';
     }
 }

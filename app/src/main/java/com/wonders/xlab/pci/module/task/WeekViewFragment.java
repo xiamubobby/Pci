@@ -16,7 +16,7 @@ import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseFragment;
-import com.wonders.xlab.pci.module.task.mvn.entity.DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity;
+import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity;
 import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
 
 import java.util.ArrayList;

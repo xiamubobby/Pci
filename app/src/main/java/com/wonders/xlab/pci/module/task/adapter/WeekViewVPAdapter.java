@@ -6,7 +6,7 @@ import android.support.v13.app.FragmentPagerAdapter;
 
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.module.task.WeekViewFragment;
-import com.wonders.xlab.pci.module.task.mvn.entity.DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity;
+import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity;
 
 import java.util.ArrayList;
 import java.util.Calendar;

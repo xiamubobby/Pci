@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.module.record.userinfo.mvn.api;
 
-import com.wonders.xlab.pci.module.record.userinfo.mvn.entity.UserInfoEntity;
+import com.wonders.xlab.pci.mvn.entity.record.userinfo.UserInfoEntity;
 
 import retrofit.http.GET;
 import retrofit.http.Path;

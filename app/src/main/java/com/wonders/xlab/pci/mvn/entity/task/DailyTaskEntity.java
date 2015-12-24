@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.module.task.mvn.entity;
+package com.wonders.xlab.pci.mvn.entity.task;
 
 import android.os.Parcel;
 import android.os.Parcelable;

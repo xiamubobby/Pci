@@ -31,6 +31,7 @@ import com.wonders.xlab.pci.module.task.AddBPActivity;
 import com.wonders.xlab.pci.module.task.AddBSActivity;
 import com.wonders.xlab.pci.module.task.AddSymptomActivity;
 import com.wonders.xlab.pci.module.task.DailyTaskActivity;
+import com.wonders.xlab.pci.service.XEMChatService;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -62,6 +63,13 @@ public class HomeFragment extends BaseFragment implements HomeView {
         super.onCreate(savedInstanceState);
         mHomeModel = new HomeModel(this);
         addModel(mHomeModel);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().startService(new Intent(getActivity(), XEMChatService.class));
+            }
+        }).start();
     }
 
     @Override

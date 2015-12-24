@@ -15,7 +15,7 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
-import com.wonders.xlab.pci.module.task.mvn.entity.SymptomEntity;
+import com.wonders.xlab.pci.mvn.entity.task.SymptomEntity;
 import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
 import com.wonders.xlab.pci.module.task.mvn.model.SymptomModel;
 import com.wonders.xlab.pci.module.task.rxbus.TaskRefreshBus;

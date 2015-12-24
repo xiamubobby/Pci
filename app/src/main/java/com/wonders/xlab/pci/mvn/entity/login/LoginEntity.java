@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.module.login.mvn.entity;
+package com.wonders.xlab.pci.mvn.entity.login;
 
 import com.wonders.xlab.pci.mvn.entity.BaseEntity;
 

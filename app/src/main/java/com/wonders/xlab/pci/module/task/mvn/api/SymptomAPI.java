@@ -1,7 +1,7 @@
 package com.wonders.xlab.pci.module.task.mvn.api;
 
 import com.wonders.xlab.pci.mvn.entity.SimpleEntity;
-import com.wonders.xlab.pci.module.task.mvn.entity.SymptomEntity;
+import com.wonders.xlab.pci.mvn.entity.task.SymptomEntity;
 
 import retrofit.http.GET;
 import rx.Observable;

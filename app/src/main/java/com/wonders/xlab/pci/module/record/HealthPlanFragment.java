@@ -24,7 +24,6 @@ import butterknife.ButterKnife;
  */
 public class HealthPlanFragment extends BaseFragment {
 
-
     @Bind(R.id.wv_health_plan)
     WebView mWvHealthPlan;
 
@@ -60,9 +59,7 @@ public class HealthPlanFragment extends BaseFragment {
         if (Build.VERSION.SDK_INT >= 16) {
             mWvHealthPlan.getSettings().setAllowUniversalAccessFromFileURLs(true);
         }
-
         mWvHealthPlan.setWebViewClient(new MyWebViewClient());
-
         mWvHealthPlan.loadUrl(url);
     }
 

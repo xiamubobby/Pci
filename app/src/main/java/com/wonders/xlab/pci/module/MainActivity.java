@@ -28,7 +28,6 @@ import com.wonders.xlab.pci.module.login.LoginActivity;
 import com.wonders.xlab.pci.module.record.RecordFragment;
 import com.wonders.xlab.pci.module.rxbus.ExitBus;
 import com.wonders.xlab.pci.module.task.DailyTaskActivity;
-import com.wonders.xlab.pci.service.XEMChatService;
 
 import java.util.concurrent.TimeUnit;
 
@@ -90,17 +89,6 @@ public class MainActivity extends BaseActivity {
                 });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                startService(new Intent(MainActivity.this, XEMChatService.class));
-            }
-        }).start();
-    }
-
     /*
 
     */
@@ -126,8 +114,8 @@ public class MainActivity extends BaseActivity {
             @Override
             public void call(Object o) {
                 if (o instanceof ExitBus) {
-                    MainActivity.this.finish();
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    MainActivity.this.finish();
                 }
             }
         }));

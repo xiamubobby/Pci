@@ -1,6 +1,5 @@
 package com.wonders.xlab.pci.module;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.wonders.xlab.pci.R;
@@ -8,7 +7,6 @@ import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.application.SPManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
-import com.wonders.xlab.pci.module.login.LoginActivity;
 import com.wonders.xlab.pci.module.rxbus.ExitBus;
 
 import butterknife.Bind;
@@ -44,7 +42,6 @@ public class UserCenterActivity extends AppbarActivity {
     @OnClick(R.id.btn_user_center_exit)
     public void exit() {
         SPManager.get(this).clear();
-        startActivity(new Intent(this, LoginActivity.class));
         RxBus.getInstance().send(new ExitBus());
         finish();
     }

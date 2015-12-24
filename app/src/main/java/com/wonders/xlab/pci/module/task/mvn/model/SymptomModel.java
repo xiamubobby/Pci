@@ -2,7 +2,7 @@ package com.wonders.xlab.pci.module.task.mvn.model;
 
 import com.wonders.xlab.pci.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.task.mvn.api.SymptomAPI;
-import com.wonders.xlab.pci.module.task.mvn.entity.SymptomEntity;
+import com.wonders.xlab.pci.mvn.entity.task.SymptomEntity;
 import com.wonders.xlab.pci.module.task.mvn.view.SymptomView;
 
 /**

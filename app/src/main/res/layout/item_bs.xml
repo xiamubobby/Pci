@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@android:color/white"
-    android:layout_height="match_parent"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@android:color/white"
+              android:orientation="vertical"
+              android:paddingLeft="@dimen/item_interval_large"
+              android:paddingRight="@dimen/item_interval_large"
     >
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?listPreferredItemHeightSmall"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
+
         <TextView
-            android:id="@+id/tv_bs_date"
+            android:id="@+id/tv_bs_hour"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            />
-        <TextView
-            android:id="@+id/tv_bs_suger"
-            android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
+            android:gravity="left"
+            />
+
+        <TextView
+            android:id="@+id/tv_bs_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"/>
+
     </LinearLayout>
+
     <include layout="@layout/divider_vertical"/>
 
 </LinearLayout>

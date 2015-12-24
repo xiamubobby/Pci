@@ -10,7 +10,7 @@ import com.wonders.xlab.pci.module.task.bean.SymptomBean;
 import com.wonders.xlab.pci.module.task.bean.WineBean;
 import com.wonders.xlab.pci.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.task.mvn.api.DailyTaskAPI;
-import com.wonders.xlab.pci.module.task.mvn.entity.DailyTaskEntity;
+import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity;
 import com.wonders.xlab.pci.module.task.mvn.view.DailyTaskView;
 
 import java.util.ArrayList;

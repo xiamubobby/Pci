@@ -6,7 +6,7 @@ import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
 import com.wonders.xlab.pci.module.task.bean.SmokeBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
 import com.wonders.xlab.pci.module.task.bean.WineBean;
-import com.wonders.xlab.pci.module.task.mvn.entity.DailyTaskEntity;
+import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity;
 import com.wonders.xlab.pci.mvn.view.BaseView;
 
 import java.util.List;

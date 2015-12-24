@@ -2,7 +2,7 @@ package com.wonders.xlab.pci.module.record.monitor.mvn.model;
 
 import com.wonders.xlab.pci.module.record.monitor.bean.MedicineCategoryBean;
 import com.wonders.xlab.pci.module.record.monitor.bean.MedicineCategoryChildBean;
-import com.wonders.xlab.pci.module.record.monitor.mvn.entity.MedicineEntity;
+import com.wonders.xlab.pci.mvn.entity.record.monitor.MedicineEntity;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.MedicineView;
 import com.wonders.xlab.pci.module.task.mvn.api.MedicineAPI;
 import com.wonders.xlab.pci.mvn.model.BaseModel;

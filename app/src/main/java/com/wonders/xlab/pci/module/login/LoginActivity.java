@@ -14,7 +14,7 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.MainActivity;
 import com.wonders.xlab.pci.module.base.BaseActivity;
-import com.wonders.xlab.pci.module.login.mvn.entity.LoginEntity;
+import com.wonders.xlab.pci.mvn.entity.login.LoginEntity;
 import com.wonders.xlab.pci.module.login.mvn.model.LoginModel;
 import com.wonders.xlab.pci.module.login.mvn.view.LoginView;
 

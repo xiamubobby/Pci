@@ -54,7 +54,6 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="16dp"
-            android:text="12月01日"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_size_normal"/>
 

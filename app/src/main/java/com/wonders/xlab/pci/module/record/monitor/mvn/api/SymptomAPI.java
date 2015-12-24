@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.module.record.monitor.mvn.api;
 
-import com.wonders.xlab.pci.module.record.monitor.mvn.entity.SymptomEntity;
+import com.wonders.xlab.pci.mvn.entity.record.monitor.SymptomEntity;
 
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;

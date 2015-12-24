@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.module.home.mvn.entity;
+package com.wonders.xlab.pci.mvn.entity.home;
 
 import com.google.gson.annotations.SerializedName;
 import com.wonders.xlab.pci.mvn.entity.BaseEntity;

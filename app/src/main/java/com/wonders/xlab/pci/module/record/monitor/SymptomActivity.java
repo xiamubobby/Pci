@@ -14,7 +14,7 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.record.monitor.adapter.SymptomRVAdapter;
-import com.wonders.xlab.pci.module.record.monitor.mvn.entity.SymptomEntity;
+import com.wonders.xlab.pci.mvn.entity.record.monitor.SymptomEntity;
 import com.wonders.xlab.pci.module.record.monitor.mvn.model.SymptomModel;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.SymptomView;
 import com.zhy.view.flowlayout.FlowLayout;

@@ -12,10 +12,9 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.module.record.monitor.bean.BpBean;
+import com.wonders.xlab.pci.module.record.monitor.bean.BPBean;
 
 import java.lang.ref.WeakReference;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,20 +22,14 @@ import butterknife.ButterKnife;
 /**
  * Created by sjy on 2015/12/22.
  */
-public class BpAdapter extends SimpleRVAdapter<BpBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
+public class BPAdapter extends SimpleRVAdapter<BPBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
     private WeakReference<Context> mContext;
     private LayoutInflater mInflater;
 
-    public BpAdapter(WeakReference<Context> contextWeakReference) {
+    public BPAdapter(WeakReference<Context> contextWeakReference) {
         super(contextWeakReference);
         mContext = contextWeakReference;
         mInflater = LayoutInflater.from(mContext.get());
-    }
-
-    @Override
-    public void setDatas(List<BpBean> mBeanList) {
-        super.setDatas(mBeanList);
-
     }
 
     @Override
@@ -63,7 +56,7 @@ public class BpAdapter extends SimpleRVAdapter<BpBean> implements StickyRecycler
 
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        View titleView = mInflater.inflate(R.layout.item_bp_title, parent, false);
+        View titleView = mInflater.inflate(R.layout.item_header_time, parent, false);
 
         return new TitleViewHolder(titleView);
     }
@@ -101,7 +94,7 @@ public class BpAdapter extends SimpleRVAdapter<BpBean> implements StickyRecycler
     }
 
     class TitleViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_bp_title)
+        @Bind(R.id.tv_header_time)
         TextView bpTitle;
 
         public TitleViewHolder(View titleView) {

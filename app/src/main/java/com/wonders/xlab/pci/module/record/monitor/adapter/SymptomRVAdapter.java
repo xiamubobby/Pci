@@ -12,7 +12,7 @@ import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.common.utils.GlideCircleTransform;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.module.record.monitor.mvn.entity.SymptomEntity;
+import com.wonders.xlab.pci.mvn.entity.record.monitor.SymptomEntity;
 
 import java.lang.ref.WeakReference;
 

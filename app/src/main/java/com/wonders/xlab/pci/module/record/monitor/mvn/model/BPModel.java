@@ -1,12 +1,10 @@
 package com.wonders.xlab.pci.module.record.monitor.mvn.model;
 
 
-import android.util.Log;
-
 import com.wonders.xlab.common.utils.DateUtil;
-import com.wonders.xlab.pci.module.record.monitor.bean.BpBean;
+import com.wonders.xlab.pci.module.record.monitor.bean.BPBean;
 import com.wonders.xlab.pci.module.record.monitor.mvn.api.BPAPI;
-import com.wonders.xlab.pci.module.record.monitor.mvn.entity.BPEntity;
+import com.wonders.xlab.pci.mvn.entity.record.monitor.BPEntity;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.BPView;
 import com.wonders.xlab.pci.mvn.model.BaseModel;
 
@@ -37,18 +35,16 @@ public class BPModel extends BaseModel<BPEntity> {
             return;
         }
         long headerId = 0;
-        List<BpBean> list = new ArrayList<>();
+        List<BPBean> list = new ArrayList<>();
         for (int i = 0; i < entity.size(); i++) {
             BPEntity.RetValuesEntity contentEntity = entity.get(i);
 
-            BpBean bpBean = new BpBean();
+            BPBean bpBean = new BPBean();
             bpBean.setDiastolicPressure(contentEntity.getDiastolicPressure() + "");
             bpBean.setSystolicPressure(contentEntity.getSystolicPressure() + "");
             bpBean.setHeartRate(contentEntity.getHeartRate() + "");
-            bpBean.setUserId(contentEntity.getId() + "");
             bpBean.setRecordTime(contentEntity.getRecordTime());
 
-            Log.d("BPModel", DateUtil.format(contentEntity.getRecordTime(), "yyyy-MM-dd"));
             if (list.size() > 0) {
                 if (DateUtil.isTheSameDay(contentEntity.getRecordTime(), list.get(i - 1).getRecordTime())) {
                     bpBean.setHeaderId(headerId - 1);
@@ -61,7 +57,7 @@ public class BPModel extends BaseModel<BPEntity> {
             list.add(bpBean);
         }
 
-        mBpView.showBplist(list);
+        mBpView.showBPlist(list);
     }
 
 

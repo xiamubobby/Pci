@@ -6,7 +6,7 @@ import com.activeandroid.query.Delete;
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
 import com.wonders.xlab.pci.module.home.bean.YesterdayTaskBean;
 import com.wonders.xlab.pci.module.home.mvn.api.HomeAPI;
-import com.wonders.xlab.pci.module.home.mvn.entity.HomeEntity;
+import com.wonders.xlab.pci.mvn.entity.home.HomeEntity;
 import com.wonders.xlab.pci.module.home.mvn.view.HomeView;
 import com.wonders.xlab.pci.mvn.model.BaseModel;
 

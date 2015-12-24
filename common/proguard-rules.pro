@@ -15,3 +15,23 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keepattributes InnerClasses
+
+#Retrofit
+-dontwarn retrofit.**
+-keep class retrofit.** { *; }
+
+#Umeng
+-keep class com.umeng.**
+-keep public interface com.umeng.socialize.**
+-keep public interface com.umeng.socialize.sensor.**
+-keep public interface com.umeng.scrshot.**
+-dontwarn com.umeng.**
+
+#不混淆butterknife
+-dontwarn butterknife.internal.**
+-keep class **$$ViewInjector { *; }
+-keepnames class * { @butterknife.InjectView *;}
+
+-dontwarn io.reactivex.**
+-dontwarn rx.**

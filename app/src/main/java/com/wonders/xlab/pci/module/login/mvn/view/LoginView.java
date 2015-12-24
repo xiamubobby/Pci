@@ -1,7 +1,7 @@
 package com.wonders.xlab.pci.module.login.mvn.view;
 
 import com.wonders.xlab.pci.mvn.view.BaseView;
-import com.wonders.xlab.pci.module.login.mvn.entity.LoginEntity;
+import com.wonders.xlab.pci.mvn.entity.login.LoginEntity;
 
 /**
  * Created by hua on 15/12/17.

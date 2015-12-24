@@ -13,8 +13,8 @@ import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
-import com.wonders.xlab.pci.module.record.monitor.adapter.BpAdapter;
-import com.wonders.xlab.pci.module.record.monitor.bean.BpBean;
+import com.wonders.xlab.pci.module.record.monitor.adapter.BPAdapter;
+import com.wonders.xlab.pci.module.record.monitor.bean.BPBean;
 import com.wonders.xlab.pci.module.record.monitor.mvn.model.BPModel;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.BPView;
 
@@ -37,7 +37,7 @@ public class BPActivity extends AppbarActivity implements BPView {
     @Bind(R.id.tv_bp_date)
     TextView tvBpDay;
     private BPModel bpModel;
-    private BpAdapter mBpAdapter;
+    private BPAdapter mBPAdapter;
 
     private SelectedPeriod mSelectedPeriod = SelectedPeriod.WEEK;
 
@@ -103,20 +103,19 @@ public class BPActivity extends AppbarActivity implements BPView {
     }
 
     @Override
-    public void showBplist(List<BpBean> bpBeanList) {
-        if (mBpAdapter == null) {
-            mBpAdapter = new BpAdapter(new WeakReference<Context>(this));
-            mRVBpHistory.setAdapter(mBpAdapter);
-            final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(mBpAdapter);
+    public void showBPlist(List<BPBean> bpBeanList) {
+        if (mBPAdapter == null) {
+            mBPAdapter = new BPAdapter(new WeakReference<Context>(this));
+            mRVBpHistory.setAdapter(mBPAdapter);
+            final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(mBPAdapter);
             mRVBpHistory.addItemDecoration(decoration);
-            mBpAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            mBPAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
                 @Override public void onChanged() {
                     decoration.invalidateHeaders();
                 }
             });
         }
-        mBpAdapter.setDatas(bpBeanList);
-
+        mBPAdapter.setDatas(bpBeanList);
     }
 
     @OnClick(R.id.tv_bp_pre_date)
@@ -187,6 +186,5 @@ public class BPActivity extends AppbarActivity implements BPView {
         }
         return DateUtil.format(endTime, "yyyy-MM-dd");
     }
-
 
 }

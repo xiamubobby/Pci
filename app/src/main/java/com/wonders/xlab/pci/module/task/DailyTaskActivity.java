@@ -32,7 +32,7 @@ import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
 import com.wonders.xlab.pci.module.task.bean.SmokeBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
 import com.wonders.xlab.pci.module.task.bean.WineBean;
-import com.wonders.xlab.pci.module.task.mvn.entity.DailyTaskEntity;
+import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity;
 import com.wonders.xlab.pci.module.task.mvn.model.DailyTaskModel;
 import com.wonders.xlab.pci.module.task.mvn.model.TakeMedicineModel;
 import com.wonders.xlab.pci.module.task.mvn.view.DailyTaskView;
