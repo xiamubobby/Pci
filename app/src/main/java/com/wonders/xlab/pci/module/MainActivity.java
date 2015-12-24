@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
+import com.wonders.xlab.common.utils.MD5Util;
 import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.R;
@@ -62,6 +64,8 @@ public class MainActivity extends BaseActivity {
                 startService(new Intent(MainActivity.this, XEMChatService.class));
             }
         }).start();
+
+        Log.d("MainActivity", new MD5Util().encrypt("111111"));
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);

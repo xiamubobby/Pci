@@ -8,6 +8,8 @@ import android.util.Log;
 
 import com.easemob.EMCallBack;
 import com.easemob.chat.EMChatManager;
+import com.wonders.xlab.common.utils.MD5Util;
+import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.receiver.EMChatMessageBroadcastReceiver;
 
 public class XEMChatService extends Service {
@@ -31,7 +33,8 @@ public class XEMChatService extends Service {
             registerReceiver(msgReceiver, intentFilter);
         }
 
-        EMChatManager.getInstance().login("doctor13248227958", "13248227958", new EMCallBack() {//回调
+        String tel = AIManager.getInstance(this).getUserTel();
+        EMChatManager.getInstance().login(tel, new MD5Util().encrypt("pci_user" + tel).toLowerCase(), new EMCallBack() {//回调
             @Override
             public void onSuccess() {
 
