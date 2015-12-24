@@ -41,7 +41,7 @@ public class BpAdapter  extends SimpleRVAdapter<BpBean> implements StickyRecycle
         final ItemViewHolder viewHolder = (ItemViewHolder) holder;
         Long time = getBean(position).getRecordTime();
         Date d = new Date(time);
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
         viewHolder.bpDate.setText(sdf.format(d));
         viewHolder.bpNum.setText(getBean(position).getSystolicPressure()+"/"+getBean(position).getDiastolicPressure());
         viewHolder.bpRate.setText(getBean(position).getHeartRate());
@@ -85,7 +85,7 @@ public class BpAdapter  extends SimpleRVAdapter<BpBean> implements StickyRecycle
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.tv_bp_date)
+        @Bind(R.id.tv_bp_hour)
         TextView bpDate;
         @Bind(R.id.tv_bp_num)
         TextView bpNum;

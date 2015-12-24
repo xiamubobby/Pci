@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
@@ -26,6 +27,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class BPActivity extends AppbarActivity implements BPView {
 
@@ -36,7 +38,7 @@ public class BPActivity extends AppbarActivity implements BPView {
     SegmentTabLayout mStlBpTimeFilter;
     @Bind(R.id.ry_bp_history)
     RecyclerView mRyBpHistroy;
-    @Bind(R.id.tv_bp_day)
+    @Bind(R.id.tv_bp_date)
     TextView tvBpDay;
     private BPModel bpModel;
     private BpAdapter mBpAdapter;
@@ -81,7 +83,7 @@ public class BPActivity extends AppbarActivity implements BPView {
                 num = 0;
                 startTime = getStartTime(position, 0);
                 endTime = getEndTime(position, 0);
-                tvBpDay.setText(sdf.format(new Date(startTime))+"~"+sdf.format(new Date(endTime)));
+                tvBpDay.setText(sdf.format(new Date(startTime)) + "~" + sdf.format(new Date(endTime)));
                 bpModel.getBpData(AIManager.getInstance(BPActivity.this).getUserId(), startTime, endTime);
                 // TextView textView= (TextView)findViewById(R.id.tv_bp_day);
 
@@ -106,13 +108,32 @@ public class BPActivity extends AppbarActivity implements BPView {
         mBpAdapter.setDatas(bpBeanList);
 
     }
+    @OnClick (R.id.tv_bp_pre_date)
+    public void onPreClick() {
+        num--;
+        startTime = getStartTime(mStlBpTimeFilter.getCurrentTab(), num);
+        endTime = getEndTime(mStlBpTimeFilter.getCurrentTab(), num);
+        tvBpDay.setText(sdf.format(new Date(startTime))+"~"+sdf.format(new Date(endTime)));
+        bpModel.getBpData(AIManager.getInstance(this).getUserId(), startTime, endTime);
 
-    public void btnClick(View view) {
+    }
+    @OnClick (R.id.tv_bp_after_date)
+    public void onAfterClick() {
+        num++;
+        startTime = getStartTime(mStlBpTimeFilter.getCurrentTab(), num);
+        endTime = getEndTime(mStlBpTimeFilter.getCurrentTab(), num);
+        tvBpDay.setText(sdf.format(new Date(startTime))+"~"+sdf.format(new Date(endTime)));
+        bpModel.getBpData(AIManager.getInstance(this).getUserId(), startTime, endTime);
+    }
+
+
+
+   /* public void btnClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_left:
+            case R.id.tv_bp_pre_date:
                 num--;
                 break;
-            case R.id.btn_right:
+            case R.id.tv_bp_after_date:
                 num++;
                 break;
             default:
@@ -123,11 +144,11 @@ public class BPActivity extends AppbarActivity implements BPView {
         tvBpDay.setText(sdf.format(new Date(startTime))+"~"+sdf.format(new Date(endTime)));
         bpModel.getBpData(AIManager.getInstance(this).getUserId(), startTime, endTime);
 
-    }
+    }*/
 
     @Override
     public void onFailed(String message) {
-
+        Toast.makeText(this,"出错",Toast.LENGTH_SHORT);
     }
 
     @Override
@@ -148,28 +169,27 @@ public class BPActivity extends AppbarActivity implements BPView {
                     calendar.add(Calendar.DAY_OF_WEEK, -1);
                     calendar.set(Calendar.DAY_OF_WEEK, 1);
                     calendar.add(Calendar.DATE, num * 7);
-                    startTime = calendar.getTimeInMillis();
                 } else {
                     calendar.set(Calendar.DAY_OF_WEEK, 2);
                     calendar.add(Calendar.DATE, num * 7);
-                    startTime = calendar.getTimeInMillis();
                 }
                 break;
             case 1:
                 calendar.set(Calendar.DAY_OF_MONTH, 1);
                 calendar.add(Calendar.MONTH, num * 1);
-                startTime = calendar.getTimeInMillis();
-
                 break;
             case 2:
                 calendar.set(Calendar.DAY_OF_YEAR, 1);
                 calendar.add(Calendar.YEAR, num * 1);
-                startTime = calendar.getTimeInMillis();
                 break;
             default:
                 break;
         }
-
+        calendar.set(Calendar.HOUR,0);
+        calendar.set(Calendar.MINUTE,0);
+        calendar.set(Calendar.SECOND,0);
+        calendar.set(Calendar.MILLISECOND,0);
+        startTime = calendar.getTimeInMillis();
 
         return startTime;
     }
@@ -180,12 +200,10 @@ public class BPActivity extends AppbarActivity implements BPView {
             case 0:
                 if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
                     calendar.add(Calendar.DATE, num * 7);
-                    endTime = calendar.getTimeInMillis();
                 } else {
                     calendar.set(Calendar.DAY_OF_WEEK, 1);
                     calendar.add(Calendar.DATE, 7);
                     calendar.add(Calendar.DATE, num * 7);
-                    endTime = calendar.getTimeInMillis();
                 }
                 break;
             case 1:
@@ -193,18 +211,21 @@ public class BPActivity extends AppbarActivity implements BPView {
                 calendar.set(Calendar.DAY_OF_MONTH, 1);
                 calendar.add(Calendar.DAY_OF_MONTH, -1);
                 calendar.add(Calendar.MONTH, num * 1);
-                endTime = calendar.getTimeInMillis();
                 break;
             case 2:
                 calendar.add(Calendar.YEAR, 1);
                 calendar.set(Calendar.DAY_OF_YEAR, 1);//本年最后一天
                 calendar.add(Calendar.DAY_OF_YEAR, -1);
                 calendar.add(Calendar.YEAR, num * 1);
-                endTime = calendar.getTimeInMillis();
                 break;
             default:
                 break;
         }
+        calendar.set(Calendar.HOUR,23);
+        calendar.set(Calendar.MINUTE,59);
+        calendar.set(Calendar.SECOND,59);
+        calendar.set(Calendar.MILLISECOND,999);
+        endTime = calendar.getTimeInMillis();
         return endTime;
     }
 
