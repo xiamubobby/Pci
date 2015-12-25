@@ -3,9 +3,7 @@ package com.wonders.xlab.pci.module.base;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MotionEvent;
 
-import com.bugtags.library.Bugtags;
 import com.umeng.update.UmengUpdateAgent;
 import com.wonders.xlab.pci.mvn.model.BaseModel;
 
@@ -32,7 +30,7 @@ public class BaseActivity extends AppCompatActivity {
         UmengUpdateAgent.update(this);
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         //注：回调 1
@@ -52,7 +50,7 @@ public class BaseActivity extends AppCompatActivity {
         Bugtags.onDispatchTouchEvent(this, event);
         return super.dispatchTouchEvent(event);
     }
-
+*/
     @Override
     protected void onStop() {
         super.onStop();

@@ -89,24 +89,6 @@ public class MainActivity extends BaseActivity {
                 });
     }
 
-    /*
-
-    */
-
-    /**
-     * 开机自启动
-     *//*
-    private void initAutoStart() {
-        final PackageManager pm = getPackageManager();
-        final ComponentName cn = new ComponentName(getPackageName(), getPackageName() + ".receiver.BootstrapReceiver");
-        final int state = pm.getComponentEnabledSetting(cn);
-        int newstate;
-        if (state == PackageManager.COMPONENT_ENABLED_STATE_DISABLED) {
-            newstate = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
-            pm.setComponentEnabledSetting(cn, newstate, PackageManager.DONT_KILL_APP);
-        }
-
-    }*/
     private void initRxBus() {
         mSubscription = new CompositeSubscription();
 

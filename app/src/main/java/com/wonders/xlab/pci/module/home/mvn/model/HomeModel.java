@@ -1,13 +1,17 @@
 package com.wonders.xlab.pci.module.home.mvn.model;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
+import com.wonders.xlab.common.utils.NetworkUtil;
+import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
 import com.wonders.xlab.pci.module.home.bean.YesterdayTaskBean;
 import com.wonders.xlab.pci.module.home.mvn.api.HomeAPI;
-import com.wonders.xlab.pci.mvn.entity.home.HomeEntity;
 import com.wonders.xlab.pci.module.home.mvn.view.HomeView;
+import com.wonders.xlab.pci.mvn.entity.home.HomeEntity;
 import com.wonders.xlab.pci.mvn.model.BaseModel;
 
 import java.util.ArrayList;
@@ -28,9 +32,21 @@ public class HomeModel extends BaseModel<HomeEntity> {
         page = -1;
     }
 
-    public void getHomeList(String userId) {
+    public void getHomeList(Context context, String userId) {
+        if (page == -1) {
+            List<HomeTaskBean> beanList = new ArrayList<>();
+            List<YesterdayTaskBean> yesterdayBeanList = new Select().from(YesterdayTaskBean.class).orderBy("updateTime DESC").execute();
+            if (yesterdayBeanList != null) {
+                beanList.addAll(yesterdayBeanList);
+                mHomeView.showHomeList(beanList);
+            }
+        }
+        if (!NetworkUtil.hasNetwork(context)) {
+            mHomeView.showError(context.getString(R.string.error_no_network));
+            return;
+        }
         if (!isLastPage) {
-            setObservable(mHomeAPI.getHomeList(userId,page + 1));
+            setObservable(mHomeAPI.getHomeList(userId, page + 1));
         }
     }
 

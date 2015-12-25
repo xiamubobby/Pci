@@ -26,6 +26,7 @@ import com.wonders.xlab.pci.module.home.rxbus.BPClickBus;
 import com.wonders.xlab.pci.module.home.rxbus.BSClickBus;
 import com.wonders.xlab.pci.module.home.rxbus.MedicineClickBus;
 import com.wonders.xlab.pci.module.home.rxbus.SymptomClickBus;
+import com.wonders.xlab.pci.module.rxbus.ConnectStateBus;
 import com.wonders.xlab.pci.module.task.AddBPActivity;
 import com.wonders.xlab.pci.module.task.AddBSActivity;
 import com.wonders.xlab.pci.module.task.AddSymptomActivity;
@@ -63,12 +64,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
         mHomeModel = new HomeModel(this);
         addModel(mHomeModel);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                getActivity().startService(new Intent(getActivity(), XEMChatService.class));
-            }
-        }).start();
     }
 
     @Override
@@ -89,61 +84,79 @@ public class HomeFragment extends BaseFragment implements HomeView {
         mRvHome.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
             public void loadMoreToBottom() {
-
+                mHomeModel.getHomeList(getActivity(), AIManager.getInstance(getActivity()).getUserId());
             }
 
             @Override
             public void loadMoreToTop() {
-                mHomeModel.getHomeList(AIManager.getInstance(getActivity()).getUserId());
             }
         });
-        mHomeModel.getHomeList(AIManager.getInstance(getActivity()).getUserId());
+        mHomeModel.getHomeList(getActivity(), AIManager.getInstance(getActivity()).getUserId());
 
         initRxBusListener();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().startService(new Intent(getActivity(), XEMChatService.class));
+            }
+        }).start();
     }
 
     private void initRxBusListener() {
-        mSubscription = new CompositeSubscription();
-
-        mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
-            @Override
-            public void call(Object o) {
-                if (o instanceof TodayTaskBean) {
-                    TodayTaskBean bus = (TodayTaskBean) o;
-                    if (mHomeRVAdapter != null) {
-                        if (mHomeRVAdapter.getItemCount() > 0) {
-                            BaseBean itemData = mHomeRVAdapter.getItemData(0);
-                            if (itemData.getItemLayout() == HomeTaskBean.ITEM_TODAY) {
-                                TodayTaskBean todayTaskBean = (TodayTaskBean) itemData;
-                                todayTaskBean.setTitle(bus.getTitle());
-                                todayTaskBean.setUpdateTime(bus.getUpdateTime());
-                                mHomeRVAdapter.notifyDataSetChanged();
+        if (mSubscription == null) {
+            mSubscription = new CompositeSubscription();
+            mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
+                @Override
+                public void call(Object o) {
+                    if (o instanceof TodayTaskBean) {
+                        TodayTaskBean bus = (TodayTaskBean) o;
+                        if (mHomeRVAdapter != null) {
+                            if (mHomeRVAdapter.getItemCount() > 0) {
+                                BaseBean itemData = mHomeRVAdapter.getItemData(0);
+                                if (itemData.getItemLayout() == HomeTaskBean.ITEM_TODAY) {
+                                    TodayTaskBean todayTaskBean = (TodayTaskBean) itemData;
+                                    todayTaskBean.setTitle(bus.getTitle());
+                                    todayTaskBean.setUpdateTime(bus.getUpdateTime());
+                                    mHomeRVAdapter.notifyDataSetChanged();
+                                } else {
+                                    mHomeRVAdapter.addToTop(bus);
+                                }
                             } else {
                                 mHomeRVAdapter.addToTop(bus);
                             }
                         } else {
+                            mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
+                            mRvHome.setAdapter(mHomeRVAdapter);
                             mHomeRVAdapter.addToTop(bus);
                         }
-                    } else {
-                        mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
-                        mRvHome.setAdapter(mHomeRVAdapter);
-                        mHomeRVAdapter.addToTop(bus);
+                    } else if (o instanceof ConnectStateBus) {
+                        ConnectStateBus connectStateBus = (ConnectStateBus) o;
+                        if (connectStateBus.isConnected()) {
+                            //断线重连
+                            if (mHomeRVAdapter != null) {
+                                return;
+                            }
+                            mHomeModel.getHomeList(getActivity(), AIManager.getInstance(getActivity()).getUserId());
+                        } else {
+                            Snackbar.make(mRvHome, getResources().getString(R.string.network_disconnected), Snackbar.LENGTH_SHORT).show();
+                        }
+                    } else if (o instanceof MedicineClickBus) {
+                        //服药
+                        getActivity().startActivity(new Intent(getActivity(), DailyTaskActivity.class));
+                    } else if (o instanceof BPClickBus) {
+                        //测血压
+                        getActivity().startActivity(new Intent(getActivity(), AddBPActivity.class));
+                    } else if (o instanceof BSClickBus) {
+                        //测血糖
+                        getActivity().startActivity(new Intent(getActivity(), AddBSActivity.class));
+                    } else if (o instanceof SymptomClickBus) {
+                        //不良症状
+                        getActivity().startActivity(new Intent(getActivity(), AddSymptomActivity.class));
                     }
-                } else if (o instanceof MedicineClickBus) {
-                    //服药
-                    getActivity().startActivity(new Intent(getActivity(), DailyTaskActivity.class));
-                } else if (o instanceof BPClickBus) {
-                    //测血压
-                    getActivity().startActivity(new Intent(getActivity(), AddBPActivity.class));
-                } else if (o instanceof BSClickBus) {
-                    //测血糖
-                    getActivity().startActivity(new Intent(getActivity(), AddBSActivity.class));
-                } else if (o instanceof SymptomClickBus) {
-                    //不良症状
-                    getActivity().startActivity(new Intent(getActivity(), AddSymptomActivity.class));
                 }
-            }
-        }));
+            }));
+        }
     }
 
     @Override
@@ -180,6 +193,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     @Override
     public void showError(String message) {
+
         Snackbar.make(mRvHome, message, Snackbar.LENGTH_SHORT).show();
     }
 

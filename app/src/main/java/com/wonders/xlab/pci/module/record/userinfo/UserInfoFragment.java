@@ -3,6 +3,7 @@ package com.wonders.xlab.pci.module.record.userinfo;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,10 +15,12 @@ import android.view.ViewGroup;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
+import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseFragment;
-import com.wonders.xlab.pci.mvn.entity.record.userinfo.UserInfoEntity;
 import com.wonders.xlab.pci.module.record.userinfo.mvn.model.UserInfoModel;
 import com.wonders.xlab.pci.module.record.userinfo.mvn.view.UserInfoView;
+import com.wonders.xlab.pci.module.rxbus.ConnectStateBus;
+import com.wonders.xlab.pci.mvn.entity.record.userinfo.UserInfoEntity;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -25,6 +28,8 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.functions.Action1;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +44,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
     private UserInfoRVAdapter mUserInfoRVAdapter;
 
     private UserInfoModel mUserInfoModel;
+    private CompositeSubscription mSubscription;
 
     public UserInfoFragment() {
         // Required empty public constructor
@@ -72,6 +78,32 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
             }
         });
         mUserInfoModel.getUserInfo(AIManager.getInstance(getActivity()).getUserId());
+
+        initRxBusListener();
+    }
+
+    private void initRxBusListener() {
+        if (mSubscription == null) {
+            mSubscription = new CompositeSubscription();
+
+            mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
+                @Override
+                public void call(Object o) {
+                    if (o instanceof ConnectStateBus) {
+                        ConnectStateBus connectStateBus = (ConnectStateBus) o;
+                        if (connectStateBus.isConnected()) {
+                            //断线重连
+                            if (mUserInfoRVAdapter != null) {
+                                return;
+                            }
+                            mUserInfoModel.getUserInfo(AIManager.getInstance(getActivity()).getUserId());
+                        } else {
+                            Snackbar.make(mRvUserInfo, getResources().getString(R.string.network_disconnected), Snackbar.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }));
+        }
     }
 
     @Override
@@ -133,6 +165,10 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
         if (mUserInfoRVAdapter != null) {
             mUserInfoRVAdapter.clear();
             mUserInfoRVAdapter = null;
+        }
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
+            mSubscription = null;
         }
         ButterKnife.unbind(this);
     }
