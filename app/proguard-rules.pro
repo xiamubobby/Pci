@@ -24,8 +24,8 @@
 -verbose
 
 # 混淆的时候不执行优化步骤与预验证步骤，Dex自己会做一些相对应的优化
--dontoptimize
--dontpreverify
+#-dontoptimize
+#-dontpreverify
 
 # 确保在jdk5.0以及更高版本能够使用泛型
 -keepattributes Signature
@@ -33,6 +33,8 @@
 -keepattributes Exceptions
 #不混淆注解
 -keepattributes *Annotation*
+#-keepattributes InnerClasses
+-keepattributes EnclosingMethod
 
 # 不混淆本地方法,includedescriptorclasses选项指定不重命名方法返回类型与参数类型
 -keepclasseswithmembernames,includedescriptorclasses class * {
@@ -62,30 +64,57 @@
   public static final android.os.Parcelable$Creator *;
 }
 
+#不混淆Serializable的子类
+# Explicitly preserve all serialization members. The Serializable interface
+# is only a marker interface, so it wouldn't save them.
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
 # 不混淆R.java文件
 -keepclassmembers class **.R$* {
     public static <fields>;
 }
 
 # 忽略support包新版本警告
--dontwarn android.support.**
+-keep  class android.support.annotation.** { *; }
+-dontwarn android.support.annotation.**
 
 # 不混淆第三方jar包
 -dontshrink
 -dontoptimize
 
+-keep class android.** {*;}
+
+# Keep GSON stuff
+-keep class sun.misc.Unsafe { *; }
+-keep class com.google.gson.** { *; }
+# Gson specific classes
+-keep class com.google.gson.stream.** { *; }
+
 # 不混淆ILicensingService类，单向的进程间通讯接口，这个接口的许可检查请求来自google play客户端
 -keep public class com.google.vending.licensing.ILicensingService
 -keep public class com.android.vending.licensing.ILicensingService
 
-# Gson
-#-keep class com.google.gson.stream.** { *; }
--keep class sun.misc.Unsafe { *; }
+#-keep class javax.** { *; }
+#-keep class org.** { *; }
 
-#不混淆butterknife
--dontwarn butterknife.internal.**
--keep class **$$ViewInjector { *; }
--keepnames class * { @butterknife.InjectView *;}
+#appcompat
+-keep public class android.support.v7.widget.** { *; }
+-keep public class android.support.v7.internal.widget.** { *; }
+-keep public class android.support.v7.internal.view.menu.** { *; }
+
+-keep public class * extends android.support.v4.view.ActionProvider {
+    public <init>(android.content.Context);
+}
+
+#cardview
+-keep class android.support.v7.widget.RoundRectDrawable { *; }
 
 #环信
 -keep class com.easemob.** {*;}
@@ -110,24 +139,113 @@
 -keep class org.bitlet.** {*;}
 -keep class org.slf4j.** {*;}
 -keep class ch.imvs.** {*;}
+-keep class internal.** {*;}
+-keep class net.** {*;}
+-keep class org.** {*;}
 
+#appcompat
+-keep public class android.support.v7.widget.** { *; }
+-keep public class android.support.v7.internal.widget.** { *; }
+-keep public class android.support.v7.internal.view.menu.** { *; }
+
+-keep public class * extends android.support.v4.view.ActionProvider {
+    public <init>(android.content.Context);
+}
+
+#design
+-dontwarn android.support.design.**
+-keep class android.support.design.** { *; }
+-keep interface android.support.design.** { *; }
+-keep public class android.support.design.R$* { *; }
+
+#butterknife
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+
+-dontwarn butterknife.internal.**
+
+#Retrofit
+-keep class retrofit.** { *; }
+-keep class okio.** { *; }
+-keep class rx.** { *; }
+-keep class com.squareup.** {*;}
+-keep class io.reactivex.** {*;}
+
+-dontwarn com.squareup.**
+-dontwarn io.reactivex.**
+-dontwarn retrofit.**
+-dontwarn okio.**
+-dontwarn rx.**
+
+#不混淆网络请求实体
+-keep class com.wonders.xlab.pci.mvn.entity.BaseEntity
+-keep class com.wonders.xlab.pci.mvn.entity.** {*;}
+-keep class * extends com.wonders.xlab.pci.mvn.entity.BaseEntity
 
 #Bugtags
 -keep class com.bugtags.library.** {*;}
 -dontwarn com.bugtags.**
 
--keep class sun.misc.Unsafe { *; }
--keep class com.google.**{*;}
--dontwarn com.google.**
+#glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+    **[] $VALUES;
+    public *;
+}
 
--dontwarn org.apache.**
--dontwarn okio.**
--dontwarn com.squareup.**
+#Umeng
+-keep class com.umeng.**
+-keep public interface com.umeng.socialize.**
+-keep public interface com.umeng.socialize.sensor.**
+-keep public interface com.umeng.scrshot.**
+-dontwarn com.umeng.**
 
-#不混淆activeandroid
+#-keepclassmembers class * {
+#   public (org.json.JSONObject);
+#}
+
+#bugtags
+-keepattributes LineNumberTable,SourceFile
+
+-keep class com.bugtags.library.** {*;}
+-dontwarn org.apache.http.**
+-dontwarn android.net.http.AndroidHttpClient
+-dontwarn com.bugtags.library.**
+-dontwarn com.bugtags.library.vender.**
+
+# RxJava 0.21
+
+-keep class rx.schedulers.Schedulers {
+    public static <methods>;
+}
+-keep class rx.schedulers.ImmediateScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.TestScheduler {
+    public <methods>;
+}
+-keep class rx.schedulers.Schedulers {
+    public static ** test();
+}
+
+
+# ActiveAndroid
 -keep class com.activeandroid.** { *; }
--keep class com.wonders.xlab.pci.module.home.bean.**{ *; }
+-keep class com.activeandroid.**.** { *; }
+-keep class * extends com.activeandroid.Model
+-keep class * extends com.activeandroid.serializer.TypeSerializer
 
 
-#不混淆网络请求实体
--keep class com.wonders.xlab.pci.mvn.entity.**{ *; }
+## AndroidAnnotations specific rules ##
+
+# Only required if not using the Spring RestTemplate
+-dontwarn org.androidannotations.api.rest.**

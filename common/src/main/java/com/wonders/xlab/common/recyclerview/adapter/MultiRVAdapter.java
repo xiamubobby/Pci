@@ -91,6 +91,18 @@ public abstract class MultiRVAdapter<bean extends BaseBean> extends RecyclerView
         notifyItemInserted(0);
     }
 
+    public void addToPosition(bean bean, int position) {
+        if (this.mDatas == null) {
+            this.mDatas = new ArrayList<>();
+        }
+        if (this.mDatas.size() > position) {
+            this.mDatas.add(position, bean);
+        } else {
+            appendData(bean);
+        }
+        notifyItemInserted(position);
+    }
+
     public void clear() {
         if (this.mDatas != null) {
             this.mDatas.clear();

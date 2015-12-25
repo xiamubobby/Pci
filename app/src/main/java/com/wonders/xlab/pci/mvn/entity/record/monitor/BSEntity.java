@@ -8,7 +8,7 @@ public class BSEntity extends BaseEntity {
 
     /**
      * id : 10
-     * bloodSuger : 126.0
+     * bloodSugar : 126.0
      * bloodSugarTime : 1
      * recordTime : 1450281600000
      */
@@ -25,7 +25,7 @@ public class BSEntity extends BaseEntity {
 
     public static class RetValuesEntity {
         private int id;
-        private double bloodSuger;
+        private double bloodSugar;
         private int bloodSugarTime;
         private long recordTime;
 
@@ -33,8 +33,8 @@ public class BSEntity extends BaseEntity {
             this.id = id;
         }
 
-        public void setBloodSuger(double bloodSuger) {
-            this.bloodSuger = bloodSuger;
+        public void setBloodSugar(double bloodSugar) {
+            this.bloodSugar = bloodSugar;
         }
 
         public void setBloodSugarTime(int bloodSugarTime) {
@@ -49,8 +49,8 @@ public class BSEntity extends BaseEntity {
             return id;
         }
 
-        public double getBloodSuger() {
-            return bloodSuger;
+        public double getBloodSugar() {
+            return bloodSugar;
         }
 
         public int getBloodSugarTime() {

@@ -282,7 +282,6 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
         ArrayList<Entry> dpVals = new ArrayList<>();
         ArrayList<Entry> bpVals = new ArrayList<>();
 
-
         for (int i = 0; i < beanList.size(); i++) {
             BloodPressureBean bean = beanList.get(i);
 
@@ -295,7 +294,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
         ArrayList<LineDataSet> dataSets = new ArrayList<>();
         LineDataSet spDataSet = new LineDataSet(spVals, "收缩压");
         LineDataSet dpDataSet = new LineDataSet(dpVals, "舒张压");
-        LineDataSet bpDataSet = new LineDataSet(bpVals, "血压");
+        LineDataSet bpDataSet = new LineDataSet(bpVals, "心率");
         initLineDataSet(spDataSet, Color.RED);
         initLineDataSet(dpDataSet, Color.GREEN);
         initLineDataSet(bpDataSet, Color.BLUE);
@@ -328,10 +327,8 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
         ArrayList<String> xVals = new ArrayList<>();
         ArrayList<Entry> sbsVals = new ArrayList<>();
 
-
         for (int i = 0; i < beanList.size(); i++) {
             BloodSugarBean bean = beanList.get(i);
-
             xVals.add(DateUtil.format(bean.getTime(), "HH:mm"));
             sbsVals.add(new Entry(bean.getBloodSugar(), i));
         }
@@ -339,11 +336,13 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
         ArrayList<LineDataSet> dataSets = new ArrayList<>();
         LineDataSet spDataSet = new LineDataSet(sbsVals, "血糖");
         initLineDataSet(spDataSet, Color.GREEN);
+        spDataSet.setValueTextColor(R.color.colorAccent);
+        spDataSet.setDrawValues(true);
         dataSets.add(spDataSet);
         spDataSet.setCircleColor(R.color.colorPrimary);
 
         LineData data = new LineData(xVals, dataSets);
-        data.setValueTextColor(Color.WHITE);
+        data.setValueTextColor(R.color.colorAccent);
         data.setValueTextSize(9f);
 
         mLineChartBs.setData(data);

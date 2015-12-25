@@ -109,7 +109,7 @@ public class DailyTaskModel extends BaseModel<DailyTaskEntity> {
         List<DailyTaskEntity.RetValuesEntity.UserBloodSugarsEntity> sugarsEntityList = valuesEntity.getUserBloodSugars();
         if (sugarsEntityList != null) {
             for (int i = 0; i < sugarsEntityList.size(); i++) {
-                BloodSugarBean bean = new BloodSugarBean(sugarsEntityList.get(i).getBloodSuger(), sugarsEntityList.get(i).getRecordTime());
+                BloodSugarBean bean = new BloodSugarBean(sugarsEntityList.get(i).getBloodSugar(), sugarsEntityList.get(i).getRecordTime());
                 bloodSugarBeen.add(bean);
             }
         }

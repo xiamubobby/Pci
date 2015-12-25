@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -49,6 +50,8 @@ public class MainActivity extends BaseActivity {
     TextView mTvMyDoctor;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+    @Bind(R.id.ll_main_my_doctor)
+    LinearLayout mLlMainMyDoctor;
 
     private FragmentVPAdapter mFragmentVPAdapter;
     private CompositeSubscription mSubscription;
@@ -79,7 +82,7 @@ public class MainActivity extends BaseActivity {
         initRxBus();
         initBottomTab();
 
-        RxView.clicks(mFab)
+        RxView.clicks(mLlMainMyDoctor)
                 .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Void>() {
                     @Override

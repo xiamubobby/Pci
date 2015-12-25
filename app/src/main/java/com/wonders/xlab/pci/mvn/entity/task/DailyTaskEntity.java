@@ -18,7 +18,7 @@ public class DailyTaskEntity extends BaseEntity {
      * userActivityDtos : [{"currentDay":1450627200000,"names":["复诊1","复诊2"]}]
      * userMedicineMap : {"Morning":[{"id":1,"medicineName":"头痛药","measurement":"20","medicineSchedule":"Morning","take":true}],"Noon":[{"id":2,"medicineName":"头痛药1","measurement":"30","medicineSchedule":"Noon","take":true}],"Evening":[{"id":3,"medicineName":"头痛药3","measurement":"20","medicineSchedule":"Evening","take":false}]}
      * userBloodPressures : [{"id":3,"heartRate":123,"systolicPressure":23,"diastolicPressure":233,"recordTime":1450686600000},{"id":4,"heartRate":55,"systolicPressure":121,"diastolicPressure":55,"recordTime":1450690020000}]
-     * userBloodSugars : [{"id":12,"bloodSuger":122,"bloodSugarTime":0,"recordTime":1450689960000},{"id":11,"bloodSuger":369,"bloodSugarTime":4,"recordTime":1450694640000}]
+     * userBloodSugars : [{"id":12,"bloodSugar":122,"bloodSugarTime":0,"recordTime":1450689960000},{"id":11,"bloodSugar":369,"bloodSugarTime":4,"recordTime":1450694640000}]
      * userSmokeDtos : [{"value":"15根香烟","recordTime":1450674060000},{"value":"12根香烟","recordTime":1450692240000}]
      * smokeStr : 今日一共抽了27根烟
      * userWineDtos : [{"value":"12杯白酒","recordTime":null},{"value":"12杯啤酒","recordTime":null}]
@@ -59,7 +59,7 @@ public class DailyTaskEntity extends BaseEntity {
         private List<UserBloodPressuresEntity> userBloodPressures;
         /**
          * id : 12
-         * bloodSuger : 122.0
+         * bloodSugar : 122.0
          * bloodSugarTime : 0
          * recordTime : 1450689960000
          */
@@ -466,7 +466,7 @@ public class DailyTaskEntity extends BaseEntity {
 
         public static class UserBloodSugarsEntity {
             private int id;
-            private float bloodSuger;
+            private float bloodSugar;
             private int bloodSugarTime;
             private long recordTime;
 
@@ -474,8 +474,8 @@ public class DailyTaskEntity extends BaseEntity {
                 this.id = id;
             }
 
-            public void setBloodSuger(float bloodSuger) {
-                this.bloodSuger = bloodSuger;
+            public void setBloodSugar(float bloodSugar) {
+                this.bloodSugar = bloodSugar;
             }
 
             public void setBloodSugarTime(int bloodSugarTime) {
@@ -490,8 +490,8 @@ public class DailyTaskEntity extends BaseEntity {
                 return id;
             }
 
-            public float getBloodSuger() {
-                return bloodSuger;
+            public float getBloodSugar() {
+                return bloodSugar;
             }
 
             public int getBloodSugarTime() {

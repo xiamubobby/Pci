@@ -11,7 +11,7 @@ import java.util.List;
 public class HomeEntity extends BaseEntity {
 
     /**
-     * content : [{"id":3,"user":"","name":"华医师","portrait":"","title":"今日任务小结","content":"但是劳斯莱斯劳斯莱斯了","createdDate":1450080990833,"lastModifiedDate":1450080990833,"new":false},{"id":2,"user":"","name":"敏医师","portrait":"","title":"昨日任务小结","content":"短发啦啦啦啦啦","createdDate":1450080990832,"lastModifiedDate":1450080990832,"new":false},{"id":1,"user":"","name":"张医师","portrait":"","title":"昨日健康任务小结","content":"dfdlfjlaj","createdDate":1450080990831,"lastModifiedDate":1450080990831,"new":false}]
+     * content : [{"id":3,"user":"","name":"华医师","portrait":"","title":"今日任务小结","content":"但是劳斯莱斯劳斯莱斯了","createdDate":1450080990833,"recordTime":1450080990833,"new":false},{"id":2,"user":"","name":"敏医师","portrait":"","title":"昨日任务小结","content":"短发啦啦啦啦啦","createdDate":1450080990832,"recordTime":1450080990832,"new":false},{"id":1,"user":"","name":"张医师","portrait":"","title":"昨日健康任务小结","content":"dfdlfjlaj","createdDate":1450080990831,"recordTime":1450080990831,"new":false}]
      * last : true
      * totalElements : 3
      * totalPages : 1
@@ -49,7 +49,7 @@ public class HomeEntity extends BaseEntity {
          * title : 今日任务小结
          * content : 但是劳斯莱斯劳斯莱斯了
          * createdDate : 1450080990833
-         * lastModifiedDate : 1450080990833
+         * recordTime : 1450080990833
          * new : false
          */
 
@@ -135,7 +135,7 @@ public class HomeEntity extends BaseEntity {
             private String title;
             private String content;
             private long createdDate;
-            private long lastModifiedDate;
+            private long recordTime;
             @SerializedName("new")
             private boolean newX;
 
@@ -167,8 +167,8 @@ public class HomeEntity extends BaseEntity {
                 this.createdDate = createdDate;
             }
 
-            public void setLastModifiedDate(long lastModifiedDate) {
-                this.lastModifiedDate = lastModifiedDate;
+            public void setRecordTime(long recordTime) {
+                this.recordTime = recordTime;
             }
 
             public void setNewX(boolean newX) {
@@ -203,8 +203,8 @@ public class HomeEntity extends BaseEntity {
                 return createdDate;
             }
 
-            public long getLastModifiedDate() {
-                return lastModifiedDate;
+            public long getRecordTime() {
+                return recordTime;
             }
 
             public boolean isNewX() {

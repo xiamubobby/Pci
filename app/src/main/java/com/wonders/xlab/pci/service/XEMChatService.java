@@ -14,6 +14,7 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.activeandroid.query.Delete;
 import com.easemob.EMCallBack;
 import com.easemob.EMConnectionListener;
 import com.easemob.EMError;
@@ -27,6 +28,8 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.MainActivity;
+import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
+import com.wonders.xlab.pci.module.home.bean.YesterdayTaskBean;
 import com.wonders.xlab.pci.module.rxbus.ExitBus;
 import com.wonders.xlab.pci.receiver.ConnectionBroadcastReceiver;
 import com.wonders.xlab.pci.receiver.EMChatMessageBroadcastReceiver;
@@ -44,6 +47,9 @@ public class XEMChatService extends Service {
     private TimeClickReceiver mTimeClickReceiver;
     private ConnectionBroadcastReceiver mConnectionReceiver;
     private boolean mIsNormalStop = false;
+
+    private final int RETRY_TIMES = 10;
+    private int mCurrentRetryTime = 0;
 
     public XEMChatService() {
     }
@@ -71,8 +77,6 @@ public class XEMChatService extends Service {
 
         initBroadcastReceiver();
 
-        //注册一个监听连接状态的listener
-        EMChatManager.getInstance().addConnectionListener(new MyConnectionListener());
     }
 
     private void initBroadcastReceiver() {
@@ -123,15 +127,17 @@ public class XEMChatService extends Service {
                 public void call(Object o) {
                     if (o instanceof ExitBus) {
                         mIsNormalStop = true;
+                        new Delete().from(TodayTaskBean.class).execute();
+                        new Delete().from(YesterdayTaskBean.class).execute();
                         stopSelf();
                     }
                 }
             }));
         }
 
-        if (!EMChat.getInstance().isLoggedIn()) {
-            login();
-        }
+//        if (!EMChat.getInstance().isLoggedIn()) {
+        login();
+//        }
 
         new NotifyUtil().showNotification(getApplicationContext(), Constant.NOTIFY_ID, getApplicationContext().getResources().getString(R.string.app_name), "正在运行", MainActivity.class, R.mipmap.ic_launcher, false);
 
@@ -159,6 +165,8 @@ public class XEMChatService extends Service {
             @Override
             public void onSuccess() {
                 EMChat.getInstance().setAppInited();
+                //注册一个监听连接状态的listener
+                EMChatManager.getInstance().addConnectionListener(new MyConnectionListener());
             }
 
             @Override
@@ -168,7 +176,11 @@ public class XEMChatService extends Service {
 
             @Override
             public void onError(int code, String message) {
-                login();
+                if (mCurrentRetryTime++ < RETRY_TIMES) {
+                    login();
+                } else {
+                    mCurrentRetryTime = 0;
+                }
             }
         });
     }
@@ -219,6 +231,7 @@ public class XEMChatService extends Service {
                                 message = "帐号在其他设备登陆";
                             } else {
                                 if (NetUtils.hasNetwork(XEMChatService.this)) {
+                                    //连接不到聊天服务器,请重新打开应用
                                     message = "连接不到聊天服务器,请重新打开应用";
                                 } else {
                                     message = "";

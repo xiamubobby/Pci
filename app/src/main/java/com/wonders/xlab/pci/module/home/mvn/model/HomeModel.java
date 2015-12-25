@@ -79,7 +79,7 @@ public class HomeModel extends BaseModel<HomeEntity> {
             YesterdayTaskBean yesterdayTaskBean = new YesterdayTaskBean();
             yesterdayTaskBean.setContent(contentEntity.getContent());
             yesterdayTaskBean.setTitle(contentEntity.getTitle());
-            yesterdayTaskBean.setUpdateTime(contentEntity.getLastModifiedDate());
+            yesterdayTaskBean.setUpdateTime(contentEntity.getRecordTime());
             yesterdayTaskBean.setName(contentEntity.getName());
             yesterdayTaskBean.setPortrait(contentEntity.getPortrait());
             beanList.add(yesterdayTaskBean);

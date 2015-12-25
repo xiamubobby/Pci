@@ -20,6 +20,7 @@ import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
+import com.wonders.xlab.pci.module.home.bean.YesterdayTaskBean;
 import com.wonders.xlab.pci.module.home.mvn.model.HomeModel;
 import com.wonders.xlab.pci.module.home.mvn.view.HomeView;
 import com.wonders.xlab.pci.module.home.rxbus.BPClickBus;
@@ -117,6 +118,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
                                 if (itemData.getItemLayout() == HomeTaskBean.ITEM_TODAY) {
                                     TodayTaskBean todayTaskBean = (TodayTaskBean) itemData;
                                     todayTaskBean.setTitle(bus.getTitle());
+                                    todayTaskBean.setPortrait(bus.getPortrait());
                                     todayTaskBean.setUpdateTime(bus.getUpdateTime());
                                     mHomeRVAdapter.notifyDataSetChanged();
                                 } else {
@@ -129,6 +131,24 @@ public class HomeFragment extends BaseFragment implements HomeView {
                             mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
                             mRvHome.setAdapter(mHomeRVAdapter);
                             mHomeRVAdapter.addToTop(bus);
+                        }
+                    } else if (o instanceof YesterdayTaskBean) {
+                        YesterdayTaskBean yesterdayTaskBean = (YesterdayTaskBean) o;
+                        if (mHomeRVAdapter != null) {
+                            if (mHomeRVAdapter.getItemCount() > 0) {
+                                BaseBean itemData = mHomeRVAdapter.getItemData(0);
+                                if (itemData.getItemLayout() == HomeTaskBean.ITEM_TODAY) {
+                                    mHomeRVAdapter.addToPosition(yesterdayTaskBean, 1);
+                                } else {
+                                    mHomeRVAdapter.addToTop(yesterdayTaskBean);
+                                }
+                            } else {
+                                mHomeRVAdapter.addToTop(yesterdayTaskBean);
+                            }
+                        } else {
+                            mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
+                            mRvHome.setAdapter(mHomeRVAdapter);
+                            mHomeRVAdapter.addToTop(yesterdayTaskBean);
                         }
                     } else if (o instanceof ConnectStateBus) {
                         ConnectStateBus connectStateBus = (ConnectStateBus) o;

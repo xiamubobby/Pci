@@ -95,7 +95,7 @@
             android:layout_weight="1"
             android:gravity="left"
             android:singleLine="true"
-            android:text="血糖"
+            android:text="血糖(mmol/L)"
             android:textSize="@dimen/text_size_normal"
             />
 

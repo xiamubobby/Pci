@@ -12,6 +12,7 @@
         android:background="@drawable/shape_text_label"
         android:padding="@dimen/item_interval"
         android:singleLine="true"
+        android:textColor="@android:color/white"
         android:textAppearance="?android:attr/textAppearance"
         android:textSize="@dimen/text_size_small"/>
 </LinearLayout>

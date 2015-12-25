@@ -24,7 +24,6 @@ public abstract class BaseModel<T extends BaseEntity> {
     private Observable<T> mObservable;
     private Subscription subscribe;
 
-
     private boolean isRequesting = false;
 
     public BaseModel() {
@@ -35,7 +34,7 @@ public abstract class BaseModel<T extends BaseEntity> {
          */
         OkHttpClient client = new OkHttpClient();
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.NONE);
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         client.interceptors().add(logging);
 //        client.setConnectTimeout(30, TimeUnit.SECONDS);
 //        client.setWriteTimeout(30, TimeUnit.SECONDS);

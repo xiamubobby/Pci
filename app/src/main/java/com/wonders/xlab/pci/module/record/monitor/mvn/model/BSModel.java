@@ -40,7 +40,7 @@ public class BSModel extends BaseModel<BSEntity> {
             BSEntity.RetValuesEntity contentEntity = entity.get(i);
 
             BSBean bpBean = new BSBean();
-            bpBean.setBs(contentEntity.getBloodSuger() + "");
+            bpBean.setBs(contentEntity.getBloodSugar() + "");
             bpBean.setRecordTime(contentEntity.getRecordTime());
 
             if (list.size() > 0) {
