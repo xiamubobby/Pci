@@ -21,7 +21,9 @@
         android:layout_gravity="bottom"
         android:layout_marginBottom="@dimen/main_bottom_margin_bottom"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp">
+        android:layout_marginRight="16dp"
+        android:clickable="true"
+        android:descendantFocusability="afterDescendants">
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tl_main"
@@ -34,7 +36,8 @@
             app:tabIndicatorHeight="3dp"
             app:tabMode="scrollable"/>
 
-        <LinearLayout android:id="@+id/ll_main_my_doctor"
+        <LinearLayout
+            android:id="@+id/ll_main_my_doctor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"

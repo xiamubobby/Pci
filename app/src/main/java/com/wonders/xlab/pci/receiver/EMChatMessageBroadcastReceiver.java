@@ -17,6 +17,7 @@ import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.MainActivity;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.home.bean.YesterdayTaskBean;
+import com.wonders.xlab.pci.module.rxbus.ExitBus;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
@@ -52,7 +53,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             String portrait = message.getStringAttribute("portrait", Constant.DEFAULT_PORTRAIT);
             String title = message.getStringAttribute("title", "");
             String content = message.getStringAttribute("content", "");
-            int type = message.getIntAttribute("type", 0);//0:提醒 1:内容
+            int type = message.getIntAttribute("type", -1);//-1:默认处理，即通过环信后台发送 0:提醒 1:内容 2：强制退出(由于用户锁定账户等等原因的安全考虑)
             long recordTime = Long.parseLong(message.getStringAttribute("recordTime"));
 
             if (type == 0) {
@@ -75,7 +76,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                     new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
                 }
                 RxBus.getInstance().send(todayTaskBean);
-            } else {
+            } else if (type == 1){
                 YesterdayTaskBean yesterdayTaskBean = new YesterdayTaskBean();
                 yesterdayTaskBean.setTitle(title);
                 yesterdayTaskBean.setUpdateTime(recordTime);
@@ -87,33 +88,41 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                     new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), yesterdayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
                 }
                 RxBus.getInstance().send(yesterdayTaskBean);
+            } else if (type == 2) {
+                RxBus.getInstance().send(new ExitBus());
+            } else if (type == -1) {
+                setupDefaultMessage(context, message);
             }
 
         } catch (EaseMobException e) {
-            TodayTaskBean cache = new Select().from(TodayTaskBean.class).executeSingle();
-            try {
-                TodayTaskBean todayTaskBean = new TodayTaskBean();
-                todayTaskBean.setTitle(new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8"));
-                todayTaskBean.setUpdateTime(Calendar.getInstance().getTimeInMillis());
-                todayTaskBean.setName("");
-                todayTaskBean.setPortrait(Constant.DEFAULT_PORTRAIT);
+            setupDefaultMessage(context, message);
+        }
+    }
 
-                if (cache != null) {
-                    cache.setName(todayTaskBean.getName());
-                    cache.setPortrait(todayTaskBean.getPortrait());
-                    cache.setUpdateTime(todayTaskBean.getUpdateTime());
-                    cache.setTitle(todayTaskBean.getTitle());
-                    cache.save();
-                } else {
-                    todayTaskBean.save();
-                }
-                if (!AIManager.getInstance(context).isHomeShowing()) {
-                    new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
-                }
-                RxBus.getInstance().send(todayTaskBean);
-            } catch (UnsupportedEncodingException e1) {
-                e1.printStackTrace();
+    private void setupDefaultMessage(Context context, EMMessage message) {
+        TodayTaskBean cache = new Select().from(TodayTaskBean.class).executeSingle();
+        try {
+            TodayTaskBean todayTaskBean = new TodayTaskBean();
+            todayTaskBean.setTitle(new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8"));
+            todayTaskBean.setUpdateTime(Calendar.getInstance().getTimeInMillis());
+            todayTaskBean.setName("");
+            todayTaskBean.setPortrait(Constant.DEFAULT_PORTRAIT);
+
+            if (cache != null) {
+                cache.setName(todayTaskBean.getName());
+                cache.setPortrait(todayTaskBean.getPortrait());
+                cache.setUpdateTime(todayTaskBean.getUpdateTime());
+                cache.setTitle(todayTaskBean.getTitle());
+                cache.save();
+            } else {
+                todayTaskBean.save();
             }
+            if (!AIManager.getInstance(context).isHomeShowing()) {
+                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
+            }
+            RxBus.getInstance().send(todayTaskBean);
+        } catch (UnsupportedEncodingException e1) {
+            e1.printStackTrace();
         }
     }
 }

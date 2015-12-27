@@ -90,6 +90,14 @@ public class MainActivity extends BaseActivity {
                         startActivity(new Intent(MainActivity.this, MyDoctorActivity.class));
                     }
                 });
+        RxView.clicks(mFab)
+                .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        startActivity(new Intent(MainActivity.this, MyDoctorActivity.class));
+                    }
+                });
     }
 
     private void initRxBus() {
