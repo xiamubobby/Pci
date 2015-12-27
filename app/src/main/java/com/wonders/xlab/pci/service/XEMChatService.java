@@ -232,7 +232,7 @@ public class XEMChatService extends Service {
                             } else {
                                 if (NetUtils.hasNetwork(XEMChatService.this)) {
                                     //连接不到聊天服务器,请重新打开应用
-                                    message = "连接不到聊天服务器,请重新打开应用";
+                                    message = "";
                                 } else {
                                     message = "";
                                 }
