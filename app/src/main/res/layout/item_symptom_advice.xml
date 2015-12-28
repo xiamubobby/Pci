@@ -1,60 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin">
+<layout>
 
-    <TextView
-        android:id="@+id/tv_symptom_advice_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="12:30"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_size_normal"/>
+    <data>
 
-    <LinearLayout
-        android:id="@+id/ll_symptom_advice_portrait"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/item_interval"
-        android:layout_toRightOf="@+id/tv_symptom_advice_time"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        <variable
+            name="advice"
+            type="com.wonders.xlab.pci.mvn.entity.record.monitor.SymptomEntity.RetValuesEntity.UserSymptomAdvicesEntity"/>
 
-        <View
-            android:layout_width="5dp"
-            android:layout_height="5dp"
-            android:background="@drawable/shape_dot"/>
+        <import type="com.wonders.xlab.common.utils.DateUtil"/>
+    </data>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="16dp"
-            android:background="@color/colorPrimary"/>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin">
 
-        <ImageView
-            android:id="@+id/iv_symptom_advice_portrait"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:src="@drawable/user_avatar_default"/>
+        <TextView
+            android:id="@+id/tv_symptom_advice_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text='@{DateUtil.format(advice.recordTime, "HH:mm")}'
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_normal"/>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-            android:minHeight="20dp"/>
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_symptom_advice_portrait"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/item_interval"
+            android:layout_toRightOf="@+id/tv_symptom_advice_time"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tv_symptom_advice_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/item_interval"
-        android:layout_marginTop="25dp"
-        android:layout_toRightOf="@+id/ll_symptom_advice_portrait"
-        android:background="@drawable/chat_room_doctor_msg_bg"
-        android:text="1212121\nasdjfksjldfsdajlfkjsadlkjflasjdlkfjlaksdjflkaksjdlfjalksdjfkl"
-        android:textSize="@dimen/text_size_normal"/>
+            <View
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:background="@drawable/shape_dot"/>
 
-</RelativeLayout>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="16dp"
+                android:background="@color/colorPrimary"/>
+
+            <ImageView
+                android:id="@+id/iv_symptom_advice_portrait"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/user_avatar_default"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"
+                android:minHeight="20dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/item_interval"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@+id/ll_symptom_advice_portrait"
+            android:background="@drawable/chat_room_doctor_msg_bg"
+            android:text="@{advice.content}"
+            android:textSize="@dimen/text_size_normal"/>
+
+    </RelativeLayout>
+</layout>

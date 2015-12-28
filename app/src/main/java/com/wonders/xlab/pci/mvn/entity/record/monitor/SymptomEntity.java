@@ -49,17 +49,12 @@ public class SymptomEntity extends BaseEntity {
 
         public static class UserSymptomAdvicesEntity {
             private int id;
-            private Object user;
             private String content;
             private long recordTime;
             private String portrait;
 
             public void setId(int id) {
                 this.id = id;
-            }
-
-            public void setUser(Object user) {
-                this.user = user;
             }
 
             public void setContent(String content) {
@@ -76,10 +71,6 @@ public class SymptomEntity extends BaseEntity {
 
             public int getId() {
                 return id;
-            }
-
-            public Object getUser() {
-                return user;
             }
 
             public String getContent() {
