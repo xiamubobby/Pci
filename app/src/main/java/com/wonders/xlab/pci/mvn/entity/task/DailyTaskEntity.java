@@ -40,8 +40,6 @@ public class DailyTaskEntity extends BaseEntity {
         private long currentDate;
         private int weekCount;
         private UserMedicineMapEntity userMedicineMap;
-        private String smokeStr;
-        private String wineStr;
         /**
          * currentDay : 1450627200000
          * names : ["复诊1","复诊2"]
@@ -65,18 +63,7 @@ public class DailyTaskEntity extends BaseEntity {
          */
 
         private List<UserBloodSugarsEntity> userBloodSugars;
-        /**
-         * value : 15根香烟
-         * recordTime : 1450674060000
-         */
 
-        private List<UserSmokeDtosEntity> userSmokeDtos;
-        /**
-         * value : 12杯白酒
-         * recordTime : null
-         */
-
-        private List<UserWineDtosEntity> userWineDtos;
         private List<String> symptoms;
 
         public void setCurrentDate(long currentDate) {
@@ -91,14 +78,6 @@ public class DailyTaskEntity extends BaseEntity {
             this.userMedicineMap = userMedicineMap;
         }
 
-        public void setSmokeStr(String smokeStr) {
-            this.smokeStr = smokeStr;
-        }
-
-        public void setWineStr(String wineStr) {
-            this.wineStr = wineStr;
-        }
-
         public void setUserActivityDtos(List<UserActivityDtosEntity> userActivityDtos) {
             this.userActivityDtos = userActivityDtos;
         }
@@ -109,14 +88,6 @@ public class DailyTaskEntity extends BaseEntity {
 
         public void setUserBloodSugars(List<UserBloodSugarsEntity> userBloodSugars) {
             this.userBloodSugars = userBloodSugars;
-        }
-
-        public void setUserSmokeDtos(List<UserSmokeDtosEntity> userSmokeDtos) {
-            this.userSmokeDtos = userSmokeDtos;
-        }
-
-        public void setUserWineDtos(List<UserWineDtosEntity> userWineDtos) {
-            this.userWineDtos = userWineDtos;
         }
 
         public void setSymptoms(List<String> symptoms) {
@@ -135,14 +106,6 @@ public class DailyTaskEntity extends BaseEntity {
             return userMedicineMap;
         }
 
-        public String getSmokeStr() {
-            return smokeStr;
-        }
-
-        public String getWineStr() {
-            return wineStr;
-        }
-
         public List<UserActivityDtosEntity> getUserActivityDtos() {
             return userActivityDtos;
         }
@@ -153,14 +116,6 @@ public class DailyTaskEntity extends BaseEntity {
 
         public List<UserBloodSugarsEntity> getUserBloodSugars() {
             return userBloodSugars;
-        }
-
-        public List<UserSmokeDtosEntity> getUserSmokeDtos() {
-            return userSmokeDtos;
-        }
-
-        public List<UserWineDtosEntity> getUserWineDtos() {
-            return userWineDtos;
         }
 
         public List<String> getSymptoms() {
@@ -365,7 +320,7 @@ public class DailyTaskEntity extends BaseEntity {
             }
         }
 
-        public static class UserActivityDtosEntity implements Parcelable{
+        public static class UserActivityDtosEntity implements Parcelable {
             private long currentDay;
             private List<String> names;
 
@@ -496,48 +451,6 @@ public class DailyTaskEntity extends BaseEntity {
 
             public int getBloodSugarTime() {
                 return bloodSugarTime;
-            }
-
-            public long getRecordTime() {
-                return recordTime;
-            }
-        }
-
-        public static class UserSmokeDtosEntity {
-            private String value;
-            private long recordTime;
-
-            public void setValue(String value) {
-                this.value = value;
-            }
-
-            public void setRecordTime(long recordTime) {
-                this.recordTime = recordTime;
-            }
-
-            public String getValue() {
-                return value;
-            }
-
-            public long getRecordTime() {
-                return recordTime;
-            }
-        }
-
-        public static class UserWineDtosEntity {
-            private String value;
-            private long recordTime;
-
-            public void setValue(String value) {
-                this.value = value;
-            }
-
-            public void setRecordTime(long recordTime) {
-                this.recordTime = recordTime;
-            }
-
-            public String getValue() {
-                return value;
             }
 
             public long getRecordTime() {

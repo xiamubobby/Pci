@@ -134,6 +134,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
     private void init() {
         initToolbar();
         initRxBusEvent();
+        mVpDailyTaskMedicine.setOffscreenPageLimit(3);
 
         mVpDailyTaskDate.setOffscreenPageLimit(0);
         mLineChartBp.setNoDataText("");
@@ -251,7 +252,6 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
             mVpDailyTaskDate.setAdapter(mWeekViewVPAdapter);
             mVpDailyTaskDate.setCurrentItem(WeekViewVPAdapter.INITIAL_POSITION);
         }
-//        mWeekViewVPAdapter.setRemindList(mRemindList);
     }
 
     /**
@@ -266,31 +266,12 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
 
         if (mMedicineVPAdapter == null) {
             mMedicineVPAdapter = new MedicineVPAdapter(getFragmentManager());
-//            mMedicineVPAdapter.addFragment(MedicineRecordFragment.newInstance(morningMedicine, canModify), getString(R.string.morning));
-//            mMedicineVPAdapter.addFragment(MedicineRecordFragment.newInstance(noonMedicine, canModify), getString(R.string.afternoon));
-//            mMedicineVPAdapter.addFragment(MedicineRecordFragment.newInstance(nightMedicine, canModify), getString(R.string.night));
+            mMedicineVPAdapter.setDatas(morningMedicine, noonMedicine, nightMedicine, mCurrentSelectedTime == mToday);
             mVpDailyTaskMedicine.setAdapter(mMedicineVPAdapter);
             mTabMedicine.setupWithViewPager(mVpDailyTaskMedicine);
-
-        } /*else {
-            for (int i = 0; i < mMedicineVPAdapter.getCount(); i++) {
-                MedicineRecordFragment fragment = (MedicineRecordFragment) mMedicineVPAdapter.getItem(i);
-                switch (i) {
-                    case 0:
-                        fragment.setDatas(morningMedicine);
-                        break;
-                    case 1:
-                        fragment.setDatas(noonMedicine);
-                        break;
-                    case 2:
-                        fragment.setDatas(nightMedicine);
-                        break;
-                }
-            }
-        }*/
-
-        mMedicineVPAdapter.setDatas(morningMedicine,noonMedicine,nightMedicine,mCurrentSelectedTime == mToday);
-
+        } else {
+            mMedicineVPAdapter.setDatas(morningMedicine,noonMedicine,nightMedicine,mCurrentSelectedTime == mToday);
+        }
     }
 
     /**
