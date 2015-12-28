@@ -12,6 +12,7 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.databinding.ItemBpBinding;
 import com.wonders.xlab.pci.module.record.monitor.bean.BPBean;
 
 import java.lang.ref.WeakReference;
@@ -36,10 +37,7 @@ public class BPAdapter extends SimpleRVAdapter<BPBean> implements StickyRecycler
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         final ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        long time = getBean(position).getRecordTime();
-        viewHolder.bpDate.setText(DateUtil.format(time, "HH:mm"));
-        viewHolder.bpNum.setText(String.format("%s/%s", getBean(position).getSystolicPressure(), getBean(position).getDiastolicPressure()));
-        viewHolder.bpRate.setText(getBean(position).getHeartRate());
+        viewHolder.binding.setBp(getBean(position));
     }
 
     @Override
@@ -80,16 +78,11 @@ public class BPAdapter extends SimpleRVAdapter<BPBean> implements StickyRecycler
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_bp_hour)
-        TextView bpDate;
-        @Bind(R.id.tv_bp_num)
-        TextView bpNum;
-        @Bind(R.id.tv_bp_rate)
-        TextView bpRate;
+        ItemBpBinding binding;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            binding = ItemBpBinding.bind(itemView);
         }
     }
 
