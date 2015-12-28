@@ -111,20 +111,6 @@
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
-            android:name=".module.task.AddCigaretteActivity"
-            android:excludeFromRecents="true"
-            android:label="@string/title_activity_add_cigarette"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity
-            android:name=".module.task.AddWineActivity"
-            android:excludeFromRecents="true"
-            android:label="@string/title_activity_add_wine"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
-        <activity
             android:name=".module.task.AddSymptomActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_add_symptom"

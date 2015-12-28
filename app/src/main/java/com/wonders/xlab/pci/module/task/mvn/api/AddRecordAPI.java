@@ -20,14 +20,6 @@ public interface AddRecordAPI {
     Observable<SimpleEntity> saveBP(@Field("userId") String userId, @Field("date") long date, @Field("heartRate") int heartRate, @Field("systolicPressure") int systolicPressure, @Field("diastolicPressure") int diastolicPressure);
 
     @FormUrlEncoded
-    @POST("smoke/saveUserSmoke")
-    Observable<SimpleEntity> saveCigarette(@Field("userId") String userId, @Field("date") long date, @Field("cigaretteCount") int cigaretteCount);
-
-    @FormUrlEncoded
-    @POST("wine/saveUserWine")
-    Observable<SimpleEntity> saveWine(@Field("userId") String userId, @Field("date") long date, @Field("wineCount") int wineCount, @Field("wineIndex") int wineIndex);
-
-    @FormUrlEncoded
     @POST("userSymptom/saveUserSymptom")
     Observable<SimpleEntity> saveSymptom(@Field("userId") String userId, @Field("symptomIdsStr") String[] symptomIdsStr);
 

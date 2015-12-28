@@ -51,7 +51,6 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, S
 
     private HashMap<String, String> mSelectedSymptomMap = new HashMap<>();
 
-
     @Override
     public int getContentLayout() {
         return R.layout.activity_add_symptom;

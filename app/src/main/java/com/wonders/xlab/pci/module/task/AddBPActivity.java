@@ -83,6 +83,16 @@ public class AddBPActivity extends AppbarActivity implements SimpleView {
 
         KeyboardUtil.hide(this, mContentView.getWindowToken());
 
+        String dateStr = mTvAddBpDate.getText().toString();
+        String timeStr = mTvAddBpTime.getText().toString();
+
+        long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), DateUtil.DEFAULT_FORMAT_FULL);
+        if (DateUtil.isBiggerThenToday(date)) {
+            showSnackbar(mCoordinator, "不能选择今天之后的日期");
+            mFabAddBp.setClickable(true);
+            return;
+        }
+
         String systolicPressure = mEtAddBpSsy.getText().toString();
         if (TextUtils.isEmpty(systolicPressure)) {
             showSnackbar(mCoordinator, "请输入收缩压");
@@ -103,11 +113,6 @@ public class AddBPActivity extends AppbarActivity implements SimpleView {
             return;
         }
 
-        String dateStr = mTvAddBpDate.getText().toString();
-        String timeStr = mTvAddBpTime.getText().toString();
-
-        long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), DateUtil.DEFAULT_FORMAT_FULL);
-
         mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(), date, Integer.valueOf(heartRate), Integer.valueOf(systolicPressure), Integer.valueOf(diastolicPressure));
     }
 
@@ -124,6 +129,7 @@ public class AddBPActivity extends AppbarActivity implements SimpleView {
                 mCalendar.get(Calendar.MONTH),
                 mCalendar.get(Calendar.DAY_OF_MONTH)
         );
+        datePickerDialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
         datePickerDialog.show();
     }
 

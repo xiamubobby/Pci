@@ -140,8 +140,8 @@
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrollView_daily_task"
         android:layout_width="match_parent"
-        android:clickable="true"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clickable="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -209,27 +209,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/bg_gray"
                 android:padding="@dimen/item_interval"
-                android:text="吸烟情况"
-                android:textSize="@dimen/text_size_normal"
-                android:visibility="gone"/>
-
-            <LinearLayout
-                android:id="@+id/container_daily_task_smoke"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <include layout="@layout/empty_tips"/>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/bg_gray"
-                android:padding="@dimen/item_interval"
                 android:text="血糖测量"
                 android:textSize="@dimen/text_size_normal"/>
 
@@ -238,26 +217,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="180dp"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/bg_gray"
-                android:padding="@dimen/item_interval"
-                android:text="控酒情况"
-                android:textSize="@dimen/text_size_normal"
-                android:visibility="gone"/>
-
-            <LinearLayout
-                android:id="@+id/container_daily_task_wine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <include layout="@layout/empty_tips"/>
-            </LinearLayout>
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

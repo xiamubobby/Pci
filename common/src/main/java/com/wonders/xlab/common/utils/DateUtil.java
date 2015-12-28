@@ -78,6 +78,20 @@ public class DateUtil {
         }
     }
 
+    public static boolean isBiggerThenToday(long oldTime) {
+        mCalendar.setTimeInMillis(oldTime);
+        mCalendar.set(Calendar.HOUR_OF_DAY, 0);
+        mCalendar.set(Calendar.MINUTE, 0);
+        mCalendar.set(Calendar.SECOND, 0);
+
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.HOUR_OF_DAY, 0);
+        today.set(Calendar.MINUTE, 0);
+        today.set(Calendar.SECOND, 0);
+
+        return mCalendar.compareTo(today) == 1;
+    }
+
     public static boolean isTheSameDay(long oldDate, long currentDate) {
         String old = format(oldDate, "yyyy-MM-dd");
         String current = format(currentDate, "yyyy-MM-dd");

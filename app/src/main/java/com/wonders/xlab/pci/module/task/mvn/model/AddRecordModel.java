@@ -32,14 +32,6 @@ public class AddRecordModel extends BaseModel<SimpleEntity> {
         setObservable(mAddRecordAPI.saveBP(userId, date, heartRate, systolicPressure, diastolicPressure));
     }
 
-    public void saveCigarette(String userId, long date, int cigaretteCount) {
-        setObservable(mAddRecordAPI.saveCigarette(userId, date, cigaretteCount));
-    }
-
-    public void saveWine(String userId, long date, int wineCount, int wineIndex) {
-        setObservable(mAddRecordAPI.saveWine(userId, date, wineCount, wineIndex));
-    }
-
     public void saveSymptom(String userId, String[] symptomIdsStr) {
         setObservable(mAddRecordAPI.saveSymptom(userId, symptomIdsStr));
     }

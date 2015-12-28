@@ -83,6 +83,17 @@ public class AddBSActivity extends AppbarActivity implements SimpleView {
 
         KeyboardUtil.hide(this, mContentView.getWindowToken());
 
+        String dateStr = mTvAddBsDate.getText().toString();
+        String timeStr = mTvAddBsTime.getText().toString();
+
+        long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), DateUtil.DEFAULT_FORMAT_FULL);
+
+        if (DateUtil.isBiggerThenToday(date)) {
+            showSnackbar(mCoordinator, "不能选择今天之后的日期");
+            mFabAddBs.setClickable(true);
+            return;
+        }
+
         String bloodSugar = mEtAddBs.getText().toString();
         if (TextUtils.isEmpty(bloodSugar)) {
             showSnackbar(mCoordinator, "请输入血糖");
@@ -90,12 +101,7 @@ public class AddBSActivity extends AppbarActivity implements SimpleView {
             return;
         }
 
-        String dateStr = mTvAddBsDate.getText().toString();
-        String timeStr = mTvAddBsTime.getText().toString();
-
-        long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), DateUtil.DEFAULT_FORMAT_FULL);
-
-        int periodIndex;
+         int periodIndex;
         String period = mTvAddBsPeriod.getText().toString();
         switch (period) {
             case "早餐前":
@@ -139,6 +145,7 @@ public class AddBSActivity extends AppbarActivity implements SimpleView {
                 mCalendar.get(Calendar.MONTH),
                 mCalendar.get(Calendar.DAY_OF_MONTH)
         );
+        datePickerDialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
         datePickerDialog.show();
     }
 
