@@ -29,7 +29,7 @@ import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.MainActivity;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
-import com.wonders.xlab.pci.module.home.bean.YesterdayTaskBean;
+import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
 import com.wonders.xlab.pci.module.rxbus.ExitBus;
 import com.wonders.xlab.pci.receiver.ConnectionBroadcastReceiver;
 import com.wonders.xlab.pci.receiver.EMChatMessageBroadcastReceiver;
@@ -128,7 +128,7 @@ public class XEMChatService extends Service {
                     if (o instanceof ExitBus) {
                         mIsNormalStop = true;
                         new Delete().from(TodayTaskBean.class).execute();
-                        new Delete().from(YesterdayTaskBean.class).execute();
+                        new Delete().from(HistoryTaskBean.class).execute();
                         stopSelf();
                     }
                 }

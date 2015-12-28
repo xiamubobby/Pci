@@ -6,8 +6,8 @@ import com.activeandroid.annotation.Table;
 /**
  * Created by hua on 15/12/14.
  */
-@Table(name = "YesterdayTaskBean")
-public class YesterdayTaskBean extends HomeTaskBean {
+@Table(name = "HistoryTaskBean")
+public class HistoryTaskBean extends HomeTaskBean {
     @Column(name = "portrait")
     private String portrait;
 

@@ -15,8 +15,8 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.MainActivity;
+import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
-import com.wonders.xlab.pci.module.home.bean.YesterdayTaskBean;
 import com.wonders.xlab.pci.module.rxbus.ExitBus;
 
 import java.io.UnsupportedEncodingException;
@@ -77,17 +77,17 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 }
                 RxBus.getInstance().send(todayTaskBean);
             } else if (type == 1){
-                YesterdayTaskBean yesterdayTaskBean = new YesterdayTaskBean();
-                yesterdayTaskBean.setTitle(title);
-                yesterdayTaskBean.setUpdateTime(recordTime);
-                yesterdayTaskBean.setName(name);
-                yesterdayTaskBean.setContent(content);
-                yesterdayTaskBean.setPortrait(portrait);
-                yesterdayTaskBean.save();
+                HistoryTaskBean historyTaskBean = new HistoryTaskBean();
+                historyTaskBean.setTitle(title);
+                historyTaskBean.setUpdateTime(recordTime);
+                historyTaskBean.setName(name);
+                historyTaskBean.setContent(content);
+                historyTaskBean.setPortrait(portrait);
+                historyTaskBean.save();
                 if (!AIManager.getInstance(context).isHomeShowing()) {
-                    new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), yesterdayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
+                    new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), historyTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
                 }
-                RxBus.getInstance().send(yesterdayTaskBean);
+                RxBus.getInstance().send(historyTaskBean);
             } else if (type == 2) {
                 RxBus.getInstance().send(new ExitBus());
             } else if (type == -1) {

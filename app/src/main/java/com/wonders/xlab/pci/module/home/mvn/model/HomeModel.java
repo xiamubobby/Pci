@@ -7,8 +7,8 @@ import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.wonders.xlab.common.utils.NetworkUtil;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
-import com.wonders.xlab.pci.module.home.bean.YesterdayTaskBean;
 import com.wonders.xlab.pci.module.home.mvn.api.HomeAPI;
 import com.wonders.xlab.pci.module.home.mvn.view.HomeView;
 import com.wonders.xlab.pci.mvn.entity.home.HomeEntity;
@@ -36,7 +36,7 @@ public class HomeModel extends BaseModel<HomeEntity> {
 
         if (page == -1) {
             List<HomeTaskBean> beanList = new ArrayList<>();
-            List<YesterdayTaskBean> yesterdayBeanList = new Select().from(YesterdayTaskBean.class).orderBy("updateTime DESC").execute();
+            List<HistoryTaskBean> yesterdayBeanList = new Select().from(HistoryTaskBean.class).orderBy("updateTime DESC").execute();
             if (yesterdayBeanList != null && yesterdayBeanList.size() > 0) {
                 beanList.addAll(yesterdayBeanList);
                 mHomeView.showHomeList(beanList);
@@ -73,21 +73,21 @@ public class HomeModel extends BaseModel<HomeEntity> {
         }
 
         //delete cache first
-        new Delete().from(YesterdayTaskBean.class).execute();
+        new Delete().from(HistoryTaskBean.class).execute();
 
         List<HomeTaskBean> beanList = new ArrayList<>();
 
         for (HomeEntity.RetValuesEntity.ContentEntity contentEntity : content) {
 
-            YesterdayTaskBean yesterdayTaskBean = new YesterdayTaskBean();
-            yesterdayTaskBean.setContent(contentEntity.getContent());
-            yesterdayTaskBean.setTitle(contentEntity.getTitle());
-            yesterdayTaskBean.setUpdateTime(contentEntity.getRecordTime());
-            yesterdayTaskBean.setName(contentEntity.getName());
-            yesterdayTaskBean.setPortrait(contentEntity.getPortrait());
-            beanList.add(yesterdayTaskBean);
+            HistoryTaskBean historyTaskBean = new HistoryTaskBean();
+            historyTaskBean.setContent(contentEntity.getContent());
+            historyTaskBean.setTitle(contentEntity.getTitle());
+            historyTaskBean.setUpdateTime(contentEntity.getRecordTime());
+            historyTaskBean.setName(contentEntity.getName());
+            historyTaskBean.setPortrait(contentEntity.getPortrait());
+            beanList.add(historyTaskBean);
 
-            yesterdayTaskBean.save();
+            historyTaskBean.save();
 
         }
 

@@ -7,7 +7,7 @@ import com.wonders.xlab.common.recyclerview.adapter.MultiRVAdapter;
 import com.wonders.xlab.common.recyclerview.adapter.MultiViewHolder;
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
 import com.wonders.xlab.pci.module.home.viewholder.TodayTaskViewHolder;
-import com.wonders.xlab.pci.module.home.viewholder.YesterdayTaskViewHolder;
+import com.wonders.xlab.pci.module.home.viewholder.HistoryTaskViewHolder;
 
 import java.lang.ref.WeakReference;
 
@@ -27,7 +27,7 @@ public class HomeRVAdapter extends MultiRVAdapter {
         MultiViewHolder holder;
         switch (viewType) {
             case HomeTaskBean.ITEM_YESTERDAY:
-                holder = new YesterdayTaskViewHolder(itemView);
+                holder = new HistoryTaskViewHolder(itemView);
                 break;
             case HomeTaskBean.ITEM_TODAY:
                 holder = new TodayTaskViewHolder(itemView);

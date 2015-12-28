@@ -34,6 +34,10 @@ public class DateUtil {
         return DateUtil.format(new Date(date), format);
     }
 
+    public static String formatToTime(long date) {
+        return DateUtil.format(new Date(date), DEFAULT_FORMAT_FULL);
+    }
+
     public static String format(Date date, String format, String suffix) {
 
         StringBuilder str = new StringBuilder();

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="history"
+            type="com.wonders.xlab.pci.module.home.bean.HistoryTaskBean"/>
+
+        <import type="com.wonders.xlab.common.utils.DateUtil"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:id="@+id/iv_item_home_yesterday_portrait"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/user_avatar_default"/>
+
+        <TextView
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/iv_item_home_yesterday_portrait"
+            android:layout_below="@+id/iv_item_home_yesterday_portrait"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@{history.name}"/>
+
+        <LinearLayout
+            android:id="@+id/ll_item_home_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/iv_item_home_yesterday_portrait"
+            android:background="@drawable/chat_room_doctor_msg_bg"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/item_interval_large"
+            android:paddingRight="@dimen/item_interval_large">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:text="@{history.title}"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <include layout="@layout/divider_vertical"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{history.content}"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/ll_item_home_content"
+            android:layout_below="@+id/ll_item_home_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="8dp"
+            android:text="@{DateUtil.format(history.updateTime, DateUtil.DEFAULT_FORMAT_FULL)}"/>
+    </RelativeLayout>
+</layout>

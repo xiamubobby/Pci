@@ -1,114 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="handler"
+            type="com.wonders.xlab.pci.module.home.viewholder.TodayTaskViewHolder"/>
+
+        <variable
+            name="task"
+            type="com.wonders.xlab.pci.module.home.bean.TodayTaskBean"/>
+
+        <import type="com.wonders.xlab.common.utils.DateUtil"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:id="@+id/iv_item_home_today_portrait"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/user_avatar_default"/>
+
+        <TextView
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/iv_item_home_today_portrait"
+            android:layout_below="@+id/iv_item_home_today_portrait"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@{task.name}"/>
+
+        <LinearLayout
+            android:id="@+id/ll_item_home_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/item_interval"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/item_interval"
+            android:layout_toRightOf="@+id/iv_item_home_today_portrait"
+            android:background="@drawable/chat_room_doctor_msg_bg"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/item_interval_large"
+            android:paddingRight="@dimen/item_interval_large">
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/activity_horizontal_margin">
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/item_interval"
+                android:text="@{task.title}"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <ImageView
-        android:id="@+id/iv_item_home_today_portrait"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/user_avatar_default"/>
+            <include layout="@layout/divider_vertical"/>
 
-    <TextView
-        android:id="@+id/tv_item_home_today_name"
-        android:layout_width="56dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/iv_item_home_today_portrait"
-        android:layout_below="@+id/iv_item_home_today_portrait"
-        android:gravity="center"
-        android:singleLine="true"/>
+            <TextView
+                android:id="@+id/tv_item_home_today_medicine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_gray"
+                android:drawablePadding="@dimen/item_interval_large"
+                android:drawableRight="@drawable/ic_home_item_medicine"
+                android:gravity="center"
+                android:onClick="@{handler.onClickMedicine}"
+                android:paddingBottom="@dimen/item_interval"
+                android:paddingLeft="@dimen/item_interval_large"
+                android:paddingRight="@dimen/item_interval_large"
+                android:paddingTop="@dimen/item_interval"
+                android:text="记录服药"/>
 
-    <LinearLayout
-        android:id="@+id/ll_item_home_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/item_interval"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/item_interval"
-        android:layout_toRightOf="@+id/iv_item_home_today_portrait"
-        android:background="@drawable/chat_room_doctor_msg_bg"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/item_interval_large"
-        android:paddingRight="@dimen/item_interval_large">
+            <TextView
+                android:id="@+id/tv_item_home_today_bp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_interval"
+                android:background="@color/bg_gray"
+                android:drawablePadding="@dimen/item_interval_large"
+                android:drawableRight="@drawable/ic_home_item_measure"
+                android:gravity="center"
+                android:onClick="@{handler.onClickBP}"
+                android:paddingBottom="@dimen/item_interval"
+                android:paddingLeft="@dimen/item_interval_large"
+                android:paddingRight="@dimen/item_interval_large"
+                android:paddingTop="@dimen/item_interval"
+                android:text="血压测量"/>
+
+            <TextView
+                android:id="@+id/tv_item_home_today_bs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_interval"
+                android:background="@color/bg_gray"
+                android:drawablePadding="@dimen/item_interval_large"
+                android:drawableRight="@drawable/ic_home_item_measure"
+                android:gravity="center"
+                android:onClick="@{handler.onClickBS}"
+                android:paddingBottom="@dimen/item_interval"
+                android:paddingLeft="@dimen/item_interval_large"
+                android:paddingRight="@dimen/item_interval_large"
+                android:paddingTop="@dimen/item_interval"
+                android:text="血糖测量"/>
+
+            <TextView
+                android:id="@+id/tv_item_home_today_symptom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_interval"
+                android:background="@color/bg_gray"
+                android:drawablePadding="@dimen/item_interval_large"
+                android:drawableRight="@drawable/ic_home_item_symptom"
+                android:gravity="center"
+                android:onClick="@{handler.onClickSymptom}"
+                android:paddingBottom="@dimen/item_interval"
+                android:paddingLeft="@dimen/item_interval_large"
+                android:paddingRight="@dimen/item_interval_large"
+                android:paddingTop="@dimen/item_interval"
+                android:text="不良症状"/>
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_item_home_today_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/item_interval"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-        <include layout="@layout/divider_vertical"/>
-
-        <TextView
-            android:id="@+id/tv_item_home_today_medicine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/bg_gray"
-            android:drawablePadding="@dimen/item_interval_large"
-            android:drawableRight="@drawable/ic_home_item_medicine"
-            android:gravity="center"
-            android:paddingBottom="@dimen/item_interval"
-            android:paddingLeft="@dimen/item_interval_large"
-            android:paddingRight="@dimen/item_interval_large"
-            android:paddingTop="@dimen/item_interval"
-            android:text="记录服药"/>
-
-        <TextView
-            android:id="@+id/tv_item_home_today_bp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/ll_item_home_content"
+            android:layout_below="@+id/ll_item_home_content"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="@dimen/item_interval"
-            android:background="@color/bg_gray"
-            android:drawablePadding="@dimen/item_interval_large"
-            android:drawableRight="@drawable/ic_home_item_measure"
-            android:gravity="center"
-            android:paddingBottom="@dimen/item_interval"
-            android:paddingLeft="@dimen/item_interval_large"
-            android:paddingRight="@dimen/item_interval_large"
-            android:paddingTop="@dimen/item_interval"
-            android:text="血压测量"/>
-
-        <TextView
-            android:id="@+id/tv_item_home_today_bs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval"
-            android:background="@color/bg_gray"
-            android:drawablePadding="@dimen/item_interval_large"
-            android:drawableRight="@drawable/ic_home_item_measure"
-            android:gravity="center"
-            android:paddingBottom="@dimen/item_interval"
-            android:paddingLeft="@dimen/item_interval_large"
-            android:paddingRight="@dimen/item_interval_large"
-            android:paddingTop="@dimen/item_interval"
-            android:text="血糖测量"/>
-
-        <TextView
-            android:id="@+id/tv_item_home_today_symptom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval"
-            android:background="@color/bg_gray"
-            android:drawablePadding="@dimen/item_interval_large"
-            android:drawableRight="@drawable/ic_home_item_symptom"
-            android:gravity="center"
-            android:paddingBottom="@dimen/item_interval"
-            android:paddingLeft="@dimen/item_interval_large"
-            android:paddingRight="@dimen/item_interval_large"
-            android:paddingTop="@dimen/item_interval"
-            android:text="不良症状"/>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_item_home_today_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ll_item_home_content"
-        android:layout_below="@+id/ll_item_home_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="@dimen/item_interval"/>
-</RelativeLayout>
+            android:text="@{DateUtil.format(task.updateTime, DateUtil.DEFAULT_FORMAT_FULL)}"/>
+    </RelativeLayout>
+</layout>
