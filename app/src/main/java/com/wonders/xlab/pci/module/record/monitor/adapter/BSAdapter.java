@@ -12,6 +12,7 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.databinding.ItemBsBinding;
 import com.wonders.xlab.pci.module.record.monitor.bean.BSBean;
 
 import java.lang.ref.WeakReference;
@@ -37,9 +38,7 @@ public class BSAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycler
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         final ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        long time = getBean(position).getRecordTime();
-        viewHolder.bsDate.setText(DateUtil.format(time, "HH:mm"));
-        viewHolder.bsNum.setText(getBean(position).getBs());
+        viewHolder.binding.setBs(getBean(position));
     }
 
     @Override
@@ -80,14 +79,11 @@ public class BSAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycler
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_bs_hour)
-        TextView bsDate;
-        @Bind(R.id.tv_bs_num)
-        TextView bsNum;
+        ItemBsBinding binding;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            binding = ItemBsBinding.bind(itemView);
         }
     }
 
