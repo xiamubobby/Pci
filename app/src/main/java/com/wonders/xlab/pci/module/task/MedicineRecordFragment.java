@@ -115,7 +115,7 @@ public class MedicineRecordFragment extends BaseFragment {
 
                 checkBox.setText(bean.getMedicineName());
                 labelView.setText(getResources().getString(R.string.daily_task_mg, bean.getMedicineDosage()));
-                if (mCanModify) {
+                if (mCanModify && !checkBox.isChecked()) {
                     checkBox.setClickable(true);
                     checkBox.setOnClickListener(new View.OnClickListener() {
                         @Override
