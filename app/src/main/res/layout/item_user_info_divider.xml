@@ -1,35 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="label"
+            type="com.wonders.xlab.pci.module.record.userinfo.UserInfoBean"/>
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="54dp"
         android:orientation="vertical">
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="@color/bg_gray"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="18dp"
+                android:background="@android:color/white"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="36dp"
-            android:background="@color/bg_gray"/>
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorPrimary"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/item_interval_large"
+            android:paddingRight="@dimen/item_interval_large"
+            android:text="@{label.label}"
+            android:textColor="@android:color/white"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="18dp"
-            android:background="@android:color/white"/>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_item_user_info_divider_title"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/item_interval_large"
-        android:paddingRight="@dimen/item_interval_large"
-        android:text="身体特征"
-        android:textColor="@android:color/white"/>
-
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

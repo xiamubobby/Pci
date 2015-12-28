@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -13,9 +12,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
-import android.view.animation.Interpolator;
 import android.view.animation.TranslateAnimation;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -56,10 +53,7 @@ import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, TakeMedicineView {
-    private static final Interpolator INTERPOLATOR = new FastOutSlowInInterpolator();
 
-    @Bind(R.id.tv_daily_task_title)
-    TextView mTvDailyTaskTitle;
     @Bind(R.id.tab_daily_task_time_period_medicine)
     TabLayout mTabMedicine;
     @Bind(R.id.fl_daily_task_symptom)
@@ -74,10 +68,6 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
     LineChart mLineChartBp;
     @Bind(R.id.lc_daily_task_bs)
     LineChart mLineChartBs;
-    @Bind(R.id.container_daily_task_smoke)
-    LinearLayout mContainerSmoke;
-    @Bind(R.id.container_daily_task_wine)
-    LinearLayout mContainerWine;
     @Bind(R.id.fam_daily_task)
     FloatingActionsMenu mFamDailyTask;
     @Bind(R.id.tv_daily_task_week)
@@ -88,8 +78,6 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
     NestedScrollView mScrollViewDailyTask;
 
     private WeekViewVPAdapter mWeekViewVPAdapter;
-
-//    private FragmentVPAdapter mMedicineVPAdapter;
 
     private MedicineVPAdapter mMedicineVPAdapter;
 
@@ -409,16 +397,6 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
     @OnClick(R.id.fam_daily_task_bs)
     public void onRecordBsClick() {
         recordNewData(AddBSActivity.class);
-    }
-
-    @OnClick(R.id.fam_daily_task_smoke)
-    public void onRecordCigaretteClick() {
-        recordNewData(AddCigaretteActivity.class);
-    }
-
-    @OnClick(R.id.fam_daily_task_wine)
-    public void onRecordWineClick() {
-        recordNewData(AddWineActivity.class);
     }
 
     @OnClick(R.id.fam_daily_task_symptom)

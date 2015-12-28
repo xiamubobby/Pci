@@ -4,7 +4,6 @@ package com.wonders.xlab.pci.module.record.userinfo;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,9 +30,6 @@ import butterknife.ButterKnife;
 import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class UserInfoFragment extends BaseFragment implements UserInfoView {
 
     @Bind(R.id.rv_user_info)

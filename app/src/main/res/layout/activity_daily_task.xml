@@ -48,18 +48,6 @@
             />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fam_daily_task_smoke"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_fab_cigarette"
-            android:visibility="gone"
-            app:fab_colorNormal="@color/white"
-            app:fab_colorPressed="@color/white_pressed"
-            app:fab_size="mini"
-            app:fab_title="吸烟情况"
-            />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fam_daily_task_bs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,18 +56,6 @@
             app:fab_colorPressed="@color/white_pressed"
             app:fab_size="mini"
             app:fab_title="血糖测量"
-            />
-
-        <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fam_daily_task_wine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_fab_wine"
-            android:visibility="gone"
-            app:fab_colorNormal="@color/white"
-            app:fab_colorPressed="@color/white_pressed"
-            app:fab_size="mini"
-            app:fab_title="控酒情况"
             />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>

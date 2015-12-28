@@ -5,15 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.databinding.ItemUserInfoBinding;
+import com.wonders.xlab.pci.databinding.ItemUserInfoDividerBinding;
 
 import java.lang.ref.WeakReference;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by hua on 15/12/14.
@@ -49,12 +47,11 @@ public class UserInfoRVAdapter extends SimpleRVAdapter<UserInfoBean> {
         switch (getItemViewType(position)) {
             case VIEW_TYPE_ITEM:
                 ItemViewHolder viewHolder = (ItemViewHolder) holder;
-                viewHolder.mTvItemUserInfoLabel.setText(getBean(position).getLabel());
-                viewHolder.mTvItemUserInfoValue.setText(getBean(position).getValue());
+                viewHolder.binding.setUser(getBean(position));
                 break;
             case VIEW_TYPE_DIVIDER:
                 DividerViewHolder dividerViewHolder = (DividerViewHolder) holder;
-                dividerViewHolder.mTvTitle.setText(getBean(position).getLabel());
+                dividerViewHolder.binding.setLabel(getBean(position));
                 break;
         }
     }
@@ -65,26 +62,20 @@ public class UserInfoRVAdapter extends SimpleRVAdapter<UserInfoBean> {
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_item_user_info_label)
-        TextView mTvItemUserInfoLabel;
-        @Bind(R.id.tv_item_user_info_value)
-        TextView mTvItemUserInfoValue;
+        ItemUserInfoBinding binding;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
-
+            binding = ItemUserInfoBinding.bind(itemView);
         }
     }
 
     class DividerViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_item_user_info_divider_title)
-        TextView mTvTitle;
+        ItemUserInfoDividerBinding binding;
 
         public DividerViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
-
+            binding = ItemUserInfoDividerBinding.bind(itemView);
         }
     }
 
