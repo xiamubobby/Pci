@@ -2,7 +2,9 @@ package com.wonders.xlab.pci.module.base;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.umeng.update.UmengUpdateAgent;
 import com.wonders.xlab.pci.mvn.model.BaseModel;
@@ -69,4 +71,9 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void showSnackbar(View view, String message) {
+        if (view != null) {
+            Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
+        }
+    }
 }

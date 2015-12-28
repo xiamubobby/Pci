@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -84,29 +83,25 @@ public class AddBPActivity extends AppbarActivity implements SimpleView {
 
         KeyboardUtil.hide(this, mContentView.getWindowToken());
 
-        String systolicPressure, diastolicPressure;
-
-        String heartRate = mEtAddBpRate.getText().toString();
-        if (TextUtils.isEmpty(heartRate)) {
-            Snackbar.make(mContentView, "请输入心率", Snackbar.LENGTH_SHORT).show();
-            mFabAddBp.setClickable(true);
-            return;
-        }
-
-        systolicPressure = mEtAddBpSsy.getText().toString();
+        String systolicPressure = mEtAddBpSsy.getText().toString();
         if (TextUtils.isEmpty(systolicPressure)) {
             showSnackbar(mCoordinator, "请输入收缩压");
             mFabAddBp.setClickable(true);
             return;
         }
-        diastolicPressure = mEtAddBpSzy.getText().toString();
+        String diastolicPressure = mEtAddBpSzy.getText().toString();
         if (TextUtils.isEmpty(diastolicPressure)) {
             showSnackbar(mCoordinator, "请输入舒张压");
             mFabAddBp.setClickable(true);
             return;
         }
+        String heartRate = mEtAddBpRate.getText().toString();
 
-        KeyboardUtil.hide(this, mContentView.getWindowToken());
+        if (TextUtils.isEmpty(heartRate)) {
+            showSnackbar(mCoordinator, "请输入心率");
+            mFabAddBp.setClickable(true);
+            return;
+        }
 
         String dateStr = mTvAddBpDate.getText().toString();
         String timeStr = mTvAddBpTime.getText().toString();

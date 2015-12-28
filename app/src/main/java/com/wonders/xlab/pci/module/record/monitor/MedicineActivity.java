@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.module.record.monitor;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,8 @@ public class MedicineActivity extends AppbarActivity implements MedicineView {
     RecyclerView mRvMedicine;
     @Bind(R.id.refresh_medicine)
     SwipeRefreshLayout mRefreshMedicine;
+    @Bind(R.id.coordinator)
+    CoordinatorLayout mCoordinator;
 
     private MedicineRVAdapter mMedicineRVAdapter;
 
@@ -71,7 +74,7 @@ public class MedicineActivity extends AppbarActivity implements MedicineView {
 
     @Override
     public void onFailed(String message) {
-        showSnackbar(mRvMedicine, message);
+        showSnackbar(mCoordinator, message);
     }
 
     @Override

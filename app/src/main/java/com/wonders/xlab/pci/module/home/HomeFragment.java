@@ -4,11 +4,11 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.activeandroid.query.Select;
 import com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView;
@@ -49,6 +49,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     @Bind(R.id.rv_home)
     LoadMoreRecyclerView mRvHome;
+    @Bind(R.id.container_home)
+    FrameLayout mContainerHome;
 
     private HomeRVAdapter mHomeRVAdapter;
 
@@ -159,7 +161,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
                             }
                             mHomeModel.getHomeList(getActivity(), AIManager.getInstance(getActivity()).getUserId());
                         } else {
-                            Snackbar.make(mRvHome, getResources().getString(R.string.network_disconnected), Snackbar.LENGTH_SHORT).show();
+                            showSnackbar(mContainerHome,getResources().getString(R.string.network_disconnected));
                         }
                     } else if (o instanceof MedicineClickBus) {
                         //服药
@@ -213,8 +215,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
 
     @Override
     public void showError(String message) {
-
-        Snackbar.make(mRvHome, message, Snackbar.LENGTH_SHORT).show();
+        showSnackbar(mContainerHome, message);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.wonders.xlab.pci.module.base;
 
 import android.app.Fragment;
+import android.support.design.widget.Snackbar;
+import android.view.View;
 
 import com.wonders.xlab.pci.mvn.model.BaseModel;
 
@@ -32,4 +34,9 @@ public class BaseFragment extends Fragment {
         }
     }
 
+    public void showSnackbar(View view, String message) {
+        if (view != null) {
+            Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
+        }
+    }
 }

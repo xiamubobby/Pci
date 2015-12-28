@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.module.record.monitor;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
@@ -38,6 +39,8 @@ public class BSActivity extends AppbarActivity implements BSView {
     TextView mTvBsDate;
     @Bind(R.id.rv_bs_history)
     RecyclerView mRvBsHistory;
+    @Bind(R.id.coordinator)
+    CoordinatorLayout mCoordinator;
 
     private BSModel mBSModel;
     private BSAdapter mBSAdapter;
@@ -149,7 +152,7 @@ public class BSActivity extends AppbarActivity implements BSView {
 
     @Override
     public void onFailed(String message) {
-
+        showSnackbar(mCoordinator, message);
     }
 
     @Override

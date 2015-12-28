@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.PopupMenu;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -86,7 +85,7 @@ public class AddBSActivity extends AppbarActivity implements SimpleView {
 
         String bloodSugar = mEtAddBs.getText().toString();
         if (TextUtils.isEmpty(bloodSugar)) {
-            Snackbar.make(mContentView, "请输入血糖", Snackbar.LENGTH_SHORT).show();
+            showSnackbar(mCoordinator, "请输入血糖");
             mFabAddBs.setClickable(true);
             return;
         }
@@ -186,7 +185,7 @@ public class AddBSActivity extends AppbarActivity implements SimpleView {
     @Override
     public void svSuccess() {
         mFabAddBs.setClickable(false);
-        showSnackbar(mCoordinator,"数据保存成功");
+        showSnackbar(mCoordinator, "数据保存成功");
         RxBus.getInstance().send(new TaskRefreshBus());
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -199,7 +198,7 @@ public class AddBSActivity extends AppbarActivity implements SimpleView {
     @Override
     public void svFailed(String message) {
         mFabAddBs.setClickable(true);
-        showSnackbar(mCoordinator,message);
+        showSnackbar(mCoordinator, message);
     }
 
     private ProgressDialog dialog;

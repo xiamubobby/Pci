@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.module.record.monitor;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,9 +15,9 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.record.monitor.adapter.SymptomRVAdapter;
-import com.wonders.xlab.pci.mvn.entity.record.monitor.SymptomEntity;
 import com.wonders.xlab.pci.module.record.monitor.mvn.model.SymptomModel;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.SymptomView;
+import com.wonders.xlab.pci.mvn.entity.record.monitor.SymptomEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -39,6 +40,8 @@ public class SymptomActivity extends AppbarActivity implements SymptomView {
     RecyclerView mRvSymptomAdvice;
     @Bind(R.id.refresh_symptom)
     SwipeRefreshLayout mRefreshSymptom;
+    @Bind(R.id.coordinator)
+    CoordinatorLayout mCoordinator;
 
     private SymptomRVAdapter mSymptomRVAdapter;
 
@@ -102,7 +105,7 @@ public class SymptomActivity extends AppbarActivity implements SymptomView {
 
     @Override
     public void onFailed(String message) {
-
+        showSnackbar(mCoordinator, message);
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.module.record.monitor;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
@@ -36,6 +37,8 @@ public class BPActivity extends AppbarActivity implements BPView {
     RecyclerView mRVBpHistory;
     @Bind(R.id.tv_bp_date)
     TextView tvBpDay;
+    @Bind(R.id.coordinator)
+    CoordinatorLayout mCoordinator;
     private BPModel bpModel;
     private BPAdapter mBPAdapter;
 
@@ -110,7 +113,8 @@ public class BPActivity extends AppbarActivity implements BPView {
             final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(mBPAdapter);
             mRVBpHistory.addItemDecoration(decoration);
             mBPAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-                @Override public void onChanged() {
+                @Override
+                public void onChanged() {
                     decoration.invalidateHeaders();
                 }
             });
@@ -147,7 +151,7 @@ public class BPActivity extends AppbarActivity implements BPView {
 
     @Override
     public void onFailed(String message) {
-        showSnackbar(mRVBpHistory, message);
+        showSnackbar(mCoordinator, message);
     }
 
     @Override

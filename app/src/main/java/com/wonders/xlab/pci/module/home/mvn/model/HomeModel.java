@@ -32,15 +32,17 @@ public class HomeModel extends BaseModel<HomeEntity> {
         page = -1;
     }
 
-    public void getHomeList(Context context, String userId) {
+    public void getHomeList(final Context context, final String userId) {
+
         if (page == -1) {
             List<HomeTaskBean> beanList = new ArrayList<>();
             List<YesterdayTaskBean> yesterdayBeanList = new Select().from(YesterdayTaskBean.class).orderBy("updateTime DESC").execute();
-            if (yesterdayBeanList != null) {
+            if (yesterdayBeanList != null && yesterdayBeanList.size() > 0) {
                 beanList.addAll(yesterdayBeanList);
                 mHomeView.showHomeList(beanList);
             }
         }
+
         if (!NetworkUtil.hasNetwork(context)) {
             mHomeView.showError(context.getString(R.string.error_no_network));
             return;
@@ -48,6 +50,7 @@ public class HomeModel extends BaseModel<HomeEntity> {
         if (!isLastPage) {
             setObservable(mHomeAPI.getHomeList(userId, page + 1));
         }
+
     }
 
     @Override

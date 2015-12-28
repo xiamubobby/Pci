@@ -5,10 +5,16 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Interpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -32,13 +38,13 @@ import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
 import com.wonders.xlab.pci.module.task.bean.SmokeBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
 import com.wonders.xlab.pci.module.task.bean.WineBean;
-import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity;
 import com.wonders.xlab.pci.module.task.mvn.model.DailyTaskModel;
 import com.wonders.xlab.pci.module.task.mvn.model.TakeMedicineModel;
 import com.wonders.xlab.pci.module.task.mvn.view.DailyTaskView;
 import com.wonders.xlab.pci.module.task.mvn.view.TakeMedicineView;
 import com.wonders.xlab.pci.module.task.rxbus.TaskRefreshBus;
 import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
+import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.util.ArrayList;
@@ -52,6 +58,7 @@ import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, TakeMedicineView {
+    private static final Interpolator INTERPOLATOR = new FastOutSlowInInterpolator();
 
     @Bind(R.id.tv_daily_task_title)
     TextView mTvDailyTaskTitle;
@@ -79,6 +86,8 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
     TextView mTvDailyTaskWeek;
     @Bind(R.id.coordinator)
     CoordinatorLayout mCoordinator;
+    @Bind(R.id.scrollView_daily_task)
+    NestedScrollView mScrollViewDailyTask;
 
     private WeekViewVPAdapter mWeekViewVPAdapter;
 
@@ -138,6 +147,43 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
         mLineChartBs.setScaleEnabled(false);
 
         mTvDailyTaskDate.setText(DateUtil.format(Calendar.getInstance().getTimeInMillis(), DateUtil.DEFAULT_FORMAT));
+
+        mScrollViewDailyTask.setOnTouchListener(new View.OnTouchListener() {
+            int oldY = -1;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_MOVE:
+                        int newY = v.getScrollY();
+                        if (oldY == -1) {
+                            oldY = newY;
+                        }
+                        if (newY - oldY > 100 && mFamDailyTask.getVisibility() == View.GONE) {
+                            TranslateAnimation hideAnimation = new TranslateAnimation(
+                                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f);
+                            hideAnimation.setFillAfter(true);
+                            hideAnimation.setDuration(500);
+                            mFamDailyTask.startAnimation(hideAnimation);
+                            mFamDailyTask.setVisibility(View.VISIBLE);
+                        } else if (oldY - newY > 100 && mFamDailyTask.getVisibility() == View.VISIBLE) {
+                            TranslateAnimation hideAnimation = new TranslateAnimation(
+                                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                                    Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+                            hideAnimation.setFillAfter(true);
+                            hideAnimation.setDuration(500);
+                            mFamDailyTask.startAnimation(hideAnimation);
+                            mFamDailyTask.setVisibility(View.GONE);
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        oldY = -1;
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     private void initToolbar() {
@@ -190,7 +236,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
     }
 
     @Override
-    public void initWeekView(long today, String week,List<DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity> mRemindList) {
+    public void initWeekView(long today, String week, List<DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity> mRemindList) {
         if (mToday == -1) {
             mToday = today;
         }
@@ -199,7 +245,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
         mTvDailyTaskDate.setText(DateUtil.format(today, DateUtil.DEFAULT_FORMAT));
         mTvDailyTaskWeek.setText(getResources().getString(R.string.daily_task_week, week));
         if (mWeekViewVPAdapter == null) {
-            mWeekViewVPAdapter = new WeekViewVPAdapter(getFragmentManager(), mToday,mRemindList);
+            mWeekViewVPAdapter = new WeekViewVPAdapter(getFragmentManager(), mToday, mRemindList);
             mVpDailyTaskDate.setAdapter(mWeekViewVPAdapter);
             mVpDailyTaskDate.setCurrentItem(WeekViewVPAdapter.INITIAL_POSITION);
         }
