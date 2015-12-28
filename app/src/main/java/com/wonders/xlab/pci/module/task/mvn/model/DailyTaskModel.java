@@ -5,13 +5,11 @@ import android.support.annotation.NonNull;
 import com.wonders.xlab.pci.module.task.bean.BloodPressureBean;
 import com.wonders.xlab.pci.module.task.bean.BloodSugarBean;
 import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
-import com.wonders.xlab.pci.module.task.bean.SmokeBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
-import com.wonders.xlab.pci.module.task.bean.WineBean;
-import com.wonders.xlab.pci.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.task.mvn.api.DailyTaskAPI;
-import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity;
 import com.wonders.xlab.pci.module.task.mvn.view.DailyTaskView;
+import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity;
+import com.wonders.xlab.pci.mvn.model.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,27 +112,6 @@ public class DailyTaskModel extends BaseModel<DailyTaskEntity> {
             }
         }
         mDailyTaskView.initBloodSugar(bloodSugarBeen);
-
-        //吸烟
-        List<SmokeBean> smokeBeanList = new ArrayList<>();
-        List<DailyTaskEntity.RetValuesEntity.UserSmokeDtosEntity> smokeEntityList = valuesEntity.getUserSmokeDtos();
-        if (smokeEntityList != null) {
-            for (int i = 0; i < smokeEntityList.size(); i++) {
-                SmokeBean bean = new SmokeBean(smokeEntityList.get(i).getRecordTime(), smokeEntityList.get(i).getValue());
-                smokeBeanList.add(bean);
-            }
-        }
-        mDailyTaskView.initSmokeView(smokeBeanList);
-        //喝酒
-        List<WineBean> wineBeanList = new ArrayList<>();
-        List<DailyTaskEntity.RetValuesEntity.UserWineDtosEntity> wineEntityList = valuesEntity.getUserWineDtos();
-        if (wineEntityList != null) {
-            for (int i = 0; i < wineEntityList.size(); i++) {
-                WineBean bean = new WineBean(wineEntityList.get(i).getRecordTime(), wineEntityList.get(i).getValue());
-                wineBeanList.add(bean);
-            }
-        }
-        mDailyTaskView.initWineView(wineBeanList);
     }
 
     @Override

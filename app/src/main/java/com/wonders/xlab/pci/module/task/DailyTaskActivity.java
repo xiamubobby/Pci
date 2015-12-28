@@ -26,18 +26,16 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.common.viewpager.WrapHeightViewPager;
-import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
+import com.wonders.xlab.pci.module.task.adapter.MedicineVPAdapter;
 import com.wonders.xlab.pci.module.task.adapter.WeekViewVPAdapter;
 import com.wonders.xlab.pci.module.task.bean.BloodPressureBean;
 import com.wonders.xlab.pci.module.task.bean.BloodSugarBean;
 import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
-import com.wonders.xlab.pci.module.task.bean.SmokeBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
-import com.wonders.xlab.pci.module.task.bean.WineBean;
 import com.wonders.xlab.pci.module.task.mvn.model.DailyTaskModel;
 import com.wonders.xlab.pci.module.task.mvn.model.TakeMedicineModel;
 import com.wonders.xlab.pci.module.task.mvn.view.DailyTaskView;
@@ -91,7 +89,9 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
 
     private WeekViewVPAdapter mWeekViewVPAdapter;
 
-    private FragmentVPAdapter mMedicineVPAdapter;
+//    private FragmentVPAdapter mMedicineVPAdapter;
+
+    private MedicineVPAdapter mMedicineVPAdapter;
 
     private CompositeSubscription mSubscription;
 
@@ -128,13 +128,13 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
         addModel(mDailyTaskModel);
         addModel(mTakeMedicineModel);
 
-        initToolbar();
-        initRxBusEvent();
-
         mDailyTaskModel.fetchData(AIManager.getInstance(this).getUserId(), null);
     }
 
     private void init() {
+        initToolbar();
+        initRxBusEvent();
+
         mVpDailyTaskDate.setOffscreenPageLimit(0);
         mLineChartBp.setNoDataText("");
         mLineChartBp.setNoDataTextDescription(getResources().getString(R.string.task_empty_tip));
@@ -160,19 +160,21 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
                             oldY = newY;
                         }
                         if (newY - oldY > 100 && mFamDailyTask.getVisibility() == View.GONE) {
+                            mFamDailyTask.clearAnimation();
                             TranslateAnimation hideAnimation = new TranslateAnimation(
                                     Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
                                     Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f);
                             hideAnimation.setFillAfter(true);
-                            hideAnimation.setDuration(500);
+                            hideAnimation.setDuration(300);
                             mFamDailyTask.startAnimation(hideAnimation);
                             mFamDailyTask.setVisibility(View.VISIBLE);
                         } else if (oldY - newY > 100 && mFamDailyTask.getVisibility() == View.VISIBLE) {
+                            mFamDailyTask.clearAnimation();
                             TranslateAnimation hideAnimation = new TranslateAnimation(
                                     Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
                                     Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
                             hideAnimation.setFillAfter(true);
-                            hideAnimation.setDuration(500);
+                            hideAnimation.setDuration(300);
                             mFamDailyTask.startAnimation(hideAnimation);
                             mFamDailyTask.setVisibility(View.GONE);
                         }
@@ -261,17 +263,16 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
      */
     @Override
     public void initMedicineRecordView(List<MedicineRecordBean> morningMedicine, List<MedicineRecordBean> noonMedicine, List<MedicineRecordBean> nightMedicine) {
-        boolean canModify = (mCurrentSelectedTime == mToday);
 
         if (mMedicineVPAdapter == null) {
-            mMedicineVPAdapter = new FragmentVPAdapter(getFragmentManager());
-            mMedicineVPAdapter.addFragment(MedicineRecordFragment.newInstance(morningMedicine, canModify), getString(R.string.morning));
-            mMedicineVPAdapter.addFragment(MedicineRecordFragment.newInstance(noonMedicine, canModify), getString(R.string.afternoon));
-            mMedicineVPAdapter.addFragment(MedicineRecordFragment.newInstance(nightMedicine, canModify), getString(R.string.night));
+            mMedicineVPAdapter = new MedicineVPAdapter(getFragmentManager());
+//            mMedicineVPAdapter.addFragment(MedicineRecordFragment.newInstance(morningMedicine, canModify), getString(R.string.morning));
+//            mMedicineVPAdapter.addFragment(MedicineRecordFragment.newInstance(noonMedicine, canModify), getString(R.string.afternoon));
+//            mMedicineVPAdapter.addFragment(MedicineRecordFragment.newInstance(nightMedicine, canModify), getString(R.string.night));
             mVpDailyTaskMedicine.setAdapter(mMedicineVPAdapter);
             mTabMedicine.setupWithViewPager(mVpDailyTaskMedicine);
 
-        } else {
+        } /*else {
             for (int i = 0; i < mMedicineVPAdapter.getCount(); i++) {
                 MedicineRecordFragment fragment = (MedicineRecordFragment) mMedicineVPAdapter.getItem(i);
                 switch (i) {
@@ -286,8 +287,9 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
                         break;
                 }
             }
-        }
+        }*/
 
+        mMedicineVPAdapter.setDatas(morningMedicine,noonMedicine,nightMedicine,mCurrentSelectedTime == mToday);
 
     }
 
@@ -393,41 +395,6 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
 
         mLineChartBs.setData(data);
         mLineChartBs.animateXY(500, 500);
-    }
-
-    @Override
-    public void initSmokeView(List<SmokeBean> beanList) {
-        mContainerSmoke.removeAllViews();
-        if (beanList.size() <= 0) {
-            mContainerSmoke.addView(mInflater.inflate(R.layout.empty_tips, mContainerSmoke, false));
-            return;
-        }
-        for (SmokeBean bean : beanList) {
-            View view = mInflater.inflate(R.layout.item_task_simple_text, null, false);
-            TextView tvTime = (TextView) view.findViewById(R.id.tv_item_task_simple_text_time);
-            TextView tvValue = (TextView) view.findViewById(R.id.tv_item_task_simple_text_value);
-            tvTime.setText(DateUtil.format(bean.getTime(), DateUtil.DEFAULT_FORMAT));
-            tvValue.setText(bean.getValue());
-            mContainerSmoke.addView(view);
-        }
-    }
-
-    @Override
-    public void initWineView(List<WineBean> beanList) {
-        mContainerWine.removeAllViews();
-        if (beanList.size() <= 0) {
-            mContainerWine.addView(mInflater.inflate(R.layout.empty_tips, mContainerWine, false));
-            return;
-        }
-        for (WineBean bean : beanList) {
-            View view = mInflater.inflate(R.layout.item_task_simple_text, null, false);
-            TextView tvTime = (TextView) view.findViewById(R.id.tv_item_task_simple_text_time);
-            TextView tvValue = (TextView) view.findViewById(R.id.tv_item_task_simple_text_value);
-
-            tvTime.setText(DateUtil.format(bean.getTime(), DateUtil.DEFAULT_FORMAT));
-            tvValue.setText(bean.getValue());
-            mContainerWine.addView(view);
-        }
     }
 
     private void initLineDataSet(LineDataSet dataSet, int color) {

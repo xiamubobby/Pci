@@ -141,7 +141,6 @@
         android:id="@+id/scrollView_daily_task"
         android:layout_width="match_parent"
         android:clickable="true"
-        android:descendantFocusability="afterDescendants"
         android:layout_height="wrap_content">
 
         <LinearLayout
