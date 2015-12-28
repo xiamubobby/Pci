@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/window_background_statusbar_toolbar_tab
+        </item>
+    </style>
+
     <style name="AppTheme.Light" parent="AppTheme">
         <!-- 解决activity切换时的黑屏问题 -->
         <item name="android:windowIsTranslucent">true</item>
