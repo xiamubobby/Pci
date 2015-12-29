@@ -28,6 +28,8 @@ public class MedicineRecordFragment extends BaseFragment {
     private List<MedicineRecordBean> mBeanList;
     private boolean mCanModify;
 
+    private LayoutInflater mInflater;
+
     public MedicineRecordFragment() {
 
     }
@@ -66,7 +68,7 @@ public class MedicineRecordFragment extends BaseFragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
+        mInflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -100,13 +102,13 @@ public class MedicineRecordFragment extends BaseFragment {
                 linearLayout.setLayoutParams(layoutParams);
 
                 final CheckBox checkBox = new CheckBox(getActivity());
-                checkBox.setPadding(0, 0, intervalLarge, 0);
                 LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
                 lp1.weight = 1;
                 checkBox.setLayoutParams(lp1);
                 checkBox.setChecked(bean.isChecked());
 
                 TextView labelView = new TextView(getActivity());
+                labelView.setPadding(intervalLarge, 0, 0, 0);
                 LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 labelView.setLayoutParams(lp2);
 

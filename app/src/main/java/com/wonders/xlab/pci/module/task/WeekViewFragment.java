@@ -133,11 +133,13 @@ public class WeekViewFragment extends BaseFragment {
 
             mTvDate.setText(showDate);
 
+            final int finalDayOfWeek = dayOfWeek;
+
             Observable.from(mRemindList)
                     .filter(new Func1<UserActivityDtosEntity, Boolean>() {
                         @Override
                         public Boolean call(UserActivityDtosEntity userActivityDtosEntity) {
-                            return DateUtil.isTheSameDay(userActivityDtosEntity.getCurrentDay(), (Long) mTvDate.getTag());
+                            return DateUtil.isTheSameDay(userActivityDtosEntity.getCurrentDay(), (Long) mTvDate.getTag()) && (finalDayOfWeek >= today);
                         }
                     })
                     .subscribeOn(AndroidSchedulers.mainThread())
@@ -148,7 +150,6 @@ public class WeekViewFragment extends BaseFragment {
                         }
                     });
 
-            final int finalDayOfWeek = dayOfWeek;
             mTvDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
@@ -157,7 +158,7 @@ public class WeekViewFragment extends BaseFragment {
                             .filter(new Func1<UserActivityDtosEntity, Boolean>() {
                                 @Override
                                 public Boolean call(UserActivityDtosEntity userActivityDtosEntity) {
-                                    return DateUtil.isTheSameDay(userActivityDtosEntity.getCurrentDay(), (Long) v.getTag());
+                                    return DateUtil.isTheSameDay(userActivityDtosEntity.getCurrentDay(), (Long) v.getTag()) && (finalDayOfWeek >= today);
                                 }
                             })
                             .subscribeOn(AndroidSchedulers.mainThread())
@@ -171,16 +172,6 @@ public class WeekViewFragment extends BaseFragment {
                                     popupMenu.show();
                                 }
                             });
-                   /* for (UserActivityDtosEntity entity : mRemindList) {
-                        if (DateUtil.isTheSameDay(entity.getCurrentDay(), (Long) v.getTag())) {
-                            PopupMenu popupMenu = new PopupMenu(getActivity(), v);
-                            for (String name : entity.getNames()) {
-                                popupMenu.getMenu().add(name);
-                            }
-                            popupMenu.show();
-                            break;
-                        }
-                    }*/
                     if (finalDayOfWeek <= today) {
                         RxBus.getInstance().send(new WeekViewClickBus((Long) v.getTag(), finalDayOfWeek));
                     }
