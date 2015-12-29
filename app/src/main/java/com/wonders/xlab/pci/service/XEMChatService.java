@@ -228,7 +228,8 @@ public class XEMChatService extends Service {
                             if (error == EMError.USER_REMOVED) {
                                 message = "显示帐号已经被移除,请联系客服";
                             } else if (error == EMError.CONNECTION_CONFLICT) {
-                                message = "帐号在其他设备登陆";
+                                //帐号在其他设备登陆
+                                message = "";
                             } else {
                                 if (NetUtils.hasNetwork(XEMChatService.this)) {
                                     //连接不到聊天服务器,请重新打开应用

@@ -22,27 +22,6 @@ public class WeekViewVPAdapter extends FragmentPagerAdapter {
     private List<UserActivityDtosEntity> mRemindList;
     private long mToday;
 
-    public Long getTime(int position) {
-        if (times != null && times.size() > position) {
-            return times.get(position);
-        } else {
-            return -1l;
-        }
-    }
-
-    /*public void setRemindList(List<UserActivityDtosEntity> remindList) {
-        if (mRemindList == null) {
-            mRemindList = new ArrayList<>();
-        } else {
-            mRemindList.clear();
-        }
-        mRemindList.addAll(remindList);
-        for (int i = 0; i < getCount(); i++) {
-            ((WeekViewFragment) getItem(i)).setRemindList(mRemindList);
-        }
-        notifyDataSetChanged();
-    }*/
-
     public WeekViewVPAdapter(FragmentManager fm, long today, List<UserActivityDtosEntity> remindList) {
         super(fm);
         mToday = today;

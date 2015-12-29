@@ -16,8 +16,8 @@ import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseFragment;
-import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity;
 import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
+import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +25,10 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +39,8 @@ public class WeekViewFragment extends BaseFragment {
     private long mToday;
     private int today;
     private List<UserActivityDtosEntity> mRemindList;
+    private List<String> mReminds;
+
     private LayoutInflater mInflater;
 
     @Bind(R.id.ll_fragment_date)
@@ -114,7 +120,7 @@ public class WeekViewFragment extends BaseFragment {
                 layoutParams.weight = 1;
             }
 
-            TextView mTvDate = (TextView) itemView.findViewById(R.id.tv_item_daily_task_date);
+            final TextView mTvDate = (TextView) itemView.findViewById(R.id.tv_item_daily_task_date);
             mTvDate.setTag(calendar.getTimeInMillis());
             itemView.setLayoutParams(layoutParams);
 
@@ -127,11 +133,45 @@ public class WeekViewFragment extends BaseFragment {
 
             mTvDate.setText(showDate);
 
+            Observable.from(mRemindList)
+                    .filter(new Func1<UserActivityDtosEntity, Boolean>() {
+                        @Override
+                        public Boolean call(UserActivityDtosEntity userActivityDtosEntity) {
+                            return DateUtil.isTheSameDay(userActivityDtosEntity.getCurrentDay(), (Long) mTvDate.getTag());
+                        }
+                    })
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<UserActivityDtosEntity>() {
+                        @Override
+                        public void call(UserActivityDtosEntity userActivityDtosEntity) {
+                            mTvDate.setTextColor(getResources().getColor(android.R.color.holo_red_light));
+                        }
+                    });
+
             final int finalDayOfWeek = dayOfWeek;
             mTvDate.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    for (UserActivityDtosEntity entity : mRemindList) {
+                public void onClick(final View v) {
+                    //提醒事件
+                    Observable.from(mRemindList)
+                            .filter(new Func1<UserActivityDtosEntity, Boolean>() {
+                                @Override
+                                public Boolean call(UserActivityDtosEntity userActivityDtosEntity) {
+                                    return DateUtil.isTheSameDay(userActivityDtosEntity.getCurrentDay(), (Long) v.getTag());
+                                }
+                            })
+                            .subscribeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Action1<UserActivityDtosEntity>() {
+                                @Override
+                                public void call(UserActivityDtosEntity userActivityDtosEntity) {
+                                    PopupMenu popupMenu = new PopupMenu(getActivity(), v);
+                                    for (String name : userActivityDtosEntity.getNames()) {
+                                        popupMenu.getMenu().add(name);
+                                    }
+                                    popupMenu.show();
+                                }
+                            });
+                   /* for (UserActivityDtosEntity entity : mRemindList) {
                         if (DateUtil.isTheSameDay(entity.getCurrentDay(), (Long) v.getTag())) {
                             PopupMenu popupMenu = new PopupMenu(getActivity(), v);
                             for (String name : entity.getNames()) {
@@ -140,7 +180,7 @@ public class WeekViewFragment extends BaseFragment {
                             popupMenu.show();
                             break;
                         }
-                    }
+                    }*/
                     if (finalDayOfWeek <= today) {
                         RxBus.getInstance().send(new WeekViewClickBus((Long) v.getTag(), finalDayOfWeek));
                     }
