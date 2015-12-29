@@ -1,5 +1,6 @@
 package com.wonders.xlab.common.utils;
 
+import android.support.annotation.IntRange;
 import android.text.TextUtils;
 
 import java.text.ParseException;
@@ -92,6 +93,22 @@ public class DateUtil {
         return mCalendar.compareTo(today) == 1;
     }
 
+    public static boolean isNewBiggerOrEvenThenOld(long newTime, long oldTime) {
+        Calendar newC = Calendar.getInstance();
+        newC.setTimeInMillis(newTime);
+        newC.set(Calendar.HOUR_OF_DAY, 0);
+        newC.set(Calendar.MINUTE, 0);
+        newC.set(Calendar.SECOND, 0);
+
+        Calendar oldC = Calendar.getInstance();
+        oldC.setTimeInMillis(oldTime);
+        oldC.set(Calendar.HOUR_OF_DAY, 0);
+        oldC.set(Calendar.MINUTE, 0);
+        oldC.set(Calendar.SECOND, 0);
+
+        return newC.compareTo(oldC) >= 0;
+    }
+
     public static boolean isTheSameDay(long oldDate, long currentDate) {
         String old = format(oldDate, "yyyy-MM-dd");
         String current = format(currentDate, "yyyy-MM-dd");
@@ -104,6 +121,18 @@ public class DateUtil {
         String current = format(currentDate, "yyyy");
 
         return old.equals(current);
+    }
+
+    /**
+     * @param day Calendar.MONDAY...
+     * @return
+     */
+    public static long getTimeOfWeek(@IntRange(from = 1, to = 7) int day) {
+        Calendar calendar = Calendar.getInstance();
+        while (calendar.get(Calendar.DAY_OF_WEEK) != day) {
+            calendar.add(Calendar.DATE, -1);
+        }
+        return calendar.getTimeInMillis();
     }
 
     /**

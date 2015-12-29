@@ -9,11 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.base.BaseFragment;
-import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.module.record.monitor.MonitorFragment;
-import com.wonders.xlab.pci.module.record.report.ReportFragment;
 import com.wonders.xlab.pci.module.record.userinfo.UserInfoFragment;
 
 import butterknife.Bind;
@@ -50,7 +49,6 @@ public class RecordFragment extends BaseFragment {
         mVpRecord.setOffscreenPageLimit(0);
         mVPAdapter = new FragmentVPAdapter(getFragmentManager());
         mVPAdapter.addFragment(new MonitorFragment(),"身体体征");
-        mVPAdapter.addFragment(new ReportFragment(),"病历报告");
         mVPAdapter.addFragment(new HealthPlanFragment(),"健康方案");
         mVPAdapter.addFragment(new UserInfoFragment(),"基本信息");
         mVpRecord.setAdapter(mVPAdapter);

@@ -27,7 +27,7 @@ public class WeekViewVPAdapter extends FragmentPagerAdapter {
         mToday = today;
         this.mRemindList = remindList;
         long first = DateUtil.calculateFirstDayOfWeek(today);
-        for (int i = -INITIAL_POSITION; i <= 0; i++) {
+        for (int i = -INITIAL_POSITION; i <= 2; i++) {
             mCalendar.setTimeInMillis(first);
             mCalendar.add(Calendar.DATE, i * 7);
             times.add(mCalendar.getTimeInMillis());

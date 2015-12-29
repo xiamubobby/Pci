@@ -13,5 +13,5 @@ import rx.Observable;
 public interface ReportDetailAPI {
     @FormUrlEncoded
     @POST("userCaseReview/listUserCaseReviewRecords")
-    Observable<ReportDetailEntity> getReports(@Field("userId") String userId,@Field("page") int page);
+    Observable<ReportDetailEntity> getReports(@Field("userId") String userId,@Field("page") int page,@Field("schedule") int schedule);
 }

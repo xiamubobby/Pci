@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -119,11 +120,13 @@ public class MedicineRecordFragment extends BaseFragment {
                 labelView.setText(getResources().getString(R.string.daily_task_mg, bean.getMedicineDosage()));
                 if (mCanModify && !checkBox.isChecked()) {
                     checkBox.setClickable(true);
-                    checkBox.setOnClickListener(new View.OnClickListener() {
+                    checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
-                        public void onClick(View v) {
-                            bean.setChecked(checkBox.isChecked());
-                            RxBus.getInstance().send(bean);
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            if (isChecked) {
+                                RxBus.getInstance().send(bean);
+                            }
+                            checkBox.setClickable(!isChecked);
                         }
                     });
                 } else {

@@ -27,6 +27,7 @@ import com.wonders.xlab.pci.module.base.BaseActivity;
 import com.wonders.xlab.pci.module.home.HomeFragment;
 import com.wonders.xlab.pci.module.login.LoginActivity;
 import com.wonders.xlab.pci.module.record.RecordFragment;
+import com.wonders.xlab.pci.module.record.report.ReportDetailActivity;
 import com.wonders.xlab.pci.module.rxbus.ExitBus;
 import com.wonders.xlab.pci.module.task.DailyTaskActivity;
 
@@ -182,9 +183,15 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.menu_main_task) {
-            startActivity(new Intent(this, DailyTaskActivity.class));
-            return true;
+        switch (id) {
+            case R.id.menu_main_task:
+                startActivity(new Intent(this, DailyTaskActivity.class));
+                break;
+            case R.id.menu_main_report:
+                Intent intent = new Intent(this, ReportDetailActivity.class);
+                intent.putExtra(ReportDetailActivity.EXTRA_TITLE, "病历报告");
+                startActivity(intent);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

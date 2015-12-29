@@ -10,7 +10,7 @@
     tools:context=".module.record.report.ReportDetailActivity"
     tools:showIn="@layout/activity_report_detail">
 
-    <android.support.v7.widget.RecyclerView
+    <com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView
         android:id="@+id/rv_report_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

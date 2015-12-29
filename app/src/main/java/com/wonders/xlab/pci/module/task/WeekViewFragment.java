@@ -172,7 +172,7 @@ public class WeekViewFragment extends BaseFragment {
                                     popupMenu.show();
                                 }
                             });
-                    if (finalDayOfWeek <= today) {
+                    if (DateUtil.isNewBiggerOrEvenThenOld(mToday, (Long) v.getTag())) {
                         RxBus.getInstance().send(new WeekViewClickBus((Long) v.getTag(), finalDayOfWeek));
                     }
                 }

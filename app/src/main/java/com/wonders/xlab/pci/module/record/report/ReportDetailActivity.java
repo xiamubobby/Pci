@@ -7,20 +7,21 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
+import com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.application.ToastManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.record.report.bean.ReportDetailBean;
-import com.wonders.xlab.pci.module.record.rxbus.ReportDetailBus;
 import com.wonders.xlab.pci.module.record.report.mvn.model.ReportDetailModel;
-import com.wonders.xlab.pci.mvn.model.UploadPicModel;
 import com.wonders.xlab.pci.module.record.report.mvn.view.ReportDetailView;
+import com.wonders.xlab.pci.module.record.rxbus.ReportDetailBus;
+import com.wonders.xlab.pci.mvn.model.UploadPicModel;
 import com.wonders.xlab.pci.mvn.view.UploadPicView;
 
 import java.io.File;
@@ -46,7 +47,7 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
     public final static String EXTRA_TITLE = "extra_title";
 
     @Bind(R.id.rv_report_detail)
-    RecyclerView mRvReportDetail;
+    LoadMoreRecyclerView mRvReportDetail;
     @Bind(R.id.fab_report_detail)
     FloatingActionButton mFabReportDetail;
 
@@ -57,6 +58,8 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
     private UploadPicModel mUploadPicModel;
 
     private CompositeSubscription mSubscription;
+
+    private int schedule;//0:术前 1:术中 2:术后
 
     @Override
     public int getContentLayout() {
@@ -73,8 +76,6 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-//        setupRxBus();
-
         detailModel = new ReportDetailModel(this);
         mUploadPicModel = new UploadPicModel(this);
         addModel(detailModel);
@@ -86,7 +87,22 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
             return;
         }
 
-        setTitle(intent.getStringExtra(EXTRA_TITLE));
+        String title = intent.getStringExtra(EXTRA_TITLE);
+        setTitle(title);
+
+        switch (title) {
+            case "术前病历":
+                schedule = 0;
+                break;
+            case "术中病历":
+                schedule = 1;
+                break;
+            case "术后病历":
+                schedule = 2;
+                break;
+            default:
+                schedule = 0;
+        }
 
         RxView.clicks(mFabReportDetail)
                 .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
@@ -101,7 +117,18 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
                 });
 
         mRvReportDetail.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        detailModel.getReportDetails(AIManager.getInstance(this).getUserId());
+        mRvReportDetail.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void loadMoreToBottom() {
+                detailModel.getReportDetails(AIManager.getInstance(ReportDetailActivity.this).getUserId(), schedule);
+            }
+
+            @Override
+            public void loadMoreToTop() {
+
+            }
+        });
+        detailModel.getReportDetails(AIManager.getInstance(this).getUserId(), schedule);
     }
 
     private Subscriber subscription;
@@ -153,15 +180,6 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(subscription);
 
-                  /*  for (String photoUrl : photos) {
-
-                        File portraitFile = new File(photoUrl);
-                        Uri uri = Uri.fromFile(portraitFile);
-
-                        //TODO upload to server
-//                        uploadPortrait(portraitFile);
-                    }*/
-
                 }
             }
         }
@@ -191,6 +209,8 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
         if (mRvAdapter == null) {
             mRvAdapter = new ReportDetailRVAdapter(new WeakReference<Context>(this));
             mRvReportDetail.setAdapter(mRvAdapter);
+        } else {
+            mRvAdapter.clear();
         }
         mRvAdapter.setDatas(detailBeanList);
     }
@@ -200,10 +220,8 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
         if (mRvAdapter == null) {
             mRvAdapter = new ReportDetailRVAdapter(new WeakReference<Context>(this));
             mRvReportDetail.setAdapter(mRvAdapter);
-        } else {
-            mRvAdapter.clear();
         }
-        mRvAdapter.setDatas(detailBeanList);
+        mRvAdapter.appendDatas(detailBeanList);
     }
 
     @Override
@@ -227,7 +245,14 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
         if (dialog != null) {
             dialog.dismiss();
         }
-        Snackbar.make(mRvReportDetail, "上传成功！", Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(mRvReportDetail, "上传成功！我们将于1个工作日后整理好资料并同步给您。请耐心等待。", Snackbar.LENGTH_INDEFINITE)
+                .setAction("知道了", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                })
+                .show();
     }
 
     @Override

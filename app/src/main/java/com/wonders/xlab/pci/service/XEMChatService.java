@@ -28,8 +28,8 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.MainActivity;
-import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
+import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.rxbus.ExitBus;
 import com.wonders.xlab.pci.receiver.ConnectionBroadcastReceiver;
 import com.wonders.xlab.pci.receiver.EMChatMessageBroadcastReceiver;
@@ -135,9 +135,7 @@ public class XEMChatService extends Service {
             }));
         }
 
-//        if (!EMChat.getInstance().isLoggedIn()) {
         login();
-//        }
 
         new NotifyUtil().showNotification(getApplicationContext(), Constant.NOTIFY_ID, getApplicationContext().getResources().getString(R.string.app_name), "正在运行", MainActivity.class, R.mipmap.ic_launcher, false);
 

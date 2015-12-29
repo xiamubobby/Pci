@@ -4,10 +4,10 @@ import android.support.annotation.NonNull;
 
 import com.wonders.xlab.pci.module.record.report.bean.ReportDetailBean;
 import com.wonders.xlab.pci.module.record.report.bean.ReportDetailImageBean;
-import com.wonders.xlab.pci.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.record.report.mvn.api.ReportDetailAPI;
-import com.wonders.xlab.pci.mvn.entity.record.report.ReportDetailEntity;
 import com.wonders.xlab.pci.module.record.report.mvn.view.ReportDetailView;
+import com.wonders.xlab.pci.mvn.entity.record.report.ReportDetailEntity;
+import com.wonders.xlab.pci.mvn.model.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +27,9 @@ public class ReportDetailModel extends BaseModel<ReportDetailEntity> {
         mReportDetailAPI = mRetrofit.create(ReportDetailAPI.class);
     }
 
-    public void getReportDetails(String userId) {
+    public void getReportDetails(String userId, int schedule) {
         if (!isLast) {
-            setObservable(mReportDetailAPI.getReports(userId, page + 1));
+            setObservable(mReportDetailAPI.getReports(userId, page + 1, schedule));
         }
     }
 
@@ -45,7 +45,7 @@ public class ReportDetailModel extends BaseModel<ReportDetailEntity> {
         isLast = entity.isLast();
 
         List<ReportDetailBean> reportDetailBeanList = new ArrayList<>();
-        for (ReportDetailEntity.RetValuesEntity.ContentEntity contentEntity: entity.getContent()) {
+        for (ReportDetailEntity.RetValuesEntity.ContentEntity contentEntity : entity.getContent()) {
 
             ReportDetailBean detailBean = new ReportDetailBean();
             detailBean.setTitle(contentEntity.getTitle());
@@ -61,7 +61,11 @@ public class ReportDetailModel extends BaseModel<ReportDetailEntity> {
             detailBean.setPicUrlList(detailImageBeanList);
             reportDetailBeanList.add(detailBean);
         }
-        mDetailView.showReportList(reportDetailBeanList);
+        if (page <= 0) {
+            mDetailView.showReportList(reportDetailBeanList);
+        } else {
+            mDetailView.appendReportList(reportDetailBeanList);
+        }
     }
 
     @Override
