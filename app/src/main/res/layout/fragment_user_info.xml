@@ -12,6 +12,5 @@
         android:layout_height="match_parent"
         android:background="@android:color/white"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/clip_bottom"
-        android:paddingTop="@dimen/item_interval"/>
+        android:paddingBottom="@dimen/clip_bottom"/>
 </android.support.v4.widget.SwipeRefreshLayout>
