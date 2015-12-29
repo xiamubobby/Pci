@@ -4,13 +4,13 @@
       tools:context=".module.MainActivity">
     <item
         android:id="@+id/menu_main_task"
-        android:icon="@drawable/ic_task"
+        android:icon="@drawable/ic_menu_main_task"
         android:orderInCategory="100"
         android:title="任务"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/menu_main_report"
-        android:icon="@drawable/ic_task"
+        android:icon="@drawable/ic_menu_main_report"
         android:orderInCategory="100"
         android:title="病历报告"
         app:showAsAction="always"/>
