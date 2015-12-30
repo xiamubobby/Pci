@@ -15,17 +15,16 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.squareup.otto.Subscribe;
+import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
-import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.rxbus.ConnectStateBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.functions.Action1;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,7 +33,6 @@ public class HealthPlanFragment extends BaseFragment {
 
     @Bind(R.id.wv_health_plan)
     WebView mWvHealthPlan;
-    private CompositeSubscription mSubscription;
 
     public HealthPlanFragment() {
         // Required empty public constructor
@@ -54,8 +52,7 @@ public class HealthPlanFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initWebView();
-
-        initRxBusListener();
+        OttoManager.register(this);
     }
 
     private void initWebView() {
@@ -100,39 +97,24 @@ public class HealthPlanFragment extends BaseFragment {
         }
     }
 
-    private void initRxBusListener() {
-        if (mSubscription == null) {
-            mSubscription = new CompositeSubscription();
-
-            mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
+    @Subscribe
+    public void onConnectionChanged(ConnectStateBus bean) {
+        if (bean.isConnected()) {
+            mWvHealthPlan.loadUrl(Constant.HEALTH_PLAN_URL + AIManager.getInstance(getActivity()).getUserId());
+            mWvHealthPlan.postDelayed(new Runnable() {
                 @Override
-                public void call(Object o) {
-                    if (o instanceof ConnectStateBus) {
-                        ConnectStateBus connectStateBus = (ConnectStateBus) o;
-                        if (connectStateBus.isConnected()) {
-                            mWvHealthPlan.loadUrl(Constant.HEALTH_PLAN_URL + AIManager.getInstance(getActivity()).getUserId());
-                            mWvHealthPlan.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mWvHealthPlan.setVisibility(View.VISIBLE);
-                                }
-                            }, 500);
-                        } else {
-                            Snackbar.make(mWvHealthPlan, getResources().getString(R.string.network_disconnected), Snackbar.LENGTH_SHORT).show();
-                        }
-                    }
+                public void run() {
+                    mWvHealthPlan.setVisibility(View.VISIBLE);
                 }
-            }));
+            }, 500);
+        } else {
+            Snackbar.make(mWvHealthPlan, getResources().getString(R.string.network_disconnected), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mSubscription != null) {
-            mSubscription.unsubscribe();
-            mSubscription = null;
-        }
-        ButterKnife.unbind(this);
+        OttoManager.unregister(this);
     }
 }

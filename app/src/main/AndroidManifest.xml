@@ -191,6 +191,17 @@
             android:enabled="true"
             android:exported="true">
         </receiver>
+
+        <activity
+            android:name=".module.task.MeasureBPGuide0Activity"
+            android:label="@string/title_activity_measure_bp"
+            android:theme="@style/AppTheme">
+        </activity>
+        <activity
+            android:name=".module.task.MeasureBSGuide0Activity"
+            android:label="@string/title_activity_measure_bsguide0"
+            android:theme="@style/AppTheme">
+        </activity>
     </application>
 
 </manifest>

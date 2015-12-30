@@ -9,11 +9,11 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.exceptions.EaseMobException;
+import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.NotifyUtil;
 import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
-import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.MainActivity;
 import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
@@ -75,7 +75,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 if (!AIManager.getInstance(context).isHomeShowing()) {
                     new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
                 }
-                RxBus.getInstance().send(todayTaskBean);
+                OttoManager.post(todayTaskBean);
             } else if (type == 1){
                 HistoryTaskBean historyTaskBean = new HistoryTaskBean();
                 historyTaskBean.setTitle(title);
@@ -87,9 +87,9 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 if (!AIManager.getInstance(context).isHomeShowing()) {
                     new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), historyTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
                 }
-                RxBus.getInstance().send(historyTaskBean);
+                OttoManager.post(historyTaskBean);
             } else if (type == 2) {
-                RxBus.getInstance().send(new ExitBus());
+                OttoManager.post(new ExitBus());
             } else if (type == -1) {
                 setupDefaultMessage(context, message);
             }
@@ -120,7 +120,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             if (!AIManager.getInstance(context).isHomeShowing()) {
                 new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
             }
-            RxBus.getInstance().send(todayTaskBean);
+            OttoManager.post(todayTaskBean);
         } catch (UnsupportedEncodingException e1) {
             e1.printStackTrace();
         }

@@ -21,12 +21,15 @@ import com.easemob.EMError;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.easemob.util.NetUtils;
+import com.squareup.otto.Subscribe;
+import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.MD5Util;
 import com.wonders.xlab.common.utils.NotifyUtil;
 import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
+import com.wonders.xlab.pci.application.SPManager;
 import com.wonders.xlab.pci.module.MainActivity;
 import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
@@ -39,10 +42,8 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
-import rx.subscriptions.CompositeSubscription;
 
 public class XEMChatService extends Service {
-    private CompositeSubscription mSubscription;
     private EMChatMessageBroadcastReceiver msgReceiver;
     private TimeClickReceiver mTimeClickReceiver;
     private ConnectionBroadcastReceiver mConnectionReceiver;
@@ -57,6 +58,7 @@ public class XEMChatService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        OttoManager.register(this);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(getResources().getString(R.string.app_name))
                 .setContentText("正在运行")
@@ -120,26 +122,21 @@ public class XEMChatService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (mSubscription == null) {
-            mSubscription = new CompositeSubscription();
-            mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
-                @Override
-                public void call(Object o) {
-                    if (o instanceof ExitBus) {
-                        mIsNormalStop = true;
-                        new Delete().from(TodayTaskBean.class).execute();
-                        new Delete().from(HistoryTaskBean.class).execute();
-                        stopSelf();
-                    }
-                }
-            }));
-        }
 
         login();
 
         new NotifyUtil().showNotification(getApplicationContext(), Constant.NOTIFY_ID, getApplicationContext().getResources().getString(R.string.app_name), "正在运行", MainActivity.class, R.mipmap.ic_launcher, false);
 
         return START_STICKY;
+    }
+
+    @Subscribe
+    public void forceExit(ExitBus bean) {
+        mIsNormalStop = true;
+        SPManager.get(this).clear();
+        new Delete().from(TodayTaskBean.class).execute();
+        new Delete().from(HistoryTaskBean.class).execute();
+        stopSelf();
     }
 
     /**
@@ -186,6 +183,7 @@ public class XEMChatService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        OttoManager.unregister(this);
         if (msgReceiver != null) {
             unregisterReceiver(msgReceiver);
             msgReceiver = null;
@@ -197,9 +195,6 @@ public class XEMChatService extends Service {
         if (mTimeClickReceiver != null) {
             unregisterReceiver(mTimeClickReceiver);
             mTimeClickReceiver = null;
-        }
-        if (mSubscription != null) {
-            mSubscription.unsubscribe();
         }
         EMChatManager.getInstance().logout();//此方法为同步方法
 

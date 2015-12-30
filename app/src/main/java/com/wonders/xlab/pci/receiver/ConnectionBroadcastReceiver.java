@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 
-import com.wonders.xlab.pci.application.RxBus;
+import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.module.rxbus.ConnectStateBus;
 
 public class ConnectionBroadcastReceiver extends BroadcastReceiver {
@@ -20,9 +20,9 @@ public class ConnectionBroadcastReceiver extends BroadcastReceiver {
         if (info != null) {
             NetworkInfo.State state = info.getState();
             if (state == NetworkInfo.State.CONNECTED) {
-                RxBus.getInstance().send(new ConnectStateBus(true));
+                OttoManager.post(new ConnectStateBus(true));
             } else {
-                RxBus.getInstance().send(new ConnectStateBus(false));
+                OttoManager.post(new ConnectStateBus(false));
             }
         }
     }

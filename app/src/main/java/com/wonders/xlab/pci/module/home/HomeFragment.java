@@ -11,16 +11,17 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.activeandroid.query.Select;
+import com.squareup.otto.Subscribe;
+import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView;
 import com.wonders.xlab.common.recyclerview.adapter.BaseBean;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
-import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.home.adapter.HomeRVAdapter;
+import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
-import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
 import com.wonders.xlab.pci.module.home.mvn.model.HomeModel;
 import com.wonders.xlab.pci.module.home.mvn.view.HomeView;
 import com.wonders.xlab.pci.module.home.rxbus.BPClickBus;
@@ -39,8 +40,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.functions.Action1;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,7 +54,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
     private HomeRVAdapter mHomeRVAdapter;
 
     private HomeModel mHomeModel;
-    private CompositeSubscription mSubscription;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -81,6 +79,8 @@ public class HomeFragment extends BaseFragment implements HomeView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        OttoManager.register(this);
+
         AIManager.getInstance(getActivity()).saveHomeShowing(true);
 
         mRvHome.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true));
@@ -96,8 +96,6 @@ public class HomeFragment extends BaseFragment implements HomeView {
         });
         mHomeModel.getHomeList(getActivity(), AIManager.getInstance(getActivity()).getUserId());
 
-        initRxBusListener();
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -106,79 +104,101 @@ public class HomeFragment extends BaseFragment implements HomeView {
         }).start();
     }
 
-    private void initRxBusListener() {
-        if (mSubscription == null) {
-            mSubscription = new CompositeSubscription();
-            mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
-                @Override
-                public void call(Object o) {
-                    if (o instanceof TodayTaskBean) {
-                        TodayTaskBean bus = (TodayTaskBean) o;
-                        if (mHomeRVAdapter != null) {
-                            if (mHomeRVAdapter.getItemCount() > 0) {
-                                BaseBean itemData = mHomeRVAdapter.getItemData(0);
-                                if (itemData.getItemLayout() == HomeTaskBean.ITEM_TODAY) {
-                                    TodayTaskBean todayTaskBean = (TodayTaskBean) itemData;
-                                    todayTaskBean.setTitle(bus.getTitle());
-                                    todayTaskBean.setPortrait(bus.getPortrait());
-                                    todayTaskBean.setUpdateTime(bus.getUpdateTime());
-                                    mHomeRVAdapter.notifyDataSetChanged();
-                                } else {
-                                    mHomeRVAdapter.addToTop(bus);
-                                }
-                            } else {
-                                mHomeRVAdapter.addToTop(bus);
-                            }
-                        } else {
-                            mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
-                            mRvHome.setAdapter(mHomeRVAdapter);
-                            mHomeRVAdapter.addToTop(bus);
-                        }
-                    } else if (o instanceof HistoryTaskBean) {
-                        HistoryTaskBean historyTaskBean = (HistoryTaskBean) o;
-                        if (mHomeRVAdapter != null) {
-                            if (mHomeRVAdapter.getItemCount() > 0) {
-                                BaseBean itemData = mHomeRVAdapter.getItemData(0);
-                                if (itemData.getItemLayout() == HomeTaskBean.ITEM_TODAY) {
-                                    mHomeRVAdapter.addToPosition(historyTaskBean, 1);
-                                } else {
-                                    mHomeRVAdapter.addToTop(historyTaskBean);
-                                }
-                            } else {
-                                mHomeRVAdapter.addToTop(historyTaskBean);
-                            }
-                        } else {
-                            mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
-                            mRvHome.setAdapter(mHomeRVAdapter);
-                            mHomeRVAdapter.addToTop(historyTaskBean);
-                        }
-                    } else if (o instanceof ConnectStateBus) {
-                        ConnectStateBus connectStateBus = (ConnectStateBus) o;
-                        if (connectStateBus.isConnected()) {
-                            //断线重连
-                            if (mHomeRVAdapter != null) {
-                                return;
-                            }
-                            mHomeModel.getHomeList(getActivity(), AIManager.getInstance(getActivity()).getUserId());
-                        } else {
-                            showSnackbar(mContainerHome,getResources().getString(R.string.network_disconnected));
-                        }
-                    } else if (o instanceof MedicineClickBus) {
-                        //服药
-                        getActivity().startActivity(new Intent(getActivity(), DailyTaskActivity.class));
-                    } else if (o instanceof BPClickBus) {
-                        //测血压
-                        getActivity().startActivity(new Intent(getActivity(), AddBPActivity.class));
-                    } else if (o instanceof BSClickBus) {
-                        //测血糖
-                        getActivity().startActivity(new Intent(getActivity(), AddBSActivity.class));
-                    } else if (o instanceof SymptomClickBus) {
-                        //不良症状
-                        getActivity().startActivity(new Intent(getActivity(), AddSymptomActivity.class));
-                    }
+    @Subscribe
+    public void showNewTodayTask(TodayTaskBean bean) {
+        if (mHomeRVAdapter != null) {
+            if (mHomeRVAdapter.getItemCount() > 0) {
+                BaseBean itemData = mHomeRVAdapter.getItemData(0);
+                if (itemData.getItemLayout() == HomeTaskBean.ITEM_TODAY) {
+                    TodayTaskBean todayTaskBean = (TodayTaskBean) itemData;
+                    todayTaskBean.setTitle(bean.getTitle());
+                    todayTaskBean.setPortrait(bean.getPortrait());
+                    todayTaskBean.setUpdateTime(bean.getUpdateTime());
+                    mHomeRVAdapter.notifyDataSetChanged();
+                } else {
+                    mHomeRVAdapter.addToTop(bean);
                 }
-            }));
+            } else {
+                mHomeRVAdapter.addToTop(bean);
+            }
+        } else {
+            mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
+            mRvHome.setAdapter(mHomeRVAdapter);
+            mHomeRVAdapter.addToTop(bean);
         }
+    }
+
+    @Subscribe
+    public void showNewHistoryTask(HistoryTaskBean bean) {
+        if (mHomeRVAdapter != null) {
+            if (mHomeRVAdapter.getItemCount() > 0) {
+                BaseBean itemData = mHomeRVAdapter.getItemData(0);
+                if (itemData.getItemLayout() == HomeTaskBean.ITEM_TODAY) {
+                    mHomeRVAdapter.addToPosition(bean, 1);
+                } else {
+                    mHomeRVAdapter.addToTop(bean);
+                }
+            } else {
+                mHomeRVAdapter.addToTop(bean);
+            }
+        } else {
+            mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
+            mRvHome.setAdapter(mHomeRVAdapter);
+            mHomeRVAdapter.addToTop(bean);
+        }
+    }
+
+    @Subscribe
+    public void onConnectionChanged(ConnectStateBus bean) {
+        if (bean.isConnected()) {
+            //断线重连
+            if (mHomeRVAdapter != null) {
+                return;
+            }
+            mHomeModel.getHomeList(getActivity(), AIManager.getInstance(getActivity()).getUserId());
+        } else {
+            showSnackbar(mContainerHome, getResources().getString(R.string.network_disconnected));
+        }
+    }
+
+    /**
+     * 服药
+     *
+     * @param bean
+     */
+    @Subscribe
+    public void onMedicineClick(MedicineClickBus bean) {
+        getActivity().startActivity(new Intent(getActivity(), DailyTaskActivity.class));
+    }
+
+    /**
+     * 服药
+     *
+     * @param bean
+     */
+    @Subscribe
+    public void onBPClick(BPClickBus bean) {
+        getActivity().startActivity(new Intent(getActivity(), AddBPActivity.class));
+    }
+
+    /**
+     * 服药
+     *
+     * @param bean
+     */
+    @Subscribe
+    public void onBSClick(BSClickBus bean) {
+        getActivity().startActivity(new Intent(getActivity(), AddBSActivity.class));
+    }
+
+    /**
+     * 服药
+     *
+     * @param bean
+     */
+    @Subscribe
+    public void onSymptomClick(SymptomClickBus bean) {
+        getActivity().startActivity(new Intent(getActivity(), AddSymptomActivity.class));
     }
 
     @Override
@@ -230,12 +250,9 @@ public class HomeFragment extends BaseFragment implements HomeView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        OttoManager.unregister(this);
         ButterKnife.unbind(this);
         AIManager.getInstance(getActivity()).saveHomeShowing(false);
-
-        if (mSubscription != null) {
-            mSubscription.unsubscribe();
-        }
     }
 
 }

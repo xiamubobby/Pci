@@ -4,10 +4,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.recyclerview.adapter.MultiViewHolder;
 import com.wonders.xlab.common.utils.GlideCircleTransform;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.databinding.ItemHomeTodayTaskBinding;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.home.rxbus.BPClickBus;
@@ -48,19 +48,19 @@ public class TodayTaskViewHolder extends MultiViewHolder<TodayTaskBean> {
 
     }
 
-    public void onClickMedicine(View view){
-        RxBus.getInstance().send(new MedicineClickBus());
+    public void onClickMedicine(View view) {
+        OttoManager.post(new MedicineClickBus());
     }
 
-    public void onClickBP(View view){
-        RxBus.getInstance().send(new BPClickBus());
+    public void onClickBP(View view) {
+        OttoManager.post(new BPClickBus());
     }
 
-    public void onClickBS(View view){
-        RxBus.getInstance().send(new BSClickBus());
+    public void onClickBS(View view) {
+        OttoManager.post(new BSClickBus());
     }
 
-    public void onClickSymptom(View view){
-        RxBus.getInstance().send(new SymptomClickBus());
+    public void onClickSymptom(View view) {
+        OttoManager.post(new SymptomClickBus());
     }
 }

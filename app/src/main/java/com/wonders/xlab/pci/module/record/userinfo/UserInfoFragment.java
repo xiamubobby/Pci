@@ -11,10 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.otto.Subscribe;
+import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
-import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.record.userinfo.mvn.model.UserInfoModel;
 import com.wonders.xlab.pci.module.record.userinfo.mvn.view.UserInfoView;
@@ -27,7 +28,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.functions.Action1;
 import rx.subscriptions.CompositeSubscription;
 
 public class UserInfoFragment extends BaseFragment implements UserInfoView {
@@ -75,30 +75,19 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
         });
         mUserInfoModel.getUserInfo(AIManager.getInstance(getActivity()).getUserId());
 
-        initRxBusListener();
+        OttoManager.register(this);
     }
 
-    private void initRxBusListener() {
-        if (mSubscription == null) {
-            mSubscription = new CompositeSubscription();
-
-            mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
-                @Override
-                public void call(Object o) {
-                    if (o instanceof ConnectStateBus) {
-                        ConnectStateBus connectStateBus = (ConnectStateBus) o;
-                        if (connectStateBus.isConnected()) {
-                            //断线重连
-                            if (mUserInfoRVAdapter != null) {
-                                return;
-                            }
-                            mUserInfoModel.getUserInfo(AIManager.getInstance(getActivity()).getUserId());
-                        } else {
-                            Snackbar.make(mRvUserInfo, getResources().getString(R.string.network_disconnected), Snackbar.LENGTH_SHORT).show();
-                        }
-                    }
-                }
-            }));
+    @Subscribe
+    public void onConnectionChanged(ConnectStateBus bean) {
+        if (bean.isConnected()) {
+            //断线重连
+            if (mUserInfoRVAdapter != null) {
+                return;
+            }
+            mUserInfoModel.getUserInfo(AIManager.getInstance(getActivity()).getUserId());
+        } else {
+            Snackbar.make(mRvUserInfo, getResources().getString(R.string.network_disconnected), Snackbar.LENGTH_SHORT).show();
         }
     }
 
@@ -158,6 +147,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        OttoManager.unregister(this);
         if (mUserInfoRVAdapter != null) {
             mUserInfoRVAdapter.clear();
             mUserInfoRVAdapter = null;

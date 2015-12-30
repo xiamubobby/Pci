@@ -2,12 +2,15 @@ package com.wonders.xlab.pci.module;
 
 import android.os.Bundle;
 
+import com.activeandroid.query.Delete;
+import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.NotifyUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
-import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.application.SPManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
+import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
+import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.rxbus.ExitBus;
 
 import butterknife.Bind;
@@ -44,7 +47,9 @@ public class UserCenterActivity extends AppbarActivity {
     public void exit() {
         new NotifyUtil().cancelAll(this);
         SPManager.get(this).clear();
-        RxBus.getInstance().send(new ExitBus());
+        new Delete().from(TodayTaskBean.class).execute();
+        new Delete().from(HistoryTaskBean.class).execute();
+        OttoManager.post(new ExitBus());
         finish();
     }
 }
