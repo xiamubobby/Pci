@@ -81,7 +81,6 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:background="@drawable/selector_white_selected_primary_normal"
-        android:enabled="false"
         android:text="开始测量"
         android:textColor="@drawable/selector_text_color_selected_accent"
         android:textSize="@dimen/text_size_normal"/>

@@ -13,7 +13,7 @@ import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.databinding.ItemBpBinding;
-import com.wonders.xlab.pci.module.record.monitor.bean.BPBean;
+import com.wonders.xlab.pci.module.record.monitor.bean.BPNBean;
 
 import java.lang.ref.WeakReference;
 
@@ -23,11 +23,11 @@ import butterknife.ButterKnife;
 /**
  * Created by sjy on 2015/12/22.
  */
-public class BPAdapter extends SimpleRVAdapter<BPBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
+public class BPNAdapter extends SimpleRVAdapter<BPNBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
     private WeakReference<Context> mContext;
     private LayoutInflater mInflater;
 
-    public BPAdapter(WeakReference<Context> contextWeakReference) {
+    public BPNAdapter(WeakReference<Context> contextWeakReference) {
         super(contextWeakReference);
         mContext = contextWeakReference;
         mInflater = LayoutInflater.from(mContext.get());
