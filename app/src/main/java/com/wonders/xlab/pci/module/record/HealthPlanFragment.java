@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,8 @@ public class HealthPlanFragment extends BaseFragment {
 
     @Bind(R.id.wv_health_plan)
     WebView mWvHealthPlan;
+    @Bind(R.id.refresh_health_plan)
+    SwipeRefreshLayout mRefresh;
 
     public HealthPlanFragment() {
         // Required empty public constructor
@@ -52,6 +55,14 @@ public class HealthPlanFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initWebView();
+        mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (mWvHealthPlan != null) {
+                    mWvHealthPlan.reload();
+                }
+            }
+        });
         OttoManager.register(this);
     }
 
@@ -95,6 +106,19 @@ public class HealthPlanFragment extends BaseFragment {
             super.onReceivedError(view, errorCode, description, failingUrl);
             mWvHealthPlan.setVisibility(View.INVISIBLE);
         }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            mRefresh.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (mRefresh != null) {
+                        mRefresh.setRefreshing(false);
+                    }
+                }
+            });
+        }
     }
 
     @Subscribe
@@ -116,5 +140,6 @@ public class HealthPlanFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         OttoManager.unregister(this);
+        ButterKnife.unbind(this);
     }
 }

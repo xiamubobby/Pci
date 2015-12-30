@@ -1,8 +1,9 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              tools:context="com.wonders.xlab.pci.module.record.HealthPlanFragment">
+<android.support.v4.widget.SwipeRefreshLayout android:id="@+id/refresh_health_plan"
+                                              xmlns:android="http://schemas.android.com/apk/res/android"
+                                              xmlns:tools="http://schemas.android.com/tools"
+                                              android:layout_width="match_parent"
+                                              android:layout_height="match_parent"
+                                              tools:context="com.wonders.xlab.pci.module.record.HealthPlanFragment">
 
     <WebView
         android:id="@+id/wv_health_plan"
@@ -11,4 +12,4 @@
         android:layout_marginBottom="@dimen/clip_bottom"
         android:clipToPadding="false"/>
 
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>
