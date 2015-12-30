@@ -5,11 +5,11 @@ import android.os.Bundle;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 
-public class MeasureBSGuide0Activity extends AppbarActivity {
+public class MeasureBSGuideActivity extends AppbarActivity {
 
     @Override
     public int getContentLayout() {
-        return R.layout.activity_measure_bsguide0;
+        return R.layout.activity_measure_bs_guide;
     }
 
     @Override

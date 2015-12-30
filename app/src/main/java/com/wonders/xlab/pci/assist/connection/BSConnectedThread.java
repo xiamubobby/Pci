@@ -3,6 +3,7 @@ package com.wonders.xlab.pci.assist.connection;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
+import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
 
 import java.io.IOException;
@@ -99,7 +100,7 @@ public class BSConnectedThread extends BaseConnectedThread {
                                         mOnReceiveDataListener.onReceiveData(bgEntity);
                                     }
                                 }
-                                mOutputStream.write(DeviceCommand.command_delData());
+//                                mOutputStream.write(DeviceCommand.command_delData());
                             }
                             break;
                         case 2://接收数据失败
@@ -168,7 +169,7 @@ public class BSConnectedThread extends BaseConnectedThread {
         List<BSEntity> bgEntities = new ArrayList<>();
 
         for (CmssxtDataJar cmssxtDataJar : cmssxtDataJars) {
-            BSEntity bgEntity = null;
+            BSEntity bgEntity = new BSEntity(DateUtil.parse(cmssxtDataJar.m_saveDate,""),cmssxtDataJar.m_data);
             bgEntities.add(bgEntity);
         }
         return bgEntities;

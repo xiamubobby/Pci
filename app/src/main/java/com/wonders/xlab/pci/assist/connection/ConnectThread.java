@@ -50,7 +50,6 @@ public class ConnectThread extends Thread {
 
     @Override
     public void run() {
-
         Looper.prepare();
 
         if (mBluetoothAdapter == null) {
@@ -58,19 +57,14 @@ public class ConnectThread extends Thread {
         }
 
         mBluetoothDevice = mBluetoothAdapter.getRemoteDevice(macAddress);
-
         try {
             mSocket = mBluetoothDevice.createRfcommSocketToServiceRecord(BluetoothService.PUBLIC_UUID);
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e(TAG, "Socket", e);
         }
-
         while (!connected && connectTime <= 8) {
             tryToConnect();
         }
-
-        Log.d("MeasureFragment", "ConnectThread:connectThread run");
     }
 
     private void tryToConnect() {
@@ -114,10 +108,10 @@ public class ConnectThread extends Thread {
     }
 
     public void cancel() {
-        Log.d("ConnectThread", "socket close");
         try {
             if (mSocket != null) {
                 mSocket.close();
+                Log.d("ConnectThread", "socket close");
             }
         } catch (IOException e) {
             Log.e(TAG, "unable to close() " +

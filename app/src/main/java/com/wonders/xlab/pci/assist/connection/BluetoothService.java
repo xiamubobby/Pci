@@ -2,7 +2,6 @@ package com.wonders.xlab.pci.assist.connection;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothSocket;
-import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -14,11 +13,31 @@ import java.util.UUID;
  * Created by hua on 15/10/27.
  */
 public class BluetoothService implements BaseConnectedThread.OnReceiveDataListener {
-    public final static int SEARCH_TYPE_INVALID = -1;//未知
-    public final static int SEARCH_TYPE_BP = 1;//血压
-    public final static int SEARCH_TYPE_BG = 2;//血糖
+    /*
+     health monitoring device names
+     */
+    private static final String DEVICE_TYPE_BG = "BG";//"BG";  // 血糖仪 CMSSXT
+    private static final String DEVICE_TYPE_BP = "NIBP";   // 电子血压计 CONTEC08A
+    private static final String DEVICE_TYPE_WT = "WT";  // 电子秤 WT100
+    private static final String DEVICE_TYPE_BO = "SpO";  // 脉搏血氧仪 CMS50EW
 
-    private int deviceType;
+    public enum DEVICE_TYPE {
+        NONE(""), BG(DEVICE_TYPE_BG), BP(DEVICE_TYPE_BP);
+
+        DEVICE_TYPE(String name) {
+            this.name = name;
+        }
+
+        private String name;
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
+
+
+    private DEVICE_TYPE mDeviceType;
 
     public static final UUID PUBLIC_UUID = UUID
             .fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -56,15 +75,14 @@ public class BluetoothService implements BaseConnectedThread.OnReceiveDataListen
     /**
      * 此方法会先进行设备连接，然后开始请求数据
      *
-     * @param deviceType * @see   {@link #SEARCH_TYPE_BG}
-     *                   {@link #SEARCH_TYPE_BP}
-     *                   {@link #SEARCH_TYPE_BG}
-     *                   {@link #SEARCH_TYPE_WT}
+     * @param deviceType * @see
+     *                   {@link #DEVICE_TYPE_BG}
+     *                   {@link #DEVICE_TYPE_BP}
      * @param address    设备地址
      */
-    public synchronized void requestData(@IntRange(from = -1, to = 3) int deviceType, String address) {
+    public synchronized void requestData(DEVICE_TYPE deviceType, String address) {
 
-        this.deviceType = deviceType;
+        this.mDeviceType = deviceType;
         this.mAddress = address;
 
         //init retry params
@@ -125,15 +143,15 @@ public class BluetoothService implements BaseConnectedThread.OnReceiveDataListen
             public void connectSuccess(BluetoothSocket socket, String macAddress) {
 
                 if (mOnConnectListener != null) {
-                    mOnConnectListener.onConnectSuccess(deviceType, macAddress);
+                    mOnConnectListener.onConnectSuccess(mDeviceType, macAddress);
                 }
                 if (shouldRequestData) {
 
-                    switch (deviceType) {
-                        case SEARCH_TYPE_BP:
+                    switch (mDeviceType) {
+                        case BP:
                             receiveData(new BPConnectedThread(socket));
                             break;
-                        case SEARCH_TYPE_BG:
+                        case BG:
                             receiveData(new BSConnectedThread(socket));
                             break;
                     }
@@ -220,13 +238,11 @@ public class BluetoothService implements BaseConnectedThread.OnReceiveDataListen
         void connectStarted();
 
         /**
-         * @param deviceType * @see {@link #SEARCH_TYPE_INVALID}
-         *                   {@link #SEARCH_TYPE_BG}
-         *                   {@link #SEARCH_TYPE_BP}
-         *                   {@link #SEARCH_TYPE_BG}
-         *                   {@link #SEARCH_TYPE_WT}
+         * @param deviceType * @see
+         *                   {@link #DEVICE_TYPE_BG}
+         *                   {@link #DEVICE_TYPE_BP}
          */
-        void onConnectSuccess(@IntRange(from = -1, to = 3) int deviceType, String macAddress);
+        void onConnectSuccess(DEVICE_TYPE deviceType, String macAddress);
 
         void onConnectFailed();
     }

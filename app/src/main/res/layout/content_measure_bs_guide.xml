@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".module.task.MeasureBSGuide0Activity"
-    tools:showIn="@layout/activity_measure_bsguide0">
+    tools:context=".module.task.MeasureBSGuideActivity"
+    tools:showIn="@layout/activity_measure_bs_guide">
 
     <ScrollView
         android:layout_width="match_parent"

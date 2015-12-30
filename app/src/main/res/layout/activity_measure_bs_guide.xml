@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".module.task.MeasureBPGuide0Activity">
+    tools:context=".module.task.MeasureBSGuideActivity">
 
     <include layout="@layout/appbar"/>
 
-    <include layout="@layout/content_measure_bp_guide_0"/>
+    <include layout="@layout/content_measure_bs_guide"/>
 
 </android.support.design.widget.CoordinatorLayout>

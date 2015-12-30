@@ -391,12 +391,12 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
 
     @OnClick(R.id.fam_daily_task_bp)
     public void onRecordBpClick() {
-        recordNewData(MeasureBPGuide0Activity.class);
+        recordNewData(MeasureBPGuideActivity.class);
     }
 
     @OnClick(R.id.fam_daily_task_bs)
     public void onRecordBsClick() {
-        recordNewData(MeasureBSGuide0Activity.class);
+        recordNewData(MeasureBSGuideActivity.class);
     }
 
     @OnClick(R.id.fam_daily_task_symptom)
