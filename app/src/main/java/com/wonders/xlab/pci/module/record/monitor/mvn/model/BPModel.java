@@ -2,8 +2,8 @@ package com.wonders.xlab.pci.module.record.monitor.mvn.model;
 
 
 import com.wonders.xlab.common.utils.DateUtil;
-import com.wonders.xlab.pci.module.record.monitor.bean.BPNBean;
-import com.wonders.xlab.pci.module.record.monitor.mvn.api.BPNAPI;
+import com.wonders.xlab.pci.module.record.monitor.bean.BPBean;
+import com.wonders.xlab.pci.module.record.monitor.mvn.api.BPAPI;
 import com.wonders.xlab.pci.mvn.entity.record.monitor.BPEntity;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.BPView;
 import com.wonders.xlab.pci.mvn.model.BaseModel;
@@ -16,11 +16,11 @@ import java.util.List;
  */
 public class BPModel extends BaseModel<BPEntity> {
     private BPView mBpView;
-    private BPNAPI mBPAPI;
+    private BPAPI mBPAPI;
 
     public BPModel(BPView bpView) {
         mBpView = bpView;
-        mBPAPI = mRetrofit.create(BPNAPI.class);
+        mBPAPI = mRetrofit.create(BPAPI.class);
     }
 
     public void getBpData(String userId, Long startDate, Long endDate) {
@@ -35,11 +35,11 @@ public class BPModel extends BaseModel<BPEntity> {
             return;
         }
         long headerId = 0;
-        List<BPNBean> list = new ArrayList<>();
+        List<BPBean> list = new ArrayList<>();
         for (int i = 0; i < entity.size(); i++) {
             BPEntity.RetValuesEntity contentEntity = entity.get(i);
 
-            BPNBean bpBean = new BPNBean();
+            BPBean bpBean = new BPBean();
             bpBean.setDiastolicPressure(contentEntity.getDiastolicPressure() + "");
             bpBean.setSystolicPressure(contentEntity.getSystolicPressure() + "");
             bpBean.setHeartRate(contentEntity.getHeartRate() + "");

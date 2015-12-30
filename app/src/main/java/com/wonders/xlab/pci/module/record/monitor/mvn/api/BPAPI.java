@@ -12,7 +12,7 @@ import retrofit.http.POST;
 /**
  * Created by sjy on 2015/12/22.
  */
-public interface BPNAPI {
+public interface BPAPI {
     @FormUrlEncoded
     @POST("userBloodPressure/listUserPressureByDate")
     Observable<BPEntity> getBp(@Field("userId") String userId, @Field("startDate") long startDate, @Field("endDate") long endDate);

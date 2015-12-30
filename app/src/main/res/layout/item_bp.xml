@@ -5,7 +5,7 @@
 
         <variable
             name="bp"
-            type="com.wonders.xlab.pci.module.record.monitor.bean.BPNBean"/>
+            type="com.wonders.xlab.pci.module.record.monitor.bean.BPBean"/>
 
         <import type="com.wonders.xlab.common.utils.DateUtil"/>
     </data>

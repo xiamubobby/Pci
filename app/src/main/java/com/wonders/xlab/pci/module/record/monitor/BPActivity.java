@@ -14,8 +14,8 @@ import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
-import com.wonders.xlab.pci.module.record.monitor.adapter.BPNAdapter;
-import com.wonders.xlab.pci.module.record.monitor.bean.BPNBean;
+import com.wonders.xlab.pci.module.record.monitor.adapter.BPAdapter;
+import com.wonders.xlab.pci.module.record.monitor.bean.BPBean;
 import com.wonders.xlab.pci.module.record.monitor.mvn.model.BPModel;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.BPView;
 
@@ -40,7 +40,7 @@ public class BPActivity extends AppbarActivity implements BPView {
     @Bind(R.id.coordinator)
     CoordinatorLayout mCoordinator;
     private BPModel bpModel;
-    private BPNAdapter mBPAdapter;
+    private BPAdapter mBPAdapter;
 
     private SelectedPeriod mSelectedPeriod = SelectedPeriod.WEEK;
 
@@ -106,9 +106,9 @@ public class BPActivity extends AppbarActivity implements BPView {
     }
 
     @Override
-    public void showBPlist(List<BPNBean> bpBeanList) {
+    public void showBPlist(List<BPBean> bpBeanList) {
         if (mBPAdapter == null) {
-            mBPAdapter = new BPNAdapter(new WeakReference<Context>(this));
+            mBPAdapter = new BPAdapter(new WeakReference<Context>(this));
             mRVBpHistory.setAdapter(mBPAdapter);
             final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(mBPAdapter);
             mRVBpHistory.addItemDecoration(decoration);
