@@ -1,23 +1,26 @@
 package com.wonders.xlab.pci.module.task;
 
-import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.squareup.otto.Subscribe;
+import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.assist.connection.BluetoothService;
-import com.wonders.xlab.pci.assist.connection.ConnectionActivity;
-import com.wonders.xlab.pci.assist.connection.entity.BPEntity;
-import com.wonders.xlab.pci.assist.connection.entity.BaseConnectionEntity;
+import com.wonders.xlab.pci.assist.connection.base.NConnActivity;
+import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
+import com.wonders.xlab.pci.assist.connection.otto.FindDeviceOtto;
+import com.wonders.xlab.pci.assist.connection.otto.ScanEndOtto;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class MeasureBPGuideActivity extends ConnectionActivity implements ConnectionActivity.OnScanListener {
+public class MeasureBPGuideActivity extends NConnActivity {
 
     @Bind(R.id.ll_measure_bg_guide_0)
     LinearLayout mLlGuide0;
@@ -42,8 +45,7 @@ public class MeasureBPGuideActivity extends ConnectionActivity implements Connec
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        setOnScanListener(this);
-        scan(true);
+        OttoManager.register(this);
     }
 
     private void showGuide0() {
@@ -58,42 +60,44 @@ public class MeasureBPGuideActivity extends ConnectionActivity implements Connec
         mLlGuide1.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onScanStart() {
-        showSnackbar(mCoordinator, "开始搜索设备...");
+    @OnClick(R.id.btn_measure_bp_guide_0_start)
+    public void start() {
+        scan();
     }
 
-    @Override
-    public void onScanFinished() {
-
-    }
-
-    @Override
-    public void onFoundDevice(BluetoothDevice device) {
-        //如果搜寻到的设备是当前正在连接的设备，则忽略此次连接
-        if (device.getAddress() != null && device.getAddress().equals(getCurrentDeviceAddress())) {
+    /**
+     * 搜索到设备
+     * @param otto
+     */
+    @Subscribe
+    public void onFindDevice(FindDeviceOtto otto) {
+        if (TextUtils.isEmpty(otto.getDeviceName())) {
             return;
         }
 
-        if (device.getName().contains(BluetoothService.DEVICE_TYPE.BP.toString())) {
-            cancel();
-            requestData(BluetoothService.DEVICE_TYPE.BP, device.getAddress());
-            showSnackbar(mCoordinator, "找到");
+        if (otto.getDeviceName().contains(DEVICE_TYPE.BP.toString())) {
+            Log.d("MeasureBPGuideActivity", otto.getDeviceName());
+            getData(DEVICE_TYPE.BP,otto.getDeviceAddress());
         }
     }
 
-    @Override
-    public void onReceiveData(BaseConnectionEntity o) {
-        super.onReceiveData(o);
-        if (o instanceof BPEntity) {
-            BPEntity entity = (BPEntity) o;
-            Log.d(TAG, "entity.getPulseRate():" + entity.getPulseRate());
-        }
+    /**
+     * 搜索结束
+     * @param otto
+     */
+    @Subscribe
+    public void onScanEnd(ScanEndOtto otto) {
+        scan();
+    }
+
+    public void onDataReceived(BSEntity bsEntity) {
+        Log.d("MeasureBPGuideActivity", "bsEntity.getBloodSugar():" + bsEntity.getBloodSugar());
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
 }

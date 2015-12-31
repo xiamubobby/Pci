@@ -3,7 +3,9 @@ package com.wonders.xlab.pci.assist.connection;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
+import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.DateUtil;
+import com.wonders.xlab.pci.assist.connection.base.DataRequestThread;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
 
 import java.io.IOException;
@@ -21,7 +23,7 @@ import cn.com.contec.jar.cmssxt.DevicePackManager;
  * <p/>
  * 血糖数据传输线程
  */
-public class BSConnectedThread extends BaseConnectedThread {
+public class BSConnectedThread extends DataRequestThread {
     private final BluetoothSocket mSocket;
 
     private final InputStream mInputStream;
@@ -98,6 +100,7 @@ public class BSConnectedThread extends BaseConnectedThread {
                                     if (mOnReceiveDataListener != null) {
                                         mOnReceiveDataListener.onReceiveData(bgEntity);
                                     }
+                                    OttoManager.post(bgEntity);
                                 }
 //                                Log.d(TAG, "接收到的数据不为空，删除数据");
 //                                mOutputStream.write(DeviceCommand.command_delData());

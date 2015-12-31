@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.assist.connection;
+package com.wonders.xlab.pci.assist.connection.base;
 
 
 import com.wonders.xlab.pci.assist.connection.entity.BaseConnectionEntity;
@@ -8,7 +8,7 @@ import java.util.Calendar;
 /**
  * Created by hua on 15/10/30.
  */
-public abstract class BaseConnectedThread extends Thread {
+public abstract class DataRequestThread extends Thread {
     public static final String TAG = "RequestDataThread";
 
     private final long RETRY_TIME_INTERVAL = 1000;//ms

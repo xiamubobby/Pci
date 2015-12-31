@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.assist.connection;
+package com.wonders.xlab.pci.assist.connection.base;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
@@ -8,12 +8,15 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.UUID;
 
 /**
  * Created by hua on 15/10/26.
  * 连接设备的线程
  */
 public class ConnectThread extends Thread {
+    private final UUID PUBLIC_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
     private final String TAG = "ConnectThread";
 
     private OnConnectListener mOnConnectListener;
@@ -59,7 +62,7 @@ public class ConnectThread extends Thread {
 
         mBluetoothDevice = mBluetoothAdapter.getRemoteDevice(macAddress);
         try {
-            mSocket = mBluetoothDevice.createRfcommSocketToServiceRecord(BluetoothService.PUBLIC_UUID);
+            mSocket = mBluetoothDevice.createRfcommSocketToServiceRecord(PUBLIC_UUID);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,7 +93,6 @@ public class ConnectThread extends Thread {
 
         try {
             mSocket.connect();
-
             if (mOnConnectListener != null) {
                 mOnConnectListener.connectSuccess(mSocket, mBluetoothDevice.getAddress());
             }
@@ -104,8 +106,6 @@ public class ConnectThread extends Thread {
                 if (mOnConnectListener != null) {
                     mOnConnectListener.connectFailed();
                 }
-            } else {
-                connectTime = 0;
             }
 
             connectTime++;

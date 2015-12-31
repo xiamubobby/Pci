@@ -1,0 +1,4 @@
+使用方法说明：
+1、新建自己的Activity，并且继承NConnActivity
+2、然后参照NConnActivity中得说明使用即可
+3、如果需要新增其他设备的数据接收，则参考BPConnectedThread来自定义一个，然后参考NConnActivity中的那一项TODO事项即可

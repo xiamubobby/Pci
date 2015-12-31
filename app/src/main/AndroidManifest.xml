@@ -204,6 +204,12 @@
             android:label="@string/title_activity_measure_bsguide0"
             android:theme="@style/AppTheme">
         </activity>
+
+        <receiver
+            android:name=".assist.connection.base.ScanReceiver"
+            android:enabled="true"
+            android:exported="true">
+        </receiver>
     </application>
 
 </manifest>

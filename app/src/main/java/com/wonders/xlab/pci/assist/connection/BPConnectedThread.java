@@ -5,6 +5,9 @@ import android.util.Log;
 
 import com.contec.jar.contec08a.DeviceCommand;
 import com.contec.jar.contec08a.DevicePackManager;
+import com.wonders.xlab.common.application.OttoManager;
+import com.wonders.xlab.common.utils.DateUtil;
+import com.wonders.xlab.pci.assist.connection.base.DataRequestThread;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntity;
 
 import java.io.IOException;
@@ -17,10 +20,10 @@ import java.util.List;
 
 /**
  * Created by hua on 15/10/26.
- * <p/>
+ * <p>
  * 血压数据传输线程
  */
-public class BPConnectedThread extends BaseConnectedThread {
+public class BPConnectedThread extends DataRequestThread {
 
     private final BluetoothSocket mSocket;
 
@@ -110,10 +113,10 @@ public class BPConnectedThread extends BaseConnectedThread {
                                 Log.d(TAG, "发送获取数据命令");
                                 pType = 1;
                                 mOutputStream.write(DeviceCommand.REQUEST_BLOOD_PRESSURE());
-                            } else if (mOp == deleteData) {
+                            } else {
                                 Log.d(TAG, "发送删除数据命令");
                                 pType = 5;
-                                mOutputStream.write(DeviceCommand.DELETE_BP());
+//                                mOutputStream.write(DeviceCommand.DELETE_BP());
                             }
 //                            else if (mOp == correctTime) {
 //                                Log.d(TAG, "发送时间校正命令");
@@ -200,16 +203,14 @@ public class BPConnectedThread extends BaseConnectedThread {
             }
         }
 
-        try
-        {
+        try {
             if (mInputStream != null) {
                 mInputStream.close();
             }
 
             mOutputStream.close();
             cancel();
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -272,10 +273,15 @@ public class BPConnectedThread extends BaseConnectedThread {
                     + ":" + minute + ":" + sec;
 
             //TODO
-            BPEntity bpEntity = null;
+            BPEntity bpEntity = new BPEntity(DateUtil.parse(dateStr, "yyyy-MM-dd HH:mm:ss"),
+                    hp,
+                    lp,
+                    pulseRate,
+                    ap);
 
             bpEntities.add(bpEntity);
-            Log.d(TAG, "成功解析一条数据:" + bpEntity.toString());
+
+            OttoManager.post(bpEntity);
         }
 
         return bpEntities;
