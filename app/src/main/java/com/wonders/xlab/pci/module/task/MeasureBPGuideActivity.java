@@ -11,10 +11,11 @@ import android.widget.LinearLayout;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.assist.connection.BluetoothService;
 import com.wonders.xlab.pci.assist.connection.ConnectionActivity;
-import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
+import com.wonders.xlab.pci.assist.connection.entity.BPEntity;
 import com.wonders.xlab.pci.assist.connection.entity.BaseConnectionEntity;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class MeasureBPGuideActivity extends ConnectionActivity implements ConnectionActivity.OnScanListener {
 
@@ -40,6 +41,7 @@ public class MeasureBPGuideActivity extends ConnectionActivity implements Connec
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
         setOnScanListener(this);
         scan(true);
     }
@@ -69,27 +71,29 @@ public class MeasureBPGuideActivity extends ConnectionActivity implements Connec
     @Override
     public void onFoundDevice(BluetoothDevice device) {
         //如果搜寻到的设备是当前正在连接的设备，则忽略此次连接
-        if (device.getAddress() != null && device.getAddress().equals(mCurDeviceMacAddress)) {
+        if (device.getAddress() != null && device.getAddress().equals(getCurrentDeviceAddress())) {
             return;
         }
 
-        if (device.getName().contains(BluetoothService.DEVICE_TYPE.BG.toString())) {
-            cancel();
-            requestData(BluetoothService.DEVICE_TYPE.BG, device.getAddress());
-            showSnackbar(mCoordinator,"找到");
-        } else if (device.getName().contains(BluetoothService.DEVICE_TYPE.BP.toString())) {
+        if (device.getName().contains(BluetoothService.DEVICE_TYPE.BP.toString())) {
             cancel();
             requestData(BluetoothService.DEVICE_TYPE.BP, device.getAddress());
-            showSnackbar(mCoordinator,"找到");
+            showSnackbar(mCoordinator, "找到");
         }
     }
 
     @Override
     public void onReceiveData(BaseConnectionEntity o) {
         super.onReceiveData(o);
-        if (o instanceof BSEntity) {
-            BSEntity entity = (BSEntity) o;
-            Log.d(TAG, "entity.getBloodSugar():" + entity.getBloodSugar());
+        if (o instanceof BPEntity) {
+            BPEntity entity = (BPEntity) o;
+            Log.d(TAG, "entity.getPulseRate():" + entity.getPulseRate());
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

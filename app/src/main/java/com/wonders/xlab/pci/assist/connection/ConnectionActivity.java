@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.wonders.xlab.pci.assist.connection.entity.BaseConnectionEntity;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
@@ -19,21 +20,21 @@ import com.wonders.xlab.pci.module.base.AppbarActivity;
 
 /**
  * @author hua
- *         扫描设备你；－借记卡6
- *         去、 *         血氧，心率
  */
 public abstract class ConnectionActivity extends AppbarActivity implements BluetoothService.OnConnectListener, BluetoothService.OnReceiveDataListener {
     public static final String TAG = "ConnectThread";
-
-    private BluetoothService.DEVICE_TYPE mDeviceType = BluetoothService.DEVICE_TYPE.NONE;
 
     private final int REQUEST_ENABLE_BT = 0;
 
     private boolean isRegister = false;
 
+    private final int MAX_RETRY_TIMES = 15;
+
+    private int mRetryTimes = 0;
+
     private boolean mAutoRetry;
 
-    public String mCurDeviceMacAddress;
+    private String mCurrentDeviceAddress;
 
     private BluetoothAdapter mBluetoothAdapter;
 
@@ -41,13 +42,49 @@ public abstract class ConnectionActivity extends AppbarActivity implements Bluet
 
     private OnScanListener mOnScanListener;
 
+    private Handler mRetryHandler;
+
+    private Runnable mRetryRunnable;
+
     public void setAutoRetry(boolean autoRetry) {
         mAutoRetry = autoRetry;
+    }
+
+    public String getCurrentDeviceAddress() {
+        return mCurrentDeviceAddress;
+    }
+
+    public BluetoothAdapter getBluetoothAdapter() {
+        return mBluetoothAdapter;
+    }
+
+    public void setOnScanListener(OnScanListener onScanListener) {
+        mOnScanListener = onScanListener;
+    }
+
+    /**
+     * 搜索蓝牙设备接口
+     */
+    public interface OnScanListener {
+        void onScanStart();
+
+        void onScanFinished();
+
+        void onFoundDevice(BluetoothDevice device);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mRetryHandler = new Handler();
+
+        mRetryRunnable = new Runnable() {
+            @Override
+            public void run() {
+                startScan();
+            }
+        };
 
         if (mBluetoothAdapter == null) {
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -78,11 +115,6 @@ public abstract class ConnectionActivity extends AppbarActivity implements Bluet
      */
     public void requestData(BluetoothService.DEVICE_TYPE deviceType, String deviceAddress) {
         Log.d(TAG, "可以绑定，连接设备并进行数据请求");
-        if (mDeviceType == deviceType) {
-            return;
-        } else {
-            mDeviceType = deviceType;
-        }
 
         mAutoRetry = false;
         if (mBluetoothAdapter != null && mBluetoothAdapter.isDiscovering())
@@ -114,14 +146,13 @@ public abstract class ConnectionActivity extends AppbarActivity implements Bluet
                 if (mBluetoothAdapter.isDiscovering()) mBluetoothAdapter.cancelDiscovery();
                 boolean isStartSuccess = mBluetoothAdapter.startDiscovery();
                 if (!isStartSuccess) {
-                    Log.d(TAG, "startDiscovery()失败");
+                    Toast.makeText(this, "搜索设备失败，请重试！", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d(TAG, "startDiscovery()成功");
                 }
             }
         } else {
-            Log.d(TAG, "设备不支持蓝牙！");
-
+            Toast.makeText(this, "设备不支持蓝牙！", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -132,25 +163,28 @@ public abstract class ConnectionActivity extends AppbarActivity implements Bluet
 
     @Override
     public void onConnectSuccess(BluetoothService.DEVICE_TYPE deviceType, String macAddress) {
-        scan(true);
-        Log.d(TAG, "设备连接成功");
+        stopScan();
     }
 
     @Override
     public void onConnectFailed() {
-        Log.d(TAG, "设备连接失败");
-        scan(true);
-        mDeviceType = BluetoothService.DEVICE_TYPE.NONE;
+        Log.d(TAG, "设备连接失败,重新搜索设备!");
+        startScan();
     }
 
+    /**
+     * TODO 如果需要接收数据，在子类中重写该方法即可
+     * @param o
+     */
     @Override
     public void onReceiveData(BaseConnectionEntity o) {
 
     }
-
+    /**
+     * TODO 如果需要接收数据接收错误消息，在子类中重写该方法即可
+     */
     @Override
     public void onReceiveFailed() {
-        mDeviceType = BluetoothService.DEVICE_TYPE.NONE;
         mAutoRetry = false;
         if (mBluetoothAdapter != null && mBluetoothAdapter.isDiscovering())
             mBluetoothAdapter.cancelDiscovery();
@@ -162,10 +196,10 @@ public abstract class ConnectionActivity extends AppbarActivity implements Bluet
         switch (requestCode) {
             case REQUEST_ENABLE_BT:
                 if (resultCode == Activity.RESULT_OK) {
-//                    ToastManager.get().show(getActivity(), "已开启蓝牙");
+                    Toast.makeText(this, "已开启蓝牙", Toast.LENGTH_SHORT).show();
                     startScan();
                 } else if (resultCode == Activity.RESULT_CANCELED) {
-//                    ToastManager.get().show(getActivity(), "取消授权！");
+                    Toast.makeText(this, "取消授权!", Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -179,18 +213,28 @@ public abstract class ConnectionActivity extends AppbarActivity implements Bluet
 
     public void cancel() {
         mAutoRetry = false;
-        mCurDeviceMacAddress = "";
-
-        if (isRegister) {
-            unregisterReceiver(mReceiver);
-            Log.d(TAG, "取消注册蓝牙监听广播");
-            isRegister = false;
-        }
+        mRetryTimes = 0;
+        mCurrentDeviceAddress = "";
+        stopScan();
         if (mBluetoothAdapter != null) {
             mBluetoothAdapter.cancelDiscovery();
         }
         if (mBluetoothService != null) {
             mBluetoothService.stop();
+        }
+    }
+
+    private void stopScan() {
+        if (mRetryHandler != null && mRetryRunnable != null) {
+            mRetryHandler.removeCallbacks(mRetryRunnable);
+        }
+        if (mBluetoothAdapter != null && mBluetoothAdapter.isDiscovering()) {
+            mBluetoothAdapter.cancelDiscovery();
+        }
+        if (isRegister) {
+            unregisterReceiver(mReceiver);
+            Log.d(TAG, "取消注册蓝牙监听广播");
+            isRegister = false;
         }
     }
 
@@ -211,13 +255,11 @@ public abstract class ConnectionActivity extends AppbarActivity implements Bluet
                     mOnScanListener.onScanFinished();
                 }
                 //不断扫描
-                if (mAutoRetry) {
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            startScan();
-                        }
-                    }, 5000);
+                if (mAutoRetry && mRetryTimes <= MAX_RETRY_TIMES) {
+                    mRetryHandler.postDelayed(mRetryRunnable, 5000);
+                    mRetryTimes++;
+                } else {
+                    mRetryTimes = 0;
                 }
 
             } else if (BluetoothDevice.ACTION_FOUND.equals(action)) {
@@ -227,7 +269,7 @@ public abstract class ConnectionActivity extends AppbarActivity implements Bluet
                 if (!TextUtils.isEmpty(device.getName())
                         && !TextUtils.isEmpty(device.getAddress())) {
 
-                    if (device.getName().contains(BluetoothService.DEVICE_TYPE.BG.toString()) ||
+                    if (device.getName().contains(BluetoothService.DEVICE_TYPE.BS.toString()) ||
                             device.getName().contains(BluetoothService.DEVICE_TYPE.BP.toString())) {
                         Log.i(TAG, "搜索到可用设备：" + device.getName());
                     } else {
@@ -248,28 +290,4 @@ public abstract class ConnectionActivity extends AppbarActivity implements Bluet
             }
         }
     };
-
-    public void setOnScanListener(OnScanListener onScanListener) {
-        mOnScanListener = onScanListener;
-    }
-
-    public BluetoothService.DEVICE_TYPE getDeviceType() {
-        return mDeviceType;
-    }
-
-    public void setDeviceType(BluetoothService.DEVICE_TYPE deviceType) {
-        this.mDeviceType = deviceType;
-    }
-
-    /**
-     * 搜索蓝牙设备接口
-     */
-    public interface OnScanListener {
-        void onScanStart();
-
-        void onScanFinished();
-
-        void onFoundDevice(BluetoothDevice device);
-    }
-
 }

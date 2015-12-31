@@ -94,28 +94,28 @@ public class BSConnectedThread extends BaseConnectedThread {
                                 Log.d(TAG, "接收到的数据为空，继续请求数据");
                                 mOutputStream.write(DeviceCommand.command_requestData());
                             } else {
-                                Log.d(TAG, "接收到的数据不为空，删除数据");
                                 for (BSEntity bgEntity : bgEntities) {
                                     if (mOnReceiveDataListener != null) {
                                         mOnReceiveDataListener.onReceiveData(bgEntity);
                                     }
                                 }
+//                                Log.d(TAG, "接收到的数据不为空，删除数据");
 //                                mOutputStream.write(DeviceCommand.command_delData());
                             }
                             break;
                         case 2://接收数据失败
                             break;
                         case 3://校正时间成功
+                            Log.d(TAG, "校正时间成功");
                             mOutputStream.write(DeviceCommand.command_requestData());
                             break;
                         case 4://校正时间失败
-
+                            Log.d(TAG, "校正时间失败");
                             if (isNewDevice) {
                                 mOutputStream.write(DeviceCommand.command_VerifyTimeSS());
                             } else {
                                 mOutputStream.write(DeviceCommand.command_VerifyTime());
                             }
-
                             break;
                         case 5://数据删除成功
                             mOutputStream.write(DeviceCommand.command_requestData());
@@ -127,9 +127,11 @@ public class BSConnectedThread extends BaseConnectedThread {
                             mOutputStream.write(DeviceCommand.command_requestData());
                             break;
                         case 8://旧设备
+                            Log.d(TAG, "旧设备");
                             mOutputStream.write(DeviceCommand.command_VerifyTime());
                             break;
                         case 9://新设备
+                            Log.d(TAG, "新设备");
                             isNewDevice = true;
 
                             mOutputStream.write(DeviceCommand.command_VerifyTimeSS());
@@ -169,7 +171,7 @@ public class BSConnectedThread extends BaseConnectedThread {
         List<BSEntity> bgEntities = new ArrayList<>();
 
         for (CmssxtDataJar cmssxtDataJar : cmssxtDataJars) {
-            BSEntity bgEntity = new BSEntity(DateUtil.parse(cmssxtDataJar.m_saveDate,""),cmssxtDataJar.m_data);
+            BSEntity bgEntity = new BSEntity(DateUtil.parse(cmssxtDataJar.m_saveDate,"yyyy-MM-dd HH:mm:ss"),cmssxtDataJar.m_data);
             bgEntities.add(bgEntity);
         }
         return bgEntities;

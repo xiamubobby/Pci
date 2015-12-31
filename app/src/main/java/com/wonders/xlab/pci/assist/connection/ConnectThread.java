@@ -21,6 +21,7 @@ public class ConnectThread extends Thread {
     //设备MAC地址
     private String macAddress;
     private boolean connected = false;
+    private final int RETRY_CONNECT_TIMES = 4;
     private int connectTime = 0;
     private BluetoothDevice mBluetoothDevice;
     private BluetoothSocket mSocket;
@@ -62,7 +63,10 @@ public class ConnectThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        while (!connected && connectTime <= 8) {
+        if (mBluetoothAdapter.isDiscovering()) {
+            mBluetoothAdapter.cancelDiscovery();
+        }
+        while (!connected && connectTime <= RETRY_CONNECT_TIMES) {
             tryToConnect();
         }
     }
@@ -91,15 +95,17 @@ public class ConnectThread extends Thread {
                 mOnConnectListener.connectSuccess(mSocket, mBluetoothDevice.getAddress());
             }
             connected = true;
-
+            connectTime = 0;
         } catch (IOException e) {
             Log.e(TAG, "无法连接设备:" + mBluetoothDevice.getName());
 
-            if (connectTime >= 8) {
+            if (connectTime >= RETRY_CONNECT_TIMES) {
+                cancel();
                 if (mOnConnectListener != null) {
                     mOnConnectListener.connectFailed();
                 }
-                cancel();
+            } else {
+                connectTime = 0;
             }
 
             connectTime++;

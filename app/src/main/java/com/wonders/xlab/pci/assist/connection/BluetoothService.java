@@ -1,9 +1,7 @@
 package com.wonders.xlab.pci.assist.connection;
 
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothSocket;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.wonders.xlab.pci.assist.connection.entity.BaseConnectionEntity;
 
@@ -16,13 +14,13 @@ public class BluetoothService implements BaseConnectedThread.OnReceiveDataListen
     /*
      health monitoring device names
      */
-    private static final String DEVICE_TYPE_BG = "BG";//"BG";  // 血糖仪 CMSSXT
+    private static final String DEVICE_TYPE_BS = "BG";  // 血糖仪 CMSSXT
     private static final String DEVICE_TYPE_BP = "NIBP";   // 电子血压计 CONTEC08A
     private static final String DEVICE_TYPE_WT = "WT";  // 电子秤 WT100
     private static final String DEVICE_TYPE_BO = "SpO";  // 脉搏血氧仪 CMS50EW
 
     public enum DEVICE_TYPE {
-        NONE(""), BG(DEVICE_TYPE_BG), BP(DEVICE_TYPE_BP);
+        NONE(""), BS(DEVICE_TYPE_BS), BP(DEVICE_TYPE_BP);
 
         DEVICE_TYPE(String name) {
             this.name = name;
@@ -36,7 +34,6 @@ public class BluetoothService implements BaseConnectedThread.OnReceiveDataListen
         }
     }
 
-
     private DEVICE_TYPE mDeviceType;
 
     public static final UUID PUBLIC_UUID = UUID
@@ -47,8 +44,6 @@ public class BluetoothService implements BaseConnectedThread.OnReceiveDataListen
     private int retryTimes;
 
     private boolean continueRetry = true;
-
-    private final BluetoothAdapter mBluetoothAdapter;
 
     private String mAddress;
 
@@ -69,26 +64,23 @@ public class BluetoothService implements BaseConnectedThread.OnReceiveDataListen
     private OnReceiveDataListener mOnReceiveDataListener;
 
     public BluetoothService() {
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
     }
 
     /**
      * 此方法会先进行设备连接，然后开始请求数据
      *
      * @param deviceType * @see
-     *                   {@link #DEVICE_TYPE_BG}
+     *                   {@link #DEVICE_TYPE_BS}
      *                   {@link #DEVICE_TYPE_BP}
      * @param address    设备地址
      */
     public synchronized void requestData(DEVICE_TYPE deviceType, String address) {
-
         this.mDeviceType = deviceType;
         this.mAddress = address;
-
         //init retry params
         continueRetry = true;
         retryTimes = 0;
-        Log.d("requestData", address);
         connectAndRequestData(true);
     }
 
@@ -99,7 +91,6 @@ public class BluetoothService implements BaseConnectedThread.OnReceiveDataListen
      */
     public synchronized void connect(String address) {
         mAddress = address;
-
         connectAndRequestData(false);
     }
 
@@ -107,7 +98,6 @@ public class BluetoothService implements BaseConnectedThread.OnReceiveDataListen
      * 断线重连,请求数据
      */
     private synchronized void continueRequestData() {
-
         connectAndRequestData(true);
     }
 
@@ -117,19 +107,15 @@ public class BluetoothService implements BaseConnectedThread.OnReceiveDataListen
      * @param shouldRequestData
      */
     private synchronized void connectAndRequestData(final boolean shouldRequestData) {
-
-
         // Cancel any thread attempting to make a connection
         if (mConnectThread != null) {
             mConnectThread.cancel();
             mConnectThread = null;
         }
-
         if (mRequestDataThread != null) {
             mRequestDataThread.cancel();
             mRequestDataThread = null;
         }
-
         mConnectThread = new ConnectThread(mAddress);
         mConnectThread.setOnConnectListener(new ConnectThread.OnConnectListener() {
             @Override
@@ -151,7 +137,7 @@ public class BluetoothService implements BaseConnectedThread.OnReceiveDataListen
                         case BP:
                             receiveData(new BPConnectedThread(socket));
                             break;
-                        case BG:
+                        case BS:
                             receiveData(new BSConnectedThread(socket));
                             break;
                     }
@@ -164,20 +150,15 @@ public class BluetoothService implements BaseConnectedThread.OnReceiveDataListen
                     mOnConnectListener.onConnectFailed();
                 }
                 retry();
-
             }
         });
         mConnectThread.start();
-
         setState(STATE_CONNECTING);
     }
 
     private synchronized void receiveData(@NonNull BaseConnectedThread thread) {
-
         thread.setOnReceiveDataListener(this);
-
         mRequestDataThread = thread;
-
         mRequestDataThread.start();
     }
 
@@ -205,7 +186,6 @@ public class BluetoothService implements BaseConnectedThread.OnReceiveDataListen
      * 重试
      */
     private void retry() {
-
         retryTimes++;
         if (retryTimes <= MAX_RETRY_TIMES && continueRetry) {
 
@@ -239,7 +219,7 @@ public class BluetoothService implements BaseConnectedThread.OnReceiveDataListen
 
         /**
          * @param deviceType * @see
-         *                   {@link #DEVICE_TYPE_BG}
+         *                   {@link #DEVICE_TYPE_BS}
          *                   {@link #DEVICE_TYPE_BP}
          */
         void onConnectSuccess(DEVICE_TYPE deviceType, String macAddress);
