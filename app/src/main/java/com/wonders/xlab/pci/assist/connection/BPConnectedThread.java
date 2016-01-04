@@ -24,8 +24,9 @@ import java.util.List;
  * 血压数据传输线程
  */
 public class BPConnectedThread extends DataRequestThread {
+//    private BluetoothAdapter mBluetoothAdapter;
 
-    private final BluetoothSocket mSocket;
+    private BluetoothSocket mSocket;
 
     private final InputStream mInputStream;
 
@@ -34,8 +35,9 @@ public class BPConnectedThread extends DataRequestThread {
     private boolean loop = true;
 
     public BPConnectedThread(BluetoothSocket socket) {
+        super();
 
-        this.mSocket = socket;
+        mSocket = socket;
 
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
@@ -47,7 +49,6 @@ public class BPConnectedThread extends DataRequestThread {
                 tmpIn = mSocket.getInputStream();
                 tmpOut = mSocket.getOutputStream();
             }
-
         } catch (IOException e) {
         }
 
@@ -166,9 +167,9 @@ public class BPConnectedThread extends DataRequestThread {
                                         mOnReceiveDataListener.onReceiveData(entity);
                                     }
                                 }
-                                mOp = deleteData;
-                                pType = 0;
-                                mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
+//                                mOp = deleteData;
+//                                pType = 0;
+//                                mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
                             }
 
                             break;
@@ -271,7 +272,10 @@ public class BPConnectedThread extends DataRequestThread {
 
             String dateStr = "20" + year + "-" + month + "-" + day + " " + hour
                     + ":" + minute + ":" + sec;
-
+            Log.d(TAG, dateStr);
+            Log.d(TAG, "ap:" + ap);
+            Log.d(TAG, "hp:" + hp);
+            Log.d(TAG, "lp:" + lp);
             //TODO
             BPEntity bpEntity = new BPEntity(DateUtil.parse(dateStr, "yyyy-MM-dd HH:mm:ss"),
                     hp,

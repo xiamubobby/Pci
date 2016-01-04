@@ -74,7 +74,7 @@ public class MedicineActivity extends AppbarActivity implements MedicineView {
 
     @Override
     public void onFailed(String message) {
-        showSnackbar(mCoordinator, message);
+        showSnackbar(mCoordinator, message, true);
     }
 
     @Override

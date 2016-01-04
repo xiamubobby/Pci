@@ -225,7 +225,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
 
     @Override
     public void getTaskFailed(String message) {
-        showSnackbar(mCoordinator, message);
+        showSnackbar(mCoordinator, message, true);
     }
 
     @Override
@@ -427,7 +427,7 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
 
     @Override
     public void takeMedicineFailed(String message) {
-        showSnackbar(mCoordinator, message);
+        showSnackbar(mCoordinator, message, true);
         mDailyTaskModel.fetchData(AIManager.getInstance(this).getUserId(), mCurrentSelectedTime);
     }
 }

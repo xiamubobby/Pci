@@ -1,7 +1,10 @@
 package com.wonders.xlab.pci.module.task.bp;
 
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -13,7 +16,7 @@ import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.assist.connection.base.NConnActivity;
-import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
+import com.wonders.xlab.pci.assist.connection.entity.BPEntity;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
 import com.wonders.xlab.pci.assist.connection.otto.FindDeviceOtto;
 import com.wonders.xlab.pci.assist.connection.otto.ScanEndOtto;
@@ -32,6 +35,8 @@ public class MeasureBPGuideActivity extends NConnActivity {
 
     private FragmentVPAdapter mFragmentVPAdapter;
 
+    private ProgressDialog mProgressDialog;
+
     @Override
     public int getContentLayout() {
         return R.layout.activity_measure_bp_guide;
@@ -48,6 +53,8 @@ public class MeasureBPGuideActivity extends NConnActivity {
         ButterKnife.bind(this);
         OttoManager.register(this);
 
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
         mFragmentVPAdapter = new FragmentVPAdapter(getFragmentManager());
         BPGuideOneFragment oneFragment = new BPGuideOneFragment();
         BPGuideTwoFragment twoFragment = new BPGuideTwoFragment();
@@ -63,51 +70,74 @@ public class MeasureBPGuideActivity extends NConnActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 1) {
-                    scan();
+                /*if (position == 1) {
+                    if (!mBluetoothAdapter.isEnabled()) {
+                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                    } else {
+                        connectBondedDevice();
+                    }
                 } else if (position == 0) {
                     cancel();
-                }
+                }*/
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    if (mVpMeasureBPGuide.getCurrentItem() == 1) {
+                        if (!mBluetoothAdapter.isEnabled()) {
+                            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                            startActivityForResult(enableBtIntent, NConnActivity.REQUEST_ENABLE_BOND);
+                        } else {
+                            connectBondedDevice();
+                        }
+                    } else {
+                        if (mProgressDialog != null) {
+                            mProgressDialog.hide();
+                        }
+                        cancel();
+                    }
+                }
             }
         });
 
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+//            mProgressDialog.setCancelable(false);
+        }
     }
 
-    private ProgressDialog mProgressDialog;
+    @Override
+    public DEVICE_TYPE getDeviceType() {
+        return DEVICE_TYPE.BP;
+    }
 
     @Subscribe
     public void onConnectionStatusChanged(ConnStatusOtto connStatusOtto) {
-        if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.SUCCESS) {
+
+        if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.START) {
             mProgressDialog.setMessage("正在连接血压设备，请稍候...");
+            mProgressDialog.show();
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.SUCCESS) {
             if (mProgressDialog != null) {
                 mProgressDialog.hide();
             }
-            showSnackbar(mCoordinator, "连接成功，请开始测量！");
+            showSnackbar(mCoordinator, "连接成功，开始读取数据！", true);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.FAILED) {
             if (mProgressDialog != null) {
                 mProgressDialog.hide();
             }
-            if (mVpMeasureBPGuide != null && mVpMeasureBPGuide.getChildCount() > 0) {
+            /*if (mVpMeasureBPGuide != null && mVpMeasureBPGuide.getChildCount() > 0) {
                 mVpMeasureBPGuide.setCurrentItem(0);
-            }
-            showSnackbar(mCoordinator, "连接失败，请重试！");
+            }*/
+            showSnackbar(mCoordinator, "连接失败，请重试！", true);
         }
-
     }
 
     @Subscribe
     public void onScanStart(ScanStartOtto startOtto) {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("正在搜索设备，请稍候...");
-//            mProgressDialog.setCancelable(false);
-        }
+        mProgressDialog.setMessage("正在搜索设备，请稍候...");
         mProgressDialog.show();
     }
 
@@ -143,10 +173,12 @@ public class MeasureBPGuideActivity extends NConnActivity {
                 mVpMeasureBPGuide.setCurrentItem(1);
                 break;
             case 1:
-                scan();
+                connectBondedDevice();
                 break;
         }
     }
+
+//    private long mLastScanTime = 0;
 
     /**
      * 搜索结束
@@ -155,24 +187,40 @@ public class MeasureBPGuideActivity extends NConnActivity {
      */
     @Subscribe
     public void onScanEnd(ScanEndOtto otto) {
-        scan();
+        /*long nowTime = Calendar.getInstance().getTimeInMillis();
+        if (nowTime - mLastScanTime > 10000) {
+            mLastScanTime = nowTime;
+           */
+//        startScan();
+//        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startScan();
+            }
+        }, 5000);
     }
 
-    public void onDataReceived(BSEntity bsEntity) {
-        Log.d("MeasureBPGuideActivity", "bsEntity.getBloodSugar():" + bsEntity.getBloodSugar());
+    @Subscribe
+    public void onDataReceived(BPEntity bpEntity) {
+        Log.d("MeasureBPGuideActivity", "bsEntity.getBloodSugar():" + bpEntity.getPulseRate());
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         if (mVpMeasureBPGuide != null && mVpMeasureBPGuide.getCurrentItem() > 0) {
             mVpMeasureBPGuide.setCurrentItem(0);
+            return;
         }
+        super.onBackPressed();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }

@@ -105,7 +105,7 @@ public class SymptomActivity extends AppbarActivity implements SymptomView {
 
     @Override
     public void onFailed(String message) {
-        showSnackbar(mCoordinator, message);
+        showSnackbar(mCoordinator, message, true);
     }
 
     @Override

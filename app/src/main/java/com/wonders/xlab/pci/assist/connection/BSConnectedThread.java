@@ -20,11 +20,11 @@ import cn.com.contec.jar.cmssxt.DevicePackManager;
 
 /**
  * Created by hua on 15/10/26.
- * <p/>
+ * <p>
  * 血糖数据传输线程
  */
 public class BSConnectedThread extends DataRequestThread {
-    private final BluetoothSocket mSocket;
+    private BluetoothSocket mSocket;
 
     private final InputStream mInputStream;
 
@@ -33,8 +33,9 @@ public class BSConnectedThread extends DataRequestThread {
     private boolean loop = true;
 
     public BSConnectedThread(BluetoothSocket socket) {
+        super();
 
-        this.mSocket = socket;
+        mSocket = socket;
 
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
@@ -174,7 +175,7 @@ public class BSConnectedThread extends DataRequestThread {
         List<BSEntity> bgEntities = new ArrayList<>();
 
         for (CmssxtDataJar cmssxtDataJar : cmssxtDataJars) {
-            BSEntity bgEntity = new BSEntity(DateUtil.parse(cmssxtDataJar.m_saveDate,"yyyy-MM-dd HH:mm:ss"),cmssxtDataJar.m_data);
+            BSEntity bgEntity = new BSEntity(DateUtil.parse(cmssxtDataJar.m_saveDate, "yyyy-MM-dd HH:mm:ss"), cmssxtDataJar.m_data);
             bgEntities.add(bgEntity);
         }
         return bgEntities;

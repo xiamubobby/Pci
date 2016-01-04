@@ -15,7 +15,7 @@ import java.util.UUID;
  * 连接设备的线程
  */
 public class ConnectThread extends Thread {
-    private final UUID PUBLIC_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    public static final UUID PUBLIC_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private final String TAG = "ConnectThread";
 
@@ -23,12 +23,11 @@ public class ConnectThread extends Thread {
 
     //设备MAC地址
     private String macAddress;
-    private boolean connected = false;
-    private final int RETRY_CONNECT_TIMES = Integer.MAX_VALUE;
-    private int connectTime = 0;
+    private BluetoothAdapter mBluetoothAdapter;
     private BluetoothDevice mBluetoothDevice;
     private BluetoothSocket mSocket;
-    private BluetoothAdapter mBluetoothAdapter;
+
+    private boolean mLoopFlag = true;
 
     public void setOnConnectListener(OnConnectListener onConnectListener) {
         mOnConnectListener = onConnectListener;
@@ -39,10 +38,8 @@ public class ConnectThread extends Thread {
 
         /**
          * 成功时回调，必须把用于connect的socket回传给需要接收数据的Thread
-         *
-         * @param socket
          */
-        void connectSuccess(BluetoothSocket socket, String macAddress);
+        void connectSuccess(BluetoothSocket socket);
 
         void connectFailed();
     }
@@ -55,9 +52,11 @@ public class ConnectThread extends Thread {
     @Override
     public void run() {
         Looper.prepare();
-
         if (mBluetoothAdapter == null) {
             mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        }
+        if (!mBluetoothAdapter.isEnabled()) {
+            mBluetoothAdapter.enable();
         }
 
         mBluetoothDevice = mBluetoothAdapter.getRemoteDevice(macAddress);
@@ -69,13 +68,15 @@ public class ConnectThread extends Thread {
         if (mBluetoothAdapter.isDiscovering()) {
             mBluetoothAdapter.cancelDiscovery();
         }
-        while (!connected && connectTime <= RETRY_CONNECT_TIMES) {
+        while (mLoopFlag) {
             tryToConnect();
         }
     }
 
     private void tryToConnect() {
-        if (mBluetoothDevice == null) return;
+        if (mBluetoothDevice == null) {
+            return;
+        }
         if (mOnConnectListener != null) mOnConnectListener.connectStarted();
 
         try {
@@ -89,31 +90,28 @@ public class ConnectThread extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, "设备(" + mBluetoothDevice.getName() + "）无法进行配对");
+            cancel();
         }
 
         try {
-            mSocket.connect();
-            if (mOnConnectListener != null) {
-                mOnConnectListener.connectSuccess(mSocket, mBluetoothDevice.getAddress());
+            if (mSocket != null) {
+                mSocket.connect();
+                if (mOnConnectListener != null) {
+                    mOnConnectListener.connectSuccess(mSocket);
+                }
+                mLoopFlag = false;
             }
-            connected = true;
-            connectTime = 0;
         } catch (IOException e) {
             Log.e(TAG, "无法连接设备:" + mBluetoothDevice.getName());
-
-            if (connectTime >= RETRY_CONNECT_TIMES) {
-                cancel();
-                if (mOnConnectListener != null) {
-                    mOnConnectListener.connectFailed();
-                }
+            cancel();
+            if (mOnConnectListener != null) {
+                mOnConnectListener.connectFailed();
             }
-
-            connectTime++;
-            connected = false;
         }
     }
 
     public void cancel() {
+        mLoopFlag = false;
         try {
             if (mSocket != null) {
                 mSocket.close();

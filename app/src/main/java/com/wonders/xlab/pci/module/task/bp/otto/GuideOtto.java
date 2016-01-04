@@ -6,7 +6,7 @@ package com.wonders.xlab.pci.module.task.bp.otto;
 public class GuideOtto {
     /**
      * 0:step 1,go to the second guide page
-     * 1:step 2,start scan device
+     * 1:step 2,start startScan device
      */
     private int step;
 

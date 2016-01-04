@@ -89,14 +89,14 @@ public class AddBSActivity extends AppbarActivity implements SimpleView {
         long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), DateUtil.DEFAULT_FORMAT_FULL);
 
         if (DateUtil.isBiggerThenToday(date)) {
-            showSnackbar(mCoordinator, "不能选择今天之后的日期");
+            showSnackbar(mCoordinator, "不能选择今天之后的日期", true);
             mFabAddBs.setClickable(true);
             return;
         }
 
         String bloodSugar = mEtAddBs.getText().toString();
         if (TextUtils.isEmpty(bloodSugar)) {
-            showSnackbar(mCoordinator, "请输入血糖");
+            showSnackbar(mCoordinator, "请输入血糖", true);
             mFabAddBs.setClickable(true);
             return;
         }
@@ -192,7 +192,7 @@ public class AddBSActivity extends AppbarActivity implements SimpleView {
     @Override
     public void svSuccess() {
         mFabAddBs.setClickable(false);
-        showSnackbar(mCoordinator, "数据保存成功");
+        showSnackbar(mCoordinator, "数据保存成功", true);
         RxBus.getInstance().send(new TaskRefreshBus());
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -205,7 +205,7 @@ public class AddBSActivity extends AppbarActivity implements SimpleView {
     @Override
     public void svFailed(String message) {
         mFabAddBs.setClickable(true);
-        showSnackbar(mCoordinator, message);
+        showSnackbar(mCoordinator, message, true);
     }
 
     private ProgressDialog dialog;

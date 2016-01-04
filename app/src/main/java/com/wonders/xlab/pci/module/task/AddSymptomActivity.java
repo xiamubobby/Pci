@@ -94,7 +94,7 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, S
             }
             mAddRecordModel.saveSymptom(AIManager.getInstance(this).getUserId(), symptomStrs);
         } else {
-            showSnackbar(mCoordinator, "请选择您的症状");
+            showSnackbar(mCoordinator, "请选择您的症状", true);
         }
     }
 
@@ -170,7 +170,7 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, S
     @Override
     public void svSuccess() {
         mFabAddSymptom.setClickable(false);
-        showSnackbar(mCoordinator, "数据保存成功");
+        showSnackbar(mCoordinator, "数据保存成功", true);
         RxBus.getInstance().send(new TaskRefreshBus());
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -183,7 +183,7 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, S
     @Override
     public void svFailed(String message) {
         mFabAddSymptom.setClickable(true);
-        showSnackbar(mCoordinator, message);
+        showSnackbar(mCoordinator, message, true);
     }
 
     private ProgressDialog dialog;

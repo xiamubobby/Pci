@@ -71,9 +71,13 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void showSnackbar(View view, String message) {
+    public void showSnackbar(View view, String message, boolean autoDismiss) {
         if (view != null) {
-            Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
+            if (autoDismiss) {
+                Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
+            } else {
+                Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE).show();
+            }
         }
     }
 }

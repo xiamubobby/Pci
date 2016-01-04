@@ -88,27 +88,27 @@ public class AddBPActivity extends AppbarActivity implements SimpleView {
 
         long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), DateUtil.DEFAULT_FORMAT_FULL);
         if (DateUtil.isBiggerThenToday(date)) {
-            showSnackbar(mCoordinator, "不能选择今天之后的日期");
+            showSnackbar(mCoordinator, "不能选择今天之后的日期", true);
             mFabAddBp.setClickable(true);
             return;
         }
 
         String systolicPressure = mEtAddBpSsy.getText().toString();
         if (TextUtils.isEmpty(systolicPressure)) {
-            showSnackbar(mCoordinator, "请输入收缩压");
+            showSnackbar(mCoordinator, "请输入收缩压", true);
             mFabAddBp.setClickable(true);
             return;
         }
         String diastolicPressure = mEtAddBpSzy.getText().toString();
         if (TextUtils.isEmpty(diastolicPressure)) {
-            showSnackbar(mCoordinator, "请输入舒张压");
+            showSnackbar(mCoordinator, "请输入舒张压", true);
             mFabAddBp.setClickable(true);
             return;
         }
         String heartRate = mEtAddBpRate.getText().toString();
 
         if (TextUtils.isEmpty(heartRate)) {
-            showSnackbar(mCoordinator, "请输入心率");
+            showSnackbar(mCoordinator, "请输入心率", true);
             mFabAddBp.setClickable(true);
             return;
         }
@@ -160,7 +160,7 @@ public class AddBPActivity extends AppbarActivity implements SimpleView {
     @Override
     public void svSuccess() {
         mFabAddBp.setClickable(false);
-        showSnackbar(mCoordinator, "数据保存成功");
+        showSnackbar(mCoordinator, "数据保存成功", true);
         RxBus.getInstance().send(new TaskRefreshBus());
         new Handler().postDelayed(new Runnable() {
             @Override

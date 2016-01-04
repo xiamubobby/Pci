@@ -152,7 +152,7 @@ public class BSActivity extends AppbarActivity implements BSView {
 
     @Override
     public void onFailed(String message) {
-        showSnackbar(mCoordinator, message);
+        showSnackbar(mCoordinator, message, true);
     }
 
     @Override

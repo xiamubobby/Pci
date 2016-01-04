@@ -1,6 +1,8 @@
 package com.wonders.xlab.pci.assist.connection.base;
 
 
+import android.bluetooth.BluetoothAdapter;
+
 import com.wonders.xlab.pci.assist.connection.entity.BaseConnectionEntity;
 
 import java.util.Calendar;
@@ -9,6 +11,8 @@ import java.util.Calendar;
  * Created by hua on 15/10/30.
  */
 public abstract class DataRequestThread extends Thread {
+    public BluetoothAdapter mBluetoothAdapter;
+
     public static final String TAG = "RequestDataThread";
 
     private final long RETRY_TIME_INTERVAL = 1000;//ms
@@ -16,6 +20,22 @@ public abstract class DataRequestThread extends Thread {
     private long lastRetryTime;//ms
 
     protected OnReceiveDataListener mOnReceiveDataListener;
+
+    public DataRequestThread() {
+        if (mBluetoothAdapter == null) {
+            mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        }
+        if (mBluetoothAdapter == null) {
+            mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        }
+        if (mBluetoothAdapter.isDiscovering()) {
+            mBluetoothAdapter.cancelDiscovery();
+        }
+        if (!mBluetoothAdapter.isEnabled()) {
+            mBluetoothAdapter.enable();
+        }
+
+    }
 
     protected void setOnReceiveDataListener(OnReceiveDataListener onReceiveDataListener) {
         mOnReceiveDataListener = onReceiveDataListener;

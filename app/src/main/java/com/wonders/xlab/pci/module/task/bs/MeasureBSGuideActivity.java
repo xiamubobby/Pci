@@ -1,6 +1,8 @@
 package com.wonders.xlab.pci.module.task.bs;
 
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
@@ -31,6 +33,8 @@ public class MeasureBSGuideActivity extends NConnActivity {
     CoordinatorLayout mCoordinator;
 
     private FragmentVPAdapter mFragmentVPAdapter;
+
+    private ProgressDialog mProgressDialog;
 
     @Override
     public int getContentLayout() {
@@ -70,8 +74,16 @@ public class MeasureBSGuideActivity extends NConnActivity {
             public void onPageScrollStateChanged(int state) {
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
                     if (mVpMeasureBSGuide.getCurrentItem() == 1) {
-                        scan();
+                        if (!mBluetoothAdapter.isEnabled()) {
+                            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                            startActivityForResult(enableBtIntent, NConnActivity.REQUEST_ENABLE_BOND);
+                        } else {
+                            connectBondedDevice();
+                        }
                     } else {
+                        if (mProgressDialog != null) {
+                            mProgressDialog.hide();
+                        }
                         cancel();
                     }
                 }
@@ -80,17 +92,21 @@ public class MeasureBSGuideActivity extends NConnActivity {
 
     }
 
-    private ProgressDialog mProgressDialog;
+    @Override
+    public DEVICE_TYPE getDeviceType() {
+        return DEVICE_TYPE.BS;
+    }
 
     @Subscribe
     public void onConnectionStatusChanged(ConnStatusOtto connStatusOtto) {
         if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.START) {
             mProgressDialog.setMessage("正在连接血糖设备，请稍候...");
+            mProgressDialog.show();
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.SUCCESS) {
             if (mProgressDialog != null) {
                 mProgressDialog.hide();
             }
-            showSnackbar(mCoordinator, "连接成功，请开始测量！");
+            showSnackbar(mCoordinator, "连接成功，请开始测量！", true);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.FAILED) {
             if (mProgressDialog != null) {
                 mProgressDialog.hide();
@@ -98,22 +114,18 @@ public class MeasureBSGuideActivity extends NConnActivity {
             if (mVpMeasureBSGuide != null && mVpMeasureBSGuide.getChildCount() > 0) {
                 mVpMeasureBSGuide.setCurrentItem(0);
             }
-            showSnackbar(mCoordinator, "连接失败，请重试！");
+            showSnackbar(mCoordinator, "连接失败，请重试！", true);
         }
-
     }
 
     @Subscribe
     public void onScanStart(ScanStartOtto startOtto) {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage("正在搜索设备，请稍候...");
 //            mProgressDialog.setCancelable(false);
         }
-        if (mProgressDialog != null) {
-            Log.d("NConnActivity", "mProgressDialog.show");
-            mProgressDialog.show();
-        }
+        mProgressDialog.setMessage("正在搜索设备，请稍候...");
+        mProgressDialog.show();
     }
 
     /**
@@ -136,11 +148,11 @@ public class MeasureBSGuideActivity extends NConnActivity {
         }
     }
 
-    /**
-     * 接收ViewPager中引导页的两个按钮的事件
-     *
-     * @param otto
-     */
+    /*  *
+       * 接收ViewPager中引导页的两个按钮的事件
+       *
+       * @param otto
+       */
     @Subscribe
     public void onGuideStep(GuideOtto otto) {
         switch (otto.getStep()) {
@@ -148,7 +160,7 @@ public class MeasureBSGuideActivity extends NConnActivity {
                 mVpMeasureBSGuide.setCurrentItem(1);
                 break;
             case 1:
-                scan();
+                connectBondedDevice();
                 break;
         }
     }
@@ -160,9 +172,10 @@ public class MeasureBSGuideActivity extends NConnActivity {
      */
     @Subscribe
     public void onScanEnd(ScanEndOtto otto) {
-        scan();
+        startScan();
     }
 
+    @Subscribe
     public void onDataReceived(BSEntity bsEntity) {
         if (mProgressDialog != null) {
             mProgressDialog.hide();
@@ -180,13 +193,8 @@ public class MeasureBSGuideActivity extends NConnActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        OttoManager.unregister(this);
-    }
-
-    @Override
     public void onDestroy() {
+        OttoManager.unregister(this);
         super.onDestroy();
         ButterKnife.unbind(this);
     }

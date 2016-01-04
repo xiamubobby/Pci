@@ -7,24 +7,29 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.assist.connection.BPConnectedThread;
 import com.wonders.xlab.pci.assist.connection.BSConnectedThread;
+import com.wonders.xlab.pci.assist.connection.ServerThread;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 
+import java.util.Set;
+
 /**
  * Created by hua on 15/12/31.
- * <p/>
+ * <p>
  * 使用步骤：
- * 1、@{@link #scan()} 获取扫描的设备的信息 通过Otto注册接收扫描的结果，具体参考@{@link ScanReceiver}
+ * 1、@{@link #startScan()} 获取扫描的设备的信息 通过Otto注册接收扫描的结果，具体参考@{@link ScanReceiver}
  * 2、@{@link #getData(DEVICE_TYPE, String)} 将第一步获取的设备地址传入，开始获取数据
  * 3、接收数据，也是通过Otto的注册方式来接收，目前只有@{@link com.wonders.xlab.pci.assist.connection.entity.BPEntity}和@{@link com.wonders.xlab.pci.assist.connection.entity.BSEntity}
  */
 public abstract class NConnActivity extends AppbarActivity {
+    public static final int REQUEST_ENABLE_BOND = 11214;
 
     private final int REQUEST_ENABLE_BT = 11213;
     /**
@@ -40,14 +45,18 @@ public abstract class NConnActivity extends AppbarActivity {
     private ScanReceiver mScanReceiver;
     private boolean isRegistered = false;
 
-    private BluetoothAdapter mBluetoothAdapter;
+    public BluetoothAdapter mBluetoothAdapter;
 
     private String mDeviceAddress;
     private ConnectThread mConnectThread;//配对线程
+    private ServerThread mServerThread;
 
     private DataRequestThread mRequestDataThread;//请求数据线程
 
-    private DEVICE_TYPE mDeviceType;
+//    private DEVICE_TYPE mDeviceType;
+
+    private final int RETRY_CONNECT_TIMES = 0;
+    private int mConnectTime = 0;
 
     /**
      * 设备类型
@@ -82,10 +91,52 @@ public abstract class NConnActivity extends AppbarActivity {
     private final int MAX_RETRY_TIME = 8;
     private int mRetryTimes = 0;
 
+    public void startServerToListen() {
+        if (mServerThread != null) {
+            mServerThread.cancel();
+            mServerThread = null;
+        }
+        mServerThread = new ServerThread();
+        mServerThread.start();
+    }
+
+    private Handler mScanHandler;
+    private Runnable mScanRunnable;
+
+    public abstract DEVICE_TYPE getDeviceType();
+
+    public void connectBondedDevice() {
+        showConnectionFailedInfo(false);
+        Set<BluetoothDevice> bondedDevices = mBluetoothAdapter.getBondedDevices();
+        for (BluetoothDevice device : bondedDevices) {
+            if (device.getName().contains(getDeviceType().toString())) {
+                getData(getDeviceType(), device.getAddress());
+                break;
+            }
+        }
+    }
+
     /**
      * 扫描
      */
-    public void scan() {
+    public void startScan() {
+        if (mScanHandler == null) {
+            mScanHandler = new Handler();
+        }
+        if (mScanRunnable == null) {
+            mScanRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    startScan();
+                }
+            };
+        }
+        mScanHandler.postDelayed(mScanRunnable, 5000);
+        scan();
+    }
+
+    private void scan() {
+        showConnectionFailedInfo(true);
         if (mRetryTimes++ <= MAX_RETRY_TIME) {
             if (!mBluetoothAdapter.isEnabled()) {
                 Log.d(TAG, "请求设备开启蓝牙");
@@ -93,7 +144,10 @@ public abstract class NConnActivity extends AppbarActivity {
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             } else {
                 registerScanReceiver();
-                if (mBluetoothAdapter.isDiscovering()) mBluetoothAdapter.cancelDiscovery();
+                if (mBluetoothAdapter.isDiscovering()) {
+                    Log.d(TAG, "cancelDiscovery");
+                    mBluetoothAdapter.cancelDiscovery();
+                }
                 boolean isStartSuccess = mBluetoothAdapter.startDiscovery();
                 if (!isStartSuccess) {
                     Toast.makeText(this, "搜索设备失败，请确认蓝牙已打开并且授予蓝牙使用权限后重试！", Toast.LENGTH_LONG).show();
@@ -102,7 +156,6 @@ public abstract class NConnActivity extends AppbarActivity {
                 }
             }
         } else {
-            cancel();
             mRetryTimes = 0;
             Toast.makeText(this, "长时间无法搜索到您的设备，可以先关闭蓝牙，然后再次打开蓝牙后重试！", Toast.LENGTH_SHORT).show();
         }
@@ -112,7 +165,7 @@ public abstract class NConnActivity extends AppbarActivity {
      * 只进行设备连接、配对
      */
     public void connect(DEVICE_TYPE deviceType, String deviceAddress) {
-        mDeviceType = deviceType;
+//        mDeviceType = deviceType;
         mDeviceAddress = deviceAddress;
         connectAndStartRequestDataThread(false);
     }
@@ -122,7 +175,7 @@ public abstract class NConnActivity extends AppbarActivity {
      */
     public void getData(DEVICE_TYPE deviceType, String deviceAddress) {
         Log.d(TAG, "请求数据");
-        mDeviceType = deviceType;
+//        mDeviceType = deviceType;
         mDeviceAddress = deviceAddress;
         connectAndStartRequestDataThread(true);
     }
@@ -134,17 +187,20 @@ public abstract class NConnActivity extends AppbarActivity {
             case REQUEST_ENABLE_BT:
                 if (resultCode == Activity.RESULT_OK) {
                     Toast.makeText(this, "已开启蓝牙", Toast.LENGTH_SHORT).show();
-                    scan();
+                    startScan();
                 } else if (resultCode == Activity.RESULT_CANCELED) {
                     Toast.makeText(this, "取消授权!", Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case REQUEST_ENABLE_BOND:
+                connectBondedDevice();
                 break;
         }
     }
 
     /**
      * 建立连接
-     * <p/>
+     * <p>
      * 成功后开始数据请求
      *
      * @param autoRequestData
@@ -169,7 +225,8 @@ public abstract class NConnActivity extends AppbarActivity {
             }
 
             @Override
-            public void connectSuccess(BluetoothSocket socket, String macAddress) {
+            public void connectSuccess(BluetoothSocket socket) {
+                OttoManager.post(new ConnStatusOtto(ConnStatusOtto.STATUS.SUCCESS));
                 if (mBluetoothAdapter != null && mBluetoothAdapter.isDiscovering()) {
                     mBluetoothAdapter.cancelDiscovery();
                 }
@@ -179,11 +236,9 @@ public abstract class NConnActivity extends AppbarActivity {
                     isRegistered = false;
                 }
 
-                OttoManager.post(new ConnStatusOtto(ConnStatusOtto.STATUS.SUCCESS));
-
                 if (autoRequestData) {
                     //TODO 后面可新增自己的设备，在此处加入类型即可
-                    switch (mDeviceType) {
+                    switch (getDeviceType()) {
                         case BP:
                             requestData(new BPConnectedThread(socket));
                             break;
@@ -196,14 +251,32 @@ public abstract class NConnActivity extends AppbarActivity {
 
             @Override
             public void connectFailed() {
-                OttoManager.post(new ConnStatusOtto(ConnStatusOtto.STATUS.FAILED));
-                if (!mBluetoothAdapter.isDiscovering()) {
-                    mBluetoothAdapter.startDiscovery();
+                if (mConnectTime++ < RETRY_CONNECT_TIMES) {
+                    connectAndStartRequestDataThread(autoRequestData);
+                } else {
+                    if (mShowConnectionFailedInfo) {
+                        OttoManager.post(new ConnStatusOtto(ConnStatusOtto.STATUS.FAILED));
+                    }
+                    /*if (!mBluetoothAdapter.isDiscovering()) {
+                        mBluetoothAdapter.startDiscovery();
+                    }*/
+                    mConnectTime = 0;
+                    startScan();
                 }
 
             }
         });
         mConnectThread.start();
+    }
+
+    private boolean mShowConnectionFailedInfo = true;
+
+    public void showConnectionFailedInfo(boolean show) {
+        mShowConnectionFailedInfo = show;
+    }
+
+    public boolean isShowConnectionFailedInfo() {
+        return mShowConnectionFailedInfo;
     }
 
     private void requestData(DataRequestThread thread) {
@@ -236,6 +309,11 @@ public abstract class NConnActivity extends AppbarActivity {
 
     public void cancel() {
         Log.d(TAG, "cancel");
+        if (mScanHandler != null) {
+            mScanHandler.removeCallbacks(mScanRunnable);
+            mScanHandler = null;
+            mScanRunnable = null;
+        }
         if (isRegistered && mScanReceiver != null) {
             unregisterReceiver(mScanReceiver);
             mScanReceiver = null;
@@ -251,6 +329,10 @@ public abstract class NConnActivity extends AppbarActivity {
         if (mConnectThread != null) {
             mConnectThread.cancel();
             mConnectThread = null;
+        }
+        if (mServerThread != null) {
+            mServerThread.cancel();
+            mServerThread = null;
         }
     }
 }
