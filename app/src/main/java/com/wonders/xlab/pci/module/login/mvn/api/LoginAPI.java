@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.module.login.mvn.api;
 
-import com.wonders.xlab.pci.mvn.entity.login.LoginEntity;
+import com.wonders.xlab.pci.module.base.mvn.entity.login.LoginEntity;
 
 import java.util.HashMap;
 

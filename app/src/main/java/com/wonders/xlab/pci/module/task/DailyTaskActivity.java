@@ -33,13 +33,15 @@ import com.wonders.xlab.pci.module.task.bean.BloodPressureBean;
 import com.wonders.xlab.pci.module.task.bean.BloodSugarBean;
 import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
+import com.wonders.xlab.pci.module.task.bp.MeasureBPGuideActivity;
+import com.wonders.xlab.pci.module.task.bs.MeasureBSGuideActivity;
 import com.wonders.xlab.pci.module.task.mvn.model.DailyTaskModel;
 import com.wonders.xlab.pci.module.task.mvn.model.TakeMedicineModel;
 import com.wonders.xlab.pci.module.task.mvn.view.DailyTaskView;
 import com.wonders.xlab.pci.module.task.mvn.view.TakeMedicineView;
-import com.wonders.xlab.pci.module.task.rxbus.TaskRefreshBus;
-import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
-import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity;
+import com.wonders.xlab.pci.module.task.otto.TaskRefreshBus;
+import com.wonders.xlab.pci.module.task.otto.WeekViewClickBus;
+import com.wonders.xlab.pci.module.base.mvn.entity.task.DailyTaskEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.util.ArrayList;

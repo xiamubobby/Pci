@@ -1,9 +1,9 @@
 package com.wonders.xlab.pci.module.task.mvn.model;
 
-import com.wonders.xlab.pci.mvn.model.BaseModel;
+import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.task.mvn.api.AddRecordAPI;
-import com.wonders.xlab.pci.mvn.entity.SimpleEntity;
-import com.wonders.xlab.pci.mvn.view.SimpleView;
+import com.wonders.xlab.pci.module.base.mvn.entity.SimpleEntity;
+import com.wonders.xlab.pci.module.base.mvn.view.SimpleView;
 
 /**
  * Created by hua on 15/12/18.

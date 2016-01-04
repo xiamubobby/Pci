@@ -4,7 +4,7 @@ import android.app.Fragment;
 import android.support.design.widget.Snackbar;
 import android.view.View;
 
-import com.wonders.xlab.pci.mvn.model.BaseModel;
+import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;

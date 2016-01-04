@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
+import com.squareup.otto.Subscribe;
+import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.R;
@@ -26,9 +28,9 @@ import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseActivity;
 import com.wonders.xlab.pci.module.home.HomeFragment;
 import com.wonders.xlab.pci.module.login.LoginActivity;
+import com.wonders.xlab.pci.module.otto.ExitBus;
 import com.wonders.xlab.pci.module.record.RecordFragment;
 import com.wonders.xlab.pci.module.record.report.ReportDetailActivity;
-import com.wonders.xlab.pci.module.rxbus.ExitBus;
 import com.wonders.xlab.pci.module.task.DailyTaskActivity;
 
 import java.util.concurrent.TimeUnit;
@@ -68,6 +70,7 @@ public class MainActivity extends BaseActivity {
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        OttoManager.register(this);
 
         setSupportActionBar(mToolbar);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -197,9 +200,16 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Subscribe
+    public void forceExit(ExitBus bean) {
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+        OttoManager.unregister(this);
         ButterKnife.unbind(this);
         if (mSubscription != null) {
             mSubscription.unsubscribe();

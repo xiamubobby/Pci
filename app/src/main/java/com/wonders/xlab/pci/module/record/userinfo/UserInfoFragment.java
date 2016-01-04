@@ -19,8 +19,8 @@ import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.record.userinfo.mvn.model.UserInfoModel;
 import com.wonders.xlab.pci.module.record.userinfo.mvn.view.UserInfoView;
-import com.wonders.xlab.pci.module.rxbus.ConnectStateBus;
-import com.wonders.xlab.pci.mvn.entity.record.userinfo.UserInfoEntity;
+import com.wonders.xlab.pci.module.otto.ConnectStateBus;
+import com.wonders.xlab.pci.module.base.mvn.entity.record.userinfo.UserInfoEntity;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

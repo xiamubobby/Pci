@@ -33,7 +33,7 @@ import com.wonders.xlab.pci.application.SPManager;
 import com.wonders.xlab.pci.module.MainActivity;
 import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
-import com.wonders.xlab.pci.module.rxbus.ExitBus;
+import com.wonders.xlab.pci.module.otto.ExitBus;
 import com.wonders.xlab.pci.receiver.ConnectionBroadcastReceiver;
 import com.wonders.xlab.pci.receiver.EMChatMessageBroadcastReceiver;
 import com.wonders.xlab.pci.receiver.TimeClickReceiver;

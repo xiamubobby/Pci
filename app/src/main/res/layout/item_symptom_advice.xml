@@ -5,7 +5,7 @@
 
         <variable
             name="advice"
-            type="com.wonders.xlab.pci.mvn.entity.record.monitor.SymptomEntity.RetValuesEntity.UserSymptomAdvicesEntity"/>
+            type="com.wonders.xlab.pci.module.base.mvn.entity.record.monitor.SymptomEntity.RetValuesEntity.UserSymptomAdvicesEntity"/>
 
         <import type="com.wonders.xlab.common.utils.DateUtil"/>
     </data>

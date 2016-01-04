@@ -11,7 +11,7 @@ import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.common.utils.GlideCircleTransform;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.databinding.ItemSymptomAdviceBinding;
-import com.wonders.xlab.pci.mvn.entity.record.monitor.SymptomEntity;
+import com.wonders.xlab.pci.module.base.mvn.entity.record.monitor.SymptomEntity;
 
 import java.lang.ref.WeakReference;
 

@@ -17,7 +17,7 @@ import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.record.monitor.adapter.SymptomRVAdapter;
 import com.wonders.xlab.pci.module.record.monitor.mvn.model.SymptomModel;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.SymptomView;
-import com.wonders.xlab.pci.mvn.entity.record.monitor.SymptomEntity;
+import com.wonders.xlab.pci.module.base.mvn.entity.record.monitor.SymptomEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;

@@ -99,14 +99,14 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
-            android:name=".module.task.AddBPActivity"
+            android:name=".module.task.bp.AddBPActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_add_blood_pressure"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
-            android:name=".module.task.AddBSActivity"
+            android:name=".module.task.bs.AddBSActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_add_blood_sugar"
             android:screenOrientation="portrait"
@@ -195,12 +195,12 @@
         </receiver>
 
         <activity
-            android:name=".module.task.MeasureBPGuideActivity"
+            android:name=".module.task.bp.MeasureBPGuideActivity"
             android:label="@string/title_activity_measure_bp"
             android:theme="@style/AppTheme">
         </activity>
         <activity
-            android:name=".module.task.MeasureBSGuideActivity"
+            android:name=".module.task.bs.MeasureBSGuideActivity"
             android:label="@string/title_activity_measure_bsguide0"
             android:theme="@style/AppTheme">
         </activity>

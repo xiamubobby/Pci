@@ -2,9 +2,9 @@ package com.wonders.xlab.pci.module.record.userinfo.mvn.model;
 
 import android.support.annotation.NonNull;
 
-import com.wonders.xlab.pci.mvn.model.BaseModel;
+import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.record.userinfo.mvn.api.UserInfoAPI;
-import com.wonders.xlab.pci.mvn.entity.record.userinfo.UserInfoEntity;
+import com.wonders.xlab.pci.module.base.mvn.entity.record.userinfo.UserInfoEntity;
 import com.wonders.xlab.pci.module.record.userinfo.mvn.view.UserInfoView;
 
 /**

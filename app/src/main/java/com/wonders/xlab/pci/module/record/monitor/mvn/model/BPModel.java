@@ -4,9 +4,9 @@ package com.wonders.xlab.pci.module.record.monitor.mvn.model;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.module.record.monitor.bean.BPBean;
 import com.wonders.xlab.pci.module.record.monitor.mvn.api.BPAPI;
-import com.wonders.xlab.pci.mvn.entity.record.monitor.BPEntity;
+import com.wonders.xlab.pci.module.base.mvn.entity.record.monitor.BPEntity;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.BPView;
-import com.wonders.xlab.pci.mvn.model.BaseModel;
+import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;

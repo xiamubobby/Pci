@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_measure_bs_guide_0_next">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_gray"
+                android:gravity="center_vertical"
+                android:minHeight="?listPreferredItemHeightSmall"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:text="① 打开血糖仪"
+                android:textSize="@dimen/text_size_normal"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/item_interval_large"
+                android:layout_marginTop="@dimen/item_interval_large"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_gray"
+                android:gravity="center_vertical"
+                android:minHeight="?listPreferredItemHeightSmall"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:text="② 打开手机蓝牙"
+                android:textSize="@dimen/text_size_normal"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/item_interval_large"
+                android:layout_marginTop="@dimen/item_interval_large"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_gray"
+                android:gravity="center_vertical"
+                android:minHeight="?listPreferredItemHeightSmall"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:text="③ 等待设备连接"
+                android:textSize="@dimen/text_size_normal"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/item_interval_large"
+                android:layout_marginTop="@dimen/item_interval_large"
+                android:src="@mipmap/ic_launcher"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_measure_bs_guide_0_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:background="@drawable/selector_white_selected_primary_normal"
+        android:clickable="false"
+        android:text="下一步"
+        android:textColor="@drawable/selector_text_color_selected_accent"
+        android:textSize="@dimen/text_size_normal"/>
+
+</RelativeLayout>

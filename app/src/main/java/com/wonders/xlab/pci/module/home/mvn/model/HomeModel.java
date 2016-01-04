@@ -11,8 +11,8 @@ import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
 import com.wonders.xlab.pci.module.home.mvn.api.HomeAPI;
 import com.wonders.xlab.pci.module.home.mvn.view.HomeView;
-import com.wonders.xlab.pci.mvn.entity.home.HomeEntity;
-import com.wonders.xlab.pci.mvn.model.BaseModel;
+import com.wonders.xlab.pci.module.base.mvn.entity.home.HomeEntity;
+import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;

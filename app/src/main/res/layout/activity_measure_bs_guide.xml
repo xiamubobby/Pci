@@ -2,14 +2,21 @@
 <android.support.design.widget.CoordinatorLayout
     android:id="@+id/coordinator"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".module.task.MeasureBSGuideActivity">
+    tools:context=".module.task.bp.MeasureBPGuideActivity">
 
     <include layout="@layout/appbar"/>
 
-    <include layout="@layout/content_measure_bs_guide"/>
+    <com.wonders.xlab.common.viewpager.XViewPager
+        android:id="@+id/vp_measure_bs_guide"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:scrollable="false"/>
+
 
 </android.support.design.widget.CoordinatorLayout>

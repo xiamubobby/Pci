@@ -24,7 +24,7 @@ public class ConnectThread extends Thread {
     //设备MAC地址
     private String macAddress;
     private boolean connected = false;
-    private final int RETRY_CONNECT_TIMES = 4;
+    private final int RETRY_CONNECT_TIMES = Integer.MAX_VALUE;
     private int connectTime = 0;
     private BluetoothDevice mBluetoothDevice;
     private BluetoothSocket mSocket;

@@ -17,7 +17,7 @@ import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.MainActivity;
 import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
-import com.wonders.xlab.pci.module.rxbus.ExitBus;
+import com.wonders.xlab.pci.module.otto.ExitBus;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;

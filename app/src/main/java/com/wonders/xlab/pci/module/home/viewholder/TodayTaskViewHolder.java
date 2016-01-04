@@ -10,10 +10,10 @@ import com.wonders.xlab.common.utils.GlideCircleTransform;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.databinding.ItemHomeTodayTaskBinding;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
-import com.wonders.xlab.pci.module.home.rxbus.BPClickBus;
-import com.wonders.xlab.pci.module.home.rxbus.BSClickBus;
-import com.wonders.xlab.pci.module.home.rxbus.MedicineClickBus;
-import com.wonders.xlab.pci.module.home.rxbus.SymptomClickBus;
+import com.wonders.xlab.pci.module.home.otto.BPClickBus;
+import com.wonders.xlab.pci.module.home.otto.BSClickBus;
+import com.wonders.xlab.pci.module.home.otto.MedicineClickBus;
+import com.wonders.xlab.pci.module.home.otto.SymptomClickBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

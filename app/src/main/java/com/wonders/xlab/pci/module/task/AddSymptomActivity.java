@@ -15,11 +15,11 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
-import com.wonders.xlab.pci.mvn.entity.task.SymptomEntity;
+import com.wonders.xlab.pci.module.base.mvn.entity.task.SymptomEntity;
 import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
 import com.wonders.xlab.pci.module.task.mvn.model.SymptomModel;
-import com.wonders.xlab.pci.module.task.rxbus.TaskRefreshBus;
-import com.wonders.xlab.pci.mvn.view.SimpleView;
+import com.wonders.xlab.pci.module.task.otto.TaskRefreshBus;
+import com.wonders.xlab.pci.module.base.mvn.view.SimpleView;
 import com.wonders.xlab.pci.module.task.mvn.view.SymptomView;
 import com.zhy.view.flowlayout.FlowLayout;
 

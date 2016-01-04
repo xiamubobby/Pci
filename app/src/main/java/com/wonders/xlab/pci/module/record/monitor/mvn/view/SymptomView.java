@@ -1,7 +1,7 @@
 package com.wonders.xlab.pci.module.record.monitor.mvn.view;
 
-import com.wonders.xlab.pci.mvn.entity.record.monitor.SymptomEntity;
-import com.wonders.xlab.pci.mvn.view.BaseView;
+import com.wonders.xlab.pci.module.base.mvn.entity.record.monitor.SymptomEntity;
+import com.wonders.xlab.pci.module.base.mvn.view.BaseView;
 
 import java.util.List;
 

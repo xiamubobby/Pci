@@ -18,7 +18,7 @@ import com.wonders.xlab.pci.module.base.AppbarActivity;
 
 /**
  * Created by hua on 15/12/31.
- * <p>
+ * <p/>
  * 使用步骤：
  * 1、@{@link #scan()} 获取扫描的设备的信息 通过Otto注册接收扫描的结果，具体参考@{@link ScanReceiver}
  * 2、@{@link #getData(DEVICE_TYPE, String)} 将第一步获取的设备地址传入，开始获取数据
@@ -108,6 +108,25 @@ public abstract class NConnActivity extends AppbarActivity {
         }
     }
 
+    /**
+     * 只进行设备连接、配对
+     */
+    public void connect(DEVICE_TYPE deviceType, String deviceAddress) {
+        mDeviceType = deviceType;
+        mDeviceAddress = deviceAddress;
+        connectAndStartRequestDataThread(false);
+    }
+
+    /**
+     * 连接设备，成功后请求数据
+     */
+    public void getData(DEVICE_TYPE deviceType, String deviceAddress) {
+        Log.d(TAG, "请求数据");
+        mDeviceType = deviceType;
+        mDeviceAddress = deviceAddress;
+        connectAndStartRequestDataThread(true);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -125,10 +144,12 @@ public abstract class NConnActivity extends AppbarActivity {
 
     /**
      * 建立连接
-     * <p>
+     * <p/>
      * 成功后开始数据请求
+     *
+     * @param autoRequestData
      */
-    private void connect() {
+    private void connectAndStartRequestDataThread(final boolean autoRequestData) {
         if (mConnectThread != null) {
             mConnectThread.cancel();
             mConnectThread = null;
@@ -160,14 +181,16 @@ public abstract class NConnActivity extends AppbarActivity {
 
                 OttoManager.post(new ConnStatusOtto(ConnStatusOtto.STATUS.SUCCESS));
 
-                //TODO 后面可新增自己的设备，在此处加入类型即可
-                switch (mDeviceType) {
-                    case BP:
-                        requestData(new BPConnectedThread(socket));
-                        break;
-                    case BS:
-                        requestData(new BSConnectedThread(socket));
-                        break;
+                if (autoRequestData) {
+                    //TODO 后面可新增自己的设备，在此处加入类型即可
+                    switch (mDeviceType) {
+                        case BP:
+                            requestData(new BPConnectedThread(socket));
+                            break;
+                        case BS:
+                            requestData(new BSConnectedThread(socket));
+                            break;
+                    }
                 }
             }
 
@@ -186,16 +209,6 @@ public abstract class NConnActivity extends AppbarActivity {
     private void requestData(DataRequestThread thread) {
         mRequestDataThread = thread;
         mRequestDataThread.start();
-    }
-
-    /**
-     * 请求数据
-     */
-    public void getData(DEVICE_TYPE deviceType, String deviceAddress) {
-        Log.d(TAG, "请求数据");
-        mDeviceType = deviceType;
-        mDeviceAddress = deviceAddress;
-        connect();
     }
 
     private void registerScanReceiver() {
@@ -221,7 +234,8 @@ public abstract class NConnActivity extends AppbarActivity {
         cancel();
     }
 
-    private void cancel() {
+    public void cancel() {
+        Log.d(TAG, "cancel");
         if (isRegistered && mScanReceiver != null) {
             unregisterReceiver(mScanReceiver);
             mScanReceiver = null;

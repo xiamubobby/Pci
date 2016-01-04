@@ -22,7 +22,7 @@ import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.BaseFragment;
-import com.wonders.xlab.pci.module.rxbus.ConnectStateBus;
+import com.wonders.xlab.pci.module.otto.ConnectStateBus;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

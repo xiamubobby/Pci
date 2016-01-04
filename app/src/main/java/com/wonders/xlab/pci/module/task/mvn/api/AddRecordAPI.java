@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.module.task.mvn.api;
 
-import com.wonders.xlab.pci.mvn.entity.SimpleEntity;
+import com.wonders.xlab.pci.module.base.mvn.entity.SimpleEntity;
 
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;

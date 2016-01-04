@@ -4,8 +4,8 @@ import com.wonders.xlab.pci.module.task.bean.BloodPressureBean;
 import com.wonders.xlab.pci.module.task.bean.BloodSugarBean;
 import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
-import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity;
-import com.wonders.xlab.pci.mvn.view.BaseView;
+import com.wonders.xlab.pci.module.base.mvn.entity.task.DailyTaskEntity;
+import com.wonders.xlab.pci.module.base.mvn.view.BaseView;
 
 import java.util.List;
 

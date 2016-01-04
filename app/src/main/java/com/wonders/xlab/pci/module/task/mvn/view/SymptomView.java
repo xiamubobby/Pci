@@ -1,7 +1,7 @@
 package com.wonders.xlab.pci.module.task.mvn.view;
 
-import com.wonders.xlab.pci.mvn.view.BaseView;
-import com.wonders.xlab.pci.mvn.entity.task.SymptomEntity;
+import com.wonders.xlab.pci.module.base.mvn.view.BaseView;
+import com.wonders.xlab.pci.module.base.mvn.entity.task.SymptomEntity;
 
 import java.util.List;
 

@@ -4,9 +4,9 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.wonders.xlab.pci.module.login.mvn.api.LoginAPI;
-import com.wonders.xlab.pci.mvn.entity.login.LoginEntity;
+import com.wonders.xlab.pci.module.base.mvn.entity.login.LoginEntity;
 import com.wonders.xlab.pci.module.login.mvn.view.LoginView;
-import com.wonders.xlab.pci.mvn.model.BaseModel;
+import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 
 import java.util.HashMap;
 

@@ -7,7 +7,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import com.wonders.xlab.common.application.OttoManager;
-import com.wonders.xlab.pci.module.rxbus.ConnectStateBus;
+import com.wonders.xlab.pci.module.otto.ConnectStateBus;
 
 public class ConnectionBroadcastReceiver extends BroadcastReceiver {
     public ConnectionBroadcastReceiver() {

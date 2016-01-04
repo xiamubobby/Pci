@@ -1,9 +1,9 @@
 package com.wonders.xlab.pci.module.record.monitor.mvn.model;
 
 import com.wonders.xlab.pci.module.record.monitor.mvn.api.SymptomAPI;
-import com.wonders.xlab.pci.mvn.entity.record.monitor.SymptomEntity;
+import com.wonders.xlab.pci.module.base.mvn.entity.record.monitor.SymptomEntity;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.SymptomView;
-import com.wonders.xlab.pci.mvn.model.BaseModel;
+import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 
 /**
  * Created by hua on 15/12/22.

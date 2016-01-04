@@ -2,7 +2,7 @@ package com.wonders.xlab.pci.module.record.monitor.mvn.api;
 
 
 
-import com.wonders.xlab.pci.mvn.entity.record.monitor.BPEntity;
+import com.wonders.xlab.pci.module.base.mvn.entity.record.monitor.BPEntity;
 
 import rx.Observable;
 import retrofit.http.Field;

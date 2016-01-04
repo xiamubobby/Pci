@@ -16,8 +16,8 @@ import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseFragment;
-import com.wonders.xlab.pci.module.task.rxbus.WeekViewClickBus;
-import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity;
+import com.wonders.xlab.pci.module.task.otto.WeekViewClickBus;
+import com.wonders.xlab.pci.module.base.mvn.entity.task.DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity;
 
 import java.util.ArrayList;
 import java.util.Calendar;

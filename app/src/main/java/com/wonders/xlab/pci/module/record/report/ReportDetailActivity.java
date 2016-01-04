@@ -20,9 +20,9 @@ import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.record.report.bean.ReportDetailBean;
 import com.wonders.xlab.pci.module.record.report.mvn.model.ReportDetailModel;
 import com.wonders.xlab.pci.module.record.report.mvn.view.ReportDetailView;
-import com.wonders.xlab.pci.module.record.rxbus.ReportDetailBus;
-import com.wonders.xlab.pci.mvn.model.UploadPicModel;
-import com.wonders.xlab.pci.mvn.view.UploadPicView;
+import com.wonders.xlab.pci.module.record.otto.ReportDetailBus;
+import com.wonders.xlab.pci.module.base.mvn.model.UploadPicModel;
+import com.wonders.xlab.pci.module.base.mvn.view.UploadPicView;
 
 import java.io.File;
 import java.lang.ref.WeakReference;

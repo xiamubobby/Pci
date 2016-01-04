@@ -8,8 +8,8 @@ import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
 import com.wonders.xlab.pci.module.task.mvn.api.DailyTaskAPI;
 import com.wonders.xlab.pci.module.task.mvn.view.DailyTaskView;
-import com.wonders.xlab.pci.mvn.entity.task.DailyTaskEntity;
-import com.wonders.xlab.pci.mvn.model.BaseModel;
+import com.wonders.xlab.pci.module.base.mvn.entity.task.DailyTaskEntity;
+import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;
