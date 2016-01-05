@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.squareup.otto.Subscribe;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
@@ -95,6 +96,18 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView 
 
         mAddRecordModel.saveBS(AIManager.getInstance(getActivity()).getUserId(), bsEntityList.getBSEntityList().get(0).getMeasureTime(), 0, (float) bsEntityList.getBSEntityList().get(0).getBloodSugar());
         mTvBsResultSugar.setText(String.valueOf(bsEntityList.getBSEntityList().get(0).getBloodSugar()));
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("血糖测量(结果)");
+        MobclickAgent.onResume(getActivity());
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("血糖测量(结果)");
+        MobclickAgent.onPause(getActivity());
     }
 
     @Override

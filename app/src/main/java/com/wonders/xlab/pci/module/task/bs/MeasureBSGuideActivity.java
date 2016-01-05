@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.module.task.bs;
 
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -108,6 +109,12 @@ public class MeasureBSGuideActivity extends NConnActivity {
         });
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialog) {
+                    cancel();
+                }
+            });
         }
     }
 
@@ -203,6 +210,12 @@ public class MeasureBSGuideActivity extends NConnActivity {
             return;
         }
         super.onBackPressed();
+    }
+
+    public void onPause() {
+        super.onPause();
+        cancel();
+        dismissDialog();
     }
 
     @Override

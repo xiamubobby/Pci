@@ -3,6 +3,7 @@ package com.wonders.xlab.pci.module;
 import android.os.Bundle;
 
 import com.activeandroid.query.Delete;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.NotifyUtil;
 import com.wonders.xlab.pci.R;
@@ -51,5 +52,23 @@ public class UserCenterActivity extends AppbarActivity {
         new Delete().from(HistoryTaskBean.class).execute();
         OttoManager.post(new ExitBus());
         finish();
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("个人中心");
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("个人中心");
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

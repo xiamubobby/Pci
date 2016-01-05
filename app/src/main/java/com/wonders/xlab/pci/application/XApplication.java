@@ -15,8 +15,6 @@ public class XApplication extends com.activeandroid.app.Application {
         super.onCreate();
         ActiveAndroid.initialize(this);
 
-//        Bugtags.start("b3d8dc7b153c16bb34d741d78b03e4d1", this, Bugtags.BTGInvocationEventNone);
-
 //        LeakCanary.install(this);
 
         EMChat.getInstance().init(this);

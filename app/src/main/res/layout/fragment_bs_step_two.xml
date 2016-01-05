@@ -21,7 +21,7 @@
                 android:gravity="center_vertical"
                 android:minHeight="?listPreferredItemHeightSmall"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:text="① 佩带袖套"
+                android:text="① 等待测量结果"
                 android:textSize="@dimen/text_size_normal"/>
 
             <ImageView
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/item_interval_large"
                 android:layout_marginTop="@dimen/item_interval_large"
-                android:src="@mipmap/ic_launcher"/>
+                android:src="@drawable/pic_bs_device"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -38,32 +38,20 @@
                 android:gravity="center_vertical"
                 android:minHeight="?listPreferredItemHeightSmall"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:text="② 点击开始"
+                android:text="② 测量完成，取出XXX"
                 android:textSize="@dimen/text_size_normal"/>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/item_interval_large"
-                android:layout_marginTop="@dimen/item_interval_large"
-                android:src="@mipmap/ic_launcher"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_interval_large"
                 android:background="@color/bg_gray"
                 android:gravity="center_vertical"
                 android:minHeight="?listPreferredItemHeightSmall"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:text="③ 等待测量结果"
+                android:text="③ 点击下面按钮，同步数据"
                 android:textSize="@dimen/text_size_normal"/>
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/item_interval_large"
-                android:layout_marginTop="@dimen/item_interval_large"
-                android:src="@mipmap/ic_launcher"/>
         </LinearLayout>
 
     </ScrollView>
@@ -77,7 +65,7 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:background="@drawable/selector_white_selected_primary_normal"
-        android:text="开始测量"
+        android:text="同步血糖数据"
         android:textColor="@drawable/selector_text_color_selected_accent"
         android:textSize="@dimen/text_size_normal"/>
 

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 
@@ -34,6 +35,18 @@ public class MyDoctorActivity extends AppbarActivity {
                 .crossFade()
                 .centerCrop()
                 .into(mIvMyDoctor);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("我的医生");
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("我的医生");
+        MobclickAgent.onPause(this);
     }
 
     @Override

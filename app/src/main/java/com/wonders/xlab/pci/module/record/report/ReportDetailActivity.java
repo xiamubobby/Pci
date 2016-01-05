@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
@@ -273,6 +274,17 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
 
     }
 
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("病历报告");
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("病历报告");
+        MobclickAgent.onPause(this);
+    }
     @Override
     public void onDestroy() {
         super.onDestroy();

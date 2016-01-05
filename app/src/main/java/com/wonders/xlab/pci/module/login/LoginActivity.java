@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.utils.KeyboardUtil;
 import com.wonders.xlab.common.utils.ViewHelper;
 import com.wonders.xlab.pci.R;
@@ -81,6 +82,22 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void hideLoading() {
 
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }
 

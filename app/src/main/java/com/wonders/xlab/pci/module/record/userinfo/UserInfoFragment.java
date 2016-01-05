@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.squareup.otto.Subscribe;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
@@ -142,6 +143,18 @@ public class UserInfoFragment extends BaseFragment implements UserInfoView {
         if (mRefresh != null) {
             mRefresh.setRefreshing(false);
         }
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("基本信息");
+        MobclickAgent.onResume(getActivity());
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("基本信息");
+        MobclickAgent.onPause(getActivity());
     }
 
     @Override

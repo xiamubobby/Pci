@@ -39,6 +39,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/item_interval"
                 android:layout_marginTop="@dimen/item_interval_large"
+                android:keepScreenOn="true"
                 android:text="0"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_large"

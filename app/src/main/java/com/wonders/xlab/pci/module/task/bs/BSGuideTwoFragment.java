@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.base.BaseFragment;
@@ -42,6 +43,18 @@ public class BSGuideTwoFragment extends BaseFragment {
     @OnClick(R.id.btn_measure_bs_guide_1_start)
     public void start() {
         OttoManager.post(new GuideOtto(1));
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("血糖测量(引导二)");
+        MobclickAgent.onResume(getActivity());
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("血糖测量(引导二)");
+        MobclickAgent.onPause(getActivity());
     }
 
     @Override

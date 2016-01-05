@@ -9,10 +9,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -27,6 +24,7 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
+import com.wonders.xlab.pci.module.base.mvn.entity.task.DailyTaskEntity;
 import com.wonders.xlab.pci.module.task.adapter.MedicineVPAdapter;
 import com.wonders.xlab.pci.module.task.adapter.WeekViewVPAdapter;
 import com.wonders.xlab.pci.module.task.bean.BloodPressureBean;
@@ -41,7 +39,6 @@ import com.wonders.xlab.pci.module.task.mvn.view.DailyTaskView;
 import com.wonders.xlab.pci.module.task.mvn.view.TakeMedicineView;
 import com.wonders.xlab.pci.module.task.otto.TaskRefreshBus;
 import com.wonders.xlab.pci.module.task.otto.WeekViewClickBus;
-import com.wonders.xlab.pci.module.base.mvn.entity.task.DailyTaskEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.util.ArrayList;
@@ -139,44 +136,6 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
 
         mTvDailyTaskDate.setText(DateUtil.format(Calendar.getInstance().getTimeInMillis(), DateUtil.DEFAULT_FORMAT));
 
-        mScrollViewDailyTask.setOnTouchListener(new View.OnTouchListener() {
-            int oldY = -1;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getActionMasked()) {
-                    case MotionEvent.ACTION_MOVE:
-                        int newY = v.getScrollY();
-                        if (oldY == -1) {
-                            oldY = newY;
-                        }
-                        if (newY - oldY > 100 && mFamDailyTask.getVisibility() == View.GONE) {
-                            mFamDailyTask.clearAnimation();
-                            TranslateAnimation hideAnimation = new TranslateAnimation(
-                                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f);
-                            hideAnimation.setFillAfter(true);
-                            hideAnimation.setDuration(300);
-                            mFamDailyTask.startAnimation(hideAnimation);
-                            mFamDailyTask.setVisibility(View.VISIBLE);
-                        } else if (oldY - newY > 100 && mFamDailyTask.getVisibility() == View.VISIBLE) {
-                            mFamDailyTask.clearAnimation();
-                            TranslateAnimation hideAnimation = new TranslateAnimation(
-                                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                                    Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-                            hideAnimation.setFillAfter(true);
-                            hideAnimation.setDuration(300);
-                            mFamDailyTask.startAnimation(hideAnimation);
-                            mFamDailyTask.setVisibility(View.GONE);
-                        }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        oldY = -1;
-                        break;
-                }
-                return false;
-            }
-        });
     }
 
     private void initToolbar() {

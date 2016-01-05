@@ -141,7 +141,8 @@
         android:id="@+id/scrollView_daily_task"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true">
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/clip_bottom">
 
         <LinearLayout
             android:layout_width="match_parent"

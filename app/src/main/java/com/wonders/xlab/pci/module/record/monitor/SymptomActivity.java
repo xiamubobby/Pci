@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
@@ -166,5 +167,23 @@ public class SymptomActivity extends AppbarActivity implements SymptomView {
                 }
             }
         });
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("身体体征(主诉症状)");
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("身体体征(主诉症状)");
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

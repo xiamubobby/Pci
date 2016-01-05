@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
@@ -190,5 +191,23 @@ public class BSActivity extends AppbarActivity implements BSView {
             endTime = DateUtil.calculateLastDayOfYear(endTime);
         }
         return DateUtil.format(endTime, "yyyy-MM-dd");
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("身体体征(血糖)");
+        MobclickAgent.onResume(this);
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("身体体征(血糖)");
+        MobclickAgent.onPause(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

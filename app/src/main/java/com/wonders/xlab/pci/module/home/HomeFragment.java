@@ -29,10 +29,10 @@ import com.wonders.xlab.pci.module.home.otto.BSClickBus;
 import com.wonders.xlab.pci.module.home.otto.MedicineClickBus;
 import com.wonders.xlab.pci.module.home.otto.SymptomClickBus;
 import com.wonders.xlab.pci.module.otto.ConnectStateBus;
-import com.wonders.xlab.pci.module.task.bp.AddBPActivity;
-import com.wonders.xlab.pci.module.task.bs.AddBSActivity;
 import com.wonders.xlab.pci.module.task.AddSymptomActivity;
 import com.wonders.xlab.pci.module.task.DailyTaskActivity;
+import com.wonders.xlab.pci.module.task.bp.MeasureBPGuideActivity;
+import com.wonders.xlab.pci.module.task.bs.MeasureBSGuideActivity;
 import com.wonders.xlab.pci.service.XEMChatService;
 
 import java.lang.ref.WeakReference;
@@ -178,7 +178,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
      */
     @Subscribe
     public void onBPClick(BPClickBus bean) {
-        getActivity().startActivity(new Intent(getActivity(), AddBPActivity.class));
+        getActivity().startActivity(new Intent(getActivity(), MeasureBPGuideActivity.class));
     }
 
     /**
@@ -188,7 +188,7 @@ public class HomeFragment extends BaseFragment implements HomeView {
      */
     @Subscribe
     public void onBSClick(BSClickBus bean) {
-        getActivity().startActivity(new Intent(getActivity(), AddBSActivity.class));
+        getActivity().startActivity(new Intent(getActivity(), MeasureBSGuideActivity.class));
     }
 
     /**
