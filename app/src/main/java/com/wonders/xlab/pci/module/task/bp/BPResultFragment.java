@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.R;
@@ -48,7 +49,6 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bp_result, container, false);
         ButterKnife.bind(this, view);
         return view;
@@ -83,33 +83,35 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView 
 
     @Subscribe
     public void onDataReceived(BPEntityList bpEntityList) {
+        //save cache again that save to server failed last time
+        List<BPEntity> cache = new Select().from(BPEntity.class).execute();
+        for (BPEntity entity : cache) {
+            bpEntityList.getBPEntityList().add(entity);
+        }
+
         List<BPEntity> bpEntities = bpEntityList.getBPEntityList();
-        mRecordModel.saveBP(AIManager.getInstance(getActivity()).getUserId(),bpEntityList);
+        mRecordModel.saveBP(AIManager.getInstance(getActivity()).getUserId(), bpEntityList);
 
         mTvBpResultPressure.setText(String.format("%d/%d", bpEntities.get(0).getSystolicPressure(), bpEntities.get(0).getDiastolicPressure()));
         mTvBpResultPulseRate.setText(String.format("%d", bpEntities.get(0).getHeartRate()));
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        OttoManager.unregister(this);
-        ButterKnife.unbind(this);
-    }
-
-    @Override
     public void svSuccess() {
         mLdvBpResult.stopAnimation();
+        //the datas are saved successfully, delete the cache
         new Delete().from(BPEntity.class).exists();
     }
 
     @Override
     public void svDuplicate() {
-
+        //the datas are saved successfully, delete the cache
+        new Delete().from(BPEntity.class).exists();
     }
 
     @Override
     public void svFailed(String message) {
+
     }
 
     @Override
@@ -120,5 +122,12 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView 
     @Override
     public void svHideLoading() {
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        OttoManager.unregister(this);
+        ButterKnife.unbind(this);
     }
 }

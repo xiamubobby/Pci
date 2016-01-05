@@ -23,13 +23,17 @@ public class AddRecordModel extends BaseModel<SimpleEntity> {
     }
 
     /**
-     *
      * @param userId
      * @param bpEntityList
      */
     public void saveBP(String userId, BPEntityList bpEntityList) {
 
         setObservable(mAddRecordAPI.saveBP(userId, bpEntityList));
+    }
+
+    public void saveBPSingle(String userId, long date, int heartRate, int systolicPressure, int diastolicPressure) {
+
+        setObservable(mAddRecordAPI.saveBPSingle(userId, date, heartRate, systolicPressure, diastolicPressure));
     }
 
     public void saveSymptom(String userId, String[] symptomIdsStr) {

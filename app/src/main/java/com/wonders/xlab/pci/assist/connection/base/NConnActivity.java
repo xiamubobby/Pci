@@ -105,6 +105,10 @@ public abstract class NConnActivity extends AppbarActivity {
     public void connectBondedDevice() {
 
         Set<BluetoothDevice> bondedDevices = mBluetoothAdapter.getBondedDevices();
+        if (bondedDevices.size() == 0) {
+            startScan();
+            return;
+        }
         for (BluetoothDevice device : bondedDevices) {
             if (device.getName().contains(getDeviceType().toString())) {
                 getData(device.getAddress());

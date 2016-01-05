@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.R;
@@ -21,6 +22,8 @@ import com.wonders.xlab.pci.assist.connection.otto.ScanStartOtto;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
 import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -84,6 +87,12 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView 
 
     @Subscribe
     public void onDataReceived(BSEntityList bsEntityList) {
+        //save cache again that save to server failed last time
+        List<BSEntity> cache = new Select().from(BSEntity.class).execute();
+        for (BSEntity entity : cache) {
+            bsEntityList.getBSEntityList().add(entity);
+        }
+
         mAddRecordModel.saveBS(AIManager.getInstance(getActivity()).getUserId(), bsEntityList.getBSEntityList().get(0).getMeasureTime(), 0, (float) bsEntityList.getBSEntityList().get(0).getBloodSugar());
         mTvBsResultSugar.setText(String.valueOf(bsEntityList.getBSEntityList().get(0).getBloodSugar()));
     }
@@ -103,7 +112,8 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView 
 
     @Override
     public void svDuplicate() {
-
+        //the datas are saved successfully, delete the cache
+        new Delete().from(BSEntity.class).exists();
     }
 
     @Override

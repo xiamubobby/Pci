@@ -16,6 +16,7 @@ import android.widget.TimePicker;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.common.utils.KeyboardUtil;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
@@ -112,7 +113,7 @@ public class AddBPActivity extends AppbarActivity implements MeasureResultView {
             return;
         }
 
-//        mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(), date, Integer.valueOf(heartRate), Integer.valueOf(systolicPressure), Integer.valueOf(diastolicPressure));
+        mAddRecordModel.saveBPSingle(AIManager.getInstance(this).getUserId(), date, Integer.valueOf(heartRate), Integer.valueOf(systolicPressure), Integer.valueOf(diastolicPressure));
     }
 
     @OnClick(R.id.tv_add_bp_date)

@@ -18,9 +18,9 @@ public interface AddRecordAPI {
     @POST("userBloodSugar/saveUserBloodSugar")
     Observable<SimpleEntity> saveBS(@Field("userId") String userId, @Field("date") long date, @Field("timeIndex") int timeIndex, @Field("bloodSugarValue") float bloodSugarValue);
 
-    //    @FormUrlEncoded
-//    @POST("userBloodPressure/saveUserPressure")
-//    Observable<SimpleEntity> saveBP(@Field("userId") String userId, @Request List<BPEntity> bodyList);
+    @FormUrlEncoded
+    @POST("userBloodPressure/saveUserPressure")
+    Observable<SimpleEntity> saveBPSingle(@Field("userId") String userId, @Field("date") long date, @Field("heartRate") int heartRate, @Field("systolicPressure") int systolicPressure, @Field("diastolicPressure") int diastolicPressure);
 
     @POST("userBloodPressure/saveUserPressureByJson/{userId}")
     Observable<SimpleEntity> saveBP(@Path("userId") String userId, @Body BPEntityList bodyList);
