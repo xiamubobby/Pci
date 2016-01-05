@@ -1,19 +1,20 @@
 package com.wonders.xlab.pci.module.task.mvn.model;
 
-import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
-import com.wonders.xlab.pci.module.task.mvn.api.AddRecordAPI;
+import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
 import com.wonders.xlab.pci.module.base.mvn.entity.SimpleEntity;
-import com.wonders.xlab.pci.module.base.mvn.view.SimpleView;
+import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
+import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
+import com.wonders.xlab.pci.module.task.mvn.api.AddRecordAPI;
 
 /**
  * Created by hua on 15/12/18.
  */
 public class AddRecordModel extends BaseModel<SimpleEntity> {
-    private SimpleView mSimpleView;
+    private MeasureResultView mMeasureResultView;
     private AddRecordAPI mAddRecordAPI;
 
-    public AddRecordModel(SimpleView simpleView) {
-        mSimpleView = simpleView;
+    public AddRecordModel(MeasureResultView measureResultView) {
+        mMeasureResultView = measureResultView;
         mAddRecordAPI = mRetrofit.create(AddRecordAPI.class);
     }
 
@@ -22,14 +23,13 @@ public class AddRecordModel extends BaseModel<SimpleEntity> {
     }
 
     /**
+     *
      * @param userId
-     * @param date
-     * @param heartRate         心率
-     * @param systolicPressure  收缩压
-     * @param diastolicPressure 舒张压
+     * @param bpEntityList
      */
-    public void saveBP(String userId, long date, int heartRate, int systolicPressure, int diastolicPressure) {
-        setObservable(mAddRecordAPI.saveBP(userId, date, heartRate, systolicPressure, diastolicPressure));
+    public void saveBP(String userId, BPEntityList bpEntityList) {
+
+        setObservable(mAddRecordAPI.saveBP(userId, bpEntityList));
     }
 
     public void saveSymptom(String userId, String[] symptomIdsStr) {
@@ -39,18 +39,22 @@ public class AddRecordModel extends BaseModel<SimpleEntity> {
     @Override
     protected void onStart() {
         super.onStart();
-        mSimpleView.svShowLoading();
+        mMeasureResultView.svShowLoading();
     }
 
     @Override
     protected void onSuccess(SimpleEntity response) {
-        mSimpleView.svHideLoading();
-        mSimpleView.svSuccess();
+        mMeasureResultView.svHideLoading();
+        if (response.getRet_code() == 0) {
+            mMeasureResultView.svSuccess();
+        } else {
+
+        }
     }
 
     @Override
     protected void onFailed(String message) {
-        mSimpleView.svHideLoading();
-        mSimpleView.svFailed("保存数据失败，请重试！");
+        mMeasureResultView.svHideLoading();
+        mMeasureResultView.svFailed("保存数据失败，请重试！");
     }
 }

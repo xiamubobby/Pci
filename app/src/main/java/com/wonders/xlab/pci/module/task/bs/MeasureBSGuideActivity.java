@@ -17,7 +17,7 @@ import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.assist.connection.base.NConnActivity;
-import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
+import com.wonders.xlab.pci.assist.connection.entity.BSEntityList;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
 import com.wonders.xlab.pci.assist.connection.otto.FindDeviceOtto;
 import com.wonders.xlab.pci.assist.connection.otto.ScanEndOtto;
@@ -185,8 +185,8 @@ public class MeasureBSGuideActivity extends NConnActivity {
     }
 
     @Subscribe
-    public void onDataReceived(BSEntity bsEntity) {
-        cancel();
+    public void onDataReceived(BSEntityList bsEntityList) {
+//        cancel();
         dismissDialog();
     }
 

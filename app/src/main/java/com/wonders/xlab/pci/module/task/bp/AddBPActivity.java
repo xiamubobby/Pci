@@ -16,12 +16,11 @@ import android.widget.TimePicker;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.common.utils.KeyboardUtil;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
+import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
 import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
 import com.wonders.xlab.pci.module.task.otto.TaskRefreshBus;
-import com.wonders.xlab.pci.module.base.mvn.view.SimpleView;
 
 import java.util.Calendar;
 
@@ -29,7 +28,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddBPActivity extends AppbarActivity implements SimpleView {
+public class AddBPActivity extends AppbarActivity implements MeasureResultView {
 
     @Bind(R.id.tv_add_bp_date)
     TextView mTvAddBpDate;
@@ -113,7 +112,7 @@ public class AddBPActivity extends AppbarActivity implements SimpleView {
             return;
         }
 
-        mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(), date, Integer.valueOf(heartRate), Integer.valueOf(systolicPressure), Integer.valueOf(diastolicPressure));
+//        mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(), date, Integer.valueOf(heartRate), Integer.valueOf(systolicPressure), Integer.valueOf(diastolicPressure));
     }
 
     @OnClick(R.id.tv_add_bp_date)
@@ -168,6 +167,11 @@ public class AddBPActivity extends AppbarActivity implements SimpleView {
                 finish();
             }
         }, 400);
+    }
+
+    @Override
+    public void svDuplicate() {
+
     }
 
     @Override

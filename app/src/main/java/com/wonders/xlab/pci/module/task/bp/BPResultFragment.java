@@ -8,20 +8,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.activeandroid.query.Delete;
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntity;
+import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
 import com.wonders.xlab.pci.assist.connection.otto.ScanStartOtto;
 import com.wonders.xlab.pci.module.base.BaseFragment;
+import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
+import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.uikit.LoadingDotView;
 import me.drakeet.labelview.LabelView;
 
-public class BPResultFragment extends BaseFragment {
+public class BPResultFragment extends BaseFragment implements MeasureResultView {
 
     @Bind(R.id.tv_bp_result_pressure)
     LabelView mTvBpResultPressure;
@@ -31,6 +38,8 @@ public class BPResultFragment extends BaseFragment {
     ImageView mIvBpResultBluetooth;
     @Bind(R.id.ldv_bp_result)
     LoadingDotView mLdvBpResult;
+
+    private AddRecordModel mRecordModel;
 
     public BPResultFragment() {
         // Required empty public constructor
@@ -49,6 +58,8 @@ public class BPResultFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         OttoManager.register(this);
+        mRecordModel = new AddRecordModel(this);
+        addModel(mRecordModel);
     }
 
     @Subscribe
@@ -64,19 +75,19 @@ public class BPResultFragment extends BaseFragment {
                     .setDotColor(Color.BLACK).setDotSize(18).startAnimation(0);
             mIvBpResultBluetooth.setImageResource(R.drawable.ic_bluetooth_failed);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.SUCCESS) {
-            mLdvBpResult.stopAnimation();
             mIvBpResultBluetooth.setImageResource(R.drawable.ic_bluetooth);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.FAILED) {
-            mLdvBpResult.stopAnimation();
             mIvBpResultBluetooth.setImageResource(R.drawable.ic_bluetooth_failed);
         }
     }
 
     @Subscribe
-    public void onDataReceived(BPEntity bpEntity) {
-        mLdvBpResult.stopAnimation();
-        mTvBpResultPressure.setText(String.format("%d/%d", bpEntity.getHighPressure(), bpEntity.getLowPressure()));
-        mTvBpResultPulseRate.setText(String.format("%d", bpEntity.getPulseRate()));
+    public void onDataReceived(BPEntityList bpEntityList) {
+        List<BPEntity> bpEntities = bpEntityList.getBPEntityList();
+        mRecordModel.saveBP(AIManager.getInstance(getActivity()).getUserId(),bpEntityList);
+
+        mTvBpResultPressure.setText(String.format("%d/%d", bpEntities.get(0).getSystolicPressure(), bpEntities.get(0).getDiastolicPressure()));
+        mTvBpResultPulseRate.setText(String.format("%d", bpEntities.get(0).getHeartRate()));
     }
 
     @Override
@@ -84,5 +95,30 @@ public class BPResultFragment extends BaseFragment {
         super.onDestroyView();
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void svSuccess() {
+        mLdvBpResult.stopAnimation();
+        new Delete().from(BPEntity.class).exists();
+    }
+
+    @Override
+    public void svDuplicate() {
+
+    }
+
+    @Override
+    public void svFailed(String message) {
+    }
+
+    @Override
+    public void svShowLoading() {
+
+    }
+
+    @Override
+    public void svHideLoading() {
+
     }
 }

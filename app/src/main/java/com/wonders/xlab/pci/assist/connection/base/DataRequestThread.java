@@ -3,8 +3,6 @@ package com.wonders.xlab.pci.assist.connection.base;
 
 import android.bluetooth.BluetoothAdapter;
 
-import com.wonders.xlab.pci.assist.connection.entity.BaseConnectionEntity;
-
 import java.util.Calendar;
 
 /**
@@ -18,8 +16,6 @@ public abstract class DataRequestThread extends Thread {
     private final long RETRY_TIME_INTERVAL = 1000;//ms
 
     private long lastRetryTime;//ms
-
-    protected OnReceiveDataListener mOnReceiveDataListener;
 
     public DataRequestThread() {
         if (mBluetoothAdapter == null) {
@@ -37,16 +33,6 @@ public abstract class DataRequestThread extends Thread {
 
     }
 
-    protected void setOnReceiveDataListener(OnReceiveDataListener onReceiveDataListener) {
-        mOnReceiveDataListener = onReceiveDataListener;
-    }
-
-    protected void retryRequest() {
-        if (mOnReceiveDataListener != null) {
-            mOnReceiveDataListener.retryRequest();
-        }
-    }
-
     /**
      * 连接失败
      */
@@ -56,27 +42,8 @@ public abstract class DataRequestThread extends Thread {
             return;
         }
         lastRetryTime = currentTime;
-
         cancel();
-        if (mOnReceiveDataListener != null) {
-            mOnReceiveDataListener.onReceiveDataFailed();
-        }
-    }
-
-    public interface OnReceiveDataListener {
-        /**
-         * 接收数据
-         *
-         * @param o
-         */
-        void onReceiveData(BaseConnectionEntity o);
-
-        /**
-         * 请求数据失败
-         */
-        void onReceiveDataFailed();
-
-        void retryRequest();
+//        OttoManager.post(new ConnStatusOtto(ConnStatusOtto.STATUS.FAILED));
     }
 
     public abstract void cancel();

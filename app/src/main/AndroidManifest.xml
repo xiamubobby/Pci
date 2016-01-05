@@ -36,7 +36,7 @@
             android:value="Pci.db"/>
         <meta-data
             android:name="AA_DB_VERSION"
-            android:value="2"/>
+            android:value="1"/>
 
         <!-- 设置环信应用的appkey -->
         <meta-data

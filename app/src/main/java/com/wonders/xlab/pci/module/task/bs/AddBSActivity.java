@@ -24,7 +24,7 @@ import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
 import com.wonders.xlab.pci.module.task.otto.TaskRefreshBus;
-import com.wonders.xlab.pci.module.base.mvn.view.SimpleView;
+import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
 
 import java.util.Calendar;
 
@@ -32,7 +32,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddBSActivity extends AppbarActivity implements SimpleView {
+public class AddBSActivity extends AppbarActivity implements MeasureResultView {
 
     @Bind(R.id.tv_add_date)
     TextView mTvAddBsDate;
@@ -200,6 +200,11 @@ public class AddBSActivity extends AppbarActivity implements SimpleView {
                 finish();
             }
         }, 400);
+    }
+
+    @Override
+    public void svDuplicate() {
+
     }
 
     @Override

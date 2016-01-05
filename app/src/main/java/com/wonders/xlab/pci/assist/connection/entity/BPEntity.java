@@ -1,48 +1,65 @@
 package com.wonders.xlab.pci.assist.connection.entity;
 
-import java.util.Date;
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
+import java.io.Serializable;
 
 /**
  * Created by hua on 15/11/9.
  */
-public class BPEntity extends BaseConnectionEntity {
+@Table(name = "BPEntity")
+public class BPEntity extends Model implements Serializable {
     private static final long serialVersionUID = 1966262086867230897L;
 
-    private int highPressure;
-    private int lowPressure;
-    private int pulseRate;
+    /**
+     * 收缩压，高压
+     */
+    @Column(name = "systolicPressure")
+    private int systolicPressure;
+    @Column(name = "diastolicPressure")
+    private int diastolicPressure;
+    @Column(name = "heartRate")
+    private int heartRate;
+    @Column(name = "averagePressure")
     private int averagePressure;
+    @Column(name = "date")
+    private long date;
 
-    public BPEntity(Date date, int highPressure, int lowPressure, int pulseRate, int averagePressure) {
+    public BPEntity() {
+    }
+
+    public BPEntity(long date, int systolicPressure, int diastolicPressure, int heartRate, int averagePressure) {
         this.date = date;
-        this.highPressure = highPressure;
-        this.lowPressure = lowPressure;
-        this.pulseRate = pulseRate;
+        this.systolicPressure = systolicPressure;
+        this.diastolicPressure = diastolicPressure;
+        this.heartRate = heartRate;
         this.averagePressure = averagePressure;
     }
 
-    public int getHighPressure() {
-        return highPressure;
+    public int getSystolicPressure() {
+        return systolicPressure;
     }
 
-    public void setHighPressure(int highPressure) {
-        this.highPressure = highPressure;
+    public void setSystolicPressure(int systolicPressure) {
+        this.systolicPressure = systolicPressure;
     }
 
-    public int getLowPressure() {
-        return lowPressure;
+    public int getDiastolicPressure() {
+        return diastolicPressure;
     }
 
-    public void setLowPressure(int lowPressure) {
-        this.lowPressure = lowPressure;
+    public void setDiastolicPressure(int diastolicPressure) {
+        this.diastolicPressure = diastolicPressure;
     }
 
-    public int getPulseRate() {
-        return pulseRate;
+    public int getHeartRate() {
+        return heartRate;
     }
 
-    public void setPulseRate(int pulseRate) {
-        this.pulseRate = pulseRate;
+    public void setHeartRate(int heartRate) {
+        this.heartRate = heartRate;
     }
 
     public int getAveragePressure() {
@@ -53,9 +70,12 @@ public class BPEntity extends BaseConnectionEntity {
         this.averagePressure = averagePressure;
     }
 
-    @Override
-    public String toString() {
-        return "highPressure=" + highPressure + ":" + "lowPressure=" + lowPressure
-                + "pulseRate=" + pulseRate + ":" + "averagePressure=" + averagePressure;
+    public long getDate() {
+        return date;
     }
+
+    public void setDate(long date) {
+        this.date = date;
+    }
+
 }

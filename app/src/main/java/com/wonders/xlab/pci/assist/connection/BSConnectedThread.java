@@ -7,11 +7,16 @@ import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.assist.connection.base.DataRequestThread;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
+import com.wonders.xlab.pci.assist.connection.entity.BSEntityList;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import cn.com.contec.jar.cmssxt.CmssxtDataJar;
@@ -20,7 +25,7 @@ import cn.com.contec.jar.cmssxt.DevicePackManager;
 
 /**
  * Created by hua on 15/10/26.
- * <p>
+ * <p/>
  * 血糖数据传输线程
  */
 public class BSConnectedThread extends DataRequestThread {
@@ -34,7 +39,6 @@ public class BSConnectedThread extends DataRequestThread {
 
     public BSConnectedThread(BluetoothSocket socket) {
         super();
-
         mSocket = socket;
 
         InputStream tmpIn = null;
@@ -97,14 +101,8 @@ public class BSConnectedThread extends DataRequestThread {
                                 Log.d(TAG, "接收到的数据为空，继续请求数据");
                                 mOutputStream.write(DeviceCommand.command_requestData());
                             } else {
-                                for (BSEntity bgEntity : bgEntities) {
-                                    if (mOnReceiveDataListener != null) {
-                                        mOnReceiveDataListener.onReceiveData(bgEntity);
-                                    }
-                                    OttoManager.post(bgEntity);
-                                }
-//                                Log.d(TAG, "接收到的数据不为空，删除数据");
-//                                mOutputStream.write(DeviceCommand.command_delData());
+                                Log.d(TAG, "接收到的数据不为空，删除数据");
+                                mOutputStream.write(DeviceCommand.command_delData());
                             }
                             break;
                         case 2://接收数据失败
@@ -122,10 +120,13 @@ public class BSConnectedThread extends DataRequestThread {
                             }
                             break;
                         case 5://数据删除成功
+                            Log.d(TAG, "数据删除成功");
                             mOutputStream.write(DeviceCommand.command_requestData());
                             break;
                         case 6://数据删除失败
-                            mOutputStream.write(DeviceCommand.command_delData());
+                            Log.d(TAG, "数据删除失败");
+//                            mOutputStream.write(DeviceCommand.command_delData());
+                            mOutputStream.write(DeviceCommand.command_requestData());
                             break;
                         case 7://无数据
                             mOutputStream.write(DeviceCommand.command_requestData());
@@ -158,13 +159,11 @@ public class BSConnectedThread extends DataRequestThread {
             if (mInputStream != null) {
                 mInputStream.close();
             }
-
             mOutputStream.close();
             cancel();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -175,8 +174,24 @@ public class BSConnectedThread extends DataRequestThread {
         List<BSEntity> bgEntities = new ArrayList<>();
 
         for (CmssxtDataJar cmssxtDataJar : cmssxtDataJars) {
-            BSEntity bgEntity = new BSEntity(DateUtil.parse(cmssxtDataJar.m_saveDate, "yyyy-MM-dd HH:mm:ss"), cmssxtDataJar.m_data);
+            Date date = DateUtil.parse(cmssxtDataJar.m_saveDate, "yyyy-MM-dd HH:mm:ss");
+            BSEntity bgEntity = new BSEntity(date == null ? Calendar.getInstance().getTimeInMillis() : date.getTime(), cmssxtDataJar.m_data);
+
+            //cache data
+            bgEntity.save();
+
             bgEntities.add(bgEntity);
+
+        }
+        if (bgEntities.size() > 0) {
+            Collections.sort(bgEntities, new Comparator<BSEntity>() {
+                @Override
+                public int compare(BSEntity lhs, BSEntity rhs) {
+                    long tmp = lhs.getMeasureTime() - rhs.getMeasureTime();
+                    return tmp > 0 ? -1 : (tmp == 0 ? 0 : 1);
+                }
+            });
+            OttoManager.post(new BSEntityList(bgEntities));
         }
         return bgEntities;
     }

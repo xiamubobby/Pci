@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.assist.connection.BPConnectedThread;
 import com.wonders.xlab.pci.assist.connection.BSConnectedThread;
-import com.wonders.xlab.pci.assist.connection.ServerThread;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 
@@ -49,7 +48,6 @@ public abstract class NConnActivity extends AppbarActivity {
 
     private String mDeviceAddress;
     private ConnectThread mConnectThread;//配对线程
-    private ServerThread mServerThread;
 
     private DataRequestThread mRequestDataThread;//请求数据线程
 
@@ -95,15 +93,6 @@ public abstract class NConnActivity extends AppbarActivity {
 
     private final int MAX_RETRY_TIME = 8;
     private int mRetryTimes = 0;
-
-    public void startServerToListen() {
-        if (mServerThread != null) {
-            mServerThread.cancel();
-            mServerThread = null;
-        }
-        mServerThread = new ServerThread();
-        mServerThread.start();
-    }
 
     private Handler mScanHandler;
     private Runnable mScanRunnable;
@@ -321,10 +310,6 @@ public abstract class NConnActivity extends AppbarActivity {
             mConnectThread.setOnConnectListener(null);
             mConnectThread.cancel();
             mConnectThread = null;
-        }
-        if (mServerThread != null) {
-            mServerThread.cancel();
-            mServerThread = null;
         }
     }
 }

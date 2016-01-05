@@ -9,6 +9,7 @@ import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.assist.connection.base.DataRequestThread;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntity;
+import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,11 +17,15 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by hua on 15/10/26.
- * <p>
+ * <p/>
  * 血压数据传输线程
  */
 public class BPConnectedThread extends DataRequestThread {
@@ -36,7 +41,6 @@ public class BPConnectedThread extends DataRequestThread {
 
     public BPConnectedThread(BluetoothSocket socket) {
         super();
-
         mSocket = socket;
 
         InputStream tmpIn = null;
@@ -56,6 +60,8 @@ public class BPConnectedThread extends DataRequestThread {
         mOutputStream = tmpOut;
     }
 
+    private DevicePackManager mPackManager;
+
     /**
      * 由于需要不断获取数据，所以在成功删除血压数据后，再继续发送获取数据命令
      */
@@ -63,7 +69,7 @@ public class BPConnectedThread extends DataRequestThread {
     public void run() {
 
         // Keep listening to the InputStream until an exception occurs
-        DevicePackManager mPackManager = new DevicePackManager();
+        mPackManager = new DevicePackManager();
 
         byte[] readBuffer = new byte[1024];
         int readBytes;
@@ -90,7 +96,6 @@ public class BPConnectedThread extends DataRequestThread {
         int pType = 0;
 
         int timeNotice = 0;
-        int correctTime = 1;
         int requestData = 2;
         int deleteData = 3;
 
@@ -119,17 +124,9 @@ public class BPConnectedThread extends DataRequestThread {
                                 pType = 5;
 //                                mOutputStream.write(DeviceCommand.DELETE_BP());
                             }
-//                            else if (mOp == correctTime) {
-//                                Log.d(TAG, "发送时间校正命令");
-//                                pType = 3;
-//                                mOutputStream.write(DeviceCommand.Correct_Time());
-//                            }
+//                        }
                             break;
                         case 0x30://可以发送时间校正命令
-                            Log.d(TAG, "可以进行时间校正");
-//                            mOp = correctTime;
-//                            pType = 0;
-//                            mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
                             Log.d(TAG, "发送时间校正命令");
                             pType = 3;
                             mOutputStream.write(DeviceCommand.Correct_Time());
@@ -162,14 +159,9 @@ public class BPConnectedThread extends DataRequestThread {
                                 mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
                             } else {
                                 Log.d(TAG, "接收到的数据不为空，删除数据");
-                                for (BPEntity entity : bpEntities) {
-                                    if (mOnReceiveDataListener != null) {
-                                        mOnReceiveDataListener.onReceiveData(entity);
-                                    }
-                                }
-//                                mOp = deleteData;
-//                                pType = 0;
-//                                mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
+                                mOp = deleteData;
+                                pType = 0;
+                                mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
                             }
 
                             break;
@@ -182,7 +174,10 @@ public class BPConnectedThread extends DataRequestThread {
                             break;
                         case 0x51://血压删除失败 81
                             Log.d(TAG, "删除数据失败，尝试重新删除");
-                            mOp = deleteData;
+//                            mOp = deleteData;
+//                            pType = 0;
+//                            mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
+                            mOp = requestData;
                             pType = 0;
                             mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
                             break;
@@ -259,7 +254,6 @@ public class BPConnectedThread extends DataRequestThread {
             hpb.order(ByteOrder.LITTLE_ENDIAN);
 
             int hp = hpb.getShort();
-
             int lp = (int) buffer[2] & 0xFF;// 低压
             int pulseRate = (int) buffer[3] & 0xFF;// 脉率
             int ap = buffer[4];// 平均压
@@ -272,22 +266,28 @@ public class BPConnectedThread extends DataRequestThread {
 
             String dateStr = "20" + year + "-" + month + "-" + day + " " + hour
                     + ":" + minute + ":" + sec;
-            Log.d(TAG, dateStr);
-            Log.d(TAG, "ap:" + ap);
-            Log.d(TAG, "hp:" + hp);
-            Log.d(TAG, "lp:" + lp);
-            //TODO
-            BPEntity bpEntity = new BPEntity(DateUtil.parse(dateStr, "yyyy-MM-dd HH:mm:ss"),
+            Date date = DateUtil.parse(dateStr, "yyyy-MM-dd HH:mm:ss");
+
+            BPEntity bpEntity = new BPEntity(date == null ? Calendar.getInstance().getTimeInMillis() : date.getTime(),
                     hp,
                     lp,
                     pulseRate,
                     ap);
-
+            //缓存数据
+            bpEntity.save();
             bpEntities.add(bpEntity);
-
-            OttoManager.post(bpEntity);
         }
 
+        if (bpEntities.size() > 0) {
+            Collections.sort(bpEntities, new Comparator<BPEntity>() {
+                @Override
+                public int compare(BPEntity lhs, BPEntity rhs) {
+                    long tmp = lhs.getDate() - rhs.getDate();
+                    return tmp > 0 ? -1 : (tmp == 0 ? 0 : 1);
+                }
+            });
+            OttoManager.post(new BPEntityList(bpEntities));
+        }
         return bpEntities;
     }
 }

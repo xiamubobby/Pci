@@ -19,7 +19,7 @@ import com.wonders.xlab.pci.module.base.mvn.entity.task.SymptomEntity;
 import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
 import com.wonders.xlab.pci.module.task.mvn.model.SymptomModel;
 import com.wonders.xlab.pci.module.task.otto.TaskRefreshBus;
-import com.wonders.xlab.pci.module.base.mvn.view.SimpleView;
+import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
 import com.wonders.xlab.pci.module.task.mvn.view.SymptomView;
 import com.zhy.view.flowlayout.FlowLayout;
 
@@ -30,7 +30,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddSymptomActivity extends AppbarActivity implements SymptomView, SimpleView {
+public class AddSymptomActivity extends AppbarActivity implements SymptomView, MeasureResultView {
 
     @Bind(R.id.container_add_symptom)
     LinearLayout mContainerAddSymptom;
@@ -178,6 +178,11 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, S
                 finish();
             }
         }, 400);
+    }
+
+    @Override
+    public void svDuplicate() {
+
     }
 
     @Override

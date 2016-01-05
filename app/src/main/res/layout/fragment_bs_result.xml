@@ -42,7 +42,7 @@
                 android:text="0"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_large"
-                app:rightText=" mml/L"/>
+                app:rightText=" mmol/L"/>
 
             <TextView
                 android:layout_width="match_parent"

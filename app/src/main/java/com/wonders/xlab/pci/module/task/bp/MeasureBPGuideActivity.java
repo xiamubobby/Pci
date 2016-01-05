@@ -17,7 +17,7 @@ import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.assist.connection.base.NConnActivity;
-import com.wonders.xlab.pci.assist.connection.entity.BPEntity;
+import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
 import com.wonders.xlab.pci.assist.connection.otto.FindDeviceOtto;
 import com.wonders.xlab.pci.assist.connection.otto.ScanEndOtto;
@@ -114,7 +114,6 @@ public class MeasureBPGuideActivity extends NConnActivity {
 
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-//            mProgressDialog.setCancelable(false);
         }
     }
 
@@ -193,8 +192,8 @@ public class MeasureBPGuideActivity extends NConnActivity {
     }
 
     @Subscribe
-    public void onDataReceived(BPEntity bpEntity) {
-        cancel();
+    public void onDataReceived(BPEntityList bpEntityList) {
+//        cancel();
         dismissDialog();
     }
 

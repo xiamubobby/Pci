@@ -83,11 +83,11 @@ public abstract class BaseModel<T extends BaseEntity> {
                     public void onNext(T result) {
                         setRequesting(false);
                         if (result != null) {
-                            if (result.getRet_code() == 0) {
+//                            if (result.getRet_code() == 0) {
                                 onSuccess(result);
-                            } else {
+                            /*} else {
                                 onFailed(result.getMessage());
-                            }
+                            }*/
                         } else {
                             onFailed(getErrorMessage());
                         }

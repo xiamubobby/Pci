@@ -9,13 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.activeandroid.query.Delete;
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
+import com.wonders.xlab.pci.assist.connection.entity.BSEntityList;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
 import com.wonders.xlab.pci.assist.connection.otto.ScanStartOtto;
 import com.wonders.xlab.pci.module.base.BaseFragment;
+import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
+import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,8 +30,7 @@ import me.drakeet.labelview.LabelView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BSResultFragment extends BaseFragment {
-
+public class BSResultFragment extends BaseFragment implements MeasureResultView {
 
     @Bind(R.id.tv_bs_result_sugar)
     LabelView mTvBsResultSugar;
@@ -34,6 +38,8 @@ public class BSResultFragment extends BaseFragment {
     ImageView mIvBsResultBluetooth;
     @Bind(R.id.ldv_bs_result)
     LoadingDotView mLdvBsResult;
+
+    private AddRecordModel mAddRecordModel;
 
     public BSResultFragment() {
         // Required empty public constructor
@@ -53,6 +59,8 @@ public class BSResultFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         OttoManager.register(this);
+        mAddRecordModel = new AddRecordModel(this);
+        addModel(mAddRecordModel);
     }
 
     @Subscribe
@@ -68,7 +76,6 @@ public class BSResultFragment extends BaseFragment {
                     .setDotColor(Color.BLACK).setDotSize(18).startAnimation(0);
             mIvBsResultBluetooth.setImageResource(R.drawable.ic_bluetooth_failed);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.SUCCESS) {
-            mLdvBsResult.stopAnimation();
             mIvBsResultBluetooth.setImageResource(R.drawable.ic_bluetooth);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.FAILED) {
             mIvBsResultBluetooth.setImageResource(R.drawable.ic_bluetooth_failed);
@@ -76,8 +83,9 @@ public class BSResultFragment extends BaseFragment {
     }
 
     @Subscribe
-    public void onDataReceived(BSEntity bsEntity) {
-        mTvBsResultSugar.setText(String.valueOf(bsEntity.getBloodSugar()));
+    public void onDataReceived(BSEntityList bsEntityList) {
+        mAddRecordModel.saveBS(AIManager.getInstance(getActivity()).getUserId(), bsEntityList.getBSEntityList().get(0).getMeasureTime(), 0, (float) bsEntityList.getBSEntityList().get(0).getBloodSugar());
+        mTvBsResultSugar.setText(String.valueOf(bsEntityList.getBSEntityList().get(0).getBloodSugar()));
     }
 
     @Override
@@ -85,5 +93,31 @@ public class BSResultFragment extends BaseFragment {
         super.onDestroyView();
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void svSuccess() {
+        mLdvBsResult.stopAnimation();
+        new Delete().from(BSEntity.class).exists();
+    }
+
+    @Override
+    public void svDuplicate() {
+
+    }
+
+    @Override
+    public void svFailed(String message) {
+
+    }
+
+    @Override
+    public void svShowLoading() {
+
+    }
+
+    @Override
+    public void svHideLoading() {
+
     }
 }
