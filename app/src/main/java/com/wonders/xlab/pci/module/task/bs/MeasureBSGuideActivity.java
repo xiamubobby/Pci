@@ -89,7 +89,10 @@ public class MeasureBSGuideActivity extends NConnActivity {
                 }
             }
         });
-
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+//            mProgressDialog.setCancelable(false);
+        }
     }
 
     @Override
@@ -108,24 +111,25 @@ public class MeasureBSGuideActivity extends NConnActivity {
             }
             showSnackbar(mCoordinator, "连接成功，请开始测量！", true);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.FAILED) {
-            if (mProgressDialog != null) {
-                mProgressDialog.hide();
-            }
-            if (mVpMeasureBSGuide != null && mVpMeasureBSGuide.getChildCount() > 0) {
-                mVpMeasureBSGuide.setCurrentItem(0);
-            }
-            showSnackbar(mCoordinator, "连接失败，请重试！", true);
+            mProgressDialog.setMessage("连接失败，即将重新搜索设备");
+            postDelayScan(5000);
         }
     }
 
     @Subscribe
     public void onScanStart(ScanStartOtto startOtto) {
-        if (mProgressDialog == null) {
-            mProgressDialog = new ProgressDialog(this);
-//            mProgressDialog.setCancelable(false);
-        }
         mProgressDialog.setMessage("正在搜索设备，请稍候...");
         mProgressDialog.show();
+    }
+
+    /**
+     * 搜索结束
+     *
+     * @param otto
+     */
+    @Subscribe
+    public void onScanEnd(ScanEndOtto otto) {
+        postDelayScan(5000);
     }
 
     /**
@@ -141,18 +145,18 @@ public class MeasureBSGuideActivity extends NConnActivity {
 
         if (otto.getDeviceName().contains(DEVICE_TYPE.BS.toString())) {
             Log.d("MeasureBSGuideActivity", otto.getDeviceName());
-            getData(DEVICE_TYPE.BS, otto.getDeviceAddress());
+            getData(otto.getDeviceAddress());
             if (mProgressDialog != null) {
                 mProgressDialog.setMessage("正在配对，请稍候...");
             }
         }
     }
 
-    /*  *
-       * 接收ViewPager中引导页的两个按钮的事件
-       *
-       * @param otto
-       */
+    /**
+     * 接收ViewPager中引导页的两个按钮的事件
+     *
+     * @param otto
+     */
     @Subscribe
     public void onGuideStep(GuideOtto otto) {
         switch (otto.getStep()) {
@@ -163,16 +167,6 @@ public class MeasureBSGuideActivity extends NConnActivity {
                 connectBondedDevice();
                 break;
         }
-    }
-
-    /**
-     * 搜索结束
-     *
-     * @param otto
-     */
-    @Subscribe
-    public void onScanEnd(ScanEndOtto otto) {
-        startScan();
     }
 
     @Subscribe
@@ -194,8 +188,11 @@ public class MeasureBSGuideActivity extends NConnActivity {
 
     @Override
     public void onDestroy() {
-        OttoManager.unregister(this);
         super.onDestroy();
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+        OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
 }

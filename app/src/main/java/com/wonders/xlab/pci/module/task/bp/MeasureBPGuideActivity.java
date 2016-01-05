@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
@@ -70,16 +69,7 @@ public class MeasureBPGuideActivity extends NConnActivity {
 
             @Override
             public void onPageSelected(int position) {
-                /*if (position == 1) {
-                    if (!mBluetoothAdapter.isEnabled()) {
-                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                    } else {
-                        connectBondedDevice();
-                    }
-                } else if (position == 0) {
-                    cancel();
-                }*/
+
             }
 
             @Override
@@ -125,13 +115,11 @@ public class MeasureBPGuideActivity extends NConnActivity {
             }
             showSnackbar(mCoordinator, "连接成功，开始读取数据！", true);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.FAILED) {
-            if (mProgressDialog != null) {
-                mProgressDialog.hide();
-            }
+            mProgressDialog.setMessage("连接失败，即将重新搜索设备");
+            postDelayScan(5000);
             /*if (mVpMeasureBPGuide != null && mVpMeasureBPGuide.getChildCount() > 0) {
                 mVpMeasureBPGuide.setCurrentItem(0);
             }*/
-            showSnackbar(mCoordinator, "连接失败，请重试！", true);
         }
     }
 
@@ -139,6 +127,16 @@ public class MeasureBPGuideActivity extends NConnActivity {
     public void onScanStart(ScanStartOtto startOtto) {
         mProgressDialog.setMessage("正在搜索设备，请稍候...");
         mProgressDialog.show();
+    }
+
+    /**
+     * 搜索结束
+     *
+     * @param otto
+     */
+    @Subscribe
+    public void onScanEnd(ScanEndOtto otto) {
+        postDelayScan(5000);
     }
 
     /**
@@ -154,7 +152,7 @@ public class MeasureBPGuideActivity extends NConnActivity {
 
         if (otto.getDeviceName().contains(DEVICE_TYPE.BP.toString())) {
             Log.d("MeasureBPGuideActivity", otto.getDeviceName());
-            getData(DEVICE_TYPE.BP, otto.getDeviceAddress());
+            getData(otto.getDeviceAddress());
             if (mProgressDialog != null) {
                 mProgressDialog.setMessage("正在配对，请稍候...");
             }
@@ -178,29 +176,6 @@ public class MeasureBPGuideActivity extends NConnActivity {
         }
     }
 
-//    private long mLastScanTime = 0;
-
-    /**
-     * 搜索结束
-     *
-     * @param otto
-     */
-    @Subscribe
-    public void onScanEnd(ScanEndOtto otto) {
-        /*long nowTime = Calendar.getInstance().getTimeInMillis();
-        if (nowTime - mLastScanTime > 10000) {
-            mLastScanTime = nowTime;
-           */
-//        startScan();
-//        }
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startScan();
-            }
-        }, 5000);
-    }
-
     @Subscribe
     public void onDataReceived(BPEntity bpEntity) {
         Log.d("MeasureBPGuideActivity", "bsEntity.getBloodSugar():" + bpEntity.getPulseRate());
@@ -221,6 +196,7 @@ public class MeasureBPGuideActivity extends NConnActivity {
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
+
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }

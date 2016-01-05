@@ -22,10 +22,10 @@ import java.util.Set;
 
 /**
  * Created by hua on 15/12/31.
- * <p>
+ * <p/>
  * 使用步骤：
  * 1、@{@link #startScan()} 获取扫描的设备的信息 通过Otto注册接收扫描的结果，具体参考@{@link ScanReceiver}
- * 2、@{@link #getData(DEVICE_TYPE, String)} 将第一步获取的设备地址传入，开始获取数据
+ * 2、@{@link #getData(String)} 将第一步获取的设备地址传入，开始获取数据
  * 3、接收数据，也是通过Otto的注册方式来接收，目前只有@{@link com.wonders.xlab.pci.assist.connection.entity.BPEntity}和@{@link com.wonders.xlab.pci.assist.connection.entity.BSEntity}
  */
 public abstract class NConnActivity extends AppbarActivity {
@@ -57,6 +57,11 @@ public abstract class NConnActivity extends AppbarActivity {
 
     private final int RETRY_CONNECT_TIMES = 0;
     private int mConnectTime = 0;
+
+    /**
+     * 是否在连接失败时发送Otto消息
+     */
+    private boolean mShowConnectionFailedInfo = true;
 
     /**
      * 设备类型
@@ -105,21 +110,21 @@ public abstract class NConnActivity extends AppbarActivity {
 
     public abstract DEVICE_TYPE getDeviceType();
 
+    /**
+     * 首先尝试连接已经绑定的设备，如果连接失败了，会有连接失败的回调，然后再进行扫描
+     */
     public void connectBondedDevice() {
-        showConnectionFailedInfo(false);
+
         Set<BluetoothDevice> bondedDevices = mBluetoothAdapter.getBondedDevices();
         for (BluetoothDevice device : bondedDevices) {
             if (device.getName().contains(getDeviceType().toString())) {
-                getData(getDeviceType(), device.getAddress());
+                getData(device.getAddress());
                 break;
             }
         }
     }
 
-    /**
-     * 扫描
-     */
-    public void startScan() {
+    public void postDelayScan(long delay) {
         if (mScanHandler == null) {
             mScanHandler = new Handler();
         }
@@ -131,12 +136,13 @@ public abstract class NConnActivity extends AppbarActivity {
                 }
             };
         }
-        mScanHandler.postDelayed(mScanRunnable, 5000);
-        scan();
+        mScanHandler.postDelayed(mScanRunnable, delay);
     }
 
-    private void scan() {
+    public void startScan() {
+        //reset flag
         showConnectionFailedInfo(true);
+
         if (mRetryTimes++ <= MAX_RETRY_TIME) {
             if (!mBluetoothAdapter.isEnabled()) {
                 Log.d(TAG, "请求设备开启蓝牙");
@@ -162,20 +168,10 @@ public abstract class NConnActivity extends AppbarActivity {
     }
 
     /**
-     * 只进行设备连接、配对
-     */
-    public void connect(DEVICE_TYPE deviceType, String deviceAddress) {
-//        mDeviceType = deviceType;
-        mDeviceAddress = deviceAddress;
-        connectAndStartRequestDataThread(false);
-    }
-
-    /**
      * 连接设备，成功后请求数据
      */
-    public void getData(DEVICE_TYPE deviceType, String deviceAddress) {
+    public void getData(String deviceAddress) {
         Log.d(TAG, "请求数据");
-//        mDeviceType = deviceType;
         mDeviceAddress = deviceAddress;
         connectAndStartRequestDataThread(true);
     }
@@ -200,7 +196,7 @@ public abstract class NConnActivity extends AppbarActivity {
 
     /**
      * 建立连接
-     * <p>
+     * <p/>
      * 成功后开始数据请求
      *
      * @param autoRequestData
@@ -254,22 +250,17 @@ public abstract class NConnActivity extends AppbarActivity {
                 if (mConnectTime++ < RETRY_CONNECT_TIMES) {
                     connectAndStartRequestDataThread(autoRequestData);
                 } else {
+                    Log.d(TAG, "mShowConnectionFailedInfo:" + mShowConnectionFailedInfo);
                     if (mShowConnectionFailedInfo) {
                         OttoManager.post(new ConnStatusOtto(ConnStatusOtto.STATUS.FAILED));
                     }
-                    /*if (!mBluetoothAdapter.isDiscovering()) {
-                        mBluetoothAdapter.startDiscovery();
-                    }*/
                     mConnectTime = 0;
-                    startScan();
                 }
 
             }
         });
         mConnectThread.start();
     }
-
-    private boolean mShowConnectionFailedInfo = true;
 
     public void showConnectionFailedInfo(boolean show) {
         mShowConnectionFailedInfo = show;
@@ -327,6 +318,7 @@ public abstract class NConnActivity extends AppbarActivity {
             mRequestDataThread = null;
         }
         if (mConnectThread != null) {
+            mConnectThread.setOnConnectListener(null);
             mConnectThread.cancel();
             mConnectThread = null;
         }
