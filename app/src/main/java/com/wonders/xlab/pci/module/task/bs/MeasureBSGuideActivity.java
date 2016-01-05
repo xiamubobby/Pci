@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.application.OttoManager;
@@ -51,13 +53,26 @@ public class MeasureBSGuideActivity extends NConnActivity {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         OttoManager.register(this);
+        getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.men_measure_retry:
+                        connectBondedDevice();
+                        break;
+                }
+                return false;
+            }
+        });
 
         mFragmentVPAdapter = new FragmentVPAdapter(getFragmentManager());
         BSGuideOneFragment oneFragment = new BSGuideOneFragment();
         BSGuideTwoFragment twoFragment = new BSGuideTwoFragment();
+        BSResultFragment threeFragment = new BSResultFragment();
 
         mFragmentVPAdapter.addFragment(oneFragment);
         mFragmentVPAdapter.addFragment(twoFragment);
+        mFragmentVPAdapter.addFragment(threeFragment);
         mVpMeasureBSGuide.setAdapter(mFragmentVPAdapter);
         mVpMeasureBSGuide.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -73,25 +88,26 @@ public class MeasureBSGuideActivity extends NConnActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
-                    if (mVpMeasureBSGuide.getCurrentItem() == 1) {
-                        if (!mBluetoothAdapter.isEnabled()) {
-                            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                            startActivityForResult(enableBtIntent, NConnActivity.REQUEST_ENABLE_BOND);
-                        } else {
-                            connectBondedDevice();
-                        }
-                    } else {
-                        if (mProgressDialog != null) {
-                            mProgressDialog.hide();
-                        }
-                        cancel();
+                    switch (mVpMeasureBSGuide.getCurrentItem()) {
+                        case 2:
+                            if (!mBluetoothAdapter.isEnabled()) {
+                                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                                startActivityForResult(enableBtIntent, NConnActivity.REQUEST_ENABLE_BOND);
+                            } else {
+                                connectBondedDevice();
+                            }
+                            getToolbar().inflateMenu(R.menu.menu_measure_retry);
+                            break;
+                        default:
+                            getToolbar().getMenu().clear();
+                            dismissDialog();
+                            cancel();
                     }
                 }
             }
         });
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-//            mProgressDialog.setCancelable(false);
         }
     }
 
@@ -106,10 +122,7 @@ public class MeasureBSGuideActivity extends NConnActivity {
             mProgressDialog.setMessage("正在连接血糖设备，请稍候...");
             mProgressDialog.show();
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.SUCCESS) {
-            if (mProgressDialog != null) {
-                mProgressDialog.hide();
-            }
-            showSnackbar(mCoordinator, "连接成功，请开始测量！", true);
+            mProgressDialog.setMessage("连接成功，正在读取数据，请稍候...");
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.FAILED) {
             mProgressDialog.setMessage("连接失败，即将重新搜索设备");
             postDelayScan(5000);
@@ -164,23 +177,29 @@ public class MeasureBSGuideActivity extends NConnActivity {
                 mVpMeasureBSGuide.setCurrentItem(1);
                 break;
             case 1:
-                connectBondedDevice();
+                if (mVpMeasureBSGuide != null) {
+                    mVpMeasureBSGuide.setCurrentItem(2);
+                }
                 break;
         }
     }
 
     @Subscribe
     public void onDataReceived(BSEntity bsEntity) {
+        cancel();
+        dismissDialog();
+    }
+
+    private void dismissDialog() {
         if (mProgressDialog != null) {
             mProgressDialog.hide();
         }
-        Log.d("MeasureBPGuideActivity", "bsEntity.getBloodSugar():" + bsEntity.getBloodSugar());
     }
 
     @Override
     public void onBackPressed() {
         if (mVpMeasureBSGuide != null && mVpMeasureBSGuide.getCurrentItem() > 0) {
-            mVpMeasureBSGuide.setCurrentItem(0);
+            mVpMeasureBSGuide.setCurrentItem(mVpMeasureBSGuide.getCurrentItem() - 1);
             return;
         }
         super.onBackPressed();

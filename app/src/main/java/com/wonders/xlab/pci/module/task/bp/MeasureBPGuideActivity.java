@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.application.OttoManager;
@@ -52,14 +54,28 @@ public class MeasureBPGuideActivity extends NConnActivity {
         ButterKnife.bind(this);
         OttoManager.register(this);
 
+        getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.men_measure_retry:
+                        connectBondedDevice();
+                        break;
+                }
+                return false;
+            }
+        });
+
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         mFragmentVPAdapter = new FragmentVPAdapter(getFragmentManager());
         BPGuideOneFragment oneFragment = new BPGuideOneFragment();
         BPGuideTwoFragment twoFragment = new BPGuideTwoFragment();
+        BPResultFragment threeFragment = new BPResultFragment();
 
         mFragmentVPAdapter.addFragment(oneFragment);
         mFragmentVPAdapter.addFragment(twoFragment);
+        mFragmentVPAdapter.addFragment(threeFragment);
         mVpMeasureBPGuide.setAdapter(mFragmentVPAdapter);
         mVpMeasureBPGuide.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -75,18 +91,22 @@ public class MeasureBPGuideActivity extends NConnActivity {
             @Override
             public void onPageScrollStateChanged(int state) {
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
-                    if (mVpMeasureBPGuide.getCurrentItem() == 1) {
-                        if (!mBluetoothAdapter.isEnabled()) {
-                            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                            startActivityForResult(enableBtIntent, NConnActivity.REQUEST_ENABLE_BOND);
-                        } else {
-                            connectBondedDevice();
-                        }
-                    } else {
-                        if (mProgressDialog != null) {
-                            mProgressDialog.hide();
-                        }
-                        cancel();
+                    switch (mVpMeasureBPGuide.getCurrentItem()) {
+                        case 2:
+                            if (!mBluetoothAdapter.isEnabled()) {
+                                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                                startActivityForResult(enableBtIntent, NConnActivity.REQUEST_ENABLE_BOND);
+                            } else {
+                                connectBondedDevice();
+                            }
+                            getToolbar().inflateMenu(R.menu.menu_measure_retry);
+                            break;
+                        default:
+                            getToolbar().getMenu().clear();
+                            if (mProgressDialog != null) {
+                                mProgressDialog.hide();
+                            }
+                            cancel();
                     }
                 }
             }
@@ -110,16 +130,10 @@ public class MeasureBPGuideActivity extends NConnActivity {
             mProgressDialog.setMessage("正在连接血压设备，请稍候...");
             mProgressDialog.show();
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.SUCCESS) {
-            if (mProgressDialog != null) {
-                mProgressDialog.hide();
-            }
-            showSnackbar(mCoordinator, "连接成功，开始读取数据！", true);
+            mProgressDialog.setMessage("连接成功，正在读取数据，请稍候...");
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.FAILED) {
             mProgressDialog.setMessage("连接失败，即将重新搜索设备");
             postDelayScan(5000);
-            /*if (mVpMeasureBPGuide != null && mVpMeasureBPGuide.getChildCount() > 0) {
-                mVpMeasureBPGuide.setCurrentItem(0);
-            }*/
         }
     }
 
@@ -171,20 +185,23 @@ public class MeasureBPGuideActivity extends NConnActivity {
                 mVpMeasureBPGuide.setCurrentItem(1);
                 break;
             case 1:
-                connectBondedDevice();
+                if (mVpMeasureBPGuide != null) {
+                    mVpMeasureBPGuide.setCurrentItem(2);
+                }
                 break;
         }
     }
 
     @Subscribe
     public void onDataReceived(BPEntity bpEntity) {
-        Log.d("MeasureBPGuideActivity", "bsEntity.getBloodSugar():" + bpEntity.getPulseRate());
+        cancel();
+        dismissDialog();
     }
 
     @Override
     public void onBackPressed() {
         if (mVpMeasureBPGuide != null && mVpMeasureBPGuide.getCurrentItem() > 0) {
-            mVpMeasureBPGuide.setCurrentItem(0);
+            mVpMeasureBPGuide.setCurrentItem(mVpMeasureBPGuide.getCurrentItem() - 1);
             return;
         }
         super.onBackPressed();
@@ -193,11 +210,15 @@ public class MeasureBPGuideActivity extends NConnActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
-        }
+        dismissDialog();
 
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
+    }
+
+    private void dismissDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
     }
 }
