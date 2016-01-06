@@ -15,8 +15,6 @@ public class XApplication extends com.activeandroid.app.Application {
         super.onCreate();
         ActiveAndroid.initialize(this);
 
-//        LeakCanary.install(this);
-
         EMChat.getInstance().init(this);
         EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);//不发通知，而是走广播
         EMChat.getInstance().setDebugMode(false);//在做打包混淆时，要关闭debug模式，避免消耗不必要的资源

@@ -7,7 +7,6 @@ import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.assist.connection.base.DataRequestThread;
-import com.wonders.xlab.pci.assist.connection.aamodel.BSAAModel;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntityList;
 
@@ -99,7 +98,8 @@ public class BSConnectedThread extends DataRequestThread {
 
                             List<BSEntity> bgEntities = parseBloodGlucose(al);
                             if (bgEntities.isEmpty()) {
-                                if (BuildConfig.DEBUG) if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据为空，继续请求数据");
+                                if (BuildConfig.DEBUG)
+                                    if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据为空，继续请求数据");
                                 mOutputStream.write(DeviceCommand.command_requestData());
                             } else {
                                 if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据不为空，删除数据");
@@ -166,6 +166,8 @@ public class BSConnectedThread extends DataRequestThread {
         }
     }
 
+    private Calendar mCalendar = Calendar.getInstance();
+
     /**
      * @param cmssxtDataJars
      */
@@ -175,13 +177,29 @@ public class BSConnectedThread extends DataRequestThread {
 
         for (CmssxtDataJar cmssxtDataJar : cmssxtDataJars) {
             Date date = DateUtil.parse(cmssxtDataJar.m_saveDate, "yyyy-MM-dd HH:mm:ss");
-            BSAAModel bsaaModel = new BSAAModel(date == null ? Calendar.getInstance().getTimeInMillis() : date.getTime(), cmssxtDataJar.m_data);
-
-            //cache data
-            bsaaModel.save();
 
             BSEntity bsEntity = new BSEntity();
-            bsEntity.setBSModel(bsaaModel);
+            bsEntity.setDate(date == null ? Calendar.getInstance().getTimeInMillis() : date.getTime());
+            bsEntity.setBloodSugarValue(cmssxtDataJar.m_data);
+
+            mCalendar.setTimeInMillis(bsEntity.getDate());
+            int hour = mCalendar.get(Calendar.HOUR_OF_DAY);
+
+            if (hour > 0 && hour <= 8) {
+                bsEntity.setTimeIndex(0);
+            } else if (hour > 8 && hour <= 10) {
+                bsEntity.setTimeIndex(1);
+            } else if (hour > 10 && hour <= 12) {
+                bsEntity.setTimeIndex(2);
+            } else if (hour > 12 && hour <= 14) {
+                bsEntity.setTimeIndex(3);
+            } else if (hour > 14 && hour <= 17) {
+                bsEntity.setTimeIndex(4);
+            } else if (hour > 17 && hour <= 20) {
+                bsEntity.setTimeIndex(5);
+            } else {
+                bsEntity.setTimeIndex(6);
+            }
 
             bgEntities.add(bsEntity);
 

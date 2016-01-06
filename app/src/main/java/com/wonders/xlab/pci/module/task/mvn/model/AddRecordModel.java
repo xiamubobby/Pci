@@ -20,24 +20,6 @@ public class AddRecordModel extends BaseModel<SimpleEntity> {
     }
 
     /**
-     * 获取血压理想范围
-     *
-     * @param userId
-     */
-    public void fetchIdealBPRange(String userId) {
-        setObservable(mAddRecordAPI.fetchIdealBPRange(userId));
-    }
-
-    /**
-     * 获取血糖理想范围
-     *
-     * @param userId
-     */
-    public void fetchIdealBSRange(String userId) {
-        setObservable(mAddRecordAPI.fetchIdealBSRange(userId));
-    }
-
-    /**
      * 保存一条血糖数据
      *
      * @param userId

@@ -23,6 +23,7 @@ public class BSEntity {
     public void setBSModel(BSAAModel bsAAModel) {
         setBloodSugarValue(bsAAModel.getBloodSugar());
         setDate(bsAAModel.getDate());
+        setTimeIndex(bsAAModel.getTimeIndex());
     }
 
     public double getBloodSugarValue() {

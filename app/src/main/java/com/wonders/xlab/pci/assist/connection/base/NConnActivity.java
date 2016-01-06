@@ -115,9 +115,10 @@ public abstract class NConnActivity extends AppbarActivity {
         for (BluetoothDevice device : bondedDevices) {
             if (device.getName().contains(getDeviceType().toString())) {
                 getData(device.getAddress());
-                break;
+                return;
             }
         }
+        startScan();
     }
 
     public void postDelayScan(long delay) {

@@ -3,6 +3,7 @@ package com.wonders.xlab.pci.assist.connection.aamodel;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
 
 import java.io.Serializable;
 
@@ -17,6 +18,8 @@ public class BSAAModel extends Model implements Serializable {
     private double bloodSugar;
     @Column(name = "date")
     private long date;
+    @Column(name = "timeIndex")
+    private int timeIndex;
 
     public BSAAModel() {
     }
@@ -25,6 +28,12 @@ public class BSAAModel extends Model implements Serializable {
 
         this.date = date;
         this.bloodSugar = bloodSugar;
+    }
+
+    public void setBSEntity(BSEntity entity) {
+        setDate(entity.getDate());
+        setTimeIndex(entity.getTimeIndex());
+        setBloodSugar(entity.getBloodSugarValue());
     }
 
     public double getBloodSugar() {
@@ -41,5 +50,13 @@ public class BSAAModel extends Model implements Serializable {
 
     public void setDate(long date) {
         this.date = date;
+    }
+
+    public int getTimeIndex() {
+        return timeIndex;
+    }
+
+    public void setTimeIndex(int timeIndex) {
+        this.timeIndex = timeIndex;
     }
 }

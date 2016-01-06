@@ -248,3 +248,9 @@
 
 # Only required if not using the Spring RestTemplate
 -dontwarn org.androidannotations.api.rest.**
+
+#blood pressure and blood sugar
+-keep class cn.com.contec.jar.cmssxt.** { *;}
+-keep class com.contec.jar.** { *;}
+-dontwarn cn.com.contec.jar.cmssxt.**
+-dontwarn com.contec.jar.**

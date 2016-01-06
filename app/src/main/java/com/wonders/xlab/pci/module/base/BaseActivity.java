@@ -1,7 +1,6 @@
 package com.wonders.xlab.pci.module.base;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -27,32 +26,11 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         UmengUpdateAgent.update(this);
     }
 
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-        //注：回调 1
-        Bugtags.onResume(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        //注：回调 2
-        Bugtags.onPause(this);
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent event) {
-        //注：回调 3
-        Bugtags.onDispatchTouchEvent(this, event);
-        return super.dispatchTouchEvent(event);
-    }
-*/
     @Override
     protected void onStop() {
         super.onStop();
