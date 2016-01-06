@@ -7,9 +7,10 @@ import com.contec.jar.contec08a.DeviceCommand;
 import com.contec.jar.contec08a.DevicePackManager;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.DateUtil;
+import com.wonders.xlab.pci.BuildConfig;
+import com.wonders.xlab.pci.assist.connection.aamodel.BPAAModel;
 import com.wonders.xlab.pci.assist.connection.base.DataRequestThread;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntity;
-import com.wonders.xlab.pci.assist.connection.aamodel.BPAAModel;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
 
 import java.io.IOException;
@@ -30,7 +31,6 @@ import java.util.List;
  * 血压数据传输线程
  */
 public class BPConnectedThread extends DataRequestThread {
-//    private BluetoothAdapter mBluetoothAdapter;
 
     private BluetoothSocket mSocket;
 
@@ -110,56 +110,54 @@ public class BPConnectedThread extends DataRequestThread {
                     switch (result) {
                         case 0x48://握手成功 72
                             //设置命令类型
-                            Log.d(TAG, "握手成功");
-
                             if (mOp == timeNotice) {
-                                Log.d(TAG, "发送将要校正时间命令");
+                                if (BuildConfig.DEBUG) Log.d(TAG, "发送将要校正时间命令");
                                 pType = 3;
                                 mOutputStream.write(DeviceCommand.correct_time_notice);
                             } else if (mOp == requestData) {
-                                Log.d(TAG, "发送获取数据命令");
+                                if (BuildConfig.DEBUG) Log.d(TAG, "发送获取数据命令");
                                 pType = 1;
                                 mOutputStream.write(DeviceCommand.REQUEST_BLOOD_PRESSURE());
                             } else {
-                                Log.d(TAG, "发送删除数据命令");
+                                if (BuildConfig.DEBUG) Log.d(TAG, "发送删除数据命令");
                                 pType = 5;
-//                                mOutputStream.write(DeviceCommand.DELETE_BP());
+                                mOutputStream.write(DeviceCommand.DELETE_BP());
                             }
 //                        }
                             break;
                         case 0x30://可以发送时间校正命令
-                            Log.d(TAG, "发送时间校正命令");
+                            if (BuildConfig.DEBUG) Log.d(TAG, "发送时间校正命令");
                             pType = 3;
                             mOutputStream.write(DeviceCommand.Correct_Time());
                             break;
                         case 0x31://不可以发送时间校正命令 49
-                            Log.e(TAG, "不可进行时间校正");
+                            if (BuildConfig.DEBUG) Log.d(TAG, "不可进行时间校正");
+                            if (BuildConfig.DEBUG) Log.d(TAG, "不可进行时间校正");
                             requestDataFailed();
                             break;
                         case 0x40://校正设备时间成功 64
-                            Log.d(TAG, "校正设备时间成功");
+                            if (BuildConfig.DEBUG) Log.d(TAG, "校正设备时间成功");
                             mOp = requestData;
                             pType = 0;
                             mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
                             break;
                         case 0x41://校正设备时间失败 65
-                            Log.e(TAG, "校正设备时间失败");
+                            if (BuildConfig.DEBUG) Log.d(TAG, "校正设备时间失败");
                             requestDataFailed();
                             break;
                         case 0x46://血压数据接收完毕 70
-                            Log.d(TAG, "接收到血压数据");
-
+                            if (BuildConfig.DEBUG) Log.d(TAG, "接收到血压数据");
                             ArrayList<byte[]> data = mPackManager.mDeviceData.mData_blood;
 
                             List<BPEntity> bpEntities = praiseBloodPressure(data);
 
                             if (bpEntities.isEmpty()) {
-                                Log.d(TAG, "接收到的数据为空，继续请求数据");
+                                if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据为空，继续请求数据");
                                 mOp = requestData;
                                 pType = 0;
                                 mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
                             } else {
-                                Log.d(TAG, "接收到的数据不为空，删除数据");
+                                if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据不为空，删除数据");
                                 mOp = deleteData;
                                 pType = 0;
                                 mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
@@ -168,34 +166,31 @@ public class BPConnectedThread extends DataRequestThread {
                             break;
                         case 0x50://血压删除成功 80
                             //继续请求血压数据
-                            Log.d(TAG, "删除数据成功");
+                            if (BuildConfig.DEBUG) Log.d(TAG, "删除数据成功");
                             mOp = requestData;
                             pType = 0;
                             mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
                             break;
                         case 0x51://血压删除失败 81
-                            Log.d(TAG, "删除数据失败，尝试重新删除");
-//                            mOp = deleteData;
-//                            pType = 0;
-//                            mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
+                            if (BuildConfig.DEBUG) Log.d(TAG, "删除数据失败，重新请求数据");
                             mOp = requestData;
                             pType = 0;
                             mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
                             break;
                         default:
-//                            Log.d(TAG, "默认发送请求数据指令");
+//                            if (BuildConfig.DEBUG) Log.d(TAG, "默认发送请求数据指令");
 //                            mOp = requestData;
 //                            pType = 0;
 //                            mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
                     }
 
                 } else {
-                    Log.d(TAG, "重开数据接受线程");
+                    if (BuildConfig.DEBUG) Log.d(TAG, "重开数据接受线程");
                     requestDataFailed();
                 }
 
             } catch (IOException e) {
-                Log.d(TAG, e.getLocalizedMessage() + " " + e.getMessage());
+                if (BuildConfig.DEBUG) Log.d(TAG, e.getLocalizedMessage() + " " + e.getMessage());
                 requestDataFailed();
             }
         }
@@ -215,7 +210,7 @@ public class BPConnectedThread extends DataRequestThread {
 
     @Override
     public void cancel() {
-        Log.d(TAG, "关闭连接");
+        if (BuildConfig.DEBUG) Log.d(TAG, "关闭连接");
         loop = false;
         if (mSocket != null) {
             try {
@@ -246,7 +241,6 @@ public class BPConnectedThread extends DataRequestThread {
      * @param data
      */
     private synchronized List<BPEntity> praiseBloodPressure(List<byte[]> data) {
-        Log.d(TAG, "开始解析血压数据：一共" + data.size() + "条");
         List<BPEntity> bpEntities = new ArrayList<>();
 
         for (byte[] buffer : data) {
@@ -262,8 +256,8 @@ public class BPConnectedThread extends DataRequestThread {
             int month = buffer[6];// 月
             int day = buffer[7];// 日
             int hour = buffer[8];// 时
-            int sec = buffer[9];// 分
-            int minute = buffer[10];// 秒
+            int minute = buffer[9];// 分
+            int sec = buffer[10];// 秒
 
             String dateStr = "20" + year + "-" + month + "-" + day + " " + hour
                     + ":" + minute + ":" + sec;

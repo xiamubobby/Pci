@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.common.utils.DateUtil;
+import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.databinding.ItemBpBinding;
 import com.wonders.xlab.pci.module.record.monitor.bean.BPBean;
@@ -73,7 +74,7 @@ public class BPAdapter extends SimpleRVAdapter<BPBean> implements StickyRecycler
                 break;
             }
         }
-        Log.d("BPModel1", DateUtil.format(time, "yyyy-MM-dd"));
+        if (BuildConfig.DEBUG) Log.d("BPModel1", DateUtil.format(time, "yyyy-MM-dd"));
         viewHolder.bpTitle.setText(DateUtil.format(time, "yyyy-MM-dd"));
     }
 

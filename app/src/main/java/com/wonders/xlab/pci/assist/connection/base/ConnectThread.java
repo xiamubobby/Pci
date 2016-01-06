@@ -6,6 +6,8 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Looper;
 import android.util.Log;
 
+import com.wonders.xlab.pci.BuildConfig;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.UUID;
@@ -84,7 +86,7 @@ public class ConnectThread extends Thread {
             if (mBluetoothDevice.getBondState() == BluetoothDevice.BOND_NONE) {
                 Method creMethod = BluetoothDevice.class
                         .getMethod("createBond");
-                Log.d(TAG, "开始配对");
+                if (BuildConfig.DEBUG) Log.d(TAG, "开始配对");
                 creMethod.invoke(mBluetoothDevice);
             }
         } catch (Exception e) {
@@ -115,7 +117,7 @@ public class ConnectThread extends Thread {
         try {
             if (mSocket != null) {
                 mSocket.close();
-                Log.d("ConnectThread", "socket close");
+                if (BuildConfig.DEBUG) Log.d("ConnectThread", "socket close");
             }
         } catch (IOException e) {
             Log.e(TAG, "unable to close() " +

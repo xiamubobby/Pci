@@ -16,6 +16,7 @@ import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
+import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.assist.connection.base.NConnActivity;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntityList;
@@ -164,7 +165,7 @@ public class MeasureBSGuideActivity extends NConnActivity {
         }
 
         if (otto.getDeviceName().contains(DEVICE_TYPE.BS.toString())) {
-            Log.d("MeasureBSGuideActivity", otto.getDeviceName());
+            if (BuildConfig.DEBUG) Log.d("MeasureBSGuideActivity", otto.getDeviceName());
             getData(otto.getDeviceAddress());
             if (mProgressDialog != null) {
                 mProgressDialog.setMessage("正在配对，请稍候...");

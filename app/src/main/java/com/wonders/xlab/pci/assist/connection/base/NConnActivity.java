@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.wonders.xlab.common.application.OttoManager;
+import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.assist.connection.BPConnectedThread;
 import com.wonders.xlab.pci.assist.connection.BSConnectedThread;
 import com.wonders.xlab.pci.assist.connection.aamodel.BPAAModel;
@@ -140,20 +141,20 @@ public abstract class NConnActivity extends AppbarActivity {
 
         if (mRetryTimes++ <= MAX_RETRY_TIME) {
             if (!mBluetoothAdapter.isEnabled()) {
-                Log.d(TAG, "请求设备开启蓝牙");
+                if (BuildConfig.DEBUG) Log.d(TAG, "请求设备开启蓝牙");
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             } else {
                 registerScanReceiver();
                 if (mBluetoothAdapter.isDiscovering()) {
-                    Log.d(TAG, "cancelDiscovery");
+                    if (BuildConfig.DEBUG) Log.d(TAG, "cancelDiscovery");
                     mBluetoothAdapter.cancelDiscovery();
                 }
                 boolean isStartSuccess = mBluetoothAdapter.startDiscovery();
                 if (!isStartSuccess) {
                     Toast.makeText(this, "搜索设备失败，请确认蓝牙已打开并且授予蓝牙使用权限后重试！", Toast.LENGTH_LONG).show();
                 } else {
-                    Log.d(TAG, "开始搜索设备");
+                    if (BuildConfig.DEBUG) Log.d(TAG, "开始搜索设备");
                 }
             }
         } else {
@@ -166,7 +167,7 @@ public abstract class NConnActivity extends AppbarActivity {
      * 连接设备，成功后请求数据
      */
     public void getData(String deviceAddress) {
-        Log.d(TAG, "请求数据");
+        if (BuildConfig.DEBUG) Log.d(TAG, "请求数据");
         mDeviceAddress = deviceAddress;
         connectAndStartRequestDataThread(true);
     }
@@ -222,7 +223,7 @@ public abstract class NConnActivity extends AppbarActivity {
                     mBluetoothAdapter.cancelDiscovery();
                 }
                 if (isRegistered) {
-                    Log.d(TAG, "取消注册蓝牙监听广播");
+                    if (BuildConfig.DEBUG) Log.d(TAG, "取消注册蓝牙监听广播");
                     unregisterReceiver(mScanReceiver);
                     isRegistered = false;
                 }
@@ -245,7 +246,7 @@ public abstract class NConnActivity extends AppbarActivity {
                 if (mConnectTime++ < RETRY_CONNECT_TIMES) {
                     connectAndStartRequestDataThread(autoRequestData);
                 } else {
-                    Log.d(TAG, "mShowConnectionFailedInfo:" + mShowConnectionFailedInfo);
+                    if (BuildConfig.DEBUG) Log.d(TAG, "mShowConnectionFailedInfo:" + mShowConnectionFailedInfo);
                     if (mShowConnectionFailedInfo) {
                         OttoManager.post(new ConnStatusOtto(ConnStatusOtto.STATUS.FAILED));
                     }
@@ -294,7 +295,7 @@ public abstract class NConnActivity extends AppbarActivity {
     }
 
     public void cancel() {
-        Log.d(TAG, "cancel");
+        if (BuildConfig.DEBUG) Log.d(TAG, "cancel");
         if (mScanHandler != null) {
             mScanHandler.removeCallbacks(mScanRunnable);
             mScanHandler = null;

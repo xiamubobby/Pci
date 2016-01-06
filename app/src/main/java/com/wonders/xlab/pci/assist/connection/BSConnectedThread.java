@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.DateUtil;
+import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.assist.connection.base.DataRequestThread;
 import com.wonders.xlab.pci.assist.connection.aamodel.BSAAModel;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
@@ -97,23 +98,22 @@ public class BSConnectedThread extends DataRequestThread {
                             ArrayList<CmssxtDataJar> al = mPackManager.m_DeviceDatas;
 
                             List<BSEntity> bgEntities = parseBloodGlucose(al);
-                            Log.d(TAG, "请求数据成功，一共" + bgEntities.size() + "条");
                             if (bgEntities.isEmpty()) {
-                                Log.d(TAG, "接收到的数据为空，继续请求数据");
+                                if (BuildConfig.DEBUG) if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据为空，继续请求数据");
                                 mOutputStream.write(DeviceCommand.command_requestData());
                             } else {
-                                Log.d(TAG, "接收到的数据不为空，删除数据");
+                                if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据不为空，删除数据");
                                 mOutputStream.write(DeviceCommand.command_delData());
                             }
                             break;
                         case 2://接收数据失败
                             break;
                         case 3://校正时间成功
-                            Log.d(TAG, "校正时间成功");
+                            if (BuildConfig.DEBUG) Log.d(TAG, "校正时间成功");
                             mOutputStream.write(DeviceCommand.command_requestData());
                             break;
                         case 4://校正时间失败
-                            Log.d(TAG, "校正时间失败");
+                            if (BuildConfig.DEBUG) Log.d(TAG, "校正时间失败");
                             if (isNewDevice) {
                                 mOutputStream.write(DeviceCommand.command_VerifyTimeSS());
                             } else {
@@ -121,23 +121,22 @@ public class BSConnectedThread extends DataRequestThread {
                             }
                             break;
                         case 5://数据删除成功
-                            Log.d(TAG, "数据删除成功");
+                            if (BuildConfig.DEBUG) Log.d(TAG, "数据删除成功");
                             mOutputStream.write(DeviceCommand.command_requestData());
                             break;
                         case 6://数据删除失败
-                            Log.d(TAG, "数据删除失败");
-//                            mOutputStream.write(DeviceCommand.command_delData());
+                            if (BuildConfig.DEBUG) Log.d(TAG, "数据删除失败，重新请求数据");
                             mOutputStream.write(DeviceCommand.command_requestData());
                             break;
                         case 7://无数据
                             mOutputStream.write(DeviceCommand.command_requestData());
                             break;
                         case 8://旧设备
-                            Log.d(TAG, "旧设备");
+                            if (BuildConfig.DEBUG) Log.d(TAG, "旧设备");
                             mOutputStream.write(DeviceCommand.command_VerifyTime());
                             break;
                         case 9://新设备
-                            Log.d(TAG, "新设备");
+                            if (BuildConfig.DEBUG) Log.d(TAG, "新设备");
                             isNewDevice = true;
 
                             mOutputStream.write(DeviceCommand.command_VerifyTimeSS());

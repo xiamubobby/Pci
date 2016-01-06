@@ -15,11 +15,12 @@ public class BPEntity {
     private int averagePressure;
     private long date;
 
-    public void setBPModel(BPAAModel BPAAModel) {
-        setHeartRate(BPAAModel.getHeartRate());
-        setSystolicPressure(BPAAModel.getSystolicPressure());
-        setDiastolicPressure(BPAAModel.getDiastolicPressure());
-        BPAAModel.setDate(BPAAModel.getDate());
+    public void setBPModel(BPAAModel bpaaModel) {
+        setDate(bpaaModel.getDate());
+        setHeartRate(bpaaModel.getHeartRate());
+        setSystolicPressure(bpaaModel.getSystolicPressure());
+        setDiastolicPressure(bpaaModel.getDiastolicPressure());
+        bpaaModel.setDate(bpaaModel.getDate());
     }
 
     public int getSystolicPressure() {
