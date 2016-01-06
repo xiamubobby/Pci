@@ -3,11 +3,11 @@ package com.wonders.xlab.pci.module.task.otto;
 /**
  * Created by hua on 15/12/16.
  */
-public class WeekViewClickBus {
+public class WeekViewClickOtto {
     private long time;
     private int dayOfMonth;
 
-    public WeekViewClickBus(long time, int dayOfMonth) {
+    public WeekViewClickOtto(long time, int dayOfMonth) {
         this.time = time;
         this.dayOfMonth = dayOfMonth;
     }

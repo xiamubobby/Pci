@@ -23,7 +23,7 @@ import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
-import com.wonders.xlab.pci.module.task.otto.TaskRefreshBus;
+import com.wonders.xlab.pci.module.task.otto.TaskRefreshOtto;
 import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
 
 import java.util.Calendar;
@@ -193,7 +193,7 @@ public class AddBSActivity extends AppbarActivity implements MeasureResultView {
     public void svSuccess() {
         mFabAddBs.setClickable(false);
         showSnackbar(mCoordinator, "数据保存成功", true);
-        RxBus.getInstance().send(new TaskRefreshBus());
+        RxBus.getInstance().send(new TaskRefreshOtto());
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

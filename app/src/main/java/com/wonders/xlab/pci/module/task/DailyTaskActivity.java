@@ -37,8 +37,8 @@ import com.wonders.xlab.pci.module.task.mvn.model.DailyTaskModel;
 import com.wonders.xlab.pci.module.task.mvn.model.TakeMedicineModel;
 import com.wonders.xlab.pci.module.task.mvn.view.DailyTaskView;
 import com.wonders.xlab.pci.module.task.mvn.view.TakeMedicineView;
-import com.wonders.xlab.pci.module.task.otto.TaskRefreshBus;
-import com.wonders.xlab.pci.module.task.otto.WeekViewClickBus;
+import com.wonders.xlab.pci.module.task.otto.TaskRefreshOtto;
+import com.wonders.xlab.pci.module.task.otto.WeekViewClickOtto;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.util.ArrayList;
@@ -166,16 +166,16 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
         mSubscription.add(RxBus.getInstance().toObserverable().subscribe(new Action1<Object>() {
             @Override
             public void call(Object o) {
-                if (o instanceof WeekViewClickBus) {
+                if (o instanceof WeekViewClickOtto) {
                     //点击日期
-                    WeekViewClickBus weekViewClickBus = (WeekViewClickBus) o;
-                    mTvDailyTaskDate.setText(DateUtil.format(weekViewClickBus.getTime(), DateUtil.DEFAULT_FORMAT));
-                    mDailyTaskModel.fetchData(AIManager.getInstance(DailyTaskActivity.this).getUserId(), weekViewClickBus.getTime());
+                    WeekViewClickOtto weekViewClickOtto = (WeekViewClickOtto) o;
+                    mTvDailyTaskDate.setText(DateUtil.format(weekViewClickOtto.getTime(), DateUtil.DEFAULT_FORMAT));
+                    mDailyTaskModel.fetchData(AIManager.getInstance(DailyTaskActivity.this).getUserId(), weekViewClickOtto.getTime());
                 } else if (o instanceof MedicineRecordBean) {
                     //选中药物记录
                     MedicineRecordBean medicine = (MedicineRecordBean) o;
                     mTakeMedicineModel.takeMedicine(medicine.getMedicineId());
-                } else if (o instanceof TaskRefreshBus) {
+                } else if (o instanceof TaskRefreshOtto) {
                     mDailyTaskModel.fetchData(AIManager.getInstance(DailyTaskActivity.this).getUserId(), null);
                 }
             }
@@ -213,13 +213,15 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
     @Override
     public void initMedicineRecordView(List<MedicineRecordBean> morningMedicine, List<MedicineRecordBean> noonMedicine, List<MedicineRecordBean> nightMedicine) {
 
+        boolean canModify = DateUtil.isTheSameDay(mCurrentSelectedTime, mToday);
+
         if (mMedicineVPAdapter == null) {
             mMedicineVPAdapter = new MedicineVPAdapter(getFragmentManager());
-            mMedicineVPAdapter.setDatas(morningMedicine, noonMedicine, nightMedicine, mCurrentSelectedTime == mToday);
+            mMedicineVPAdapter.setDatas(morningMedicine, noonMedicine, nightMedicine, canModify);
             mVpDailyTaskMedicine.setAdapter(mMedicineVPAdapter);
             mTabMedicine.setupWithViewPager(mVpDailyTaskMedicine);
         } else {
-            mMedicineVPAdapter.setDatas(morningMedicine,noonMedicine,nightMedicine,mCurrentSelectedTime == mToday);
+            mMedicineVPAdapter.setDatas(morningMedicine,noonMedicine,nightMedicine,canModify);
         }
     }
 

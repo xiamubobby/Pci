@@ -246,7 +246,8 @@ public abstract class NConnActivity extends AppbarActivity {
                 if (mConnectTime++ < RETRY_CONNECT_TIMES) {
                     connectAndStartRequestDataThread(autoRequestData);
                 } else {
-                    if (BuildConfig.DEBUG) Log.d(TAG, "mShowConnectionFailedInfo:" + mShowConnectionFailedInfo);
+                    if (BuildConfig.DEBUG)
+                        Log.d(TAG, "mShowConnectionFailedInfo:" + mShowConnectionFailedInfo);
                     if (mShowConnectionFailedInfo) {
                         OttoManager.post(new ConnStatusOtto(ConnStatusOtto.STATUS.FAILED));
                     }

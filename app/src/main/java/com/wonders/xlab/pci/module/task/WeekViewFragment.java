@@ -16,7 +16,7 @@ import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseFragment;
-import com.wonders.xlab.pci.module.task.otto.WeekViewClickBus;
+import com.wonders.xlab.pci.module.task.otto.WeekViewClickOtto;
 import com.wonders.xlab.pci.module.base.mvn.entity.task.DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity;
 
 import java.util.ArrayList;
@@ -173,7 +173,7 @@ public class WeekViewFragment extends BaseFragment {
                                 }
                             });
                     if (DateUtil.isNewBiggerOrEvenThenOld(mToday, (Long) v.getTag())) {
-                        RxBus.getInstance().send(new WeekViewClickBus((Long) v.getTag(), finalDayOfWeek));
+                        RxBus.getInstance().send(new WeekViewClickOtto((Long) v.getTag(), finalDayOfWeek));
                     }
                 }
             });

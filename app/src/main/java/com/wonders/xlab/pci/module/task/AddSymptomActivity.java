@@ -20,7 +20,7 @@ import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
 import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
 import com.wonders.xlab.pci.module.task.mvn.model.SymptomModel;
 import com.wonders.xlab.pci.module.task.mvn.view.SymptomView;
-import com.wonders.xlab.pci.module.task.otto.TaskRefreshBus;
+import com.wonders.xlab.pci.module.task.otto.TaskRefreshOtto;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.util.ArrayList;
@@ -203,7 +203,7 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, M
     public void svSuccess() {
         mFabAddSymptom.setClickable(false);
         showSnackbar(mCoordinator, "数据保存成功", true);
-        RxBus.getInstance().send(new TaskRefreshBus());
+        RxBus.getInstance().send(new TaskRefreshOtto());
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

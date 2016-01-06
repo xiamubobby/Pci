@@ -12,10 +12,13 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
+import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
+import com.wonders.xlab.pci.module.task.otto.CanModifyMedicineOtto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +46,11 @@ public class MedicineRecordFragment extends BaseFragment {
         args.putBoolean(ARG_MODIFY, canModify);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Subscribe
+    public void CanModify(CanModifyMedicineOtto canModify) {
+        mCanModify = canModify.isCanModify();
     }
 
     public void setDatas(List<MedicineRecordBean> beanList) {
@@ -84,6 +92,7 @@ public class MedicineRecordFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        OttoManager.register(this);
         refreshViews();
     }
 
@@ -140,6 +149,7 @@ public class MedicineRecordFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
 }
