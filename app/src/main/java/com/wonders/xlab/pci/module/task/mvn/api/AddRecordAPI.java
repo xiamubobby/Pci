@@ -7,6 +7,7 @@ import com.wonders.xlab.pci.module.base.mvn.entity.SimpleEntity;
 import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
+import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
 import rx.Observable;
@@ -33,5 +34,9 @@ public interface AddRecordAPI {
     @POST("userSymptom/saveUserSymptom")
     Observable<SimpleEntity> saveSymptom(@Field("userId") String userId, @Field("symptomIdsStr") String[] symptomIdsStr);
 
+    @GET("userBloodPressureStandard/listBloodPressureStandard/{userId}")
+    Observable<SimpleEntity> fetchIdealBPRange(@Field("userId") String userId);
 
+    @GET("userBloodPressureStandard/listBloodPressureStandard/{userId}")
+    Observable<SimpleEntity> fetchIdealBSRange(@Field("userId") String userId);
 }

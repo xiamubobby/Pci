@@ -19,29 +19,75 @@ public class AddRecordModel extends BaseModel<SimpleEntity> {
         mAddRecordAPI = mRetrofit.create(AddRecordAPI.class);
     }
 
+    /**
+     * 获取血压理想范围
+     *
+     * @param userId
+     */
+    public void fetchIdealBPRange(String userId) {
+        setObservable(mAddRecordAPI.fetchIdealBPRange(userId));
+    }
+
+    /**
+     * 获取血糖理想范围
+     *
+     * @param userId
+     */
+    public void fetchIdealBSRange(String userId) {
+        setObservable(mAddRecordAPI.fetchIdealBSRange(userId));
+    }
+
+    /**
+     * 保存一条血糖数据
+     *
+     * @param userId
+     * @param date
+     * @param timeIndex
+     * @param bloodSugarValue
+     */
     public void saveBSSingle(String userId, long date, int timeIndex, float bloodSugarValue) {
         setObservable(mAddRecordAPI.saveBSSingle(userId, date, timeIndex, bloodSugarValue));
     }
 
+    /**
+     * 批量保存血糖数据
+     *
+     * @param userId
+     * @param bsEntityList
+     */
     public void saveBS(String userId, BSEntityList bsEntityList) {
-
         setObservable(mAddRecordAPI.saveBS(userId, bsEntityList));
     }
 
     /**
+     * 批量保存血压数据
+     *
      * @param userId
      * @param bpEntityList
      */
     public void saveBP(String userId, BPEntityList bpEntityList) {
-
         setObservable(mAddRecordAPI.saveBP(userId, bpEntityList));
     }
 
+    /**
+     * 保存一条血压数据
+     *
+     * @param userId
+     * @param date
+     * @param heartRate
+     * @param systolicPressure
+     * @param diastolicPressure
+     */
     public void saveBPSingle(String userId, long date, int heartRate, int systolicPressure, int diastolicPressure) {
-
         setObservable(mAddRecordAPI.saveBPSingle(userId, date, heartRate, systolicPressure, diastolicPressure));
     }
 
+    /**
+     * 保存主诉症状
+     *
+     * @param userId
+     * @param symptomIdsStr
+     */
     public void saveSymptom(String userId, String[] symptomIdsStr) {
         setObservable(mAddRecordAPI.saveSymptom(userId, symptomIdsStr));
     }

@@ -98,7 +98,7 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView 
         }
 
         mAddRecordModel.saveBS(AIManager.getInstance(getActivity()).getUserId(), bsEntityList);
-        mTvBsResultSugar.setText(String.valueOf(bsEntityList.getBs().get(0).getBloodSugar()));
+        mTvBsResultSugar.setText(String.valueOf(bsEntityList.getBs().get(0).getBloodSugarValue()));
     }
 
     public void onResume() {

@@ -7,29 +7,30 @@ import com.wonders.xlab.pci.assist.connection.aamodel.BSAAModel;
  */
 public class BSEntity {
 
-    private double bloodSugar;
+    private double bloodSugarValue;
     private long date;
+    private int timeIndex;
 
     public BSEntity() {
     }
 
-    public BSEntity(long date, double bloodSugar) {
-
+    public BSEntity(double bloodSugarValue, long date, int timeIndex) {
+        this.bloodSugarValue = bloodSugarValue;
         this.date = date;
-        this.bloodSugar = bloodSugar;
+        this.timeIndex = timeIndex;
     }
 
     public void setBSModel(BSAAModel bsAAModel) {
-        setBloodSugar(bsAAModel.getBloodSugar());
+        setBloodSugarValue(bsAAModel.getBloodSugar());
         setDate(bsAAModel.getDate());
     }
 
-    public double getBloodSugar() {
-        return bloodSugar;
+    public double getBloodSugarValue() {
+        return bloodSugarValue;
     }
 
-    public void setBloodSugar(double bloodSugar) {
-        this.bloodSugar = bloodSugar;
+    public void setBloodSugarValue(double bloodSugarValue) {
+        this.bloodSugarValue = bloodSugarValue;
     }
 
     public long getDate() {
@@ -38,5 +39,13 @@ public class BSEntity {
 
     public void setDate(long date) {
         this.date = date;
+    }
+
+    public int getTimeIndex() {
+        return timeIndex;
+    }
+
+    public void setTimeIndex(int timeIndex) {
+        this.timeIndex = timeIndex;
     }
 }

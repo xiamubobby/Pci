@@ -8,6 +8,9 @@ import java.util.List;
 public class BSEntityList {
     private List<BSEntity> bs;
 
+    public BSEntityList() {
+    }
+
     public BSEntityList(List<BSEntity> BSAAModelList) {
         bs = BSAAModelList;
     }
