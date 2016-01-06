@@ -1,6 +1,7 @@
 package com.wonders.xlab.pci.module.task.mvn.model;
 
 import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
+import com.wonders.xlab.pci.assist.connection.entity.BSEntityList;
 import com.wonders.xlab.pci.module.base.mvn.entity.SimpleEntity;
 import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
@@ -18,8 +19,13 @@ public class AddRecordModel extends BaseModel<SimpleEntity> {
         mAddRecordAPI = mRetrofit.create(AddRecordAPI.class);
     }
 
-    public void saveBS(String userId, long date, int timeIndex, float bloodSugarValue) {
-        setObservable(mAddRecordAPI.saveBS(userId, date, timeIndex, bloodSugarValue));
+    public void saveBSSingle(String userId, long date, int timeIndex, float bloodSugarValue) {
+        setObservable(mAddRecordAPI.saveBSSingle(userId, date, timeIndex, bloodSugarValue));
+    }
+
+    public void saveBS(String userId, BSEntityList bsEntityList) {
+
+        setObservable(mAddRecordAPI.saveBS(userId, bsEntityList));
     }
 
     /**

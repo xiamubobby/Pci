@@ -9,6 +9,7 @@ import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.assist.connection.base.DataRequestThread;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntity;
+import com.wonders.xlab.pci.assist.connection.aamodel.BPAAModel;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
 
 import java.io.IOException;
@@ -268,13 +269,17 @@ public class BPConnectedThread extends DataRequestThread {
                     + ":" + minute + ":" + sec;
             Date date = DateUtil.parse(dateStr, "yyyy-MM-dd HH:mm:ss");
 
-            BPEntity bpEntity = new BPEntity(date == null ? Calendar.getInstance().getTimeInMillis() : date.getTime(),
+            BPAAModel BPAAModel = new BPAAModel(date == null ? Calendar.getInstance().getTimeInMillis() : date.getTime(),
                     hp,
                     lp,
                     pulseRate,
                     ap);
             //缓存数据
-            bpEntity.save();
+            BPAAModel.save();
+
+            BPEntity bpEntity = new BPEntity();
+            bpEntity.setBPModel(BPAAModel);
+
             bpEntities.add(bpEntity);
         }
 

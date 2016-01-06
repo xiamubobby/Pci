@@ -16,13 +16,14 @@ import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.base.mvn.entity.task.SymptomEntity;
+import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
 import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
 import com.wonders.xlab.pci.module.task.mvn.model.SymptomModel;
-import com.wonders.xlab.pci.module.task.otto.TaskRefreshBus;
-import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
 import com.wonders.xlab.pci.module.task.mvn.view.SymptomView;
+import com.wonders.xlab.pci.module.task.otto.TaskRefreshBus;
 import com.zhy.view.flowlayout.FlowLayout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -104,6 +105,9 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, M
         ButterKnife.unbind(this);
     }
 
+    private List<TextView> labelViews = new ArrayList<>();
+    private TextView labelClear;//以上症状全无
+
     @Override
     public void showSymptoms(List<SymptomEntity.RetValuesEntity> entityList) {
         mEmpty.setVisibility(View.GONE);
@@ -119,20 +123,48 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, M
                 labelView.setText(symptomEntity.getName());
                 //将标签id设置在label的tag中
                 labelView.setTag(symptomEntity.getId());
+
+                if (symptomEntity.getName().contains("症状全无")) {
+                    labelClear = labelView;
+                }
+
                 labelView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!labelView.isSelected()) {
-                            mSelectedSymptomMap.put(v.getTag().toString(), v.getTag().toString());
+                        if (labelClear == v) {
+                            //点击以上全无
+                            boolean isSelected = labelClear.isSelected();
+                            //1、clear all
+                            mSelectedSymptomMap.clear();
+                            for (int i = 0; i < labelViews.size(); i++) {
+                                labelViews.get(i).setSelected(false);
+                            }
+
+                            labelClear.setSelected(isSelected);
+                            //2、add new
+                            if (!v.isSelected()) {
+                                mSelectedSymptomMap.put(v.getTag().toString(), v.getTag().toString());
+                            } else {
+                                mSelectedSymptomMap.remove(v.getTag().toString());
+                            }
+                            labelClear.setSelected(!labelClear.isSelected());
                         } else {
-                            mSelectedSymptomMap.remove(v.getTag().toString());
+                            if (!labelClear.isSelected()) {
+                                if (!v.isSelected()) {
+                                    mSelectedSymptomMap.put(v.getTag().toString(), v.getTag().toString());
+                                } else {
+                                    mSelectedSymptomMap.remove(v.getTag().toString());
+                                }
+                                labelView.setSelected(!labelView.isSelected());
+                            }
                         }
 
-                        labelView.setSelected(!labelView.isSelected());
                     }
                 });
 
                 contents.addView(labelView);
+
+                labelViews.add(labelView);
             }
             mContainerAddSymptom.addView(itemView);
         }

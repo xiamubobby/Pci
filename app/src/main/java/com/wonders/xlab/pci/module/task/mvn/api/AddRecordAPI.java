@@ -1,6 +1,7 @@
 package com.wonders.xlab.pci.module.task.mvn.api;
 
 import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
+import com.wonders.xlab.pci.assist.connection.entity.BSEntityList;
 import com.wonders.xlab.pci.module.base.mvn.entity.SimpleEntity;
 
 import retrofit.http.Body;
@@ -16,7 +17,10 @@ import rx.Observable;
 public interface AddRecordAPI {
     @FormUrlEncoded
     @POST("userBloodSugar/saveUserBloodSugar")
-    Observable<SimpleEntity> saveBS(@Field("userId") String userId, @Field("date") long date, @Field("timeIndex") int timeIndex, @Field("bloodSugarValue") float bloodSugarValue);
+    Observable<SimpleEntity> saveBSSingle(@Field("userId") String userId, @Field("date") long date, @Field("timeIndex") int timeIndex, @Field("bloodSugarValue") float bloodSugarValue);
+
+    @POST("userBloodSugar/saveUserBloodSugarByJson/{userId}")
+    Observable<SimpleEntity> saveBS(@Path("userId") String userId, @Body BSEntityList bodyList);
 
     @FormUrlEncoded
     @POST("userBloodPressure/saveUserPressure")

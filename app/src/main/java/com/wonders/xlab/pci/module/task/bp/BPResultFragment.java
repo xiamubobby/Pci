@@ -17,6 +17,7 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntity;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
+import com.wonders.xlab.pci.assist.connection.aamodel.BPAAModel;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
 import com.wonders.xlab.pci.assist.connection.otto.ScanStartOtto;
 import com.wonders.xlab.pci.module.base.BaseFragment;
@@ -85,12 +86,14 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView 
     @Subscribe
     public void onDataReceived(BPEntityList bpEntityList) {
         //save cache again that save to server failed last time
-        List<BPEntity> cache = new Select().from(BPEntity.class).execute();
-        for (BPEntity entity : cache) {
-            bpEntityList.getBPEntityList().add(entity);
+        List<BPAAModel> cache = new Select().from(BPAAModel.class).execute();
+        for (BPAAModel model : cache) {
+            BPEntity bpEntity = new BPEntity();
+            bpEntity.setBPModel(model);
+            bpEntityList.getBp().add(bpEntity);
         }
 
-        List<BPEntity> bpEntities = bpEntityList.getBPEntityList();
+        List<BPEntity> bpEntities = bpEntityList.getBp();
         mRecordModel.saveBP(AIManager.getInstance(getActivity()).getUserId(), bpEntityList);
 
         mTvBpResultPressure.setText(String.format("%d/%d", bpEntities.get(0).getSystolicPressure(), bpEntities.get(0).getDiastolicPressure()));
@@ -101,13 +104,13 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView 
     public void svSuccess() {
         mLdvBpResult.stopAnimation();
         //the datas are saved successfully, delete the cache
-        new Delete().from(BPEntity.class).exists();
+        new Delete().from(BPAAModel.class).exists();
     }
 
     @Override
     public void svDuplicate() {
         //the datas are saved successfully, delete the cache
-        new Delete().from(BPEntity.class).exists();
+        new Delete().from(BPAAModel.class).exists();
     }
 
     @Override

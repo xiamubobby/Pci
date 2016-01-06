@@ -1,30 +1,27 @@
 package com.wonders.xlab.pci.assist.connection.entity;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
-
-import java.io.Serializable;
+import com.wonders.xlab.pci.assist.connection.aamodel.BSAAModel;
 
 /**
  * Created by hua on 15/11/9.
  */
-@Table(name = "BSEntity")
-public class BSEntity extends Model implements Serializable {
-    private static final long serialVersionUID = 8000111713589185380L;
+public class BSEntity {
 
-    @Column(name = "bloodSugar")
     private double bloodSugar;
-    @Column(name = "measureTime")
-    private long measureTime;
+    private long date;
 
     public BSEntity() {
     }
 
-    public BSEntity(long measureTime, double bloodSugar) {
+    public BSEntity(long date, double bloodSugar) {
 
-        this.measureTime = measureTime;
+        this.date = date;
         this.bloodSugar = bloodSugar;
+    }
+
+    public void setBSModel(BSAAModel bsAAModel) {
+        setBloodSugar(bsAAModel.getBloodSugar());
+        setDate(bsAAModel.getDate());
     }
 
     public double getBloodSugar() {
@@ -35,11 +32,11 @@ public class BSEntity extends Model implements Serializable {
         this.bloodSugar = bloodSugar;
     }
 
-    public long getMeasureTime() {
-        return measureTime;
+    public long getDate() {
+        return date;
     }
 
-    public void setMeasureTime(long measureTime) {
-        this.measureTime = measureTime;
+    public void setDate(long date) {
+        this.date = date;
     }
 }

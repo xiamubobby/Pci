@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.assist.connection.BPConnectedThread;
 import com.wonders.xlab.pci.assist.connection.BSConnectedThread;
+import com.wonders.xlab.pci.assist.connection.aamodel.BPAAModel;
+import com.wonders.xlab.pci.assist.connection.aamodel.BSAAModel;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 
@@ -25,7 +27,7 @@ import java.util.Set;
  * 使用步骤：
  * 1、@{@link #startScan()} 获取扫描的设备的信息 通过Otto注册接收扫描的结果，具体参考@{@link ScanReceiver}
  * 2、@{@link #getData(String)} 将第一步获取的设备地址传入，开始获取数据
- * 3、接收数据，也是通过Otto的注册方式来接收，目前只有@{@link com.wonders.xlab.pci.assist.connection.entity.BPEntity}和@{@link com.wonders.xlab.pci.assist.connection.entity.BSEntity}
+ * 3、接收数据，也是通过Otto的注册方式来接收，目前只有@{@link BPAAModel}和@{@link BSAAModel}
  */
 public abstract class NConnActivity extends AppbarActivity {
     public static final int REQUEST_ENABLE_BOND = 11214;

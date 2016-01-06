@@ -6,6 +6,7 @@ import android.util.Log;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.assist.connection.base.DataRequestThread;
+import com.wonders.xlab.pci.assist.connection.aamodel.BSAAModel;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntityList;
 
@@ -175,19 +176,22 @@ public class BSConnectedThread extends DataRequestThread {
 
         for (CmssxtDataJar cmssxtDataJar : cmssxtDataJars) {
             Date date = DateUtil.parse(cmssxtDataJar.m_saveDate, "yyyy-MM-dd HH:mm:ss");
-            BSEntity bgEntity = new BSEntity(date == null ? Calendar.getInstance().getTimeInMillis() : date.getTime(), cmssxtDataJar.m_data);
+            BSAAModel bsaaModel = new BSAAModel(date == null ? Calendar.getInstance().getTimeInMillis() : date.getTime(), cmssxtDataJar.m_data);
 
             //cache data
-            bgEntity.save();
+            bsaaModel.save();
 
-            bgEntities.add(bgEntity);
+            BSEntity bsEntity = new BSEntity();
+            bsEntity.setBSModel(bsaaModel);
+
+            bgEntities.add(bsEntity);
 
         }
         if (bgEntities.size() > 0) {
             Collections.sort(bgEntities, new Comparator<BSEntity>() {
                 @Override
                 public int compare(BSEntity lhs, BSEntity rhs) {
-                    long tmp = lhs.getMeasureTime() - rhs.getMeasureTime();
+                    long tmp = lhs.getDate() - rhs.getDate();
                     return tmp > 0 ? -1 : (tmp == 0 ? 0 : 1);
                 }
             });

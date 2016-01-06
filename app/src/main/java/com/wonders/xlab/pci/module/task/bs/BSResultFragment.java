@@ -16,6 +16,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
+import com.wonders.xlab.pci.assist.connection.aamodel.BSAAModel;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntityList;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
@@ -89,13 +90,15 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView 
     @Subscribe
     public void onDataReceived(BSEntityList bsEntityList) {
         //save cache again that save to server failed last time
-        List<BSEntity> cache = new Select().from(BSEntity.class).execute();
-        for (BSEntity entity : cache) {
-            bsEntityList.getBSEntityList().add(entity);
+        List<BSAAModel> cache = new Select().from(BSAAModel.class).execute();
+        for (BSAAModel model : cache) {
+            BSEntity bsEntity = new BSEntity();
+            bsEntity.setBSModel(model);
+            bsEntityList.getBs().add(bsEntity);
         }
 
-        mAddRecordModel.saveBS(AIManager.getInstance(getActivity()).getUserId(), bsEntityList.getBSEntityList().get(0).getMeasureTime(), 0, (float) bsEntityList.getBSEntityList().get(0).getBloodSugar());
-        mTvBsResultSugar.setText(String.valueOf(bsEntityList.getBSEntityList().get(0).getBloodSugar()));
+        mAddRecordModel.saveBS(AIManager.getInstance(getActivity()).getUserId(), bsEntityList);
+        mTvBsResultSugar.setText(String.valueOf(bsEntityList.getBs().get(0).getBloodSugar()));
     }
 
     public void onResume() {
@@ -120,13 +123,13 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView 
     @Override
     public void svSuccess() {
         mLdvBsResult.stopAnimation();
-        new Delete().from(BSEntity.class).exists();
+        new Delete().from(BSAAModel.class).exists();
     }
 
     @Override
     public void svDuplicate() {
         //the datas are saved successfully, delete the cache
-        new Delete().from(BSEntity.class).exists();
+        new Delete().from(BSAAModel.class).exists();
     }
 
     @Override

@@ -6,17 +6,20 @@ import java.util.List;
  * Created by hua on 16/1/5.
  */
 public class BPEntityList {
-    private List<BPEntity> mBPEntityList;
+    private List<BPEntity> bp;
 
-    public BPEntityList(List<BPEntity> BPEntityList) {
-        mBPEntityList = BPEntityList;
+    public BPEntityList() {
     }
 
-    public List<BPEntity> getBPEntityList() {
-        return mBPEntityList;
+    public BPEntityList(List<BPEntity> BPModelList) {
+        bp = BPModelList;
     }
 
-    public void setBPEntityList(List<BPEntity> BPEntityList) {
-        mBPEntityList = BPEntityList;
+    public List<BPEntity> getBp() {
+        return bp;
+    }
+
+    public void setBp(List<BPEntity> bp) {
+        this.bp = bp;
     }
 }

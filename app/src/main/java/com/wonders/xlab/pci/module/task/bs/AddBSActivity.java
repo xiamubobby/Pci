@@ -129,7 +129,7 @@ public class AddBSActivity extends AppbarActivity implements MeasureResultView {
                 periodIndex = 0;
         }
 
-        mAddRecordModel.saveBS(AIManager.getInstance(this).getUserId(), date, periodIndex, Float.parseFloat(bloodSugar));
+        mAddRecordModel.saveBSSingle(AIManager.getInstance(this).getUserId(), date, periodIndex, Float.parseFloat(bloodSugar));
     }
 
     @OnClick(R.id.tv_add_date)

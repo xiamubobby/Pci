@@ -1,25 +1,38 @@
-package com.wonders.xlab.pci.assist.connection.entity;
+package com.wonders.xlab.pci.assist.connection.aamodel;
 
-import com.wonders.xlab.pci.assist.connection.aamodel.BPAAModel;
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 
 /**
- * Created by hua on 16/1/6.
+ * Created by hua on 15/11/9.
  */
-public class BPEntity {
+@Table(name = "BPAAModel")
+public class BPAAModel extends Model{
+
     /**
      * 收缩压，高压
      */
+    @Column(name = "systolicPressure")
     private int systolicPressure;
+    @Column(name = "diastolicPressure")
     private int diastolicPressure;
+    @Column(name = "heartRate")
     private int heartRate;
+    @Column(name = "averagePressure")
     private int averagePressure;
+    @Column(name = "date")
     private long date;
 
-    public void setBPModel(BPAAModel BPAAModel) {
-        setHeartRate(BPAAModel.getHeartRate());
-        setSystolicPressure(BPAAModel.getSystolicPressure());
-        setDiastolicPressure(BPAAModel.getDiastolicPressure());
-        BPAAModel.setDate(BPAAModel.getDate());
+    public BPAAModel() {
+    }
+
+    public BPAAModel(long date, int systolicPressure, int diastolicPressure, int heartRate, int averagePressure) {
+        this.date = date;
+        this.systolicPressure = systolicPressure;
+        this.diastolicPressure = diastolicPressure;
+        this.heartRate = heartRate;
+        this.averagePressure = averagePressure;
     }
 
     public int getSystolicPressure() {
@@ -61,4 +74,5 @@ public class BPEntity {
     public void setDate(long date) {
         this.date = date;
     }
+
 }
