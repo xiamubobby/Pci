@@ -1,49 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?listPreferredItemHeightSmall"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:orientation="vertical">
 
-    <data>
-
-        <variable
-            name="category"
-            type="com.wonders.xlab.pci.module.record.monitor.bean.MedicineCategoryBean"/>
-
-    </data>
+    <include layout="@layout/divider_vertical"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?listPreferredItemHeightSmall"
-        android:background="?selectableItemBackground"
-        android:clickable="true"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/item_interval">
 
-        <include layout="@layout/divider_vertical"/>
+        <TextView
+            android:id="@+id/tv_item_medicine_category_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/item_interval">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="调整记录"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@{category.title}"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="调整记录"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/item_interval"
-                android:src="@drawable/arrow_down"/>
-
-        </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/item_interval"
+            android:src="@drawable/arrow_down"/>
 
     </LinearLayout>
-</layout>
+
+</LinearLayout>

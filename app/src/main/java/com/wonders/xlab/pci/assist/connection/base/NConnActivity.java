@@ -308,7 +308,7 @@ public abstract class NConnActivity extends AppbarActivity {
             mScanReceiver = null;
             isRegistered = false;
         }
-        if (mBluetoothAdapter.isDiscovering()) {
+        if (mBluetoothAdapter != null && mBluetoothAdapter.isDiscovering()) {
             mBluetoothAdapter.cancelDiscovery();
         }
         if (mRequestDataThread != null) {

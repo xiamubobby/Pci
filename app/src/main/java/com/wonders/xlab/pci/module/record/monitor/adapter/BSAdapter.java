@@ -13,7 +13,6 @@ import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.databinding.ItemBsBinding;
 import com.wonders.xlab.pci.module.record.monitor.bean.BSBean;
 
 import java.lang.ref.WeakReference;
@@ -39,7 +38,8 @@ public class BSAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycler
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         final ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        viewHolder.binding.setBs(getBean(position));
+        viewHolder.mTvItemBsRecordTime.setText(DateUtil.format(getBean(position).getRecordTime(),"HH:mm"));
+        viewHolder.mTvItemBsRecordBs.setText(getBean(position).getBs());
     }
 
     @Override
@@ -80,11 +80,14 @@ public class BSAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycler
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        ItemBsBinding binding;
+        @Bind(R.id.tv_item_bs_record_time)
+        TextView mTvItemBsRecordTime;
+        @Bind(R.id.tv_item_bs_record_bs)
+        TextView mTvItemBsRecordBs;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            binding = ItemBsBinding.bind(itemView);
+            ButterKnife.bind(this,itemView);
         }
     }
 

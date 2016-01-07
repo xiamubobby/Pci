@@ -13,7 +13,6 @@ import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.databinding.ItemBpBinding;
 import com.wonders.xlab.pci.module.record.monitor.bean.BPBean;
 
 import java.lang.ref.WeakReference;
@@ -25,6 +24,7 @@ import butterknife.ButterKnife;
  * Created by sjy on 2015/12/22.
  */
 public class BPAdapter extends SimpleRVAdapter<BPBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
+
     private WeakReference<Context> mContext;
     private LayoutInflater mInflater;
 
@@ -38,7 +38,9 @@ public class BPAdapter extends SimpleRVAdapter<BPBean> implements StickyRecycler
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         final ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        viewHolder.binding.setBp(getBean(position));
+        viewHolder.mTvItemBpRecordTime.setText(DateUtil.format(getBean(position).getRecordTime(),"HH:mm"));
+        viewHolder.mTvItemBpRecordSpDp.setText(String.format("%s/%s",getBean(position).getSystolicPressure(),getBean(position).getDiastolicPressure()));
+        viewHolder.mTvItemBpRecordHeartRate.setText(getBean(position).getHeartRate());
     }
 
     @Override
@@ -79,11 +81,16 @@ public class BPAdapter extends SimpleRVAdapter<BPBean> implements StickyRecycler
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        ItemBpBinding binding;
+        @Bind(R.id.tv_item_bp_record_time)
+        TextView mTvItemBpRecordTime;
+        @Bind(R.id.tv_item_bp_record_sp_dp)
+        TextView mTvItemBpRecordSpDp;
+        @Bind(R.id.tv_item_bp_record_heart_rate)
+        TextView mTvItemBpRecordHeartRate;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            binding = ItemBpBinding.bind(itemView);
+            ButterKnife.bind(this,itemView);
         }
     }
 

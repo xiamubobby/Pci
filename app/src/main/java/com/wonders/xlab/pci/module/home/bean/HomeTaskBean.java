@@ -9,5 +9,4 @@ import com.wonders.xlab.pci.R;
 public abstract class HomeTaskBean extends BaseBean {
     public final static int ITEM_HISTORY = R.layout.item_home_history_task;
     public final static int ITEM_TODAY = R.layout.item_home_today_task;
-
 }

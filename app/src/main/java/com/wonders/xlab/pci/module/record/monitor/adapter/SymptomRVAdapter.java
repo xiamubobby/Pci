@@ -5,12 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
+import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.common.utils.GlideCircleTransform;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.databinding.ItemSymptomAdviceBinding;
 import com.wonders.xlab.pci.module.base.mvn.entity.record.monitor.SymptomEntity;
 
 import java.lang.ref.WeakReference;
@@ -36,7 +37,8 @@ public class SymptomRVAdapter extends SimpleRVAdapter<SymptomEntity.RetValuesEnt
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         AdviceViewHolder viewHolder = (AdviceViewHolder) holder;
-        viewHolder.binding.setAdvice(getBean(position));
+        viewHolder.mTvSymptomAdviceTime.setText(DateUtil.format(getBean(position).getRecordTime(), "HH:mm"));
+        viewHolder.mTvSymptomAdviceContent.setText(getBean(position).getContent());
         Glide.with(getContextWeakReference().get())
                 .load(getBean(position).getPortrait())
                 .transform(new GlideCircleTransform(getContextWeakReference().get()))
@@ -46,14 +48,16 @@ public class SymptomRVAdapter extends SimpleRVAdapter<SymptomEntity.RetValuesEnt
     }
 
     class AdviceViewHolder extends RecyclerView.ViewHolder {
-        ItemSymptomAdviceBinding binding;
 
         @Bind(R.id.iv_symptom_advice_portrait)
         ImageView mIvSymptomAdvicePortrait;
+        @Bind(R.id.tv_symptom_advice_time)
+        TextView mTvSymptomAdviceTime;
+        @Bind(R.id.tv_symptom_advice_content)
+        TextView mTvSymptomAdviceContent;
 
         public AdviceViewHolder(View itemView) {
             super(itemView);
-            binding = ItemSymptomAdviceBinding.bind(itemView);
             ButterKnife.bind(this, itemView);
         }
     }

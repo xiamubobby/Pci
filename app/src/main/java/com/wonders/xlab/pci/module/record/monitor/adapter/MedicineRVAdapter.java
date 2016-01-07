@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.bignerdranch.expandablerecyclerview.Adapter.ExpandableRecyclerAdapter;
 import com.bignerdranch.expandablerecyclerview.Model.ParentListItem;
+import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.record.monitor.adapter.viewholder.MedicineCategoryChildVH;
 import com.wonders.xlab.pci.module.record.monitor.adapter.viewholder.MedicineCategoryVH;
@@ -26,7 +27,7 @@ public class MedicineRVAdapter extends ExpandableRecyclerAdapter<MedicineCategor
 
     /**
      * Primary constructor. Sets up {@link #mParentItemList} and {@link #mItemList}.
-     * <p>
+     * <p/>
      * Changes to {@link #mParentItemList} should be made through add/remove methods in
      * {@link ExpandableRecyclerAdapter}
      *
@@ -70,12 +71,14 @@ public class MedicineRVAdapter extends ExpandableRecyclerAdapter<MedicineCategor
     @Override
     public void onBindParentViewHolder(MedicineCategoryVH parentViewHolder, int position, ParentListItem parentListItem) {
         MedicineCategoryBean bean = (MedicineCategoryBean) parentListItem;
-        parentViewHolder.getBinding().setCategory(bean);
+        parentViewHolder.mTvTitle.setText(bean.getTitle());
     }
 
     @Override
     public void onBindChildViewHolder(MedicineCategoryChildVH childViewHolder, int position, Object childListItem) {
         MedicineCategoryChildBean bean = (MedicineCategoryChildBean) childListItem;
-        childViewHolder.getBinding().setMedicine(bean);
+        childViewHolder.mTvTitle.setText(bean.isTitle() ? "时间" : DateUtil.format(bean.getTime(), DateUtil.DEFAULT_FORMAT));
+        childViewHolder.mTvValue.setText(bean.isTitle()?"剂量(mg)":bean.getValue());
+        childViewHolder.mTvCounts.setText(bean.isTitle()?"次数(mg/天)":bean.getCounts());
     }
 }
