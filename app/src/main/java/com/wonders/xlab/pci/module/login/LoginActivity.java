@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.utils.KeyboardUtil;
+import com.wonders.xlab.common.utils.MD5Util;
 import com.wonders.xlab.common.utils.ViewHelper;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
@@ -59,7 +60,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
             ViewHelper.shakeEdit(mEtPassword, this);
             return;
         }
-        mLoginModel.login(tel, password);
+        mLoginModel.login(tel, new MD5Util().encrypt(password));
     }
 
     @Override

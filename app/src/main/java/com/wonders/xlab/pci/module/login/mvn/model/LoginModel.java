@@ -39,10 +39,10 @@ public class LoginModel extends BaseModel<LoginEntity> {
     @Override
     protected void onSuccess(@NonNull LoginEntity response) {
         mLoginView.hideLoading();
-        if (response.getRet_values() == null) {
-            mLoginView.loginFailed("登录失败，请重试！");
-        } else {
+        if (response.getRet_code() == 0) {
             mLoginView.loginSuccess(response.getRet_values());
+        } else {
+            mLoginView.loginFailed(response.getMessage());
         }
     }
 

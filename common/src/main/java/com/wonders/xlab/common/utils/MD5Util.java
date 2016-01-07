@@ -23,7 +23,7 @@ public class MD5Util {
                     h = "0" + h;
                 md5Hash.append(h);
             }
-            result = md5Hash.toString();
+            result = md5Hash.toString().toLowerCase();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
