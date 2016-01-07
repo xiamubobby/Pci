@@ -202,6 +202,7 @@ public class MainActivity extends BaseActivity {
 
     @Subscribe
     public void forceExit(ExitBus bean) {
+        startActivity(new Intent(this, MainActivity.class));
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }

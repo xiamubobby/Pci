@@ -222,7 +222,8 @@ public class XEMChatService extends Service {
                                 message = "显示帐号已经被移除,请联系客服";
                             } else if (error == EMError.CONNECTION_CONFLICT) {
                                 //帐号在其他设备登陆
-                                message = "";
+                                message = "帐号在其他设备登陆";
+                                OttoManager.post(new ExitBus());
                             } else {
                                 if (NetUtils.hasNetwork(XEMChatService.this)) {
                                     //连接不到聊天服务器,请重新打开应用
