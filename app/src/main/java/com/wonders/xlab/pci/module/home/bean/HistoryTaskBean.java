@@ -25,7 +25,7 @@ public class HistoryTaskBean extends HomeTaskBean {
 
     @Override
     public int getItemLayout() {
-        return HomeTaskBean.ITEM_YESTERDAY;
+        return HomeTaskBean.ITEM_HISTORY;
     }
 
     public String getTitle() {

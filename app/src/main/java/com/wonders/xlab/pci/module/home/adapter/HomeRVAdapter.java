@@ -26,14 +26,14 @@ public class HomeRVAdapter extends MultiRVAdapter {
     public MultiViewHolder createViewHolder(View itemView, int viewType) {
         MultiViewHolder holder;
         switch (viewType) {
-            case HomeTaskBean.ITEM_YESTERDAY:
+            case HomeTaskBean.ITEM_HISTORY:
                 holder = new HistoryTaskViewHolder(itemView);
                 break;
             case HomeTaskBean.ITEM_TODAY:
                 holder = new TodayTaskViewHolder(itemView);
                 break;
             default:
-                throw new IllegalArgumentException("you must set your layout in HomeTaskBean.ITEM_YESTERDAY and HomeTaskBean.ITEM_TODAY as your viewType");
+                throw new IllegalArgumentException("you must set your layout in HomeTaskBean.ITEM_HISTORY and HomeTaskBean.ITEM_TODAY as your viewType");
         }
         holder.setContext(mContextWeakReference);
         return holder;

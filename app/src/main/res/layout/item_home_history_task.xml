@@ -44,7 +44,7 @@
             android:paddingLeft="@dimen/item_interval_large"
             android:paddingRight="@dimen/item_interval_large">
 
-            <TextView
+            <TextView android:id="@+id/tv_item_home_history_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -54,7 +54,7 @@
 
             <include layout="@layout/divider_vertical"/>
 
-            <TextView
+            <TextView android:id="@+id/tv_item_home_history_content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -62,7 +62,7 @@
 
         </LinearLayout>
 
-        <TextView
+        <TextView android:id="@+id/tv_item_home_history_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/ll_item_home_content"
