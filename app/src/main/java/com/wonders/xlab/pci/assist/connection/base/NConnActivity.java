@@ -64,6 +64,8 @@ public abstract class NConnActivity extends AppbarActivity {
      */
     private boolean mShowConnectionFailedInfo = true;
 
+    private boolean mIsCancel = true;
+
     /**
      * 设备类型
      */
@@ -122,21 +124,27 @@ public abstract class NConnActivity extends AppbarActivity {
     }
 
     public void postDelayScan(long delay) {
-        if (mScanHandler == null) {
-            mScanHandler = new Handler();
+
+        if (!mIsCancel) {
+            if (mScanHandler == null) {
+                mScanHandler = new Handler();
+            }
+            if (mScanRunnable == null) {
+                mScanRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!mIsCancel) {
+                            startScan();
+                        }
+                    }
+                };
+            }
+            mScanHandler.postDelayed(mScanRunnable, delay);
         }
-        if (mScanRunnable == null) {
-            mScanRunnable = new Runnable() {
-                @Override
-                public void run() {
-                    startScan();
-                }
-            };
-        }
-        mScanHandler.postDelayed(mScanRunnable, delay);
     }
 
     public void startScan() {
+        mIsCancel = false;
         //reset flag
         showConnectionFailedInfo(true);
 
@@ -168,6 +176,8 @@ public abstract class NConnActivity extends AppbarActivity {
      * 连接设备，成功后请求数据
      */
     public void getData(String deviceAddress) {
+        mIsCancel = false;
+
         if (BuildConfig.DEBUG) Log.d(TAG, "请求数据");
         mDeviceAddress = deviceAddress;
         connectAndStartRequestDataThread(true);
@@ -219,6 +229,9 @@ public abstract class NConnActivity extends AppbarActivity {
 
             @Override
             public void connectSuccess(BluetoothSocket socket) {
+                //连接成功，停止扫描
+                mIsCancel = true;
+
                 OttoManager.post(new ConnStatusOtto(ConnStatusOtto.STATUS.SUCCESS));
                 if (mBluetoothAdapter != null && mBluetoothAdapter.isDiscovering()) {
                     mBluetoothAdapter.cancelDiscovery();
@@ -297,6 +310,8 @@ public abstract class NConnActivity extends AppbarActivity {
     }
 
     public void cancel() {
+        mIsCancel = true;
+
         if (BuildConfig.DEBUG) Log.d(TAG, "cancel");
         if (mScanHandler != null) {
             mScanHandler.removeCallbacks(mScanRunnable);

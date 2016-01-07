@@ -22,6 +22,8 @@ import com.wonders.xlab.pci.assist.connection.aamodel.BPAAModel;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntity;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
+import com.wonders.xlab.pci.assist.connection.otto.EmptyDataOtto;
+import com.wonders.xlab.pci.assist.connection.otto.RequestDataFailed;
 import com.wonders.xlab.pci.assist.connection.otto.ScanStartOtto;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
@@ -91,15 +93,6 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView,
         startConnectingAnim();
     }
 
-    /**
-     * 底部loading动画
-     */
-    private void startConnectingAnim() {
-        mIvBpResultBluetooth.startAnimation(rotateAnimation);
-        mLdvBpResult.setDuration(mLdvBpResult.getChildCount() * 300)
-                .setDotColor(Color.BLACK).setDotSize(18).startAnimation(0);
-    }
-
     @Subscribe
     public void onConnectionStatusChanged(ConnStatusOtto connStatusOtto) {
         if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.START) {
@@ -130,10 +123,19 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView,
         mTvBpResultPulseRate.setText(String.format("%d", bpEntities.get(0).getHeartRate()));
     }
 
+    @Subscribe
+    public void onDeviceHasNoData(EmptyDataOtto otto) {
+        stopConnectingAnim();
+    }
+
+    @Subscribe
+    public void onRequestDataFailed(RequestDataFailed otto) {
+        stopConnectingAnim();
+    }
+
     @Override
     public void svSuccess() {
-        mLdvBpResult.stopAnimation();
-        mIvBpResultBluetooth.clearAnimation();
+        stopConnectingAnim();
         //the datas are saved successfully, delete the cache
         new Delete().from(BPAAModel.class).execute();
     }
@@ -159,6 +161,31 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView,
 
     }
 
+    /**
+     * 底部loading动画
+     */
+    private void startConnectingAnim() {
+        mIvBpResultBluetooth.startAnimation(rotateAnimation);
+        mLdvBpResult.setDuration(mLdvBpResult.getChildCount() * 300)
+                .setDotColor(Color.BLACK).setDotSize(18).startAnimation(0);
+    }
+
+    private void stopConnectingAnim() {
+        mLdvBpResult.stopAnimation();
+        mIvBpResultBluetooth.clearAnimation();
+    }
+
+    @Override
+    public void showRange(String range) {
+        mTvBpResultIdealRange.setText(range);
+    }
+
+    @Override
+    public void fetchIdealRangeFailed(String message) {
+//        mIdealRangeModel.fetchIdealBPRange(AIManager.getInstance(getActivity()).getUserId());
+    }
+
+
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("血压测量(结果)");
@@ -176,15 +203,5 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView,
         super.onDestroyView();
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void showRange(String range) {
-        mTvBpResultIdealRange.setText(range);
-    }
-
-    @Override
-    public void fetchIdealRangeFailed(String message) {
-//        mIdealRangeModel.fetchIdealBPRange(AIManager.getInstance(getActivity()).getUserId());
     }
 }

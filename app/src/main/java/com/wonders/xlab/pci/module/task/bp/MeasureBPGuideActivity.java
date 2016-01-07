@@ -21,7 +21,9 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.assist.connection.base.NConnActivity;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
+import com.wonders.xlab.pci.assist.connection.otto.EmptyDataOtto;
 import com.wonders.xlab.pci.assist.connection.otto.FindDeviceOtto;
+import com.wonders.xlab.pci.assist.connection.otto.RequestDataFailed;
 import com.wonders.xlab.pci.assist.connection.otto.ScanEndOtto;
 import com.wonders.xlab.pci.assist.connection.otto.ScanStartOtto;
 import com.wonders.xlab.pci.module.task.bp.otto.GuideOtto;
@@ -122,6 +124,12 @@ public class MeasureBPGuideActivity extends NConnActivity {
                     cancel();
                 }
             });
+            mProgressDialog.setButton(DialogInterface.BUTTON_NEGATIVE, "停止连接", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    cancel();
+                }
+            });
         }
     }
 
@@ -134,12 +142,12 @@ public class MeasureBPGuideActivity extends NConnActivity {
     public void onConnectionStatusChanged(ConnStatusOtto connStatusOtto) {
 
         if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.START) {
-            mProgressDialog.setMessage("正在连接血压设备，请稍候...");
+            mProgressDialog.setMessage("正在连接血压仪，请稍候...");
             mProgressDialog.show();
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.SUCCESS) {
             mProgressDialog.setMessage("连接成功，正在读取数据，请稍候...");
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.FAILED) {
-            mProgressDialog.setMessage("连接失败，即将重新搜索设备");
+            mProgressDialog.setMessage("正在搜索设备，请稍候...");
             postDelayScan(5000);
         }
     }
@@ -203,6 +211,20 @@ public class MeasureBPGuideActivity extends NConnActivity {
     public void onDataReceived(BPEntityList bpEntityList) {
         cancel();
         dismissDialog();
+    }
+
+    @Subscribe
+    public void onDeviceHasNoData(EmptyDataOtto otto) {
+        cancel();
+        dismissDialog();
+        showSnackbar(mCoordinator,"没有读取到血压数据，请先测量血压，然后重新同步数据",true);
+    }
+
+    @Subscribe
+    public void onRequestDataFailed(RequestDataFailed otto) {
+        cancel();
+        dismissDialog();
+        showSnackbar(mCoordinator,otto.getMessage(),true);
     }
 
     @Override

@@ -2,6 +2,10 @@ package com.wonders.xlab.pci.assist.connection.base;
 
 
 import android.bluetooth.BluetoothAdapter;
+import android.os.Handler;
+
+import com.wonders.xlab.common.application.OttoManager;
+import com.wonders.xlab.pci.assist.connection.otto.RequestDataFailed;
 
 import java.util.Calendar;
 
@@ -31,6 +35,13 @@ public abstract class DataRequestThread extends Thread {
             mBluetoothAdapter.enable();
         }
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                OttoManager.post(new RequestDataFailed("连接设备超时，请重试！"));
+                cancel();
+            }
+        }, 10000);
     }
 
     /**

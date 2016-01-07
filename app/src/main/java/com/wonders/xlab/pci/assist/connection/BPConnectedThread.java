@@ -12,6 +12,8 @@ import com.wonders.xlab.pci.assist.connection.aamodel.BPAAModel;
 import com.wonders.xlab.pci.assist.connection.base.DataRequestThread;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntity;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
+import com.wonders.xlab.pci.assist.connection.otto.EmptyDataOtto;
+import com.wonders.xlab.pci.assist.connection.otto.RequestDataFailed;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -147,15 +149,18 @@ public class BPConnectedThread extends DataRequestThread {
                             break;
                         case 0x46://血压数据接收完毕 70
                             if (BuildConfig.DEBUG) Log.d(TAG, "接收到血压数据");
+
                             ArrayList<byte[]> data = mPackManager.mDeviceData.mData_blood;
 
                             List<BPEntity> bpEntities = praiseBloodPressure(data);
 
                             if (bpEntities.isEmpty()) {
-                                if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据为空，继续请求数据");
-                                mOp = requestData;
+                                if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据为空");
+                                cancel();
+                                /*mOp = requestData;
                                 pType = 0;
-                                mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
+                                mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());*/
+                                OttoManager.post(new EmptyDataOtto(true));
                             } else {
                                 if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据不为空，删除数据");
                                 mOp = deleteData;
@@ -167,17 +172,20 @@ public class BPConnectedThread extends DataRequestThread {
                         case 0x50://血压删除成功 80
                             //继续请求血压数据
                             if (BuildConfig.DEBUG) Log.d(TAG, "删除数据成功");
-                            mOp = requestData;
-                            pType = 0;
-                            mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
+//                            mOp = requestData;
+//                            pType = 0;
+//                            mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
+                            cancel();
                             break;
                         case 0x51://血压删除失败 81
-                            if (BuildConfig.DEBUG) Log.d(TAG, "删除数据失败，重新请求数据");
-                            mOp = requestData;
-                            pType = 0;
-                            mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
+                            if (BuildConfig.DEBUG) Log.d(TAG, "删除数据失败");
+//                            mOp = requestData;
+//                            pType = 0;
+//                            mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
+                            cancel();
                             break;
                         default:
+                            if (BuildConfig.DEBUG) Log.d(TAG, "default");
 //                            if (BuildConfig.DEBUG) Log.d(TAG, "默认发送请求数据指令");
 //                            mOp = requestData;
 //                            pType = 0;
@@ -186,12 +194,16 @@ public class BPConnectedThread extends DataRequestThread {
 
                 } else {
                     if (BuildConfig.DEBUG) Log.d(TAG, "重开数据接受线程");
-                    requestDataFailed();
+//                    requestDataFailed();
+                    cancel();
+                    OttoManager.post(new EmptyDataOtto(true));
                 }
 
             } catch (IOException e) {
                 if (BuildConfig.DEBUG) Log.d(TAG, e.getLocalizedMessage() + " " + e.getMessage());
-                requestDataFailed();
+//                requestDataFailed();
+                cancel();
+                OttoManager.post(new RequestDataFailed("读取血压数据失败，请先测量血压，并确保血压仪开启，然后重新同步数据"));
             }
         }
 
@@ -205,7 +217,6 @@ public class BPConnectedThread extends DataRequestThread {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

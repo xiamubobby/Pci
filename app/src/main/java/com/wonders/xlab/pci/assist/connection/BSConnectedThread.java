@@ -9,6 +9,8 @@ import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.assist.connection.base.DataRequestThread;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntityList;
+import com.wonders.xlab.pci.assist.connection.otto.EmptyDataOtto;
+import com.wonders.xlab.pci.assist.connection.otto.RequestDataFailed;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -94,19 +96,20 @@ public class BSConnectedThread extends DataRequestThread {
 
                     switch (result) {
                         case 1://成功接收数据
-                            ArrayList<CmssxtDataJar> al = mPackManager.m_DeviceDatas;
 
+                            ArrayList<CmssxtDataJar> al = mPackManager.m_DeviceDatas;
                             List<BSEntity> bgEntities = parseBloodGlucose(al);
                             if (bgEntities.isEmpty()) {
-                                if (BuildConfig.DEBUG)
-                                    if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据为空，继续请求数据");
-                                mOutputStream.write(DeviceCommand.command_requestData());
+                                if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据为空");
+                                cancel();
+                                OttoManager.post(new EmptyDataOtto(true));
                             } else {
                                 if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据不为空，删除数据");
                                 mOutputStream.write(DeviceCommand.command_delData());
                             }
                             break;
                         case 2://接收数据失败
+                            mOutputStream.write(DeviceCommand.command_requestData());
                             break;
                         case 3://校正时间成功
                             if (BuildConfig.DEBUG) Log.d(TAG, "校正时间成功");
@@ -122,14 +125,18 @@ public class BSConnectedThread extends DataRequestThread {
                             break;
                         case 5://数据删除成功
                             if (BuildConfig.DEBUG) Log.d(TAG, "数据删除成功");
-                            mOutputStream.write(DeviceCommand.command_requestData());
+                            cancel();
+//                            mOutputStream.write(DeviceCommand.command_requestData());
                             break;
                         case 6://数据删除失败
                             if (BuildConfig.DEBUG) Log.d(TAG, "数据删除失败，重新请求数据");
-                            mOutputStream.write(DeviceCommand.command_requestData());
+                            cancel();
+//                            mOutputStream.write(DeviceCommand.command_requestData());
                             break;
                         case 7://无数据
-                            mOutputStream.write(DeviceCommand.command_requestData());
+                            cancel();
+                            OttoManager.post(new EmptyDataOtto(true));
+//                            mOutputStream.write(DeviceCommand.command_requestData());
                             break;
                         case 8://旧设备
                             if (BuildConfig.DEBUG) Log.d(TAG, "旧设备");
@@ -146,11 +153,15 @@ public class BSConnectedThread extends DataRequestThread {
                     }
 
                 } else {
-                    requestDataFailed();
+                    cancel();
+                    OttoManager.post(new EmptyDataOtto(true));
+//                    requestDataFailed();
                 }
 
             } catch (IOException e) {
-                requestDataFailed();
+                cancel();
+                OttoManager.post(new RequestDataFailed("读取血糖数据失败，请先测量血糖，并确保血糖仪开启，然后重新同步数据"));
+//                requestDataFailed();
             }
 
         }

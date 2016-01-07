@@ -23,6 +23,8 @@ import com.wonders.xlab.pci.assist.connection.aamodel.BSAAModel;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntityList;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
+import com.wonders.xlab.pci.assist.connection.otto.EmptyDataOtto;
+import com.wonders.xlab.pci.assist.connection.otto.RequestDataFailed;
 import com.wonders.xlab.pci.assist.connection.otto.ScanStartOtto;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
@@ -129,15 +131,6 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView,
         startConnectingAnim();
     }
 
-    /**
-     * 底部loading动画
-     */
-    private void startConnectingAnim() {
-        mIvBsResultBluetooth.startAnimation(rotateAnimation);
-        mLdvBsResult.setDuration(mLdvBsResult.getChildCount() * 300)
-                .setDotColor(Color.BLACK).setDotSize(18).startAnimation(0);
-    }
-
     @Subscribe
     public void onConnectionStatusChanged(ConnStatusOtto connStatusOtto) {
         if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.START) {
@@ -176,29 +169,19 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView,
         mAddRecordModel.saveBS(AIManager.getInstance(getActivity()).getUserId(), bsEntityList);
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("血糖测量(结果)");
-        MobclickAgent.onResume(getActivity());
+    @Subscribe
+    public void onDeviceHasNoData(EmptyDataOtto otto) {
+        stopConnectingAnim();
     }
 
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("血糖测量(结果)");
-        MobclickAgent.onPause(getActivity());
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        OttoManager.unregister(this);
-        ButterKnife.unbind(this);
+    @Subscribe
+    public void onRequestDataFailed(RequestDataFailed otto) {
+        stopConnectingAnim();
     }
 
     @Override
     public void svSuccess() {
-        mIvBsResultBluetooth.clearAnimation();
-        mLdvBsResult.stopAnimation();
+        stopConnectingAnim();
         new Delete().from(BSAAModel.class).execute();
     }
 
@@ -231,5 +214,38 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView,
     @Override
     public void fetchIdealRangeFailed(String message) {
 //        mIdealRangeModel.fetchIdealBSRange(AIManager.getInstance(getActivity()).getUserId());
+    }
+
+    /**
+     * 底部loading动画
+     */
+    private void startConnectingAnim() {
+        mIvBsResultBluetooth.startAnimation(rotateAnimation);
+        mLdvBsResult.setDuration(mLdvBsResult.getChildCount() * 300)
+                .setDotColor(Color.BLACK).setDotSize(18).startAnimation(0);
+    }
+
+    private void stopConnectingAnim() {
+        mIvBsResultBluetooth.clearAnimation();
+        mLdvBsResult.stopAnimation();
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart("血糖测量(结果)");
+        MobclickAgent.onResume(getActivity());
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd("血糖测量(结果)");
+        MobclickAgent.onPause(getActivity());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        OttoManager.unregister(this);
+        ButterKnife.unbind(this);
     }
 }

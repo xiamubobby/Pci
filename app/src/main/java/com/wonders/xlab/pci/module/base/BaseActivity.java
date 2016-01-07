@@ -52,7 +52,7 @@ public class BaseActivity extends AppCompatActivity {
     public void showSnackbar(View view, String message, boolean autoDismiss) {
         if (view != null) {
             if (autoDismiss) {
-                Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
             } else {
                 Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE).show();
             }
