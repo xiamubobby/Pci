@@ -122,9 +122,10 @@ public class SymptomActivity extends AppbarActivity implements SymptomView {
             mFlSymptomLabel.setAdapter(new TagAdapter<String>(symptomList) {
                 @Override
                 public View getView(FlowLayout parent, int position, String label) {
-                    TextView tvLabel = (TextView) mInflater.inflate(R.layout.item_symptom_content_label, parent, false);
+                    View view =  mInflater.inflate(R.layout.item_symptom_content_label, parent, false);
+                    TextView tvLabel = (TextView) view.findViewById(R.id.tv_item_symptom_content_label);
                     tvLabel.setText(label);
-                    return tvLabel;
+                    return view;
                 }
             });
 
