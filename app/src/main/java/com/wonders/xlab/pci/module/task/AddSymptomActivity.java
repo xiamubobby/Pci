@@ -28,9 +28,7 @@ import com.wonders.xlab.pci.module.task.mvn.view.SymptomView;
 import com.wonders.xlab.pci.module.task.otto.TaskRefreshOtto;
 import com.zhy.view.flowlayout.FlowLayout;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -112,9 +110,6 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, M
         ButterKnife.unbind(this);
     }
 
-    private List<TextView> labelViews = new ArrayList<>();
-    private TextView labelClear;//以上症状全无
-
     @Override
     public void showSymptoms(SymptomEntity.RetValuesEntity valuesEntity) {
         mEmpty.setVisibility(View.GONE);
@@ -173,47 +168,21 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, M
                 //将标签id设置在label的tag中
                 labelView.setTag(symptomEntity.getId());
 
-                if (symptomEntity.getName().contains("症状全无")) {
-                    labelClear = labelView;
-                }
-
                 labelView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (labelClear == v) {
-                            //点击以上全无
-                            boolean isSelected = labelClear.isSelected();
-                            //1、clear all
-                            mSelectedSymptomMap.clear();
-                            for (int i = 0; i < labelViews.size(); i++) {
-                                labelViews.get(i).setSelected(false);
-                            }
-
-                            labelClear.setSelected(isSelected);
-                            //2、add new
-                            if (!v.isSelected()) {
-                                mSelectedSymptomMap.put(v.getTag().toString(), v.getTag().toString());
-                            } else {
-                                mSelectedSymptomMap.remove(v.getTag().toString());
-                            }
-                            labelClear.setSelected(!labelClear.isSelected());
+                        if (!v.isSelected()) {
+                            mSelectedSymptomMap.put(v.getTag().toString(), v.getTag().toString());
                         } else {
-                            if (!labelClear.isSelected()) {
-                                if (!v.isSelected()) {
-                                    mSelectedSymptomMap.put(v.getTag().toString(), v.getTag().toString());
-                                } else {
-                                    mSelectedSymptomMap.remove(v.getTag().toString());
-                                }
-                                labelView.setSelected(!labelView.isSelected());
-                            }
+                            mSelectedSymptomMap.remove(v.getTag().toString());
                         }
+                        labelView.setSelected(!labelView.isSelected());
 
                     }
                 });
 
                 contents.addView(view);
 
-                labelViews.add(labelView);
             }
             mContainerAddSymptom.addView(itemView);
         }
