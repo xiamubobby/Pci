@@ -104,57 +104,57 @@
             android:excludeFromRecents="true"
             android:label="@string/title_activity_add_blood_pressure"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".module.task.bs.AddBSActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_add_blood_sugar"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".module.task.AddSymptomActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_add_symptom"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".module.MyDoctorActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_my_doctor"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".module.record.monitor.BPActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_bp"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".module.record.monitor.BSActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_bp"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".module.record.monitor.SymptomActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_symptom"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".module.record.monitor.MedicineActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_medicine"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".module.UserCenterActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_user_center"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <service
             android:name=".service.XEMChatService"
@@ -198,12 +198,14 @@
         <activity
             android:name=".module.task.bp.MeasureBPGuideActivity"
             android:label="@string/title_activity_measure_bp"
-            android:theme="@style/AppTheme">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".module.task.bs.MeasureBSGuideActivity"
             android:label="@string/title_activity_measure_bsguide0"
-            android:theme="@style/AppTheme">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
         <receiver

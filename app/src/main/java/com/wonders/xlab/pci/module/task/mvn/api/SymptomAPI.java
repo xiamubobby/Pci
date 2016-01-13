@@ -1,6 +1,5 @@
 package com.wonders.xlab.pci.module.task.mvn.api;
 
-import com.wonders.xlab.pci.module.base.mvn.entity.SimpleEntity;
 import com.wonders.xlab.pci.module.base.mvn.entity.task.SymptomEntity;
 
 import retrofit.http.GET;
@@ -12,6 +11,4 @@ import rx.Observable;
 public interface SymptomAPI {
     @GET("symptom/retrieveSymptom")
     Observable<SymptomEntity> getSymptoms();
-
-    Observable<SimpleEntity> saveSymptoms();
 }

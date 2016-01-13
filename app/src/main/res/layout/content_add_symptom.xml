@@ -1,44 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.wonders.xlab.pci.module.task.AddSymptomActivity"
-    tools:showIn="@layout/activity_add_symptom">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              app:layout_behavior="@string/appbar_scrolling_view_behavior"
+              tools:context="com.wonders.xlab.pci.module.task.AddSymptomActivity"
+              tools:showIn="@layout/activity_add_symptom">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/refresh_add_symptom"
+    <TextView
+        android:id="@+id/tv_add_symptom_tip"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content"
+        android:background="@color/bg_gray"
+        android:padding="@dimen/item_interval"
+        android:text="小贴士"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="@dimen/text_size_small"/>
 
-        <ScrollView
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/refresh_add_symptom"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            >
 
-            <LinearLayout
-                android:id="@+id/container_add_symptom"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                />
+                android:layout_height="match_parent">
 
-        </ScrollView>
+                <LinearLayout
+                    android:id="@+id/container_add_symptom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/activity_vertical_margin"
+                    android:paddingLeft="@dimen/activity_horizontal_margin"
+                    android:paddingRight="@dimen/activity_horizontal_margin"
+                    android:paddingTop="@dimen/activity_vertical_margin"
+                    />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            </ScrollView>
 
-    <include
-        android:id="@+id/empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        layout="@layout/error_tips"/>
-</FrameLayout>
+        </android.support.v4.widget.SwipeRefreshLayout>
 
+        <include
+            android:id="@+id/empty"
+            layout="@layout/error_tips"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+
+</LinearLayout>
 

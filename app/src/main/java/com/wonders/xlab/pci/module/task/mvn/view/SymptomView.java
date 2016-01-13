@@ -1,15 +1,13 @@
 package com.wonders.xlab.pci.module.task.mvn.view;
 
-import com.wonders.xlab.pci.module.base.mvn.view.BaseView;
 import com.wonders.xlab.pci.module.base.mvn.entity.task.SymptomEntity;
-
-import java.util.List;
+import com.wonders.xlab.pci.module.base.mvn.view.BaseView;
 
 /**
  * Created by hua on 15/12/18.
  */
 public interface SymptomView extends BaseView {
-    void showSymptoms(List<SymptomEntity.RetValuesEntity> entityList);
+    void showSymptoms(SymptomEntity.RetValuesEntity valuesEntity);
 
     void getSymptomsFailed(String message);
 

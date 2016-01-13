@@ -1,16 +1,21 @@
 package com.wonders.xlab.pci.module.task;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
@@ -43,6 +48,8 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, M
     View mEmpty;
     @Bind(R.id.coordinator)
     CoordinatorLayout mCoordinator;
+    @Bind(R.id.tv_add_symptom_tip)
+    TextView mTvTip;
 
     private SymptomModel mSymptomModel;
 
@@ -109,17 +116,59 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, M
     private TextView labelClear;//以上症状全无
 
     @Override
-    public void showSymptoms(List<SymptomEntity.RetValuesEntity> entityList) {
+    public void showSymptoms(SymptomEntity.RetValuesEntity valuesEntity) {
         mEmpty.setVisibility(View.GONE);
         mContainerAddSymptom.removeAllViews();
-        for (SymptomEntity.RetValuesEntity entity : entityList) {
+        mTvTip.setText(valuesEntity.getTips());
+        for (SymptomEntity.RetValuesEntity.SymptomDtosEntity entity : valuesEntity.getSymptomDtos()) {
             LinearLayout itemView = (LinearLayout) mInflater.inflate(R.layout.item_symptom, mContainerAddSymptom, false);
             TextView title = (TextView) itemView.findViewById(R.id.tv_item_symptom_title);
             title.setText(entity.getName());
 
             FlowLayout contents = (FlowLayout) itemView.findViewById(R.id.fl_item_symptom);
-            for (SymptomEntity.RetValuesEntity.SymptomsEntity symptomEntity : entity.getSymptoms()) {
-                final TextView labelView = (TextView) mInflater.inflate(R.layout.item_symptom_content_label, itemView, false);
+            for (SymptomEntity.RetValuesEntity.SymptomDtosEntity.SymptomsEntity symptomEntity : entity.getSymptoms()) {
+                View view = mInflater.inflate(R.layout.item_symptom_content_label, itemView, false);
+
+                final TextView labelView = (TextView) view.findViewById(R.id.tv_item_symptom_content_label);
+
+                final TextView questionView = (TextView) view.findViewById(R.id.tv_item_symptom_question);
+                if (!TextUtils.isEmpty(symptomEntity.getSymptomUrl())) {
+                    questionView.setVisibility(View.VISIBLE);
+                    questionView.setTag(symptomEntity.getSymptomUrl());
+                    questionView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String url = String.valueOf(v.getTag());
+
+                            View dialogView = mInflater.inflate(R.layout.dialog_add_symptom_guide, null, false);
+                            ImageView imageView = (ImageView) dialogView.findViewById(R.id.iv_dialog_add_symptom);
+
+                            Glide.with(AddSymptomActivity.this)
+                                    .load(url)
+                                    .crossFade()
+                                    .fitCenter()
+                                    .into(imageView);
+
+                            final Dialog dialog = new Dialog(AddSymptomActivity.this, R.style.dialog);
+                            dialogView.setOnTouchListener(new View.OnTouchListener() {
+                                @Override
+                                public boolean onTouch(View v, MotionEvent event) {
+                                    switch (event.getAction()) {
+                                        case MotionEvent.ACTION_UP:
+                                            dialog.dismiss();
+                                            break;
+                                    }
+                                    return false;
+                                }
+                            });
+                            dialog.setContentView(dialogView);
+                            dialog.show();
+                        }
+                    });
+                } else {
+                    questionView.setVisibility(View.GONE);
+                }
+
                 labelView.setText(symptomEntity.getName());
                 //将标签id设置在label的tag中
                 labelView.setTag(symptomEntity.getId());
@@ -162,7 +211,7 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, M
                     }
                 });
 
-                contents.addView(labelView);
+                contents.addView(view);
 
                 labelViews.add(labelView);
             }
