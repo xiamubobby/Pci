@@ -18,6 +18,8 @@ import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.application.AIManager;
+import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.assist.connection.base.NConnActivity;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
@@ -26,12 +28,16 @@ import com.wonders.xlab.pci.assist.connection.otto.FindDeviceOtto;
 import com.wonders.xlab.pci.assist.connection.otto.RequestDataFailed;
 import com.wonders.xlab.pci.assist.connection.otto.ScanEndOtto;
 import com.wonders.xlab.pci.assist.connection.otto.ScanStartOtto;
+import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
 import com.wonders.xlab.pci.module.task.bp.otto.GuideOtto;
+import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
+import com.wonders.xlab.pci.module.task.otto.TaskRefreshOtto;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MeasureBPGuideActivity extends NConnActivity {
+
+public class MeasureBPGuideActivity extends NConnActivity implements MeasureResultView {
 
     @Bind(R.id.vp_measure_bp_guide)
     XViewPager mVpMeasureBPGuide;
@@ -41,6 +47,8 @@ public class MeasureBPGuideActivity extends NConnActivity {
     private FragmentVPAdapter mFragmentVPAdapter;
 
     private ProgressDialog mProgressDialog;
+
+    private AddRecordModel mAddRecordModel;
 
     @Override
     public int getContentLayout() {
@@ -57,6 +65,9 @@ public class MeasureBPGuideActivity extends NConnActivity {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         OttoManager.register(this);
+
+        mAddRecordModel = new AddRecordModel(this);
+        addModel(mAddRecordModel);
 
         getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -210,7 +221,8 @@ public class MeasureBPGuideActivity extends NConnActivity {
     @Subscribe
     public void onDataReceived(BPEntityList bpEntityList) {
         cancel();
-        dismissDialog();
+//        dismissDialog();
+        mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(),bpEntityList);
     }
 
     @Subscribe
@@ -255,5 +267,33 @@ public class MeasureBPGuideActivity extends NConnActivity {
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
+    }
+
+    @Override
+    public void svSuccess() {
+        RxBus.getInstance().send(new TaskRefreshOtto());
+        showSnackbar(mCoordinator,"保存成功",true);
+    }
+
+    @Override
+    public void svDuplicate() {
+
+    }
+
+    @Override
+    public void svFailed(String message) {
+        showSnackbar(mCoordinator,"保存失败，请重试!",true);
+    }
+
+    @Override
+    public void svShowLoading() {
+        if (mProgressDialog != null) {
+            mProgressDialog.setMessage("正在保存数据，请稍候...");
+        }
+    }
+
+    @Override
+    public void svHideLoading() {
+        dismissDialog();
     }
 }

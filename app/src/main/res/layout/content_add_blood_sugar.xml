@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".module.task.bs.AddBSActivity"
     tools:showIn="@layout/activity_add_blood_sugar">
@@ -28,7 +27,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="测量日期"
+                android:text="@string/text_measure_date"
                 android:textSize="@dimen/text_size_normal"/>
 
             <TextView
@@ -36,7 +35,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
-                android:text="2015-01-01"
                 android:textSize="@dimen/text_size_normal"/>
         </LinearLayout>
 
@@ -51,7 +49,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="测量时间"
+                android:text="@string/text_measure_time"
                 android:textSize="@dimen/text_size_normal"/>
 
             <TextView
@@ -59,7 +57,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
-                android:text="08:12"
                 android:textSize="@dimen/text_size_normal"/>
         </LinearLayout>
 
@@ -73,7 +70,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="测量时段"
+                android:text="@string/text_measure_period"
                 android:textSize="@dimen/text_size_normal"/>
 
             <TextView
@@ -81,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
-                android:text="早餐前"
+                android:text="@string/text_before_breakfast"
                 android:textSize="@dimen/text_size_normal"/>
         </LinearLayout>
 
@@ -95,7 +92,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="血糖"
+                android:text="@string/text_blood_sugar"
                 android:textSize="@dimen/text_size_normal"/>
 
             <EditText
@@ -106,14 +103,14 @@
                 android:inputType="numberDecimal"
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical|right"
-                android:hint="0"
+                android:hint="@string/_0"
                 android:singleLine="true"
                 android:textSize="@dimen/text_size_normal"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="mol/L"
+                android:text="@string/unit_mol_l"
                 android:textSize="@dimen/text_size_normal"/>
         </LinearLayout>
 

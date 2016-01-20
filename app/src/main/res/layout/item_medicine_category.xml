@@ -9,7 +9,7 @@
 
     <include layout="@layout/divider_vertical"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -19,21 +19,25 @@
 
         <TextView
             android:id="@+id/tv_item_medicine_category_title"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_toLeftOf="@+id/tv_item_medicine_category"/>
 
         <TextView
+            android:id="@+id/tv_item_medicine_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/iv_item_medicine_category_arrow"
             android:text="调整记录"/>
 
         <ImageView
+            android:id="@+id/iv_item_medicine_category_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/item_interval"
             android:src="@drawable/arrow_down"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

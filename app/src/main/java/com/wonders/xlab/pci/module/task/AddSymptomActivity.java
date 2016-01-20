@@ -94,11 +94,11 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, M
     @OnClick(R.id.fab_add_symptom)
     public void save() {
         if (mSelectedSymptomMap.size() > 0) {
-            String[] symptomStrs = new String[mSelectedSymptomMap.size()];
+            String[] symptomStr = new String[mSelectedSymptomMap.size()];
             for (int i = 0; i < mSelectedSymptomMap.values().size(); i++) {
-                symptomStrs[i] = mSelectedSymptomMap.values().toArray()[i].toString();
+                symptomStr[i] = mSelectedSymptomMap.values().toArray()[i].toString();
             }
-            mAddRecordModel.saveSymptom(AIManager.getInstance(this).getUserId(), symptomStrs);
+            mAddRecordModel.saveSymptom(AIManager.getInstance(this).getUserId(), symptomStr);
         } else {
             showSnackbar(mCoordinator, "请选择您的症状", true);
         }
@@ -115,13 +115,13 @@ public class AddSymptomActivity extends AppbarActivity implements SymptomView, M
         mEmpty.setVisibility(View.GONE);
         mContainerAddSymptom.removeAllViews();
         mTvTip.setText(valuesEntity.getTips());
-        for (SymptomEntity.RetValuesEntity.SymptomDtosEntity entity : valuesEntity.getSymptomDtos()) {
+        for (SymptomEntity.RetValuesEntity.SymptomDtoEntity entity : valuesEntity.getSymptomDtos()) {
             LinearLayout itemView = (LinearLayout) mInflater.inflate(R.layout.item_symptom, mContainerAddSymptom, false);
             TextView title = (TextView) itemView.findViewById(R.id.tv_item_symptom_title);
             title.setText(entity.getName());
 
             FlowLayout contents = (FlowLayout) itemView.findViewById(R.id.fl_item_symptom);
-            for (SymptomEntity.RetValuesEntity.SymptomDtosEntity.SymptomsEntity symptomEntity : entity.getSymptoms()) {
+            for (SymptomEntity.RetValuesEntity.SymptomDtoEntity.SymptomsEntity symptomEntity : entity.getSymptoms()) {
                 View view = mInflater.inflate(R.layout.item_symptom_content_label, itemView, false);
 
                 final TextView labelView = (TextView) view.findViewById(R.id.tv_item_symptom_content_label);

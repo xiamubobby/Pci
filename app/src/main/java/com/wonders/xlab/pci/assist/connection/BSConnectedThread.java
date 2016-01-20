@@ -55,7 +55,7 @@ public class BSConnectedThread extends DataRequestThread {
                 tmpOut = mSocket.getOutputStream();
             }
 
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
 
         mInputStream = tmpIn;
@@ -160,7 +160,7 @@ public class BSConnectedThread extends DataRequestThread {
 
             } catch (IOException e) {
                 cancel();
-                OttoManager.post(new RequestDataFailed("读取血糖数据失败，请先测量血糖，并确保血糖仪开启，然后重新同步数据"));
+                OttoManager.post(new RequestDataFailed(""));//读取血糖数据失败，请先测量血糖，并确保血糖仪开启，然后重新同步数据
 //                requestDataFailed();
             }
 

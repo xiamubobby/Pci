@@ -32,13 +32,13 @@ public class SymptomEntity extends BaseEntity {
          * symptoms : [{"id":10,"name":"胸闷","symptomUrl":"","new":false},{"id":11,"name":"心前区疼痛","symptomUrl":"","new":false},{"id":12,"name":"后背疼痛","symptomUrl":"","new":false},{"id":13,"name":"颈部疼痛","symptomUrl":"","new":false},{"id":14,"name":"咽喉疼痛","symptomUrl":"","new":false},{"id":15,"name":"肩膀疼痛","symptomUrl":"","new":false},{"id":16,"name":"手臂疼痛","symptomUrl":"","new":false},{"id":17,"name":"胃疼","symptomUrl":"","new":false}]
          */
 
-        private List<SymptomDtosEntity> symptomDtos;
+        private List<SymptomDtoEntity> symptomDtos;
 
         public void setTips(String tips) {
             this.tips = tips;
         }
 
-        public void setSymptomDtos(List<SymptomDtosEntity> symptomDtos) {
+        public void setSymptomDtos(List<SymptomDtoEntity> symptomDtos) {
             this.symptomDtos = symptomDtos;
         }
 
@@ -46,11 +46,11 @@ public class SymptomEntity extends BaseEntity {
             return tips;
         }
 
-        public List<SymptomDtosEntity> getSymptomDtos() {
+        public List<SymptomDtoEntity> getSymptomDtos() {
             return symptomDtos;
         }
 
-        public static class SymptomDtosEntity {
+        public static class SymptomDtoEntity {
             private String name;
             /**
              * id : 10

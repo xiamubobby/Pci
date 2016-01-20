@@ -223,7 +223,7 @@ public class XEMChatService extends Service {
                             } else if (error == EMError.CONNECTION_CONFLICT) {
                                 //帐号在其他设备登陆
                                 message = "帐号在其他设备登陆";
-                                OttoManager.post(new ExitBus());
+//                                OttoManager.post(new ExitBus());
                             } else {
                                 if (NetUtils.hasNetwork(XEMChatService.this)) {
                                     //连接不到聊天服务器,请重新打开应用

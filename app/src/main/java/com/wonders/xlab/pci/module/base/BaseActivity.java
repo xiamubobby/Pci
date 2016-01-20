@@ -3,6 +3,7 @@ package com.wonders.xlab.pci.module.base;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.umeng.update.UmengUpdateAgent;
@@ -50,7 +51,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void showSnackbar(View view, String message, boolean autoDismiss) {
-        if (view != null) {
+        if (view != null && !TextUtils.isEmpty(message)) {
             if (autoDismiss) {
                 Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
             } else {

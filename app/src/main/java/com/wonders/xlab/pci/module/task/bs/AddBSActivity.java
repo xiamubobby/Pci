@@ -22,9 +22,9 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
+import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
 import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
 import com.wonders.xlab.pci.module.task.otto.TaskRefreshOtto;
-import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;
 
 import java.util.Calendar;
 

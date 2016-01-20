@@ -188,7 +188,10 @@
 
 #不混淆网络请求实体
 -keep class com.wonders.xlab.pci.module.base.mvn.entity.** {*;}
+-keep class com.wonders.xlab.pci.assist.connection.entity.** {*;}
+-keep class com.wonders.xlab.pci.module.base.mvn.entity.** {*;}
 -keep class * extends com.wonders.xlab.pci.module.base.mvn.entity.BaseEntity
+
 
 #Bugtags
 -keep class com.bugtags.library.** {*;}

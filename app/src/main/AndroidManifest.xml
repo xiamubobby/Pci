@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
@@ -158,8 +157,7 @@
 
         <service
             android:name=".service.XEMChatService"
-            android:enabled="true"
-            android:exported="true"/>
+            android:enabled="true"/>
 
         <receiver
             android:name=".receiver.BootstrapReceiver"
@@ -170,9 +168,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".receiver.EMChatMessageBroadcastReceiver"
-            android:enabled="true"
-            android:exported="true"/>
+            android:name=".receiver.EMChatMessageBroadcastReceiver"/>
 
         <!-- umeng -->
         <service
@@ -185,14 +181,10 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <receiver
-            android:name=".receiver.TimeClickReceiver"
-            android:enabled="true"
-            android:exported="true">
+            android:name=".receiver.TimeClickReceiver">
         </receiver>
         <receiver
-            android:name=".receiver.ConnectionBroadcastReceiver"
-            android:enabled="true"
-            android:exported="true">
+            android:name=".receiver.ConnectionBroadcastReceiver">
         </receiver>
 
         <activity
@@ -209,9 +201,7 @@
         </activity>
 
         <receiver
-            android:name=".assist.connection.base.ScanReceiver"
-            android:enabled="true"
-            android:exported="true">
+            android:name=".assist.connection.base.ScanReceiver">
         </receiver>
     </application>
 

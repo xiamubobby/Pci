@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * Created by hua on 15/10/26.
- * <p/>
+ * <p>
  * 血压数据传输线程
  */
 public class BPConnectedThread extends DataRequestThread {
@@ -56,7 +56,7 @@ public class BPConnectedThread extends DataRequestThread {
                 tmpIn = mSocket.getInputStream();
                 tmpOut = mSocket.getOutputStream();
             }
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         }
 
         mInputStream = tmpIn;
@@ -165,7 +165,9 @@ public class BPConnectedThread extends DataRequestThread {
                                 if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据不为空，删除数据");
                                 mOp = deleteData;
                                 pType = 0;
-                                mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
+                                if (mSocket != null && mOutputStream != null && mSocket.isConnected()) {
+                                    mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
+                                }
                             }
 
                             break;
@@ -203,7 +205,7 @@ public class BPConnectedThread extends DataRequestThread {
                 if (BuildConfig.DEBUG) Log.d(TAG, e.getLocalizedMessage() + " " + e.getMessage());
 //                requestDataFailed();
                 cancel();
-                OttoManager.post(new RequestDataFailed("读取血压数据失败，请先测量血压，并确保血压仪开启，然后重新同步数据"));
+                OttoManager.post(new RequestDataFailed(""));//读取血压数据失败，请先测量血压，并确保血压仪开启，然后重新同步数据
             }
         }
 

@@ -68,7 +68,7 @@ public class HealthPlanFragment extends BaseFragment {
 
     private void initWebView() {
 
-        mWvHealthPlan.getSettings().setJavaScriptEnabled(true);
+        mWvHealthPlan.getSettings().setJavaScriptEnabled(false);
         mWvHealthPlan.getSettings().setDomStorageEnabled(true);
         mWvHealthPlan.getSettings().setDatabaseEnabled(true);
         mWvHealthPlan.getSettings().setAppCacheEnabled(false);
@@ -98,12 +98,6 @@ public class HealthPlanFragment extends BaseFragment {
         @Override
         public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
             super.onReceivedHttpError(view, request, errorResponse);
-            mWvHealthPlan.setVisibility(View.INVISIBLE);
-        }
-
-        @Override
-        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-            super.onReceivedError(view, errorCode, description, failingUrl);
             mWvHealthPlan.setVisibility(View.INVISIBLE);
         }
 

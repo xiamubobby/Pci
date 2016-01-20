@@ -8,7 +8,6 @@ import com.activeandroid.query.Select;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.TextMessageBody;
-import com.easemob.exceptions.EaseMobException;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.NotifyUtil;
 import com.wonders.xlab.pci.Constant;
@@ -48,55 +47,55 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             }
         }
 
-        try {
-            String name = message.getStringAttribute("name", "");
-            String portrait = message.getStringAttribute("portrait", Constant.DEFAULT_PORTRAIT);
-            String title = message.getStringAttribute("title", "");
-            String content = message.getStringAttribute("content", "");
-            int type = message.getIntAttribute("type", -1);//-1:默认处理，即通过环信后台发送 0:提醒 1:内容 2：强制退出(由于用户锁定账户等等原因的安全考虑)
-            long recordTime = Long.parseLong(message.getStringAttribute("recordTime"));
+        String name = message.getStringAttribute("name", "");
+        String portrait = message.getStringAttribute("portrait", Constant.DEFAULT_PORTRAIT);
+        String title = message.getStringAttribute("title", "");
+        String content = message.getStringAttribute("content", "");
+        int type = message.getIntAttribute("type", -1);//-1:默认处理，即通过环信后台发送 0:提醒 1:内容 2：强制退出(由于用户锁定账户等等原因的安全考虑)
 
-            if (type == 0) {
-                TodayTaskBean cache = new Select().from(TodayTaskBean.class).executeSingle();
-                TodayTaskBean todayTaskBean = new TodayTaskBean();
-                todayTaskBean.setTitle(title);
-                todayTaskBean.setUpdateTime(recordTime);
-                todayTaskBean.setName(name);
-                todayTaskBean.setPortrait(portrait);
-                if (cache != null) {
-                    cache.setName(todayTaskBean.getName());
-                    cache.setPortrait(todayTaskBean.getPortrait());
-                    cache.setUpdateTime(todayTaskBean.getUpdateTime());
-                    cache.setTitle(todayTaskBean.getTitle());
-                    cache.save();
-                } else {
-                    todayTaskBean.save();
-                }
-                if (!AIManager.getInstance(context).isHomeShowing()) {
-                    new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
-                }
-                OttoManager.post(todayTaskBean);
-            } else if (type == 1){
-                HistoryTaskBean historyTaskBean = new HistoryTaskBean();
-                historyTaskBean.setTitle(title);
-                historyTaskBean.setUpdateTime(recordTime);
-                historyTaskBean.setName(name);
-                historyTaskBean.setContent(content);
-                historyTaskBean.setPortrait(portrait);
-                historyTaskBean.save();
-                if (!AIManager.getInstance(context).isHomeShowing()) {
-                    new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), historyTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
-                }
-                OttoManager.post(historyTaskBean);
-            } else if (type == 2) {
-                OttoManager.post(new ExitBus());
-            } else if (type == -1) {
-                setupDefaultMessage(context, message);
+        long recordTime;
+        if (type == 0) {
+            recordTime = Long.parseLong(message.getStringAttribute("recordTime", String.valueOf(Calendar.getInstance().getTimeInMillis())));
+
+            TodayTaskBean cache = new Select().from(TodayTaskBean.class).executeSingle();
+            TodayTaskBean todayTaskBean = new TodayTaskBean();
+            todayTaskBean.setTitle(title);
+            todayTaskBean.setUpdateTime(recordTime);
+            todayTaskBean.setName(name);
+            todayTaskBean.setPortrait(portrait);
+            if (cache != null) {
+                cache.setName(todayTaskBean.getName());
+                cache.setPortrait(todayTaskBean.getPortrait());
+                cache.setUpdateTime(todayTaskBean.getUpdateTime());
+                cache.setTitle(todayTaskBean.getTitle());
+                cache.save();
+            } else {
+                todayTaskBean.save();
             }
+            if (!AIManager.getInstance(context).isHomeShowing()) {
+                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
+            }
+            OttoManager.post(todayTaskBean);
+        } else if (type == 1) {
+            recordTime = Long.parseLong(message.getStringAttribute("recordTime", String.valueOf(Calendar.getInstance().getTimeInMillis())));
 
-        } catch (EaseMobException e) {
+            HistoryTaskBean historyTaskBean = new HistoryTaskBean();
+            historyTaskBean.setTitle(title);
+            historyTaskBean.setUpdateTime(recordTime);
+            historyTaskBean.setName(name);
+            historyTaskBean.setContent(content);
+            historyTaskBean.setPortrait(portrait);
+            historyTaskBean.save();
+            if (!AIManager.getInstance(context).isHomeShowing()) {
+                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), historyTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
+            }
+            OttoManager.post(historyTaskBean);
+        } else if (type == 2) {
+            OttoManager.post(new ExitBus());
+        } else if (type == -1) {
             setupDefaultMessage(context, message);
         }
+
     }
 
     private void setupDefaultMessage(Context context, EMMessage message) {

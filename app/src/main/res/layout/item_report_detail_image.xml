@@ -15,6 +15,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/item_interval"
-        android:text="121"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 </LinearLayout>
