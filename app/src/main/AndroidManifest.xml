@@ -154,6 +154,11 @@
             android:label="@string/title_activity_user_center"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".module.setting.SettingActivity"
+            android:excludeFromRecents="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <service
             android:name=".service.XEMChatService"
@@ -167,8 +172,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
             </intent-filter>
         </receiver>
-        <receiver
-            android:name=".receiver.EMChatMessageBroadcastReceiver"/>
+        <receiver android:name=".receiver.EMChatMessageBroadcastReceiver"/>
 
         <!-- umeng -->
         <service
@@ -180,11 +184,9 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
-        <receiver
-            android:name=".receiver.TimeClickReceiver">
+        <receiver android:name=".receiver.TimeClickReceiver">
         </receiver>
-        <receiver
-            android:name=".receiver.ConnectionBroadcastReceiver">
+        <receiver android:name=".receiver.ConnectionBroadcastReceiver">
         </receiver>
 
         <activity
@@ -200,9 +202,9 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <receiver
-            android:name=".assist.connection.base.ScanReceiver">
+        <receiver android:name=".assist.connection.base.ScanReceiver">
         </receiver>
+
     </application>
 
 </manifest>

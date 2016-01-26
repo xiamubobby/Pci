@@ -1,6 +1,9 @@
 package com.wonders.xlab.pci.module;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.activeandroid.query.Delete;
 import com.umeng.analytics.MobclickAgent;
@@ -13,6 +16,7 @@ import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
 import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.otto.ExitBus;
+import com.wonders.xlab.pci.module.setting.SettingActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,6 +44,19 @@ public class UserCenterActivity extends AppbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        getToolbar().inflateMenu(R.menu.menu_user_center);
+        getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_user_center_setting:
+                        startActivity(new Intent(UserCenterActivity.this, SettingActivity.class));
+                        break;
+                }
+                return false;
+            }
+        });
+
         mTvUserCenterTel.setText(AIManager.getInstance(this).getUserTel());
         mTvUserCenterMedi.setText(AIManager.getInstance(this).getMedicareCard());
     }

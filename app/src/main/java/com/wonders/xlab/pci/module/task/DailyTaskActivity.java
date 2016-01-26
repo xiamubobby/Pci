@@ -23,6 +23,7 @@ import com.wonders.xlab.common.viewpager.WrapHeightViewPager;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
+import com.wonders.xlab.pci.application.SPManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.base.mvn.entity.task.DailyTaskEntity;
 import com.wonders.xlab.pci.module.task.adapter.MedicineVPAdapter;
@@ -31,7 +32,9 @@ import com.wonders.xlab.pci.module.task.bean.BloodPressureBean;
 import com.wonders.xlab.pci.module.task.bean.BloodSugarBean;
 import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
 import com.wonders.xlab.pci.module.task.bean.SymptomBean;
+import com.wonders.xlab.pci.module.task.bp.AddBPActivity;
 import com.wonders.xlab.pci.module.task.bp.MeasureBPGuideActivity;
+import com.wonders.xlab.pci.module.task.bs.AddBSActivity;
 import com.wonders.xlab.pci.module.task.bs.MeasureBSGuideActivity;
 import com.wonders.xlab.pci.module.task.mvn.model.DailyTaskModel;
 import com.wonders.xlab.pci.module.task.mvn.model.TakeMedicineModel;
@@ -354,12 +357,22 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
 
     @OnClick(R.id.fam_daily_task_bp)
     public void onRecordBpClick() {
-        recordNewData(MeasureBPGuideActivity.class);
+        boolean useEquipment = SPManager.get(this).getBoolean(getString(R.string.pref_key_use_equipment), false);
+        if (useEquipment) {
+            recordNewData(MeasureBPGuideActivity.class);
+        } else {
+            recordNewData(AddBPActivity.class);
+        }
     }
 
     @OnClick(R.id.fam_daily_task_bs)
     public void onRecordBsClick() {
-        recordNewData(MeasureBSGuideActivity.class);
+        boolean useEquipment = SPManager.get(this).getBoolean(getString(R.string.pref_key_use_equipment), false);
+        if (useEquipment) {
+            recordNewData(MeasureBSGuideActivity.class);
+        } else {
+            recordNewData(AddBSActivity.class);
+        }
     }
 
     @OnClick(R.id.fam_daily_task_symptom)

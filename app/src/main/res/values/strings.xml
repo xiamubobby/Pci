@@ -51,4 +51,12 @@
     <string name="text_phone_number">手机号码</string>
     <string name="text_password">密码</string>
     <string name="text_login">登录</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="menu_setting">设置</string>
+
+    <string name="label_setting">设置</string>
+
+    <!--preference key-->
+    <string name="pref_key_use_equipment">use_equipment</string>
+    <string name="app_version">v0.9</string>
 </resources>
