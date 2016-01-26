@@ -9,7 +9,7 @@
         <item name="background">@android:color/white</item>
     </style>
 
-    <style name="AppTheme.Launcher">
+    <style name="AppTheme.Launcher" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/window_background_statusbar_toolbar_tab
         </item>
     </style>
