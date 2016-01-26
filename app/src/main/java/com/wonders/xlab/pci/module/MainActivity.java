@@ -61,6 +61,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        //cold start
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         if (!AIManager.getInstance(this).hasLogin()) {

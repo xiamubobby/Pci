@@ -32,6 +32,7 @@ import com.wonders.xlab.pci.module.task.mvn.model.IdealRangeModel;
 import com.wonders.xlab.pci.module.task.mvn.view.IdealRangeView;
 
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -119,8 +120,8 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView,
         List<BPEntity> bpEntities = bpEntityList.getBp();
         mRecordModel.saveBP(AIManager.getInstance(getActivity()).getUserId(), bpEntityList);
 
-        mTvBpResultPressure.setText(String.format("%d/%d", bpEntities.get(0).getSystolicPressure(), bpEntities.get(0).getDiastolicPressure()));
-        mTvBpResultPulseRate.setText(String.format("%d", bpEntities.get(0).getHeartRate()));
+        mTvBpResultPressure.setText(String.format(Locale.CHINA,"%d/%d", bpEntities.get(0).getSystolicPressure(), bpEntities.get(0).getDiastolicPressure()));
+        mTvBpResultPulseRate.setText(String.format(Locale.CHINA,"%d", bpEntities.get(0).getHeartRate()));
     }
 
     @Subscribe

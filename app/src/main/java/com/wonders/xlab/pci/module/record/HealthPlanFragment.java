@@ -68,7 +68,7 @@ public class HealthPlanFragment extends BaseFragment {
 
     private void initWebView() {
 
-        mWvHealthPlan.getSettings().setJavaScriptEnabled(false);
+        mWvHealthPlan.getSettings().setJavaScriptEnabled(true);
         mWvHealthPlan.getSettings().setDomStorageEnabled(true);
         mWvHealthPlan.getSettings().setDatabaseEnabled(true);
         mWvHealthPlan.getSettings().setAppCacheEnabled(false);

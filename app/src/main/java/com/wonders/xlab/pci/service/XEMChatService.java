@@ -38,6 +38,8 @@ import com.wonders.xlab.pci.receiver.ConnectionBroadcastReceiver;
 import com.wonders.xlab.pci.receiver.EMChatMessageBroadcastReceiver;
 import com.wonders.xlab.pci.receiver.TimeClickReceiver;
 
+import java.util.Locale;
+
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -156,7 +158,7 @@ public class XEMChatService extends Service {
             intentFilter.setPriority(999);
             registerReceiver(msgReceiver, intentFilter);
         }
-        EMChatManager.getInstance().login(tel, new MD5Util().encrypt("pci_user" + tel).toLowerCase(), new EMCallBack() {//回调
+        EMChatManager.getInstance().login(tel, new MD5Util().encrypt("pci_user" + tel).toLowerCase(Locale.CHINA), new EMCallBack() {//回调
             @Override
             public void onSuccess() {
                 EMChat.getInstance().setAppInited();
