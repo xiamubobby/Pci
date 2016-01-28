@@ -1,13 +1,12 @@
-package com.wonders.xlab.pci.util;
-
-import com.wonders.xlab.common.utils.MD5Util;
-import com.wonders.xlab.pci.BuildConfig;
+package com.wonders.xlab.common.utils;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricGradleTestRunner;
 import org.robolectric.annotation.Config;
+
+import xlab.wonders.com.common.BuildConfig;
 
 /**
  * Created by hua on 16/1/26.

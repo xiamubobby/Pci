@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:padding="@dimen/item_interval">
+
+    <ImageView
+        android:id="@+id/iv_my_doctor_portrait"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginTop="@dimen/item_interval"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_launcher"/>
+
+    <LinearLayout
+        android:id="@+id/ll_my_doctor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/item_interval_large"
+        android:layout_toRightOf="@+id/iv_my_doctor_portrait"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_my_doctor_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_interval"
+            android:text="姓名"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <TextView
+            android:id="@+id/tv_my_doctor_hospital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_interval"
+            android:text="医院"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <TextView
+            android:id="@+id/tv_my_doctor_department"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_interval"
+            android:text="科室"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <TextView
+            android:id="@+id/tv_my_doctor_job"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_interval"
+            android:text="职称"
+            android:textSize="@dimen/text_size_normal"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_my_doctor_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_my_doctor"
+        android:layout_marginBottom="@dimen/item_interval"
+        android:layout_marginTop="@dimen/item_interval"
+        android:text="医生简介"
+        android:textSize="@dimen/text_size_normal"/>
+</RelativeLayout>

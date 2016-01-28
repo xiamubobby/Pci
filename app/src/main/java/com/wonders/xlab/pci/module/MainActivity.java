@@ -28,6 +28,7 @@ import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.module.base.BaseActivity;
 import com.wonders.xlab.pci.module.home.HomeFragment;
 import com.wonders.xlab.pci.module.login.LoginActivity;
+import com.wonders.xlab.pci.module.mydoctor.MyDoctorActivity;
 import com.wonders.xlab.pci.module.otto.ExitBus;
 import com.wonders.xlab.pci.module.record.RecordFragment;
 import com.wonders.xlab.pci.module.record.report.ReportDetailActivity;
