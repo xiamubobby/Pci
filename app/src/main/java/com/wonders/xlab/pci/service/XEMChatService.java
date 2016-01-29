@@ -219,12 +219,12 @@ public class XEMChatService extends Service {
                     .map(new Func1<Integer, String>() {
                         @Override
                         public String call(Integer integer) {
-                            String message;
+                            String message = null;
                             if (error == EMError.USER_REMOVED) {
                                 message = "显示帐号已经被移除,请联系客服";
                             } else if (error == EMError.CONNECTION_CONFLICT) {
                                 //帐号在其他设备登陆
-                                message = "帐号在其他设备登陆";
+//                                message = "帐号在其他设备登陆";
 //                                OttoManager.post(new ExitBus());
                             } else {
                                 if (NetUtils.hasNetwork(XEMChatService.this)) {

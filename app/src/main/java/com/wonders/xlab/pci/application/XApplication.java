@@ -3,6 +3,7 @@ package com.wonders.xlab.pci.application;
 import com.activeandroid.ActiveAndroid;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
+import com.github.moduth.blockcanary.BlockCanary;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 
@@ -23,5 +24,6 @@ public class XApplication extends com.activeandroid.app.Application {
         AnalyticsConfig.enableEncrypt(true);
         MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式，这样将不会再自动统计Activity。
 
+        BlockCanary.install(this, new AppBlockCanaryContext()).start();
     }
 }

@@ -4,12 +4,13 @@ package com.wonders.xlab.pci.module.mydoctor.mvn;
  * Created by hua on 16/1/28.
  */
 public class DoctorInfoEntity {
+    private String id;
     private String name;
     private String hospital;
     private String department;
     private String description;
-    private String job;
-    private String iconUrl;
+    private String jobTitle;
+    private String avatarUrl;
 
     public String getName() {
         return name;
@@ -43,19 +44,27 @@ public class DoctorInfoEntity {
         this.description = description;
     }
 
-    public String getIconUrl() {
-        return iconUrl;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setIconUrl(String iconUrl) {
-        this.iconUrl = iconUrl;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
-    public String getJob() {
-        return job;
+    public String getJobTitle() {
+        return jobTitle;
     }
 
-    public void setJob(String job) {
-        this.job = job;
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

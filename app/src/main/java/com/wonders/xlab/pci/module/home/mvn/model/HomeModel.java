@@ -5,17 +5,21 @@ import android.support.annotation.NonNull;
 
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
-import com.wonders.xlab.common.utils.NetworkUtil;
-import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.module.base.mvn.entity.home.HomeEntity;
+import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
 import com.wonders.xlab.pci.module.home.bean.HomeTaskBean;
 import com.wonders.xlab.pci.module.home.mvn.api.HomeAPI;
 import com.wonders.xlab.pci.module.home.mvn.view.HomeView;
-import com.wonders.xlab.pci.module.base.mvn.entity.home.HomeEntity;
-import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hua on 15/12/14.
@@ -35,18 +39,36 @@ public class HomeModel extends BaseModel<HomeEntity> {
     public void getHomeList(final Context context, final String userId) {
 
         if (page == -1) {
-            List<HomeTaskBean> beanList = new ArrayList<>();
-            List<HistoryTaskBean> yesterdayBeanList = new Select().from(HistoryTaskBean.class).orderBy("updateTime DESC").execute();
-            if (yesterdayBeanList != null && yesterdayBeanList.size() > 0) {
-                beanList.addAll(yesterdayBeanList);
-                mHomeView.showHomeList(beanList);
-            }
+            Observable.just(HistoryTaskBean.class)
+                    .subscribeOn(Schedulers.io())
+                    .map(new Func1<Class<HistoryTaskBean>, List<HistoryTaskBean>>() {
+                        @Override
+                        public List<HistoryTaskBean> call(Class<HistoryTaskBean> historyTaskBeanClass) {
+                            return new Select().from(historyTaskBeanClass).orderBy("updateTime DESC").execute();
+                        }
+                    })
+                    .filter(new Func1<List<HistoryTaskBean>, Boolean>() {
+                        @Override
+                        public Boolean call(List<HistoryTaskBean> historyTaskBeen) {
+                            return historyTaskBeen != null && historyTaskBeen.size() > 0;
+                        }
+                    })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<List<HistoryTaskBean>>() {
+                        @Override
+                        public void call(List<HistoryTaskBean> historyTaskBeen) {
+                            List beanList = new ArrayList<>();
+                            beanList.addAll(historyTaskBeen);
+                            mHomeView.showHomeList(beanList);
+                        }
+                    });
+
         }
 
-        if (!NetworkUtil.hasNetwork(context)) {
+        /*if (!NetworkUtil.hasNetwork(context)) {
             mHomeView.showError(context.getString(R.string.error_no_network));
             return;
-        }
+        }*/
         if (!isLastPage) {
             setObservable(mHomeAPI.getHomeList(userId, page + 1));
         }

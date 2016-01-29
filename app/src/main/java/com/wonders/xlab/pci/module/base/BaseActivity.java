@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 
+import com.umeng.update.UmengUpdateAgent;
 import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        UmengUpdateAgent.update(this);
+        UmengUpdateAgent.update(this);
     }
 
     @Override

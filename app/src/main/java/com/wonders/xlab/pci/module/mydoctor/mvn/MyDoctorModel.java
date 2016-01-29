@@ -26,9 +26,9 @@ public class MyDoctorModel extends BaseModel<MyDoctorEntity> {
             doctorInfo.setName("六二");
             doctorInfo.setHospital("瑞金医院");
             doctorInfo.setDepartment("心内科");
-            doctorInfo.setJob("住院医师");
+            doctorInfo.setJobTitle("住院医师");
             doctorInfo.setDescription("医师简介");
-            doctorInfo.setIconUrl("http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg");
+            doctorInfo.setAvatarUrl("http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg");
 
             doctorInfoEntityList.add(doctorInfo);
         }

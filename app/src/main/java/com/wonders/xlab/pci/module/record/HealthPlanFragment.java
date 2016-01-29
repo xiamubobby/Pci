@@ -71,8 +71,8 @@ public class HealthPlanFragment extends BaseFragment {
         mWvHealthPlan.getSettings().setJavaScriptEnabled(true);
         mWvHealthPlan.getSettings().setDomStorageEnabled(true);
         mWvHealthPlan.getSettings().setDatabaseEnabled(true);
-        mWvHealthPlan.getSettings().setAppCacheEnabled(false);
-        mWvHealthPlan.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        mWvHealthPlan.getSettings().setAppCacheEnabled(true);
+        mWvHealthPlan.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
 //        mWvHealthPlan.getSettings().setAllowFileAccess(true);
 
         if (Build.VERSION.SDK_INT >= 16) {

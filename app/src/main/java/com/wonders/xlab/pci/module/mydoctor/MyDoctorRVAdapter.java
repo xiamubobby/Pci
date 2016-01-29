@@ -42,10 +42,10 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<DoctorInfoEntity> {
         viewHolder.mTvMyDoctorName.setText(doctorInfo.getName());
         viewHolder.mTvMyDoctorHospital.setText(doctorInfo.getHospital());
         viewHolder.mTvMyDoctorDepartment.setText(doctorInfo.getDepartment());
-        viewHolder.mTvMyDoctorJob.setText(doctorInfo.getJob());
+        viewHolder.mTvMyDoctorJob.setText(doctorInfo.getJobTitle());
         viewHolder.mTvMyDoctorDescription.setText(doctorInfo.getDescription());
         Glide.with(getContextWeakReference().get())
-                .load(doctorInfo.getIconUrl())
+                .load(doctorInfo.getAvatarUrl())
                 .crossFade()
                 .fitCenter()
                 .into(viewHolder.mIvMyDoctorPortrait);
