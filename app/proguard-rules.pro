@@ -190,6 +190,8 @@
 -keep class com.wonders.xlab.pci.module.base.mvn.entity.** {*;}
 -keep class com.wonders.xlab.pci.assist.connection.entity.** {*;}
 -keep class com.wonders.xlab.pci.module.base.mvn.entity.** {*;}
+-keep class com.wonders.xlab.pci.module.mydoctor.mvn.MyDoctorEntity {*;}
+-keep class com.wonders.xlab.pci.module.mydoctor.mvn.DoctorInfoEntity {*;}
 -keep class * extends com.wonders.xlab.pci.module.base.mvn.entity.BaseEntity
 
 

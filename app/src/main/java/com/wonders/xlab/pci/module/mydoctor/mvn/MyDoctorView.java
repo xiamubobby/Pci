@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface MyDoctorView extends BaseView {
     void showDoctorList(List<DoctorInfoEntity> doctorInfoList);
+
+    void showError(String message);
 }

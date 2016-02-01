@@ -40,12 +40,13 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<DoctorInfoEntity> {
         DoctorInfoEntity doctorInfo = getBean(position);
 
         viewHolder.mTvMyDoctorName.setText(doctorInfo.getName());
-        viewHolder.mTvMyDoctorHospital.setText(doctorInfo.getHospital());
-        viewHolder.mTvMyDoctorDepartment.setText(doctorInfo.getDepartment());
-        viewHolder.mTvMyDoctorJob.setText(doctorInfo.getJobTitle());
-        viewHolder.mTvMyDoctorDescription.setText(doctorInfo.getDescription());
+        viewHolder.mTvMyDoctorHospital.setText(doctorInfo.getHospitalname());
+        viewHolder.mTvMyDoctorDepartment.setText(doctorInfo.getParentdepartname());
+        viewHolder.mTvMyDoctorJob.setText(doctorInfo.getTitle());
+        viewHolder.mTvMyDoctorDescription.setText(doctorInfo.getDes());
         Glide.with(getContextWeakReference().get())
-                .load(doctorInfo.getAvatarUrl())
+                .load(doctorInfo.getPic())
+                .placeholder(R.drawable.user_avatar_default)
                 .crossFade()
                 .fitCenter()
                 .into(viewHolder.mIvMyDoctorPortrait);

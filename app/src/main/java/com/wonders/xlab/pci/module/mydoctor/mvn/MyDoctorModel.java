@@ -2,9 +2,6 @@ package com.wonders.xlab.pci.module.mydoctor.mvn;
 
 import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by hua on 16/1/28.
  */
@@ -17,32 +14,40 @@ public class MyDoctorModel extends BaseModel<MyDoctorEntity> {
         mMyDoctorAPI = mRetrofit.create(MyDoctorAPI.class);
     }
 
-    public void getDoctorList(String userId,String tel) {
+    public void getDoctorList(String userId, String tel) {
 
-        List<DoctorInfoEntity> doctorInfoEntityList = new ArrayList<>();
+       /* List<DoctorInfoEntity> doctorInfoEntityList = new ArrayList<>();
 
         for (int i = 0; i < 12; i++) {
             DoctorInfoEntity doctorInfo = new DoctorInfoEntity();
             doctorInfo.setName("六二");
-            doctorInfo.setHospital("瑞金医院");
-            doctorInfo.setDepartment("心内科");
-            doctorInfo.setJobTitle("住院医师");
-            doctorInfo.setDescription("医师简介");
-            doctorInfo.setAvatarUrl("http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg");
+            doctorInfo.setHospitalname("瑞金医院");
+            doctorInfo.setParentdepartname("心内科");
+            doctorInfo.setTitle("住院医师");
+            doctorInfo.setDes("医师简介");
+            doctorInfo.setPic("http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg");
 
             doctorInfoEntityList.add(doctorInfo);
         }
 
         mMyDoctorView.showDoctorList(doctorInfoEntityList);
+*/
+        setObservable(mMyDoctorAPI.getDoctorList(userId, tel));
     }
 
     @Override
     protected void onSuccess(MyDoctorEntity response) {
-
+        mMyDoctorView.hideLoading();
+        if (response.getRet_code() == 0) {
+            mMyDoctorView.showDoctorList(response.getRet_values());
+        } else {
+            mMyDoctorView.showError(response.getMessage());
+        }
     }
 
     @Override
     protected void onFailed(String message) {
-
+        mMyDoctorView.hideLoading();
+        mMyDoctorView.showError(message);
     }
 }

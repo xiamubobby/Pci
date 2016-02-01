@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.module.mydoctor;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -24,6 +25,8 @@ public class MyDoctorActivity extends AppbarActivity implements MyDoctorView {
 
     @Bind(R.id.rv_my_doctor)
     RecyclerView mRvMyDoctor;
+    @Bind(R.id.coordinator)
+    CoordinatorLayout mCoordinator;
 
     private MyDoctorRVAdapter mDoctorRVAdapter;
     private MyDoctorModel mMyDoctorModel;
@@ -87,5 +90,10 @@ public class MyDoctorActivity extends AppbarActivity implements MyDoctorView {
             mRvMyDoctor.setAdapter(mDoctorRVAdapter);
         }
         mDoctorRVAdapter.setDatas(doctorInfoList);
+    }
+
+    @Override
+    public void showError(String message) {
+        showSnackbar(mContentView, message, true);
     }
 }

@@ -8,8 +8,9 @@ android {
         applicationId "com.wonders.xlab.pci"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 10
-        versionName "0.9"
+        versionCode 11
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     signingConfigs {
         debug {
@@ -56,6 +57,14 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.0'
     testCompile "org.mockito:mockito-core:1.10.19"
+    androidTestCompile 'com.android.support:support-annotations:23.1.1'
+    androidTestCompile 'com.android.support.test:runner:0.4'
+    // Set this dependency to use JUnit 4 rules
+    androidTestCompile 'com.android.support.test:rules:0.4'
+    // Set this dependency to build and run Espresso tests
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    // Set this dependency to build and run UI Automator tests
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
     compile project(':common')
     compile project(':uikit')
     compile 'com.android.support:cardview-v7:23.1.1'
@@ -71,5 +80,4 @@ dependencies {
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:1.5.0@aar'
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.2'
     compile 'com.bignerdranch.android:expandablerecyclerview:2.0.4'
-    compile 'com.github.moduth:blockcanary-ui:1.1.3'
 }
