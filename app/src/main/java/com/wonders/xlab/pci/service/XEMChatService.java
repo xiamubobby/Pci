@@ -30,9 +30,9 @@ import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.application.SPManager;
-import com.wonders.xlab.pci.module.MainActivity;
-import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
-import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
+import com.wonders.xlab.pci.module.NewMainActivity;
+import com.wonders.xlab.pci.module.message.bean.HistoryTaskBean;
+import com.wonders.xlab.pci.module.message.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.otto.ExitBus;
 import com.wonders.xlab.pci.receiver.ConnectionBroadcastReceiver;
 import com.wonders.xlab.pci.receiver.EMChatMessageBroadcastReceiver;
@@ -66,7 +66,7 @@ public class XEMChatService extends Service {
                 .setContentText("正在运行")
                 .setAutoCancel(false);
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, NewMainActivity.class);
         Bundle data = new Bundle();
         intent.putExtras(data);
 
@@ -127,7 +127,7 @@ public class XEMChatService extends Service {
 
         login();
 
-        new NotifyUtil().showNotification(getApplicationContext(), Constant.NOTIFY_ID, getApplicationContext().getResources().getString(R.string.app_name), "正在运行", MainActivity.class, R.mipmap.ic_launcher, false);
+        new NotifyUtil().showNotification(getApplicationContext(), Constant.NOTIFY_ID, getApplicationContext().getResources().getString(R.string.app_name), "正在运行", NewMainActivity.class, R.mipmap.ic_launcher, false);
 
         return START_STICKY;
     }

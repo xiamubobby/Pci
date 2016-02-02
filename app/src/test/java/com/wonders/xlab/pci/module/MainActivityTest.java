@@ -8,7 +8,7 @@ import android.support.v7.widget.Toolbar;
 import com.wonders.xlab.common.utils.StreamUtil;
 import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.module.mydoctor.MyDoctorActivity;
+import com.wonders.xlab.pci.module.mydoctor.MyDoctorFragment;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -58,7 +58,7 @@ public class MainActivityTest {
 
     @Test
     public void goToMyDoctorActivity() {
-        Intent intent = new Intent(activity.getApplicationContext(), MyDoctorActivity.class);
+        Intent intent = new Intent(activity.getApplicationContext(), MyDoctorFragment.class);
 
     }
 }

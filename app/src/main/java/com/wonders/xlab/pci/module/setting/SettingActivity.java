@@ -1,19 +1,24 @@
 package com.wonders.xlab.pci.module.setting;
 
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 
+import com.activeandroid.query.Delete;
+import com.wonders.xlab.common.application.OttoManager;
+import com.wonders.xlab.common.utils.NotifyUtil;
 import com.wonders.xlab.pci.R;
+import com.wonders.xlab.pci.application.SPManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
+import com.wonders.xlab.pci.module.message.bean.HistoryTaskBean;
+import com.wonders.xlab.pci.module.message.bean.TodayTaskBean;
+import com.wonders.xlab.pci.module.otto.ExitBus;
 
-import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by hua on 16/1/26.
  */
 public class SettingActivity extends AppbarActivity {
-    @Bind(R.id.coordinator)
-    CoordinatorLayout mCoordinator;
 
     @Override
     public int getContentLayout() {
@@ -28,8 +33,26 @@ public class SettingActivity extends AppbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
+
         getFragmentManager().beginTransaction()
                 .add(R.id.setting_container, SettingFragment.newInstance())
                 .commitAllowingStateLoss();
+    }
+
+    @OnClick(R.id.btn_setting_exit)
+    public void exit() {
+        new NotifyUtil().cancelAll(this);
+        SPManager.get(this).clear();
+        new Delete().from(TodayTaskBean.class).execute();
+        new Delete().from(HistoryTaskBean.class).execute();
+        OttoManager.post(new ExitBus());
+        finish();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

@@ -11,11 +11,28 @@
 
     <include layout="@layout/appbar"/>
 
-    <FrameLayout
-        android:id="@+id/setting_container"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <FrameLayout
+            android:id="@+id/setting_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"/>
+
+        <Button
+            android:id="@+id/btn_setting_exit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/setting_container"
+            android:layout_marginLeft="@dimen/item_interval_large"
+            android:layout_marginRight="@dimen/item_interval_large"
+            android:layout_marginTop="@dimen/item_interval"
+            android:background="@drawable/selector_white_selected_primary_normal"
+            android:text="退出账号"
+            android:textColor="@drawable/selector_text_color_selected_accent"/>
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

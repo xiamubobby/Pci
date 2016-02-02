@@ -13,9 +13,9 @@ import com.wonders.xlab.common.utils.NotifyUtil;
 import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
-import com.wonders.xlab.pci.module.MainActivity;
-import com.wonders.xlab.pci.module.home.bean.HistoryTaskBean;
-import com.wonders.xlab.pci.module.home.bean.TodayTaskBean;
+import com.wonders.xlab.pci.module.NewMainActivity;
+import com.wonders.xlab.pci.module.message.bean.HistoryTaskBean;
+import com.wonders.xlab.pci.module.message.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.otto.ExitBus;
 
 import java.io.UnsupportedEncodingException;
@@ -73,7 +73,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 todayTaskBean.save();
             }
             if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
+                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), NewMainActivity.class, R.mipmap.ic_launcher, true);
             }
             OttoManager.post(todayTaskBean);
         } else if (type == 1) {
@@ -87,7 +87,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             historyTaskBean.setPortrait(portrait);
             historyTaskBean.save();
             if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), historyTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
+                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), historyTaskBean.getTitle(), NewMainActivity.class, R.mipmap.ic_launcher, true);
             }
             OttoManager.post(historyTaskBean);
         } else if (type == 2) {
@@ -117,7 +117,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 todayTaskBean.save();
             }
             if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
+                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), NewMainActivity.class, R.mipmap.ic_launcher, true);
             }
             OttoManager.post(todayTaskBean);
         } catch (UnsupportedEncodingException e1) {
