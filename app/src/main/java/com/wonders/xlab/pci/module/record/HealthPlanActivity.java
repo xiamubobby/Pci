@@ -80,7 +80,7 @@ public class HealthPlanActivity extends AppbarActivity {
             mWvHealthPlan.getSettings().setAllowUniversalAccessFromFileURLs(true);
         }
         mWvHealthPlan.setWebViewClient(new MyWebViewClient());
-        mWvHealthPlan.loadUrl(Constant.HEALTH_PLAN_URL + AIManager.getInstance(this).getUserId());
+        mWvHealthPlan.loadUrl(Constant.HEALTH_PLAN_URL + AIManager.getInstance(this).getUserTel());
     }
 
     private class MyWebViewClient extends WebViewClient {
