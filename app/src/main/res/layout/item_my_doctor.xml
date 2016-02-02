@@ -12,8 +12,7 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginTop="@dimen/item_interval"
-        android:scaleType="fitCenter"
-        android:src="@mipmap/ic_launcher"/>
+        android:scaleType="fitCenter"/>
 
     <LinearLayout
         android:id="@+id/ll_my_doctor"
@@ -28,23 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_interval"
-            android:text="姓名"
-            android:textSize="@dimen/text_size_normal"/>
-
-        <TextView
-            android:id="@+id/tv_my_doctor_hospital"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval"
-            android:text="医院"
-            android:textSize="@dimen/text_size_normal"/>
-
-        <TextView
-            android:id="@+id/tv_my_doctor_department"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval"
-            android:text="科室"
+            android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_size_normal"/>
 
         <TextView
@@ -52,7 +35,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_interval"
-            android:text="职称"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <TextView
+            android:id="@+id/tv_my_doctor_department"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_interval"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <TextView
+            android:id="@+id/tv_my_doctor_hospital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_interval"
             android:textSize="@dimen/text_size_normal"/>
 
     </LinearLayout>
@@ -64,6 +60,5 @@
         android:layout_below="@+id/ll_my_doctor"
         android:layout_marginBottom="@dimen/item_interval"
         android:layout_marginTop="@dimen/item_interval"
-        android:text="医生简介"
         android:textSize="@dimen/text_size_normal"/>
 </RelativeLayout>

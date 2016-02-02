@@ -118,7 +118,7 @@ public class HealthPlanFragment extends BaseFragment {
     @Subscribe
     public void onConnectionChanged(ConnectStateBus bean) {
         if (bean.isConnected()) {
-            mWvHealthPlan.loadUrl(Constant.HEALTH_PLAN_URL + AIManager.getInstance(getActivity()).getUserId());
+            mWvHealthPlan.loadUrl(Constant.HEALTH_PLAN_URL + AIManager.getInstance(getActivity()).getUserTel());
             mWvHealthPlan.postDelayed(new Runnable() {
                 @Override
                 public void run() {
