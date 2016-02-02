@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.base.BaseFragment;
-import com.wonders.xlab.pci.module.record.monitor.MonitorFragment;
+import com.wonders.xlab.pci.module.record.monitor.HealthDataActivity;
 import com.wonders.xlab.pci.module.record.userinfo.UserInfoFragment;
 
 import butterknife.Bind;
@@ -47,7 +47,8 @@ public class RecordFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mVPAdapter = new FragmentVPAdapter(getFragmentManager());
-        mVPAdapter.addFragment(new MonitorFragment(),"身体体征");
+        //TODO 删除
+//        mVPAdapter.addFragment(new HealthDataActivity(),"身体体征");
         mVPAdapter.addFragment(new HealthPlanFragment(),"健康方案");
         mVPAdapter.addFragment(new UserInfoFragment(),"基本信息");
         mVpRecord.setAdapter(mVPAdapter);

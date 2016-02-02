@@ -1,0 +1,90 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.wonders.xlab.pci.module.home.NewHomeFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.v4.view.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginBottom="@dimen/item_interval"/>
+
+            <include layout="@layout/divider_vertical"/>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_new_home_daily_record"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/item_interval"
+                        android:layout_weight="1"
+                        android:background="#efa664"
+                        android:drawableLeft="@drawable/pic_symptom"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:padding="@dimen/item_interval"
+                        android:text="每日记录"/>
+
+                    <TextView
+                        android:id="@+id/tv_new_home_upload_pic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/item_interval"
+                        android:layout_weight="1"
+                        android:background="#77cfab"
+                        android:drawableLeft="@drawable/pic_symptom"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:padding="@dimen/item_interval"
+                        android:text="病历上传"/>
+                </TableRow>
+
+                <TableRow android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_new_home_health_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/item_interval"
+                        android:layout_weight="1"
+                        android:background="#f29e91"
+                        android:drawableLeft="@drawable/pic_symptom"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:padding="@dimen/item_interval"
+                        android:text="监测数据"/>
+
+                    <TextView
+                        android:id="@+id/tv_new_home_health_advise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/item_interval"
+                        android:layout_weight="1"
+                        android:background="#b0d77d"
+                        android:drawableLeft="@drawable/pic_symptom"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:gravity="center"
+                        android:padding="@dimen/item_interval"
+                        android:text="健康方案"/>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>
