@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.activeandroid.query.Select;
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView;
@@ -35,6 +34,7 @@ import com.wonders.xlab.pci.module.task.bp.AddBPActivity;
 import com.wonders.xlab.pci.module.task.bp.MeasureBPGuideActivity;
 import com.wonders.xlab.pci.module.task.bs.AddBSActivity;
 import com.wonders.xlab.pci.module.task.bs.MeasureBSGuideActivity;
+import com.wonders.xlab.pci.service.XEMChatService;
 
 import java.util.List;
 
@@ -99,7 +99,7 @@ public class MessageFragment extends BaseFragment implements HomeView {
         new Thread(new Runnable() {
             @Override
             public void run() {
-//                getActivity().startService(new Intent(getActivity(), XEMChatService.class));
+                getActivity().startService(new Intent(getActivity(), XEMChatService.class));
             }
         }).start();
     }
@@ -221,7 +221,7 @@ public class MessageFragment extends BaseFragment implements HomeView {
         }
         mRvHome.setAdapter(mHomeRVAdapter);
 
-        TodayTaskBean cache = new Select().from(TodayTaskBean.class).executeSingle();
+        TodayTaskBean cache = null;//new Select().from(TodayTaskBean.class).executeSingle();
 
         if (cache != null) {
             TodayTaskBean notice = new TodayTaskBean();

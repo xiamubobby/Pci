@@ -3,8 +3,8 @@ package com.wonders.xlab.pci.module.message.mvn.model;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.activeandroid.query.Delete;
-import com.activeandroid.query.Select;
+import com.wonders.xlab.common.utils.NetworkUtil;
+import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.base.mvn.entity.home.HomeEntity;
 import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.message.bean.HistoryTaskBean;
@@ -14,12 +14,6 @@ import com.wonders.xlab.pci.module.message.mvn.view.HomeView;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by hua on 15/12/14.
@@ -39,7 +33,7 @@ public class HomeModel extends BaseModel<HomeEntity> {
     public void getHomeList(final Context context, final String userId) {
 
         if (page == -1) {
-            Observable.just(HistoryTaskBean.class)
+            /*Observable.just(HistoryTaskBean.class)
                     .subscribeOn(Schedulers.io())
                     .map(new Func1<Class<HistoryTaskBean>, List<HistoryTaskBean>>() {
                         @Override
@@ -62,13 +56,13 @@ public class HomeModel extends BaseModel<HomeEntity> {
                             mHomeView.showHomeList(beanList);
                         }
                     });
-
+*/
         }
 
-        /*if (!NetworkUtil.hasNetwork(context)) {
+        if (!NetworkUtil.hasNetwork(context)) {
             mHomeView.showError(context.getString(R.string.error_no_network));
             return;
-        }*/
+        }
         if (!isLastPage) {
             setObservable(mHomeAPI.getHomeList(userId, page + 1));
         }
@@ -95,7 +89,7 @@ public class HomeModel extends BaseModel<HomeEntity> {
         }
 
         //delete cache first
-        new Delete().from(HistoryTaskBean.class).execute();
+//        new Delete().from(HistoryTaskBean.class).execute();
 
         List<HomeTaskBean> beanList = new ArrayList<>();
 
@@ -109,7 +103,7 @@ public class HomeModel extends BaseModel<HomeEntity> {
             historyTaskBean.setPortrait(contentEntity.getPortrait());
             beanList.add(historyTaskBean);
 
-            historyTaskBean.save();
+//            historyTaskBean.save();
 
         }
 

@@ -2,14 +2,11 @@ package com.wonders.xlab.pci.module.setting;
 
 import android.os.Bundle;
 
-import com.activeandroid.query.Delete;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.common.utils.NotifyUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.SPManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
-import com.wonders.xlab.pci.module.message.bean.HistoryTaskBean;
-import com.wonders.xlab.pci.module.message.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.otto.ExitBus;
 
 import butterknife.ButterKnife;
@@ -44,8 +41,8 @@ public class SettingActivity extends AppbarActivity {
     public void exit() {
         new NotifyUtil().cancelAll(this);
         SPManager.get(this).clear();
-        new Delete().from(TodayTaskBean.class).execute();
-        new Delete().from(HistoryTaskBean.class).execute();
+//        new Delete().from(TodayTaskBean.class).execute();
+//        new Delete().from(HistoryTaskBean.class).execute();
         OttoManager.post(new ExitBus());
         finish();
     }

@@ -11,14 +11,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.activeandroid.query.Delete;
-import com.activeandroid.query.Select;
 import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.application.OttoManager;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
-import com.wonders.xlab.pci.assist.connection.aamodel.BPAAModel;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntity;
 import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
 import com.wonders.xlab.pci.assist.connection.otto.ConnStatusOtto;
@@ -110,12 +107,12 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView,
     @Subscribe
     public void onDataReceived(BPEntityList bpEntityList) {
         //save cache again that save to server failed last time
-        List<BPAAModel> cache = new Select().from(BPAAModel.class).execute();
+        /*List<BPAAModel> cache = new Select().from(BPAAModel.class).execute();
         for (BPAAModel model : cache) {
             BPEntity bpEntity = new BPEntity();
             bpEntity.setBPModel(model);
             bpEntityList.getBp().add(bpEntity);
-        }
+        }*/
 
         List<BPEntity> bpEntities = bpEntityList.getBp();
         mRecordModel.saveBP(AIManager.getInstance(getActivity()).getUserId(), bpEntityList);
@@ -138,13 +135,13 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView,
     public void svSuccess() {
         stopConnectingAnim();
         //the datas are saved successfully, delete the cache
-        new Delete().from(BPAAModel.class).execute();
+//        new Delete().from(BPAAModel.class).execute();
     }
 
     @Override
     public void svDuplicate() {
         //the datas are saved successfully, delete the cache
-        new Delete().from(BPAAModel.class).execute();
+//        new Delete().from(BPAAModel.class).execute();
     }
 
     @Override

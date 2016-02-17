@@ -60,21 +60,11 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        mVpNewMain.setOffscreenPageLimit(2);
-
-        initAdapter();
+        initViewPager();
     }
 
-    private void initAdapter() {
-        if (mVPAdapter == null) {
-            mVPAdapter = new FragmentVPAdapter(getFragmentManager());
-        }
-
-        mVPAdapter.addFragment(new HomeFragment(), "首页");
-        mVPAdapter.addFragment(new MyDoctorFragment(), "医生");
-        mVPAdapter.addFragment(new MessageFragment(), "消息");
-
-        mVpNewMain.setAdapter(mVPAdapter);
+    private void initViewPager() {
+        mVpNewMain.setOffscreenPageLimit(2);
 
         ArrayList<CustomTabEntity> tabEntities = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -91,6 +81,17 @@ public class MainActivity extends BaseActivity {
             }
         }
         mTabNewMain.setTabData(tabEntities);
+
+        if (mVPAdapter == null) {
+            mVPAdapter = new FragmentVPAdapter(getFragmentManager());
+        }
+
+        mVPAdapter.addFragment(new HomeFragment(), "首页");
+        mVPAdapter.addFragment(new MyDoctorFragment(), "医生");
+        mVPAdapter.addFragment(new MessageFragment(), "消息");
+
+        mVpNewMain.setAdapter(mVPAdapter);
+
         mTabNewMain.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {

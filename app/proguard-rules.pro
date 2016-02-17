@@ -241,14 +241,6 @@
     public static ** test();
 }
 
-
-# ActiveAndroid
--keep class com.activeandroid.** { *; }
--keep class com.activeandroid.**.** { *; }
--keep class * extends com.activeandroid.Model
--keep class * extends com.activeandroid.serializer.TypeSerializer
-
-
 ## AndroidAnnotations specific rules ##
 
 # Only required if not using the Spring RestTemplate
@@ -260,6 +252,14 @@
 -dontwarn cn.com.contec.jar.cmssxt.**
 -dontwarn com.contec.jar.**
 
-#blockcanary
+#github
 -keep class com.github.** {*;}
 -dontwarn com.github.**
+
+#realm
+-keep class io.realm.annotations.RealmModule
+-keep @io.realm.annotations.RealmModule class *
+-keep class io.realm.internal.Keep
+-keep @io.realm.internal.Keep class * { *; }
+-dontwarn javax.**
+-dontwarn io.realm.**

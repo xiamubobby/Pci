@@ -1,27 +1,17 @@
 package com.wonders.xlab.pci.assist.connection.aamodel;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
-
 /**
  * Created by hua on 15/11/9.
  */
-@Table(name = "BPAAModel")
-public class BPAAModel extends Model{
+public class BPAAModel{
 
     /**
      * 收缩压，高压
      */
-    @Column(name = "systolicPressure")
     private int systolicPressure;
-    @Column(name = "diastolicPressure")
     private int diastolicPressure;
-    @Column(name = "heartRate")
     private int heartRate;
-    @Column(name = "averagePressure")
     private int averagePressure;
-    @Column(name = "date")
     private long date;
 
     public BPAAModel() {

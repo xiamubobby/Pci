@@ -1,8 +1,5 @@
 package com.wonders.xlab.pci.assist.connection.aamodel;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
 import com.wonders.xlab.pci.assist.connection.entity.BSEntity;
 
 import java.io.Serializable;
@@ -10,15 +7,11 @@ import java.io.Serializable;
 /**
  * Created by hua on 15/11/9.
  */
-@Table(name = "BSAAModel")
-public class BSAAModel extends Model implements Serializable {
+public class BSAAModel implements Serializable {
     private static final long serialVersionUID = 8000111713589185380L;
 
-    @Column(name = "bloodSugar")
     private double bloodSugar;
-    @Column(name = "date")
     private long date;
-    @Column(name = "timeIndex")
     private int timeIndex;
 
     public BSAAModel() {

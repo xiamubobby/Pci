@@ -14,7 +14,6 @@ import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.activeandroid.query.Delete;
 import com.easemob.EMCallBack;
 import com.easemob.EMConnectionListener;
 import com.easemob.EMError;
@@ -31,8 +30,6 @@ import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.application.SPManager;
 import com.wonders.xlab.pci.module.MainActivity;
-import com.wonders.xlab.pci.module.message.bean.HistoryTaskBean;
-import com.wonders.xlab.pci.module.message.bean.TodayTaskBean;
 import com.wonders.xlab.pci.module.otto.ExitBus;
 import com.wonders.xlab.pci.receiver.ConnectionBroadcastReceiver;
 import com.wonders.xlab.pci.receiver.EMChatMessageBroadcastReceiver;
@@ -136,8 +133,8 @@ public class XEMChatService extends Service {
     public void forceExit(ExitBus bean) {
         mIsNormalStop = true;
         SPManager.get(this).clear();
-        new Delete().from(TodayTaskBean.class).execute();
-        new Delete().from(HistoryTaskBean.class).execute();
+//        new Delete().from(TodayTaskBean.class).execute();
+//        new Delete().from(HistoryTaskBean.class).execute();
         stopSelf();
     }
 

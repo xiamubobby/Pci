@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.activeandroid.query.Select;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.TextMessageBody;
@@ -57,13 +56,14 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         if (type == 0) {
             recordTime = Long.parseLong(message.getStringAttribute("recordTime", String.valueOf(Calendar.getInstance().getTimeInMillis())));
 
-            TodayTaskBean cache = new Select().from(TodayTaskBean.class).executeSingle();
+            TodayTaskBean cache = new TodayTaskBean();//new Select().from(TodayTaskBean.class).executeSingle();
+
             TodayTaskBean todayTaskBean = new TodayTaskBean();
             todayTaskBean.setTitle(title);
             todayTaskBean.setUpdateTime(recordTime);
             todayTaskBean.setName(name);
             todayTaskBean.setPortrait(portrait);
-            if (cache != null) {
+            /*if (cache != null) {
                 cache.setName(todayTaskBean.getName());
                 cache.setPortrait(todayTaskBean.getPortrait());
                 cache.setUpdateTime(todayTaskBean.getUpdateTime());
@@ -71,7 +71,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 cache.save();
             } else {
                 todayTaskBean.save();
-            }
+            }*/
             if (!AIManager.getInstance(context).isHomeShowing()) {
                 new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
             }
@@ -85,7 +85,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             historyTaskBean.setName(name);
             historyTaskBean.setContent(content);
             historyTaskBean.setPortrait(portrait);
-            historyTaskBean.save();
+//            historyTaskBean.save();
             if (!AIManager.getInstance(context).isHomeShowing()) {
                 new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), historyTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
             }
@@ -99,7 +99,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
     }
 
     private void setupDefaultMessage(Context context, EMMessage message) {
-        TodayTaskBean cache = new Select().from(TodayTaskBean.class).executeSingle();
+        TodayTaskBean cache = new TodayTaskBean();//new Select().from(TodayTaskBean.class).executeSingle();
         try {
             TodayTaskBean todayTaskBean = new TodayTaskBean();
             todayTaskBean.setTitle(new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8"));
@@ -107,7 +107,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             todayTaskBean.setName("");
             todayTaskBean.setPortrait(Constant.DEFAULT_PORTRAIT);
 
-            if (cache != null) {
+            /*if (cache != null) {
                 cache.setName(todayTaskBean.getName());
                 cache.setPortrait(todayTaskBean.getPortrait());
                 cache.setUpdateTime(todayTaskBean.getUpdateTime());
@@ -115,7 +115,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 cache.save();
             } else {
                 todayTaskBean.save();
-            }
+            }*/
             if (!AIManager.getInstance(context).isHomeShowing()) {
                 new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
             }
