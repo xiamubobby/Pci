@@ -21,7 +21,7 @@ public class NoticeBean extends ChatBean {
 
     @Override
     public int getItemLayout() {
-        return ChatBean.ITEM_TODAY;
+        return ChatBean.ITEM_NOTICE;
     }
 
     public String getTitle() {

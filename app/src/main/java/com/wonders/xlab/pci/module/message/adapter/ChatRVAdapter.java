@@ -17,14 +17,14 @@ public class ChatRVAdapter extends MultiRVAdapter<ChatBean> {
     public MultiViewHolder<ChatBean> createViewHolder(View itemView, int viewType) {
         MultiViewHolder holder;
         switch (viewType) {
-            case ChatBean.ITEM_HISTORY:
+            case ChatBean.ITEM_MESSAGE:
                 holder = new MessageViewHolder(itemView);
                 break;
-            case ChatBean.ITEM_TODAY:
+            case ChatBean.ITEM_NOTICE:
                 holder = new NoticeViewHolder(itemView);
                 break;
             default:
-                throw new IllegalArgumentException("you must set your layout in ChatBean.ITEM_HISTORY and ChatBean.ITEM_TODAY as your viewType");
+                throw new IllegalArgumentException("you must set your layout in ChatBean.ITEM_MESSAGE and ChatBean.ITEM_NOTICE as your viewType");
         }
         return holder;
     }

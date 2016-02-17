@@ -36,32 +36,57 @@ public class ChatModel extends BaseModel<ChatEntity> {
      */
     public void getChatList(final Context context, final String userId) {
 
-        if (page == -1) {
-            /*Observable.just(MessageBean.class)
+        /*if (page == -1) {
+            Observable.just(ChatRealmEntity.class)
                     .subscribeOn(Schedulers.io())
-                    .map(new Func1<Class<MessageBean>, List<MessageBean>>() {
+                    .map(new Func1<Class<ChatRealmEntity>, RealmResults<ChatRealmEntity>>() {
                         @Override
-                        public List<MessageBean> call(Class<MessageBean> historyTaskBeanClass) {
-                            return new Select().from(historyTaskBeanClass).orderBy("updateTime DESC").execute();
+                        public RealmResults<ChatRealmEntity> call(Class<ChatRealmEntity> messageEntity) {
+                            Realm realm = Realm.getInstance(context);
+
+                            return realm.where(ChatRealmEntity.class).equalTo("isMessage", true).findAll();
                         }
                     })
-                    .filter(new Func1<List<MessageBean>, Boolean>() {
+                    .filter(new Func1<RealmResults<ChatRealmEntity>, Boolean>() {
                         @Override
-                        public Boolean call(List<MessageBean> historyTaskBeen) {
+                        public Boolean call(RealmResults<ChatRealmEntity> historyTaskBeen) {
                             return historyTaskBeen != null && historyTaskBeen.size() > 0;
                         }
                     })
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<List<MessageBean>>() {
+                    .flatMap(new Func1<RealmResults<ChatRealmEntity>, Observable<ChatRealmEntity>>() {
                         @Override
-                        public void call(List<MessageBean> historyTaskBeen) {
-                            List beanList = new ArrayList<>();
-                            beanList.addAll(historyTaskBeen);
+                        public Observable<ChatRealmEntity> call(RealmResults<ChatRealmEntity> chatRealmEntities) {
+                            return Observable.from(chatRealmEntities);
+                        }
+                    })
+                    .map(new Func1<ChatRealmEntity, MessageBean>() {
+                        @Override
+                        public MessageBean call(ChatRealmEntity chatRealmEntity) {
+                            MessageBean messageBean = new MessageBean();
+                            messageBean.setChatRealmEntity(chatRealmEntity);
+                            return messageBean;
+                        }
+                    })
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<MessageBean>() {
+                        ArrayList<ChatBean> beanList = new ArrayList<>();
+
+                        @Override
+                        public void onCompleted() {
                             mChatView.showHomeList(beanList);
                         }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(MessageBean messageBean) {
+                            beanList.add(messageBean);
+                        }
                     });
-*/
-        }
+        }*/
 
         if (!NetworkUtil.hasNetwork(context)) {
             mChatView.showError(context.getString(R.string.error_no_network));
@@ -92,9 +117,6 @@ public class ChatModel extends BaseModel<ChatEntity> {
             return;
         }
 
-        //delete cache first
-//        new Delete().from(MessageBean.class).execute();
-
         List<ChatBean> beanList = new ArrayList<>();
 
         for (ChatEntity.RetValuesEntity.ContentEntity contentEntity : content) {
@@ -106,8 +128,6 @@ public class ChatModel extends BaseModel<ChatEntity> {
             messageBean.setName(contentEntity.getName());
             messageBean.setPortrait(contentEntity.getPortrait());
             beanList.add(messageBean);
-
-//            messageBean.save();
 
         }
 

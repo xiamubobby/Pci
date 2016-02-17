@@ -13,7 +13,7 @@ public class MessageBean extends ChatBean {
     private String content;
     private long updateTime;
 
-    public void setMessageRealmEntity(ChatRealmEntity realmEntity) {
+    public void setChatRealmEntity(ChatRealmEntity realmEntity) {
         setPortrait(realmEntity.getPortrait());
         setName(realmEntity.getName());
         setTitle(realmEntity.getTitle());
@@ -23,7 +23,7 @@ public class MessageBean extends ChatBean {
 
     @Override
     public int getItemLayout() {
-        return ChatBean.ITEM_HISTORY;
+        return ChatBean.ITEM_MESSAGE;
     }
 
     public String getTitle() {

@@ -141,26 +141,10 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView,
 
     @Subscribe
     public void onDataReceived(BSEntityList bsEntityList) {
-        //save cache again that save to server failed last time
-       /* List<BSAAModel> cache = new Select().from(BSAAModel.class).execute();
-        for (BSAAModel model : cache) {
-            BSEntity bsEntity = new BSEntity();
-            bsEntity.setBSModel(model);
-            bsEntityList.getBs().add(bsEntity);
-        }*/
-
         BSEntity bsEntity = bsEntityList.getBs().get(0);
         mTvBsResultSugar.setText(String.valueOf(bsEntity.getBloodSugarValue()));
 //        mSpBsResultPeriod.setSelection(bsEntity.getTimeIndex());
 
-        //cache
-        /*for (BSEntity entity : bsEntityList.getBs()) {
-            BSAAModel model = new BSAAModel();
-            model.setBSEntity(entity);
-            model.save();
-        }*/
-
-//        bsEntityList.getBs().remove(0);
         mAddRecordModel.saveBS(AIManager.getInstance(getActivity()).getUserId(), bsEntityList);
     }
 
@@ -177,13 +161,10 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView,
     @Override
     public void svSuccess() {
         stopConnectingAnim();
-//        new Delete().from(BSAAModel.class).execute();
     }
 
     @Override
     public void svDuplicate() {
-        //the datas are saved successfully, delete the cache
-//        new Delete().from(BSAAModel.class).execute();
     }
 
     @Override
@@ -208,7 +189,6 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView,
 
     @Override
     public void fetchIdealRangeFailed(String message) {
-//        mIdealRangeModel.fetchIdealBSRange(AIManager.getInstance(getActivity()).getUserId());
     }
 
     /**

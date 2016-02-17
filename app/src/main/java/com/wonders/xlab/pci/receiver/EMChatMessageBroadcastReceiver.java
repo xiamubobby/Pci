@@ -57,15 +57,6 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         String content = message.getStringAttribute("content", "");
         int type = message.getIntAttribute("type", -1);//-1:默认处理，即通过环信后台发送 0:提醒 1:内容 2：强制退出(由于用户锁定账户等等原因的安全考虑)
 
-        // When you create a RealmConfiguration you can specify the version of the schema.
-        // If the schema does not have that version a RealmMigrationNeededException will be thrown.
-        /*RealmConfiguration config = new RealmConfiguration.Builder(context)
-                .name("pci")
-                .schemaVersion(3)
-                .build();
-
-        // You can then manually call Realm.migrateRealm().
-        Realm.migrateRealm(config, new Migration());*/
         Realm realm = Realm.getInstance(context);
 
         long recordTime;
@@ -138,7 +129,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
              * 通知消息界面更新列表
              */
             MessageBean messageBean = new MessageBean();
-            messageBean.setMessageRealmEntity(cacheEntity);
+            messageBean.setChatRealmEntity(cacheEntity);
             if (!AIManager.getInstance(context).isHomeShowing()) {
                 new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), messageBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
             }

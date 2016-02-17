@@ -7,6 +7,6 @@ import com.wonders.xlab.pci.R;
  * Created by hua on 15/12/14.
  */
 public abstract class ChatBean extends BaseBean {
-    public final static int ITEM_HISTORY = R.layout.item_home_history_task;
-    public final static int ITEM_TODAY = R.layout.item_home_today_task;
+    public final static int ITEM_MESSAGE = R.layout.item_chat_message;
+    public final static int ITEM_NOTICE = R.layout.item_chat_notice;
 }

@@ -106,13 +106,6 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView,
 
     @Subscribe
     public void onDataReceived(BPEntityList bpEntityList) {
-        //save cache again that save to server failed last time
-        /*List<BPAAModel> cache = new Select().from(BPAAModel.class).execute();
-        for (BPAAModel model : cache) {
-            BPEntity bpEntity = new BPEntity();
-            bpEntity.setBPModel(model);
-            bpEntityList.getBp().add(bpEntity);
-        }*/
 
         List<BPEntity> bpEntities = bpEntityList.getBp();
         mRecordModel.saveBP(AIManager.getInstance(getActivity()).getUserId(), bpEntityList);
@@ -134,14 +127,10 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView,
     @Override
     public void svSuccess() {
         stopConnectingAnim();
-        //the datas are saved successfully, delete the cache
-//        new Delete().from(BPAAModel.class).execute();
     }
 
     @Override
     public void svDuplicate() {
-        //the datas are saved successfully, delete the cache
-//        new Delete().from(BPAAModel.class).execute();
     }
 
     @Override
@@ -180,7 +169,6 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView,
 
     @Override
     public void fetchIdealRangeFailed(String message) {
-//        mIdealRangeModel.fetchIdealBPRange(AIManager.getInstance(getActivity()).getUserId());
     }
 
 

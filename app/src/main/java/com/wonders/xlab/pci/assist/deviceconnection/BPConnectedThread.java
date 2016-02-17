@@ -281,8 +281,6 @@ public class BPConnectedThread extends DataRequestThread {
                     lp,
                     pulseRate,
                     ap);
-            //缓存数据
-//            BPAAModel.save();
 
             BPEntity bpEntity = new BPEntity();
             bpEntity.setBPModel(BPAAModel);

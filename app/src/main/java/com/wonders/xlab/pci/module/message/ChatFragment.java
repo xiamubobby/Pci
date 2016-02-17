@@ -34,12 +34,14 @@ import com.wonders.xlab.pci.module.task.bp.AddBPActivity;
 import com.wonders.xlab.pci.module.task.bp.MeasureBPGuideActivity;
 import com.wonders.xlab.pci.module.task.bs.AddBSActivity;
 import com.wonders.xlab.pci.module.task.bs.MeasureBSGuideActivity;
+import com.wonders.xlab.pci.realm.ChatRealmEntity;
 import com.wonders.xlab.pci.service.XEMChatService;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -109,7 +111,7 @@ public class ChatFragment extends BaseFragment implements ChatView {
         if (mChatRVAdapter != null) {
             if (mChatRVAdapter.getItemCount() > 0) {
                 BaseBean itemData = mChatRVAdapter.getItemData(0);
-                if (itemData.getItemLayout() == ChatBean.ITEM_TODAY) {
+                if (itemData.getItemLayout() == ChatBean.ITEM_NOTICE) {
                     NoticeBean noticeBean = (NoticeBean) itemData;
                     noticeBean.setTitle(bean.getTitle());
                     noticeBean.setPortrait(bean.getPortrait());
@@ -133,7 +135,7 @@ public class ChatFragment extends BaseFragment implements ChatView {
         if (mChatRVAdapter != null) {
             if (mChatRVAdapter.getItemCount() > 0) {
                 BaseBean itemData = mChatRVAdapter.getItemData(0);
-                if (itemData.getItemLayout() == ChatBean.ITEM_TODAY) {
+                if (itemData.getItemLayout() == ChatBean.ITEM_NOTICE) {
                     mChatRVAdapter.addToPosition(bean, 1);
                 } else {
                     mChatRVAdapter.addToTop(bean);
@@ -221,7 +223,9 @@ public class ChatFragment extends BaseFragment implements ChatView {
         }
         mRvHome.setAdapter(mChatRVAdapter);
 
-        NoticeBean cache = null;
+        Realm realm = Realm.getInstance(getActivity());
+
+        ChatRealmEntity cache = realm.where(ChatRealmEntity.class).equalTo("isMessage", false).findFirst();
 
         if (cache != null) {
             NoticeBean notice = new NoticeBean();

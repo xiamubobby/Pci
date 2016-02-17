@@ -14,11 +14,7 @@ public class BSAAModel implements Serializable {
     private long date;
     private int timeIndex;
 
-    public BSAAModel() {
-    }
-
     public BSAAModel(long date, double bloodSugar) {
-
         this.date = date;
         this.bloodSugar = bloodSugar;
     }

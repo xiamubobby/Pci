@@ -14,9 +14,6 @@ public class BPAAModel{
     private int averagePressure;
     private long date;
 
-    public BPAAModel() {
-    }
-
     public BPAAModel(long date, int systolicPressure, int diastolicPressure, int heartRate, int averagePressure) {
         this.date = date;
         this.systolicPressure = systolicPressure;
