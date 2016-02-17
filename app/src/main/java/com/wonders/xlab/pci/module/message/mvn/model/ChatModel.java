@@ -3,7 +3,7 @@ package com.wonders.xlab.pci.module.message.mvn.model;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.wonders.xlab.common.utils.NetworkUtil;
+import im.hua.utils.NetworkUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.base.mvn.entity.home.ChatEntity;
 import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;

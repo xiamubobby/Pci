@@ -2,8 +2,8 @@ package com.wonders.xlab.pci.module.setting;
 
 import android.os.Bundle;
 
-import com.wonders.xlab.common.application.OttoManager;
-import com.wonders.xlab.common.utils.NotifyUtil;
+import com.wonders.xlab.common.manager.OttoManager;
+import im.hua.utils.NotifyUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.SPManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;

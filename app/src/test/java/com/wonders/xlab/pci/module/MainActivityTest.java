@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.Toolbar;
 
-import com.wonders.xlab.common.utils.StreamUtil;
+import im.hua.utils.StreamUtil;
 import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.mydoctor.MyDoctorFragment;

@@ -4,7 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
-import com.wonders.xlab.common.utils.DateUtil;
+import im.hua.utils.DateUtil;
 import com.wonders.xlab.pci.module.task.WeekViewFragment;
 import com.wonders.xlab.pci.module.base.mvn.entity.task.DailyTaskEntity.RetValuesEntity.UserActivityDtosEntity;
 

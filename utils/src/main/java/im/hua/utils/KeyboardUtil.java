@@ -1,4 +1,4 @@
-package com.wonders.xlab.common.utils;
+package im.hua.utils;
 
 import android.app.Activity;
 import android.os.IBinder;

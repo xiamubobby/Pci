@@ -59,9 +59,13 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile project(':common')
+    compile project(':utils')
+    compile project(':uikit')
+
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.0'
-    testCompile "org.mockito:mockito-core:1.10.19"
+    testCompile 'org.mockito:mockito-core:1.10.19'
     androidTestCompile 'com.android.support:support-annotations:23.1.1'
     androidTestCompile 'com.android.support.test:runner:0.4'
     // Set this dependency to use JUnit 4 rules
@@ -70,8 +74,7 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
     // Set this dependency to build and run UI Automator tests
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
-    compile project(':common')
-    compile project(':uikit')
+
     compile 'com.android.support:cardview-v7:23.1.1'
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'

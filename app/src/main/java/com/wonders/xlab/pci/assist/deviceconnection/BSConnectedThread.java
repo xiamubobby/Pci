@@ -3,8 +3,8 @@ package com.wonders.xlab.pci.assist.deviceconnection;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
 
-import com.wonders.xlab.common.application.OttoManager;
-import com.wonders.xlab.common.utils.DateUtil;
+import com.wonders.xlab.common.manager.OttoManager;
+import im.hua.utils.DateUtil;
 import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.assist.deviceconnection.base.DataRequestThread;
 import com.wonders.xlab.pci.assist.deviceconnection.entity.BSEntity;

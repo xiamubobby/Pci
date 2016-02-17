@@ -11,7 +11,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.wonders.xlab.common.application.OttoManager;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.assist.deviceconnection.BPConnectedThread;
 import com.wonders.xlab.pci.assist.deviceconnection.BSConnectedThread;

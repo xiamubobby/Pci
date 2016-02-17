@@ -13,7 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.squareup.otto.Subscribe;
-import com.wonders.xlab.common.application.OttoManager;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.BuildConfig;

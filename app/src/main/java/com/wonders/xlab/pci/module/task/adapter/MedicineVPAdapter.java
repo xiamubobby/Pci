@@ -4,7 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
-import com.wonders.xlab.common.application.OttoManager;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.module.task.MedicineRecordFragment;
 import com.wonders.xlab.pci.module.task.bean.MedicineRecordBean;
 import com.wonders.xlab.pci.module.task.otto.CanModifyMedicineOtto;

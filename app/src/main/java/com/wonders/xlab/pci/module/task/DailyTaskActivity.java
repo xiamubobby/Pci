@@ -18,7 +18,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.wonders.xlab.common.utils.DateUtil;
+import im.hua.utils.DateUtil;
 import com.wonders.xlab.common.viewpager.WrapHeightViewPager;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;

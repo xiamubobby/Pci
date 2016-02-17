@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.squareup.otto.Subscribe;
-import com.wonders.xlab.common.application.OttoManager;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView;
 import com.wonders.xlab.common.recyclerview.adapter.BaseBean;
 import com.wonders.xlab.pci.R;

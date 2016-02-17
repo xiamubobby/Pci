@@ -1,4 +1,4 @@
-package com.wonders.xlab.common.utils;
+package im.hua.utils;
 
 import org.junit.Assert;
 import org.junit.Test;

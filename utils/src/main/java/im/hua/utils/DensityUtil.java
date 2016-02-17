@@ -1,4 +1,4 @@
-package com.wonders.xlab.common.utils;
+package im.hua.utils;
 
 /**
  * Created by hua on 15/8/27.

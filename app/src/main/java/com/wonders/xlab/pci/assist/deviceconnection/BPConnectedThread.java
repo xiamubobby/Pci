@@ -5,8 +5,8 @@ import android.util.Log;
 
 import com.contec.jar.contec08a.DeviceCommand;
 import com.contec.jar.contec08a.DevicePackManager;
-import com.wonders.xlab.common.application.OttoManager;
-import com.wonders.xlab.common.utils.DateUtil;
+import com.wonders.xlab.common.manager.OttoManager;
+import im.hua.utils.DateUtil;
 import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.assist.deviceconnection.aamodel.BPAAModel;
 import com.wonders.xlab.pci.assist.deviceconnection.base.DataRequestThread;

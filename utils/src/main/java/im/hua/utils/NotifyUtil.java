@@ -1,4 +1,4 @@
-package com.wonders.xlab.common.utils;
+package im.hua.utils;
 
 import android.app.Notification;
 import android.app.NotificationManager;

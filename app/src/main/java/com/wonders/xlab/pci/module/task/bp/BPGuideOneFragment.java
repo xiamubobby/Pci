@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.umeng.analytics.MobclickAgent;
-import com.wonders.xlab.common.application.OttoManager;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.task.bp.otto.GuideOtto;

@@ -16,7 +16,7 @@ import android.webkit.WebViewClient;
 
 import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
-import com.wonders.xlab.common.application.OttoManager;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;

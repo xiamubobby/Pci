@@ -3,13 +3,12 @@ package com.wonders.xlab.pci.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;
 import com.easemob.chat.TextMessageBody;
-import com.wonders.xlab.common.application.OttoManager;
-import com.wonders.xlab.common.utils.NotifyUtil;
+import com.wonders.xlab.common.manager.OttoManager;
+import im.hua.utils.NotifyUtil;
 import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;

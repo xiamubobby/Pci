@@ -4,7 +4,7 @@ package com.wonders.xlab.pci.assist.deviceconnection.base;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Handler;
 
-import com.wonders.xlab.common.application.OttoManager;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.assist.deviceconnection.otto.RequestDataFailed;
 
 import java.util.Calendar;

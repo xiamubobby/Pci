@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
-import com.wonders.xlab.common.utils.DateUtil;
+import im.hua.utils.DateUtil;
 import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.record.monitor.bean.BPBean;

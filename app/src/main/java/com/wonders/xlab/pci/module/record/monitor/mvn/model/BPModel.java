@@ -1,7 +1,7 @@
 package com.wonders.xlab.pci.module.record.monitor.mvn.model;
 
 
-import com.wonders.xlab.common.utils.DateUtil;
+import im.hua.utils.DateUtil;
 import com.wonders.xlab.pci.module.record.monitor.bean.BPBean;
 import com.wonders.xlab.pci.module.record.monitor.mvn.api.BPAPI;
 import com.wonders.xlab.pci.module.base.mvn.entity.record.monitor.BPEntity;

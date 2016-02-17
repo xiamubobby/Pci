@@ -1,4 +1,4 @@
-package com.wonders.xlab.common.utils;
+package com.wonders.xlab.common.glide;
 
 import android.content.Context;
 import android.graphics.Bitmap;

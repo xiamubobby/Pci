@@ -12,8 +12,8 @@ import android.view.MenuItem;
 
 import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
-import com.wonders.xlab.common.application.OttoManager;
-import com.wonders.xlab.common.utils.DateUtil;
+import com.wonders.xlab.common.manager.OttoManager;
+import im.hua.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;

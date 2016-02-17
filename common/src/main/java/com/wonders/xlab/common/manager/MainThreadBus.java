@@ -1,4 +1,4 @@
-package com.wonders.xlab.common.application;
+package com.wonders.xlab.common.manager;
 
 import android.os.Handler;
 import android.os.Looper;

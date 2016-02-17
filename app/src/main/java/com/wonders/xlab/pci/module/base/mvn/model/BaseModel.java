@@ -24,8 +24,6 @@ public abstract class BaseModel<T extends BaseEntity> {
     private Observable<T> mObservable;
     private Subscription subscribe;
 
-    private boolean isRequesting = false;
-
     public BaseModel() {
         /**
          * TODO 开启日志
@@ -44,8 +42,6 @@ public abstract class BaseModel<T extends BaseEntity> {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//必须加上
                 .client(client)
                 .build();
-
-
     }
 
     private synchronized void fetchData() {
@@ -65,45 +61,30 @@ public abstract class BaseModel<T extends BaseEntity> {
                     public void onStart() {
                         super.onStart();
                         BaseModel.this.onStart();
-                        setRequesting(true);
                     }
 
                     @Override
                     public void onCompleted() {
-                        setRequesting(false);
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        setRequesting(false);
                         onFailed("请求失败，请重试！");
                     }
 
                     @Override
                     public void onNext(T result) {
-                        setRequesting(false);
                         if (result != null) {
-//                            if (result.getRet_code() == 0) {
-                                onSuccess(result);
-                            /*} else {
-                                onFailed(result.getMessage());
-                            }*/
+                            onSuccess(result);
                         } else {
-                            onFailed(getErrorMessage());
+                            onFailed("获取数据出错！");
                         }
                     }
                 });
     }
 
-    private synchronized void setRequesting(boolean isRequesting) {
-        this.isRequesting = isRequesting;
-    }
-
-    public boolean isRequesting() {
-        return isRequesting;
-    }
-
-    public synchronized void cancel() {
+    public void cancel() {
         if (subscribe != null) {
             subscribe.unsubscribe();
             subscribe = null;
@@ -114,26 +95,10 @@ public abstract class BaseModel<T extends BaseEntity> {
         }
     }
 
-    protected void cancelPreRequest() {
-
-    }
-
-    /**
-     * cancel first
-     *
-     * @param observable
-     */
-    protected synchronized void setObservable(@NonNull Observable<T> observable) {
-        if (mObservable != null && isRequesting) {
-            cancelPreRequest();
-        }
+    protected void setObservable(@NonNull Observable<T> observable) {
         cancel();
         mObservable = observable;
         fetchData();
-    }
-
-    protected String getErrorMessage() {
-        return "获取数据出错！";
     }
 
     protected void onStart() {
@@ -142,10 +107,5 @@ public abstract class BaseModel<T extends BaseEntity> {
 
     protected abstract void onSuccess(T response);
 
-    /**
-     * 请求成功，但是ret_code为-1等错误信息标记
-     *
-     * @param message
-     */
     protected abstract void onFailed(String message);
 }

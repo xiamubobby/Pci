@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.wonders.xlab.common.application.OttoManager;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.assist.deviceconnection.otto.FindDeviceOtto;
 import com.wonders.xlab.pci.assist.deviceconnection.otto.ScanEndOtto;

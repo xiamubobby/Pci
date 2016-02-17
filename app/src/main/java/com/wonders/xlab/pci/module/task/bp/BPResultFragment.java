@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
-import com.wonders.xlab.common.application.OttoManager;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.assist.deviceconnection.entity.BPEntity;

@@ -8,7 +8,7 @@ import android.support.annotation.ColorInt;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.wonders.xlab.common.utils.DensityUtil;
+import im.hua.utils.DensityUtil;
 
 /**
  * Created by hua on 16/1/28.
@@ -51,7 +51,7 @@ public class VerticalItemDecoration extends RecyclerView.ItemDecoration {
         }
     }
 
-    public VerticalItemDecoration(Context context,@ColorInt int mDividerColor) {
+    public VerticalItemDecoration(Context context, @ColorInt int mDividerColor) {
         super();
         mContext = context;
 

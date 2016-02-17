@@ -9,9 +9,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.umeng.analytics.MobclickAgent;
-import com.wonders.xlab.common.utils.KeyboardUtil;
-import com.wonders.xlab.common.utils.MD5Util;
-import com.wonders.xlab.common.utils.ViewHelper;
+import im.hua.utils.KeyboardUtil;
+import im.hua.utils.MD5Util;
+import im.hua.utils.ViewHelper;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.MainActivity;
