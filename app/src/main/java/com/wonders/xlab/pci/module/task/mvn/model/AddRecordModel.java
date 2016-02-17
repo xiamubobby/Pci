@@ -1,7 +1,7 @@
 package com.wonders.xlab.pci.module.task.mvn.model;
 
-import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
-import com.wonders.xlab.pci.assist.connection.entity.BSEntityList;
+import com.wonders.xlab.pci.assist.deviceconnection.entity.BPEntityList;
+import com.wonders.xlab.pci.assist.deviceconnection.entity.BSEntityList;
 import com.wonders.xlab.pci.module.base.mvn.entity.SimpleEntity;
 import com.wonders.xlab.pci.module.base.mvn.model.BaseModel;
 import com.wonders.xlab.pci.module.base.mvn.view.MeasureResultView;

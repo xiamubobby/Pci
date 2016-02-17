@@ -41,8 +41,8 @@ public class SettingActivity extends AppbarActivity {
     public void exit() {
         new NotifyUtil().cancelAll(this);
         SPManager.get(this).clear();
-//        new Delete().from(TodayTaskBean.class).execute();
-//        new Delete().from(HistoryTaskBean.class).execute();
+//        new Delete().from(NoticeBean.class).execute();
+//        new Delete().from(MessageBean.class).execute();
         OttoManager.post(new ExitBus());
         finish();
     }

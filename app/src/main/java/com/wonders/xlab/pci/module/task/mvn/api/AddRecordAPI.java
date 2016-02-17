@@ -1,7 +1,7 @@
 package com.wonders.xlab.pci.module.task.mvn.api;
 
-import com.wonders.xlab.pci.assist.connection.entity.BPEntityList;
-import com.wonders.xlab.pci.assist.connection.entity.BSEntityList;
+import com.wonders.xlab.pci.assist.deviceconnection.entity.BPEntityList;
+import com.wonders.xlab.pci.assist.deviceconnection.entity.BSEntityList;
 import com.wonders.xlab.pci.module.base.mvn.entity.SimpleEntity;
 
 import retrofit.http.Body;

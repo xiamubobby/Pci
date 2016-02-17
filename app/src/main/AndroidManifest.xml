@@ -197,7 +197,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
 
-        <receiver android:name=".assist.connection.base.ScanReceiver">
+        <receiver android:name=".assist.deviceconnection.base.ScanReceiver">
         </receiver>
 
     </application>

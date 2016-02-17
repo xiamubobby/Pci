@@ -17,7 +17,7 @@ import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.BaseActivity;
 import com.wonders.xlab.pci.module.home.HomeFragment;
 import com.wonders.xlab.pci.module.login.LoginActivity;
-import com.wonders.xlab.pci.module.message.MessageFragment;
+import com.wonders.xlab.pci.module.message.ChatFragment;
 import com.wonders.xlab.pci.module.message.bean.TabEntity;
 import com.wonders.xlab.pci.module.mydoctor.MyDoctorFragment;
 import com.wonders.xlab.pci.module.otto.ExitBus;
@@ -88,7 +88,7 @@ public class MainActivity extends BaseActivity {
 
         mVPAdapter.addFragment(new HomeFragment(), "首页");
         mVPAdapter.addFragment(new MyDoctorFragment(), "医生");
-        mVPAdapter.addFragment(new MessageFragment(), "消息");
+        mVPAdapter.addFragment(new ChatFragment(), "消息");
 
         mVpNewMain.setAdapter(mVPAdapter);
 

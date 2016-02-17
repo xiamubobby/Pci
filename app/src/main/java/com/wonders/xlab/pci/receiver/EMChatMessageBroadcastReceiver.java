@@ -13,12 +13,16 @@ import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.MainActivity;
-import com.wonders.xlab.pci.module.message.bean.HistoryTaskBean;
-import com.wonders.xlab.pci.module.message.bean.TodayTaskBean;
+import com.wonders.xlab.pci.module.message.bean.MessageBean;
+import com.wonders.xlab.pci.module.message.bean.NoticeBean;
 import com.wonders.xlab.pci.module.otto.ExitBus;
+import com.wonders.xlab.pci.realm.ChatRealmEntity;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
     public EMChatMessageBroadcastReceiver() {
@@ -27,6 +31,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
         // 注销广播
         abortBroadcast();
         // 消息id（每条消息都会生成唯一的一个id，目前是SDK生成）
@@ -52,76 +57,131 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         String content = message.getStringAttribute("content", "");
         int type = message.getIntAttribute("type", -1);//-1:默认处理，即通过环信后台发送 0:提醒 1:内容 2：强制退出(由于用户锁定账户等等原因的安全考虑)
 
+        // When you create a RealmConfiguration you can specify the version of the schema.
+        // If the schema does not have that version a RealmMigrationNeededException will be thrown.
+        /*RealmConfiguration config = new RealmConfiguration.Builder(context)
+                .name("pci")
+                .schemaVersion(3)
+                .build();
+
+        // You can then manually call Realm.migrateRealm().
+        Realm.migrateRealm(config, new Migration());*/
+        Realm realm = Realm.getInstance(context);
+
         long recordTime;
+
+        /**
+         * -1:默认处理，即通过环信后台发送
+         * 0:提醒
+         * 1:内容
+         * 2：强制退出(由于用户锁定账户等等原因的安全考虑)
+         */
         if (type == 0) {
+            /**
+             * 提醒类型的数据，先删除以前的提醒数据，然后在插入新接收到的提醒数据，因为提醒数据有且只会显示一条
+             */
+
             recordTime = Long.parseLong(message.getStringAttribute("recordTime", String.valueOf(Calendar.getInstance().getTimeInMillis())));
 
-            TodayTaskBean cache = new TodayTaskBean();//new Select().from(TodayTaskBean.class).executeSingle();
+            realm.beginTransaction();
 
-            TodayTaskBean todayTaskBean = new TodayTaskBean();
-            todayTaskBean.setTitle(title);
-            todayTaskBean.setUpdateTime(recordTime);
-            todayTaskBean.setName(name);
-            todayTaskBean.setPortrait(portrait);
-            /*if (cache != null) {
-                cache.setName(todayTaskBean.getName());
-                cache.setPortrait(todayTaskBean.getPortrait());
-                cache.setUpdateTime(todayTaskBean.getUpdateTime());
-                cache.setTitle(todayTaskBean.getTitle());
-                cache.save();
-            } else {
-                todayTaskBean.save();
-            }*/
-            if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
+            /**
+             * 清除所有提醒数据
+             */
+            RealmResults<ChatRealmEntity> realmResults = realm.where(ChatRealmEntity.class).equalTo("isMessage", false).findAll();
+            if (realmResults != null) {
+                realmResults.clear();
             }
-            OttoManager.post(todayTaskBean);
+
+            /**
+             * 保存当前提醒
+             */
+            ChatRealmEntity cacheEntity = realm.createObject(ChatRealmEntity.class);
+            cacheEntity.setTitle(title);
+            cacheEntity.setUpdateTime(recordTime);
+            cacheEntity.setName(name);
+            cacheEntity.setPortrait(portrait);
+            cacheEntity.setMessage(false);
+            cacheEntity.setUserId(AIManager.getInstance(context).getUserId());
+
+            realm.commitTransaction();
+
+            /**
+             * 通知消息界面更新列表
+             */
+            NoticeBean noticeBean = new NoticeBean();
+            noticeBean.setMessageRealmEntity(cacheEntity);
+            if (!AIManager.getInstance(context).isHomeShowing()) {
+                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), cacheEntity.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
+            }
+            OttoManager.post(cacheEntity);
         } else if (type == 1) {
             recordTime = Long.parseLong(message.getStringAttribute("recordTime", String.valueOf(Calendar.getInstance().getTimeInMillis())));
 
-            HistoryTaskBean historyTaskBean = new HistoryTaskBean();
-            historyTaskBean.setTitle(title);
-            historyTaskBean.setUpdateTime(recordTime);
-            historyTaskBean.setName(name);
-            historyTaskBean.setContent(content);
-            historyTaskBean.setPortrait(portrait);
-//            historyTaskBean.save();
+            /**
+             * 保存当前提醒
+             */
+            realm.beginTransaction();
+
+            ChatRealmEntity cacheEntity = realm.createObject(ChatRealmEntity.class);
+            cacheEntity.setTitle(title);
+            cacheEntity.setUpdateTime(recordTime);
+            cacheEntity.setName(name);
+            cacheEntity.setPortrait(portrait);
+            cacheEntity.setMessage(true);
+            cacheEntity.setContent(content);
+            cacheEntity.setUserId(AIManager.getInstance(context).getUserId());
+
+            realm.commitTransaction();
+
+            /**
+             * 通知消息界面更新列表
+             */
+            MessageBean messageBean = new MessageBean();
+            messageBean.setMessageRealmEntity(cacheEntity);
             if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), historyTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
+                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), messageBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
             }
-            OttoManager.post(historyTaskBean);
+            OttoManager.post(messageBean);
         } else if (type == 2) {
             OttoManager.post(new ExitBus());
         } else if (type == -1) {
-            setupDefaultMessage(context, message);
-        }
+            try {
+                /**
+                 * 保存当前提醒
+                 */
+                realm.beginTransaction();
+                /**
+                 * 清除所有提醒数据
+                 */
+                RealmResults<ChatRealmEntity> realmResults = realm.where(ChatRealmEntity.class).equalTo("isMessage", false).findAll();
+                if (realmResults != null) {
+                    realmResults.clear();
+                }
 
-    }
+                ChatRealmEntity cacheEntity = realm.createObject(ChatRealmEntity.class);
+                cacheEntity.setName("");
+                cacheEntity.setPortrait(Constant.DEFAULT_PORTRAIT);
+                cacheEntity.setUpdateTime(Calendar.getInstance().getTimeInMillis());
+                cacheEntity.setTitle(new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8"));
+                cacheEntity.setMessage(false);
+                cacheEntity.setUserId(AIManager.getInstance(context).getUserId());
 
-    private void setupDefaultMessage(Context context, EMMessage message) {
-        TodayTaskBean cache = new TodayTaskBean();//new Select().from(TodayTaskBean.class).executeSingle();
-        try {
-            TodayTaskBean todayTaskBean = new TodayTaskBean();
-            todayTaskBean.setTitle(new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8"));
-            todayTaskBean.setUpdateTime(Calendar.getInstance().getTimeInMillis());
-            todayTaskBean.setName("");
-            todayTaskBean.setPortrait(Constant.DEFAULT_PORTRAIT);
+                realm.commitTransaction();
 
-            /*if (cache != null) {
-                cache.setName(todayTaskBean.getName());
-                cache.setPortrait(todayTaskBean.getPortrait());
-                cache.setUpdateTime(todayTaskBean.getUpdateTime());
-                cache.setTitle(todayTaskBean.getTitle());
-                cache.save();
-            } else {
-                todayTaskBean.save();
-            }*/
-            if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), todayTaskBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
+                /**
+                 * 通知消息界面更新列表
+                 */
+                NoticeBean noticeBean = new NoticeBean();
+                noticeBean.setMessageRealmEntity(cacheEntity);
+                if (!AIManager.getInstance(context).isHomeShowing()) {
+                    new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), noticeBean.getTitle(), MainActivity.class, R.mipmap.ic_launcher, true);
+                }
+                OttoManager.post(noticeBean);
+            } catch (UnsupportedEncodingException e1) {
+                e1.printStackTrace();
             }
-            OttoManager.post(todayTaskBean);
-        } catch (UnsupportedEncodingException e1) {
-            e1.printStackTrace();
         }
+
     }
 }
