@@ -86,7 +86,7 @@ public class AddRecordModel extends BaseModel<SimpleEntity> {
         if (response.getRet_code() == 0) {
             mMeasureResultView.svSuccess();
         } else {
-
+            mMeasureResultView.svFailed(response.getMessage());
         }
     }
 

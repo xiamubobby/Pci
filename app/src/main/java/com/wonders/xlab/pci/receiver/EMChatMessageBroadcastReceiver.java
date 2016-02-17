@@ -3,6 +3,7 @@ package com.wonders.xlab.pci.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMMessage;

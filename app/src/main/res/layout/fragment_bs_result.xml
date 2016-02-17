@@ -56,9 +56,18 @@
                     android:id="@+id/sp_bs_result_period"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/item_interval"
-                    android:visibility="gone"/>
+                    android:layout_marginLeft="@dimen/item_interval"/>
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_bs_result_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/selector_white_selected_primary_normal"
+                android:text="保存"
+                android:textColor="@drawable/selector_text_color_selected_accent"
+                android:textSize="@dimen/text_size_normal"/>
 
 
             <TextView

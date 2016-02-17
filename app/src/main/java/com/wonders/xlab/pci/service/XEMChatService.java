@@ -133,8 +133,6 @@ public class XEMChatService extends Service {
     public void forceExit(ExitBus bean) {
         mIsNormalStop = true;
         SPManager.get(this).clear();
-//        new Delete().from(NoticeBean.class).execute();
-//        new Delete().from(MessageBean.class).execute();
         stopSelf();
     }
 

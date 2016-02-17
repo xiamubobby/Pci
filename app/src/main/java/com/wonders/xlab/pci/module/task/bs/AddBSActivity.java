@@ -101,7 +101,7 @@ public class AddBSActivity extends AppbarActivity implements MeasureResultView {
             return;
         }
 
-         int periodIndex;
+        int periodIndex;
         String period = mTvAddBsPeriod.getText().toString();
         switch (period) {
             case "早餐前":

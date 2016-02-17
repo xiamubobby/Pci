@@ -225,7 +225,7 @@ public class ChatFragment extends BaseFragment implements ChatView {
 
         Realm realm = Realm.getInstance(getActivity());
 
-        ChatRealmEntity cache = realm.where(ChatRealmEntity.class).equalTo("isMessage", false).findFirst();
+        ChatRealmEntity cache = realm.where(ChatRealmEntity.class).equalTo("isMessage", false).equalTo("userId",AIManager.getInstance(getActivity()).getUserId()).findFirst();
 
         if (cache != null) {
             NoticeBean notice = new NoticeBean();

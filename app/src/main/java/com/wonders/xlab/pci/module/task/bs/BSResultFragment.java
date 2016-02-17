@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
@@ -29,8 +32,13 @@ import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
 import com.wonders.xlab.pci.module.task.mvn.model.IdealRangeModel;
 import com.wonders.xlab.pci.module.task.mvn.view.IdealRangeView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import im.hua.uikit.LoadingDotView;
 
 /**
@@ -46,15 +54,17 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView,
     LoadingDotView mLdvBsResult;
     @Bind(R.id.tv_bs_result_ideal_range)
     TextView mTvBsResultIdealRange;
-//    @Bind(R.id.sp_bs_result_period)
-//    Spinner mSpBsResultPeriod;
+    @Bind(R.id.sp_bs_result_period)
+    Spinner mSpBsResultPeriod;
 
     private AddRecordModel mAddRecordModel;
     private IdealRangeModel mIdealRangeModel;
 
     private Animation rotateAnimation;
 
-//    private List<HashMap<String, String>> mPeriodList = new ArrayList<>();
+    private List<HashMap<String, String>> mPeriodList = new ArrayList<>();
+
+    private boolean mIsSaveSingle = false;
 
     public BSResultFragment() {
         // Required empty public constructor
@@ -71,7 +81,6 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView,
         if (rotateAnimation == null) {
             rotateAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
         }
-/*
         if (mPeriodList.size() == 0) {
             for (int i = 0; i < 7; i++) {
                 HashMap<String, String> period = new HashMap<>();
@@ -100,7 +109,7 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView,
                 }
                 mPeriodList.add(period);
             }
-        }*/
+        }
     }
 
     @Override
@@ -118,7 +127,19 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView,
         OttoManager.register(this);
         mIdealRangeModel.fetchIdealBSRange(AIManager.getInstance(getActivity()).getUserId());
 
-//        mSpBsResultPeriod.setAdapter(new SimpleAdapter(getActivity(), mPeriodList, R.layout.item_spinner_text, new String[]{"name"}, new int[]{R.id.tv_spinner}));
+        mSpBsResultPeriod.setAdapter(new SimpleAdapter(getActivity(), mPeriodList, R.layout.item_spinner_text, new String[]{"name"}, new int[]{R.id.tv_spinner}));
+    }
+
+    @OnClick(R.id.btn_bs_result_save)
+    public void save() {
+        float bsValue = Float.parseFloat(mTvBsResultSugar.getText().toString());
+
+        if (Float.compare(bsValue, 0) > 0 && mTvBsResultSugar.getTag() != null) {
+            mIsSaveSingle = true;
+            mAddRecordModel.saveBSSingle(AIManager.getInstance(getActivity()).getUserId(), Long.parseLong(mTvBsResultSugar.getTag().toString()), mSpBsResultPeriod.getSelectedItemPosition(), bsValue);
+        } else {
+            Toast.makeText(getActivity(), "请先测量您的血糖，然后点击保存!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Subscribe
@@ -143,9 +164,14 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView,
     public void onDataReceived(BSEntityList bsEntityList) {
         BSEntity bsEntity = bsEntityList.getBs().get(0);
         mTvBsResultSugar.setText(String.valueOf(bsEntity.getBloodSugarValue()));
-//        mSpBsResultPeriod.setSelection(bsEntity.getTimeIndex());
+        mTvBsResultSugar.setTag(bsEntity.getDate());
+        mSpBsResultPeriod.setSelection(bsEntity.getTimeIndex());
 
-        mAddRecordModel.saveBS(AIManager.getInstance(getActivity()).getUserId(), bsEntityList);
+        bsEntityList.getBs().remove(0);
+        if (bsEntityList.getBs().size() > 0) {
+            mIsSaveSingle = false;
+            mAddRecordModel.saveBS(AIManager.getInstance(getActivity()).getUserId(), bsEntityList);
+        }
     }
 
     @Subscribe
@@ -161,6 +187,10 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView,
     @Override
     public void svSuccess() {
         stopConnectingAnim();
+        if (mIsSaveSingle) {
+            mTvBsResultSugar.setText("0");
+            Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
