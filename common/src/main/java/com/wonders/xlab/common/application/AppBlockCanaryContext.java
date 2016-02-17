@@ -1,12 +1,15 @@
+/*
 package com.wonders.xlab.common.application;
 
 import com.github.moduth.blockcanary.BlockCanaryContext;
 
 import xlab.wonders.com.common.BuildConfig;
 
+*/
 /**
  * Created by hua on 16/2/16.
- */
+ *//*
+
 public class AppBlockCanaryContext extends BlockCanaryContext {
     // override to provide context like app qualifier, uid, network type, block threshold, log save path
 
@@ -27,4 +30,4 @@ public class AppBlockCanaryContext extends BlockCanaryContext {
     public String getLogPath() {
         return "/blockcanary/performance";
     }
-}
+}*/

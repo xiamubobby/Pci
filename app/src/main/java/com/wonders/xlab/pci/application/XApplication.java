@@ -4,10 +4,8 @@ import android.app.Application;
 
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
-import com.github.moduth.blockcanary.BlockCanary;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
-import com.wonders.xlab.common.application.AppBlockCanaryContext;
 
 /**
  * Created by hua on 15/12/13.
@@ -17,7 +15,9 @@ public class XApplication extends Application {
     public void onCreate() {
         super.onCreate();
         // Do it on main process
-        BlockCanary.install(this, new AppBlockCanaryContext()).start();
+//        if (BuildConfig.DEBUG) {
+//            BlockCanary.install(this, new AppBlockCanaryContext()).start();
+//        }
 
         EMChat.getInstance().init(this);
         EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);//不发通知，而是走广播
