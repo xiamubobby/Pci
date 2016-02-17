@@ -1,7 +1,7 @@
 package com.wonders.xlab.pci.module.record.monitor.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,8 +14,6 @@ import com.wonders.xlab.common.utils.GlideCircleTransform;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.base.mvn.entity.record.monitor.SymptomEntity;
 
-import java.lang.ref.WeakReference;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -24,13 +22,9 @@ import butterknife.ButterKnife;
  */
 public class SymptomRVAdapter extends SimpleRVAdapter<SymptomEntity.RetValuesEntity.UserSymptomAdvicesEntity> {
 
-    public SymptomRVAdapter(WeakReference<Context> contextWeakReference) {
-        super(contextWeakReference);
-    }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new AdviceViewHolder(mInflater.inflate(R.layout.item_symptom_advice, parent, false));
+        return new AdviceViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_symptom_advice, parent, false));
     }
 
     @Override
@@ -39,9 +33,9 @@ public class SymptomRVAdapter extends SimpleRVAdapter<SymptomEntity.RetValuesEnt
         AdviceViewHolder viewHolder = (AdviceViewHolder) holder;
         viewHolder.mTvSymptomAdviceTime.setText(DateUtil.format(getBean(position).getRecordTime(), "HH:mm"));
         viewHolder.mTvSymptomAdviceContent.setText(getBean(position).getContent());
-        Glide.with(getContextWeakReference().get())
+        Glide.with(holder.itemView.getContext())
                 .load(getBean(position).getPortrait())
-                .transform(new GlideCircleTransform(getContextWeakReference().get()))
+                .transform(new GlideCircleTransform(holder.itemView.getContext()))
                 .crossFade()
                 .centerCrop()
                 .into(viewHolder.mIvSymptomAdvicePortrait);

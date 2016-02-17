@@ -1,6 +1,5 @@
 package com.wonders.xlab.pci.module.record.monitor;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,7 +15,6 @@ import com.wonders.xlab.pci.module.record.monitor.bean.MedicineCategoryBean;
 import com.wonders.xlab.pci.module.record.monitor.mvn.model.MedicineModel;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.MedicineView;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.Bind;
@@ -67,7 +65,7 @@ public class MedicineActivity extends AppbarActivity implements MedicineView {
     @Override
     public void showMedicineRecords(List<MedicineCategoryBean> categoryBeanList) {
         if (mMedicineRVAdapter == null) {
-            mMedicineRVAdapter = new MedicineRVAdapter(new WeakReference<Context>(this), categoryBeanList);
+            mMedicineRVAdapter = new MedicineRVAdapter(categoryBeanList);
             mRvMedicine.setAdapter(mMedicineRVAdapter);
         }
         mMedicineRVAdapter.setDatas(categoryBeanList);

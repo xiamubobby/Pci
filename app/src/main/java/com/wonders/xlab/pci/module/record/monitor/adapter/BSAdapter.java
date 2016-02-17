@@ -1,6 +1,5 @@
 package com.wonders.xlab.pci.module.record.monitor.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,8 +14,6 @@ import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.record.monitor.bean.BSBean;
 
-import java.lang.ref.WeakReference;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -24,15 +21,6 @@ import butterknife.ButterKnife;
  * Created by sjy on 2015/12/23.
  */
 public class BSAdapter extends SimpleRVAdapter<BSBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
-
-    private WeakReference<Context> mContext;
-    private LayoutInflater mInflater;
-
-    public BSAdapter(WeakReference<Context> contextWeakReference) {
-        super(contextWeakReference);
-        mContext = contextWeakReference;
-        mInflater = LayoutInflater.from(mContext.get());
-    }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
@@ -44,7 +32,7 @@ public class BSAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycler
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.item_bs, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bs, parent, false);
         return new ItemViewHolder(itemView);
 
     }
@@ -56,7 +44,7 @@ public class BSAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycler
 
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        View titleView = mInflater.inflate(R.layout.item_header_time, parent, false);
+        View titleView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_header_time, parent, false);
 
         return new TitleViewHolder(titleView);
     }

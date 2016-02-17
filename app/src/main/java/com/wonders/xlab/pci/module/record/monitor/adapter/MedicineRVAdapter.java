@@ -1,6 +1,5 @@
 package com.wonders.xlab.pci.module.record.monitor.adapter;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import com.wonders.xlab.pci.module.record.monitor.adapter.viewholder.MedicineCat
 import com.wonders.xlab.pci.module.record.monitor.bean.MedicineCategoryBean;
 import com.wonders.xlab.pci.module.record.monitor.bean.MedicineCategoryChildBean;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +20,6 @@ import java.util.List;
  * Created by hua on 15/12/22.
  */
 public class MedicineRVAdapter extends ExpandableRecyclerAdapter<MedicineCategoryVH, MedicineCategoryChildVH> {
-
-    private LayoutInflater mInflater;
 
     /**
      * Primary constructor. Sets up {@link #mParentItemList} and {@link #mItemList}.
@@ -35,9 +31,8 @@ public class MedicineRVAdapter extends ExpandableRecyclerAdapter<MedicineCategor
      *                       displayed in the RecyclerView that this
      *                       adapter is linked to
      */
-    public MedicineRVAdapter(WeakReference<Context> contextWeakReference, @NonNull List<? extends ParentListItem> parentItemList) {
+    public MedicineRVAdapter(@NonNull List<? extends ParentListItem> parentItemList) {
         super(parentItemList);
-        mInflater = LayoutInflater.from(contextWeakReference.get());
     }
 
     public void setDatas(@NonNull List<? extends ParentListItem> parentItemList) {
@@ -53,19 +48,13 @@ public class MedicineRVAdapter extends ExpandableRecyclerAdapter<MedicineCategor
 
     @Override
     public MedicineCategoryVH onCreateParentViewHolder(ViewGroup parentViewGroup) {
-        if (mInflater != null) {
-            return new MedicineCategoryVH(mInflater.inflate(R.layout.item_medicine_category, parentViewGroup, false));
-        }
-        return null;
+        return new MedicineCategoryVH(LayoutInflater.from(parentViewGroup.getContext()).inflate(R.layout.item_medicine_category, parentViewGroup, false));
 
     }
 
     @Override
     public MedicineCategoryChildVH onCreateChildViewHolder(ViewGroup childViewGroup) {
-        if (mInflater != null) {
-            return new MedicineCategoryChildVH(mInflater.inflate(R.layout.item_medicine_category_child, childViewGroup, false));
-        }
-        return null;
+        return new MedicineCategoryChildVH(LayoutInflater.from(childViewGroup.getContext()).inflate(R.layout.item_medicine_category_child, childViewGroup, false));
     }
 
     @Override
@@ -78,7 +67,7 @@ public class MedicineRVAdapter extends ExpandableRecyclerAdapter<MedicineCategor
     public void onBindChildViewHolder(MedicineCategoryChildVH childViewHolder, int position, Object childListItem) {
         MedicineCategoryChildBean bean = (MedicineCategoryChildBean) childListItem;
         childViewHolder.mTvTitle.setText(bean.isTitle() ? "时间" : DateUtil.format(bean.getTime(), DateUtil.DEFAULT_FORMAT));
-        childViewHolder.mTvValue.setText(bean.isTitle()?"剂量(mg)":bean.getValue());
-        childViewHolder.mTvCounts.setText(bean.isTitle()?"次数(mg/天)":bean.getCounts());
+        childViewHolder.mTvValue.setText(bean.isTitle() ? "剂量(mg)" : bean.getValue());
+        childViewHolder.mTvCounts.setText(bean.isTitle() ? "次数(mg/天)" : bean.getCounts());
     }
 }

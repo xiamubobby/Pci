@@ -1,7 +1,6 @@
 package com.wonders.xlab.pci.module.message;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,9 +35,7 @@ import com.wonders.xlab.pci.module.task.bp.AddBPActivity;
 import com.wonders.xlab.pci.module.task.bp.MeasureBPGuideActivity;
 import com.wonders.xlab.pci.module.task.bs.AddBSActivity;
 import com.wonders.xlab.pci.module.task.bs.MeasureBSGuideActivity;
-import com.wonders.xlab.pci.service.XEMChatService;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.Bind;
@@ -102,7 +99,7 @@ public class MessageFragment extends BaseFragment implements HomeView {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                getActivity().startService(new Intent(getActivity(), XEMChatService.class));
+//                getActivity().startService(new Intent(getActivity(), XEMChatService.class));
             }
         }).start();
     }
@@ -125,7 +122,7 @@ public class MessageFragment extends BaseFragment implements HomeView {
                 mHomeRVAdapter.addToTop(bean);
             }
         } else {
-            mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
+            mHomeRVAdapter = new HomeRVAdapter();
             mRvHome.setAdapter(mHomeRVAdapter);
             mHomeRVAdapter.addToTop(bean);
         }
@@ -145,7 +142,7 @@ public class MessageFragment extends BaseFragment implements HomeView {
                 mHomeRVAdapter.addToTop(bean);
             }
         } else {
-            mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
+            mHomeRVAdapter = new HomeRVAdapter();
             mRvHome.setAdapter(mHomeRVAdapter);
             mHomeRVAdapter.addToTop(bean);
         }
@@ -218,7 +215,7 @@ public class MessageFragment extends BaseFragment implements HomeView {
     @Override
     public void showHomeList(List<HomeTaskBean> beanList) {
         if (mHomeRVAdapter == null) {
-            mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
+            mHomeRVAdapter = new HomeRVAdapter();
         } else {
             mHomeRVAdapter.clear();
         }
@@ -241,7 +238,7 @@ public class MessageFragment extends BaseFragment implements HomeView {
     @Override
     public void appendHomeList(List<HomeTaskBean> beanList) {
         if (mHomeRVAdapter == null) {
-            mHomeRVAdapter = new HomeRVAdapter(new WeakReference<Context>(getActivity()));
+            mHomeRVAdapter = new HomeRVAdapter();
         }
         mRvHome.setAdapter(mHomeRVAdapter);
         mHomeRVAdapter.appendDatas(beanList);

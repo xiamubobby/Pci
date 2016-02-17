@@ -58,5 +58,5 @@
 
     <!--preference key-->
     <string name="pref_key_use_equipment">use_equipment</string>
-    <string name="app_version">v0.9</string>
+    <string name="app_version">v1.0</string>
 </resources>

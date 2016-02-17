@@ -26,7 +26,7 @@ public class UserInfoRVAdapter extends SimpleRVAdapter<UserInfoBean> {
     private LayoutInflater mInflater;
 
     public UserInfoRVAdapter(WeakReference<Context> contextWeakReference) {
-        super(contextWeakReference);
+        super();
         mInflater = LayoutInflater.from(contextWeakReference.get());
     }
 

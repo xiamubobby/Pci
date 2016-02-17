@@ -1,6 +1,5 @@
 package com.wonders.xlab.pci.module.mydoctor;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +18,6 @@ import com.wonders.xlab.pci.module.mydoctor.mvn.DoctorInfoEntity;
 import com.wonders.xlab.pci.module.mydoctor.mvn.MyDoctorModel;
 import com.wonders.xlab.pci.module.mydoctor.mvn.MyDoctorView;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 import butterknife.Bind;
@@ -88,7 +86,7 @@ public class MyDoctorFragment extends BaseFragment implements MyDoctorView {
     @Override
     public void showDoctorList(List<DoctorInfoEntity> doctorInfoList) {
         if (mDoctorRVAdapter == null) {
-            mDoctorRVAdapter = new MyDoctorRVAdapter(new WeakReference<Context>(getActivity()));
+            mDoctorRVAdapter = new MyDoctorRVAdapter();
             mRvMyDoctor.setAdapter(mDoctorRVAdapter);
         }
         mDoctorRVAdapter.setDatas(doctorInfoList);

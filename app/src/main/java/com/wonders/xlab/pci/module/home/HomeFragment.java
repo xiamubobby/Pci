@@ -7,7 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.record.HealthPlanActivity;
@@ -15,6 +17,7 @@ import com.wonders.xlab.pci.module.record.monitor.HealthDataActivity;
 import com.wonders.xlab.pci.module.record.report.ReportDetailActivity;
 import com.wonders.xlab.pci.module.task.DailyTaskActivity;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -23,10 +26,12 @@ import butterknife.OnClick;
  */
 public class HomeFragment extends BaseFragment {
 
+    @Bind(R.id.iv_home_top_holder)
+    ImageView mIvHomeTopHolder;
+
     public HomeFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,6 +40,15 @@ public class HomeFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Glide.with(this)
+                .load(R.drawable.home_top_holder)
+                .crossFade()
+                .into(mIvHomeTopHolder);
     }
 
     @OnClick(R.id.tv_new_home_daily_record)

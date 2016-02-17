@@ -1,7 +1,7 @@
 package com.wonders.xlab.pci.module.mydoctor;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,8 +12,6 @@ import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.module.mydoctor.mvn.DoctorInfoEntity;
 
-import java.lang.ref.WeakReference;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -22,13 +20,9 @@ import butterknife.ButterKnife;
  */
 public class MyDoctorRVAdapter extends SimpleRVAdapter<DoctorInfoEntity> {
 
-    public MyDoctorRVAdapter(WeakReference<Context> contextWeakReference) {
-        super(contextWeakReference);
-    }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = mInflater.inflate(R.layout.item_my_doctor, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_my_doctor, parent, false);
         return new DoctorViewHolder(itemView);
     }
 
@@ -44,7 +38,7 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<DoctorInfoEntity> {
         viewHolder.mTvMyDoctorDepartment.setText(doctorInfo.getParentdepartname());
         viewHolder.mTvMyDoctorJob.setText(doctorInfo.getTitle());
         viewHolder.mTvMyDoctorDescription.setText(doctorInfo.getDes());
-        Glide.with(getContextWeakReference().get())
+        Glide.with(viewHolder.itemView.getContext())
                 .load(doctorInfo.getPic())
                 .placeholder(R.drawable.user_avatar_default)
                 .crossFade()

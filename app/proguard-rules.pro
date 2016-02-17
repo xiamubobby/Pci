@@ -259,3 +259,7 @@
 -keep class com.contec.jar.** { *;}
 -dontwarn cn.com.contec.jar.cmssxt.**
 -dontwarn com.contec.jar.**
+
+#blockcanary
+-keep class com.github.** {*;}
+-dontwarn com.github.**

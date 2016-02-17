@@ -1,6 +1,5 @@
 package com.wonders.xlab.pci.module.record.monitor;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +19,6 @@ import com.wonders.xlab.pci.module.record.monitor.bean.BSBean;
 import com.wonders.xlab.pci.module.record.monitor.mvn.model.BSModel;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.BSView;
 
-import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.List;
 
@@ -137,7 +135,7 @@ public class BSActivity extends AppbarActivity implements BSView {
     @Override
     public void showBSlist(List<BSBean> bpBeanList) {
         if (mBSAdapter == null) {
-            mBSAdapter = new BSAdapter(new WeakReference<Context>(this));
+            mBSAdapter = new BSAdapter();
             mRvBsHistory.setAdapter(mBSAdapter);
             final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(mBSAdapter);
             mRvBsHistory.addItemDecoration(decoration);

@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class NewMainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
@@ -56,7 +56,7 @@ public class NewMainActivity extends BaseActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(NewMainActivity.this, UserCenterActivity.class));
+                startActivity(new Intent(MainActivity.this, UserCenterActivity.class));
             }
         });
 
@@ -122,7 +122,7 @@ public class NewMainActivity extends BaseActivity {
 
     @Subscribe
     public void forceExit(ExitBus bean) {
-        startActivity(new Intent(this, NewMainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }

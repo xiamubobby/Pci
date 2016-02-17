@@ -1,6 +1,5 @@
 package com.wonders.xlab.pci.module.record.monitor;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,15 +14,14 @@ import com.wonders.xlab.common.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
+import com.wonders.xlab.pci.module.base.mvn.entity.record.monitor.SymptomEntity;
 import com.wonders.xlab.pci.module.record.monitor.adapter.SymptomRVAdapter;
 import com.wonders.xlab.pci.module.record.monitor.mvn.model.SymptomModel;
 import com.wonders.xlab.pci.module.record.monitor.mvn.view.SymptomView;
-import com.wonders.xlab.pci.module.base.mvn.entity.record.monitor.SymptomEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
-import java.lang.ref.WeakReference;
 import java.util.Calendar;
 import java.util.List;
 
@@ -138,7 +136,7 @@ public class SymptomActivity extends AppbarActivity implements SymptomView {
             return;
         }
         if (mSymptomRVAdapter == null) {
-            mSymptomRVAdapter = new SymptomRVAdapter(new WeakReference<Context>(this));
+            mSymptomRVAdapter = new SymptomRVAdapter();
             mRvSymptomAdvice.setAdapter(mSymptomRVAdapter);
         }
         mSymptomRVAdapter.setDatas(symptomAdviceList);

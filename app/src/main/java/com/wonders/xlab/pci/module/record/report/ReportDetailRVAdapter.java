@@ -37,7 +37,7 @@ public class ReportDetailRVAdapter extends SimpleRVAdapter<ReportDetailBean> {
     private LayoutInflater mInflater;
 
     public ReportDetailRVAdapter(WeakReference<Context> contextWeakReference) {
-        super(contextWeakReference);
+        super();
         mContext = contextWeakReference;
         mInflater = LayoutInflater.from(mContext.get());
     }

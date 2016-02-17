@@ -1,12 +1,10 @@
 package com.wonders.xlab.common.recyclerview.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,15 +13,9 @@ import java.util.List;
  */
 public abstract class MultiRVAdapter<bean extends BaseBean> extends RecyclerView.Adapter<MultiViewHolder<bean>> {
 
-    private LayoutInflater mInflater;
-
     private List<bean> mDatas;
 
     private OnItemClickListener onItemClickListener;
-
-    public MultiRVAdapter(WeakReference<Context> contextWeakReference) {
-        this.mInflater = LayoutInflater.from(contextWeakReference.get());
-    }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
@@ -119,7 +111,7 @@ public abstract class MultiRVAdapter<bean extends BaseBean> extends RecyclerView
 
     @Override
     public MultiViewHolder<bean> onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = this.mInflater.inflate(viewType, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
         return createViewHolder(view, viewType);
     }
 

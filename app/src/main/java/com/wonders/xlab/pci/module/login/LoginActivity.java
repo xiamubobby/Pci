@@ -14,7 +14,7 @@ import com.wonders.xlab.common.utils.MD5Util;
 import com.wonders.xlab.common.utils.ViewHelper;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
-import com.wonders.xlab.pci.module.NewMainActivity;
+import com.wonders.xlab.pci.module.MainActivity;
 import com.wonders.xlab.pci.module.base.BaseActivity;
 import com.wonders.xlab.pci.module.base.mvn.entity.login.LoginEntity;
 import com.wonders.xlab.pci.module.login.mvn.model.LoginModel;
@@ -66,7 +66,7 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void loginSuccess(LoginEntity.RetValuesEntity value) {
         AIManager.getInstance(this).saveUserInfo(String.valueOf(value.getId()), value.getTel(), value.getMedicareCard());
-        startActivity(new Intent(this, NewMainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 

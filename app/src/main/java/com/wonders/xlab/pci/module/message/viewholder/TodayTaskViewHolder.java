@@ -44,9 +44,9 @@ public class TodayTaskViewHolder extends MultiViewHolder<TodayTaskBean> {
         mTvItemHomeTodayName.setText(data.getName());
         mTvItemHomeTodayTitle.setText(data.getTitle());
         mTvItemHomeTodayTime.setText(DateUtil.format(data.getUpdateTime(),DateUtil.DEFAULT_FORMAT_FULL));
-        Glide.with(getContextWeakReference().get())
+        Glide.with(itemView.getContext())
                 .load(data.getPortrait())
-                .transform(new GlideCircleTransform(getContextWeakReference().get()))
+                .transform(new GlideCircleTransform(itemView.getContext()))
                 .placeholder(R.drawable.user_avatar_default)
                 .centerCrop()
                 .crossFade()

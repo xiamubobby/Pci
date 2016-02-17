@@ -38,10 +38,10 @@ public class HistoryTaskViewHolder extends MultiViewHolder<HistoryTaskBean> {
         mTvItemHomeHistoryTitle.setText(data.getTitle());
         mTvItemHomeHistoryContent.setText(data.getContent());
         mTvItemHomeHistoryTime.setText(DateUtil.format(data.getUpdateTime(),DateUtil.DEFAULT_FORMAT_FULL));
-        Glide.with(getContextWeakReference().get())
+        Glide.with(itemView.getContext())
                 .load(data.getPortrait())
                 .centerCrop()
-                .transform(new GlideCircleTransform(getContextWeakReference().get()))
+                .transform(new GlideCircleTransform(itemView.getContext()))
                 .placeholder(R.drawable.user_avatar_default)
                 .crossFade()
                 .into(mIvPortrait);

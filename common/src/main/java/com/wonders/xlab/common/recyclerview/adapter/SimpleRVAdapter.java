@@ -1,11 +1,8 @@
 package com.wonders.xlab.common.recyclerview.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,24 +11,13 @@ import java.util.List;
  * Created by hua on 15/11/30.
  */
 public abstract class SimpleRVAdapter<Bean> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private WeakReference<Context> mContextWeakReference;
-    protected LayoutInflater mInflater;
 
     private List<Bean> mBeanList;
 
     private OnItemClickListener mOnItemClickListener;
 
-    public SimpleRVAdapter(WeakReference<Context> contextWeakReference) {
-        mContextWeakReference = contextWeakReference;
-        this.mInflater = LayoutInflater.from(contextWeakReference.get());
-    }
-
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         mOnItemClickListener = onItemClickListener;
-    }
-
-    public WeakReference<Context> getContextWeakReference() {
-        return mContextWeakReference;
     }
 
     public interface OnItemClickListener {
