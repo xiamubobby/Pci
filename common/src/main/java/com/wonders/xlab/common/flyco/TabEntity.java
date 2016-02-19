@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.module.message.bean;
+package com.wonders.xlab.common.flyco;
 
 import com.flyco.tablayout.listener.CustomTabEntity;
 

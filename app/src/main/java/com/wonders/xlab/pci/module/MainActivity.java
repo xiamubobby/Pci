@@ -18,7 +18,7 @@ import com.wonders.xlab.pci.module.base.BaseActivity;
 import com.wonders.xlab.pci.module.home.HomeFragment;
 import com.wonders.xlab.pci.module.login.LoginActivity;
 import com.wonders.xlab.pci.module.message.ChatFragment;
-import com.wonders.xlab.pci.module.message.bean.TabEntity;
+import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.pci.module.mydoctor.MyDoctorFragment;
 import com.wonders.xlab.pci.module.otto.ExitBus;
 import com.wonders.xlab.pci.module.usercenter.UserCenterActivity;
@@ -67,7 +67,7 @@ public class MainActivity extends BaseActivity {
         mVpNewMain.setOffscreenPageLimit(2);
 
         ArrayList<CustomTabEntity> tabEntities = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
             switch (i) {
                 case 0:
                     tabEntities.add(new TabEntity("首页", R.drawable.tab_home_select, R.drawable.tab_home_unselect));

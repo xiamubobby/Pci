@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="patient"
+            type="com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean"/>
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:padding="@dimen/item_interval_large">
+
+        <ImageView
+            android:id="@+id/iv_patient_item_portrait"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"/>
+
+        <LinearLayout
+            android:id="@+id/ll_patient_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/item_interval"
+            android:layout_toRightOf="@id/iv_patient_item_portrait"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="@{patient.username}"
+                android:textColor="@color/text_color_primary"
+                android:textSize="@dimen/text_size_primary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/item_interval"
+                android:singleLine="true"
+                android:text="@{patient.gender}"
+                android:textColor="@color/text_color_primary"
+                android:textSize="@dimen/text_size_primary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/item_interval"
+                android:singleLine="true"
+                android:text="@{patient.age + '岁'}"
+                android:textColor="@color/text_color_primary"
+                android:textSize="@dimen/text_size_primary"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/item_interval"
+                android:gravity="right"
+                android:singleLine="true"
+                android:text="@{patient.timeAfterSurgery}"
+                android:textColor="@color/text_color_primary"
+                android:textSize="@dimen/text_size_primary"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/ll_patient_item"
+            android:layout_below="@+id/ll_patient_item"
+            android:layout_marginTop="@dimen/item_interval"
+            android:singleLine="true"
+            android:text="@{patient.history}"
+            android:textColor="@color/text_color_secondary"
+            android:textSize="@dimen/text_size_secondary"/>
+
+    </RelativeLayout>
+</layout>

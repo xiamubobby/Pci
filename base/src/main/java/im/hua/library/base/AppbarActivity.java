@@ -21,12 +21,6 @@ public abstract class AppbarActivity extends BaseActivity {
 
     public abstract Toolbar getToolbar();
 
-    public void setTitle(String title) {
-        if (mToolbar != null) {
-            mToolbar.setTitle(title);
-        }
-    }
-
     public void setOnNavigationClickListener(OnNavigationClickListener onNavigationClickListener) {
         mOnNavigationClickListener = onNavigationClickListener;
     }
