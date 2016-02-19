@@ -7,10 +7,11 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.wonders.xlab.pci.doctor.module.chatroom.ChatActivity"
-    tools:showIn="@layout/chat_activity">
+    tools:context=".module.chatroom.ChatRoomActivity"
+    tools:showIn="@layout/chat_room_activity">
 
-    <HorizontalScrollView android:id="@+id/scroll_chat_room_top"
+    <HorizontalScrollView
+        android:id="@+id/scroll_chat_room_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none">
@@ -58,6 +59,13 @@
 
         </LinearLayout>
     </HorizontalScrollView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_chat_room"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rl_chat_room_bottom"
+        android:layout_below="@+id/scroll_chat_room_top"/>
 
     <RelativeLayout
         android:id="@+id/rl_chat_room_bottom"

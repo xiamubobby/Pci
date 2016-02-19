@@ -3,6 +3,8 @@ package com.wonders.xlab.pci.doctor.module.chatroom;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -10,11 +12,27 @@ import android.widget.Toast;
 
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.adapter.ChatRoomRVAdapter;
+import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
+import com.wonders.xlab.pci.doctor.module.chatroom.model.ChatRoomModel;
+import com.wonders.xlab.pci.doctor.module.chatroom.view.ChatRoomView;
 
-public class ChatActivity extends AppbarActivity {
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class ChatRoomActivity extends AppbarActivity implements ChatRoomView {
     public final static String EXTRA_PATIENT_ID = "PATIENT_ID";
     public final static String EXTRA_PATIENT_NAME = "PATIENT_NAME";
     public final static String EXTRA_PATIENT_PHONE_NUMBER = "PATIENT_NUMBER";
+
+    private ChatRoomModel mChatRoomModel;
+
+    @Bind(R.id.recycler_view_chat_room)
+    RecyclerView mRecyclerViewChatRoom;
+
+    private ChatRoomRVAdapter mChatRoomRVAdapter;
 
     private String patientId;
     private String patientName;
@@ -22,7 +40,7 @@ public class ChatActivity extends AppbarActivity {
 
     @Override
     public int getContentLayout() {
-        return R.layout.chat_activity;
+        return R.layout.chat_room_activity;
     }
 
     @Override
@@ -33,6 +51,7 @@ public class ChatActivity extends AppbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -47,6 +66,17 @@ public class ChatActivity extends AppbarActivity {
 
         setupToolbar();
 
+        mRecyclerViewChatRoom.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+
+        mChatRoomModel = new ChatRoomModel(this);
+        addModel(mChatRoomModel);
+        mChatRoomModel.getChatList();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 
     private void setupToolbar() {
@@ -63,7 +93,7 @@ public class ChatActivity extends AppbarActivity {
 
                         break;
                     case R.id.menu_chat_room_export:
-                        Toast.makeText(ChatActivity.this, "即将开放，敬请期待...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChatRoomActivity.this, "即将开放，敬请期待...", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 return false;
@@ -71,4 +101,37 @@ public class ChatActivity extends AppbarActivity {
         });
     }
 
+    private void initChatRoomAdapter() {
+        if (mChatRoomRVAdapter == null) {
+            mChatRoomRVAdapter = new ChatRoomRVAdapter();
+        }
+        mRecyclerViewChatRoom.setAdapter(mChatRoomRVAdapter);
+    }
+
+    @Override
+    public void showChatMessageList(List<ChatRoomBean> chatRoomBeanList) {
+        initChatRoomAdapter();
+        mChatRoomRVAdapter.setDatas(chatRoomBeanList);
+    }
+
+    @Override
+    public void appendChatMessageList(List<ChatRoomBean> chatRoomBeanList) {
+        initChatRoomAdapter();
+        mChatRoomRVAdapter.appendDatas(chatRoomBeanList);
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
 }

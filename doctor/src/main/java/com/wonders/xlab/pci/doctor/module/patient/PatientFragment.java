@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
-import com.wonders.xlab.pci.doctor.module.chatroom.ChatActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.pci.doctor.module.patient.adapter.PatientRVAdapter;
 import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
 import com.wonders.xlab.pci.doctor.module.patient.model.PatientModel;
@@ -88,10 +88,10 @@ public class PatientFragment extends BaseFragment implements PatientView {
             mPatientRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    Intent intent = new Intent(getActivity(), ChatActivity.class);
-                    intent.putExtra(ChatActivity.EXTRA_PATIENT_ID, mPatientRVAdapter.getBean(position).getPatientId());
-                    intent.putExtra(ChatActivity.EXTRA_PATIENT_NAME, mPatientRVAdapter.getBean(position).getPatientName());
-                    intent.putExtra(ChatActivity.EXTRA_PATIENT_PHONE_NUMBER, mPatientRVAdapter.getBean(position).getPhoneNumber());
+                    Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
+                    intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_ID, mPatientRVAdapter.getBean(position).getPatientId());
+                    intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_NAME, mPatientRVAdapter.getBean(position).getPatientName());
+                    intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER, mPatientRVAdapter.getBean(position).getPhoneNumber());
                     getActivity().startActivity(intent);
                 }
             });

@@ -16,8 +16,8 @@
 
         <ImageView
             android:id="@+id/iv_patient_item_portrait"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/portrait_list_item_size"
+            android:layout_height="@dimen/portrait_list_item_size"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher"/>
 

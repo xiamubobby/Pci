@@ -116,13 +116,13 @@ public abstract class MultiRVAdapter<bean extends BaseBean> extends RecyclerView
     }
 
     @Override
-    public void onBindViewHolder(MultiViewHolder<bean> holder, final int position) {
+    public void onBindViewHolder(final MultiViewHolder<bean> holder, final int position) {
         holder.onBindViewHolder(this.mDatas.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(position);
+                    onItemClickListener.onItemClick(holder.getAdapterPosition());
                 }
             }
         });
