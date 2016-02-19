@@ -70,11 +70,25 @@ public abstract class MultiRVAdapter<bean extends BaseBean> extends RecyclerView
     }
 
     /**
+     * 将新数据添加到原来数据之后
+     *
+     * @param beans
+     */
+    public void insertDatasToTop(List<bean> beans) {
+        if (this.mDatas == null) {
+            this.mDatas = new ArrayList<>();
+        }
+        this.mDatas.addAll(0,beans);
+
+        notifyDataSetChanged();
+    }
+
+    /**
      * 添加一条新数据到原来数据的 开始
      *
      * @param bean
      */
-    public void addToTop(bean bean) {
+    public void insertToTop(bean bean) {
         if (this.mDatas == null) {
             this.mDatas = new ArrayList<>();
         }
@@ -83,7 +97,7 @@ public abstract class MultiRVAdapter<bean extends BaseBean> extends RecyclerView
         notifyItemInserted(0);
     }
 
-    public void addToPosition(bean bean, int position) {
+    public void insertToPosition(bean bean, int position) {
         if (this.mDatas == null) {
             this.mDatas = new ArrayList<>();
         }

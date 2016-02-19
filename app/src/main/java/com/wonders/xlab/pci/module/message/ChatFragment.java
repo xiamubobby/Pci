@@ -118,15 +118,15 @@ public class ChatFragment extends BaseFragment implements ChatView {
                     noticeBean.setUpdateTime(bean.getUpdateTime());
                     mChatRVAdapter.notifyDataSetChanged();
                 } else {
-                    mChatRVAdapter.addToTop(bean);
+                    mChatRVAdapter.insertToTop(bean);
                 }
             } else {
-                mChatRVAdapter.addToTop(bean);
+                mChatRVAdapter.insertToTop(bean);
             }
         } else {
             mChatRVAdapter = new ChatRVAdapter();
             mRvHome.setAdapter(mChatRVAdapter);
-            mChatRVAdapter.addToTop(bean);
+            mChatRVAdapter.insertToTop(bean);
         }
     }
 
@@ -136,17 +136,17 @@ public class ChatFragment extends BaseFragment implements ChatView {
             if (mChatRVAdapter.getItemCount() > 0) {
                 BaseBean itemData = mChatRVAdapter.getItemData(0);
                 if (itemData.getItemLayout() == ChatBean.ITEM_NOTICE) {
-                    mChatRVAdapter.addToPosition(bean, 1);
+                    mChatRVAdapter.insertToPosition(bean, 1);
                 } else {
-                    mChatRVAdapter.addToTop(bean);
+                    mChatRVAdapter.insertToTop(bean);
                 }
             } else {
-                mChatRVAdapter.addToTop(bean);
+                mChatRVAdapter.insertToTop(bean);
             }
         } else {
             mChatRVAdapter = new ChatRVAdapter();
             mRvHome.setAdapter(mChatRVAdapter);
-            mChatRVAdapter.addToTop(bean);
+            mChatRVAdapter.insertToTop(bean);
         }
     }
 
