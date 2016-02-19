@@ -25,8 +25,7 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_secondary"/>
 
-        <LinearLayout
-            android:id="@+id/ll_chat_room_item_me"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/iv_chat_room_item_me_portrait"
@@ -35,22 +34,10 @@
             android:layout_marginTop="@dimen/item_interval"
             android:layout_toLeftOf="@+id/iv_chat_room_item_me_portrait"
             android:background="@drawable/chat_room_item_bg_me"
-            android:orientation="vertical">
+            android:text="@{chat.text}"
+            android:textColor="@color/text_color_primary"
+            android:textSize="@dimen/text_size_primary"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{chat.text}"
-                android:textColor="@color/text_color_primary"
-                android:textSize="@dimen/text_size_primary"/>
-
-            <com.zhy.view.flowlayout.FlowLayout
-                android:id="@+id/flow_chat_room_item_me"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/item_interval">
-            </com.zhy.view.flowlayout.FlowLayout>
-        </LinearLayout>
 
         <ImageView
             android:id="@+id/iv_chat_room_item_me_portrait"

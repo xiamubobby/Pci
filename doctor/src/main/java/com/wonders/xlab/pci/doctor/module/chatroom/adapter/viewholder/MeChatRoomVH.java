@@ -8,7 +8,6 @@ import com.wonders.xlab.common.recyclerview.adapter.MultiViewHolder;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.databinding.ChatRoomItemMeBinding;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
-import com.zhy.view.flowlayout.FlowLayout;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -17,8 +16,6 @@ import butterknife.ButterKnife;
  * Created by hua on 16/2/19.
  */
 public class MeChatRoomVH extends MultiViewHolder<MeChatRoomBean> {
-    @Bind(R.id.flow_chat_room_item_me)
-    FlowLayout mFlowChatRoomItemMe;
     @Bind(R.id.iv_chat_room_item_me_portrait)
     ImageView mIvChatRoomItemMePortrait;
 
