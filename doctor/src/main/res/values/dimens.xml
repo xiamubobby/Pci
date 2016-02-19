@@ -6,4 +6,5 @@
 
     <dimen name="text_size_primary">16sp</dimen>
     <dimen name="text_size_secondary">12dp</dimen>
+    <dimen name="chat_room_top_icon_size">50dp</dimen>
 </resources>

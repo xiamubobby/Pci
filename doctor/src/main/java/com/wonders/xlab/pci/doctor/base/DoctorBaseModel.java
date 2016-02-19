@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.module.base;
+package com.wonders.xlab.pci.doctor.base;
 
 import com.wonders.xlab.pci.doctor.Constant;
 

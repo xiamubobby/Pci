@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.doctor.module.patient;
 
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.module.chatroom.ChatActivity;
 import com.wonders.xlab.pci.doctor.module.patient.adapter.PatientRVAdapter;
 import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
 import com.wonders.xlab.pci.doctor.module.patient.model.PatientModel;
@@ -87,7 +88,11 @@ public class PatientFragment extends BaseFragment implements PatientView {
             mPatientRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-
+                    Intent intent = new Intent(getActivity(), ChatActivity.class);
+                    intent.putExtra(ChatActivity.EXTRA_PATIENT_ID, mPatientRVAdapter.getBean(position).getPatientId());
+                    intent.putExtra(ChatActivity.EXTRA_PATIENT_NAME, mPatientRVAdapter.getBean(position).getPatientName());
+                    intent.putExtra(ChatActivity.EXTRA_PATIENT_PHONE_NUMBER, mPatientRVAdapter.getBean(position).getPhoneNumber());
+                    getActivity().startActivity(intent);
                 }
             });
         }

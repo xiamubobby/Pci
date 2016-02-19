@@ -1,7 +1,7 @@
 package com.wonders.xlab.pci.doctor.module.patient.model;
 
 import com.wonders.xlab.pci.doctor.Constant;
-import com.wonders.xlab.pci.doctor.module.base.DoctorBaseModel;
+import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.module.networkentity.PatientEntity;
 import com.wonders.xlab.pci.doctor.module.patient.api.PatientAPI;
 import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
@@ -37,8 +37,9 @@ public class PatientModel extends DoctorBaseModel<PatientEntity> {
             bean.setGender("男");
             bean.setHistory("稳定性心绞痛");
             bean.setPortrait(Constant.DEFAULT_PORTRAIT);
-            bean.setUsername("张三");
+            bean.setPatientName("张三");
             bean.setTimeAfterSurgery("术后六个月");
+            bean.setPhoneNumber("13800138000");
 
             patientBeen.add(bean);
         }

@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="@{patient.username}"
+                android:text="@{patient.patientName}"
                 android:textColor="@color/text_color_primary"
                 android:textSize="@dimen/text_size_primary"/>
 

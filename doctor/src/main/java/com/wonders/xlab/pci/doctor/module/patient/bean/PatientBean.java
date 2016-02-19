@@ -5,17 +5,19 @@ import android.databinding.Bindable;
 
 import com.wonders.xlab.pci.doctor.BR;
 
+
 /**
  * Created by hua on 16/2/19.
  */
 public class PatientBean extends BaseObservable {
     private String patientId;
     private String portrait;
-    private String username;
+    private String patientName;
     private String gender;
     private String age;
     private String timeAfterSurgery;
     private String history;
+    private String phoneNumber;
 
     @Bindable
     public String getPortrait() {
@@ -28,13 +30,13 @@ public class PatientBean extends BaseObservable {
     }
 
     @Bindable
-    public String getUsername() {
-        return username;
+    public String getPatientName() {
+        return patientName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-        notifyPropertyChanged(BR.username);
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+        notifyPropertyChanged(BR.patientName);
     }
 
     @Bindable
@@ -85,5 +87,15 @@ public class PatientBean extends BaseObservable {
     public void setPatientId(String patientId) {
         this.patientId = patientId;
         notifyPropertyChanged(BR.patientId);
+    }
+
+    @Bindable
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+        notifyPropertyChanged(BR.phoneNumber);
     }
 }
