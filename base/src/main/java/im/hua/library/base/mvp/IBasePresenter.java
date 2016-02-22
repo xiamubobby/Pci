@@ -3,10 +3,10 @@ package im.hua.library.base.mvp;
 /**
  * Created by hua on 15/12/3.
  */
-public interface BaseView {
-    void showLoading();
+public interface IBasePresenter {
+    void showLoading(String message);
 
-    void hideLoading();
+    void hideLoading(String message);
 
     void showError(String message);
 }

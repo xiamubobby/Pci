@@ -5,30 +5,30 @@ import android.app.Fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import im.hua.library.base.mvp.BaseModel;
+import im.hua.library.base.mvp.BasePresenter;
 
 /**
  * Created by hua on 15/12/14.
  */
 public class BaseFragment extends Fragment {
-    private List<BaseModel> mBaseModelList;
+    private List<BasePresenter> mBasePresenterList;
 
-    public void addModel(BaseModel model) {
-        if (mBaseModelList == null) {
-            mBaseModelList = new ArrayList<>();
+    public void addPresenter(BasePresenter presenter) {
+        if (mBasePresenterList == null) {
+            mBasePresenterList = new ArrayList<>();
         }
-        mBaseModelList.add(model);
+        mBasePresenterList.add(presenter);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if (mBaseModelList != null) {
-            for (BaseModel model : mBaseModelList) {
-                model.cancel();
+        if (mBasePresenterList != null) {
+            for (BasePresenter presenter : mBasePresenterList) {
+                presenter.onDestroy();
             }
-            mBaseModelList.clear();
-            mBaseModelList = null;
+            mBasePresenterList.clear();
+            mBasePresenterList = null;
         }
     }
 }

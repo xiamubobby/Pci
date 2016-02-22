@@ -1,33 +1,38 @@
-package com.wonders.xlab.pci.doctor.module.chatroom.model;
+package com.wonders.xlab.pci.doctor.mvp.presenter;
 
 import com.wonders.xlab.pci.doctor.Constant;
-import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
-import com.wonders.xlab.pci.doctor.module.chatroom.view.ChatRoomView;
-import com.wonders.xlab.pci.doctor.module.networkentity.ChatRoomEntity;
+import com.wonders.xlab.pci.doctor.mvp.model.ChatRoomModel;
+import com.wonders.xlab.pci.doctor.mvp.model.IChatRoomModel;
+import com.wonders.xlab.pci.doctor.mvp.entity.ChatRoomEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import im.hua.library.base.mvp.BasePresenter;
+
 /**
- * Created by hua on 16/2/19.
+ * Created by hua on 16/2/22.
  */
-public class ChatRoomModel extends DoctorBaseModel<ChatRoomEntity> {
+public class ChatRoomPresenter extends BasePresenter implements IChatRoomModel {
 
-    private ChatRoomView mChatRoomView;
+    private ChatRoomModel mChatRoomModel;
+    private IChatRoomPresenter mIChatRoomView;
 
-    public ChatRoomModel(ChatRoomView chatRoomView) {
-        mChatRoomView = chatRoomView;
+    public ChatRoomPresenter(IChatRoomPresenter presenter) {
+        mIChatRoomView = presenter;
+        mChatRoomModel = new ChatRoomModel(this);
+        addModel(mChatRoomModel);
     }
 
     public void getChatList() {
-        onSuccess(null);
+        mChatRoomModel.getChatList();
     }
 
     @Override
-    protected void onSuccess(ChatRoomEntity response) {
+    public void onReceiveChatRoomHistorySuccess(ChatRoomEntity chatRoomEntity) {
         List<ChatRoomBean> chatRoomBeanList = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
             if (i % 3 == 0) {
@@ -48,11 +53,18 @@ public class ChatRoomModel extends DoctorBaseModel<ChatRoomEntity> {
                 chatRoomBeanList.add(bean);
             }
         }
-        mChatRoomView.showChatMessageList(chatRoomBeanList);
+        if (mIChatRoomView != null) {
+            mIChatRoomView.showChatMessageList(chatRoomBeanList);
+        }
+
     }
 
     @Override
-    protected void onFailed(String message) {
+    public void onReceiveChatRoomHistoryFailed(String message) {
 
+    }
+
+    public void setIChatRoomView(IChatRoomPresenter IChatRoomView) {
+        mIChatRoomView = IChatRoomView;
     }
 }

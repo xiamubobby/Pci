@@ -18,7 +18,11 @@ public class VerticalItemDecoration extends RecyclerView.ItemDecoration {
 
     private Paint mPaint;
 
-    private int dividerHeight = 12;//dp
+    private int mDividerHeight = 12;//dp
+
+    public void setDividerHeight(int height) {
+        mDividerHeight = height;
+    }
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -46,14 +50,16 @@ public class VerticalItemDecoration extends RecyclerView.ItemDecoration {
             final View child = parent.getChildAt(i);
             final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
             final int top = child.getBottom() + params.bottomMargin;
-            final int bottom = top + DensityUtil.dp2px(mContext, dividerHeight);
+            final int bottom = top + DensityUtil.dp2px(mContext, mDividerHeight);
             c.drawRect(left, top, right, bottom, mPaint);
         }
     }
 
-    public VerticalItemDecoration(Context context, @ColorInt int mDividerColor) {
+    public VerticalItemDecoration(Context context, @ColorInt int mDividerColor, int dividerHeight) {
         super();
         mContext = context;
+
+        this.mDividerHeight = dividerHeight;
 
         mPaint = new Paint();
         mPaint.setColor(mDividerColor);

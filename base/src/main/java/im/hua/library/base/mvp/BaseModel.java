@@ -17,10 +17,18 @@ import rx.schedulers.Schedulers;
 /**
  * Created by hua on 15/12/13.
  */
-public abstract class BaseModel<T extends BaseEntity> {
+public abstract class BaseModel {
     protected Retrofit mRetrofit;
-    private Observable<T> mObservable;
+    private Observable<? extends BaseEntity> mObservable;
     private Subscription subscribe;
+
+    private ResponseListener mResponseListener;
+
+    public interface ResponseListener {
+        void onSuccess(BaseEntity response);
+
+        void onFailed(Throwable e);
+    }
 
     public BaseModel() {
         /**
@@ -46,7 +54,7 @@ public abstract class BaseModel<T extends BaseEntity> {
 
     private void fetchData() {
         if (mObservable == null) {
-            throw new IllegalArgumentException("mObservable cannot be null, must call setObservable first!");
+            throw new IllegalArgumentException("mObservable cannot be null, must call fetchData first!");
         }
 
         if (subscribe != null) {
@@ -56,12 +64,7 @@ public abstract class BaseModel<T extends BaseEntity> {
 
         subscribe = mObservable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<T>() {
-                    @Override
-                    public void onStart() {
-                        super.onStart();
-                        BaseModel.this.onStart();
-                    }
+                .subscribe(new Subscriber<BaseEntity>() {
 
                     @Override
                     public void onCompleted() {
@@ -70,15 +73,25 @@ public abstract class BaseModel<T extends BaseEntity> {
 
                     @Override
                     public void onError(Throwable e) {
-                        onFailed("请求失败，请重试！");
+//                        onFailed("请求失败，请重试！");
+                        if (mResponseListener != null) {
+                            mResponseListener.onFailed(e);
+                        }
+                        //TODO 只为测试使用
+                        if (mResponseListener != null) {
+                            mResponseListener.onSuccess(null);
+                        }
                     }
 
                     @Override
-                    public void onNext(T result) {
-                        if (result != null) {
+                    public void onNext(BaseEntity result) {
+                        /*if (result != null) {
                             onSuccess(result);
                         } else {
                             onFailed("获取数据出错！");
+                        }*/
+                        if (mResponseListener != null) {
+                            mResponseListener.onSuccess(result);
                         }
                     }
                 });
@@ -89,23 +102,13 @@ public abstract class BaseModel<T extends BaseEntity> {
             subscribe.unsubscribe();
             subscribe = null;
         }
-        if (mObservable != null) {
-            mObservable.unsubscribeOn(AndroidSchedulers.mainThread());
-            mObservable = null;
-        }
+        mObservable = null;
     }
 
-    protected void setObservable(@NonNull Observable<T> observable) {
+    public void fetchData(@NonNull Observable<? extends BaseEntity> observable,@NonNull ResponseListener callback) {
         cancel();
+        mResponseListener = callback;
         mObservable = observable;
         fetchData();
     }
-
-    protected void onStart() {
-
-    }
-
-    protected abstract void onSuccess(T response);
-
-    protected abstract void onFailed(String message);
 }

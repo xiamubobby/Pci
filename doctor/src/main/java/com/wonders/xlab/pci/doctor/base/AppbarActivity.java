@@ -49,6 +49,7 @@ public abstract class AppbarActivity extends BaseActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {
             mToolbar.setTitle(getToolbarTitle());
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

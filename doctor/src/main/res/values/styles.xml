@@ -23,4 +23,7 @@
 
     <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="TransparentText">
+        <item name="android:textColor">#00000000</item>
+    </style>
 </resources>

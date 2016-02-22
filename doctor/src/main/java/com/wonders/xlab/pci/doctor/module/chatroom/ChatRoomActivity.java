@@ -13,12 +13,13 @@ import android.widget.Toast;
 
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
+import com.wonders.xlab.pci.doctor.module.bp.BloodPressureActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
-import com.wonders.xlab.pci.doctor.module.chatroom.model.ChatRoomModel;
-import com.wonders.xlab.pci.doctor.module.chatroom.view.ChatRoomView;
+import com.wonders.xlab.pci.doctor.mvp.presenter.ChatRoomPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.IChatRoomPresenter;
 
 import java.util.List;
 
@@ -27,14 +28,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import im.hua.uikit.BadgeView;
 
-public class ChatRoomActivity extends AppbarActivity implements ChatRoomView {
+public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresenter {
     public final static String EXTRA_PATIENT_ID = "PATIENT_ID";
     public final static String EXTRA_PATIENT_NAME = "PATIENT_NAME";
     public final static String EXTRA_PATIENT_PHONE_NUMBER = "PATIENT_NUMBER";
     @Bind(R.id.iv_chat_room_record)
     ImageView mIvChatRoomRecord;
 
-    private ChatRoomModel mChatRoomModel;
+    private ChatRoomPresenter mChatRoomPresenter;
 
     @Bind(R.id.recycler_view_chat_room)
     RecyclerView mRecyclerViewChatRoom;
@@ -80,9 +81,9 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomView {
 
         mRecyclerViewChatRoom.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
 
-        mChatRoomModel = new ChatRoomModel(this);
-        addModel(mChatRoomModel);
-        mChatRoomModel.getChatList();
+        mChatRoomPresenter = new ChatRoomPresenter(this);
+        addPresenter(mChatRoomPresenter);
+        mChatRoomPresenter.getChatList();
     }
 
     @Override
@@ -93,14 +94,20 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomView {
 
     @OnClick(R.id.btn_chat_room_send)
     public void sendMessage() {
-        ChatRoomBean itemData = mChatRoomRVAdapter.getItemData(1);
+        ChatRoomBean itemData = mChatRoomRVAdapter.getItemData(0);
         if (itemData instanceof MeChatRoomBean) {
             MeChatRoomBean bean = (MeChatRoomBean) itemData;
-            bean.name.set("修改");
+            Toast.makeText(this, "bean.text:" + bean.text.get(), Toast.LENGTH_SHORT).show();
         } else {
             OthersChatRoomBean bean = (OthersChatRoomBean) itemData;
             bean.name.set("修改了");
         }
+    }
+
+    @OnClick(R.id.iv_chat_room_bp)
+    public void onBPClick() {
+
+        startActivity(new Intent(this, BloodPressureActivity.class));
     }
 
     private void setupToolbar() {
@@ -145,12 +152,12 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomView {
     }
 
     @Override
-    public void showLoading() {
+    public void showLoading(String message) {
 
     }
 
     @Override
-    public void hideLoading() {
+    public void hideLoading(String message) {
 
     }
 

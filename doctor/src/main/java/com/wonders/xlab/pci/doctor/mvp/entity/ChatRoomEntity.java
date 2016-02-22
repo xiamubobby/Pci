@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.module.networkentity;
+package com.wonders.xlab.pci.doctor.mvp.entity;
 
 import im.hua.library.base.mvp.BaseEntity;
 

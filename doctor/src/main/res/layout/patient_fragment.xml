@@ -1,13 +1,7 @@
-<android.support.v4.widget.SwipeRefreshLayout
-    android:id="@+id/refresh_patient"
+<com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView
+    android:id="@+id/recycler_view_patient"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".module.patient.PatientFragment">
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_patient"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</android.support.v4.widget.SwipeRefreshLayout>
+    tools:context=".module.patient.PatientFragment"/>

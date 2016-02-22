@@ -50,7 +50,7 @@ public class MyDoctorFragment extends BaseFragment implements MyDoctorView {
         addModel(mMyDoctorModel);
 
         mRvMyDoctor.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mRvMyDoctor.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider)));
+        mRvMyDoctor.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 12));
 
         mMyDoctorModel.getDoctorList(AIManager.getInstance(getActivity()).getUserId(), AIManager.getInstance(getActivity()).getUserTel());
     }
