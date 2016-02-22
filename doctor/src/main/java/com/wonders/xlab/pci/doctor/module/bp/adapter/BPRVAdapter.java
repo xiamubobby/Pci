@@ -1,6 +1,7 @@
 package com.wonders.xlab.pci.doctor.module.bp.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,7 @@ public class BPRVAdapter extends SimpleRVAdapter<BPBean> implements StickyRecycl
 
     @Override
     public long getHeaderId(int position) {
+        Log.d("BPRVAdapter", "getBean(position).getHeaderId():" + getBean(position).getHeaderId());
         return getBean(position).getHeaderId();
     }
 
@@ -45,7 +47,15 @@ public class BPRVAdapter extends SimpleRVAdapter<BPBean> implements StickyRecycl
 
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        final TitleViewHolder viewHolder = (TitleViewHolder) holder;
+        String time = "";
+        for (int i = 0; i < getItemCount(); i++) {
+            if (getBean(i).getHeaderId() == getHeaderId(position)) {
+                time = getBean(i).getTime();
+                break;
+            }
+        }
+        viewHolder.bpTitle.setText(time);
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {

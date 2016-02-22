@@ -105,7 +105,7 @@ public abstract class BaseModel {
         mObservable = null;
     }
 
-    public void fetchData(@NonNull Observable<? extends BaseEntity> observable,@NonNull ResponseListener callback) {
+    protected void fetchData(@NonNull Observable<? extends BaseEntity> observable,@NonNull ResponseListener callback) {
         cancel();
         mResponseListener = callback;
         mObservable = observable;

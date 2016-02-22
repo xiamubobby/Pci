@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.doctor.module.bp;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -22,23 +23,36 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.data.ScatterDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
+import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
+import com.wonders.xlab.pci.doctor.module.bp.adapter.BPRVAdapter;
+import com.wonders.xlab.pci.doctor.module.bp.bean.BPBean;
+import com.wonders.xlab.pci.doctor.mvp.presenter.BloodPressurePresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.IBloodPressurePresenter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class BloodPressureActivity extends AppbarActivity {
+public class BloodPressureActivity extends AppbarActivity implements IBloodPressurePresenter{
 
     @Bind(R.id.chart_blood_pressure)
     CombinedChart mChart;
 
-    protected String[] mMonths = new String[] {
+    private BloodPressurePresenter mBloodPressurePresenter;
+    private BPRVAdapter mBPRVAdapter;
+
+    protected String[] mMonths = new String[]{
             "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"
     };
     private final int itemcount = 12;
+    @Bind(R.id.recycler_view_blood_pressure)
+    PullLoadMoreRecyclerView mRecyclerView;
 
     @Override
     public int getContentLayout() {
@@ -55,35 +69,14 @@ public class BloodPressureActivity extends AppbarActivity {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        mChart.setDescription("");
-        mChart.setBackgroundColor(Color.WHITE);
-        mChart.setDrawGridBackground(false);
-        mChart.setDrawBarShadow(false);
+        mRecyclerView.setLinearLayout();
+        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this,getResources().getColor(R.color.divider),1));
 
-        // draw bars behind lines
-        mChart.setDrawOrder(new CombinedChart.DrawOrder[] {
-                CombinedChart.DrawOrder.BAR, CombinedChart.DrawOrder.BUBBLE, CombinedChart.DrawOrder.CANDLE, CombinedChart.DrawOrder.LINE, CombinedChart.DrawOrder.SCATTER
-        });
+        mBloodPressurePresenter = new BloodPressurePresenter(this);
+        addPresenter(mBloodPressurePresenter);
 
-        YAxis rightAxis = mChart.getAxisRight();
-        rightAxis.setDrawGridLines(false);
+        mBloodPressurePresenter.getBloodPressureList();
 
-        YAxis leftAxis = mChart.getAxisLeft();
-        leftAxis.setDrawGridLines(false);
-
-        XAxis xAxis = mChart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
-        CombinedData data = new CombinedData(mMonths);
-
-        data.setData(generateLineData());
-        data.setData(generateBarData());
-        data.setData(generateBubbleData());
-         data.setData(generateScatterData());
-         data.setData(generateCandleData());
-
-        mChart.setData(data);
-        mChart.invalidate();
     }
 
     private LineData generateLineData() {
@@ -197,4 +190,66 @@ public class BloodPressureActivity extends AppbarActivity {
         return (float) (Math.random() * range) + startsfrom;
     }
 
+    @Override
+    public void showBloodPressureList(List<BPBean> bpBeanList) {
+        if (mBPRVAdapter == null) {
+            mBPRVAdapter = new BPRVAdapter();
+            mRecyclerView.setAdapter(mBPRVAdapter);
+            final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(mBPRVAdapter);
+            mRecyclerView.getRecyclerView().addItemDecoration(decoration);
+            mBPRVAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onChanged() {
+                    decoration.invalidateHeaders();
+                }
+            });
+        }
+
+        mBPRVAdapter.setDatas(bpBeanList);
+
+        mChart.setDescription("");
+        mChart.setBackgroundColor(Color.WHITE);
+        mChart.setDrawGridBackground(false);
+        mChart.setDrawBarShadow(false);
+
+        // draw bars behind lines
+        mChart.setDrawOrder(new CombinedChart.DrawOrder[]{
+                CombinedChart.DrawOrder.BAR, CombinedChart.DrawOrder.BUBBLE, CombinedChart.DrawOrder.CANDLE, CombinedChart.DrawOrder.LINE, CombinedChart.DrawOrder.SCATTER
+        });
+
+        YAxis rightAxis = mChart.getAxisRight();
+        rightAxis.setDrawGridLines(false);
+
+        YAxis leftAxis = mChart.getAxisLeft();
+        leftAxis.setDrawGridLines(false);
+
+        XAxis xAxis = mChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        CombinedData data = new CombinedData(mMonths);
+
+        data.setData(generateLineData());
+        data.setData(generateBarData());
+        data.setData(generateBubbleData());
+        data.setData(generateScatterData());
+        data.setData(generateCandleData());
+
+        mChart.setData(data);
+        mChart.invalidate();
+    }
+
+    @Override
+    public void showLoading(String message) {
+
+    }
+
+    @Override
+    public void hideLoading(String message) {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
 }
