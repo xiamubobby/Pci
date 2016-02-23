@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".module.bs.BloodSugarActivity"
+    tools:showIn="@layout/bs_activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/bs_cell_divider_width"
+        android:paddingTop="@dimen/bs_cell_divider_width">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/bs_cell_divider_width"
+            android:layout_weight="1"
+            android:background="@color/bs_cell_bg"
+            android:gravity="center"
+            android:text="日\n期"
+            android:textColor="@color/text_color_primary"
+            android:textSize="@dimen/text_size_primary"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/bs_cell_divider_width"
+            android:layout_weight="1"
+            android:background="@color/bs_cell_bg"
+            android:gravity="center"
+            android:text="凌\n晨"
+            android:textColor="@color/text_color_primary"
+            android:textSize="@dimen/text_size_primary"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/bs_cell_divider_width"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/bs_cell_divider_width"
+                android:layout_weight="1"
+                android:background="@color/bs_cell_bg"
+                android:gravity="center"
+                android:text="早餐"
+                android:textColor="@color/text_color_primary"
+                android:textSize="@dimen/text_size_primary"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/bs_cell_divider_width"
+                    android:layout_weight="1"
+                    android:background="@color/bs_cell_bg"
+                    android:gravity="center"
+                    android:text="前"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="@dimen/text_size_primary"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/bs_cell_bg"
+                    android:gravity="center"
+                    android:text="后"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="@dimen/text_size_primary"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/bs_cell_divider_width"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/bs_cell_divider_width"
+                android:layout_weight="1"
+                android:background="@color/bs_cell_bg"
+                android:gravity="center"
+                android:text="午餐"
+                android:textColor="@color/text_color_primary"
+                android:textSize="@dimen/text_size_primary"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/bs_cell_divider_width"
+                    android:layout_weight="1"
+                    android:background="@color/bs_cell_bg"
+                    android:gravity="center"
+                    android:text="前"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="@dimen/text_size_primary"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/bs_cell_bg"
+                    android:gravity="center"
+                    android:text="后"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="@dimen/text_size_primary"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/bs_cell_divider_width"
+            android:layout_weight="2"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/bs_cell_divider_width"
+                android:layout_weight="1"
+                android:background="@color/bs_cell_bg"
+                android:gravity="center"
+                android:text="晚餐"
+                android:textColor="@color/text_color_primary"
+                android:textSize="@dimen/text_size_primary"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="@dimen/bs_cell_divider_width"
+                    android:layout_weight="1"
+                    android:background="@color/bs_cell_bg"
+                    android:gravity="center"
+                    android:text="前"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="@dimen/text_size_primary"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/bs_cell_bg"
+                    android:gravity="center"
+                    android:text="后"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="@dimen/text_size_primary"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/bs_cell_bg"
+            android:gravity="center"
+            android:text="随\n机"
+            android:textColor="@color/text_color_primary"
+            android:textSize="@dimen/text_size_primary"/>
+    </LinearLayout>
+
+    <com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView
+        android:id="@+id/recycler_view_bs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

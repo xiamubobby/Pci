@@ -1,26 +1,26 @@
 package com.wonders.xlab.pci.doctor.mvp.model;
 
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
-import com.wonders.xlab.pci.doctor.mvp.api.BloodPressureAPI;
+import com.wonders.xlab.pci.doctor.mvp.api.BPAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.BPEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.IBloodPressureModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.IBPModel;
 
 import im.hua.library.base.mvp.BaseEntity;
 
 /**
  * Created by hua on 16/2/22.
  */
-public class BloodPressureModel extends DoctorBaseModel {
-    private BloodPressureAPI mBloodPressureAPI;
-    private IBloodPressureModel mBloodPressureModel;
+public class BPModel extends DoctorBaseModel {
+    private BPAPI mBPAPI;
+    private IBPModel mBloodPressureModel;
 
-    public BloodPressureModel(IBloodPressureModel bloodPressureModel) {
+    public BPModel(IBPModel bloodPressureModel) {
         mBloodPressureModel = bloodPressureModel;
-        mBloodPressureAPI = mRetrofit.create(BloodPressureAPI.class);
+        mBPAPI = mRetrofit.create(BPAPI.class);
     }
 
     public void getBPList() {
-        fetchData(mBloodPressureAPI.getBPList(), new ResponseListener() {
+        fetchData(mBPAPI.getBPList(), new ResponseListener() {
             @Override
             public void onSuccess(BaseEntity response) {
                 if (mBloodPressureModel != null) {

@@ -8,7 +8,7 @@ import rx.Observable;
 /**
  * Created by hua on 16/2/22.
  */
-public interface BloodPressureAPI {
+public interface BPAPI {
 
     @GET("getBPList")
     Observable<BPEntity> getBPList();

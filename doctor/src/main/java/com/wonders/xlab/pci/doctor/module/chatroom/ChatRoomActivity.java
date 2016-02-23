@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.bp.BloodPressureActivity;
+import com.wonders.xlab.pci.doctor.module.bs.BloodSugarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
@@ -107,8 +108,12 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
 
     @OnClick(R.id.iv_chat_room_bp)
     public void onBPClick() {
-
         startActivity(new Intent(this, BloodPressureActivity.class));
+    }
+
+    @OnClick(R.id.iv_chat_room_bs)
+    public void onBSClick() {
+        startActivity(new Intent(this, BloodSugarActivity.class));
     }
 
     @OnClick(R.id.iv_chat_room_user_info)

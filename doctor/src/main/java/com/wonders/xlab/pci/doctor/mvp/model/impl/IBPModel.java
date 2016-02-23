@@ -7,6 +7,6 @@ import im.hua.library.base.mvp.IBaseModel;
 /**
  * Created by hua on 16/2/22.
  */
-public interface IBloodPressureModel extends IBaseModel {
+public interface IBPModel extends IBaseModel {
     void onReceiveBPSuccess(BPEntity bpEntity);
 }

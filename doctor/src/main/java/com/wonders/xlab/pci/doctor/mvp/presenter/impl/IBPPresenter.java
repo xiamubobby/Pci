@@ -9,6 +9,6 @@ import im.hua.library.base.mvp.IBasePresenter;
 /**
  * Created by hua on 16/2/22.
  */
-public interface IBloodPressurePresenter extends IBasePresenter {
+public interface IBPPresenter extends IBasePresenter {
     void showBloodPressureList(List<BPBean> bpBeanList);
 }

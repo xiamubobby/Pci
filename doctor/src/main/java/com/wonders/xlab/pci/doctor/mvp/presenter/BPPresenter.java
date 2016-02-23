@@ -4,9 +4,9 @@ import android.support.annotation.NonNull;
 
 import com.wonders.xlab.pci.doctor.module.bp.bean.BPBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.BPEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.BloodPressureModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.IBloodPressureModel;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IBloodPressurePresenter;
+import com.wonders.xlab.pci.doctor.mvp.model.BPModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.IBPModel;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IBPPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,19 +16,19 @@ import im.hua.library.base.mvp.BasePresenter;
 /**
  * Created by hua on 16/2/22.
  */
-public class BloodPressurePresenter extends BasePresenter implements IBloodPressureModel {
-    private IBloodPressurePresenter mBloodPressurePresenter;
-    private BloodPressureModel mBloodPressureModel;
+public class BPPresenter extends BasePresenter implements IBPModel {
+    private IBPPresenter mBloodPressurePresenter;
+    private BPModel mBPModel;
 
-    public BloodPressurePresenter(@NonNull IBloodPressurePresenter bloodPressurePresenter) {
+    public BPPresenter(@NonNull IBPPresenter bloodPressurePresenter) {
         mBloodPressurePresenter = bloodPressurePresenter;
 
-        mBloodPressureModel = new BloodPressureModel(this);
-        addModel(mBloodPressureModel);
+        mBPModel = new BPModel(this);
+        addModel(mBPModel);
     }
 
-    public void getBloodPressureList() {
-//        mBloodPressureModel.getBPList();
+    public void getBPList() {
+//        mBPModel.getBPList();
         onReceiveBPSuccess(null);
     }
 

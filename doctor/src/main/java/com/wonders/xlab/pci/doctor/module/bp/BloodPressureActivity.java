@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.charts.ScatterChart;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.CombinedData;
@@ -22,8 +23,8 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.bp.adapter.BPRVAdapter;
 import com.wonders.xlab.pci.doctor.module.bp.bean.BPBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.BloodPressurePresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IBloodPressurePresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.BPPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IBPPresenter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,7 +33,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class BloodPressureActivity extends AppbarActivity implements IBloodPressurePresenter {
+public class BloodPressureActivity extends AppbarActivity implements IBPPresenter {
 
     @Bind(R.id.chart_blood_pressure)
     CombinedChart mChart;
@@ -43,7 +44,7 @@ public class BloodPressureActivity extends AppbarActivity implements IBloodPress
             ColorTemplate.VORDIPLOM_COLORS[2]
     };
 
-    private BloodPressurePresenter mBloodPressurePresenter;
+    private BPPresenter mBPPresenter;
     private BPRVAdapter mBPRVAdapter;
 
     private final int mItemCount = 180;
@@ -71,8 +72,8 @@ public class BloodPressureActivity extends AppbarActivity implements IBloodPress
         mRecyclerView.setLinearLayout();
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
 
-        mBloodPressurePresenter = new BloodPressurePresenter(this);
-        addPresenter(mBloodPressurePresenter);
+        mBPPresenter = new BPPresenter(this);
+        addPresenter(mBPPresenter);
 
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -180);
@@ -84,7 +85,7 @@ public class BloodPressureActivity extends AppbarActivity implements IBloodPress
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        mBloodPressurePresenter.getBloodPressureList();
+        mBPPresenter.getBPList();
         mChart.setPinchZoom(true);
     }
 
@@ -121,6 +122,11 @@ public class BloodPressureActivity extends AppbarActivity implements IBloodPress
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.setDrawGridLines(false);
 
+//        addLimitLines(leftAxis);
+
+        // limit lines are drawn behind data (and not on top)
+        leftAxis.setDrawLimitLinesBehindData(false);
+
         XAxis xAxis = mChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
@@ -132,13 +138,61 @@ public class BloodPressureActivity extends AppbarActivity implements IBloodPress
         mChart.setData(data);
         mChart.invalidate();
         mChart.animateXY(2000, 2000);
-
         // limit the number of visible entries
         mChart.setVisibleXRangeMaximum(itemMaxX);
         // mChart.setVisibleYRange(30, AxisDependency.LEFT);
 
         // move to the latest entry
         mChart.moveViewToX(data.getXValCount() - itemMaxX - 1);
+    }
+
+    private void addLimitLines(YAxis leftAxis) {
+        LimitLine ll1 = new LimitLine(140f, "收缩压(高)");
+        ll1.setLineWidth(2f);
+        ll1.setLineColor(Color.parseColor("#69c88e"));
+        ll1.setTextColor(Color.parseColor("#69c88e"));
+        ll1.enableDashedLine(10f, 10f, 0f);
+        ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+        ll1.setTextSize(10f);
+
+        LimitLine ll2 = new LimitLine(91f, "收缩压(低)");
+        ll2.setLineColor(Color.parseColor("#69c88e"));
+        ll2.setTextColor(Color.parseColor("#69c88e"));
+        ll2.setLineWidth(2f);
+        ll2.enableDashedLine(10f, 10f, 0f);
+        ll2.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+        ll2.setTextSize(10f);
+
+        LimitLine ll3 = new LimitLine(90f, "舒张压(高)");
+        ll3.setLineWidth(2f);
+        ll3.setLineColor(Color.parseColor("#12b9f8"));
+        ll3.setTextColor(Color.parseColor("#12b9f8"));
+        ll3.enableDashedLine(10f, 10f, 0f);
+        ll3.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
+        ll3.setTextSize(10f);
+
+        LimitLine ll4 = new LimitLine(60f, "舒张压(低)");
+        ll4.setLineColor(Color.parseColor("#12b9f8"));
+        ll4.setTextColor(Color.parseColor("#12b9f8"));
+        ll4.setLineWidth(2f);
+        ll4.enableDashedLine(10f, 10f, 0f);
+        ll4.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_BOTTOM);
+        ll4.setTextSize(10f);
+
+        LimitLine ll5 = new LimitLine(70f, "心率(低)");
+        ll5.setLineColor(Color.parseColor("#de0404"));
+        ll5.setTextColor(Color.parseColor("#de0404"));
+        ll5.setLineWidth(2f);
+        ll5.enableDashedLine(10f, 10f, 0f);
+        ll5.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
+        ll5.setTextSize(10f);
+
+
+        leftAxis.addLimitLine(ll1);
+        leftAxis.addLimitLine(ll2);
+        leftAxis.addLimitLine(ll3);
+        leftAxis.addLimitLine(ll4);
+        leftAxis.addLimitLine(ll5);
     }
 
     @Override
