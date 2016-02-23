@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.mvp.presenter;
+package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.module.bp.bean.BPBean;
 

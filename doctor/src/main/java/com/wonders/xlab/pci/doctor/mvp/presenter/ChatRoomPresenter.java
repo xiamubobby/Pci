@@ -5,8 +5,9 @@ import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
 import com.wonders.xlab.pci.doctor.mvp.model.ChatRoomModel;
-import com.wonders.xlab.pci.doctor.mvp.model.IChatRoomModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.IChatRoomModel;
 import com.wonders.xlab.pci.doctor.mvp.entity.ChatRoomEntity;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IChatRoomPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,12 +60,12 @@ public class ChatRoomPresenter extends BasePresenter implements IChatRoomModel {
 
     }
 
-    @Override
-    public void onReceiveChatRoomHistoryFailed(String message) {
-
-    }
-
     public void setIChatRoomView(IChatRoomPresenter IChatRoomView) {
         mIChatRoomView = IChatRoomView;
+    }
+
+    @Override
+    public void onReceiveFailed(String message) {
+
     }
 }

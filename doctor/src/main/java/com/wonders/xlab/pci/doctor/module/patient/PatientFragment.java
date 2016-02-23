@@ -15,7 +15,7 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.pci.doctor.module.patient.adapter.PatientRVAdapter;
 import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.IPatientPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IPatientPresenter;
 import com.wonders.xlab.pci.doctor.mvp.presenter.PatientPresenter;
 
 import java.util.ArrayList;
@@ -77,6 +77,7 @@ public class PatientFragment extends BaseFragment implements IPatientPresenter {
             }
         });
 
+        mRecyclerViewPatient.setRefreshing(true);
         mPatientPresenter.getPatientList();
     }
 
@@ -105,31 +106,27 @@ public class PatientFragment extends BaseFragment implements IPatientPresenter {
 
     @Override
     public void showPatientList(ArrayList<PatientBean> patientBeen) {
+        /**
+         * TODO 一定要通过这样设置加载完成
+         */
+        mRecyclerViewPatient.setPullLoadMoreCompleted();
         initPatientAdapter();
         mPatientRVAdapter.setDatas(patientBeen);
     }
 
     @Override
     public void appendPatientList(ArrayList<PatientBean> patientBeen) {
+        /**
+         * TODO 一定要通过这样设置加载完成
+         */
+        mRecyclerViewPatient.setPullLoadMoreCompleted();
         initPatientAdapter();
         mPatientRVAdapter.appendDatas(patientBeen);
     }
 
     @Override
-    public void showLoading(String message) {
-        mRecyclerViewPatient.setRefreshing(true);
-    }
-
-    @Override
-    public void hideLoading(String message) {
-        /**
-         * TODO 一定要通过这样设置加载完成
-         */
-        mRecyclerViewPatient.setPullLoadMoreCompleted();
-    }
-
-    @Override
     public void showError(String message) {
+        mRecyclerViewPatient.setPullLoadMoreCompleted();
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 

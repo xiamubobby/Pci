@@ -5,7 +5,8 @@ import android.support.annotation.NonNull;
 import com.wonders.xlab.pci.doctor.module.bp.bean.BPBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.BPEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.BloodPressureModel;
-import com.wonders.xlab.pci.doctor.mvp.model.IBloodPressureModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.IBloodPressureModel;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IBloodPressurePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class BloodPressurePresenter extends BasePresenter implements IBloodPress
     }
 
     @Override
-    public void onReceiveBPFailed(Throwable throwable) {
+    public void onReceiveFailed(String message) {
 
     }
 }

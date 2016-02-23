@@ -21,8 +21,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
     @Bind(R.id.view_pager_main)
     ViewPager mViewPagerMain;
     @Bind(R.id.tab_main)

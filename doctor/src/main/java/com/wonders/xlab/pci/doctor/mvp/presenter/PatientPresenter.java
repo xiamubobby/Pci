@@ -3,8 +3,9 @@ package com.wonders.xlab.pci.doctor.mvp.presenter;
 import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.PatientEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.IPatientModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.IPatientModel;
 import com.wonders.xlab.pci.doctor.mvp.model.PatientModel;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IPatientPresenter;
 
 import java.util.ArrayList;
 
@@ -50,7 +51,7 @@ public class PatientPresenter extends BasePresenter implements IPatientModel {
     }
 
     @Override
-    public void onReceivePatientFailed(PatientEntity entity) {
+    public void onReceiveFailed(String message) {
 
     }
 }

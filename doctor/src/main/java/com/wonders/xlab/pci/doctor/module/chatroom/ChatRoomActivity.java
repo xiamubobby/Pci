@@ -18,8 +18,9 @@ import com.wonders.xlab.pci.doctor.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
+import com.wonders.xlab.pci.doctor.module.userinfo.UserInfoActivity;
 import com.wonders.xlab.pci.doctor.mvp.presenter.ChatRoomPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.IChatRoomPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IChatRoomPresenter;
 
 import java.util.List;
 
@@ -110,6 +111,12 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
         startActivity(new Intent(this, BloodPressureActivity.class));
     }
 
+    @OnClick(R.id.iv_chat_room_user_info)
+    public void onUserInfoClick() {
+
+        startActivity(new Intent(this, UserInfoActivity.class));
+    }
+
     private void setupToolbar() {
         setToolbarTitle(patientName);
 
@@ -149,16 +156,6 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     public void appendChatMessageList(List<ChatRoomBean> chatRoomBeanList) {
         initChatRoomAdapter();
         mChatRoomRVAdapter.insertDatasToTop(chatRoomBeanList);
-    }
-
-    @Override
-    public void showLoading(String message) {
-
-    }
-
-    @Override
-    public void hideLoading(String message) {
-
     }
 
     @Override

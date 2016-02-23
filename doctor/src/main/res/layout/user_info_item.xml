@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="userInfo"
+            type="com.wonders.xlab.pci.doctor.module.userinfo.bean.UserInfoBean"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="?attr/selectableItemBackground"
+                  android:gravity="center"
+                  android:minHeight="?attr/listPreferredItemHeight"
+                  android:orientation="horizontal"
+                  android:paddingLeft="@dimen/item_interval"
+                  android:paddingRight="@dimen/item_interval">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@{userInfo.title}"
+            android:textColor="@color/text_color_primary"
+            android:textSize="@dimen/text_size_primary"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="right|center_vertical"
+            android:text="@{userInfo.value}"
+            android:textColor="@color/text_color_secondary"
+            android:textSize="@dimen/text_size_primary"/>
+    </LinearLayout>
+</layout>

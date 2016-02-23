@@ -3,6 +3,7 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.entity.ChatRoomEntity;
 import com.wonders.xlab.pci.doctor.mvp.api.ChatRoomAPI;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.IChatRoomModel;
 
 import im.hua.library.base.mvp.BaseEntity;
 
@@ -32,7 +33,7 @@ public class ChatRoomModel extends DoctorBaseModel {
             @Override
             public void onFailed(Throwable e) {
                 if (mChatRoomModelListener != null) {
-                    mChatRoomModelListener.onReceiveChatRoomHistoryFailed(e.getMessage());
+                    mChatRoomModelListener.onReceiveFailed("");
                 }
             }
         });

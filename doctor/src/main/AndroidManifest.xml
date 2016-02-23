@@ -48,6 +48,12 @@
             android:label="@string/title_activity_blood_pressure"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".module.userinfo.UserInfoActivity"
+            android:label="@string/title_activity_user_info"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

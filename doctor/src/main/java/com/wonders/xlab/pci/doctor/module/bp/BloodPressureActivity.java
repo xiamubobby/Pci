@@ -23,7 +23,7 @@ import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.bp.adapter.BPRVAdapter;
 import com.wonders.xlab.pci.doctor.module.bp.bean.BPBean;
 import com.wonders.xlab.pci.doctor.mvp.presenter.BloodPressurePresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.IBloodPressurePresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IBloodPressurePresenter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -85,8 +85,7 @@ public class BloodPressureActivity extends AppbarActivity implements IBloodPress
         }
 
         mBloodPressurePresenter.getBloodPressureList();
-
-        mChart.setPinchZoom(false);
+        mChart.setPinchZoom(true);
     }
 
     @Override
@@ -106,7 +105,7 @@ public class BloodPressureActivity extends AppbarActivity implements IBloodPress
 
         mBPRVAdapter.setDatas(bpBeanList);
 
-        mChart.setDescription("血压");
+        mChart.setDescription("血压(mmHg)");
         mChart.setBackgroundColor(Color.WHITE);
         mChart.setDrawGridBackground(false);
         mChart.setDrawBarShadow(true);
@@ -140,16 +139,6 @@ public class BloodPressureActivity extends AppbarActivity implements IBloodPress
 
         // move to the latest entry
         mChart.moveViewToX(data.getXValCount() - itemMaxX - 1);
-    }
-
-    @Override
-    public void showLoading(String message) {
-
-    }
-
-    @Override
-    public void hideLoading(String message) {
-
     }
 
     @Override
