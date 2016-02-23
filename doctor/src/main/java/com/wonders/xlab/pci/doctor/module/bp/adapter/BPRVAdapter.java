@@ -1,7 +1,6 @@
 package com.wonders.xlab.pci.doctor.module.bp.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +34,6 @@ public class BPRVAdapter extends SimpleRVAdapter<BPBean> implements StickyRecycl
 
     @Override
     public long getHeaderId(int position) {
-        Log.d("BPRVAdapter", "getBean(position).getHeaderId():" + getBean(position).getHeaderId());
         return getBean(position).getHeaderId();
     }
 

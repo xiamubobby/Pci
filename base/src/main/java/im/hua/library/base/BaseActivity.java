@@ -18,7 +18,9 @@ public class BaseActivity extends AppCompatActivity {
         if (mBasePresenterList == null) {
             mBasePresenterList = new ArrayList<>();
         }
-        mBasePresenterList.add(presenter);
+        if (presenter != null) {
+            mBasePresenterList.add(presenter);
+        }
     }
 
     @Override

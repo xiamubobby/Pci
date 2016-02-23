@@ -37,15 +37,20 @@ public class BSPresenter extends BasePresenter implements IBSModel {
         List<BSBean> BSBeanList = new ArrayList<>();
 
         long headerId = 0;
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 10; i++) {
             if (i % 3 == 0) {
                 headerId++;
             }
             BSBean bean = new BSBean();
             bean.setHeaderId(headerId);
-            bean.setDiastolic("1" + i);
-            bean.setSystolic("2" + i);
-            bean.setHeartRate(i + "0");
+            bean.setEarlyMorningBS(i + "");
+            bean.setBreakfastBeforeBS(i + "");
+            bean.setBreakfastAfterBS(i + "");
+            bean.setLunchBeforeBS(i + "");
+            bean.setLunchAfterBS(i + "");
+            bean.setDinnerBeforeBS(i + "");
+            bean.setDinnerAfterBS(i + "");
+            bean.setRandomBS(i + "");
             bean.setTime("2016-02-0" + i);
             BSBeanList.add(bean);
         }

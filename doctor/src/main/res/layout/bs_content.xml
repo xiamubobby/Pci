@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/darker_gray"
+        android:minHeight="?attr/listPreferredItemHeight"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/bs_cell_divider_width"
         android:paddingTop="@dimen/bs_cell_divider_width">

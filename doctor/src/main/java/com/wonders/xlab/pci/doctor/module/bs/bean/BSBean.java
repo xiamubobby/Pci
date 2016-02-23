@@ -4,17 +4,24 @@ package com.wonders.xlab.pci.doctor.module.bs.bean;
  * Created by hua on 16/2/22.
  */
 public class BSBean {
-    private String time;
-    /**
-     * 收缩压
-     */
-    private String systolic;
-    /**
-     * 舒张压
-     */
-    private String diastolic;
-    private String heartRate;
     private long headerId;
+    private String time;
+    private String earlyMorningBS;
+    private String breakfastBeforeBS;
+    private String breakfastAfterBS;
+    private String lunchBeforeBS;
+    private String lunchAfterBS;
+    private String dinnerBeforeBS;
+    private String dinnerAfterBS;
+    private String randomBS;
+
+    public long getHeaderId() {
+        return headerId;
+    }
+
+    public void setHeaderId(long headerId) {
+        this.headerId = headerId;
+    }
 
     public String getTime() {
         return time;
@@ -24,35 +31,67 @@ public class BSBean {
         this.time = time;
     }
 
-    public String getSystolic() {
-        return systolic;
+    public String getEarlyMorningBS() {
+        return earlyMorningBS;
     }
 
-    public void setSystolic(String systolic) {
-        this.systolic = systolic;
+    public void setEarlyMorningBS(String earlyMorningBS) {
+        this.earlyMorningBS = earlyMorningBS;
     }
 
-    public String getDiastolic() {
-        return diastolic;
+    public String getBreakfastBeforeBS() {
+        return breakfastBeforeBS;
     }
 
-    public void setDiastolic(String diastolic) {
-        this.diastolic = diastolic;
+    public void setBreakfastBeforeBS(String breakfastBeforeBS) {
+        this.breakfastBeforeBS = breakfastBeforeBS;
     }
 
-    public String getHeartRate() {
-        return heartRate;
+    public String getBreakfastAfterBS() {
+        return breakfastAfterBS;
     }
 
-    public void setHeartRate(String heartRate) {
-        this.heartRate = heartRate;
+    public void setBreakfastAfterBS(String breakfastAfterBS) {
+        this.breakfastAfterBS = breakfastAfterBS;
     }
 
-    public long getHeaderId() {
-        return headerId;
+    public String getLunchBeforeBS() {
+        return lunchBeforeBS;
     }
 
-    public void setHeaderId(long headerId) {
-        this.headerId = headerId;
+    public void setLunchBeforeBS(String lunchBeforeBS) {
+        this.lunchBeforeBS = lunchBeforeBS;
+    }
+
+    public String getLunchAfterBS() {
+        return lunchAfterBS;
+    }
+
+    public void setLunchAfterBS(String lunchAfterBS) {
+        this.lunchAfterBS = lunchAfterBS;
+    }
+
+    public String getDinnerBeforeBS() {
+        return dinnerBeforeBS;
+    }
+
+    public void setDinnerBeforeBS(String dinnerBeforeBS) {
+        this.dinnerBeforeBS = dinnerBeforeBS;
+    }
+
+    public String getDinnerAfterBS() {
+        return dinnerAfterBS;
+    }
+
+    public void setDinnerAfterBS(String dinnerAfterBS) {
+        this.dinnerAfterBS = dinnerAfterBS;
+    }
+
+    public String getRandomBS() {
+        return randomBS;
+    }
+
+    public void setRandomBS(String randomBS) {
+        this.randomBS = randomBS;
     }
 }

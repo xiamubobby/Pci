@@ -9,11 +9,13 @@ import java.util.List;
 public class BasePresenter {
     private List<BaseModel> mBaseModelList;
 
-    public void addModel(BaseModel model) {
+    protected void addModel(BaseModel model) {
         if (mBaseModelList == null) {
             mBaseModelList = new ArrayList<>();
         }
-        mBaseModelList.add(model);
+        if (model != null) {
+            mBaseModelList.add(model);
+        }
     }
 
     public void onDestroy() {
