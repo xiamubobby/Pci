@@ -59,6 +59,11 @@
             android:label="@string/title_activity_bs"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".module.symptom.SymptomActivity"
+            android:label="@string/title_activity_symptom"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
