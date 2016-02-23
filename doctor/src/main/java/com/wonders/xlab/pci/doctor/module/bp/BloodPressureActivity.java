@@ -5,17 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.BubbleData;
-import com.github.mikephil.charting.data.BubbleDataSet;
-import com.github.mikephil.charting.data.BubbleEntry;
-import com.github.mikephil.charting.data.CandleData;
-import com.github.mikephil.charting.data.CandleDataSet;
-import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -34,23 +26,30 @@ import com.wonders.xlab.pci.doctor.mvp.presenter.BloodPressurePresenter;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IBloodPressurePresenter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class BloodPressureActivity extends AppbarActivity implements IBloodPressurePresenter{
+public class BloodPressureActivity extends AppbarActivity implements IBloodPressurePresenter {
 
     @Bind(R.id.chart_blood_pressure)
     CombinedChart mChart;
 
+    private int[] mColors = new int[]{
+            ColorTemplate.VORDIPLOM_COLORS[0],
+            ColorTemplate.VORDIPLOM_COLORS[1],
+            ColorTemplate.VORDIPLOM_COLORS[2]
+    };
+
     private BloodPressurePresenter mBloodPressurePresenter;
     private BPRVAdapter mBPRVAdapter;
 
-    protected String[] mMonths = new String[]{
-            "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"
-    };
-    private final int itemcount = 12;
+    private final int mItemCount = 180;
+    private final int itemMaxX = 30;
+    protected String[] xVals = new String[mItemCount];
+
     @Bind(R.id.recycler_view_blood_pressure)
     PullLoadMoreRecyclerView mRecyclerView;
 
@@ -70,124 +69,24 @@ public class BloodPressureActivity extends AppbarActivity implements IBloodPress
         ButterKnife.bind(this);
 
         mRecyclerView.setLinearLayout();
-        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this,getResources().getColor(R.color.divider),1));
+        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
 
         mBloodPressurePresenter = new BloodPressurePresenter(this);
         addPresenter(mBloodPressurePresenter);
 
-        mBloodPressurePresenter.getBloodPressureList();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -180);
+        for (int i = 0; i < mItemCount; i++) {
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            int month = calendar.get(Calendar.MONTH) + 1;
+            xVals[i] = month + "-" + day;
 
-    }
-
-    private LineData generateLineData() {
-
-        LineData d = new LineData();
-
-        ArrayList<Entry> entries = new ArrayList<Entry>();
-
-        for (int index = 0; index < itemcount; index++)
-            entries.add(new Entry(getRandom(15, 10), index));
-
-        LineDataSet set = new LineDataSet(entries, "Line DataSet");
-        set.setColor(Color.rgb(240, 238, 70));
-        set.setLineWidth(2.5f);
-        set.setCircleColor(Color.rgb(240, 238, 70));
-        set.setCircleSize(5f);
-        set.setFillColor(Color.rgb(240, 238, 70));
-        set.setDrawCubic(true);
-        set.setDrawValues(true);
-        set.setValueTextSize(10f);
-        set.setValueTextColor(Color.rgb(240, 238, 70));
-
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-        d.addDataSet(set);
-
-        return d;
-    }
-
-    private BarData generateBarData() {
-
-        BarData d = new BarData();
-
-        ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
-
-        for (int index = 0; index < itemcount; index++)
-            entries.add(new BarEntry(getRandom(15, 30), index));
-
-        BarDataSet set = new BarDataSet(entries, "Bar DataSet");
-        set.setColor(Color.rgb(60, 220, 78));
-        set.setValueTextColor(Color.rgb(60, 220, 78));
-        set.setValueTextSize(10f);
-        d.addDataSet(set);
-
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
-
-        return d;
-    }
-
-    protected ScatterData generateScatterData() {
-
-        ScatterData d = new ScatterData();
-
-        ArrayList<Entry> entries = new ArrayList<Entry>();
-
-        for (int index = 0; index < itemcount; index++)
-            entries.add(new Entry(getRandom(20, 15), index));
-
-        ScatterDataSet set = new ScatterDataSet(entries, "Scatter DataSet");
-        set.setColor(Color.GREEN);
-        set.setScatterShapeSize(7.5f);
-        set.setDrawValues(false);
-        set.setValueTextSize(10f);
-        d.addDataSet(set);
-
-        return d;
-    }
-
-    protected CandleData generateCandleData() {
-
-        CandleData d = new CandleData();
-
-        ArrayList<CandleEntry> entries = new ArrayList<CandleEntry>();
-
-        for (int index = 0; index < itemcount; index++)
-            entries.add(new CandleEntry(index, 20f, 10f, 13f, 17f));
-
-        CandleDataSet set = new CandleDataSet(entries, "Candle DataSet");
-        set.setColor(Color.rgb(80, 80, 80));
-        set.setBodySpace(0.3f);
-        set.setValueTextSize(10f);
-        set.setDrawValues(false);
-        d.addDataSet(set);
-
-        return d;
-    }
-
-    protected BubbleData generateBubbleData() {
-
-        BubbleData bd = new BubbleData();
-
-        ArrayList<BubbleEntry> entries = new ArrayList<BubbleEntry>();
-
-        for (int index = 0; index < itemcount; index++) {
-            float rnd = getRandom(20, 30);
-            entries.add(new BubbleEntry(index, rnd, rnd));
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
 
-        BubbleDataSet set = new BubbleDataSet(entries, "Bubble DataSet");
-        set.setColors(ColorTemplate.VORDIPLOM_COLORS);
-        set.setValueTextSize(10f);
-        set.setValueTextColor(Color.WHITE);
-        set.setHighlightCircleWidth(1.5f);
-        set.setDrawValues(true);
-        bd.addDataSet(set);
+        mBloodPressurePresenter.getBloodPressureList();
 
-        return bd;
-    }
-
-    private float getRandom(float range, float startsfrom) {
-        return (float) (Math.random() * range) + startsfrom;
+        mChart.setPinchZoom(false);
     }
 
     @Override
@@ -207,10 +106,10 @@ public class BloodPressureActivity extends AppbarActivity implements IBloodPress
 
         mBPRVAdapter.setDatas(bpBeanList);
 
-        mChart.setDescription("");
+        mChart.setDescription("血压");
         mChart.setBackgroundColor(Color.WHITE);
         mChart.setDrawGridBackground(false);
-        mChart.setDrawBarShadow(false);
+        mChart.setDrawBarShadow(true);
 
         // draw bars behind lines
         mChart.setDrawOrder(new CombinedChart.DrawOrder[]{
@@ -226,16 +125,21 @@ public class BloodPressureActivity extends AppbarActivity implements IBloodPress
         XAxis xAxis = mChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-        CombinedData data = new CombinedData(mMonths);
+        CombinedData data = new CombinedData(xVals);
 
-        data.setData(generateLineData());
-        data.setData(generateBarData());
-        data.setData(generateBubbleData());
+        data.setData(generateLineData(5));
         data.setData(generateScatterData());
-        data.setData(generateCandleData());
 
         mChart.setData(data);
         mChart.invalidate();
+        mChart.animateXY(2000, 2000);
+
+        // limit the number of visible entries
+        mChart.setVisibleXRangeMaximum(itemMaxX);
+        // mChart.setVisibleYRange(30, AxisDependency.LEFT);
+
+        // move to the latest entry
+        mChart.moveViewToX(data.getXValCount() - itemMaxX - 1);
     }
 
     @Override
@@ -251,5 +155,67 @@ public class BloodPressureActivity extends AppbarActivity implements IBloodPress
     @Override
     public void showError(String message) {
 
+    }
+
+    private LineData generateLineData(int start) {
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+
+        for (int z = 0; z < 2; z++) {
+
+            ArrayList<Entry> values = new ArrayList<Entry>();
+
+            for (int i = 0; i < mItemCount; i++) {
+                double val = getRandom(90, start);
+                values.add(new Entry((float) val, i));
+            }
+
+            LineDataSet d = new LineDataSet(values, "");
+            d.setLineWidth(2.5f);
+            d.setCircleSize(4f);
+
+            String label = "";
+            int color = mColors[z % mColors.length];
+            switch (z) {
+                case 0:
+                    label = "舒张压";
+                    color = Color.parseColor("#12b9f8");
+                    break;
+                case 1:
+                    label = "收缩压";
+                    color = Color.parseColor("#69c88e");
+                    break;
+            }
+            d.setLabel(label);
+            d.setColor(color);
+            d.setCircleColor(color);
+            dataSets.add(d);
+        }
+
+        return new LineData(xVals, dataSets);
+    }
+
+    protected ScatterData generateScatterData() {
+
+        ScatterData d = new ScatterData();
+
+        ArrayList<Entry> entries = new ArrayList<Entry>();
+
+        for (int index = 0; index < mItemCount; index++)
+            entries.add(new Entry(getRandom(20, 15), index));
+
+        ScatterDataSet set = new ScatterDataSet(entries, "心率");
+        set.setScatterShape(ScatterChart.ScatterShape.CIRCLE);
+        set.setColor(Color.parseColor("#de0404"));
+        set.setScatterShapeSize(7.5f);
+        set.setDrawValues(false);
+        set.setValueTextSize(10f);
+        d.addDataSet(set);
+
+        return d;
+    }
+
+    private float getRandom(float range, float startsfrom) {
+        return (float) (Math.random() * range) + startsfrom;
     }
 }
