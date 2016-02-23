@@ -9,5 +9,5 @@
     <dimen name="chat_room_top_icon_size">50dp</dimen>
     <dimen name="portrait_list_item_size">48dp</dimen>
     <dimen name="app_bar_height">256dp</dimen>
-    <dimen name="bs_cell_divider_width">0.5dp</dimen>
+    <dimen name="bs_cell_divider_width">0.25dp</dimen>
 </resources>
