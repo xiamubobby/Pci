@@ -19,6 +19,7 @@ import com.wonders.xlab.pci.doctor.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
+import com.wonders.xlab.pci.doctor.module.medicalrecord.MedicalRecordActivity;
 import com.wonders.xlab.pci.doctor.module.symptom.SymptomActivity;
 import com.wonders.xlab.pci.doctor.module.userinfo.UserInfoActivity;
 import com.wonders.xlab.pci.doctor.mvp.presenter.ChatRoomPresenter;
@@ -123,8 +124,13 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     }
 
     @OnClick(R.id.iv_chat_room_symptom)
-    public void onSymptomInfoClick() {
+    public void onSymptomClick() {
         startActivity(new Intent(this, SymptomActivity.class));
+    }
+
+    @OnClick(R.id.iv_chat_room_record)
+    public void onMedicalRecordClick() {
+        startActivity(new Intent(this, MedicalRecordActivity.class));
     }
 
     private void setupToolbar() {

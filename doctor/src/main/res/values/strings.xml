@@ -14,4 +14,5 @@
     <string name="et_hint_symptom_edit_dialog_comment">输入备注</string>
     <string name="cb_hint_symptom_edit_dialog_check_label">已确认</string>
     <string name="btn_symptom_item_comment">备注</string>
+    <string name="title_activity_medical_record">MedicalRecordActivity</string>
 </resources>
