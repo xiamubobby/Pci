@@ -28,13 +28,15 @@ public class MedicalRecordPhotoVH extends MultiViewHolder<MedicalRecordPhotoBean
     @Bind(R.id.recycler_view_medical_record_photo_item)
     RecyclerView mRecyclerView;
 
+    private OnPhotoClickListener mOnPhotoClickListener;
+
     public MedicalRecordPhotoVH(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
     @Override
-    public void onBindViewHolder(MedicalRecordPhotoBean data) {
+    public void onBindViewHolder(final MedicalRecordPhotoBean data) {
         mTime.setText(data.getTimeStr());
         mTitle.setText(data.getTitle());
 
@@ -42,8 +44,20 @@ public class MedicalRecordPhotoVH extends MultiViewHolder<MedicalRecordPhotoBean
 
         PhotoRVAdapter photoRVAdapter = new PhotoRVAdapter();
         photoRVAdapter.setDatas(data.getPhotos());
+        photoRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                if (null != mOnPhotoClickListener) {
+                    mOnPhotoClickListener.onPhotoClick(position);
+                }
+            }
+        });
         mRecyclerView.setAdapter(photoRVAdapter);
 
+    }
+
+    public void setOnPhotoClickListener(OnPhotoClickListener onPhotoClickListener) {
+        mOnPhotoClickListener = onPhotoClickListener;
     }
 
     class PhotoRVAdapter extends SimpleRVAdapter<String> {
@@ -72,4 +86,7 @@ public class MedicalRecordPhotoVH extends MultiViewHolder<MedicalRecordPhotoBean
 
     }
 
+    public interface OnPhotoClickListener{
+        void onPhotoClick(int selectedPosition);
+    }
 }

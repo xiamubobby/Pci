@@ -77,7 +77,6 @@ dependencies {
 
     compile 'com.android.support:cardview-v7:23.1.1'
     compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'
-    compile 'me.iwf.photopicker:PhotoPicker:0.2.8@aar'
     compile 'me.drakeet.labelview:labelview:0.8'
     compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'com.bignerdranch.android:expandablerecyclerview:2.0.4'

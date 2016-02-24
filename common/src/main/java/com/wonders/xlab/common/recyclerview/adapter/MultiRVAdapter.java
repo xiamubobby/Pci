@@ -130,7 +130,7 @@ public abstract class MultiRVAdapter<bean extends BaseBean> extends RecyclerView
     }
 
     @Override
-    public void onBindViewHolder(final MultiViewHolder<bean> holder, final int position) {
+    public void onBindViewHolder(final MultiViewHolder holder, final int position) {
         holder.onBindViewHolder(this.mDatas.get(position));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,5 +153,5 @@ public abstract class MultiRVAdapter<bean extends BaseBean> extends RecyclerView
         return this.mDatas.get(position).getItemLayout();
     }
 
-    public abstract MultiViewHolder<bean> createViewHolder(View itemView, int viewType);
+    public abstract MultiViewHolder createViewHolder(View itemView, int viewType);
 }

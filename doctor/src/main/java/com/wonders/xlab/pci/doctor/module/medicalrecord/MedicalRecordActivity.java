@@ -1,5 +1,6 @@
 package com.wonders.xlab.pci.doctor.module.medicalrecord;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
@@ -16,8 +17,11 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.iwf.photopicker.PhotoPagerActivity;
 
 public class MedicalRecordActivity extends AppbarActivity {
+
+    private static final int REQUEST_CODE = 1123;
 
     @Bind(R.id.recycler_view_medical_record)
     PullLoadMoreRecyclerView mRecyclerView;
@@ -41,7 +45,7 @@ public class MedicalRecordActivity extends AppbarActivity {
         mRecyclerView.setLinearLayout();
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 5));
 
-        List<String> photos = new ArrayList<>();
+        final ArrayList<String> photos = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             photos.add(Constant.DEFAULT_PORTRAIT);
         }
@@ -58,6 +62,17 @@ public class MedicalRecordActivity extends AppbarActivity {
 
         mMedicalRecordRVAdapter = new MedicalRecordRVAdapter();
         mMedicalRecordRVAdapter.setDatas(beanList);
+        mMedicalRecordRVAdapter.setOnPhotoClickListener(new MedicalRecordRVAdapter.OnPhotoClickListener() {
+            @Override
+            public void onPhotoClick(ArrayList<String> photoUrls, int selectedPosition) {
+
+                Intent intent = new Intent(MedicalRecordActivity.this, PhotoPagerActivity.class);
+                intent.putExtra(PhotoPagerActivity.EXTRA_CURRENT_ITEM, selectedPosition);
+                intent.putExtra(PhotoPagerActivity.EXTRA_PHOTOS, photoUrls);
+                intent.putExtra(PhotoPagerActivity.EXTRA_SHOW_DELETE, false); // default is true
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
 
         mRecyclerView.setAdapter(mMedicalRecordRVAdapter);
     }

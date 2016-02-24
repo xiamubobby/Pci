@@ -13,7 +13,7 @@ import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
  */
 public class ChatRoomRVAdapter extends MultiRVAdapter<ChatRoomBean> {
     @Override
-    public MultiViewHolder<ChatRoomBean> createViewHolder(View itemView, int viewType) {
+    public MultiViewHolder createViewHolder(View itemView, int viewType) {
         MultiViewHolder holder;
         switch (viewType) {
             case ChatRoomBean.ITEM_LAYOUT_ME:

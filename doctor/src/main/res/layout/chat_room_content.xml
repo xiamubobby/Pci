@@ -56,30 +56,6 @@
                 android:layout_marginLeft="@dimen/item_interval"
                 android:layout_marginRight="@dimen/item_interval"
                 android:src="@drawable/pic_chat_room_blood_sugar"/>
-            <ImageView
-                android:layout_width="@dimen/chat_room_top_icon_size"
-                android:layout_height="@dimen/chat_room_top_icon_size"
-                android:layout_marginLeft="@dimen/item_interval"
-                android:layout_marginRight="@dimen/item_interval"
-                android:src="@drawable/pic_chat_room_blood_sugar"/>
-            <ImageView
-                android:layout_width="@dimen/chat_room_top_icon_size"
-                android:layout_height="@dimen/chat_room_top_icon_size"
-                android:layout_marginLeft="@dimen/item_interval"
-                android:layout_marginRight="@dimen/item_interval"
-                android:src="@drawable/pic_chat_room_blood_sugar"/>
-            <ImageView
-                android:layout_width="@dimen/chat_room_top_icon_size"
-                android:layout_height="@dimen/chat_room_top_icon_size"
-                android:layout_marginLeft="@dimen/item_interval"
-                android:layout_marginRight="@dimen/item_interval"
-                android:src="@drawable/pic_chat_room_blood_sugar"/>
-            <ImageView
-                android:layout_width="@dimen/chat_room_top_icon_size"
-                android:layout_height="@dimen/chat_room_top_icon_size"
-                android:layout_marginLeft="@dimen/item_interval"
-                android:layout_marginRight="@dimen/item_interval"
-                android:src="@drawable/pic_chat_room_blood_sugar"/>
 
         </LinearLayout>
     </HorizontalScrollView>

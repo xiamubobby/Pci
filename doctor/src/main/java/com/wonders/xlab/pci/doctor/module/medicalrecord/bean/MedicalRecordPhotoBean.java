@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.doctor.module.medicalrecord.bean;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by hua on 16/2/24.
@@ -8,7 +8,7 @@ import java.util.List;
 public class MedicalRecordPhotoBean extends MedicalRecordBean {
     private String timeStr;
     private String title;
-    private List<String> photos;
+    private ArrayList<String> photos;
 
     @Override
     public int getItemLayout() {
@@ -31,11 +31,11 @@ public class MedicalRecordPhotoBean extends MedicalRecordBean {
         this.title = title;
     }
 
-    public List<String> getPhotos() {
+    public ArrayList<String> getPhotos() {
         return photos;
     }
 
-    public void setPhotos(List<String> photos) {
+    public void setPhotos(ArrayList<String> photos) {
         this.photos = photos;
     }
 }
