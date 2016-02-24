@@ -1,82 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal"
-              android:padding="@dimen/item_interval_middle">
+<layout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+    <data>
 
-        <View
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:background="@drawable/shape_dot"/>
+        <import type="android.text.TextUtils"/>
 
-        <View
-            android:layout_width="2dp"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"/>
-    </LinearLayout>
+        <import type="android.view.View"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/item_interval_middle"
-        android:orientation="vertical">
+        <variable
+            name="symptom"
+            type="com.wonders.xlab.pci.doctor.module.symptom.bean.SymptomBean"/>
 
-        <TextView
+        <variable
+            name="handler"
+            type="com.wonders.xlab.pci.doctor.module.symptom.adapter.SymptomRVAdapter.ItemViewHolder"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:paddingLeft="@dimen/item_interval_middle"
+                  android:paddingRight="@dimen/item_interval_middle">
+
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2016-02-24"
-            android:textColor="@color/text_color_primary"
-            android:textSize="@dimen/text_size_primary"/>
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval"
-            android:text="@string/symptom_check_status"
-            android:textColor="@color/text_color_primary"
-            android:textSize="@dimen/text_size_primary"/>
+            <View
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:background="@drawable/shape_dot"/>
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="@color/colorPrimary"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval"
+            android:layout_marginBottom="@dimen/item_interval_large"
+            android:layout_marginLeft="@dimen/item_interval_middle"
             android:background="@drawable/shape_rectangle_outline"
             android:orientation="vertical"
             android:padding="@dimen/item_interval">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{symptom.timeStr}"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_primary"/>
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="主诉："
-                android:textColor="@color/text_color_primary"
+                android:layout_marginTop="@dimen/item_interval"
+                android:text='@{"状态：" + (symptom.isChecked ? "已确认":"未确认")}'
+                android:textColor="@{symptom.isChecked ? @color/text_color_primary : @color/text_error}"
                 android:textSize="@dimen/text_size_primary"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:layout_gravity="right"
-                android:layout_marginTop="@dimen/item_interval_middle"
-                android:text="备注"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_interval"
+                android:background="@drawable/shape_rectangle_outline"
+                android:orientation="vertical"
+                android:padding="@dimen/item_interval">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/item_interval"
+                    android:text='@{"主诉："+ symptom.symptomStr}'
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="@dimen/text_size_primary"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="@{TextUtils.isEmpty(symptom.comment) ? View.VISIBLE : View.GONE}">
+
+                    <include layout="@layout/divider_vertical"/>
+                </LinearLayout>
+
+                <Button
+                    style="?attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="@dimen/item_interval"
+                    android:onClick="@{handler.onBtnClick}"
+                    android:text="@string/btn_symptom_item_comment"
+                    android:textColor="@color/text_color_primary"
+                    android:textSize="@dimen/text_size_secondary"
+                    android:visibility="@{TextUtils.isEmpty(symptom.comment) ? View.VISIBLE : View.GONE}"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/item_interval"
+                android:background="@color/bg_gray"
+                android:foreground="?attr/selectableItemBackground"
+                android:onClick="@{handler.onCommentClick}"
+                android:orientation="vertical"
+                android:padding="@dimen/item_interval"
+                android:text="@{symptom.comment}"
                 android:textColor="@color/text_color_primary"
-                android:textSize="@dimen/text_size_primary"/>
+                android:visibility="@{TextUtils.isEmpty(symptom.comment) ? View.GONE : View.VISIBLE}"/>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/item_interval"
-            android:background="@color/bg_gray"
-            android:orientation="vertical"
-            android:padding="@dimen/item_interval"
-            android:text="备注内容"
-            android:textColor="@color/text_color_primary"/>
     </LinearLayout>
-
-</LinearLayout>
+</layout>

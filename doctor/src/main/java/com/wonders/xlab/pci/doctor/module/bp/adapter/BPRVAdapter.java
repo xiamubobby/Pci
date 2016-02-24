@@ -61,7 +61,6 @@ public class BPRVAdapter extends SimpleRVAdapter<BPBean> implements StickyRecycl
         BloodPressureItemBinding mBinding;
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
             mBinding = BloodPressureItemBinding.bind(itemView);
         }
     }
