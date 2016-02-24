@@ -26,7 +26,26 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:name=".application.XApplication"
         android:theme="@style/AppTheme.NoActionBar">
+
+        <!-- umeng -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="56cd7623e0f55aa80b000957"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="internal"/>
+        <!-- umeng -->
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService"/>
+
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
         <activity
             android:name=".module.MainActivity"
             android:screenOrientation="portrait">

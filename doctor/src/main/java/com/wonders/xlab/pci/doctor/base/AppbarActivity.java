@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
+import com.umeng.update.UmengUpdateAgent;
+
 import im.hua.library.base.BaseActivity;
 import xlab.wonders.com.common.R;
 
@@ -45,6 +47,9 @@ public abstract class AppbarActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentLayout());
+
+        UmengUpdateAgent.update(this);
+
         mContentView = findViewById(android.R.id.content);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {
