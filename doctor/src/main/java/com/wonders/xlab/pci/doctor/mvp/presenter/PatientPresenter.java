@@ -48,6 +48,8 @@ public class PatientPresenter extends BasePresenter implements IPatientModel {
             bean.setPatientName(valuesEntity.getName());
             bean.setTimeAfterSurgery(valuesEntity.getLastOperationTime());
             bean.setGroupName(valuesEntity.getGroupName());
+            bean.setGroupId(valuesEntity.getGroupId());
+            bean.setPhoneNumber(valuesEntity.getTel());
 
             patientBeen.add(bean);
         }

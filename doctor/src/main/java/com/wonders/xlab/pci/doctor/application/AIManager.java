@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 
 import com.wonders.xlab.common.manager.SPManager;
+import com.wonders.xlab.pci.doctor.Constant;
 
 /**
  * Created by hua on 15/12/17.
@@ -15,6 +16,7 @@ public class AIManager {
      */
     public final static String PRE_USER_ID = "userId";
     public final static String PRE_USER_TEL = "userTel";
+    public final static String PRE_USER_AVATAR_URL = "avatarUrl";
     public final static String PRE_IS_HOME_SHOWING = "isShowingHome";
 
     private static AIManager aiManager;
@@ -49,7 +51,12 @@ public class AIManager {
     }
 
     public String getUserTel() {
+
         return spManager.getString(PRE_USER_TEL, "");
+    }
+
+    public String getAvatarUrl() {
+        return spManager.getString(PRE_USER_AVATAR_URL, Constant.DEFAULT_PORTRAIT);
     }
 
 
@@ -57,7 +64,7 @@ public class AIManager {
         return spManager.getBoolean(PRE_IS_HOME_SHOWING, false);
     }
 
-    public void saveUserInfo(String userId, String tel) {
+    public void saveUserInfo(String userId, String tel, String avatarUrl) {
         saveUserId(userId);
         saveUserTel(tel);
     }
@@ -68,6 +75,10 @@ public class AIManager {
 
     public void saveUserTel(String tel) {
         spManager.putString(PRE_USER_TEL, tel);
+    }
+
+    public void saveAvatarUrl(String avatarUrl) {
+        spManager.putString(PRE_USER_AVATAR_URL, avatarUrl);
     }
 
 

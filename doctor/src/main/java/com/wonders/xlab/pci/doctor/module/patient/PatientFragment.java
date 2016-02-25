@@ -98,6 +98,7 @@ public class PatientFragment extends BaseFragment implements IPatientPresenter {
                     intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_ID, mPatientRVAdapter.getBean(position).getPatientId());
                     intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_NAME, mPatientRVAdapter.getBean(position).getPatientName());
                     intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER, mPatientRVAdapter.getBean(position).getPhoneNumber());
+                    intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_GROUP_ID, mPatientRVAdapter.getBean(position).getGroupId());
                     getActivity().startActivity(intent);
                 }
             });

@@ -36,6 +36,8 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     public final static String EXTRA_PATIENT_ID = "PATIENT_ID";
     public final static String EXTRA_PATIENT_NAME = "PATIENT_NAME";
     public final static String EXTRA_PATIENT_PHONE_NUMBER = "PATIENT_NUMBER";
+    public final static String EXTRA_PATIENT_GROUP_ID = "GROUP_ID";
+
     @Bind(R.id.iv_chat_room_record)
     ImageView mIvChatRoomRecord;
 
@@ -47,6 +49,7 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     private ChatRoomRVAdapter mChatRoomRVAdapter;
 
     private String patientId;
+    private String groupId;
     private String patientName;
     private String patientPhoneNumber;
 
@@ -70,6 +73,7 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
             throw new NullPointerException("getIntent() is null");
         }
         patientId = intent.getStringExtra(EXTRA_PATIENT_ID);
+        groupId = intent.getStringExtra(EXTRA_PATIENT_GROUP_ID);
         if (TextUtils.isEmpty(patientId)) {
             throw new NullPointerException("EXTRA_PATIENT_ID is null");
         }
@@ -87,7 +91,8 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
 
         mChatRoomPresenter = new ChatRoomPresenter(this);
         addPresenter(mChatRoomPresenter);
-        mChatRoomPresenter.getChatList();
+
+        mChatRoomPresenter.getChatList(groupId);
     }
 
     @Override

@@ -40,9 +40,9 @@ public class LoginEntity extends BaseEntity {
         private String department;
         private String jobTitle;
         private String type;
-        private Object avatarUrl;
-        private Object description;
-        private Object groups;
+        private String avatarUrl;
+        private String description;
+        private String groups;
 
         public void setId(String id) {
             this.id = id;
@@ -76,15 +76,15 @@ public class LoginEntity extends BaseEntity {
             this.type = type;
         }
 
-        public void setAvatarUrl(Object avatarUrl) {
+        public void setAvatarUrl(String avatarUrl) {
             this.avatarUrl = avatarUrl;
         }
 
-        public void setDescription(Object description) {
+        public void setDescription(String description) {
             this.description = description;
         }
 
-        public void setGroups(Object groups) {
+        public void setGroups(String groups) {
             this.groups = groups;
         }
 
@@ -120,15 +120,15 @@ public class LoginEntity extends BaseEntity {
             return type;
         }
 
-        public Object getAvatarUrl() {
+        public String getAvatarUrl() {
             return avatarUrl;
         }
 
-        public Object getDescription() {
+        public String getDescription() {
             return description;
         }
 
-        public Object getGroups() {
+        public String getGroups() {
             return groups;
         }
     }

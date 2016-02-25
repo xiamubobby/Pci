@@ -21,8 +21,8 @@ public class ChatRoomModel extends DoctorBaseModel {
         mChatRoomAPI = mRetrofit.create(ChatRoomAPI.class);
     }
 
-    public void getChatList() {
-        fetchData(mChatRoomAPI.getChatHistory(), new ResponseListener() {
+    public void getChatList(String groupId) {
+        fetchData(mChatRoomAPI.getChatHistory(groupId), new ResponseListener() {
             @Override
             public void onSuccess(BaseEntity response) {
                 if (mChatRoomModelListener != null) {
@@ -33,7 +33,7 @@ public class ChatRoomModel extends DoctorBaseModel {
             @Override
             public void onFailed(Throwable e) {
                 if (mChatRoomModelListener != null) {
-                    mChatRoomModelListener.onReceiveFailed("");
+                    mChatRoomModelListener.onReceiveFailed(e.getMessage());
                 }
             }
         });

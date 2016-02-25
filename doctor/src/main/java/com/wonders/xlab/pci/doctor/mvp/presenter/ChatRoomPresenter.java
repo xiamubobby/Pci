@@ -28,14 +28,20 @@ public class ChatRoomPresenter extends BasePresenter implements IChatRoomModel {
         addModel(mChatRoomModel);
     }
 
-    public void getChatList() {
-        mChatRoomModel.getChatList();
+    public void getChatList(String groupId) {
+        mChatRoomModel.getChatList(groupId);
     }
 
     @Override
     public void onReceiveChatRoomHistorySuccess(ChatRoomEntity chatRoomEntity) {
         List<ChatRoomBean> chatRoomBeanList = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
+        if (null == chatRoomEntity.getRet_values()) {
+
+            return;
+        }
+        for (int i = 0; i < chatRoomEntity.getRet_values().size(); i++) {
+            ChatRoomEntity.RetValuesEntity roomEntity = chatRoomEntity.getRet_values().get(i);
+
             if (i % 3 == 0) {
                 MeChatRoomBean bean = new MeChatRoomBean();
                 bean.name.set("我");
@@ -66,6 +72,6 @@ public class ChatRoomPresenter extends BasePresenter implements IChatRoomModel {
 
     @Override
     public void onReceiveFailed(String message) {
-
+        mIChatRoomView.showError(message);
     }
 }

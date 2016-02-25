@@ -96,7 +96,6 @@
         <activity
             android:name=".module.bp.BloodPressureActivity"
             android:label="@string/title_activity_blood_pressure"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity

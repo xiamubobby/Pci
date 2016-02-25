@@ -74,11 +74,11 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter {
     }
 
     @Override
-    public void loginSuccess(String userId, String tel) {
+    public void loginSuccess(String userId, String tel, String avatarUrl) {
         if (null != mDialog) {
             mDialog.dismiss();
         }
-        AIManager.getInstance(this).saveUserInfo(userId, tel);
+        AIManager.getInstance(this).saveUserInfo(userId, tel, avatarUrl);
 
         startActivity(new Intent(this, MainActivity.class));
         finish();

@@ -37,6 +37,7 @@ public class PatientEntity extends BaseEntity {
         private String avatarUrl;
         private String symptom;
         private String age;
+        private String tel;
         private String gender;
         private String lastOperationTime;
         private String groupId;
@@ -112,6 +113,14 @@ public class PatientEntity extends BaseEntity {
 
         public String getGroupName() {
             return groupName;
+        }
+
+        public String getTel() {
+            return tel;
+        }
+
+        public void setTel(String tel) {
+            this.tel = tel;
         }
     }
 }
