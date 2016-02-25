@@ -21,7 +21,6 @@ import im.hua.library.base.BaseActivity;
 import im.hua.utils.KeyboardUtil;
 import im.hua.utils.ViewHelper;
 
-
 public class LoginActivity extends BaseActivity implements ILoginPresenter {
 
     @Bind(R.id.login_phone_number)
