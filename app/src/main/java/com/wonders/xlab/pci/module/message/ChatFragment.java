@@ -11,11 +11,11 @@ import android.widget.FrameLayout;
 
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
+import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView;
 import com.wonders.xlab.common.recyclerview.adapter.BaseBean;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
-import com.wonders.xlab.pci.application.SPManager;
 import com.wonders.xlab.pci.module.base.BaseFragment;
 import com.wonders.xlab.pci.module.message.adapter.ChatRVAdapter;
 import com.wonders.xlab.pci.module.message.bean.ChatBean;

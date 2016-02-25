@@ -22,13 +22,11 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.util.NetUtils;
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
-import im.hua.utils.MD5Util;
-import im.hua.utils.NotifyUtil;
+import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
-import com.wonders.xlab.pci.application.SPManager;
 import com.wonders.xlab.pci.module.MainActivity;
 import com.wonders.xlab.pci.module.otto.ExitBus;
 import com.wonders.xlab.pci.receiver.ConnectionBroadcastReceiver;
@@ -37,6 +35,8 @@ import com.wonders.xlab.pci.receiver.TimeClickReceiver;
 
 import java.util.Locale;
 
+import im.hua.utils.MD5Util;
+import im.hua.utils.NotifyUtil;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;

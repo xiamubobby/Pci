@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.application;
+package com.wonders.xlab.pci.doctor.application;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -15,7 +15,6 @@ public class AIManager {
      */
     public final static String PRE_USER_ID = "userId";
     public final static String PRE_USER_TEL = "userTel";
-    public final static String PRE_USER_MEDICARE_CARD = "userMedicareCard";
     public final static String PRE_IS_HOME_SHOWING = "isShowingHome";
 
     private static AIManager aiManager;
@@ -49,18 +48,14 @@ public class AIManager {
         return spManager.getString(PRE_USER_TEL, "");
     }
 
-    public String getMedicareCard() {
-        return spManager.getString(PRE_USER_MEDICARE_CARD, "");
-    }
 
     public boolean isHomeShowing() {
         return spManager.getBoolean(PRE_IS_HOME_SHOWING, false);
     }
 
-    public void saveUserInfo(String userId, String tel, String medicareCard) {
+    public void saveUserInfo(String userId, String tel) {
         saveUserId(userId);
         saveUserTel(tel);
-        saveMedicareCard(medicareCard);
     }
 
     public void saveUserId(String userId) {
@@ -71,9 +66,6 @@ public class AIManager {
         spManager.putString(PRE_USER_TEL, tel);
     }
 
-    public void saveMedicareCard(String medicareCard) {
-        spManager.putString(PRE_USER_MEDICARE_CARD, medicareCard);
-    }
 
     public void saveHomeShowing(boolean isShowing) {
         spManager.putBoolean(PRE_IS_HOME_SHOWING, isShowing);

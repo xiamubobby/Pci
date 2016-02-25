@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.application;
+package com.wonders.xlab.common.manager;
 
 import android.content.Context;
 import android.content.SharedPreferences;

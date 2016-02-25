@@ -1,5 +1,6 @@
 package com.wonders.xlab.pci.doctor.module;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +12,8 @@ import com.umeng.update.UmengUpdateAgent;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.application.AIManager;
+import com.wonders.xlab.pci.doctor.module.login.LoginActivity;
 import com.wonders.xlab.pci.doctor.module.me.MeFragment;
 import com.wonders.xlab.pci.doctor.module.patient.PatientFragment;
 
@@ -32,15 +35,21 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
-        ButterKnife.bind(this);
 
-        UmengUpdateAgent.update(this);
+        if (!AIManager.getInstance(this).hasLogin()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        } else {
+            setContentView(R.layout.main_activity);
+            ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+            UmengUpdateAgent.update(this);
 
-        initViewPager();
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
+            initViewPager();
+        }
     }
 
     private void initViewPager() {

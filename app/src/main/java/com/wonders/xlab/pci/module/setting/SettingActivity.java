@@ -3,14 +3,14 @@ package com.wonders.xlab.pci.module.setting;
 import android.os.Bundle;
 
 import com.wonders.xlab.common.manager.OttoManager;
-import im.hua.utils.NotifyUtil;
+import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.application.SPManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
 import com.wonders.xlab.pci.module.otto.ExitBus;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import im.hua.utils.NotifyUtil;
 
 /**
  * Created by hua on 16/1/26.
