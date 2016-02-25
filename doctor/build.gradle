@@ -62,6 +62,6 @@ dependencies {
     compile project(':utils')
     compile project(':uikit')
 
-    compile 'com.android.support:support-v4:23.1.1'
+    compile 'com.android.support:support-v4:23.2.0'
 
 }
