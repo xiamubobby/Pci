@@ -12,6 +12,7 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.pci.doctor.module.patient.adapter.PatientRVAdapter;
 import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
@@ -63,7 +64,7 @@ public class PatientFragment extends BaseFragment implements IPatientPresenter {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerViewPatient.setLinearLayout();
+        mRecyclerViewPatient.setLinearLayout(false);
         mRecyclerViewPatient.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
         mRecyclerViewPatient.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
@@ -78,7 +79,7 @@ public class PatientFragment extends BaseFragment implements IPatientPresenter {
         });
 
         mRecyclerViewPatient.setRefreshing(true);
-        mPatientPresenter.getPatientList();
+        mPatientPresenter.getPatientList(AIManager.getInstance(getActivity()).getUserId());
     }
 
     @Override

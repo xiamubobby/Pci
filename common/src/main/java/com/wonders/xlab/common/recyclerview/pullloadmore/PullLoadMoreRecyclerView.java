@@ -31,8 +31,11 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     private boolean pullRefreshEnable = true;
     private boolean pushRefreshEnable = true;
     private View mFooterView;
+    private View mHeaderView;
     private Context mContext;
-    private TextView loadMoreText;
+    private TextView mFooterLoadMoreText;
+    private TextView mHeaderLoadMoreText;
+    private boolean mIsReverse = false;
 
     public PullLoadMoreRecyclerView(Context context) {
         super(context);
@@ -61,8 +64,12 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mRecyclerView.setOnTouchListener(new onTouchRecyclerView());
 
         mFooterView = view.findViewById(R.id.footerView);
-        loadMoreText = (TextView) view.findViewById(R.id.loadMoreText);
+        mFooterLoadMoreText = (TextView) view.findViewById(R.id.loadMoreText);
         mFooterView.setVisibility(View.GONE);
+
+        mHeaderView = view.findViewById(R.id.headerView);
+        mHeaderLoadMoreText = (TextView) view.findViewById(R.id.loadMoreText);
+        mHeaderView.setVisibility(View.GONE);
         this.addView(view);
 
     }
@@ -70,10 +77,13 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     /**
      * LinearLayoutManager
+     * @param reverse
      */
-    public void setLinearLayout() {
+    public void setLinearLayout(boolean reverse) {
+        mIsReverse = reverse;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        linearLayoutManager.setReverseLayout(reverse);
         mRecyclerView.setLayoutManager(linearLayoutManager);
     }
 
@@ -180,11 +190,19 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     }
 
     public void setFooterViewText(CharSequence text) {
-        loadMoreText.setText(text);
+        mFooterLoadMoreText.setText(text);
+    }
+
+    public void setHeaderViewText(CharSequence text) {
+        mHeaderLoadMoreText.setText(text);
     }
 
     public void setFooterViewText(int resid) {
-        loadMoreText.setText(resid);
+        mFooterLoadMoreText.setText(resid);
+    }
+
+    public void setHeaderViewText(int resid) {
+        mHeaderLoadMoreText.setText(resid);
     }
 
     public void refresh() {
@@ -195,13 +213,19 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     public void loadMore() {
         if (mPullLoadMoreListener != null && hasMore) {
-            mFooterView.setVisibility(View.VISIBLE);
+            if (mIsReverse) {
+                mFooterView.setVisibility(View.GONE);
+                mHeaderView.setVisibility(View.VISIBLE);
+
+            } else {
+                mFooterView.setVisibility(View.VISIBLE);
+                mHeaderView.setVisibility(View.GONE);
+            }
             invalidate();
             mPullLoadMoreListener.onLoadMore();
 
         }
     }
-
 
     public void setPullLoadMoreCompleted() {
         isRefresh = false;
@@ -209,6 +233,7 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
         isLoadMore = false;
         mFooterView.setVisibility(View.GONE);
+        mHeaderView.setVisibility(View.GONE);
 
     }
 

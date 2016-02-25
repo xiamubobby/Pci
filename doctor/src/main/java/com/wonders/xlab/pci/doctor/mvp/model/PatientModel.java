@@ -20,8 +20,8 @@ public class PatientModel extends DoctorBaseModel {
         mPatientAPI = mRetrofit.create(PatientAPI.class);
     }
 
-    public void getPatientList() {
-        fetchData(mPatientAPI.getPatientList(), new ResponseListener() {
+    public void getPatientList(String doctorId) {
+        fetchData(mPatientAPI.getPatientList(doctorId), new ResponseListener() {
             @Override
             public void onSuccess(BaseEntity response) {
                 mIPatientPresenter.onReceivePatientSuccess((PatientEntity) response);

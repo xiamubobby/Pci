@@ -44,7 +44,7 @@ public class MedicalRecordActivity extends AppbarActivity implements IMedicalRec
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        mRecyclerView.setLinearLayout();
+        mRecyclerView.setLinearLayout(false);
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 5));
 
         mMedicalRecordPresenter = new MedicalRecordPresenter(this);

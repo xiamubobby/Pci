@@ -42,7 +42,7 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     private ChatRoomPresenter mChatRoomPresenter;
 
     @Bind(R.id.recycler_view_chat_room)
-    RecyclerView mRecyclerViewChatRoom;
+    RecyclerView mRecyclerView;
 
     private ChatRoomRVAdapter mChatRoomRVAdapter;
 
@@ -83,7 +83,7 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
         badgeView.setText("2");
         badgeView.show();
 
-        mRecyclerViewChatRoom.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,true));
 
         mChatRoomPresenter = new ChatRoomPresenter(this);
         addPresenter(mChatRoomPresenter);
@@ -159,7 +159,7 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
         if (mChatRoomRVAdapter == null) {
             mChatRoomRVAdapter = new ChatRoomRVAdapter();
         }
-        mRecyclerViewChatRoom.setAdapter(mChatRoomRVAdapter);
+        mRecyclerView.setAdapter(mChatRoomRVAdapter);
     }
 
     @Override

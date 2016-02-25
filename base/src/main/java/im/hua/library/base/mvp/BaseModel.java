@@ -39,7 +39,7 @@ public abstract class BaseModel {
         OkHttpClient client = new OkHttpClient();
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        client.interceptors().add(logging);
+//        client.interceptors().add(logging);
 //        client.setConnectTimeout(30, TimeUnit.SECONDS);
 //        client.setWriteTimeout(30, TimeUnit.SECONDS);
 //        client.setReadTimeout(30, TimeUnit.SECONDS);
@@ -85,13 +85,12 @@ public abstract class BaseModel {
 
                     @Override
                     public void onNext(BaseEntity result) {
-                        /*if (result != null) {
-                            onSuccess(result);
-                        } else {
-                            onFailed("获取数据出错！");
-                        }*/
                         if (mResponseListener != null) {
-                            mResponseListener.onSuccess(result);
+                            if (null == result || 0 != result.getRet_code()) {
+                                mResponseListener.onFailed(new Throwable(result.getMessage()));
+                            } else {
+                                mResponseListener.onSuccess(result);
+                            }
                         }
                     }
                 });

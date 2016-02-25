@@ -42,7 +42,7 @@ public class BloodSugarActivity extends AppbarActivity implements IBSPresenter{
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        mRecyclerView.setLinearLayout();
+        mRecyclerView.setLinearLayout(false);
 
         mBSPresenter = new BSPresenter(this);
         addPresenter(mBSPresenter);

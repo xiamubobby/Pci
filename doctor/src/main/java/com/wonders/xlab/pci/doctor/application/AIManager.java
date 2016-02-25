@@ -40,6 +40,10 @@ public class AIManager {
         return !TextUtils.isEmpty(getUserId());
     }
 
+    public void logout() {
+        spManager.clear();
+    }
+
     public String getUserId() {
         return spManager.getString(PRE_USER_ID, "");
     }

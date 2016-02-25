@@ -48,7 +48,7 @@ public class SymptomActivity extends AppbarActivity implements ISymptomPresenter
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        mRecyclerView.setLinearLayout();
+        mRecyclerView.setLinearLayout(false);
 
         mSymptomPresenter = new SymptomPresenter(this);
         addPresenter(mSymptomPresenter);

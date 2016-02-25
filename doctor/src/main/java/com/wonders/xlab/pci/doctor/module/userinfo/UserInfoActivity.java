@@ -41,7 +41,7 @@ public class UserInfoActivity extends AppbarActivity implements IUserInfoPresent
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        mRecyclerView.setLinearLayout();
+        mRecyclerView.setLinearLayout(false);
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this,getResources().getColor(R.color.divider),1));
         mRecyclerView.setPushRefreshEnable(false);//disable load more
 

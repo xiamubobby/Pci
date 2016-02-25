@@ -69,7 +69,7 @@ public class BloodPressureActivity extends AppbarActivity implements IBPPresente
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        mRecyclerView.setLinearLayout();
+        mRecyclerView.setLinearLayout(false);
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
 
         mBPPresenter = new BPPresenter(this);

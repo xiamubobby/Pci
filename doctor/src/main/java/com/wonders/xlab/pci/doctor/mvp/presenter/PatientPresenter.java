@@ -24,9 +24,8 @@ public class PatientPresenter extends BasePresenter implements IPatientModel {
         addModel(mPatientModel);
     }
 
-    public void getPatientList() {
-        onReceivePatientSuccess(null);
-//        mPatientModel.getPatientList();
+    public void getPatientList(String doctorId) {
+        mPatientModel.getPatientList(doctorId);
     }
 
     @Override

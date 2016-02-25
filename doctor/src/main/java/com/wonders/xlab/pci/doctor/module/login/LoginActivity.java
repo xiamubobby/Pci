@@ -1,5 +1,6 @@
 package com.wonders.xlab.pci.doctor.module.login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -34,6 +35,8 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter {
 
     private LoginPresenter mLoginPresenter;
 
+    private ProgressDialog mDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,12 +64,21 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter {
             return;
         }
 
-        mLoginPresenter.login();
+        if (null == mDialog) {
+            mDialog = new ProgressDialog(this);
+            mDialog.setMessage("正在登录，请稍候...");
+        }
+        mDialog.show();
+
+        mLoginPresenter.login(tel, password);
     }
 
     @Override
     public void loginSuccess(String userId, String tel) {
-        AIManager.getInstance(this).saveUserInfo(userId,tel);
+        if (null != mDialog) {
+            mDialog.dismiss();
+        }
+        AIManager.getInstance(this).saveUserInfo(userId, tel);
 
         startActivity(new Intent(this, MainActivity.class));
         finish();
@@ -74,6 +86,9 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter {
 
     @Override
     public void showError(String message) {
-
+        if (null != mDialog) {
+            mDialog.dismiss();
+        }
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

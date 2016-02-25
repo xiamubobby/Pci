@@ -29,6 +29,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
 
+        <!-- 设置环信应用的appkey -->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="xlab#pci"/>
+        <!-- 声明sdk所需的service SDK核心功能 -->
+        <service android:name="com.easemob.chat.EMChatService"/>
+
         <!-- umeng -->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -45,6 +52,22 @@
             android:name="com.umeng.update.UpdateDialogActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+        <service
+            android:name=".service.XEMChatService"
+            android:enabled="true"/>
+
+        <receiver
+            android:name=".receiver.BootstrapReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receiver.EMChatMessageBroadcastReceiver"/>
+        <receiver android:name=".receiver.TimeClickReceiver"/>
+
         <activity
             android:name=".module.MainActivity"
             android:theme="@style/AppTheme.MaterialColdStart"
