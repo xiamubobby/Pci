@@ -77,16 +77,14 @@ public abstract class BaseModel {
                         if (mResponseListener != null) {
                             mResponseListener.onFailed(e);
                         }
-                        //TODO 只为测试使用
-                        if (mResponseListener != null) {
-                            mResponseListener.onSuccess(null);
-                        }
                     }
 
                     @Override
                     public void onNext(BaseEntity result) {
                         if (mResponseListener != null) {
-                            if (null == result || 0 != result.getRet_code()) {
+                            if (null == result) {
+                                mResponseListener.onFailed(new Throwable("请求出错，请重试！"));
+                            } else if (0 != result.getRet_code()) {
                                 mResponseListener.onFailed(new Throwable(result.getMessage()));
                             } else {
                                 mResponseListener.onSuccess(result);
@@ -104,7 +102,7 @@ public abstract class BaseModel {
         mObservable = null;
     }
 
-    protected void fetchData(@NonNull Observable<? extends BaseEntity> observable,@NonNull ResponseListener callback) {
+    protected void fetchData(@NonNull Observable<? extends BaseEntity> observable, @NonNull ResponseListener callback) {
         cancel();
         mResponseListener = callback;
         mObservable = observable;

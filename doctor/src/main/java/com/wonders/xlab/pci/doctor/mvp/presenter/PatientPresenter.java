@@ -1,10 +1,9 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter;
 
-import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.PatientEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.IPatientModel;
 import com.wonders.xlab.pci.doctor.mvp.model.PatientModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.IPatientModel;
 import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IPatientPresenter;
 
 import java.util.ArrayList;
@@ -17,6 +16,8 @@ import im.hua.library.base.mvp.BasePresenter;
 public class PatientPresenter extends BasePresenter implements IPatientModel {
     private IPatientPresenter mIPatientPresenter;
     private PatientModel mPatientModel;
+
+    private int mPageIndex = 0;
 
     public PatientPresenter(IPatientPresenter IPatientPresenter) {
         mIPatientPresenter = IPatientPresenter;
@@ -31,16 +32,22 @@ public class PatientPresenter extends BasePresenter implements IPatientModel {
     @Override
     public void onReceivePatientSuccess(PatientEntity entity) {
         ArrayList<PatientBean> patientBeen = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        if (null == entity.getRet_values()) {
+            mIPatientPresenter.showError("数据为空，请重试！");
+            return;
+        }
+        for (int i = 0; i < entity.getRet_values().size(); i++) {
+            PatientEntity.RetValuesEntity valuesEntity = entity.getRet_values().get(i);
+
             PatientBean bean = new PatientBean();
-            bean.setPatientId("" + i);
-            bean.setAge("1" + i);
-            bean.setGender("男");
-            bean.setHistory("稳定性心绞痛");
-            bean.setPortrait(Constant.DEFAULT_PORTRAIT);
-            bean.setPatientName("张三");
-            bean.setTimeAfterSurgery("术后六个月");
-            bean.setPhoneNumber("13800138000");
+            bean.setPatientId(valuesEntity.getId());
+            bean.setAge(valuesEntity.getAge());
+            bean.setGender(valuesEntity.getGender());
+            bean.setHistory(valuesEntity.getSymptom());
+            bean.setPortrait(valuesEntity.getAvatarUrl());
+            bean.setPatientName(valuesEntity.getName());
+            bean.setTimeAfterSurgery(valuesEntity.getLastOperationTime());
+            bean.setGroupName(valuesEntity.getGroupName());
 
             patientBeen.add(bean);
         }
@@ -51,6 +58,6 @@ public class PatientPresenter extends BasePresenter implements IPatientModel {
 
     @Override
     public void onReceiveFailed(String message) {
-
+        mIPatientPresenter.showError(message);
     }
 }

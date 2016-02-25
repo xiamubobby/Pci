@@ -18,6 +18,7 @@ public class PatientBean extends BaseObservable {
     private String timeAfterSurgery;
     private String history;
     private String phoneNumber;
+    private String groupName;
 
     @Bindable
     public String getPortrait() {
@@ -97,5 +98,13 @@ public class PatientBean extends BaseObservable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
         notifyPropertyChanged(BR.phoneNumber);
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }

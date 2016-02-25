@@ -29,7 +29,7 @@ public class PatientModel extends DoctorBaseModel {
 
             @Override
             public void onFailed(Throwable e) {
-
+                mIPatientPresenter.onReceiveFailed(e.getMessage());
             }
         });
     }
