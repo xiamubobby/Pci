@@ -4,7 +4,8 @@ package com.wonders.xlab.pci.doctor.module.bp.bean;
  * Created by hua on 16/2/22.
  */
 public class BPListBean {
-    private String time;
+    private String headerTime;
+    private String detailTime;
     /**
      * 收缩压
      */
@@ -16,12 +17,12 @@ public class BPListBean {
     private String heartRate;
     private long headerId;
 
-    public String getTime() {
-        return time;
+    public String getHeaderTime() {
+        return headerTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setHeaderTime(String headerTime) {
+        this.headerTime = headerTime;
     }
 
     public String getSystolic() {
@@ -54,5 +55,13 @@ public class BPListBean {
 
     public void setHeaderId(long headerId) {
         this.headerId = headerId;
+    }
+
+    public String getDetailTime() {
+        return detailTime;
+    }
+
+    public void setDetailTime(String detailTime) {
+        this.detailTime = detailTime;
     }
 }

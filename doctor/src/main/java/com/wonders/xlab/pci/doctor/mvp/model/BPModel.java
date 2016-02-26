@@ -17,8 +17,8 @@ public class BPModel extends DoctorBaseModel<BPEntity> {
         mBPAPI = mRetrofit.create(BPAPI.class);
     }
 
-    public void getBPList() {
-        fetchData(mBPAPI.getBPList());
+    public void getBPList(String patientId, long startTime, long endTime) {
+        fetchData(mBPAPI.getBPList(patientId, startTime, endTime));
     }
 
     @Override

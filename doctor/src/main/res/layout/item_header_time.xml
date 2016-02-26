@@ -8,6 +8,7 @@
     <TextView
         android:id="@+id/tv_header_time"
         android:layout_width="match_parent"
+        android:paddingLeft="@dimen/item_interval"
         android:layout_height="?listPreferredItemHeightSmall"
         android:gravity="center_vertical"
         android:textSize="@dimen/text_size_primary"

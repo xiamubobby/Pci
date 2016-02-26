@@ -116,7 +116,9 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
 
     @OnClick(R.id.iv_chat_room_bp)
     public void onBPClick() {
-        startActivity(new Intent(this, BloodPressureActivity.class));
+        Intent intent = new Intent(this, BloodPressureActivity.class);
+        intent.putExtra(BloodPressureActivity.EXTRA_PATIENT_ID,patientId);
+        startActivity(intent);
     }
 
     @OnClick(R.id.iv_chat_room_bs)

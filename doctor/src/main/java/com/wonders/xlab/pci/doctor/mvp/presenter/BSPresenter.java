@@ -51,7 +51,7 @@ public class BSPresenter extends BasePresenter implements IBSModel {
             bean.setDinnerBeforeBS(i + "");
             bean.setDinnerAfterBS(i + "");
             bean.setRandomBS(i + "");
-            bean.setTime("2016-02-0" + i);
+            bean.setHeaderTime("2016-02-0" + i);
             BSBeanList.add(bean);
         }
 

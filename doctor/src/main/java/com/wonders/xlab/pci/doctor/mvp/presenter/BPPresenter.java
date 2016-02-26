@@ -10,6 +10,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.data.ScatterDataSet;
+import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.module.bp.bean.BPChartBean;
 import com.wonders.xlab.pci.doctor.module.bp.bean.BPListBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.BPEntity;
@@ -19,8 +20,10 @@ import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IBPPresenter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import im.hua.library.base.mvp.BasePresenter;
+import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/2/22.
@@ -36,52 +39,72 @@ public class BPPresenter extends BasePresenter implements IBPModel {
         addModel(mBPModel);
     }
 
-    public void getBPList() {
-//        mBPModel.getBPList();
-        onReceiveBPSuccess(null);
+    public void getBPList(String patientId, long startTime, long endTime) {
+        mBPModel.getBPList(patientId, startTime, endTime);
     }
 
     @Override
     public void onReceiveBPSuccess(BPEntity bpEntity) {
-        ArrayList<BPListBean> bpListBeanList = new ArrayList<>();
-        ArrayList<BPChartBean> systolicList = new ArrayList<>();
-        ArrayList<BPChartBean> diastolicList = new ArrayList<>();
-        ArrayList<BPChartBean> heartRateList = new ArrayList<>();
-        String[] xVals = new String[180];
+        if (null == bpEntity.getRet_values() || null == bpEntity.getRet_values().getLine() || null == bpEntity.getRet_values().getTable()) {
+            mBloodPressurePresenter.showError(Constant.ERROR_MESSAGE);
+            return;
+        }
 
+        BPEntity.RetValuesEntity.TableEntity tableEntity = bpEntity.getRet_values().getTable();
+
+        ArrayList<BPListBean> bpListBeanList = new ArrayList<>();
+
+        List<BPEntity.RetValuesEntity.TableEntity.ContentEntity> contentEntityList = tableEntity.getContent();
         long headerId = 0;
-        for (int i = 0; i < 30; i++) {
-            if (i % 3 == 0) {
-                headerId++;
-            }
+        for (int i = 0; i < contentEntityList.size(); i++) {
+            BPEntity.RetValuesEntity.TableEntity.ContentEntity contentEntity = contentEntityList.get(i);
             BPListBean bean = new BPListBean();
+
+            String timeStr = DateUtil.format(contentEntity.getRecordTime(), "yyyy-MM-dd");
+            if (i > 0) {
+                String preTimeStr = DateUtil.format(contentEntityList.get(i - 1).getRecordTime(), "yyyy-MM-dd");
+                if (!timeStr.equals(preTimeStr)) {
+                    headerId++;
+                }
+            }
             bean.setHeaderId(headerId);
-            bean.setDiastolic("1" + i);
-            bean.setSystolic("2" + i);
-            bean.setHeartRate(i + "0");
-            bean.setTime("2016-02-0" + i);
+            bean.setDiastolic(String.valueOf(contentEntity.getDiastolicPressure()));
+            bean.setSystolic(String.valueOf(contentEntity.getSystolicPressure()));
+            bean.setHeartRate(String.valueOf(contentEntity.getHeartRate()));
+            bean.setHeaderTime(DateUtil.format(contentEntity.getRecordTime(), "yyyy-MM-dd"));
+            bean.setDetailTime(DateUtil.format(contentEntity.getRecordTime(), "HH:mm"));
             bpListBeanList.add(bean);
         }
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, -180);
+        BPEntity.RetValuesEntity.LineEntity lineEntity = bpEntity.getRet_values().getLine();
 
-        for (int i = 0; i < 180; i++) {
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
-            int month = calendar.get(Calendar.MONTH) + 1;
-            xVals[i] = month + "-" + day;
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
+
+        ArrayList<BPChartBean> systolicList = new ArrayList<>();
+        ArrayList<BPChartBean> diastolicList = new ArrayList<>();
+        ArrayList<BPChartBean> heartRateList = new ArrayList<>();
+
+        int chartSize = lineEntity.getDiastolic().size();
+        String[] xVals = new String[chartSize];
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_MONTH, -chartSize);
+
+        for (int i = 0; i < chartSize; i++) {
+//            int day = calendar.get(Calendar.DAY_OF_MONTH);
+//            int month = calendar.get(Calendar.MONTH) + 1;
+            xVals[i] = DateUtil.format(lineEntity.getRecordTime().get(i), "MM-dd");
+//            calendar.add(Calendar.DAY_OF_MONTH, 1);
 
             BPChartBean systolicBean = new BPChartBean();
-            systolicBean.setValue(getRandom(90f, 10f));
+            systolicBean.setValue(lineEntity.getSystolic().get(i));
             systolicList.add(systolicBean);
 
             BPChartBean heartRateBean = new BPChartBean();
-            heartRateBean.setValue(getRandom(100f, 50f));
+            heartRateBean.setValue(lineEntity.getHeartRates().get(i));
             heartRateList.add(heartRateBean);
 
             BPChartBean diastolicBean = new BPChartBean();
-            diastolicBean.setValue(getRandom(140f, 50f));
+            diastolicBean.setValue(lineEntity.getDiastolic().get(i));
             diastolicList.add(diastolicBean);
         }
 

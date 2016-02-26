@@ -49,7 +49,7 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
         String time = "";
         for (int i = 0; i < getItemCount(); i++) {
             if (getBean(i).getHeaderId() == getHeaderId(position)) {
-                time = getBean(i).getTime();
+                time = getBean(i).getHeaderTime();
                 break;
             }
         }

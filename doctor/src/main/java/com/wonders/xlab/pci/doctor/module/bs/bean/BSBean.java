@@ -5,7 +5,7 @@ package com.wonders.xlab.pci.doctor.module.bs.bean;
  */
 public class BSBean {
     private long headerId;
-    private String time;
+    private String headerTime;
     private String earlyMorningBS;
     private String breakfastBeforeBS;
     private String breakfastAfterBS;
@@ -23,12 +23,12 @@ public class BSBean {
         this.headerId = headerId;
     }
 
-    public String getTime() {
-        return time;
+    public String getHeaderTime() {
+        return headerTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setHeaderTime(String headerTime) {
+        this.headerTime = headerTime;
     }
 
     public String getEarlyMorningBS() {

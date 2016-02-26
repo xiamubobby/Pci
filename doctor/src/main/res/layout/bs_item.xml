@@ -22,7 +22,7 @@
             android:layout_margin="@dimen/bs_cell_divider_width"
             android:background="@color/bs_cell_bg_dark"
             android:gravity="center"
-            android:text="@{bs.time.substring(8)}"
+            android:text="@{bs.headerTime.substring(8)}"
             android:textColor="@color/text_color_primary"
             android:textSize="@dimen/text_size_primary"/>
 

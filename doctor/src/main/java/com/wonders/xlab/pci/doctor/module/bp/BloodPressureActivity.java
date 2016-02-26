@@ -22,11 +22,14 @@ import com.wonders.xlab.pci.doctor.mvp.presenter.BPPresenter;
 import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IBPPresenter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class BloodPressureActivity extends AppbarActivity implements IBPPresenter {
+    public static final String EXTRA_PATIENT_ID = "patientId";
+    private String mPatientId;
 
     @Bind(R.id.chart_blood_pressure)
     CombinedChart mChart;
@@ -55,17 +58,33 @@ public class BloodPressureActivity extends AppbarActivity implements IBPPresente
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
+        mPatientId = getIntent().getExtras().getString(EXTRA_PATIENT_ID);
+
         initChart();
 
         if (null != mRecyclerView) {
             mRecyclerView.setLinearLayout(false);
             mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
+            mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+                @Override
+                public void onRefresh() {
+                    mBPPresenter.getBPList(mPatientId,0, Calendar.getInstance().getTimeInMillis());
+                }
+
+                @Override
+                public void onLoadMore() {
+
+                }
+            });
         }
 
         mBPPresenter = new BPPresenter(this);
         addPresenter(mBPPresenter);
 
-        mBPPresenter.getBPList();
+        if (null != mRecyclerView) {
+            mRecyclerView.setRefreshing(true);
+        }
+        mBPPresenter.getBPList(mPatientId,0, Calendar.getInstance().getTimeInMillis());
     }
 
     private void initChart() {
@@ -100,6 +119,9 @@ public class BloodPressureActivity extends AppbarActivity implements IBPPresente
 
     @Override
     public void showBloodPressureList(ArrayList<BPListBean> bpListBeanList, CombinedData combinedData) {
+        if (mRecyclerView != null) {
+            mRecyclerView.setPullLoadMoreCompleted();
+        }
         if (null != mRecyclerView) {
             if (mBPRVAdapter == null) {
                 mBPRVAdapter = new BPRVAdapter();
@@ -177,6 +199,9 @@ public class BloodPressureActivity extends AppbarActivity implements IBPPresente
 
     @Override
     public void showError(String message) {
+        if (mRecyclerView != null) {
+            mRecyclerView.setPullLoadMoreCompleted();
+        }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
