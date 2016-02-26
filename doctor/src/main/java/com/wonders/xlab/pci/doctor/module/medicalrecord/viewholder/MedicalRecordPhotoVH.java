@@ -43,7 +43,7 @@ public class MedicalRecordPhotoVH extends MultiViewHolder<MedicalRecordPhotoBean
         mRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(),LinearLayoutManager.HORIZONTAL,false));
 
         PhotoRVAdapter photoRVAdapter = new PhotoRVAdapter();
-        photoRVAdapter.setDatas(data.getPhotos());
+        photoRVAdapter.setDatas(data.getPhotoThumbnails());
         photoRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {

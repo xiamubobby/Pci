@@ -1,6 +1,5 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter;
 
-import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.module.medicalrecord.bean.MedicalRecordBean;
 import com.wonders.xlab.pci.doctor.module.medicalrecord.bean.MedicalRecordPhotoBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.MedicalRecordEntity;
@@ -12,11 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import im.hua.library.base.mvp.BasePresenter;
+import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/2/25.
  */
-public class MedicalRecordPresenter extends BasePresenter implements IMedicalRecordModel{
+public class MedicalRecordPresenter extends BasePresenter implements IMedicalRecordModel {
     private IMedicalRecordPresenter mIMedicalRecordPresenter;
     private MedicalRecordModel mMedicalRecordModel;
 
@@ -26,25 +26,36 @@ public class MedicalRecordPresenter extends BasePresenter implements IMedicalRec
         addModel(mMedicalRecordModel);
     }
 
-    public void getMedicalRecordList() {
-        onReceiveMedicalRecordSuccess(null);
-//        mMedicalRecordModel.getMedicalRecordList();
+    public void getMedicalRecordList(String userId) {
+        mMedicalRecordModel.getMedicalRecordList(userId);
     }
-
 
     @Override
     public void onReceiveMedicalRecordSuccess(MedicalRecordEntity entity) {
-        final ArrayList<String> photos = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            photos.add(Constant.DEFAULT_PORTRAIT);
+        MedicalRecordEntity.RetValuesEntity valuesEntity = entity.getRet_values();
+        if (null == valuesEntity) {
+            mIMedicalRecordPresenter.showError("获取数据失败，请重试！");
+            return;
         }
 
         List<MedicalRecordBean> beanList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < entity.getRet_values().getContent().size(); i++) {
+            MedicalRecordEntity.RetValuesEntity.ContentEntity contentEntity = entity.getRet_values().getContent().get(i);
+
+            List<MedicalRecordEntity.RetValuesEntity.ContentEntity.UserCasesEntity> userCasesEntityList = contentEntity.getUserCases();
+
+            final ArrayList<String> photoThumbnails = new ArrayList<>();
+            final ArrayList<String> photoOrigin = new ArrayList<>();
+            for (int j = 0; j < userCasesEntityList.size(); j++) {
+                photoThumbnails.add(userCasesEntityList.get(j).getMinCaseUrl());
+                photoOrigin.add(userCasesEntityList.get(j).getCaseUrl());
+            }
+
             MedicalRecordPhotoBean bean = new MedicalRecordPhotoBean();
-            bean.setTitle("心电图");
-            bean.setTimeStr("2016-02-25");
-            bean.setPhotos(photos);
+            bean.setTitle(contentEntity.getTitle());
+            bean.setTimeStr(DateUtil.format(contentEntity.getUploadTime(), "yyyy-MM-dd"));
+            bean.setPhotoThumbnails(photoThumbnails);
+            bean.setPhotosOrigin(photoOrigin);
 
             beanList.add(bean);
         }
@@ -55,6 +66,6 @@ public class MedicalRecordPresenter extends BasePresenter implements IMedicalRec
 
     @Override
     public void onReceiveFailed(String message) {
-
+        mIMedicalRecordPresenter.showError(message);
     }
 }

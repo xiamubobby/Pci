@@ -18,8 +18,8 @@ public class MedicalRecordModel extends DoctorBaseModel<MedicalRecordEntity> {
         mMedicalRecordAPI = mRetrofit.create(MedicalRecordAPI.class);
     }
 
-    public void getMedicalRecordList() {
-        fetchData(mMedicalRecordAPI.getMedicalRecordList());
+    public void getMedicalRecordList(String userId) {
+        fetchData(mMedicalRecordAPI.getMedicalRecordList(userId));
     }
 
     @Override

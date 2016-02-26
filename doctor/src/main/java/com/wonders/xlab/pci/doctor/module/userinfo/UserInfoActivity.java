@@ -1,6 +1,7 @@
 package com.wonders.xlab.pci.doctor.module.userinfo;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
@@ -45,10 +46,22 @@ public class UserInfoActivity extends AppbarActivity implements IUserInfoPresent
         mRecyclerView.setLinearLayout(false);
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
         mRecyclerView.setPushRefreshEnable(false);//disable load more
+        mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+                mUserInfoPresenter.getUserInfo(AIManager.getInstance(UserInfoActivity.this).getUserId());
+            }
+
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
 
         mUserInfoPresenter = new UserInfoPresenter(this);
         addPresenter(mUserInfoPresenter);
 
+        mRecyclerView.setRefreshing(true);
         mUserInfoPresenter.getUserInfo(AIManager.getInstance(this).getUserId());
     }
 
@@ -60,6 +73,7 @@ public class UserInfoActivity extends AppbarActivity implements IUserInfoPresent
 
     @Override
     public void showUserInfo(List<UserInfoBean> userInfoBeanList) {
+        mRecyclerView.setPullLoadMoreCompleted();
         if (mUserInfoRVAdapter == null) {
             mUserInfoRVAdapter = new UserInfoRVAdapter();
         }
@@ -70,6 +84,7 @@ public class UserInfoActivity extends AppbarActivity implements IUserInfoPresent
 
     @Override
     public void showError(String message) {
-
+        mRecyclerView.setPullLoadMoreCompleted();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

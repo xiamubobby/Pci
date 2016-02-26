@@ -136,7 +136,9 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
 
     @OnClick(R.id.iv_chat_room_record)
     public void onMedicalRecordClick() {
-        startActivity(new Intent(this, MedicalRecordActivity.class));
+        Intent intent = new Intent(this, MedicalRecordActivity.class);
+        intent.putExtra(MedicalRecordActivity.EXTRA_USER_ID,patientId);
+        startActivity(intent);
     }
 
     private void setupToolbar() {
@@ -182,6 +184,6 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
 
     @Override
     public void showError(String message) {
-
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

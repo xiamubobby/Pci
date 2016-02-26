@@ -8,7 +8,8 @@ import java.util.ArrayList;
 public class MedicalRecordPhotoBean extends MedicalRecordBean {
     private String timeStr;
     private String title;
-    private ArrayList<String> photos;
+    private ArrayList<String> photoThumbnails;
+    private ArrayList<String> photosOrigin;
 
     @Override
     public int getItemLayout() {
@@ -31,11 +32,19 @@ public class MedicalRecordPhotoBean extends MedicalRecordBean {
         this.title = title;
     }
 
-    public ArrayList<String> getPhotos() {
-        return photos;
+    public ArrayList<String> getPhotoThumbnails() {
+        return photoThumbnails;
     }
 
-    public void setPhotos(ArrayList<String> photos) {
-        this.photos = photos;
+    public void setPhotoThumbnails(ArrayList<String> photoThumbnails) {
+        this.photoThumbnails = photoThumbnails;
+    }
+
+    public ArrayList<String> getPhotosOrigin() {
+        return photosOrigin;
+    }
+
+    public void setPhotosOrigin(ArrayList<String> photosOrigin) {
+        this.photosOrigin = photosOrigin;
     }
 }

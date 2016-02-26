@@ -37,7 +37,7 @@ public class MedicalRecordRVAdapter extends MultiRVAdapter<MedicalRecordBean> {
                     @Override
                     public void onPhotoClick(int selectedPosition) {
                         if (null != mOnPhotoClickListener) {
-                            mOnPhotoClickListener.onPhotoClick(((MedicalRecordPhotoBean) getItemData(holder.getAdapterPosition())).getPhotos(), selectedPosition);
+                            mOnPhotoClickListener.onPhotoClick(((MedicalRecordPhotoBean) getItemData(holder.getAdapterPosition())).getPhotosOrigin(), selectedPosition);
                         }
                     }
                 });

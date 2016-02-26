@@ -14,7 +14,7 @@ import im.hua.library.base.mvp.BasePresenter;
 /**
  * Created by hua on 16/2/23.
  */
-public class UserInfoPresenter extends BasePresenter implements IUserInfoModel{
+public class UserInfoPresenter extends BasePresenter implements IUserInfoModel {
     private UserInfoModel mUserInfoModel;
     private IUserInfoPresenter mUserInfoPresenter;
 
@@ -26,45 +26,22 @@ public class UserInfoPresenter extends BasePresenter implements IUserInfoModel{
     }
 
     public void getUserInfo(String userId) {
-        onReceiveUserInfoSuccess(null);
-//        mUserInfoModel.getUserInfo(userId);
+        mUserInfoModel.getUserInfo(userId);
     }
 
     @Override
     public void onReceiveUserInfoSuccess(UserInfoEntity entity) {
+        List<UserInfoEntity.RetValuesEntity> valuesEntity = entity.getRet_values();
+        if (null == valuesEntity) {
+            mUserInfoPresenter.showError("获取数据失败，请重试1");
+            return;
+        }
         if (mUserInfoPresenter != null) {
             List<UserInfoBean> userInfoBeanList = new ArrayList<>();
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < valuesEntity.size(); i++) {
                 UserInfoBean infoBean = new UserInfoBean();
-                String title = "";
-                switch (i) {
-                    case 0:
-                        title = "住院号";
-                        break;
-                    case 1:
-                        title = "床位号";
-                        break;
-                    case 2:
-                        title = "姓名";
-                        break;
-                    case 3:
-                        title = "性别";
-                        break;
-                    case 4:
-                        title = "出生日期";
-                        break;
-                    case 5:
-                        title = "首诊时间";
-                        break;
-                    case 6:
-                        title = "手机号码";
-                        break;
-                    case 7:
-                        title = "备注";
-                        break;
-                }
-                infoBean.setTitle(title);
-                infoBean.setValue("value"+i);
+                infoBean.setTitle(valuesEntity.get(i).getTitle());
+                infoBean.setValue(valuesEntity.get(i).getValue());
 
                 userInfoBeanList.add(infoBean);
             }
