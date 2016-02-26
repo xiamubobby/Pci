@@ -36,7 +36,7 @@ public class MeChatRoomVH extends MultiViewHolder<MeChatRoomBean> {
 
     @Override
     public void onBindViewHolder(MeChatRoomBean data) {
-        ImageViewManager.setImageViewWithUrl(itemView.getContext(), mIvChatRoomItemMePortrait, data.portraitUrl.get());
+        ImageViewManager.setImageViewWithUrl(itemView.getContext(), mIvChatRoomItemMePortrait, data.portraitUrl.get(), xlab.wonders.com.common.R.drawable.portrait_default);
         binding.setChat(data);
     }
 }

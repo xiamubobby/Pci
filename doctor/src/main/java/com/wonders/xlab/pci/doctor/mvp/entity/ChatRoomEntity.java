@@ -10,68 +10,250 @@ import im.hua.library.base.mvp.BaseEntity;
 public class ChatRoomEntity extends BaseEntity {
 
     /**
-     * id : 1
-     * fromWho : 111
-     * content : 看看
-     * type : User
-     * groupId : 1
+     * content : [{"id":1,"fromWho":111,"type":"User","name":"张","content":"看看","groupId":1,"sendTime":1456420800000,"avatarUrl":" "},{"id":2,"fromWho":222,"type":"Doctor","name":"三","content":"可能","groupId":1,"sendTime":1456426920000,"avatarUrl":" "}]
+     * last : true
+     * totalPages : 1
+     * totalElements : 2
+     * size : 10
+     * number : 0
+     * sort : [{"direction":"DESC","property":"lastModifiedDate","ignoreCase":false,"nullHandling":"NATIVE","ascending":false}]
+     * first : true
+     * numberOfElements : 2
      */
 
-    private List<RetValuesEntity> ret_values;
+    private RetValuesEntity ret_values;
 
-    public void setRet_values(List<RetValuesEntity> ret_values) {
+    public void setRet_values(RetValuesEntity ret_values) {
         this.ret_values = ret_values;
     }
 
-    public List<RetValuesEntity> getRet_values() {
+    public RetValuesEntity getRet_values() {
         return ret_values;
     }
 
     public static class RetValuesEntity {
-        private int id;
-        private String fromWho;
-        private String content;
-        private String type;
-        private int groupId;
+        private boolean last;
+        private int totalPages;
+        private int totalElements;
+        private int size;
+        private int number;
+        private boolean first;
+        private int numberOfElements;
+        /**
+         * id : 1
+         * fromWho : 111
+         * type : User
+         * name : 张
+         * content : 看看
+         * groupId : 1
+         * sendTime : 1456420800000
+         * avatarUrl :
+         */
 
-        public void setId(int id) {
-            this.id = id;
+        private List<ContentEntity> content;
+        /**
+         * direction : DESC
+         * property : lastModifiedDate
+         * ignoreCase : false
+         * nullHandling : NATIVE
+         * ascending : false
+         */
+
+        private List<SortEntity> sort;
+
+        public void setLast(boolean last) {
+            this.last = last;
         }
 
-        public void setFromWho(String fromWho) {
-            this.fromWho = fromWho;
+        public void setTotalPages(int totalPages) {
+            this.totalPages = totalPages;
         }
 
-        public void setContent(String content) {
+        public void setTotalElements(int totalElements) {
+            this.totalElements = totalElements;
+        }
+
+        public void setSize(int size) {
+            this.size = size;
+        }
+
+        public void setNumber(int number) {
+            this.number = number;
+        }
+
+        public void setFirst(boolean first) {
+            this.first = first;
+        }
+
+        public void setNumberOfElements(int numberOfElements) {
+            this.numberOfElements = numberOfElements;
+        }
+
+        public void setContent(List<ContentEntity> content) {
             this.content = content;
         }
 
-        public void setType(String type) {
-            this.type = type;
+        public void setSort(List<SortEntity> sort) {
+            this.sort = sort;
         }
 
-        public void setGroupId(int groupId) {
-            this.groupId = groupId;
+        public boolean isLast() {
+            return last;
         }
 
-        public int getId() {
-            return id;
+        public int getTotalPages() {
+            return totalPages;
         }
 
-        public String getFromWho() {
-            return fromWho;
+        public int getTotalElements() {
+            return totalElements;
         }
 
-        public String getContent() {
+        public int getSize() {
+            return size;
+        }
+
+        public int getNumber() {
+            return number;
+        }
+
+        public boolean isFirst() {
+            return first;
+        }
+
+        public int getNumberOfElements() {
+            return numberOfElements;
+        }
+
+        public List<ContentEntity> getContent() {
             return content;
         }
 
-        public String getType() {
-            return type;
+        public List<SortEntity> getSort() {
+            return sort;
         }
 
-        public int getGroupId() {
-            return groupId;
+        public static class ContentEntity {
+            private int id;
+            private int fromWho;
+            private String type;
+            private String name;
+            private String content;
+            private int groupId;
+            private long sendTime;
+            private String avatarUrl;
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public void setFromWho(int fromWho) {
+                this.fromWho = fromWho;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public void setContent(String content) {
+                this.content = content;
+            }
+
+            public void setGroupId(int groupId) {
+                this.groupId = groupId;
+            }
+
+            public void setSendTime(long sendTime) {
+                this.sendTime = sendTime;
+            }
+
+            public void setAvatarUrl(String avatarUrl) {
+                this.avatarUrl = avatarUrl;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public int getFromWho() {
+                return fromWho;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public String getContent() {
+                return content;
+            }
+
+            public int getGroupId() {
+                return groupId;
+            }
+
+            public long getSendTime() {
+                return sendTime;
+            }
+
+            public String getAvatarUrl() {
+                return avatarUrl;
+            }
+        }
+
+        public static class SortEntity {
+            private String direction;
+            private String property;
+            private boolean ignoreCase;
+            private String nullHandling;
+            private boolean ascending;
+
+            public void setDirection(String direction) {
+                this.direction = direction;
+            }
+
+            public void setProperty(String property) {
+                this.property = property;
+            }
+
+            public void setIgnoreCase(boolean ignoreCase) {
+                this.ignoreCase = ignoreCase;
+            }
+
+            public void setNullHandling(String nullHandling) {
+                this.nullHandling = nullHandling;
+            }
+
+            public void setAscending(boolean ascending) {
+                this.ascending = ascending;
+            }
+
+            public String getDirection() {
+                return direction;
+            }
+
+            public String getProperty() {
+                return property;
+            }
+
+            public boolean isIgnoreCase() {
+                return ignoreCase;
+            }
+
+            public String getNullHandling() {
+                return nullHandling;
+            }
+
+            public boolean isAscending() {
+                return ascending;
+            }
         }
     }
 }

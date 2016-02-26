@@ -16,6 +16,7 @@ public class AIManager {
      */
     public final static String PRE_USER_ID = "userId";
     public final static String PRE_USER_TEL = "userTel";
+    public final static String PRE_USER_NAME = "userName";
     public final static String PRE_USER_AVATAR_URL = "avatarUrl";
     public final static String PRE_IS_HOME_SHOWING = "isShowingHome";
 
@@ -55,6 +56,11 @@ public class AIManager {
         return spManager.getString(PRE_USER_TEL, "");
     }
 
+    public String getUserName() {
+
+        return spManager.getString(PRE_USER_NAME, "");
+    }
+
     public String getAvatarUrl() {
         return spManager.getString(PRE_USER_AVATAR_URL, Constant.DEFAULT_PORTRAIT);
     }
@@ -64,13 +70,20 @@ public class AIManager {
         return spManager.getBoolean(PRE_IS_HOME_SHOWING, false);
     }
 
-    public void saveUserInfo(String userId, String tel, String avatarUrl) {
+    public void saveUserInfo(String userId, String tel, String avatarUrl,String userName) {
         saveUserId(userId);
         saveUserTel(tel);
+        saveAvatarUrl(avatarUrl);
+        saveUserName(userName);
     }
 
     public void saveUserId(String userId) {
+
         spManager.putString(PRE_USER_ID, userId);
+    }
+
+    public void saveUserName(String userName) {
+        spManager.putString(PRE_USER_NAME, userName);
     }
 
     public void saveUserTel(String tel) {

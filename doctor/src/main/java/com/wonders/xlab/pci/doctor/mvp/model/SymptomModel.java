@@ -5,12 +5,10 @@ import com.wonders.xlab.pci.doctor.mvp.api.SymptomAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.SymptomEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.impl.ISymptomModel;
 
-import im.hua.library.base.mvp.BaseEntity;
-
 /**
  * Created by hua on 16/2/24.
  */
-public class SymptomModel extends DoctorBaseModel {
+public class SymptomModel extends DoctorBaseModel<SymptomEntity> {
     private SymptomAPI mSymptomAPI;
     private ISymptomModel mISymptomModel;
 
@@ -20,20 +18,16 @@ public class SymptomModel extends DoctorBaseModel {
     }
 
     public void getSymptomList() {
-        fetchData(mSymptomAPI.getSymptomList(), new ResponseListener() {
-            @Override
-            public void onSuccess(BaseEntity response) {
-                if (null != mISymptomModel) {
-                    mISymptomModel.onReceiveSymptomSuccess((SymptomEntity) response);
-                }
-            }
+        fetchData(mSymptomAPI.getSymptomList());
+    }
 
-            @Override
-            public void onFailed(Throwable e) {
-                if (null != mISymptomModel) {
-                    mISymptomModel.onReceiveFailed(e.getMessage());
-                }
-            }
-        });
+    @Override
+    protected void onSuccess(SymptomEntity response) {
+        mISymptomModel.onReceiveSymptomSuccess(response);
+    }
+
+    @Override
+    protected void onFailed(Throwable e) {
+        mISymptomModel.onReceiveFailed(e.getMessage());
     }
 }

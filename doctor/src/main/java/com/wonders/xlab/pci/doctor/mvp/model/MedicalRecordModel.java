@@ -5,12 +5,10 @@ import com.wonders.xlab.pci.doctor.mvp.api.MedicalRecordAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.MedicalRecordEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.impl.IMedicalRecordModel;
 
-import im.hua.library.base.mvp.BaseEntity;
-
 /**
  * Created by hua on 16/2/25.
  */
-public class MedicalRecordModel extends DoctorBaseModel {
+public class MedicalRecordModel extends DoctorBaseModel<MedicalRecordEntity> {
     private IMedicalRecordModel mIMedicalRecordModel;
     private MedicalRecordAPI mMedicalRecordAPI;
 
@@ -21,16 +19,16 @@ public class MedicalRecordModel extends DoctorBaseModel {
     }
 
     public void getMedicalRecordList() {
-        fetchData(mMedicalRecordAPI.getMedicalRecordList(), new ResponseListener() {
-            @Override
-            public void onSuccess(BaseEntity response) {
-                mIMedicalRecordModel.onReceiveMedicalRecordSuccess((MedicalRecordEntity) response);
-            }
+        fetchData(mMedicalRecordAPI.getMedicalRecordList());
+    }
 
-            @Override
-            public void onFailed(Throwable e) {
-                mIMedicalRecordModel.onReceiveFailed(e.getMessage());
-            }
-        });
+    @Override
+    protected void onSuccess(MedicalRecordEntity response) {
+        mIMedicalRecordModel.onReceiveMedicalRecordSuccess(response);
+    }
+
+    @Override
+    protected void onFailed(Throwable e) {
+        mIMedicalRecordModel.onReceiveFailed(e.getMessage());
     }
 }

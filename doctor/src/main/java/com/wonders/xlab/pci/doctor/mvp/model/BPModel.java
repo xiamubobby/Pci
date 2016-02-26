@@ -5,12 +5,10 @@ import com.wonders.xlab.pci.doctor.mvp.api.BPAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.BPEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.impl.IBPModel;
 
-import im.hua.library.base.mvp.BaseEntity;
-
 /**
  * Created by hua on 16/2/22.
  */
-public class BPModel extends DoctorBaseModel {
+public class BPModel extends DoctorBaseModel<BPEntity> {
     private BPAPI mBPAPI;
     private IBPModel mBloodPressureModel;
 
@@ -20,19 +18,16 @@ public class BPModel extends DoctorBaseModel {
     }
 
     public void getBPList() {
-        fetchData(mBPAPI.getBPList(), new ResponseListener() {
-            @Override
-            public void onSuccess(BaseEntity response) {
-                if (mBloodPressureModel != null) {
-                    mBloodPressureModel.onReceiveBPSuccess((BPEntity) response);
-                }
-            }
-
-            @Override
-            public void onFailed(Throwable e) {
-
-            }
-        });
+        fetchData(mBPAPI.getBPList());
     }
 
+    @Override
+    protected void onSuccess(BPEntity response) {
+        mBloodPressureModel.onReceiveBPSuccess(response);
+    }
+
+    @Override
+    protected void onFailed(Throwable e) {
+        mBloodPressureModel.onReceiveFailed(e.getMessage());
+    }
 }

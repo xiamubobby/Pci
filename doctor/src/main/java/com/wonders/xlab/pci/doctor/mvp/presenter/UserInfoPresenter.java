@@ -25,9 +25,9 @@ public class UserInfoPresenter extends BasePresenter implements IUserInfoModel{
         addModel(mUserInfoModel);
     }
 
-    public void getUserInfo() {
+    public void getUserInfo(String userId) {
         onReceiveUserInfoSuccess(null);
-//        mUserInfoModel.getUserInfo();
+//        mUserInfoModel.getUserInfo(userId);
     }
 
     @Override

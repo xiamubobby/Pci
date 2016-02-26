@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.doctor.mvp.api;
 
-import com.wonders.xlab.pci.doctor.mvp.entity.BPEntity;
+import com.wonders.xlab.pci.doctor.mvp.entity.BSEntity;
 
 import retrofit.http.GET;
 import rx.Observable;
@@ -11,5 +11,5 @@ import rx.Observable;
 public interface BSAPI {
 
     @GET("getBSList")
-    Observable<BPEntity> getBSList();
+    Observable<BSEntity> getBSList();
 }

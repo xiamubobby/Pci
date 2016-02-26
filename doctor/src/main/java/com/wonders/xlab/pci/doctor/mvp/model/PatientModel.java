@@ -5,12 +5,10 @@ import com.wonders.xlab.pci.doctor.mvp.api.PatientAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.PatientEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.impl.IPatientModel;
 
-import im.hua.library.base.mvp.BaseEntity;
-
 /**
  * Created by hua on 16/2/19.
  */
-public class PatientModel extends DoctorBaseModel {
+public class PatientModel extends DoctorBaseModel<PatientEntity> {
 
     private IPatientModel mIPatientPresenter;
     private PatientAPI mPatientAPI;
@@ -21,16 +19,16 @@ public class PatientModel extends DoctorBaseModel {
     }
 
     public void getPatientList(String doctorId) {
-        fetchData(mPatientAPI.getPatientList(doctorId), new ResponseListener() {
-            @Override
-            public void onSuccess(BaseEntity response) {
-                mIPatientPresenter.onReceivePatientSuccess((PatientEntity) response);
-            }
+        fetchData(mPatientAPI.getPatientList(doctorId));
+    }
 
-            @Override
-            public void onFailed(Throwable e) {
-                mIPatientPresenter.onReceiveFailed(e.getMessage());
-            }
-        });
+    @Override
+    protected void onSuccess(PatientEntity response) {
+        mIPatientPresenter.onReceivePatientSuccess(response);
+    }
+
+    @Override
+    protected void onFailed(Throwable e) {
+        mIPatientPresenter.onReceiveFailed(e.getMessage());
     }
 }

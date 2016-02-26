@@ -5,12 +5,10 @@ import com.wonders.xlab.pci.doctor.mvp.api.UserInfoAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.UserInfoEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.impl.IUserInfoModel;
 
-import im.hua.library.base.mvp.BaseEntity;
-
 /**
  * Created by hua on 16/2/23.
  */
-public class UserInfoModel extends DoctorBaseModel {
+public class UserInfoModel extends DoctorBaseModel<UserInfoEntity> {
     private IUserInfoModel mUserInfoModel;
 
     private UserInfoAPI mUserInfoAPI;
@@ -20,21 +18,17 @@ public class UserInfoModel extends DoctorBaseModel {
         mUserInfoAPI = mRetrofit.create(UserInfoAPI.class);
     }
 
-    public void getUserInfo() {
-        fetchData(mUserInfoAPI.getUserInfo(), new ResponseListener() {
-            @Override
-            public void onSuccess(BaseEntity response) {
-                if (mUserInfoModel != null) {
-                    mUserInfoModel.onReceiveUserInfoSuccess((UserInfoEntity) response);
-                }
-            }
+    public void getUserInfo(String userId) {
+        fetchData(mUserInfoAPI.getUserInfo(userId));
+    }
 
-            @Override
-            public void onFailed(Throwable e) {
-                if (mUserInfoModel != null) {
-                    mUserInfoModel.onReceiveFailed("");
-                }
-            }
-        });
+    @Override
+    protected void onSuccess(UserInfoEntity response) {
+        mUserInfoModel.onReceiveUserInfoSuccess(response);
+    }
+
+    @Override
+    protected void onFailed(Throwable e) {
+        mUserInfoModel.onReceiveFailed(e.getMessage());
     }
 }

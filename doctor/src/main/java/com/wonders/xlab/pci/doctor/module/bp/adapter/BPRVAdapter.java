@@ -10,7 +10,7 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.databinding.BloodPressureItemBinding;
-import com.wonders.xlab.pci.doctor.module.bp.bean.BPBean;
+import com.wonders.xlab.pci.doctor.module.bp.bean.BPListBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 /**
  * Created by hua on 16/2/22.
  */
-public class BPRVAdapter extends SimpleRVAdapter<BPBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
+public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.blood_pressure_item, parent, false);

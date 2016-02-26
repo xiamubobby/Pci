@@ -6,5 +6,5 @@ import im.hua.library.base.mvp.IBasePresenter;
  * Created by hua on 16/2/25.
  */
 public interface ILoginPresenter extends IBasePresenter {
-    void loginSuccess(String userId, String tel, String avatarUrl);
+    void loginSuccess(String userId, String tel, String avatarUrl,String userName);
 }

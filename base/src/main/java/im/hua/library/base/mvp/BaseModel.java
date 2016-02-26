@@ -17,18 +17,10 @@ import rx.schedulers.Schedulers;
 /**
  * Created by hua on 15/12/13.
  */
-public abstract class BaseModel {
+public abstract class BaseModel<T extends BaseEntity> {
     protected Retrofit mRetrofit;
-    private Observable<? extends BaseEntity> mObservable;
+    private Observable<T> mObservable;
     private Subscription subscribe;
-
-    private ResponseListener mResponseListener;
-
-    public interface ResponseListener {
-        void onSuccess(BaseEntity response);
-
-        void onFailed(Throwable e);
-    }
 
     public BaseModel() {
         /**
@@ -64,7 +56,7 @@ public abstract class BaseModel {
 
         subscribe = mObservable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<BaseEntity>() {
+                .subscribe(new Subscriber<T>() {
 
                     @Override
                     public void onCompleted() {
@@ -73,28 +65,27 @@ public abstract class BaseModel {
 
                     @Override
                     public void onError(Throwable e) {
-//                        onFailed("请求失败，请重试！");
-                        if (mResponseListener != null) {
-                            mResponseListener.onFailed(e);
-                        }
+                        onFailed(e);
                     }
 
                     @Override
-                    public void onNext(BaseEntity result) {
-                        if (mResponseListener != null) {
-                            if (null == result) {
-                                mResponseListener.onFailed(new Throwable("请求出错，请重试！"));
-                            } else if (0 != result.getRet_code()) {
-                                mResponseListener.onFailed(new Throwable(result.getMessage()));
-                            } else {
-                                mResponseListener.onSuccess(result);
-                            }
+                    public void onNext(T result) {
+                        if (null == result) {
+                            onFailed(new Throwable("请求出错，请重试！"));
+                        } else if (0 != result.getRet_code()) {
+                            onFailed(new Throwable(result.getMessage()));
+                        } else {
+                            onSuccess(result);
                         }
                     }
                 });
     }
 
-    public void cancel() {
+    protected abstract void onSuccess(T response);
+
+    protected abstract void onFailed(Throwable e);
+
+    protected void cancel() {
         if (subscribe != null) {
             subscribe.unsubscribe();
             subscribe = null;
@@ -102,9 +93,8 @@ public abstract class BaseModel {
         mObservable = null;
     }
 
-    protected void fetchData(@NonNull Observable<? extends BaseEntity> observable, @NonNull ResponseListener callback) {
+    protected void fetchData(@NonNull Observable<T> observable) {
         cancel();
-        mResponseListener = callback;
         mObservable = observable;
         fetchData();
     }

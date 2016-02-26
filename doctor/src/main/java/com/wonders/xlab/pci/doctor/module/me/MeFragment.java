@@ -8,7 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.wonders.xlab.common.manager.ImageViewManager;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.login.LoginActivity;
@@ -26,6 +29,10 @@ public class MeFragment extends BaseFragment {
 
     @Bind(R.id.btn_me_exit)
     Button mBtnMeExit;
+    @Bind(R.id.iv_me_portrait)
+    ImageView mIvMePortrait;
+    @Bind(R.id.tv_me_name)
+    TextView mTvMeName;
 
     public MeFragment() {
         // Required empty public constructor
@@ -44,12 +51,20 @@ public class MeFragment extends BaseFragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mTvMeName.setText(AIManager.getInstance(getActivity()).getUserName());
+        ImageViewManager.setImageViewWithUrl(getActivity(), mIvMePortrait, AIManager.getInstance(getActivity()).getAvatarUrl(), R.drawable.portrait_default);
+    }
+
     @OnClick(R.id.btn_me_exit)
     public void exit() {
         AIManager.getInstance(getActivity()).logout();
         startActivity(new Intent(getActivity(), LoginActivity.class));
         getActivity().finish();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

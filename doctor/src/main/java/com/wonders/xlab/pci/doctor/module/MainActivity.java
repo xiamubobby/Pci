@@ -64,10 +64,10 @@ public class MainActivity extends BaseActivity {
         for (int i = 0; i < 2; i++) {
             switch (i) {
                 case 0:
-                    tabEntities.add(new TabEntity("患者", R.mipmap.ic_launcher, R.mipmap.ic_launcher));
+                    tabEntities.add(new TabEntity("患者", R.drawable.ic_tab_patient_selected, R.drawable.ic_tab_patient_unselected));
                     break;
                 case 1:
-                    tabEntities.add(new TabEntity("我", R.mipmap.ic_launcher, R.mipmap.ic_launcher));
+                    tabEntities.add(new TabEntity("我", R.drawable.ic_tab_me_selected, R.drawable.ic_tab_me_unselected));
                     break;
             }
         }

@@ -29,7 +29,7 @@ public class OthersChatRoomVH extends MultiViewHolder<OthersChatRoomBean> {
 
     @Override
     public void onBindViewHolder(OthersChatRoomBean data) {
-        ImageViewManager.setImageViewWithUrl(itemView.getContext(), mIvChatRoomItemOthersPortrait, data.portraitUrl.get());
+        ImageViewManager.setImageViewWithUrl(itemView.getContext(), mIvChatRoomItemOthersPortrait, data.portraitUrl.get(), xlab.wonders.com.common.R.drawable.portrait_default);
         binding.setChat(data);
     }
 }

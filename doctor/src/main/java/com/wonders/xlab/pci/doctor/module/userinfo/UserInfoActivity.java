@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.userinfo.adapter.UserInfoRVAdapter;
 import com.wonders.xlab.pci.doctor.module.userinfo.bean.UserInfoBean;
@@ -42,13 +43,13 @@ public class UserInfoActivity extends AppbarActivity implements IUserInfoPresent
         ButterKnife.bind(this);
 
         mRecyclerView.setLinearLayout(false);
-        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this,getResources().getColor(R.color.divider),1));
+        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
         mRecyclerView.setPushRefreshEnable(false);//disable load more
 
         mUserInfoPresenter = new UserInfoPresenter(this);
         addPresenter(mUserInfoPresenter);
 
-        mUserInfoPresenter.getUserInfo();
+        mUserInfoPresenter.getUserInfo(AIManager.getInstance(this).getUserId());
     }
 
     @Override

@@ -29,7 +29,7 @@ public class PatientRVAdapter extends SimpleRVAdapter<PatientBean> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         PatientViewHolder viewHolder = (PatientViewHolder) holder;
-        ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(), viewHolder.mIvPatientItemPortrait, getBean(position).getPortrait());
+        ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(), viewHolder.mIvPatientItemPortrait, getBean(position).getPortrait(), xlab.wonders.com.common.R.drawable.portrait_default);
 
         viewHolder.mBinding.setPatient(getBean(position));
     }

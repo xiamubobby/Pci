@@ -3,7 +3,7 @@ package com.wonders.xlab.pci.doctor.module.bp.bean;
 /**
  * Created by hua on 16/2/22.
  */
-public class BPBean {
+public class BPListBean {
     private String time;
     /**
      * 收缩压

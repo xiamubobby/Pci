@@ -27,7 +27,7 @@ public class LoginPresenter extends BasePresenter implements ILoginModel {
 
     @Override
     public void loginSuccess(LoginEntity entity) {
-        mILoginPresenter.loginSuccess(entity.getRet_values().getId(), entity.getRet_values().getTel(), entity.getRet_values().getAvatarUrl());
+        mILoginPresenter.loginSuccess(entity.getRet_values().getId(), entity.getRet_values().getTel(), entity.getRet_values().getAvatarUrl(),entity.getRet_values().getName());
     }
 
     @Override

@@ -71,7 +71,7 @@ public class MedicalRecordPhotoVH extends MultiViewHolder<MedicalRecordPhotoBean
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             super.onBindViewHolder(holder, position);
             ImageViewHolder viewHolder = (ImageViewHolder) holder;
-            ImageViewManager.setImageViewWithUrl(itemView.getContext(),viewHolder.mIvSimple,getBean(position));
+            ImageViewManager.setImageViewWithUrl(itemView.getContext(),viewHolder.mIvSimple,getBean(position), xlab.wonders.com.common.R.drawable.portrait_default);
         }
 
         class ImageViewHolder extends RecyclerView.ViewHolder {

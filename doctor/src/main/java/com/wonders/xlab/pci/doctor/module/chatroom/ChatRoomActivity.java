@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.bp.BloodPressureActivity;
 import com.wonders.xlab.pci.doctor.module.bs.BloodSugarActivity;
@@ -89,7 +90,7 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,true));
 
-        mChatRoomPresenter = new ChatRoomPresenter(this);
+        mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance(this).getUserId());
         addPresenter(mChatRoomPresenter);
 
         mChatRoomPresenter.getChatList(groupId);

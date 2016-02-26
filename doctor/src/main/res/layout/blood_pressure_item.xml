@@ -5,7 +5,7 @@
 
         <variable
             name="bp"
-            type="com.wonders.xlab.pci.doctor.module.bp.bean.BPBean"/>
+            type="com.wonders.xlab.pci.doctor.module.bp.bean.BPListBean"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

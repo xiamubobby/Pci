@@ -69,7 +69,7 @@ public class PatientFragment extends BaseFragment implements IPatientPresenter {
         mRecyclerViewPatient.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
-
+                mPatientPresenter.getPatientList(AIManager.getInstance(getActivity()).getUserId());
             }
 
             @Override
