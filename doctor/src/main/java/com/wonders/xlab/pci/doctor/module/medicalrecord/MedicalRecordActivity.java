@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.doctor.module.medicalrecord;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
@@ -79,7 +80,7 @@ public class MedicalRecordActivity extends AppbarActivity implements IMedicalRec
 
     @Override
     public void showMedicalRecordList(List<MedicalRecordBean> beanList) {
-
+        mRecyclerView.setPullLoadMoreCompleted();
         if (null == mMedicalRecordRVAdapter) {
             mMedicalRecordRVAdapter = new MedicalRecordRVAdapter();
             mMedicalRecordRVAdapter.setOnPhotoClickListener(new MedicalRecordRVAdapter.OnPhotoClickListener() {
@@ -100,6 +101,7 @@ public class MedicalRecordActivity extends AppbarActivity implements IMedicalRec
 
     @Override
     public void showError(String message) {
-
+        mRecyclerView.setPullLoadMoreCompleted();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

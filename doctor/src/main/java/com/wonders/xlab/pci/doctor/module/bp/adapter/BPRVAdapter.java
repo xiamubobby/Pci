@@ -59,6 +59,7 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
         BloodPressureItemBinding mBinding;
+
         public ItemViewHolder(View itemView) {
             super(itemView);
             mBinding = BloodPressureItemBinding.bind(itemView);
