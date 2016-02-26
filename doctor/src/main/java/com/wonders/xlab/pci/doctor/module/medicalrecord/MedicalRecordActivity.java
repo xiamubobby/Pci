@@ -21,7 +21,7 @@ import me.iwf.photopicker.PhotoPagerActivity;
 
 public class MedicalRecordActivity extends AppbarActivity implements IMedicalRecordPresenter {
 
-    public static final String EXTRA_USER_ID = "userId";
+    public static final String EXTRA_PATIENT_ID = "patientId";
 
     private static final int REQUEST_CODE = 1123;
 
@@ -31,7 +31,7 @@ public class MedicalRecordActivity extends AppbarActivity implements IMedicalRec
 
     private MedicalRecordPresenter mMedicalRecordPresenter;
 
-    private String mUserId;
+    private String mPatientId;
 
     @Override
     public int getContentLayout() {
@@ -48,14 +48,14 @@ public class MedicalRecordActivity extends AppbarActivity implements IMedicalRec
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        mUserId = getIntent().getExtras().getString(EXTRA_USER_ID);
+        mPatientId = getIntent().getExtras().getString(EXTRA_PATIENT_ID);
 
         mRecyclerView.setLinearLayout(false);
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 5));
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
-                mMedicalRecordPresenter.getMedicalRecordList(mUserId);
+                mMedicalRecordPresenter.getMedicalRecordList(mPatientId);
             }
 
             @Override
@@ -68,7 +68,7 @@ public class MedicalRecordActivity extends AppbarActivity implements IMedicalRec
         addPresenter(mMedicalRecordPresenter);
 
         mRecyclerView.setRefreshing(true);
-        mMedicalRecordPresenter.getMedicalRecordList(mUserId);
+        mMedicalRecordPresenter.getMedicalRecordList(mPatientId);
     }
 
     @Override

@@ -131,13 +131,15 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
 
     @OnClick(R.id.iv_chat_room_symptom)
     public void onSymptomClick() {
-        startActivity(new Intent(this, SymptomActivity.class));
+        Intent intent = new Intent(this, SymptomActivity.class);
+        intent.putExtra(SymptomActivity.EXTRA_PATIENT_ID,patientId);
+        startActivity(intent);
     }
 
     @OnClick(R.id.iv_chat_room_record)
     public void onMedicalRecordClick() {
         Intent intent = new Intent(this, MedicalRecordActivity.class);
-        intent.putExtra(MedicalRecordActivity.EXTRA_USER_ID,patientId);
+        intent.putExtra(MedicalRecordActivity.EXTRA_PATIENT_ID,patientId);
         startActivity(intent);
     }
 

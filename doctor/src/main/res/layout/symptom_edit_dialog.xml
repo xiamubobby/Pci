@@ -15,7 +15,7 @@
             android:gravity="left|top"
             android:hint="@string/et_hint_symptom_edit_dialog_comment"
             android:lines="6"
-            android:maxLength="1000"
+            android:maxLength="255"
             android:maxLines="15"/>
     </android.support.design.widget.TextInputLayout>
 

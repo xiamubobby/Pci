@@ -17,8 +17,8 @@ public class SymptomModel extends DoctorBaseModel<SymptomEntity> {
         mSymptomAPI = mRetrofit.create(SymptomAPI.class);
     }
 
-    public void getSymptomList() {
-        fetchData(mSymptomAPI.getSymptomList());
+    public void getSymptomList(String userId) {
+        fetchData(mSymptomAPI.getSymptomList(userId));
     }
 
     @Override

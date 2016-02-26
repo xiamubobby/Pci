@@ -11,4 +11,6 @@ import im.hua.library.base.mvp.IBasePresenter;
  */
 public interface ISymptomPresenter extends IBasePresenter {
     void showSymptomList(List<SymptomBean> symptomBeanList);
+
+    void saveCommentSuccess();
 }
