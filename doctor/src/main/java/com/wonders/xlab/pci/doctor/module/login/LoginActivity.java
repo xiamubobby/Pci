@@ -1,14 +1,20 @@
 package com.wonders.xlab.pci.doctor.module.login;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.wonders.xlab.common.manager.SPManager;
+import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.MainActivity;
@@ -32,6 +38,8 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter {
     Button mBtnLogin;
     @Bind(R.id.coordinate)
     CoordinatorLayout mCoordinate;
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
 
     private LoginPresenter mLoginPresenter;
 
@@ -43,6 +51,30 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter {
         setContentView(R.layout.login_activity);
         ButterKnife.bind(this);
 
+        Constant.setBaseUrl(this);
+
+        mToolbar.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                final EditText editText = new EditText(LoginActivity.this);
+                editText.setText(SPManager.get(LoginActivity.this).getString(Constant.PREF_KEY_BASE_URL,"http://xlab-tech.com:45675/pci-doctor/v1/"));
+                AlertDialog alertDialog = new AlertDialog.Builder(LoginActivity.this)
+                        .setView(editText)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (!TextUtils.isEmpty(editText.getText().toString())) {
+                                    SPManager.get(LoginActivity.this).putString(Constant.PREF_KEY_BASE_URL,editText.getText().toString());
+                                    Constant.setBaseUrl(LoginActivity.this);
+                                    LoginActivity.this.recreate();
+                                }
+                            }
+                        })
+                        .create();
+                alertDialog.show();
+                return false;
+            }
+        });
         mLoginPresenter = new LoginPresenter(this);
         addPresenter(mLoginPresenter);
 
@@ -74,11 +106,11 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter {
     }
 
     @Override
-    public void loginSuccess(String userId, String tel, String avatarUrl,String userName) {
+    public void loginSuccess(String userId, String tel, String avatarUrl, String userName) {
         if (null != mDialog) {
             mDialog.dismiss();
         }
-        AIManager.getInstance(this).saveUserInfo(userId, tel, avatarUrl,userName);
+        AIManager.getInstance(this).saveUserInfo(userId, tel, avatarUrl, userName);
 
         startActivity(new Intent(this, MainActivity.class));
         finish();

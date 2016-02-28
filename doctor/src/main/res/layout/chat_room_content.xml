@@ -82,7 +82,7 @@
         android:id="@+id/rl_chat_room_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentTop="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -95,14 +95,15 @@
                 android:layout_centerVertical="true"
                 android:layout_toLeftOf="@+id/btn_chat_room_send"/>
 
-            <Button
+            <ImageView
                 android:id="@+id/btn_chat_room_send"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/item_interval"
-                android:text="发送"/>
+                android:contentDescription="@string/text_send"
+                android:src="@drawable/ic_send_black_36dp"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

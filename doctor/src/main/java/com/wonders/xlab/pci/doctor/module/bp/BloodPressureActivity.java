@@ -105,7 +105,7 @@ public class BloodPressureActivity extends AppbarActivity implements IBPPresente
         YAxis leftAxis = mChart.getAxisLeft();
         leftAxis.setDrawGridLines(false);
 
-//        addLimitLines(leftAxis);
+        addLimitLines(leftAxis);
 
         // limit lines are drawn behind data (and not on top)
         leftAxis.setDrawLimitLinesBehindData(false);
