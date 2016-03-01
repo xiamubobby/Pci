@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.bs.adapter.BSRVAdapter;
 import com.wonders.xlab.pci.doctor.module.bs.bean.BSBean;
@@ -18,7 +19,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class BloodSugarActivity extends AppbarActivity implements IBSPresenter{
+public class BloodSugarActivity extends AppbarActivity implements IBSPresenter {
 
     @Bind(R.id.recycler_view_bs)
     PullLoadMoreRecyclerView mRecyclerView;
@@ -43,15 +44,27 @@ public class BloodSugarActivity extends AppbarActivity implements IBSPresenter{
         ButterKnife.bind(this);
 
         mRecyclerView.setLinearLayout(false);
+        mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+                mBSPresenter.getBSList(AIManager.getInstance(BloodSugarActivity.this).getUserId());
+            }
+
+            @Override
+            public void onLoadMore() {
+
+            }
+        });
 
         mBSPresenter = new BSPresenter(this);
         addPresenter(mBSPresenter);
 
-        mBSPresenter.getBSList();
+        mBSPresenter.getBSList(AIManager.getInstance(this).getUserId());
     }
 
     @Override
     public void showBloodPressureList(List<BSBean> bsBeanList) {
+        mRecyclerView.setPullLoadMoreCompleted();
         if (mBSRVAdapter == null) {
             mBSRVAdapter = new BSRVAdapter();
             final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(mBSRVAdapter);
@@ -70,6 +83,7 @@ public class BloodSugarActivity extends AppbarActivity implements IBSPresenter{
 
     @Override
     public void showError(String message) {
+        mRecyclerView.setPullLoadMoreCompleted();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -3,6 +3,7 @@ package com.wonders.xlab.pci.doctor.mvp.api;
 import com.wonders.xlab.pci.doctor.mvp.entity.BSEntity;
 
 import retrofit.http.GET;
+import retrofit.http.Path;
 import rx.Observable;
 
 /**
@@ -10,6 +11,6 @@ import rx.Observable;
  */
 public interface BSAPI {
 
-    @GET("getBSList")
-    Observable<BSEntity> getBSList();
+    @GET("bloodSugars/listBloodSugarRecord/{userId}")
+    Observable<BSEntity> getBSList(@Path("userId") String userId);
 }

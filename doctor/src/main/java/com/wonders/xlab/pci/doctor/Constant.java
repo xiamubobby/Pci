@@ -19,6 +19,6 @@ public class Constant {
     public static final String ERROR_MESSAGE = "获取数据失败，请重试！";
 
     public static void setBaseUrl(Context context) {
-        BASE_URL = SPManager.get(context).getString(PREF_KEY_BASE_URL,"http://xlab-tech.com:45675/pci-doctor/v1/");
+        BASE_URL = SPManager.get(context).getString(PREF_KEY_BASE_URL,"http://192.168.1.101:8080/v1/");
     }
 }

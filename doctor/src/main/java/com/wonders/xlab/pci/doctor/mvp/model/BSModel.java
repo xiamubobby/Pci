@@ -17,8 +17,8 @@ public class BSModel extends DoctorBaseModel<BSEntity> {
         mBSAPI = mRetrofit.create(BSAPI.class);
     }
 
-    public void getBSList() {
-        fetchData(mBSAPI.getBSList());
+    public void getBSList(String userId) {
+        fetchData(mBSAPI.getBSList(userId));
     }
 
     @Override

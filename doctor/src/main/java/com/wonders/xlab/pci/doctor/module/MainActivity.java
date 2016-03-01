@@ -11,6 +11,7 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.umeng.update.UmengUpdateAgent;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
+import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.login.LoginActivity;
@@ -35,6 +36,8 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_NoActionBar);
+
+        Constant.setBaseUrl(this);
 
         super.onCreate(savedInstanceState);
 

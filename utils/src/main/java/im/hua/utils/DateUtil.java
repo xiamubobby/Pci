@@ -116,6 +116,13 @@ public class DateUtil {
         return old.equals(current);
     }
 
+    public static boolean isTheSameMonth(long oldDate, long currentDate) {
+        String old = format(oldDate, "yyyy-MM");
+        String current = format(currentDate, "yyyy-MM");
+
+        return old.equals(current);
+    }
+
     public static boolean isTheSameYear(long oldDate, long currentDate) {
         String old = format(oldDate, "yyyy");
         String current = format(currentDate, "yyyy");
