@@ -87,4 +87,9 @@ public class UserInfoActivity extends AppbarActivity implements IUserInfoPresent
         mRecyclerView.setPullLoadMoreCompleted();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void hideLoading() {
+        
+    }
 }

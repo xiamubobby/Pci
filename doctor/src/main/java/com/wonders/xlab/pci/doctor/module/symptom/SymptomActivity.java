@@ -204,6 +204,11 @@ public class SymptomActivity extends AppbarActivity implements ISymptomPresenter
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void hideLoading() {
+
+    }
+
     private void showProgressDialog(String message) {
         if (null == mProgressDialog) {
             mProgressDialog = new ProgressDialog(this);

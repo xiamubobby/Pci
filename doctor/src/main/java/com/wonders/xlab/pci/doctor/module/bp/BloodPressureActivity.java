@@ -208,4 +208,9 @@ public class BloodPressureActivity extends AppbarActivity implements IBPPresente
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void hideLoading() {
+
+    }
+
 }

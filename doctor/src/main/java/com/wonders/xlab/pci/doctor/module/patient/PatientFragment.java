@@ -132,4 +132,9 @@ public class PatientFragment extends BaseFragment implements IPatientPresenter {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void hideLoading() {
+
+    }
+
 }

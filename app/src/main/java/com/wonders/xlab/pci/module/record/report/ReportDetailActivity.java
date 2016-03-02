@@ -120,12 +120,12 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
         mRvReportDetail.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRvReportDetail.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
-            public void loadMoreToBottom() {
+            public void loadMore() {
                 detailModel.getReportDetails(AIManager.getInstance(ReportDetailActivity.this).getUserId(), schedule);
             }
 
             @Override
-            public void loadMoreToTop() {
+            public void refresh() {
 
             }
         });

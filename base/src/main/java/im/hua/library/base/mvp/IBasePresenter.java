@@ -5,4 +5,6 @@ package im.hua.library.base.mvp;
  */
 public interface IBasePresenter {
     void showError(String message);
+
+    void hideLoading();
 }

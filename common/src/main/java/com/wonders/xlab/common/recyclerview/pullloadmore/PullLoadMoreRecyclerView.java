@@ -36,6 +36,8 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     private TextView mFooterLoadMoreText;
     private TextView mHeaderLoadMoreText;
     private boolean mIsReverse = false;
+    private boolean mShowHeaderView = true;
+    private boolean mShowFooterView = true;
 
     public PullLoadMoreRecyclerView(Context context) {
         super(context);
@@ -74,9 +76,13 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     }
 
+    public boolean isReverse() {
+        return mIsReverse;
+    }
 
     /**
      * LinearLayoutManager
+     *
      * @param reverse
      */
     public void setLinearLayout(boolean reverse) {
@@ -98,11 +104,9 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mRecyclerView.setLayoutManager(gridLayoutManager);
     }
 
-
     /**
      * StaggeredGridLayoutManager
      */
-
     public void setStaggeredGridLayout(int spanCount) {
         StaggeredGridLayoutManager staggeredGridLayoutManager =
                 new StaggeredGridLayoutManager(spanCount, LinearLayoutManager.VERTICAL);
@@ -148,7 +152,6 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     public void setColorSchemeResources(int... colorResIds) {
         mSwipeRefreshLayout.setColorSchemeResources(colorResIds);
-
     }
 
     public SwipeRefreshLayout getSwipeRefreshLayout() {
@@ -205,6 +208,11 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mHeaderLoadMoreText.setText(resid);
     }
 
+    public void showHeaderOrFooterView(boolean showHeaderView, boolean showFooterView) {
+        mShowHeaderView = showHeaderView;
+        mShowFooterView = showFooterView;
+    }
+
     public void refresh() {
         if (mPullLoadMoreListener != null) {
             mPullLoadMoreListener.onRefresh();
@@ -213,12 +221,17 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     public void loadMore() {
         if (mPullLoadMoreListener != null && hasMore) {
+
             if (mIsReverse) {
                 mFooterView.setVisibility(View.GONE);
-                mHeaderView.setVisibility(View.VISIBLE);
+                if (mShowHeaderView) {
+                    mHeaderView.setVisibility(View.VISIBLE);
+                }
 
             } else {
-                mFooterView.setVisibility(View.VISIBLE);
+                if (mShowFooterView) {
+                    mFooterView.setVisibility(View.VISIBLE);
+                }
                 mHeaderView.setVisibility(View.GONE);
             }
             invalidate();
@@ -237,13 +250,11 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     }
 
-
     public void setOnPullLoadMoreListener(PullLoadMoreListener listener) {
         mPullLoadMoreListener = listener;
     }
 
-
-    public boolean isLoadMore() {
+    public boolean isLoadingMore() {
         return isLoadMore;
     }
 

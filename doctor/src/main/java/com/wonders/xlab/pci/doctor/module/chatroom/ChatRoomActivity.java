@@ -3,15 +3,16 @@ package com.wonders.xlab.pci.doctor.module.chatroom;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
@@ -39,7 +40,17 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     public final static String EXTRA_PATIENT_ID = "PATIENT_ID";
     public final static String EXTRA_PATIENT_NAME = "PATIENT_NAME";
     public final static String EXTRA_PATIENT_PHONE_NUMBER = "PATIENT_NUMBER";
+    /**
+     * 患者和医生所在聊天组的id
+     */
     public final static String EXTRA_PATIENT_GROUP_ID = "GROUP_ID";
+    @Bind(R.id.ll_chat_room_loading)
+    LinearLayout mLoadingView;
+
+    private String patientId;
+    private String groupId;
+    private String patientName;
+    private String patientPhoneNumber;
 
     @Bind(R.id.iv_chat_room_record)
     ImageView mIvChatRoomRecord;
@@ -49,14 +60,9 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     private ChatRoomPresenter mChatRoomPresenter;
 
     @Bind(R.id.recycler_view_chat_room)
-    RecyclerView mRecyclerView;
+    PullLoadMoreRecyclerView mRecyclerView;
 
     private ChatRoomRVAdapter mChatRoomRVAdapter;
-
-    private String patientId;
-    private String groupId;
-    private String patientName;
-    private String patientPhoneNumber;
 
     @Override
     public int getContentLayout() {
@@ -92,7 +98,24 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
         badgeView.setText("2");
         badgeView.show();
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
+        mLoadingView.setVisibility(View.GONE);
+
+        mRecyclerView.setLinearLayout(true);
+        mRecyclerView.setPullRefreshEnable(false);
+        mRecyclerView.setPushRefreshEnable(true);
+        mRecyclerView.showHeaderOrFooterView(false, false);
+        mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+
+            @Override
+            public void onLoadMore() {
+                mLoadingView.setVisibility(View.VISIBLE);
+                mChatRoomPresenter.getChatList(groupId);
+            }
+        });
 
         mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance(this).getUserId());
         addPresenter(mChatRoomPresenter);
@@ -114,14 +137,13 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
 
             MeChatRoomBean bean = new MeChatRoomBean();
             bean.text.set(message);
-            bean.name.set(AIManager.getInstance(this).getUserName());
             bean.portraitUrl.set(AIManager.getInstance(this).getAvatarUrl());
             bean.recordTime.set(DateUtil.format(sendTime, "yyyy-MM-dd HH:mm"));
             bean.recordTimeInMill.set(sendTime);
             bean.isSending.set(true);
             mChatRoomRVAdapter.insertToTop(bean);
 
-            mRecyclerView.smoothScrollToPosition(0);
+            mRecyclerView.getRecyclerView().smoothScrollToPosition(0);
 
             mEtChatRoomInput.setText("");
 
@@ -185,8 +207,8 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     private void initChatRoomAdapter() {
         if (mChatRoomRVAdapter == null) {
             mChatRoomRVAdapter = new ChatRoomRVAdapter();
+            mRecyclerView.setAdapter(mChatRoomRVAdapter);
         }
-        mRecyclerView.setAdapter(mChatRoomRVAdapter);
     }
 
     @Override
@@ -198,7 +220,8 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     @Override
     public void appendChatMessageList(List<ChatRoomBean> chatRoomBeanList) {
         initChatRoomAdapter();
-        mChatRoomRVAdapter.insertDatasToTop(chatRoomBeanList);
+        mChatRoomRVAdapter.appendDatas(chatRoomBeanList);
+        mRecyclerView.getRecyclerView().smoothScrollToPosition(mChatRoomRVAdapter.getItemCount() - chatRoomBeanList.size());
     }
 
     @Override
@@ -220,5 +243,11 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     @Override
     public void showError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hideLoading() {
+        mLoadingView.setVisibility(View.GONE);
+        mRecyclerView.setPullLoadMoreCompleted();
     }
 }

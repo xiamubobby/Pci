@@ -8,7 +8,6 @@ import android.databinding.ObservableField;
  */
 public class MeChatRoomBean extends ChatRoomBean {
     public ObservableField<String> portraitUrl = new ObservableField<>();
-    public ObservableField<String> name = new ObservableField<>();
     public ObservableField<String> recordTime = new ObservableField<>();
     public ObservableField<Long> recordTimeInMill = new ObservableField<>();
     public ObservableField<String> text = new ObservableField<>();

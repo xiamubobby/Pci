@@ -50,9 +50,11 @@ public abstract class MultiRVAdapter<bean extends BaseBean> extends RecyclerView
         if (this.mDatas == null) {
             this.mDatas = new ArrayList<>();
         }
+        int oldSize = this.mDatas.size();
+
         this.mDatas.addAll(beans);
 
-        notifyDataSetChanged();
+        notifyItemRangeInserted(oldSize, beans.size());
     }
 
     /**
@@ -78,7 +80,7 @@ public abstract class MultiRVAdapter<bean extends BaseBean> extends RecyclerView
         if (this.mDatas == null) {
             this.mDatas = new ArrayList<>();
         }
-        this.mDatas.addAll(0,beans);
+        this.mDatas.addAll(0, beans);
 
         notifyDataSetChanged();
     }

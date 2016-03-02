@@ -32,12 +32,33 @@ public class ChatRoomEntity extends BaseEntity {
     }
 
     public static class RetValuesEntity {
+        /**
+         * 是否是最后一页
+         */
         private boolean last;
+        /**
+         * 数据中总共的页数
+         */
         private int totalPages;
+        /**
+         * 数据库中总共的条数
+         */
         private int totalElements;
+        /**
+         * 分页大小
+         */
         private int size;
+        /**
+         * 当前第几页
+         */
         private int number;
+        /**
+         * 是否是第一页
+         */
         private boolean first;
+        /**
+         * 当前返回的这一页的数据条数
+         */
         private int numberOfElements;
         /**
          * id : 1
@@ -139,7 +160,7 @@ public class ChatRoomEntity extends BaseEntity {
             private String type;
             private String name;
             private String content;
-            private int groupId;
+            private String groupId;
             private long sendTime;
             private String avatarUrl;
 
@@ -163,7 +184,7 @@ public class ChatRoomEntity extends BaseEntity {
                 this.content = content;
             }
 
-            public void setGroupId(int groupId) {
+            public void setGroupId(String groupId) {
                 this.groupId = groupId;
             }
 
@@ -195,7 +216,7 @@ public class ChatRoomEntity extends BaseEntity {
                 return content;
             }
 
-            public int getGroupId() {
+            public String getGroupId() {
                 return groupId;
             }
 

@@ -104,4 +104,9 @@ public class MedicalRecordActivity extends AppbarActivity implements IMedicalRec
         mRecyclerView.setPullLoadMoreCompleted();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void hideLoading() {
+
+    }
 }

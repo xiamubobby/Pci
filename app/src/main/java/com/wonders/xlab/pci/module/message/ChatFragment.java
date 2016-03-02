@@ -88,12 +88,12 @@ public class ChatFragment extends BaseFragment implements ChatView {
         mRvHome.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true));
         mRvHome.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
-            public void loadMoreToBottom() {
+            public void loadMore() {
                 mChatModel.getChatList(getActivity(), AIManager.getInstance(getActivity()).getUserId());
             }
 
             @Override
-            public void loadMoreToTop() {
+            public void refresh() {
             }
         });
         mChatModel.getChatList(getActivity(), AIManager.getInstance(getActivity()).getUserId());
@@ -225,7 +225,7 @@ public class ChatFragment extends BaseFragment implements ChatView {
 
         Realm realm = Realm.getInstance(getActivity());
 
-        ChatRealmEntity cache = realm.where(ChatRealmEntity.class).equalTo("isMessage", false).equalTo("userId",AIManager.getInstance(getActivity()).getUserId()).findFirst();
+        ChatRealmEntity cache = realm.where(ChatRealmEntity.class).equalTo("isMessage", false).equalTo("userId", AIManager.getInstance(getActivity()).getUserId()).findFirst();
 
         if (cache != null) {
             NoticeBean notice = new NoticeBean();

@@ -4,6 +4,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 
 /**
  * Created by WuXiaolong on 2015/7/7.
@@ -46,19 +47,27 @@ public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
         } else {
             mPullLoadMoreRecyclerView.setSwipeRefreshEnable(false);
         }
+
+        Log.d("RecyclerViewOnScroll", "mPullLoadMoreRecyclerView.getPushRefreshEnable():" + mPullLoadMoreRecyclerView.getPushRefreshEnable());
+        Log.d("RecyclerViewOnScroll", "mPullLoadMoreRecyclerView.isRefresh():" + mPullLoadMoreRecyclerView.isRefresh());
+        Log.d("RecyclerViewOnScroll", "mPullLoadMoreRecyclerView.isHasMore():" + mPullLoadMoreRecyclerView.isHasMore());
+        Log.d("RecyclerViewOnScroll", "lastCompletelyVisibleItem == totalItemCount - 1:" + (lastCompletelyVisibleItem == totalItemCount - 1));
+        Log.d("RecyclerViewOnScroll", "mPullLoadMoreRecyclerView.isLoadingMore():" + mPullLoadMoreRecyclerView.isLoadingMore());
+        Log.d("RecyclerViewOnScroll", "dx > 0 || dy > 0:" + (dx > 0 || dy > 0));
+
         if (mPullLoadMoreRecyclerView.getPushRefreshEnable() &&
                 !mPullLoadMoreRecyclerView.isRefresh()
                 && mPullLoadMoreRecyclerView.isHasMore()
                 && (lastCompletelyVisibleItem == totalItemCount - 1)
-                && !mPullLoadMoreRecyclerView.isLoadMore()
-                && (dx > 0 || dy > 0)) {
+                && !mPullLoadMoreRecyclerView.isLoadingMore()
+                && ((!mPullLoadMoreRecyclerView.isReverse() && (dx > 0 || dy > 0)) || (mPullLoadMoreRecyclerView.isReverse() && (dx <= 0 || dy <= 0)))) {
             mPullLoadMoreRecyclerView.setIsLoadMore(true);
             mPullLoadMoreRecyclerView.loadMore();
         }
 
     }
-    //To find the maximum value in the array
 
+    //To find the maximum value in the array
     private int findMax(int[] lastPositions) {
 
         int max = lastPositions[0];

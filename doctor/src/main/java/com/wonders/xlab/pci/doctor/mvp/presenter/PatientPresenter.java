@@ -18,6 +18,7 @@ public class PatientPresenter extends BasePresenter implements IPatientModel {
     private PatientModel mPatientModel;
 
     private int mPageIndex = 0;
+    private boolean mIsLast = false;
 
     public PatientPresenter(IPatientPresenter IPatientPresenter) {
         mIPatientPresenter = IPatientPresenter;

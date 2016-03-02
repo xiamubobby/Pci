@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:layout_alignParentBottom="true"
-        android:background="#eaebeb"
+        android:background="#eff0f1"
         android:paddingBottom="4dp"
         android:paddingTop="@dimen/item_interval"
         app:tl_indicator_color="@color/colorPrimary"

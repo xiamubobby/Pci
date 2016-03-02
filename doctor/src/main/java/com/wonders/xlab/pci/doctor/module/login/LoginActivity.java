@@ -123,4 +123,9 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter {
         }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void hideLoading() {
+
+    }
 }
