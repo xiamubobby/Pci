@@ -5,6 +5,7 @@ import com.wonders.xlab.pci.doctor.mvp.entity.request.SendMessageBody;
 
 import retrofit.http.Body;
 import retrofit.http.POST;
+import retrofit.http.Path;
 import rx.Observable;
 
 /**
@@ -20,6 +21,6 @@ public interface SendMessageAPI {
     },
         "from" : "13621673988"
     }*/
-    @POST("im/sendChatContent")
-    Observable<SendMessageEntity> sendMessage(@Body SendMessageBody body);
+    @POST("im/sendChatContent/{time}")
+    Observable<SendMessageEntity> sendMessage(@Body SendMessageBody body, @Path("time") long time);
 }

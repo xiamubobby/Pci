@@ -10,8 +10,10 @@ public class MeChatRoomBean extends ChatRoomBean {
     public ObservableField<String> portraitUrl = new ObservableField<>();
     public ObservableField<String> name = new ObservableField<>();
     public ObservableField<String> recordTime = new ObservableField<>();
+    public ObservableField<Long> recordTimeInMill = new ObservableField<>();
     public ObservableField<String> text = new ObservableField<>();
     public ObservableArrayList<String> imageUrls = new ObservableArrayList<>();
+    public ObservableField<Boolean> isSending = new ObservableField<>();
 
     @Override
     public int getItemLayout() {

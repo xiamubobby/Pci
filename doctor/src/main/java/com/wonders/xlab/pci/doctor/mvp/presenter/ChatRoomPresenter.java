@@ -49,8 +49,8 @@ public class ChatRoomPresenter extends BasePresenter implements IChatRoomModel, 
         mChatRoomModel.getChatList(groupId, page, size);
     }
 
-    public void sendMessage(String message, String doctorTel) {
-        mSendMessageModel.sendMessage(message, doctorTel);
+    public void sendMessage(String message, String doctorTel, String groupId, long time) {
+        mSendMessageModel.sendMessage(message, doctorTel, groupId, time);
     }
 
     @Override
@@ -70,6 +70,7 @@ public class ChatRoomPresenter extends BasePresenter implements IChatRoomModel, 
                 bean.portraitUrl.set(contentEntity.getAvatarUrl());
                 bean.recordTime.set(DateUtil.format(contentEntity.getSendTime(), "yyy-MM-dd HH:mm"));
                 bean.text.set(contentEntity.getContent());
+                bean.isSending.set(false);
 
                 chatRoomBeanList.add(bean);
             } else {
@@ -94,7 +95,7 @@ public class ChatRoomPresenter extends BasePresenter implements IChatRoomModel, 
     }
 
     @Override
-    public void onSendMessageSuccess() {
-        mIChatRoomPresenter.sendMessageSuccess();
+    public void onSendMessageSuccess(long time) {
+        mIChatRoomPresenter.sendMessageSuccess(time);
     }
 }

@@ -21,7 +21,7 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
         mSendMessageAPI = mRetrofit.create(SendMessageAPI.class);
     }
 
-    public void sendMessage(String message,String doctorTel) {
+    public void sendMessage(String message, String doctorTel, String groupId,long time) {
         SendMessageBody body = new SendMessageBody();
 
         SendMessageBody.MsgEntity msgEntity = new SendMessageBody.MsgEntity();
@@ -29,20 +29,20 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
         msgEntity.setMsg(message);
 
         List<String> targets = new ArrayList<>();
-        targets.add("166710012339552740");
+        targets.add(groupId);
 
         body.setMsg(msgEntity);
         body.setFrom(doctorTel);
         body.setTarget_type("chatgroups");
         body.setTarget(targets);
 
-        fetchData(mSendMessageAPI.sendMessage(body), false);
+        fetchData(mSendMessageAPI.sendMessage(body,time), false);
     }
 
     @Override
     protected void onSuccess(SendMessageEntity response) {
         if (null != mISendMessageModel) {
-            mISendMessageModel.onSendMessageSuccess();
+            mISendMessageModel.onSendMessageSuccess(response.getRet_values());
         } else {
             mISendMessageModel.onReceiveFailed(response.getMessage());
         }

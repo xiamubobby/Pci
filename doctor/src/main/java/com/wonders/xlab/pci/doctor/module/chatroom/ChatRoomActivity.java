@@ -110,7 +110,22 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     public void sendMessage() {
         String message = mEtChatRoomInput.getText().toString();
         if (!TextUtils.isEmpty(message)) {
-            mChatRoomPresenter.sendMessage(message,AIManager.getInstance(this).getUserTel());
+            long sendTime = Calendar.getInstance().getTimeInMillis();
+
+            MeChatRoomBean bean = new MeChatRoomBean();
+            bean.text.set(message);
+            bean.name.set(AIManager.getInstance(this).getUserName());
+            bean.portraitUrl.set(AIManager.getInstance(this).getAvatarUrl());
+            bean.recordTime.set(DateUtil.format(sendTime, "yyyy-MM-dd HH:mm"));
+            bean.recordTimeInMill.set(sendTime);
+            bean.isSending.set(true);
+            mChatRoomRVAdapter.insertToTop(bean);
+
+            mRecyclerView.smoothScrollToPosition(0);
+
+            mEtChatRoomInput.setText("");
+
+            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getUserTel(), groupId, sendTime);
         }
     }
 
@@ -187,19 +202,19 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     }
 
     @Override
-    public void sendMessageSuccess() {
-        String message = mEtChatRoomInput.getText().toString();
-
-        MeChatRoomBean bean = new MeChatRoomBean();
-        bean.text.set(message);
-        bean.name.set(AIManager.getInstance(this).getUserName());
-        bean.portraitUrl.set(AIManager.getInstance(this).getAvatarUrl());
-        bean.recordTime.set(DateUtil.format(Calendar.getInstance().getTimeInMillis(),"yyyy-MM-dd HH:mm"));
-        mChatRoomRVAdapter.insertToTop(bean);
-
-        mRecyclerView.smoothScrollToPosition(0);
-
-        mEtChatRoomInput.setText("");
+    public void sendMessageSuccess(long time) {
+        for (int i = 0; i < mChatRoomRVAdapter.getItemCount(); i++) {
+            ChatRoomBean bean = mChatRoomRVAdapter.getItemData(i);
+            switch (mChatRoomRVAdapter.getItemViewType(i)) {
+                case ChatRoomBean.ITEM_LAYOUT_ME:
+                    MeChatRoomBean meChatRoomBean = (MeChatRoomBean) bean;
+                    if (meChatRoomBean.isSending.get() && null != meChatRoomBean.recordTimeInMill && meChatRoomBean.recordTimeInMill.get() == time) {
+                        meChatRoomBean.isSending.set(false);
+                        return;
+                    }
+                    break;
+            }
+        }
     }
 
     @Override
