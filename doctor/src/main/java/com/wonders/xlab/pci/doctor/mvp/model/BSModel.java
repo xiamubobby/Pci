@@ -18,7 +18,7 @@ public class BSModel extends DoctorBaseModel<BSEntity> {
     }
 
     public void getBSList(String userId) {
-        fetchData(mBSAPI.getBSList(userId));
+        fetchData(mBSAPI.getBSList(userId), true);
     }
 
     @Override
@@ -28,6 +28,6 @@ public class BSModel extends DoctorBaseModel<BSEntity> {
 
     @Override
     protected void onFailed(Throwable e) {
-        mBloodPressureModel.onReceiveFailed(e.getMessage());
+        mBloodPressureModel.onReceiveFailed("获取血糖数据失败，请重试！");
     }
 }

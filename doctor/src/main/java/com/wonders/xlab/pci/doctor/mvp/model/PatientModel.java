@@ -19,7 +19,7 @@ public class PatientModel extends DoctorBaseModel<PatientEntity> {
     }
 
     public void getPatientList(String doctorId) {
-        fetchData(mPatientAPI.getPatientList(doctorId));
+        fetchData(mPatientAPI.getPatientList(doctorId), true);
     }
 
     @Override
@@ -29,6 +29,6 @@ public class PatientModel extends DoctorBaseModel<PatientEntity> {
 
     @Override
     protected void onFailed(Throwable e) {
-        mIPatientPresenter.onReceiveFailed(e.getMessage());
+        mIPatientPresenter.onReceiveFailed("获取患者列表失败，请重试！");
     }
 }

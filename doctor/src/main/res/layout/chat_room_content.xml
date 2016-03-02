@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/item_interval">
 
-            <EditText
+            <EditText android:id="@+id/et_chat_room_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

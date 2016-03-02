@@ -1,6 +1,7 @@
 package im.hua.library.base.mvp;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.squareup.okhttp.OkHttpClient;
 
@@ -46,12 +47,8 @@ public abstract class BaseModel<T extends BaseEntity> {
 
     private void fetchData() {
         if (mObservable == null) {
-            throw new IllegalArgumentException("mObservable cannot be null, must call fetchData first!");
-        }
-
-        if (subscribe != null) {
-            subscribe.unsubscribe();
-            subscribe = null;
+            Log.e("BaseModel", "mObservable cannot be null, must call fetchData first!");
+            return;
         }
 
         subscribe = mObservable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
@@ -93,8 +90,11 @@ public abstract class BaseModel<T extends BaseEntity> {
         mObservable = null;
     }
 
-    protected void fetchData(@NonNull Observable<T> observable) {
-        cancel();
+    protected void fetchData(@NonNull Observable<T> observable, boolean autoCancelPreFetch) {
+        if (autoCancelPreFetch && subscribe != null) {
+            subscribe.unsubscribe();
+            subscribe = null;
+        }
         mObservable = observable;
         fetchData();
     }

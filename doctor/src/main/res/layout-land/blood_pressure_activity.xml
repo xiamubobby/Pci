@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.github.mikephil.charting.charts.CombinedChart
-    android:id="@+id/chart_blood_pressure"
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.wonders.xlab.pci.doctor.module.bp.BloodPressureActivity">
+
+    <include layout="@layout/appbar"/>
+
+    <com.github.mikephil.charting.charts.CombinedChart
+        android:id="@+id/chart_blood_pressure"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</android.support.design.widget.CoordinatorLayout>

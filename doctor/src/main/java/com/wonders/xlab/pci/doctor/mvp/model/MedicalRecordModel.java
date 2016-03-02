@@ -19,7 +19,7 @@ public class MedicalRecordModel extends DoctorBaseModel<MedicalRecordEntity> {
     }
 
     public void getMedicalRecordList(String userId) {
-        fetchData(mMedicalRecordAPI.getMedicalRecordList(userId));
+        fetchData(mMedicalRecordAPI.getMedicalRecordList(userId), true);
     }
 
     @Override
@@ -29,6 +29,6 @@ public class MedicalRecordModel extends DoctorBaseModel<MedicalRecordEntity> {
 
     @Override
     protected void onFailed(Throwable e) {
-        mIMedicalRecordModel.onReceiveFailed(e.getMessage());
+        mIMedicalRecordModel.onReceiveFailed("获取就诊记录失败，请重试！");
     }
 }

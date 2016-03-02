@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -19,19 +20,20 @@ import com.wonders.xlab.pci.doctor.module.bs.BloodSugarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
-import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.medicalrecord.MedicalRecordActivity;
 import com.wonders.xlab.pci.doctor.module.symptom.SymptomActivity;
 import com.wonders.xlab.pci.doctor.module.userinfo.UserInfoActivity;
 import com.wonders.xlab.pci.doctor.mvp.presenter.ChatRoomPresenter;
 import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IChatRoomPresenter;
 
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import im.hua.uikit.BadgeView;
+import im.hua.utils.DateUtil;
 
 public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresenter {
     public final static String EXTRA_PATIENT_ID = "PATIENT_ID";
@@ -41,6 +43,8 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
 
     @Bind(R.id.iv_chat_room_record)
     ImageView mIvChatRoomRecord;
+    @Bind(R.id.et_chat_room_input)
+    EditText mEtChatRoomInput;
 
     private ChatRoomPresenter mChatRoomPresenter;
 
@@ -88,7 +92,7 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
         badgeView.setText("2");
         badgeView.show();
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,true));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true));
 
         mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance(this).getUserId());
         addPresenter(mChatRoomPresenter);
@@ -104,20 +108,16 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
 
     @OnClick(R.id.btn_chat_room_send)
     public void sendMessage() {
-        ChatRoomBean itemData = mChatRoomRVAdapter.getItemData(0);
-        if (itemData instanceof MeChatRoomBean) {
-            MeChatRoomBean bean = (MeChatRoomBean) itemData;
-            Toast.makeText(this, "bean.text:" + bean.text.get(), Toast.LENGTH_SHORT).show();
-        } else {
-            OthersChatRoomBean bean = (OthersChatRoomBean) itemData;
-            bean.name.set("修改了");
+        String message = mEtChatRoomInput.getText().toString();
+        if (!TextUtils.isEmpty(message)) {
+            mChatRoomPresenter.sendMessage(message,AIManager.getInstance(this).getUserTel());
         }
     }
 
     @OnClick(R.id.iv_chat_room_bp)
     public void onBPClick() {
         Intent intent = new Intent(this, BloodPressureActivity.class);
-        intent.putExtra(BloodPressureActivity.EXTRA_PATIENT_ID,patientId);
+        intent.putExtra(BloodPressureActivity.EXTRA_PATIENT_ID, patientId);
         startActivity(intent);
     }
 
@@ -134,14 +134,14 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     @OnClick(R.id.iv_chat_room_symptom)
     public void onSymptomClick() {
         Intent intent = new Intent(this, SymptomActivity.class);
-        intent.putExtra(SymptomActivity.EXTRA_PATIENT_ID,patientId);
+        intent.putExtra(SymptomActivity.EXTRA_PATIENT_ID, patientId);
         startActivity(intent);
     }
 
     @OnClick(R.id.iv_chat_room_record)
     public void onMedicalRecordClick() {
         Intent intent = new Intent(this, MedicalRecordActivity.class);
-        intent.putExtra(MedicalRecordActivity.EXTRA_PATIENT_ID,patientId);
+        intent.putExtra(MedicalRecordActivity.EXTRA_PATIENT_ID, patientId);
         startActivity(intent);
     }
 
@@ -184,6 +184,22 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     public void appendChatMessageList(List<ChatRoomBean> chatRoomBeanList) {
         initChatRoomAdapter();
         mChatRoomRVAdapter.insertDatasToTop(chatRoomBeanList);
+    }
+
+    @Override
+    public void sendMessageSuccess() {
+        String message = mEtChatRoomInput.getText().toString();
+
+        MeChatRoomBean bean = new MeChatRoomBean();
+        bean.text.set(message);
+        bean.name.set(AIManager.getInstance(this).getUserName());
+        bean.portraitUrl.set(AIManager.getInstance(this).getAvatarUrl());
+        bean.recordTime.set(DateUtil.format(Calendar.getInstance().getTimeInMillis(),"yyyy-MM-dd HH:mm"));
+        mChatRoomRVAdapter.insertToTop(bean);
+
+        mRecyclerView.smoothScrollToPosition(0);
+
+        mEtChatRoomInput.setText("");
     }
 
     @Override

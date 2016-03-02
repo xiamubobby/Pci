@@ -18,7 +18,7 @@ public class BPModel extends DoctorBaseModel<BPEntity> {
     }
 
     public void getBPList(String patientId, long startTime, long endTime) {
-        fetchData(mBPAPI.getBPList(patientId, startTime, endTime));
+        fetchData(mBPAPI.getBPList(patientId, startTime, endTime), true);
     }
 
     @Override
@@ -28,6 +28,6 @@ public class BPModel extends DoctorBaseModel<BPEntity> {
 
     @Override
     protected void onFailed(Throwable e) {
-        mBloodPressureModel.onReceiveFailed(e.getMessage());
+        mBloodPressureModel.onReceiveFailed("获取血压数据失败，请重试！");
     }
 }

@@ -20,9 +20,8 @@ public class ChatRoomModel extends DoctorBaseModel<ChatRoomEntity> {
     }
 
     public void getChatList(String groupId, int page, int size) {
-        fetchData(mChatRoomAPI.getChatHistory(groupId, page, size));
+        fetchData(mChatRoomAPI.getChatHistory(groupId, page, size), true);
     }
-
 
     @Override
     protected void onSuccess(ChatRoomEntity response) {
@@ -34,7 +33,7 @@ public class ChatRoomModel extends DoctorBaseModel<ChatRoomEntity> {
     @Override
     protected void onFailed(Throwable e) {
         if (mChatRoomModelListener != null) {
-            mChatRoomModelListener.onReceiveFailed(e.getMessage());
+            mChatRoomModelListener.onReceiveFailed("获取聊天记录失败，请重试！");
         }
     }
 }

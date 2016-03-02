@@ -7,7 +7,9 @@ import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.ChatRoomEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.ChatRoomModel;
+import com.wonders.xlab.pci.doctor.mvp.model.SendMessageModel;
 import com.wonders.xlab.pci.doctor.mvp.model.impl.IChatRoomModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.ISendMessageModel;
 import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IChatRoomPresenter;
 
 import java.util.ArrayList;
@@ -19,22 +21,27 @@ import im.hua.utils.DateUtil;
 /**
  * Created by hua on 16/2/22.
  */
-public class ChatRoomPresenter extends BasePresenter implements IChatRoomModel {
+public class ChatRoomPresenter extends BasePresenter implements IChatRoomModel, ISendMessageModel {
 
     private String mDoctorId = "";
     private final String TYPE_USER = "User";
     private final String TYPE_DOCTOR = "Doctor";
 
     private ChatRoomModel mChatRoomModel;
-    private IChatRoomPresenter mIChatRoomView;
+    private SendMessageModel mSendMessageModel;
+
+    private IChatRoomPresenter mIChatRoomPresenter;
 
     private int page;
     private int size = 20;
 
     public ChatRoomPresenter(IChatRoomPresenter presenter, @NonNull String doctorId) {
         mDoctorId = doctorId;
-        mIChatRoomView = presenter;
+        mIChatRoomPresenter = presenter;
         mChatRoomModel = new ChatRoomModel(this);
+        mSendMessageModel = new SendMessageModel(this);
+
+        addModel(mSendMessageModel);
         addModel(mChatRoomModel);
     }
 
@@ -42,11 +49,15 @@ public class ChatRoomPresenter extends BasePresenter implements IChatRoomModel {
         mChatRoomModel.getChatList(groupId, page, size);
     }
 
+    public void sendMessage(String message, String doctorTel) {
+        mSendMessageModel.sendMessage(message, doctorTel);
+    }
+
     @Override
     public void onReceiveChatRoomHistorySuccess(ChatRoomEntity chatRoomEntity) {
         List<ChatRoomBean> chatRoomBeanList = new ArrayList<>();
         if (null == chatRoomEntity.getRet_values()) {
-            mIChatRoomView.showError("获取数据出错，请重试！");
+            mIChatRoomPresenter.showError("获取数据出错，请重试！");
             return;
         }
         for (int i = 0; i < chatRoomEntity.getRet_values().getContent().size(); i++) {
@@ -71,14 +82,19 @@ public class ChatRoomPresenter extends BasePresenter implements IChatRoomModel {
                 chatRoomBeanList.add(bean);
             }
         }
-        if (mIChatRoomView != null) {
-            mIChatRoomView.showChatMessageList(chatRoomBeanList);
+        if (mIChatRoomPresenter != null) {
+            mIChatRoomPresenter.showChatMessageList(chatRoomBeanList);
         }
 
     }
 
     @Override
     public void onReceiveFailed(String message) {
-        mIChatRoomView.showError(message);
+        mIChatRoomPresenter.showError(message);
+    }
+
+    @Override
+    public void onSendMessageSuccess() {
+        mIChatRoomPresenter.sendMessageSuccess();
     }
 }

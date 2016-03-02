@@ -18,7 +18,7 @@ public class SymptomModel extends DoctorBaseModel<SymptomEntity> {
     }
 
     public void getSymptomList(String userId) {
-        fetchData(mSymptomAPI.getSymptomList(userId));
+        fetchData(mSymptomAPI.getSymptomList(userId), true);
     }
 
     @Override
@@ -28,6 +28,6 @@ public class SymptomModel extends DoctorBaseModel<SymptomEntity> {
 
     @Override
     protected void onFailed(Throwable e) {
-        mISymptomModel.onReceiveFailed(e.getMessage());
+        mISymptomModel.onReceiveFailed("获取不适症状失败，请重试！");
     }
 }

@@ -19,7 +19,7 @@ public class UserInfoModel extends DoctorBaseModel<UserInfoEntity> {
     }
 
     public void getUserInfo(String userId) {
-        fetchData(mUserInfoAPI.getUserInfo(userId));
+        fetchData(mUserInfoAPI.getUserInfo(userId), true);
     }
 
     @Override
@@ -29,6 +29,6 @@ public class UserInfoModel extends DoctorBaseModel<UserInfoEntity> {
 
     @Override
     protected void onFailed(Throwable e) {
-        mUserInfoModel.onReceiveFailed(e.getMessage());
+        mUserInfoModel.onReceiveFailed("获取患者基本信息失败，请重试！");
     }
 }

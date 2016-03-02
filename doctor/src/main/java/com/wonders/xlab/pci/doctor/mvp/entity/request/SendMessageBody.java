@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by hua on 16/3/1.
  */
-public class SendMessageEntity {
+public class SendMessageBody {
 
     /**
      * target_type : chatgroups

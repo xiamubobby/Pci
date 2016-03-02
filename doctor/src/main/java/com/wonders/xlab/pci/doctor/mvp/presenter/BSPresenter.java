@@ -73,6 +73,6 @@ public class BSPresenter extends BasePresenter implements IBSModel {
 
     @Override
     public void onReceiveFailed(String message) {
-
+        mBloodPressurePresenter.showError(message);
     }
 }

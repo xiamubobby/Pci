@@ -60,10 +60,13 @@ public class BloodPressureActivity extends AppbarActivity implements IBPPresente
 
         mPatientId = getIntent().getExtras().getString(EXTRA_PATIENT_ID);
 
+        getToolbar().inflateMenu(R.menu.menu_blood_sugar);
+
         initChart();
 
         if (null != mRecyclerView) {
             mRecyclerView.setLinearLayout(false);
+            mRecyclerView.setPullRefreshEnable(false);
             mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
             mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
                 @Override

@@ -13,4 +13,6 @@ public interface IChatRoomPresenter extends IBasePresenter {
     void showChatMessageList(List<ChatRoomBean> chatRoomBeanList);
 
     void appendChatMessageList(List<ChatRoomBean> chatRoomBeanList);
+
+    void sendMessageSuccess();
 }

@@ -118,7 +118,7 @@ public class BPPresenter extends BasePresenter implements IBPModel {
 
     @Override
     public void onReceiveFailed(String message) {
-
+        mBloodPressurePresenter.showError(message);
     }
 
     private float getRandom(float range, float startsfrom) {

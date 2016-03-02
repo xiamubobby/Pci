@@ -19,7 +19,7 @@ public class LoginModel extends DoctorBaseModel<LoginEntity> {
 
     public void login(String tel, String password) {
 
-        fetchData(mLoginAPI.login(tel, password));
+        fetchData(mLoginAPI.login(tel, password), true);
     }
 
     @Override
@@ -29,6 +29,6 @@ public class LoginModel extends DoctorBaseModel<LoginEntity> {
 
     @Override
     protected void onFailed(Throwable e) {
-        mILoginModel.onReceiveFailed(e.getMessage());
+        mILoginModel.onReceiveFailed("登录失败，请重试！");
     }
 }
