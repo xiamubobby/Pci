@@ -1,4 +1,4 @@
-package im.hua.library.base.mvp;
+package im.hua.library.base.mvp.impl;
 
 /**
  * Created by hua on 15/12/3.

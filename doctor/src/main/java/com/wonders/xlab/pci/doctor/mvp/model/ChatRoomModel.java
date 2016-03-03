@@ -19,14 +19,29 @@ public class ChatRoomModel extends DoctorBaseModel<ChatRoomEntity> {
         mChatRoomAPI = mRetrofit.create(ChatRoomAPI.class);
     }
 
-    public void getChatList(String groupId, int page, int size) {
-        fetchData(mChatRoomAPI.getChatHistory(groupId, page, size), true);
+    public void getChatList(String groupId) {
+        if (!isLast()) {
+            fetchData(mChatRoomAPI.getChatHistory(groupId, getPageIndex() + 1, getSize()), true);
+        } else {
+            mChatRoomModelListener.silenceRequest();
+        }
     }
 
     @Override
     protected void onSuccess(ChatRoomEntity response) {
         if (mChatRoomModelListener != null) {
-            mChatRoomModelListener.onReceiveChatRoomHistorySuccess(response);
+            ChatRoomEntity.RetValuesEntity ret_values = response.getRet_values();
+
+            if (null == ret_values) {
+                mChatRoomModelListener.onReceiveFailed("获取数据出错，请重试！");
+                return;
+            }
+
+            setPageIndex(ret_values.getNumber());
+            setLast(ret_values.isLast());
+            setFirst(ret_values.isFirst());
+
+            mChatRoomModelListener.onReceiveChatRoomHistorySuccess(response, getPageIndex() > 0);
         }
     }
 

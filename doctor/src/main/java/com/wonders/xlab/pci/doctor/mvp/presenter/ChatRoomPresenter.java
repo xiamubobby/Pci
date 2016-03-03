@@ -15,13 +15,13 @@ import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IChatRoomPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import im.hua.library.base.mvp.BasePagePresenter;
+import im.hua.library.base.mvp.BasePresenter;
 import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/2/22.
  */
-public class ChatRoomPresenter extends BasePagePresenter implements IChatRoomModel, ISendMessageModel {
+public class ChatRoomPresenter extends BasePresenter implements IChatRoomModel, ISendMessageModel {
 
     private String mDoctorId = "";
     private final String TYPE_USER = "User";
@@ -43,11 +43,7 @@ public class ChatRoomPresenter extends BasePagePresenter implements IChatRoomMod
     }
 
     public void getChatList(String groupId) {
-        if (!isLast()) {
-            mChatRoomModel.getChatList(groupId, getPageIndex() + 1, getSize());
-        } else {
-            mIChatRoomPresenter.hideLoading();
-        }
+        mChatRoomModel.getChatList(groupId);
     }
 
     public void sendMessage(String message, String doctorTel, String groupId, long time) {
@@ -55,25 +51,18 @@ public class ChatRoomPresenter extends BasePagePresenter implements IChatRoomMod
     }
 
     @Override
-    public void onReceiveChatRoomHistorySuccess(ChatRoomEntity chatRoomEntity) {
+    public void onReceiveChatRoomHistorySuccess(ChatRoomEntity chatRoomEntity, boolean shouldAppend) {
         mIChatRoomPresenter.hideLoading();
+
         List<ChatRoomBean> chatRoomBeanList = new ArrayList<>();
 
         ChatRoomEntity.RetValuesEntity ret_values = chatRoomEntity.getRet_values();
-        if (null == ret_values) {
-            mIChatRoomPresenter.showError("获取数据出错，请重试！");
-            return;
-        }
 
-        setPageIndex(ret_values.getNumber());
-        setLast(ret_values.isLast());
-        setFirst(ret_values.isFirst());
-
-        for (int i = 0; i < chatRoomEntity.getRet_values().getContent().size(); i++) {
-            ChatRoomEntity.RetValuesEntity.ContentEntity contentEntity = chatRoomEntity.getRet_values().getContent().get(i);
+        for (int i = 0; i < ret_values.getContent().size(); i++) {
+            ChatRoomEntity.RetValuesEntity.ContentEntity contentEntity = ret_values.getContent().get(i);
 
             if (TYPE_DOCTOR.equals(contentEntity.getType()) && mDoctorId.equals(String.valueOf(contentEntity.getFromWho()))) {
-                //current user's message
+                //current login doctor's message
                 MeChatRoomBean bean = new MeChatRoomBean();
                 bean.portraitUrl.set(contentEntity.getAvatarUrl());
                 bean.recordTime.set(DateUtil.format(contentEntity.getSendTime(), "yyy-MM-dd HH:mm"));
@@ -91,12 +80,11 @@ public class ChatRoomPresenter extends BasePagePresenter implements IChatRoomMod
                 chatRoomBeanList.add(bean);
             }
         }
-        if (mIChatRoomPresenter != null) {
-            if (getPageIndex() <= 0) {
-                mIChatRoomPresenter.showChatMessageList(chatRoomBeanList);
-            } else {
-                mIChatRoomPresenter.appendChatMessageList(chatRoomBeanList);
-            }
+
+        if (shouldAppend) {
+            mIChatRoomPresenter.appendChatMessageList(chatRoomBeanList);
+        } else {
+            mIChatRoomPresenter.showChatMessageList(chatRoomBeanList);
         }
 
     }
@@ -110,5 +98,10 @@ public class ChatRoomPresenter extends BasePagePresenter implements IChatRoomMod
     @Override
     public void onSendMessageSuccess(long time) {
         mIChatRoomPresenter.sendMessageSuccess(time);
+    }
+
+    @Override
+    public void silenceRequest() {
+        mIChatRoomPresenter.hideLoading();
     }
 }

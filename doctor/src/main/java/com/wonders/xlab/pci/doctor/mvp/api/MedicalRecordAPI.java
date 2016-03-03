@@ -4,6 +4,7 @@ import com.wonders.xlab.pci.doctor.mvp.entity.MedicalRecordEntity;
 
 import retrofit.http.GET;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import rx.Observable;
 
 /**
@@ -11,5 +12,5 @@ import rx.Observable;
  */
 public interface MedicalRecordAPI {
     @GET("reviews/listReviews/{userId}")
-    Observable<MedicalRecordEntity> getMedicalRecordList(@Path("userId") String userId);
+    Observable<MedicalRecordEntity> getMedicalRecordList(@Path("userId") String userId, @Query("page") int page, @Query("size") int size);
 }

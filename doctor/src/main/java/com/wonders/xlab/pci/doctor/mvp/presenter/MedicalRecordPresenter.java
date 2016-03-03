@@ -68,4 +68,9 @@ public class MedicalRecordPresenter extends BasePresenter implements IMedicalRec
     public void onReceiveFailed(String message) {
         mIMedicalRecordPresenter.showError(message);
     }
+
+    @Override
+    public void silenceRequest() {
+        mIMedicalRecordPresenter.hideLoading();
+    }
 }

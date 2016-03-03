@@ -5,7 +5,7 @@ import com.wonders.xlab.pci.doctor.module.bp.bean.BPListBean;
 
 import java.util.ArrayList;
 
-import im.hua.library.base.mvp.IBasePresenter;
+import im.hua.library.base.mvp.impl.IBasePresenter;
 
 /**
  * Created by hua on 16/2/22.
