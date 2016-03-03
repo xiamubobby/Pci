@@ -29,6 +29,6 @@ public class LoginModel extends DoctorBaseModel<LoginEntity> {
 
     @Override
     protected void onFailed(Throwable e) {
-        mILoginModel.onReceiveFailed("登录失败，请重试！");
+        mILoginModel.onReceiveFailed(e.getMessage());
     }
 }

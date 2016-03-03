@@ -4,6 +4,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.CombinedChart;
@@ -60,7 +62,21 @@ public class BloodPressureActivity extends AppbarActivity implements IBPPresente
 
         mPatientId = getIntent().getExtras().getString(EXTRA_PATIENT_ID);
 
-        getToolbar().inflateMenu(R.menu.menu_blood_sugar);
+        getToolbar().inflateMenu(R.menu.menu_blood_pressure);
+        getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_bp_refresh:
+                        if (mRecyclerView != null) {
+                            mRecyclerView.setRefreshing(true);
+                        }
+                        mBPPresenter.getBPList(mPatientId,0, Calendar.getInstance().getTimeInMillis());
+                        break;
+                }
+                return false;
+            }
+        });
 
         initChart();
 
@@ -93,6 +109,7 @@ public class BloodPressureActivity extends AppbarActivity implements IBPPresente
     private void initChart() {
         mChart.setPinchZoom(true);
         mChart.setDescription("血压(mmHg)");
+        mChart.setNoDataText("暂无数据");
         mChart.setBackgroundColor(Color.WHITE);
         mChart.setDrawGridBackground(false);
         mChart.setDrawBarShadow(true);

@@ -88,12 +88,12 @@ public class ChatFragment extends BaseFragment implements ChatView {
         mRvHome.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true));
         mRvHome.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
             @Override
-            public void loadMore() {
+            public void loadMoreToBottom() {
                 mChatModel.getChatList(getActivity(), AIManager.getInstance(getActivity()).getUserId());
             }
 
             @Override
-            public void refresh() {
+            public void loadMoreToTop() {
             }
         });
         mChatModel.getChatList(getActivity(), AIManager.getInstance(getActivity()).getUserId());

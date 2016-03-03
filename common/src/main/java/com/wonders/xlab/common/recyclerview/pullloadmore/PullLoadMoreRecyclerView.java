@@ -23,6 +23,7 @@ import xlab.wonders.com.common.R;
  */
 public class PullLoadMoreRecyclerView extends LinearLayout {
     private RecyclerView mRecyclerView;
+//    private View mEmptyView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private PullLoadMoreListener mPullLoadMoreListener;
     private boolean hasMore = true;
@@ -31,12 +32,9 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
     private boolean pullRefreshEnable = true;
     private boolean pushRefreshEnable = true;
     private View mFooterView;
-    private View mHeaderView;
     private Context mContext;
     private TextView mFooterLoadMoreText;
-    private TextView mHeaderLoadMoreText;
     private boolean mIsReverse = false;
-    private boolean mShowHeaderView = true;
     private boolean mShowFooterView = true;
 
     public PullLoadMoreRecyclerView(Context context) {
@@ -65,16 +63,26 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
         mRecyclerView.setOnTouchListener(new onTouchRecyclerView());
 
+//        mEmptyView = view.findViewById(R.id.empty_view);
+//        mEmptyView.setVisibility(VISIBLE);
+
         mFooterView = view.findViewById(R.id.footerView);
         mFooterLoadMoreText = (TextView) view.findViewById(R.id.loadMoreText);
         mFooterView.setVisibility(View.GONE);
 
-        mHeaderView = view.findViewById(R.id.headerView);
-        mHeaderLoadMoreText = (TextView) view.findViewById(R.id.loadMoreText);
-        mHeaderView.setVisibility(View.GONE);
         this.addView(view);
 
     }
+
+  /*  public void hideEmptyView() {
+        mRecyclerView.setVisibility(VISIBLE);
+        mEmptyView.setVisibility(GONE);
+    }
+
+    public void showEmptyView() {
+        mRecyclerView.setVisibility(GONE);
+        mEmptyView.setVisibility(VISIBLE);
+    }*/
 
     public boolean isReverse() {
         return mIsReverse;
@@ -196,20 +204,11 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mFooterLoadMoreText.setText(text);
     }
 
-    public void setHeaderViewText(CharSequence text) {
-        mHeaderLoadMoreText.setText(text);
-    }
-
     public void setFooterViewText(int resid) {
         mFooterLoadMoreText.setText(resid);
     }
 
-    public void setHeaderViewText(int resid) {
-        mHeaderLoadMoreText.setText(resid);
-    }
-
-    public void showHeaderOrFooterView(boolean showHeaderView, boolean showFooterView) {
-        mShowHeaderView = showHeaderView;
+    public void showHeaderOrFooterView(boolean showFooterView) {
         mShowFooterView = showFooterView;
     }
 
@@ -224,15 +223,10 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
             if (mIsReverse) {
                 mFooterView.setVisibility(View.GONE);
-                if (mShowHeaderView) {
-                    mHeaderView.setVisibility(View.VISIBLE);
-                }
-
             } else {
                 if (mShowFooterView) {
                     mFooterView.setVisibility(View.VISIBLE);
                 }
-                mHeaderView.setVisibility(View.GONE);
             }
             invalidate();
             mPullLoadMoreListener.onLoadMore();
@@ -246,7 +240,6 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
         isLoadMore = false;
         mFooterView.setVisibility(View.GONE);
-        mHeaderView.setVisibility(View.GONE);
 
     }
 

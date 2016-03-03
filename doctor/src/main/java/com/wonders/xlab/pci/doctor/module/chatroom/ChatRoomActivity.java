@@ -103,7 +103,7 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
         mRecyclerView.setLinearLayout(true);
         mRecyclerView.setPullRefreshEnable(false);
         mRecyclerView.setPushRefreshEnable(true);
-        mRecyclerView.showHeaderOrFooterView(false, false);
+        mRecyclerView.showHeaderOrFooterView(false);
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {

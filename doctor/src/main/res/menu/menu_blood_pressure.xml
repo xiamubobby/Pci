@@ -2,21 +2,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/menu_bs_refresh"
+    <item
+        android:id="@+id/menu_bp_refresh"
+        android:icon="@drawable/ic_refresh_white_48dp"
         android:title="刷新"
-        app:showAsAction="never"/>
+        app:showAsAction="always"/>
     <group>
-        <item android:id="@+id/menu_bs_show_all"
+        <item
+            android:id="@+id/menu_bp_show_all"
             android:title="全部显示"
             app:showAsAction="never"/>
-        <item android:id="@+id/menu_bs_show_szy"
+        <item
+            android:id="@+id/menu_bp_show_szy"
+            android:checkable="true"
             android:title="只显示舒张压"
             app:showAsAction="never"/>
-        <item android:id="@+id/menu_bs_show_ssy"
+        <item
+            android:id="@+id/menu_bp_show_ssy"
             android:title="只显示收缩压"
+            android:checkable="true"
             app:showAsAction="never"/>
-        <item android:id="@+id/menu_bs_show_hr"
+        <item
+            android:id="@+id/menu_bp_show_hr"
             android:title="只显示心率"
+            android:checkable="true"
             app:showAsAction="never"/>
     </group>
 </menu>
