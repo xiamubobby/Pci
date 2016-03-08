@@ -108,13 +108,16 @@ public class MeasureBPGuideActivity extends NConnActivity implements MeasureResu
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
                     switch (mVpMeasureBPGuide.getCurrentItem()) {
                         case 2:
-                            if (!mBluetoothAdapter.isEnabled()) {
-                                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                                startActivityForResult(enableBtIntent, NConnActivity.REQUEST_ENABLE_BOND);
-                            } else {
-                                connectBondedDevice();
+                            if (null != mBluetoothAdapter) {
+                                if (!mBluetoothAdapter.isEnabled()) {
+                                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                                    startActivityForResult(enableBtIntent, NConnActivity.REQUEST_ENABLE_BOND);
+                                } else {
+                                    connectBondedDevice();
+                                }
+                                getToolbar().inflateMenu(R.menu.menu_measure_retry);
                             }
-                            getToolbar().inflateMenu(R.menu.menu_measure_retry);
+
                             break;
                         default:
                             getToolbar().getMenu().clear();
@@ -222,21 +225,21 @@ public class MeasureBPGuideActivity extends NConnActivity implements MeasureResu
     public void onDataReceived(BPEntityList bpEntityList) {
         cancel();
 //        dismissDialog();
-        mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(),bpEntityList);
+        mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(), bpEntityList);
     }
 
     @Subscribe
     public void onDeviceHasNoData(EmptyDataOtto otto) {
         cancel();
         dismissDialog();
-        showSnackbar(mCoordinator,"没有读取到血压数据，请先测量血压，然后重新同步数据",true);
+        showSnackbar(mCoordinator, "没有读取到血压数据，请先测量血压，然后重新同步数据", true);
     }
 
     @Subscribe
     public void onRequestDataFailed(RequestDataFailed otto) {
         cancel();
         dismissDialog();
-        showSnackbar(mCoordinator,otto.getMessage(),true);
+        showSnackbar(mCoordinator, otto.getMessage(), true);
     }
 
     @Override
@@ -272,7 +275,7 @@ public class MeasureBPGuideActivity extends NConnActivity implements MeasureResu
     @Override
     public void svSuccess() {
         RxBus.getInstance().send(new TaskRefreshOtto());
-        showSnackbar(mCoordinator,"保存成功",true);
+        showSnackbar(mCoordinator, "保存成功", true);
     }
 
     @Override
@@ -282,7 +285,7 @@ public class MeasureBPGuideActivity extends NConnActivity implements MeasureResu
 
     @Override
     public void svFailed(String message) {
-        showSnackbar(mCoordinator,"保存失败，请重试!",true);
+        showSnackbar(mCoordinator, "保存失败，请重试!", true);
     }
 
     @Override

@@ -48,20 +48,6 @@
         <TableRow>
 
             <TextView
-                android:id="@+id/tv_monitor_medicine"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="?selectableItemBackground"
-                android:clickable="true"
-                android:drawablePadding="@dimen/item_interval"
-                android:drawableTop="@drawable/pic_medicine"
-                android:gravity="center"
-                android:paddingBottom="@dimen/item_interval_large"
-                android:paddingTop="@dimen/item_interval_large"
-                android:text="用药"/>
-
-            <TextView
                 android:id="@+id/tv_monitor_symptom"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -74,6 +60,23 @@
                 android:paddingBottom="@dimen/item_interval_large"
                 android:paddingTop="@dimen/item_interval_large"
                 android:text="主诉症状"/>
+
+            <TextView
+                android:id="@+id/tv_monitor_medicine"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:drawablePadding="@dimen/item_interval"
+                android:drawableTop="@drawable/pic_medicine"
+                android:gravity="center"
+                android:paddingBottom="@dimen/item_interval_large"
+                android:paddingTop="@dimen/item_interval_large"
+                android:text="用药"
+                android:visibility="gone"/>
+
+
         </TableRow>
     </TableLayout>
 

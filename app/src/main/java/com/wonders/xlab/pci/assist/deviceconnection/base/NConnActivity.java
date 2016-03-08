@@ -92,7 +92,7 @@ public abstract class NConnActivity extends AppbarActivity {
         }
         if (mBluetoothAdapter == null) {
             Toast.makeText(this, "设备不支持蓝牙！", Toast.LENGTH_SHORT).show();
-            finish();
+//            finish();
         }
     }
 

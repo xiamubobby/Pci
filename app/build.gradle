@@ -8,7 +8,7 @@ android {
         applicationId "com.wonders.xlab.pci"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 15
+        versionCode 18
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -31,9 +31,9 @@ android {
         debug {
             signingConfig signingConfigs.release
             minifyEnabled false
-            zipAlignEnabled false
+            zipAlignEnabled true
             // 移除无用的resource文件
-            shrinkResources false
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {

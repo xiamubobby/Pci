@@ -136,50 +136,50 @@ public class BSEntity extends BaseEntity {
         }
 
         public static class ContentEntity {
-            private int id;
-            private int beforeBreakfast;
-            private int afterBreakfast;
-            private int beforeLunch;
-            private int afterLunch;
-            private int beforeDinner;
-            private int afterDinner;
-            private int beforeDawn;
-            private int randomValue;
+            private String id;
+            private float beforeBreakfast;
+            private float afterBreakfast;
+            private float beforeLunch;
+            private float afterLunch;
+            private float beforeDinner;
+            private float afterDinner;
+            private float beforeDawn;
+            private float randomValue;
             private long recordTime2Long;
 
-            public void setId(int id) {
+            public void setId(String id) {
                 this.id = id;
             }
 
-            public void setBeforeBreakfast(int beforeBreakfast) {
+            public void setBeforeBreakfast(float beforeBreakfast) {
                 this.beforeBreakfast = beforeBreakfast;
             }
 
-            public void setAfterBreakfast(int afterBreakfast) {
+            public void setAfterBreakfast(float afterBreakfast) {
                 this.afterBreakfast = afterBreakfast;
             }
 
-            public void setBeforeLunch(int beforeLunch) {
+            public void setBeforeLunch(float beforeLunch) {
                 this.beforeLunch = beforeLunch;
             }
 
-            public void setAfterLunch(int afterLunch) {
+            public void setAfterLunch(float afterLunch) {
                 this.afterLunch = afterLunch;
             }
 
-            public void setBeforeDinner(int beforeDinner) {
+            public void setBeforeDinner(float beforeDinner) {
                 this.beforeDinner = beforeDinner;
             }
 
-            public void setAfterDinner(int afterDinner) {
+            public void setAfterDinner(float afterDinner) {
                 this.afterDinner = afterDinner;
             }
 
-            public void setBeforeDawn(int beforeDawn) {
+            public void setBeforeDawn(float beforeDawn) {
                 this.beforeDawn = beforeDawn;
             }
 
-            public void setRandomValue(int randomValue) {
+            public void setRandomValue(float randomValue) {
                 this.randomValue = randomValue;
             }
 
@@ -187,39 +187,39 @@ public class BSEntity extends BaseEntity {
                 this.recordTime2Long = recordTime2Long;
             }
 
-            public int getId() {
+            public String getId() {
                 return id;
             }
 
-            public int getBeforeBreakfast() {
+            public float getBeforeBreakfast() {
                 return beforeBreakfast;
             }
 
-            public int getAfterBreakfast() {
+            public float getAfterBreakfast() {
                 return afterBreakfast;
             }
 
-            public int getBeforeLunch() {
+            public float getBeforeLunch() {
                 return beforeLunch;
             }
 
-            public int getAfterLunch() {
+            public float getAfterLunch() {
                 return afterLunch;
             }
 
-            public int getBeforeDinner() {
+            public float getBeforeDinner() {
                 return beforeDinner;
             }
 
-            public int getAfterDinner() {
+            public float getAfterDinner() {
                 return afterDinner;
             }
 
-            public int getBeforeDawn() {
+            public float getBeforeDawn() {
                 return beforeDawn;
             }
 
-            public int getRandomValue() {
+            public float getRandomValue() {
                 return randomValue;
             }
 

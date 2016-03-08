@@ -122,19 +122,19 @@ public class DailyTaskActivity extends AppbarActivity implements DailyTaskView, 
     }
 
     private void init() {
-        initToolbar();
+//        initToolbar();
         initRxBusEvent();
         mVpDailyTaskMedicine.setOffscreenPageLimit(3);
 
         mVpDailyTaskDate.setOffscreenPageLimit(0);
         mLineChartBp.setNoDataText("");
         mLineChartBp.setNoDataTextDescription(getResources().getString(R.string.task_empty_tip));
-        mLineChartBp.setDescription("血压");
+        mLineChartBp.setDescription("血压(mmHg)");
         mLineChartBp.setScaleEnabled(false);
 
         mLineChartBs.setNoDataText("");
         mLineChartBs.setNoDataTextDescription(getResources().getString(R.string.task_empty_tip));
-        mLineChartBs.setDescription("血糖(mol/L)");
+        mLineChartBs.setDescription("血糖(mmol/L)");
         mLineChartBs.setScaleEnabled(false);
 
         mTvDailyTaskDate.setText(DateUtil.format(Calendar.getInstance().getTimeInMillis(), DateUtil.DEFAULT_FORMAT));

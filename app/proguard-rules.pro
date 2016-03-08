@@ -263,3 +263,8 @@
 -keep @io.realm.internal.Keep class * { *; }
 -dontwarn javax.**
 -dontwarn io.realm.**
+
+
+-keep class com.wonders.xlab.pci.realm.** {*;}
+-keep class com.marshalchen.** {*;}
+

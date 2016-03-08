@@ -28,6 +28,8 @@ import com.wonders.xlab.pci.module.task.mvn.model.AddRecordModel;
 import com.wonders.xlab.pci.module.task.mvn.model.IdealRangeModel;
 import com.wonders.xlab.pci.module.task.mvn.view.IdealRangeView;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -84,6 +86,24 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView,
         super.onViewCreated(view, savedInstanceState);
         OttoManager.register(this);
         mIdealRangeModel.fetchIdealBPRange(AIManager.getInstance(getActivity()).getUserId());
+
+        BPEntityList bpEntityList = new BPEntityList();
+
+        List<BPEntity> bpEntities = new ArrayList<>();
+        BPEntity bpEntity = new BPEntity();
+        bpEntity.setAveragePressure(90);
+        bpEntity.setDate(Calendar.getInstance().getTimeInMillis());
+        bpEntity.setDiastolicPressure(110);
+        bpEntity.setSystolicPressure(90);
+        bpEntity.setHeartRate(92);
+
+        bpEntities.add(bpEntity);
+        bpEntities.add(bpEntity);
+
+        bpEntityList.setBp(bpEntities);
+
+//        mRecordModel.saveBP(AIManager.getInstance(getActivity()).getUserId(), bpEntityList);
+
     }
 
     @Subscribe
@@ -110,8 +130,10 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView,
         List<BPEntity> bpEntities = bpEntityList.getBp();
         mRecordModel.saveBP(AIManager.getInstance(getActivity()).getUserId(), bpEntityList);
 
-        mTvBpResultPressure.setText(String.format(Locale.CHINA,"%d/%d", bpEntities.get(0).getSystolicPressure(), bpEntities.get(0).getDiastolicPressure()));
-        mTvBpResultPulseRate.setText(String.format(Locale.CHINA,"%d", bpEntities.get(0).getHeartRate()));
+        if (null != bpEntities && bpEntities.size() > 0) {
+            mTvBpResultPressure.setText(String.format(Locale.CHINA,"%d/%d", bpEntities.get(0).getSystolicPressure(), bpEntities.get(0).getDiastolicPressure()));
+            mTvBpResultPulseRate.setText(String.format(Locale.CHINA,"%d", bpEntities.get(0).getHeartRate()));
+        }
     }
 
     @Subscribe

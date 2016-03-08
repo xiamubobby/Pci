@@ -41,7 +41,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -155,7 +156,8 @@
                 android:background="@color/bg_gray"
                 android:padding="@dimen/item_interval"
                 android:text="药物记录"
-                android:textSize="@dimen/text_size_normal"/>
+                android:textSize="@dimen/text_size_normal"
+                android:visibility="gone"/>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tab_daily_task_time_period_medicine"
@@ -164,16 +166,17 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:background="@android:color/white"
+                android:visibility="gone"
                 app:tabMode="fixed"/>
 
-            <include layout="@layout/divider_vertical"/>
 
             <com.wonders.xlab.common.viewpager.WrapHeightViewPager
                 android:id="@+id/vp_daily_task_medicine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/item_interval"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="match_parent"

@@ -31,7 +31,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.robolectric:robolectric:3.0'
     testCompile "org.mockito:mockito-core:1.10.19"
-    
+
     compile 'com.android.support:support-v13:23.2.0'
     compile 'com.android.support:support-v4:23.2.0'
     compile 'com.android.support:appcompat-v7:23.2.0'
@@ -54,21 +54,19 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
 
     compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0'
- /*   compile 'com.jakewharton.rxbinding:rxbinding-design:0.3.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7:0.3.0'
-    compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
-    compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.3.0'*/
+    /*   compile 'com.jakewharton.rxbinding:rxbinding-design:0.3.0'
+       compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7:0.3.0'
+       compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
+       compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.3.0'*/
 
     compile 'com.umeng.analytics:analytics:latest.integration'
-    compile 'io.realm:realm-android:0.87.4'
+    compile 'io.realm:realm-android:0.87.5'
     compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.2@aar'
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:1.5.0@aar'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
     compile 'com.zhy:flowlayout-lib:1.0.0'
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.2'
     compile 'me.iwf.photopicker:PhotoPicker:0.2.9@aar'
-
-
 
 //    compile 'com.github.moduth:blockcanary-ui:1.1.4'
     // this way you only enable BlockCanary in debug package

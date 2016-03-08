@@ -46,7 +46,7 @@
     <string name="text_measure_period">测量时段</string>
     <string name="text_before_breakfast">早餐前</string>
     <string name="text_blood_sugar">血糖</string>
-    <string name="unit_mol_l">mol/L</string>
+    <string name="unit_mol_l">mmol/L</string>
     <string name="text_tips">小贴士</string>
     <string name="text_phone_number">手机号码</string>
     <string name="text_password">密码</string>

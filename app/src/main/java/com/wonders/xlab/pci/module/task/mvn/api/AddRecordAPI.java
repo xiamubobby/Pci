@@ -16,20 +16,20 @@ import rx.Observable;
  */
 public interface AddRecordAPI {
     @FormUrlEncoded
-    @POST("userBloodSugar/saveUserBloodSugar")
+    @POST("v1/bloodSugars/saveUserBloodSugar")
     Observable<SimpleEntity> saveBSSingle(@Field("userId") String userId, @Field("date") long date, @Field("timeIndex") int timeIndex, @Field("bloodSugarValue") float bloodSugarValue);
 
-    @POST("userBloodSugar/saveUserBloodSugarByJson/{userId}")
+    @POST("v1/bloodSugars/saveUserBloodSugarByJson/{userId}")
     Observable<SimpleEntity> saveBS(@Path("userId") String userId, @Body BSEntityList bodyList);
 
     @FormUrlEncoded
-    @POST("userBloodPressure/saveUserPressure")
+    @POST("v1/bloodPressures/saveUserPressure")
     Observable<SimpleEntity> saveBPSingle(@Field("userId") String userId, @Field("date") long date, @Field("heartRate") int heartRate, @Field("systolicPressure") int systolicPressure, @Field("diastolicPressure") int diastolicPressure);
 
-    @POST("userBloodPressure/saveUserPressureByJson/{userId}")
+    @POST("v1/bloodPressures/saveUserPressureByJson/{userId}")
     Observable<SimpleEntity> saveBP(@Path("userId") String userId, @Body BPEntityList bodyList);
 
     @FormUrlEncoded
-    @POST("userSymptom/saveUserSymptom")
+    @POST("v1/symptoms/saveUserSymptom")
     Observable<SimpleEntity> saveSymptom(@Field("userId") String userId, @Field("symptomIdsStr") String[] symptomIdsStr);
 }
