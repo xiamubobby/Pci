@@ -191,6 +191,7 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView,
             mTvBsResultSugar.setText("0");
             Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();
         }
+        getActivity().finish();
     }
 
     @Override

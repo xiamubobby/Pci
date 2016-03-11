@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.auth.login;
+package com.wonders.xlab.patient.module.auth.login;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

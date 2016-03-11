@@ -1,8 +1,13 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
+
+    dataBinding {
+        enabled = true;
+    }
 
     defaultConfig {
         applicationId "com.wonders.xlab.patient"
@@ -10,6 +15,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        // Enabling multidex support.
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -17,8 +24,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    packagingOptions{
+
+    packagingOptions {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'META-INF/maven/com.squareup/javawriter/pom.properties'
+        exclude 'META-INF/maven/com.squareup/javawriter/pom.xml'
     }
 }
 
@@ -26,4 +36,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':base')
     compile project(':common')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.squareup.dagger:dagger:1.2.2'
+    apt 'com.squareup.dagger:dagger-compiler:1.2.2'
 }

@@ -6,7 +6,6 @@ import android.util.Log;
 import com.contec.jar.contec08a.DeviceCommand;
 import com.contec.jar.contec08a.DevicePackManager;
 import com.wonders.xlab.common.manager.OttoManager;
-import im.hua.utils.DateUtil;
 import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.assist.deviceconnection.aamodel.BPAAModel;
 import com.wonders.xlab.pci.assist.deviceconnection.base.DataRequestThread;
@@ -26,6 +25,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+
+import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 15/10/26.
@@ -123,7 +124,7 @@ public class BPConnectedThread extends DataRequestThread {
                             } else {
                                 if (BuildConfig.DEBUG) Log.d(TAG, "发送删除数据命令");
                                 pType = 5;
-                                mOutputStream.write(DeviceCommand.DELETE_BP());
+//                                mOutputStream.write(DeviceCommand.DELETE_BP());
                             }
 //                        }
                             break;
@@ -133,7 +134,6 @@ public class BPConnectedThread extends DataRequestThread {
                             mOutputStream.write(DeviceCommand.Correct_Time());
                             break;
                         case 0x31://不可以发送时间校正命令 49
-                            if (BuildConfig.DEBUG) Log.d(TAG, "不可进行时间校正");
                             if (BuildConfig.DEBUG) Log.d(TAG, "不可进行时间校正");
                             requestDataFailed();
                             break;

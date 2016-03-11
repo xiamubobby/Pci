@@ -18,7 +18,6 @@ import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.BuildConfig;
 import com.wonders.xlab.pci.R;
-import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.assist.deviceconnection.base.NConnActivity;
 import com.wonders.xlab.pci.assist.deviceconnection.entity.BPEntityList;
@@ -225,7 +224,7 @@ public class MeasureBPGuideActivity extends NConnActivity implements MeasureResu
     public void onDataReceived(BPEntityList bpEntityList) {
         cancel();
 //        dismissDialog();
-        mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(), bpEntityList);
+//        mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(), bpEntityList);
     }
 
     @Subscribe

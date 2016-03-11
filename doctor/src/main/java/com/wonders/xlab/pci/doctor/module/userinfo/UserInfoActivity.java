@@ -1,6 +1,8 @@
 package com.wonders.xlab.pci.doctor.module.userinfo;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
@@ -20,6 +22,9 @@ import butterknife.ButterKnife;
 
 
 public class UserInfoActivity extends AppbarActivity implements IUserInfoPresenter {
+    public final static String EXTRA_PATIENT_ID = "patientId";
+
+    private String mPatientId;
 
     @Bind(R.id.recycler_view_user_info)
     PullLoadMoreRecyclerView mRecyclerView;
@@ -41,6 +46,19 @@ public class UserInfoActivity extends AppbarActivity implements IUserInfoPresent
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if (null == intent) {
+            Toast.makeText(this, "获取患者信息失败，请重试！", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+        mPatientId = intent.getStringExtra(EXTRA_PATIENT_ID);
+        if (TextUtils.isEmpty(mPatientId)) {
+            Toast.makeText(this, "获取患者信息失败，请重试！", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         ButterKnife.bind(this);
 
         mRecyclerView.setLinearLayout(false);
@@ -62,7 +80,7 @@ public class UserInfoActivity extends AppbarActivity implements IUserInfoPresent
         addPresenter(mUserInfoPresenter);
 
         mRecyclerView.setRefreshing(true);
-        mUserInfoPresenter.getUserInfo(AIManager.getInstance(this).getUserId());
+        mUserInfoPresenter.getUserInfo(mPatientId);
     }
 
     @Override
@@ -90,6 +108,6 @@ public class UserInfoActivity extends AppbarActivity implements IUserInfoPresent
 
     @Override
     public void hideLoading() {
-        
+
     }
 }

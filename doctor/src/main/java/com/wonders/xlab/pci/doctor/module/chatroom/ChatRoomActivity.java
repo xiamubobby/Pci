@@ -81,12 +81,17 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
 
         Intent intent = getIntent();
         if (intent == null) {
-            throw new NullPointerException("getIntent() is null");
+//            throw new NullPointerException("getIntent() is null");
+            Toast.makeText(this, "获取患者信息失败，请重试！", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
         patientId = intent.getStringExtra(EXTRA_PATIENT_ID);
         groupId = intent.getStringExtra(EXTRA_PATIENT_GROUP_ID);
         if (TextUtils.isEmpty(patientId)) {
-            throw new NullPointerException("EXTRA_PATIENT_ID is null");
+            Toast.makeText(this, "获取患者信息失败，请重试！", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
         patientName = intent.getStringExtra(EXTRA_PATIENT_NAME);
         patientPhoneNumber = intent.getStringExtra(EXTRA_PATIENT_PHONE_NUMBER);
@@ -165,7 +170,9 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
 
     @OnClick(R.id.iv_chat_room_user_info)
     public void onUserInfoClick() {
-        startActivity(new Intent(this, UserInfoActivity.class));
+        Intent intent = new Intent(this, UserInfoActivity.class);
+        intent.putExtra(UserInfoActivity.EXTRA_PATIENT_ID, patientId);
+        startActivity(intent);
     }
 
     @OnClick(R.id.iv_chat_room_symptom)

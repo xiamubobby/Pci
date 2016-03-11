@@ -39,6 +39,11 @@ public class BPGuideOneFragment extends BaseFragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
     @OnClick(R.id.btn_measure_bp_guide_0_next)
     public void next() {
         OttoManager.post(new GuideOtto(0));

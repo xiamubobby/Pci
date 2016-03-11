@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.main;
+package com.wonders.xlab.patient.module.main;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -12,9 +12,9 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.main.doctors.DoctorsFragment;
-import com.wonders.xlab.patient.main.home.HomeFragment;
-import com.wonders.xlab.patient.main.me.MeFragment;
+import com.wonders.xlab.patient.module.main.doctors.DoctorsFragment;
+import com.wonders.xlab.patient.module.main.home.HomeFragment;
+import com.wonders.xlab.patient.module.main.me.MeFragment;
 
 import java.util.ArrayList;
 

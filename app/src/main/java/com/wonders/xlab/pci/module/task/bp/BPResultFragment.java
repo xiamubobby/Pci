@@ -10,6 +10,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
@@ -149,6 +150,8 @@ public class BPResultFragment extends BaseFragment implements MeasureResultView,
     @Override
     public void svSuccess() {
         stopConnectingAnim();
+        Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();
+        getActivity().finish();
     }
 
     @Override
