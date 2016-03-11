@@ -1,10 +1,12 @@
 package com.wonders.xlab.pci.doctor.module.bp;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -60,7 +62,18 @@ public class BloodPressureActivity extends AppbarActivity implements IBPPresente
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        mPatientId = getIntent().getExtras().getString(EXTRA_PATIENT_ID);
+        Intent intent = getIntent();
+        if (null == intent) {
+            Toast.makeText(this, "获取患者血压信息失败，请重试！", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+        mPatientId = intent.getStringExtra(EXTRA_PATIENT_ID);
+        if (TextUtils.isEmpty(mPatientId)) {
+            Toast.makeText(this, "获取患者血压信息失败，请重试！", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         getToolbar().inflateMenu(R.menu.menu_blood_pressure);
         getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {

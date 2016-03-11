@@ -4,20 +4,20 @@ package com.wonders.xlab.patient.module.main.home;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.mvp.presenter.HomePresenter;
+import com.wonders.xlab.patient.module.main.home.adapter.HomeRVAdapter;
+import com.wonders.xlab.patient.module.main.home.adapter.bean.HomeItemBean;
 
 import java.util.ArrayList;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -33,9 +33,7 @@ public class HomeFragment extends BaseFragment {
     @Bind(R.id.recycler_view_home)
     RecyclerView mRecyclerViewHome;
     private HomeRVAdapter mHomeRVAdapter;
-
-    @Inject
-    HomePresenter mHomePresenter;
+    private FragmentVPAdapter mTopVPAdapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -58,7 +56,15 @@ public class HomeFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerViewHome.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
+        mRecyclerViewHome.setItemAnimator(new DefaultItemAnimator());
 
+        mTopVPAdapter = new FragmentVPAdapter(getActivity().getFragmentManager());
+
+        setupBottomFunctionView();
+
+    }
+
+    private void setupBottomFunctionView() {
         mHomeRVAdapter = new HomeRVAdapter();
         ArrayList<HomeItemBean> beanArrayList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -90,8 +96,6 @@ public class HomeFragment extends BaseFragment {
         }
         mHomeRVAdapter.setDatas(beanArrayList);
         mRecyclerViewHome.setAdapter(mHomeRVAdapter);
-
-        Toast.makeText(getActivity(), mHomePresenter.getTopData(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

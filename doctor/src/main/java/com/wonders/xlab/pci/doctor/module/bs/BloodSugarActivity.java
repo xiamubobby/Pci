@@ -1,13 +1,14 @@
 package com.wonders.xlab.pci.doctor.module.bs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.pci.doctor.R;
-import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.bs.adapter.BSRVAdapter;
 import com.wonders.xlab.pci.doctor.module.bs.bean.BSBean;
@@ -20,6 +21,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class BloodSugarActivity extends AppbarActivity implements IBSPresenter {
+    public static final String EXTRA_PATIENT_ID = "patientId";
+    private String mPatientId;
 
     @Bind(R.id.recycler_view_bs)
     PullLoadMoreRecyclerView mRecyclerView;
@@ -43,11 +46,24 @@ public class BloodSugarActivity extends AppbarActivity implements IBSPresenter {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
+        Intent intent = getIntent();
+        if (null == intent) {
+            Toast.makeText(this, "获取患者血糖信息失败，请重试！", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+        mPatientId = intent.getStringExtra(EXTRA_PATIENT_ID);
+        if (TextUtils.isEmpty(mPatientId)) {
+            Toast.makeText(this, "获取患者血糖信息失败，请重试！", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         mRecyclerView.setLinearLayout(false);
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
-                mBSPresenter.getBSList(AIManager.getInstance(BloodSugarActivity.this).getUserId());
+                mBSPresenter.getBSList(mPatientId);
             }
 
             @Override
@@ -59,7 +75,7 @@ public class BloodSugarActivity extends AppbarActivity implements IBSPresenter {
         mBSPresenter = new BSPresenter(this);
         addPresenter(mBSPresenter);
 
-        mBSPresenter.getBSList(AIManager.getInstance(this).getUserId());
+        mBSPresenter.getBSList(mPatientId);
     }
 
     @Override

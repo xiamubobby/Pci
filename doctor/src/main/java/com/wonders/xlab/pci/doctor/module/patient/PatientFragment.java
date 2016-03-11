@@ -3,6 +3,7 @@ package com.wonders.xlab.pci.doctor.module.patient;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,7 @@ public class PatientFragment extends BaseFragment implements IPatientPresenter {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerViewPatient.setLinearLayout(false);
+        mRecyclerViewPatient.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
         mRecyclerViewPatient.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
         mRecyclerViewPatient.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override

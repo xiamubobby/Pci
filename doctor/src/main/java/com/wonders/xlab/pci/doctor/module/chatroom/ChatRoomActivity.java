@@ -159,34 +159,36 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     @OnClick(R.id.iv_chat_room_bp)
     public void onBPClick() {
         Intent intent = new Intent(this, BloodPressureActivity.class);
-        intent.putExtra(BloodPressureActivity.EXTRA_PATIENT_ID, patientId);
+        goToActivity(intent, BloodPressureActivity.EXTRA_PATIENT_ID);
+    }
+
+    private void goToActivity(Intent intent, String extraPatientId) {
+        intent.putExtra(extraPatientId, patientId);
         startActivity(intent);
     }
 
     @OnClick(R.id.iv_chat_room_bs)
     public void onBSClick() {
-        startActivity(new Intent(this, BloodSugarActivity.class));
+        Intent intent = new Intent(this, BloodSugarActivity.class);
+        goToActivity(intent, SymptomActivity.EXTRA_PATIENT_ID);
     }
 
     @OnClick(R.id.iv_chat_room_user_info)
     public void onUserInfoClick() {
         Intent intent = new Intent(this, UserInfoActivity.class);
-        intent.putExtra(UserInfoActivity.EXTRA_PATIENT_ID, patientId);
-        startActivity(intent);
+        goToActivity(intent, UserInfoActivity.EXTRA_PATIENT_ID);
     }
 
     @OnClick(R.id.iv_chat_room_symptom)
     public void onSymptomClick() {
         Intent intent = new Intent(this, SymptomActivity.class);
-        intent.putExtra(SymptomActivity.EXTRA_PATIENT_ID, patientId);
-        startActivity(intent);
+        goToActivity(intent, SymptomActivity.EXTRA_PATIENT_ID);
     }
 
     @OnClick(R.id.iv_chat_room_record)
     public void onMedicalRecordClick() {
         Intent intent = new Intent(this, MedicalRecordActivity.class);
-        intent.putExtra(MedicalRecordActivity.EXTRA_PATIENT_ID, patientId);
-        startActivity(intent);
+        goToActivity(intent, MedicalRecordActivity.EXTRA_PATIENT_ID);
     }
 
     private void setupToolbar() {

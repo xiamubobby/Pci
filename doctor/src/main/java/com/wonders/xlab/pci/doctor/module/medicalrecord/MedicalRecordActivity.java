@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.doctor.module.medicalrecord;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
@@ -49,7 +50,18 @@ public class MedicalRecordActivity extends AppbarActivity implements IMedicalRec
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        mPatientId = getIntent().getExtras().getString(EXTRA_PATIENT_ID);
+        Intent intent = getIntent();
+        if (null == intent) {
+            Toast.makeText(this, "获取患者就诊记录失败，请重试！", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+        mPatientId = intent.getStringExtra(EXTRA_PATIENT_ID);
+        if (TextUtils.isEmpty(mPatientId)) {
+            Toast.makeText(this, "获取患者就诊记录失败，请重试！", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         mRecyclerView.setLinearLayout(false);
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 5));
