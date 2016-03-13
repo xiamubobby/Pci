@@ -57,12 +57,21 @@ public class HomeTopImageFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ImageViewManager.setImageViewWithUrl(getActivity(),mIvHomeTopImage,mImageUrl,-1);
+        ImageViewManager.setImageViewWithUrl(getActivity(), mIvHomeTopImage, mImageUrl, -1);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    public static HomeTopImageFragment newInstance(String imageUrl) {
+        Bundle data = new Bundle();
+        data.putString(EXTRA_IMAGE_URL, imageUrl);
+
+        HomeTopImageFragment fragment = new HomeTopImageFragment();
+        fragment.setArguments(data);
+        return fragment;
     }
 }

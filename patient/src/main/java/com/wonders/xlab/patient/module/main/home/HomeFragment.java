@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseFragment;
+import im.hua.uikit.viewpager.CirclePageIndicator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +33,8 @@ public class HomeFragment extends BaseFragment {
     ViewPager mViewPagerHome;
     @Bind(R.id.recycler_view_home)
     RecyclerView mRecyclerViewHome;
+    @Bind(R.id.indicator_home)
+    CirclePageIndicator mIndicatorHome;
     private HomeRVAdapter mHomeRVAdapter;
     private FragmentVPAdapter mTopVPAdapter;
 
@@ -59,6 +62,11 @@ public class HomeFragment extends BaseFragment {
         mRecyclerViewHome.setItemAnimator(new DefaultItemAnimator());
 
         mTopVPAdapter = new FragmentVPAdapter(getActivity().getFragmentManager());
+        mTopVPAdapter.addFragment(HomeTopCircleFragment.newInstance(null));
+        mTopVPAdapter.addFragment(HomeTopImageFragment.newInstance("http://mmbiz.qpic.cn/mmbiz/gj62mn6HWrkADfXmMmNEmic7BRTB30aZicwJ74R0ibLvAXco4dLTJtOAkAGRW4PklnevKvqJkNzmGtosU9HUbFQXQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5"));
+        mViewPagerHome.setAdapter(mTopVPAdapter);
+
+        mIndicatorHome.setViewPager(mViewPagerHome);
 
         setupBottomFunctionView();
 

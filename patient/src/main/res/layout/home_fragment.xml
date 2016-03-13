@@ -1,23 +1,41 @@
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                                            xmlns:tools="http://schemas.android.com/tools"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            tools:context=".module.main.home.HomeFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".module.main.home.HomeFragment">
 
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager_home"
             android:layout_width="match_parent"
-            android:layout_height="160dp"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_home"
-            android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+        <im.hua.uikit.viewpager.CirclePageIndicator
+            android:id="@+id/indicator_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/item_interval"
+            app:fillColor="@android:color/white"
+            app:pageColor="#bdffffff"
+            app:showWhenSingle="false"
+            app:paddingEnd="2dp"
+            app:strokeWidth="0dp"/>
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

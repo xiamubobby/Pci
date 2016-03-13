@@ -2,6 +2,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/colorPrimary"
               android:orientation="horizontal"
               tools:context="com.wonders.xlab.patient.module.main.home.HomeTopCircleFragment">
 
@@ -9,36 +10,56 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_circle_home_top"/>
+            android:gravity="center"
+            android:text="正常\n7.5\nmmol/L"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_primary"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center">
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_circle_home_top"/>
+            android:text="正常"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_primary"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_interval"
+            android:gravity="center"
+            android:text="120/75\nmmHg"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_primary"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_circle_home_top"/>
+            android:gravity="center"
+            android:text="正常\n87\n次/分"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_primary"/>
     </LinearLayout>
 
 </LinearLayout>

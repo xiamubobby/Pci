@@ -35,6 +35,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':base')
     compile project(':common')
+    compile project(':uikit')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:multidex:1.0.1'
 }
