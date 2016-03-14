@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="doctorBean"
+            type="com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean"/>
+
+        <import type="com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean"/>
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:padding="@dimen/item_interval_middle">
+
+        <ImageView
+            android:id="@+id/iv_doctor_my_item_portrait"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/tv_doctor_my_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/item_interval_middle"
+            android:layout_marginRight="@dimen/item_interval"
+            android:layout_toLeftOf="@+id/tv_doctor_my_item_time"
+            android:layout_toRightOf="@+id/iv_doctor_my_item_portrait"
+            android:singleLine="true"
+            android:text="@{doctorBean.doctorGroupName}"
+            android:textColor='@{doctorBean.headerId == MyDoctorItemBean.HEADER_ID_IN_SERVICE ? @color/text_color_primary_black : @color/text_color_secondary_gray}'
+            android:textSize="@dimen/text_size_large"/>
+
+        <TextView
+            android:id="@+id/tv_doctor_my_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="right|center_vertical"
+            android:singleLine="true"
+            android:text="@{doctorBean.timeStr}"
+            android:textColor='@{doctorBean.headerId == MyDoctorItemBean.HEADER_ID_IN_SERVICE ? @color/text_color_primary_gray : @color/text_color_secondary_gray}'
+            android:textSize="@dimen/text_size_middle"/>
+
+        <TextView
+            android:id="@+id/tv_doctor_my_item_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/tv_doctor_my_item_name"
+            android:layout_marginLeft="@dimen/item_interval_middle"
+            android:layout_marginTop="@dimen/item_interval_middle"
+            android:layout_toRightOf="@+id/iv_doctor_my_item_portrait"
+            android:maxLines="3"
+            android:text="@{doctorBean.latestChatMessage}"
+            android:textColor='@{doctorBean.headerId == MyDoctorItemBean.HEADER_ID_IN_SERVICE ? @color/text_color_primary_gray : @color/text_color_secondary_gray}'
+            android:textSize="@dimen/text_size_middle"/>
+    </RelativeLayout>
+</layout>

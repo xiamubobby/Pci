@@ -25,12 +25,12 @@ public abstract class SimpleRVAdapter<Bean> extends RecyclerView.Adapter<Recycle
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(position);
+                    mOnItemClickListener.onItemClick(holder.getAdapterPosition());
                 }
             }
         });

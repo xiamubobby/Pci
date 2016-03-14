@@ -9,6 +9,6 @@
 
     <include layout="@layout/appbar"/>
 
-    <include layout="@layout/content_web"/>
+    <include layout="@layout/web_content"/>
 
 </android.support.design.widget.CoordinatorLayout>

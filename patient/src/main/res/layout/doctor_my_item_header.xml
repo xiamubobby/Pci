@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/background_gray"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_doctor_my_item_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_marginTop="@dimen/item_interval"
+        android:layout_marginBottom="1dp"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/item_height_min"
+        android:paddingLeft="@dimen/item_interval"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/text_size_large"/>
+</LinearLayout>

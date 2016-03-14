@@ -12,6 +12,15 @@ import com.bumptech.glide.Glide;
  * Created by hua on 16/2/19.
  */
 public class ImageViewManager {
+    public final static int PLACE_HOLDER_EMPTY = -1;
+
+    /**
+     *
+     * @param context
+     * @param imageView
+     * @param imageUrl
+     * @param placeHolder
+     */
     public static void setImageViewWithUrl(Context context, ImageView imageView, String imageUrl, @DrawableRes int placeHolder) {
         if (TextUtils.isEmpty(imageUrl) || imageView == null || context == null) {
             return;
@@ -20,7 +29,7 @@ public class ImageViewManager {
                 .load(imageUrl)
                 .crossFade()
                 .centerCrop();
-        if (-1 != placeHolder) {
+        if (PLACE_HOLDER_EMPTY != placeHolder) {
             builder.placeholder(placeHolder);
         }
         builder.into(imageView);
