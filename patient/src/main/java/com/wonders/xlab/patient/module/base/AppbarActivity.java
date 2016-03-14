@@ -7,9 +7,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.umeng.update.UmengUpdateAgent;
+import com.wonders.xlab.patient.R;
 
 import im.hua.library.base.BaseActivity;
-import xlab.wonders.com.common.R;
 
 /**
  * Created by hua on 15/12/1.

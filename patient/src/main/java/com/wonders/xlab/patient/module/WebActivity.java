@@ -1,14 +1,15 @@
 package com.wonders.xlab.patient.module;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
@@ -18,13 +19,6 @@ import butterknife.ButterKnife;
 
 public class WebActivity extends AppbarActivity {
     public final static String EXTRA_WEB_URL = "webUrl";
-    public final static String EXTRA_TITLE_NAME = "titleName";
-
-    private String titleName;
-    private String webUrl;
-
-    @Bind(R.id.toolbar)
-    Toolbar mToolbar;
     @Bind(R.id.wb_web)
     WebView mWbWeb;
 
@@ -38,15 +32,23 @@ public class WebActivity extends AppbarActivity {
         return "";
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.web_activity);
         ButterKnife.bind(this);
 
-        setToolbarTitle(titleName);
+        Intent intent = getIntent();
+        if (null == intent) {
+            Toast.makeText(this, "打开链接失败，请重试！", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+        Bundle data = intent.getExtras();
 
+        String webUrl = data.getString(EXTRA_WEB_URL);
 
+        initWebView(webUrl);
     }
 
     private void initWebView(final String url) {
@@ -55,8 +57,8 @@ public class WebActivity extends AppbarActivity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setDatabaseEnabled(true);
-        webSettings.setAppCacheEnabled(true);
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        webSettings.setAppCacheEnabled(false);
+        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webSettings.setAllowFileAccess(true);
 
         if (Build.VERSION.SDK_INT >= 16) {
@@ -73,7 +75,6 @@ public class WebActivity extends AppbarActivity {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
             return false;
         }
 
@@ -86,6 +87,7 @@ public class WebActivity extends AppbarActivity {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+            setToolbarTitle(view.getTitle());
             mIsPageFinished = true;
         }
 

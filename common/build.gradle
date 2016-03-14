@@ -1,7 +1,7 @@
 //noinspection GradleCompatible
 apply plugin: 'com.android.library'
 
-def supportLibVersion = "23.2.0"
+def supportLibVersion = "23.2.1"
 def retrofitVersion = "2.0.0-beta2"
 
 android {

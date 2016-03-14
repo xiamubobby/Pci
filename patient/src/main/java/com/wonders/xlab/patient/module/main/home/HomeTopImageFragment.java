@@ -1,6 +1,7 @@
 package com.wonders.xlab.patient.module.main.home;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 
 import com.wonders.xlab.common.manager.ImageViewManager;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.module.WebActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -16,20 +18,22 @@ import im.hua.library.base.BaseFragment;
 
 public class HomeTopImageFragment extends BaseFragment {
     private final static String EXTRA_IMAGE_URL = "imageUrl";
+    private final static String EXTRA_WEB_URL = "webUrl";
 
     private String mImageUrl;
+    private String mWebUrl;
 
     @Bind(R.id.iv_home_top_image)
     ImageView mIvHomeTopImage;
-
 
     public HomeTopImageFragment() {
         // Required empty public constructor
     }
 
-    public static HomeTopImageFragment getInstance(String imageUrl) {
+    public static HomeTopImageFragment newInstance(String imageUrl, String webUrl) {
         Bundle data = new Bundle();
         data.putString(EXTRA_IMAGE_URL, imageUrl);
+        data.putString(EXTRA_WEB_URL, webUrl);
 
         HomeTopImageFragment fragment = new HomeTopImageFragment();
         fragment.setArguments(data);
@@ -42,6 +46,7 @@ public class HomeTopImageFragment extends BaseFragment {
         Bundle data = getArguments();
         if (null != data) {
             mImageUrl = data.getString(EXTRA_IMAGE_URL);
+            mWebUrl = data.getString(EXTRA_WEB_URL);
         }
     }
 
@@ -58,6 +63,14 @@ public class HomeTopImageFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ImageViewManager.setImageViewWithUrl(getActivity(), mIvHomeTopImage, mImageUrl, -1);
+        mIvHomeTopImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), WebActivity.class);
+                intent.putExtra(WebActivity.EXTRA_WEB_URL, mWebUrl);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -66,12 +79,4 @@ public class HomeTopImageFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    public static HomeTopImageFragment newInstance(String imageUrl) {
-        Bundle data = new Bundle();
-        data.putString(EXTRA_IMAGE_URL, imageUrl);
-
-        HomeTopImageFragment fragment = new HomeTopImageFragment();
-        fragment.setArguments(data);
-        return fragment;
-    }
 }

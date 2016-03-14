@@ -1,13 +1,32 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".module.main.doctors.DoctorsFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".module.main.doctors.DoctorsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.flyco.tablayout.CommonTabLayout
+        android:id="@+id/tab_doctors"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:layout_height="48dp"
+        android:background="@android:color/white"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        app:tl_iconVisible="false"
+        app:tl_indicator_bounce_enable="true"
+        app:tl_indicator_color="@color/colorPrimary"
+        app:tl_indicator_corner_radius="4dp"
+        app:tl_indicator_margin_left="25dp"
+        app:tl_indicator_margin_right="25dp"
+        app:tl_indicator_style="BLOCK"
+        app:tl_textSelectColor="@android:color/white"
+        app:tl_textUnselectColor="@color/text_color_primary_gray"
+        app:tl_textsize="14sp"/>
 
-</FrameLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager_doctors"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

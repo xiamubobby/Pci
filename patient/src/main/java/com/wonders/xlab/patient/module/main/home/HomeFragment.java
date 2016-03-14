@@ -1,6 +1,5 @@
 package com.wonders.xlab.patient.module.main.home;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -63,7 +62,8 @@ public class HomeFragment extends BaseFragment {
 
         mTopVPAdapter = new FragmentVPAdapter(getActivity().getFragmentManager());
         mTopVPAdapter.addFragment(HomeTopCircleFragment.newInstance(null));
-        mTopVPAdapter.addFragment(HomeTopImageFragment.newInstance("http://mmbiz.qpic.cn/mmbiz/gj62mn6HWrkADfXmMmNEmic7BRTB30aZicwJ74R0ibLvAXco4dLTJtOAkAGRW4PklnevKvqJkNzmGtosU9HUbFQXQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5"));
+        mTopVPAdapter.addFragment(HomeTopImageFragment.newInstance("http://mmbiz.qpic.cn/mmbiz/gj62mn6HWrkADfXmMmNEmic7BRTB30aZicwJ74R0ibLvAXco4dLTJtOAkAGRW4PklnevKvqJkNzmGtosU9HUbFQXQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5", "https://mp.weixin.qq.com/s?__biz=MzI3MTE0MzE4OA==&mid=402506650&idx=1&sn=835501fbff82d74eeb091705bad45908&scene=1&srcid=0313puhCxxMzCRem3xajbdJu&key=710a5d99946419d9a9ec354ed7c1757fbfb4f58a2db84028d9e611b33539e3f43e16d94e206510518e370b3bd8940838&ascene=0&uin=MjgwMjI2Mzc1&devicetype=iMac+MacBookPro11%2C5+OSX+OSX+10.11.2+build(15C50)&version=11020201&pass_ticket=CxvDr1ZlxeWQYh7f29QnAfCynylFVU0mB6pChMo2RpBt24d5WMM7S5RlQfwO1Ubj"));
+        mTopVPAdapter.addFragment(HomeTopImageFragment.newInstance("http://mmbiz.qpic.cn/mmbiz/gj62mn6HWrmN80xGVWnvR6bTDzVHopNpt2bVa3U6DgA29wkia6WaMZXDomeib22BjpIRpD3AhdsJev9j50ia8FKpg/0?tp=webp&wxfrom=5&wx_lazy=1", "https://mp.weixin.qq.com/s?__biz=MzI3MTE0MzE4OA==&mid=403001788&idx=1&sn=2840b64b96e3ed32f35d4194b75f3aaa&scene=1&srcid=0313W1BPh2zSVgeHLN9KoOJ8&key=710a5d99946419d900fad65bd3cbdf05f4f85373e58259a5d49ccd4133930038e475e17397a142ffd6c3466ccc1b8191&ascene=0&uin=MjgwMjI2Mzc1&devicetype=iMac+MacBookPro11%2C5+OSX+OSX+10.11.2+build(15C50)&version=11020201&pass_ticket=CxvDr1ZlxeWQYh7f29QnAfCynylFVU0mB6pChMo2RpBt24d5WMM7S5RlQfwO1Ubj"));
         mViewPagerHome.setAdapter(mTopVPAdapter);
 
         mIndicatorHome.setViewPager(mViewPagerHome);
