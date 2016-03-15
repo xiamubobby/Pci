@@ -13,7 +13,7 @@ import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView;
-import com.wonders.xlab.common.recyclerview.adapter.BaseBean;
+import com.wonders.xlab.common.recyclerview.adapter.bean.BaseBean;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.BaseFragment;

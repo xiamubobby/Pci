@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
+import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.databinding.UserInfoItemBinding;
 import com.wonders.xlab.pci.doctor.module.userinfo.bean.UserInfoBean;

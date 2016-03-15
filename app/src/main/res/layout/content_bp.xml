@@ -14,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg_gray"
-        android:paddingBottom="@dimen/item_interval"
-        android:paddingTop="@dimen/item_interval">
+        android:paddingBottom="@dimen/item_interval_small"
+        android:paddingTop="@dimen/item_interval_small">
 
         <com.flyco.tablayout.SegmentTabLayout
             android:id="@+id/stl_bp_time_filter"

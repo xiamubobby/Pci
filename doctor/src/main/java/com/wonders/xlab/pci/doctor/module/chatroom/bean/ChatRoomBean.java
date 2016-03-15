@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.doctor.module.chatroom.bean;
 
-import com.wonders.xlab.common.recyclerview.adapter.BaseBean;
+import com.wonders.xlab.common.recyclerview.adapter.bean.BaseBean;
 import com.wonders.xlab.pci.doctor.R;
 
 /**

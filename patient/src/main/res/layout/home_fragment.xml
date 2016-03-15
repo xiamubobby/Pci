@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/item_interval"
+            android:layout_marginBottom="@dimen/item_interval_small"
             app:fillColor="@android:color/white"
             app:pageColor="#bdffffff"
             app:showWhenSingle="false"

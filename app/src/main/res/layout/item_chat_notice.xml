@@ -26,9 +26,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/item_interval"
+        android:layout_marginLeft="@dimen/item_interval_small"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/item_interval"
+        android:layout_marginTop="@dimen/item_interval_small"
         android:layout_toRightOf="@+id/iv_item_home_today_portrait"
         android:background="@drawable/chat_room_doctor_msg_bg"
         android:orientation="vertical"
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/item_interval"
+            android:layout_marginBottom="@dimen/item_interval_small"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <include layout="@layout/divider_vertical"/>
@@ -53,55 +53,55 @@
             android:drawablePadding="@dimen/item_interval_large"
             android:drawableRight="@drawable/ic_home_item_medicine"
             android:gravity="center"
-            android:paddingBottom="@dimen/item_interval"
+            android:paddingBottom="@dimen/item_interval_small"
             android:paddingLeft="@dimen/item_interval_large"
             android:paddingRight="@dimen/item_interval_large"
-            android:paddingTop="@dimen/item_interval"
+            android:paddingTop="@dimen/item_interval_small"
             android:text="记录服药"/>
 
         <TextView
             android:id="@+id/tv_item_home_today_bp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval"
+            android:layout_marginTop="@dimen/item_interval_small"
             android:background="@color/bg_gray"
             android:drawablePadding="@dimen/item_interval_large"
             android:drawableRight="@drawable/ic_home_item_measure"
             android:gravity="center"
-            android:paddingBottom="@dimen/item_interval"
+            android:paddingBottom="@dimen/item_interval_small"
             android:paddingLeft="@dimen/item_interval_large"
             android:paddingRight="@dimen/item_interval_large"
-            android:paddingTop="@dimen/item_interval"
+            android:paddingTop="@dimen/item_interval_small"
             android:text="血压测量"/>
 
         <TextView
             android:id="@+id/tv_item_home_today_bs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval"
+            android:layout_marginTop="@dimen/item_interval_small"
             android:background="@color/bg_gray"
             android:drawablePadding="@dimen/item_interval_large"
             android:drawableRight="@drawable/ic_home_item_measure"
             android:gravity="center"
-            android:paddingBottom="@dimen/item_interval"
+            android:paddingBottom="@dimen/item_interval_small"
             android:paddingLeft="@dimen/item_interval_large"
             android:paddingRight="@dimen/item_interval_large"
-            android:paddingTop="@dimen/item_interval"
+            android:paddingTop="@dimen/item_interval_small"
             android:text="血糖测量"/>
 
         <TextView
             android:id="@+id/tv_item_home_today_symptom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval"
+            android:layout_marginTop="@dimen/item_interval_small"
             android:background="@color/bg_gray"
             android:drawablePadding="@dimen/item_interval_large"
             android:drawableRight="@drawable/ic_home_item_symptom"
             android:gravity="center"
-            android:paddingBottom="@dimen/item_interval"
+            android:paddingBottom="@dimen/item_interval_small"
             android:paddingLeft="@dimen/item_interval_large"
             android:paddingRight="@dimen/item_interval_large"
-            android:paddingTop="@dimen/item_interval"
+            android:paddingTop="@dimen/item_interval_small"
             android:text="不良症状"/>
     </LinearLayout>
 
@@ -112,5 +112,5 @@
         android:layout_alignLeft="@+id/ll_item_home_content"
         android:layout_below="@+id/ll_item_home_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="@dimen/item_interval"/>
+        android:layout_marginTop="@dimen/item_interval_small"/>
 </RelativeLayout>

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
+import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.R;
 
 import java.lang.ref.WeakReference;

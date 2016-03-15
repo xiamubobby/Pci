@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
-                android:padding="@dimen/item_interval"
+                android:padding="@dimen/item_interval_small"
                 android:text="主诉症状统计"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_small"/>
@@ -126,7 +126,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@color/colorPrimary"
                 android:gravity="center"
-                android:padding="@dimen/item_interval"
+                android:padding="@dimen/item_interval_small"
                 android:text="患者症状及建议"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_small"/>

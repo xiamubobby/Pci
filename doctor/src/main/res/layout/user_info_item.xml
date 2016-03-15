@@ -15,8 +15,8 @@
                   android:gravity="center"
                   android:minHeight="?attr/listPreferredItemHeight"
                   android:orientation="horizontal"
-                  android:paddingLeft="@dimen/item_interval"
-                  android:paddingRight="@dimen/item_interval">
+                  android:paddingLeft="@dimen/item_interval_small"
+                  android:paddingRight="@dimen/item_interval_small">
 
         <TextView
             android:layout_width="0dp"

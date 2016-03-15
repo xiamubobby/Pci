@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wonders.xlab.common.manager.ImageViewManager;
-import com.wonders.xlab.common.recyclerview.adapter.MultiViewHolder;
-import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
+import com.wonders.xlab.common.recyclerview.adapter.multi.MultiViewHolder;
+import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.module.medicalrecord.bean.MedicalRecordPhotoBean;
 

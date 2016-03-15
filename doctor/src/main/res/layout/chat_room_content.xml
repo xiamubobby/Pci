@@ -24,46 +24,46 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="@dimen/item_interval">
+                android:padding="@dimen/item_interval_small">
 
                 <ImageView
                     android:id="@+id/iv_chat_room_user_info"
                     android:layout_width="@dimen/chat_room_top_icon_size"
                     android:layout_height="@dimen/chat_room_top_icon_size"
-                    android:layout_marginLeft="@dimen/item_interval"
-                    android:layout_marginRight="@dimen/item_interval"
+                    android:layout_marginLeft="@dimen/item_interval_small"
+                    android:layout_marginRight="@dimen/item_interval_small"
                     android:src="@drawable/pic_chat_room_patient_info"/>
 
                 <ImageView
                     android:id="@+id/iv_chat_room_record"
                     android:layout_width="@dimen/chat_room_top_icon_size"
                     android:layout_height="@dimen/chat_room_top_icon_size"
-                    android:layout_marginLeft="@dimen/item_interval"
-                    android:layout_marginRight="@dimen/item_interval"
+                    android:layout_marginLeft="@dimen/item_interval_small"
+                    android:layout_marginRight="@dimen/item_interval_small"
                     android:src="@drawable/pic_chat_room_record"/>
 
                 <ImageView
                     android:id="@+id/iv_chat_room_symptom"
                     android:layout_width="@dimen/chat_room_top_icon_size"
                     android:layout_height="@dimen/chat_room_top_icon_size"
-                    android:layout_marginLeft="@dimen/item_interval"
-                    android:layout_marginRight="@dimen/item_interval"
+                    android:layout_marginLeft="@dimen/item_interval_small"
+                    android:layout_marginRight="@dimen/item_interval_small"
                     android:src="@drawable/pic_chat_room_symptom"/>
 
                 <ImageView
                     android:id="@+id/iv_chat_room_bp"
                     android:layout_width="@dimen/chat_room_top_icon_size"
                     android:layout_height="@dimen/chat_room_top_icon_size"
-                    android:layout_marginLeft="@dimen/item_interval"
-                    android:layout_marginRight="@dimen/item_interval"
+                    android:layout_marginLeft="@dimen/item_interval_small"
+                    android:layout_marginRight="@dimen/item_interval_small"
                     android:src="@drawable/pic_chat_room_blood_pressure"/>
 
                 <ImageView
                     android:id="@+id/iv_chat_room_bs"
                     android:layout_width="@dimen/chat_room_top_icon_size"
                     android:layout_height="@dimen/chat_room_top_icon_size"
-                    android:layout_marginLeft="@dimen/item_interval"
-                    android:layout_marginRight="@dimen/item_interval"
+                    android:layout_marginLeft="@dimen/item_interval_small"
+                    android:layout_marginRight="@dimen/item_interval_small"
                     android:src="@drawable/pic_chat_room_blood_sugar"/>
 
             </LinearLayout>
@@ -77,8 +77,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/scroll_chat_room_top"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/item_interval"
-        android:layout_marginTop="@dimen/item_interval"
+        android:layout_marginBottom="@dimen/item_interval_small"
+        android:layout_marginTop="@dimen/item_interval_small"
         android:visibility="gone"
         android:orientation="horizontal">
 
@@ -112,7 +112,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/item_interval">
+            android:padding="@dimen/item_interval_small">
 
             <EditText
                 android:id="@+id/et_chat_room_input"
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/item_interval"
+                android:layout_marginLeft="@dimen/item_interval_small"
                 android:contentDescription="@string/text_send"
                 android:src="@drawable/ic_send_black_36dp"/>
         </RelativeLayout>

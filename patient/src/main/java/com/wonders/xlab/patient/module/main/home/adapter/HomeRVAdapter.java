@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.wonders.xlab.common.recyclerview.adapter.SimpleRVAdapter;
+import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.HomeRvItemBinding;
 import com.wonders.xlab.patient.module.main.home.adapter.bean.HomeItemBean;

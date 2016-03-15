@@ -1,4 +1,4 @@
-package com.wonders.xlab.common.recyclerview.adapter;
+package com.wonders.xlab.common.recyclerview.adapter.bean;
 
 /**
  * Created by tangmingjian on 15/11/23.

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="@dimen/item_interval">
+        android:padding="@dimen/item_interval_small">
 
         <ImageView
             android:id="@+id/iv_me_portrait"

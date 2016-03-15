@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <import type="android.text.TextUtils"/>
+
+        <variable
+            name="bean"
+            type="com.wonders.xlab.patient.module.main.doctors.adapter.bean.AllDoctorItemBean"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="@color/background_gray"
+                  android:orientation="vertical"
+                  android:paddingTop="@dimen/item_interval_middle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="@{bean.personal ? View.GONE : View.VISIBLE}">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/item_interval_small">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{bean.doctorGroupName}"
+                    android:textColor="@color/text_color_primary_black"
+                    android:textSize="@dimen/text_size_middle"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/item_interval_small"
+                    android:text='@{"("+bean.tagStr+")"}'
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/text_size_small"
+                    android:visibility="@{bean.tagStr == null ? View.GONE : View.VISIBLE}"/>
+            </LinearLayout>
+
+            <include layout="@layout/divider_vertical"/>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:padding="@dimen/item_interval_small">
+
+            <ImageView
+                android:id="@+id/iv_doctor_all_item_portrait"
+                android:layout_width="@dimen/doctor_list_icon_size"
+                android:layout_height="@dimen/doctor_list_icon_size"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:id="@+id/tv_doctor_all_admin_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/item_interval_middle"
+                android:layout_toRightOf="@+id/iv_doctor_all_item_portrait"
+                android:maxLength="15"
+                android:text="@{bean.adminName}"
+                android:textColor="@color/text_color_primary_black"
+                android:textSize="@dimen/text_size_middle"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/item_interval_small"
+                android:layout_toRightOf="@+id/tv_doctor_all_admin_name"
+                android:gravity="center_vertical"
+                android:minWidth="20dp"
+                android:text='@{TextUtils.isEmpty(bean.tagStr) ? "":"("+bean.tagStr+")"}'
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="@{bean.personal &amp;&amp; !TextUtils.isEmpty(bean.tagStr) ? View.VISIBLE : View.GONE}"/>
+
+            <TextView
+                android:id="@+id/tv_doctor_all_admin_title_department"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_doctor_all_admin_name"
+                android:layout_marginLeft="@dimen/item_interval_middle"
+                android:layout_marginTop="@dimen/item_interval_middle"
+                android:layout_toRightOf="@+id/iv_doctor_all_item_portrait"
+                android:singleLine="true"
+                android:text='@{bean.department + " " + bean.title}'
+                android:textColor="@color/text_color_primary_gray"
+                android:textSize="@dimen/text_size_small"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_doctor_all_admin_title_department"
+                android:layout_marginLeft="@dimen/item_interval_middle"
+                android:layout_marginTop="@dimen/item_interval_very_small"
+                android:layout_toRightOf="@+id/iv_doctor_all_item_portrait"
+                android:singleLine="true"
+                android:text="@{bean.hospital}"
+                android:textColor="@color/text_color_primary_gray"
+                android:textSize="@dimen/text_size_small"/>
+        </RelativeLayout>
+
+        <include layout="@layout/divider_vertical"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/item_interval_small">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="提供服务："
+                android:textColor="@color/text_color_primary_gray"
+                android:textSize="@dimen/text_size_small"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_doctor_all_item_services"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

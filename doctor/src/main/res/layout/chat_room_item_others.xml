@@ -11,7 +11,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/item_interval">
+                    android:padding="@dimen/item_interval_small">
 
         <TextView
             android:id="@+id/tv_chat_room_item_others_time"
@@ -28,9 +28,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_chat_room_item_others_name"
-            android:layout_marginLeft="@dimen/item_interval"
+            android:layout_marginLeft="@dimen/item_interval_small"
             android:layout_marginRight="@dimen/item_interval_large"
-            android:layout_marginTop="@dimen/item_interval"
+            android:layout_marginTop="@dimen/item_interval_small"
             android:layout_toRightOf="@+id/iv_chat_room_item_others_portrait"
             android:background="@drawable/chat_room_item_bg_others"
             android:text="@{chat.text}"
@@ -44,7 +44,7 @@
             android:layout_height="@dimen/portrait_list_item_size"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/tv_chat_room_item_others_time"
-            android:layout_marginTop="@dimen/item_interval"/>
+            android:layout_marginTop="@dimen/item_interval_small"/>
 
         <TextView
             android:id="@+id/tv_chat_room_item_others_name"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/iv_chat_room_item_others_portrait"
             android:layout_below="@id/iv_chat_room_item_others_portrait"
-            android:layout_marginLeft="@dimen/item_interval"
+            android:layout_marginLeft="@dimen/item_interval_small"
             android:layout_toRightOf="@+id/iv_chat_room_item_others_portrait"
             android:gravity="left"
             android:singleLine="true"

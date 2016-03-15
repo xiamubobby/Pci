@@ -13,7 +13,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/item_interval">
+                    android:padding="@dimen/item_interval_small">
 
         <TextView
             android:id="@+id/tv_chat_room_item_me_time"
@@ -31,8 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/iv_chat_room_item_me_portrait"
             android:layout_marginLeft="@dimen/item_interval_large"
-            android:layout_marginRight="@dimen/item_interval"
-            android:layout_marginTop="@dimen/item_interval"
+            android:layout_marginRight="@dimen/item_interval_small"
+            android:layout_marginTop="@dimen/item_interval_small"
             android:layout_toLeftOf="@+id/iv_chat_room_item_me_portrait"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -41,7 +41,7 @@
                 style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/item_interval"
+                android:layout_marginRight="@dimen/item_interval_small"
                 android:visibility="@{chat.isSending ? View.VISIBLE : View.GONE }"/>
 
             <TextView
@@ -61,6 +61,6 @@
             android:layout_height="@dimen/portrait_list_item_size"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tv_chat_room_item_me_time"
-            android:layout_marginTop="@dimen/item_interval"/>
+            android:layout_marginTop="@dimen/item_interval_small"/>
     </RelativeLayout>
 </layout>

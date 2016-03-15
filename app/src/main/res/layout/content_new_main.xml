@@ -21,7 +21,7 @@
         android:layout_alignParentBottom="true"
         android:background="#eaebeb"
         android:paddingBottom="4dp"
-        android:paddingTop="@dimen/item_interval"
+        android:paddingTop="@dimen/item_interval_small"
         app:tl_indicator_color="@color/colorPrimary"
         app:tl_indicator_height="0dp"
         app:tl_textSelectColor="@color/colorAccent"

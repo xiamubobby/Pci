@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bg_gray"
-        android:padding="@dimen/item_interval"
+        android:padding="@dimen/item_interval_small"
         android:text="@string/text_tips"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="@dimen/text_size_small"/>

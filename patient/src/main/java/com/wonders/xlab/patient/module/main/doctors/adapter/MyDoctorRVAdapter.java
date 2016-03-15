@@ -8,10 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.DoctorMyItemBinding;
-import com.wonders.xlab.patient.module.base.CustomUltimateViewAdapter;
 import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
 
 import butterknife.Bind;
@@ -20,33 +21,26 @@ import butterknife.ButterKnife;
 /**
  * Created by hua on 16/3/14.
  */
-public class MyDoctorRVAdapter extends CustomUltimateViewAdapter<MyDoctorItemBean> {
+public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
 
     @Override
-    public RecyclerView.ViewHolder getViewHolder(View view) {
-        return new ItemViewHolder(view, false);
-    }
-
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View headerView = LayoutInflater.from(parent.getContext()).inflate(R.layout.doctor_my_item, parent, false);
-        return new ItemViewHolder(headerView, true);
-    }
-
-    @Override
-    public long generateHeaderId(int position) {
-        return getDataItem(position).getHeaderId();
+        return new ItemViewHolder(headerView);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        MyDoctorItemBean dataItem = getDataItem(position);
+        super.onBindViewHolder(holder, position);
+        MyDoctorItemBean dataItem = getBean(position);
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        if (viewHolder.mIsItem) {
-            viewHolder.binding.setDoctorBean(dataItem);
-            ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(), viewHolder.mIvPortrait, dataItem.getPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
+        viewHolder.binding.setDoctorBean(dataItem);
+        ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(), viewHolder.mIvPortrait, dataItem.getPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
+    }
 
-        }
+    @Override
+    public long getHeaderId(int position) {
+        return getBean(position).getHeaderId();
     }
 
     @Override
@@ -58,9 +52,9 @@ public class MyDoctorRVAdapter extends CustomUltimateViewAdapter<MyDoctorItemBea
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemHeaderViewHolder viewHolder = (ItemHeaderViewHolder) holder;
-        if (MyDoctorItemBean.HEADER_ID_IN_SERVICE == generateHeaderId(position)) {
+        if (MyDoctorItemBean.HEADER_ID_IN_SERVICE == getHeaderId(position)) {
             viewHolder.mTvDoctorMyItemHeader.setText("服务中");
-        } else if (MyDoctorItemBean.HEADER_ID_OUT_OF_SERVICE == generateHeaderId(position)) {
+        } else if (MyDoctorItemBean.HEADER_ID_OUT_OF_SERVICE == getHeaderId(position)) {
             viewHolder.mTvDoctorMyItemHeader.setText("历史记录");
         }
     }
@@ -80,15 +74,10 @@ public class MyDoctorRVAdapter extends CustomUltimateViewAdapter<MyDoctorItemBea
 
         DoctorMyItemBinding binding;
 
-        boolean mIsItem;
-
-        public ItemViewHolder(View itemView, boolean isItem) {
+        public ItemViewHolder(View itemView) {
             super(itemView);
-            this.mIsItem = isItem;
-            if (isItem) {
-                mIvPortrait = (ImageView) itemView.findViewById(R.id.iv_doctor_my_item_portrait);
-                binding = DoctorMyItemBinding.bind(itemView);
-            }
+            mIvPortrait = (ImageView) itemView.findViewById(R.id.iv_doctor_my_item_portrait);
+            binding = DoctorMyItemBinding.bind(itemView);
         }
     }
 

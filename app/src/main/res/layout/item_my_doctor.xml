@@ -5,13 +5,13 @@
                 android:background="?selectableItemBackground"
                 android:clickable="true"
                 android:orientation="vertical"
-                android:padding="@dimen/item_interval">
+                android:padding="@dimen/item_interval_small">
 
     <ImageView
         android:id="@+id/iv_my_doctor_portrait"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginTop="@dimen/item_interval"
+        android:layout_marginTop="@dimen/item_interval_small"
         android:scaleType="fitCenter"/>
 
     <LinearLayout
@@ -26,7 +26,7 @@
             android:id="@+id/tv_my_doctor_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval"
+            android:layout_marginTop="@dimen/item_interval_small"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_size_normal"/>
 
@@ -34,21 +34,21 @@
             android:id="@+id/tv_my_doctor_job"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval"
+            android:layout_marginTop="@dimen/item_interval_small"
             android:textSize="@dimen/text_size_normal"/>
 
         <TextView
             android:id="@+id/tv_my_doctor_department"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval"
+            android:layout_marginTop="@dimen/item_interval_small"
             android:textSize="@dimen/text_size_normal"/>
 
         <TextView
             android:id="@+id/tv_my_doctor_hospital"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval"
+            android:layout_marginTop="@dimen/item_interval_small"
             android:textSize="@dimen/text_size_normal"/>
 
     </LinearLayout>
@@ -58,7 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_my_doctor"
-        android:layout_marginBottom="@dimen/item_interval"
-        android:layout_marginTop="@dimen/item_interval"
+        android:layout_marginBottom="@dimen/item_interval_small"
+        android:layout_marginTop="@dimen/item_interval_small"
         android:textSize="@dimen/text_size_normal"/>
 </RelativeLayout>

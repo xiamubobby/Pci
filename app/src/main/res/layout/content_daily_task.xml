@@ -16,8 +16,8 @@
         android:background="@android:color/white"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/item_interval"
-        android:paddingTop="@dimen/item_interval">
+        android:paddingBottom="@dimen/item_interval_small"
+        android:paddingTop="@dimen/item_interval_small">
 
         <TextView
             android:id="@+id/tv_daily_task_date"
@@ -47,8 +47,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/item_interval"
-            android:layout_marginTop="@dimen/item_interval"
+            android:layout_marginBottom="@dimen/item_interval_small"
+            android:layout_marginTop="@dimen/item_interval_small"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -120,7 +120,7 @@
             android:id="@+id/vp_daily_task_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/item_interval"
+            android:layout_marginBottom="@dimen/item_interval_small"
             android:gravity="center"/>
 
     </LinearLayout>
@@ -154,7 +154,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/bg_gray"
-                android:padding="@dimen/item_interval"
+                android:padding="@dimen/item_interval_small"
                 android:text="药物记录"
                 android:textSize="@dimen/text_size_normal"
                 android:visibility="gone"/>
@@ -174,7 +174,7 @@
                 android:id="@+id/vp_daily_task_medicine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/item_interval"
+                android:layout_marginBottom="@dimen/item_interval_small"
                 android:gravity="center"
                 android:visibility="gone"/>
 
@@ -182,7 +182,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/bg_gray"
-                android:padding="@dimen/item_interval"
+                android:padding="@dimen/item_interval_small"
                 android:text="主诉症状"
                 android:textSize="@dimen/text_size_normal"/>
 
@@ -199,7 +199,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/bg_gray"
-                android:padding="@dimen/item_interval"
+                android:padding="@dimen/item_interval_small"
                 android:text="血压测量"
                 android:textSize="@dimen/text_size_normal"/>
 
@@ -212,7 +212,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/bg_gray"
-                android:padding="@dimen/item_interval"
+                android:padding="@dimen/item_interval_small"
                 android:text="血糖测量"
                 android:textSize="@dimen/text_size_normal"/>
 

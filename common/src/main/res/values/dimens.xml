@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="item_interval">8dp</dimen>
+    <dimen name="item_interval_very_small">5dp</dimen>
+    <dimen name="item_interval_small">8dp</dimen>
     <dimen name="item_interval_middle">16dp</dimen>
     <dimen name="item_interval_large">24dp</dimen>
 </resources>

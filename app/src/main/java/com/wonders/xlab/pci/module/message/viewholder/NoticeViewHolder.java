@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.wonders.xlab.common.manager.OttoManager;
-import com.wonders.xlab.common.recyclerview.adapter.MultiViewHolder;
+import com.wonders.xlab.common.recyclerview.adapter.multi.MultiViewHolder;
 import im.hua.utils.DateUtil;
 import com.wonders.xlab.common.glide.GlideCircleTransform;
 import com.wonders.xlab.pci.R;

@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:singleLine="true"
         android:layout_height="wrap_content"
-        android:padding="@dimen/item_interval"
+        android:padding="@dimen/item_interval_small"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_size_normal"/>
 

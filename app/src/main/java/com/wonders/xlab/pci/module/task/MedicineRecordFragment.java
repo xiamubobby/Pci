@@ -101,7 +101,7 @@ public class MedicineRecordFragment extends BaseFragment {
             mLinearLayout.removeAllViews();
         }
         if (mBeanList != null && mBeanList.size() > 0) {
-            int interval = (int) getResources().getDimension(R.dimen.item_interval);
+            int interval = (int) getResources().getDimension(R.dimen.item_interval_small);
             int intervalLarge = (int) getResources().getDimension(R.dimen.item_interval_large);
 
             for (final MedicineRecordBean bean : mBeanList) {

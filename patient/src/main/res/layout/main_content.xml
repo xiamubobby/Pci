@@ -22,7 +22,7 @@
         android:layout_alignParentBottom="true"
         android:background="#eff0f1"
         android:paddingBottom="4dp"
-        android:paddingTop="@dimen/item_interval"
+        android:paddingTop="@dimen/item_interval_small"
         app:tl_iconHeight="26dp"
         app:tl_iconWidth="26dp"
         app:tl_indicator_color="@color/colorPrimary"

@@ -2,8 +2,8 @@ package com.wonders.xlab.pci.doctor.module.medicalrecord.adapter;
 
 import android.view.View;
 
-import com.wonders.xlab.common.recyclerview.adapter.MultiRVAdapter;
-import com.wonders.xlab.common.recyclerview.adapter.MultiViewHolder;
+import com.wonders.xlab.common.recyclerview.adapter.multi.MultiRVAdapter;
+import com.wonders.xlab.common.recyclerview.adapter.multi.MultiViewHolder;
 import com.wonders.xlab.pci.doctor.module.medicalrecord.bean.MedicalRecordBean;
 import com.wonders.xlab.pci.doctor.module.medicalrecord.bean.MedicalRecordPhotoBean;
 import com.wonders.xlab.pci.doctor.module.medicalrecord.viewholder.MedicalRecordPhotoVH;

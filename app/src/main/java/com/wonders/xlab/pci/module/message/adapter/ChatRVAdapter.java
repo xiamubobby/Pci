@@ -2,8 +2,8 @@ package com.wonders.xlab.pci.module.message.adapter;
 
 import android.view.View;
 
-import com.wonders.xlab.common.recyclerview.adapter.MultiRVAdapter;
-import com.wonders.xlab.common.recyclerview.adapter.MultiViewHolder;
+import com.wonders.xlab.common.recyclerview.adapter.multi.MultiRVAdapter;
+import com.wonders.xlab.common.recyclerview.adapter.multi.MultiViewHolder;
 import com.wonders.xlab.pci.module.message.bean.ChatBean;
 import com.wonders.xlab.pci.module.message.viewholder.MessageViewHolder;
 import com.wonders.xlab.pci.module.message.viewholder.NoticeViewHolder;

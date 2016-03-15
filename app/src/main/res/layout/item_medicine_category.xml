@@ -15,7 +15,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="@dimen/item_interval">
+        android:padding="@dimen/item_interval_small">
 
         <TextView
             android:id="@+id/tv_item_medicine_category_title"
@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginLeft="@dimen/item_interval"
+            android:layout_marginLeft="@dimen/item_interval_small"
             android:src="@drawable/arrow_down"/>
 
     </RelativeLayout>

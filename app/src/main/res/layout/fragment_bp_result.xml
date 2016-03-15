@@ -26,7 +26,7 @@
                 android:layout_height="?listPreferredItemHeightSmall"
                 android:background="@color/bg_gray"
                 android:gravity="center_vertical"
-                android:paddingLeft="@dimen/item_interval"
+                android:paddingLeft="@dimen/item_interval_small"
                 android:text="当前测量结果"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_normal"/>
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/item_interval"
+                android:layout_marginBottom="@dimen/item_interval_small"
                 android:layout_marginTop="@dimen/item_interval_large"
                 android:text="0/0"
                 android:textColor="@color/colorAccent"
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/item_interval"
+                android:layout_marginTop="@dimen/item_interval_small"
                 android:text="0"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_large"
@@ -66,7 +66,7 @@
                 android:layout_marginTop="@dimen/item_interval_large"
                 android:background="@color/bg_gray"
                 android:gravity="center_vertical"
-                android:paddingLeft="@dimen/item_interval"
+                android:paddingLeft="@dimen/item_interval_small"
                 android:text="理想范围"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_normal"/>
@@ -91,10 +91,10 @@
         android:background="@color/bg_gray"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/item_interval"
-        android:paddingLeft="@dimen/item_interval"
-        android:paddingRight="@dimen/item_interval"
-        android:paddingTop="@dimen/item_interval">
+        android:paddingBottom="@dimen/item_interval_small"
+        android:paddingLeft="@dimen/item_interval_small"
+        android:paddingRight="@dimen/item_interval_small"
+        android:paddingTop="@dimen/item_interval_small">
 
         <ImageView
             android:layout_width="36dp"
