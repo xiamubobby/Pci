@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.main.home;
+package com.wonders.xlab.patient.module.home;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.module.main.home.adapter.HomeRVAdapter;
-import com.wonders.xlab.patient.module.main.home.adapter.bean.HomeItemBean;
+import com.wonders.xlab.patient.module.home.adapter.HomeRVAdapter;
+import com.wonders.xlab.patient.module.home.adapter.bean.HomeItemBean;
 
 import java.util.ArrayList;
 

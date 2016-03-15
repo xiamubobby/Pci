@@ -12,9 +12,9 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.module.main.doctors.DoctorsFragment;
-import com.wonders.xlab.patient.module.main.home.HomeFragment;
-import com.wonders.xlab.patient.module.main.me.MeFragment;
+import com.wonders.xlab.patient.module.doctors.DoctorsFragment;
+import com.wonders.xlab.patient.module.home.HomeFragment;
+import com.wonders.xlab.patient.module.me.MeFragment;
 
 import java.util.ArrayList;
 

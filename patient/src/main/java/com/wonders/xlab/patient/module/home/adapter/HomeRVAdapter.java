@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.main.home.adapter;
+package com.wonders.xlab.patient.module.home.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.HomeRvItemBinding;
-import com.wonders.xlab.patient.module.main.home.adapter.bean.HomeItemBean;
+import com.wonders.xlab.patient.module.home.adapter.bean.HomeItemBean;
 
 /**
  * Created by hua on 16/3/8.

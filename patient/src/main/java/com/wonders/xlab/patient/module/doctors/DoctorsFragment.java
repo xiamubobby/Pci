@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.main.doctors;
+package com.wonders.xlab.patient.module.doctors;
 
 
 import android.os.Bundle;

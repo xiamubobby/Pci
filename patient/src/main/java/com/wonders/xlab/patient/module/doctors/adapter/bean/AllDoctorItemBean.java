@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.main.doctors.adapter.bean;
+package com.wonders.xlab.patient.module.doctors.adapter.bean;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;

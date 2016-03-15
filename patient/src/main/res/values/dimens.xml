@@ -9,4 +9,5 @@
     <dimen name="text_size_small">12sp</dimen>
     <dimen name="item_height_min">48dp</dimen>
     <dimen name="doctor_list_icon_size">64dp</dimen>
+    <dimen name="portrait_list_item_size">48dp</dimen>
 </resources>

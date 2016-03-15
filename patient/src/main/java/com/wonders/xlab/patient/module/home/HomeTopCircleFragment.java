@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.main.home;
+package com.wonders.xlab.patient.module.home;
 
 
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.module.main.home.bean.HomeTopCircleBean;
+import com.wonders.xlab.patient.module.home.bean.HomeTopCircleBean;
 
 import java.util.ArrayList;
 

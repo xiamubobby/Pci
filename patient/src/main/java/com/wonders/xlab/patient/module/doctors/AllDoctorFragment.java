@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.main.doctors;
+package com.wonders.xlab.patient.module.doctors;
 
 
 import android.os.Bundle;
@@ -12,8 +12,8 @@ import android.widget.Toast;
 import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.module.main.doctors.adapter.AllDoctorRVAdapter;
-import com.wonders.xlab.patient.module.main.doctors.adapter.bean.AllDoctorItemBean;
+import com.wonders.xlab.patient.module.doctors.adapter.AllDoctorRVAdapter;
+import com.wonders.xlab.patient.module.doctors.adapter.bean.AllDoctorItemBean;
 import com.wonders.xlab.patient.mvp.presenter.AllDoctorPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.IAllDoctorPresenter;
 

@@ -1,6 +1,7 @@
-package com.wonders.xlab.patient.module.main.doctors;
+package com.wonders.xlab.patient.module.doctors;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,10 +12,12 @@ import android.widget.Toast;
 
 import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.module.main.doctors.adapter.MyDoctorRVAdapter;
-import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
+import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
+import com.wonders.xlab.patient.module.doctors.adapter.MyDoctorRVAdapter;
+import com.wonders.xlab.patient.module.doctors.adapter.bean.MyDoctorItemBean;
 import com.wonders.xlab.patient.mvp.presenter.MyDoctorPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.IMyDoctorPresenter;
 
@@ -87,6 +90,14 @@ public class MyDoctorFragment extends BaseFragment implements IMyDoctorPresenter
     public void showMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList) {
         if (null == mMyDoctorRVAdapter) {
             mMyDoctorRVAdapter = new MyDoctorRVAdapter();
+            mMyDoctorRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
+                    intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_NAME, mMyDoctorRVAdapter.getBean(position).getDoctorGroupName());
+                    startActivity(intent);
+                }
+            });
             StickyRecyclerHeadersDecoration stickyRecyclerHeadersDecoration = new StickyRecyclerHeadersDecoration(mMyDoctorRVAdapter);
             mRecyclerView.getRecyclerView().addItemDecoration(stickyRecyclerHeadersDecoration);
         }

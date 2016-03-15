@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.main.home.bean;
+package com.wonders.xlab.patient.module.home.bean;
 
 import android.os.Parcel;
 import android.os.Parcelable;

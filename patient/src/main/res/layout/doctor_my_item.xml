@@ -5,9 +5,9 @@
 
         <variable
             name="doctorBean"
-            type="com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean"/>
+            type="com.wonders.xlab.patient.module.doctors.adapter.bean.MyDoctorItemBean"/>
 
-        <import type="com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean"/>
+        <import type="com.wonders.xlab.patient.module.doctors.adapter.bean.MyDoctorItemBean"/>
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.main.doctors.adapter;
+package com.wonders.xlab.patient.module.doctors.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +13,7 @@ import com.wonders.xlab.common.manager.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.DoctorMyItemBinding;
-import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
+import com.wonders.xlab.patient.module.doctors.adapter.bean.MyDoctorItemBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

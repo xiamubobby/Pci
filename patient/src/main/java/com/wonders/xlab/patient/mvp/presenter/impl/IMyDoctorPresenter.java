@@ -1,6 +1,6 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
-import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
+import com.wonders.xlab.patient.module.doctors.adapter.bean.MyDoctorItemBean;
 
 import java.util.ArrayList;
 
