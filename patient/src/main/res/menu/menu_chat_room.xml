@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_chat_room_detail"
+        android:icon="@drawable/ic_supervisor_account_white_48dp"
+        android:title="详情"
+        app:showAsAction="always"/>
+</menu>

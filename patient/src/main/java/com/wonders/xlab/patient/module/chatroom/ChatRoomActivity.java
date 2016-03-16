@@ -2,7 +2,9 @@ package com.wonders.xlab.patient.module.chatroom;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -15,6 +17,7 @@ import com.wonders.xlab.patient.module.base.AppbarActivity;
 import com.wonders.xlab.patient.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.patient.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.MeChatRoomBean;
+import com.wonders.xlab.patient.module.doctors.detail.DoctorDetailActivity;
 import com.wonders.xlab.patient.mvp.presenter.ChatRoomPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.IChatRoomPresenter;
 
@@ -27,20 +30,17 @@ import butterknife.OnClick;
 import im.hua.utils.DateUtil;
 
 public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresenter {
-    public final static String EXTRA_PATIENT_ID = "PATIENT_ID";
-    public final static String EXTRA_PATIENT_NAME = "PATIENT_NAME";
-    public final static String EXTRA_PATIENT_PHONE_NUMBER = "PATIENT_NUMBER";
+    public final static String EXTRA_GROUP_NAME = "group_name";
     /**
      * 患者和医生所在聊天组的id
      */
-    public final static String EXTRA_PATIENT_GROUP_ID = "GROUP_ID";
+    public final static String EXTRA_GROUP_ID = "GROUP_ID";
+
     @Bind(R.id.ll_chat_room_loading)
     LinearLayout mLoadingView;
 
-    private String patientId;
     private String groupId;
-    private String patientName;
-    private String patientPhoneNumber;
+    private String groupName;
 
     @Bind(R.id.et_chat_room_input)
     EditText mEtChatRoomInput;
@@ -69,21 +69,19 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
 
         Intent intent = getIntent();
         if (intent == null) {
-//            Toast.makeText(this, getResources().getString(R.string.query_patient_info_failed), Toast.LENGTH_SHORT).show();
-//            finish();
-//            return;
+            Toast.makeText(this, getResources().getString(R.string.query_patient_info_failed), Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
-        patientId = intent.getStringExtra(EXTRA_PATIENT_ID);
-        groupId = intent.getStringExtra(EXTRA_PATIENT_GROUP_ID);
-        if (TextUtils.isEmpty(patientId)) {
-//            Toast.makeText(this, getResources().getString(R.string.query_patient_info_failed), Toast.LENGTH_SHORT).show();
-//            finish();
-//            return;
+        groupId = intent.getStringExtra(EXTRA_GROUP_ID);
+        if (TextUtils.isEmpty(groupId)) {
+            Toast.makeText(this, getResources().getString(R.string.query_patient_info_failed), Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
-        patientName = intent.getStringExtra(EXTRA_PATIENT_NAME);
-        patientPhoneNumber = intent.getStringExtra(EXTRA_PATIENT_PHONE_NUMBER);
+        groupName = intent.getStringExtra(EXTRA_GROUP_NAME);
 
-        setToolbarTitle(patientName);
+        setToolbarTitle(groupName);
 
         mLoadingView.setVisibility(View.GONE);
 
@@ -108,6 +106,22 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
         addPresenter(mChatRoomPresenter);
 
         mChatRoomPresenter.getChatList(groupId);
+
+        getToolbar().inflateMenu(R.menu.menu_chat_room);
+        getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_chat_room_detail:
+                        Intent intent = new Intent(ChatRoomActivity.this, DoctorDetailActivity.class);
+                        intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, groupName);
+                        intent.putExtra(DoctorDetailActivity.EXTRA_GROUP_ID, groupId);
+                        startActivity(intent);
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override

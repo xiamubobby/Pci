@@ -94,7 +94,8 @@ public class DoctorMyFragment extends BaseFragment implements IDoctorMyPresenter
                 @Override
                 public void onItemClick(int position) {
                     Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
-                    intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_NAME, mMyDoctorRVAdapter.getBean(position).getDoctorGroupName());
+                    intent.putExtra(ChatRoomActivity.EXTRA_GROUP_ID, mMyDoctorRVAdapter.getBean(position).getGroupId());
+                    intent.putExtra(ChatRoomActivity.EXTRA_GROUP_NAME, mMyDoctorRVAdapter.getBean(position).getDoctorGroupName());
                     startActivity(intent);
                 }
             });

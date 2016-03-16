@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.wonders.xlab.patient.module.doctors.detail.DoctorDetailActivity">
+
+    <include layout="@layout/appbar"/>
+
+    <include layout="@layout/doctor_detail_content"/>
+
+</android.support.design.widget.CoordinatorLayout>

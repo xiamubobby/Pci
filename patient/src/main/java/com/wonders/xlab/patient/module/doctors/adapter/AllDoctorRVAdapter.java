@@ -44,7 +44,7 @@ public class AllDoctorRVAdapter extends SimpleRVAdapter<AllDoctorItemBean> {
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.iv_doctor_all_item_portrait)
+        @Bind(R.id.iv_doctor_detail_portrait)
         ImageView mIvDoctorAllItemPortrait;
         @Bind(R.id.recycler_view_doctor_all_item_services)
         RecyclerView mRecyclerView;

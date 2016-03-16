@@ -96,7 +96,6 @@
             android:label="@string/title_activity_web"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
-
         <activity
             android:name=".module.chatroom.ChatRoomActivity"
             android:screenOrientation="portrait"/>
@@ -120,6 +119,10 @@
         <activity
             android:name=".module.dailyrecord.symptom.SymptomActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.doctors.detail.DoctorDetailActivity"
+            android:label="@string/title_activity_doctor_detail">
+        </activity>
     </application>
 
 </manifest>

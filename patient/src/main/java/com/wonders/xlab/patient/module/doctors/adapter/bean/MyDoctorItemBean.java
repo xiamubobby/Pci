@@ -11,6 +11,8 @@ import com.wonders.xlab.patient.BR;
 public class MyDoctorItemBean extends BaseObservable{
     public final static long HEADER_ID_IN_SERVICE = 0;
     public final static long HEADER_ID_OUT_OF_SERVICE = 1;
+
+    private String groupId;
     /**
      * {@link HEADER_ID_IN_SERVICE}：正在服务
      * {@link HEADER_ID_OUT_OF_SERVICE}：历史记录
@@ -65,5 +67,13 @@ public class MyDoctorItemBean extends BaseObservable{
 
     public void setHeaderId(long headerId) {
         this.headerId = headerId;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 }

@@ -10,4 +10,5 @@
     <dimen name="item_height_min">48dp</dimen>
     <dimen name="doctor_list_icon_size">64dp</dimen>
     <dimen name="portrait_list_item_size">48dp</dimen>
+    <dimen name="divider_height_large">10dp</dimen>
 </resources>

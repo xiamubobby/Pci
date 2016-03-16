@@ -1,6 +1,7 @@
 package com.wonders.xlab.patient.module.doctors;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
+import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.doctors.adapter.AllDoctorRVAdapter;
 import com.wonders.xlab.patient.module.doctors.adapter.bean.AllDoctorItemBean;
+import com.wonders.xlab.patient.module.doctors.detail.DoctorDetailActivity;
 import com.wonders.xlab.patient.mvp.presenter.DoctorAllPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.IDoctorAllPresenter;
 
@@ -81,18 +84,29 @@ public class DoctorAllFragment extends BaseFragment implements IDoctorAllPresent
 
     @Override
     public void showAllDoctorList(ArrayList<AllDoctorItemBean> myDoctorBeanList) {
-        if (null == mAllDoctorRVAdapter) {
-            mAllDoctorRVAdapter = new AllDoctorRVAdapter();
-        }
+        initRecyclerViewAdapter();
         mAllDoctorRVAdapter.setDatas(myDoctorBeanList);
         mRecyclerView.setAdapter(mAllDoctorRVAdapter);
     }
 
-    @Override
-    public void appendAllDoctorList(ArrayList<AllDoctorItemBean> myDoctorBeanList) {
+    private void initRecyclerViewAdapter() {
         if (null == mAllDoctorRVAdapter) {
             mAllDoctorRVAdapter = new AllDoctorRVAdapter();
+            mAllDoctorRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    Intent intent = new Intent(getActivity(), DoctorDetailActivity.class);
+                    intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, mAllDoctorRVAdapter.getBean(position).getDoctorGroupName());
+                    intent.putExtra(DoctorDetailActivity.EXTRA_GROUP_ID, "111");
+                    startActivity(intent);
+                }
+            });
         }
+    }
+
+    @Override
+    public void appendAllDoctorList(ArrayList<AllDoctorItemBean> myDoctorBeanList) {
+        initRecyclerViewAdapter();
         mAllDoctorRVAdapter.appendDatas(myDoctorBeanList);
         mRecyclerView.setAdapter(mAllDoctorRVAdapter);
     }

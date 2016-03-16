@@ -14,6 +14,7 @@ public class AllDoctorItemBean extends BaseObservable {
     public final static long HEADER_ID_IN_SERVICE = 0;
     public final static long HEADER_ID_OUT_OF_SERVICE = 1;
 
+    private String groupId;
     /**
      * 是否为个人医生
      */
@@ -146,5 +147,13 @@ public class AllDoctorItemBean extends BaseObservable {
     public void setPersonal(boolean personal) {
         isPersonal = personal;
         notifyPropertyChanged(BR.personal);
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 }
