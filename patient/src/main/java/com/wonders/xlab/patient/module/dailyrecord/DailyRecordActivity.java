@@ -7,10 +7,11 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
-import com.wonders.xlab.patient.module.dailyrecord.bp.AddBPActivity;
-import com.wonders.xlab.patient.module.dailyrecord.bp.MeasureBPGuideActivity;
-import com.wonders.xlab.patient.module.dailyrecord.bs.AddBSActivity;
-import com.wonders.xlab.patient.module.dailyrecord.bs.MeasureBSGuideActivity;
+import com.wonders.xlab.patient.module.dailyrecord.bp.BPAddActivity;
+import com.wonders.xlab.patient.module.dailyrecord.bp.BPGuideActivity;
+import com.wonders.xlab.patient.module.dailyrecord.bs.BSAddActivity;
+import com.wonders.xlab.patient.module.dailyrecord.bs.BSGuideActivity;
+import com.wonders.xlab.patient.module.dailyrecord.symptom.SymptomActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -39,27 +40,27 @@ public class DailyRecordActivity extends AppbarActivity {
 
     @OnClick(R.id.fam_daily_task_bp)
     public void onRecordBpClick() {
-        boolean useEquipment = SPManager.get(this).getBoolean(getString(R.string.pref_key_use_equipment), true);
+        boolean useEquipment = SPManager.get(this).getBoolean(getString(R.string.pref_key_use_equipment), false);
         if (useEquipment) {
-            recordNewData(MeasureBPGuideActivity.class);
+            recordNewData(BPGuideActivity.class);
         } else {
-            recordNewData(AddBPActivity.class);
+            recordNewData(BPAddActivity.class);
         }
     }
 
     @OnClick(R.id.fam_daily_task_bs)
     public void onRecordBsClick() {
-        boolean useEquipment = SPManager.get(this).getBoolean(getString(R.string.pref_key_use_equipment), true);
+        boolean useEquipment = SPManager.get(this).getBoolean(getString(R.string.pref_key_use_equipment), false);
         if (useEquipment) {
-            recordNewData(MeasureBSGuideActivity.class);
+            recordNewData(BSGuideActivity.class);
         } else {
-            recordNewData(AddBSActivity.class);
+            recordNewData(BSAddActivity.class);
         }
     }
 
     @OnClick(R.id.fam_daily_task_symptom)
     public void onRecordSymptomClick() {
-        recordNewData(AddRetrieveSymptomActivity.class);
+        recordNewData(SymptomActivity.class);
     }
 
     private void recordNewData(Class targetActivity) {

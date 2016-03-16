@@ -23,10 +23,10 @@ import com.wonders.xlab.patient.assist.deviceconnection.otto.ConnStatusOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.EmptyDataOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.RequestDataFailed;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.ScanStartOtto;
-import com.wonders.xlab.patient.module.dailyrecord.mvn.presenter.AddRecordPresenter;
-import com.wonders.xlab.patient.module.dailyrecord.mvn.presenter.IdealRangePresenter;
-import com.wonders.xlab.patient.module.dailyrecord.mvn.presenter.impl.IAddRecordPresenter;
-import com.wonders.xlab.patient.module.dailyrecord.mvn.presenter.impl.IIdealRangePresenter;
+import com.wonders.xlab.patient.mvp.presenter.RecordSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.IdealRangePresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.IRecordAddPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.IIdealRangePresenter;
 
 import java.util.List;
 import java.util.Locale;
@@ -37,7 +37,7 @@ import im.hua.library.base.BaseFragment;
 import im.hua.uikit.LoadingDotView;
 import me.drakeet.labelview.LabelView;
 
-public class BPResultFragment extends BaseFragment implements IAddRecordPresenter, IIdealRangePresenter {
+public class BPResultFragment extends BaseFragment implements IRecordAddPresenter, IIdealRangePresenter {
 
     @Bind(R.id.tv_bp_result_pressure)
     LabelView mTvBpResultPressure;
@@ -50,7 +50,7 @@ public class BPResultFragment extends BaseFragment implements IAddRecordPresente
     @Bind(R.id.tv_bp_result_ideal_range)
     TextView mTvBpResultIdealRange;
 
-    private AddRecordPresenter mAddRecordPresenter;
+    private RecordSavePresenter mRecordSavePresenter;
     private IdealRangePresenter mIdealRangePresenter;
 
     private Animation rotateAnimation;
@@ -62,10 +62,10 @@ public class BPResultFragment extends BaseFragment implements IAddRecordPresente
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAddRecordPresenter = new AddRecordPresenter(this);
+        mRecordSavePresenter = new RecordSavePresenter(this);
         mIdealRangePresenter = new IdealRangePresenter(this);
 
-        addPresenter(mAddRecordPresenter);
+        addPresenter(mRecordSavePresenter);
         addPresenter(mIdealRangePresenter);
 
         if (rotateAnimation == null) {
@@ -110,7 +110,7 @@ public class BPResultFragment extends BaseFragment implements IAddRecordPresente
     public void onDataReceived(BPEntityList bpEntityList) {
 
         List<BPEntity> bpEntities = bpEntityList.getBp();
-        mAddRecordPresenter.saveBP(AIManager.getInstance(getActivity()).getUserId(), bpEntityList);
+        mRecordSavePresenter.saveBP(AIManager.getInstance(getActivity()).getUserId(), bpEntityList);
 
         if (null != bpEntities && bpEntities.size() > 0) {
             mTvBpResultPressure.setText(String.format(Locale.CHINA, "%d/%d", bpEntities.get(0).getSystolicPressure(), bpEntities.get(0).getDiastolicPressure()));

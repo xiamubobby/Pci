@@ -25,10 +25,10 @@ import com.wonders.xlab.patient.assist.deviceconnection.otto.ConnStatusOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.EmptyDataOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.RequestDataFailed;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.ScanStartOtto;
-import com.wonders.xlab.patient.module.dailyrecord.mvn.presenter.AddRecordPresenter;
-import com.wonders.xlab.patient.module.dailyrecord.mvn.presenter.IdealRangePresenter;
-import com.wonders.xlab.patient.module.dailyrecord.mvn.presenter.impl.IAddRecordPresenter;
-import com.wonders.xlab.patient.module.dailyrecord.mvn.presenter.impl.IIdealRangePresenter;
+import com.wonders.xlab.patient.mvp.presenter.RecordSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.IdealRangePresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.IRecordAddPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.IIdealRangePresenter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +43,7 @@ import im.hua.uikit.LoadingDotView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BSResultFragment extends BaseFragment implements IAddRecordPresenter, IIdealRangePresenter {
+public class BSResultFragment extends BaseFragment implements IRecordAddPresenter, IIdealRangePresenter {
 
     @Bind(R.id.tv_bs_result_sugar)
     TextView mTvBsResultSugar;
@@ -56,7 +56,7 @@ public class BSResultFragment extends BaseFragment implements IAddRecordPresente
     @Bind(R.id.sp_bs_result_period)
     Spinner mSpBsResultPeriod;
 
-    private AddRecordPresenter mAddRecordPresenter;
+    private RecordSavePresenter mRecordSavePresenter;
     private IdealRangePresenter mIdealRangePresenter;
 
     private Animation rotateAnimation;
@@ -72,9 +72,9 @@ public class BSResultFragment extends BaseFragment implements IAddRecordPresente
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mAddRecordPresenter = new AddRecordPresenter(this);
+        mRecordSavePresenter = new RecordSavePresenter(this);
         mIdealRangePresenter = new IdealRangePresenter(this);
-        addPresenter(mAddRecordPresenter);
+        addPresenter(mRecordSavePresenter);
         addPresenter(mIdealRangePresenter);
 
         if (rotateAnimation == null) {
@@ -135,7 +135,7 @@ public class BSResultFragment extends BaseFragment implements IAddRecordPresente
 
         if (Float.compare(bsValue, 0) > 0 && mTvBsResultSugar.getTag() != null) {
             mIsSaveSingle = true;
-            mAddRecordPresenter.saveBSSingle(AIManager.getInstance(getActivity()).getUserId(), Long.parseLong(mTvBsResultSugar.getTag().toString()), mSpBsResultPeriod.getSelectedItemPosition(), bsValue);
+            mRecordSavePresenter.saveBSSingle(AIManager.getInstance(getActivity()).getUserId(), Long.parseLong(mTvBsResultSugar.getTag().toString()), mSpBsResultPeriod.getSelectedItemPosition(), bsValue);
         } else {
             Toast.makeText(getActivity(), "请先测量您的血糖，然后点击保存!", Toast.LENGTH_SHORT).show();
         }
@@ -169,7 +169,7 @@ public class BSResultFragment extends BaseFragment implements IAddRecordPresente
         bsEntityList.getBs().remove(0);
         if (bsEntityList.getBs().size() > 0) {
             mIsSaveSingle = false;
-            mAddRecordPresenter.saveBS(AIManager.getInstance(getActivity()).getUserId(), bsEntityList);
+            mRecordSavePresenter.saveBS(AIManager.getInstance(getActivity()).getUserId(), bsEntityList);
         }
     }
 

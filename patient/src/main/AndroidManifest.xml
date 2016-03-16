@@ -104,19 +104,21 @@
             android:name=".module.dailyrecord.DailyRecordActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".module.dailyrecord.bp.AddBPActivity"
+            android:name=".module.dailyrecord.bp.BPAddActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name=".module.dailyrecord.bs.BSAddActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity
+            android:name=".module.dailyrecord.bp.BPGuideActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".module.dailyrecord.bs.AddBSActivity"
+            android:name=".module.dailyrecord.bs.BSGuideActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".module.dailyrecord.bp.MeasureBPGuideActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".module.dailyrecord.bs.MeasureBSGuideActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".module.dailyrecord.AddRetrieveSymptomActivity"
+            android:name=".module.dailyrecord.symptom.SymptomActivity"
             android:screenOrientation="portrait"/>
     </application>
 

@@ -53,8 +53,8 @@ public class DoctorsFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
 
         FragmentVPAdapter fragmentVPAdapter = new FragmentVPAdapter(getActivity().getFragmentManager());
-        fragmentVPAdapter.addFragment(MyDoctorFragment.newInstance());
-        fragmentVPAdapter.addFragment(AllDoctorFragment.newInstance());
+        fragmentVPAdapter.addFragment(DoctorMyFragment.newInstance());
+        fragmentVPAdapter.addFragment(DoctorAllFragment.newInstance());
         mViewPager.setAdapter(fragmentVPAdapter);
 
         setupBottomTab();
