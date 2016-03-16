@@ -30,6 +30,7 @@ public class DoctorMyPresenter extends BasePresenter {
             } else {
                 itemBean.setHeaderId(MyDoctorItemBean.HEADER_ID_OUT_OF_SERVICE);
             }
+            itemBean.setGroupId(i + "");
             itemBean.setDoctorGroupName("刘" + i);
             itemBean.setLatestChatMessage("可以复检了。");
             itemBean.setTimeStr(DateUtil.format(Calendar.getInstance().getTimeInMillis(), "HH:mm"));

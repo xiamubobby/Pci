@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="bean"
+            type="com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailGroupOfDoctorBean"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:background="?attr/selectableItemBackground"
+                  android:gravity="center"
+                  android:orientation="vertical"
+                  android:padding="@dimen/item_interval_middle">
+
+        <ImageView
+            android:id="@+id/iv_doctor_detail_group_of_doctor_item_portrait"
+            android:layout_width="@dimen/doctor_list_icon_size"
+            android:layout_height="@dimen/doctor_list_icon_size"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_interval_small"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:text="@{bean.name}"
+            android:textColor="@color/text_color_primary_gray"
+            android:textSize="@dimen/text_size_middle"/>
+    </LinearLayout>
+</layout>

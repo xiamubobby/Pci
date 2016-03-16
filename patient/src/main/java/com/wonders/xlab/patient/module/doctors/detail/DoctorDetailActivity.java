@@ -1,17 +1,29 @@
 package com.wonders.xlab.patient.module.doctors.detail;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
+import com.wonders.xlab.patient.module.doctors.detail.adapter.DoctorDetailGroupOfDoctorRVAdapter;
+import com.wonders.xlab.patient.module.doctors.detail.adapter.DoctorDetailMemberRVAdapter;
+import com.wonders.xlab.patient.module.doctors.detail.adapter.DoctorDetailPackageRVAdapter;
+import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailGroupMemberBean;
+import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailGroupOfDoctorBean;
+import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailPackageBean;
+import com.wonders.xlab.patient.mvp.presenter.DoctorDetailPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.IDoctorDetailPresenter;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class DoctorDetailActivity extends AppbarActivity {
+public class DoctorDetailActivity extends AppbarActivity implements IDoctorDetailPresenter {
     public final static String EXTRA_TITLE = "title";
     public final static String EXTRA_GROUP_ID = "group_id";
 
@@ -24,6 +36,12 @@ public class DoctorDetailActivity extends AppbarActivity {
     RecyclerView mRecyclerViewDoctorDetailPackage;
     @Bind(R.id.recycler_view_doctor_detail_member_or_group)
     RecyclerView mRecyclerViewDoctorDetailMemberOrGroup;
+
+    private DoctorDetailPackageRVAdapter mPackageRVAdapter;
+    private DoctorDetailMemberRVAdapter mMemberRVAdapter;
+    private DoctorDetailGroupOfDoctorRVAdapter mGroupOfDoctorRVAdapter;
+
+    private DoctorDetailPresenter mDoctorDetailPresenter;
 
     @Override
     public int getContentLayout() {
@@ -51,6 +69,54 @@ public class DoctorDetailActivity extends AppbarActivity {
         groupId = data.getString(EXTRA_GROUP_ID);
 
         setToolbarTitle(title);
+        mRecyclerViewDoctorDetailPackage.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false));
+        mRecyclerViewDoctorDetailMemberOrGroup.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+
+        mDoctorDetailPresenter = new DoctorDetailPresenter(this);
+        addPresenter(mDoctorDetailPresenter);
+
+        mDoctorDetailPresenter.fetchDoctorDetailInfo();
     }
 
+    @Override
+    public void showBasicInfo() {
+
+    }
+
+    @Override
+    public void showPackageList(ArrayList<DoctorDetailPackageBean> packageList) {
+        if (null == mPackageRVAdapter) {
+            mPackageRVAdapter = new DoctorDetailPackageRVAdapter();
+        }
+        mPackageRVAdapter.setDatas(packageList);
+        mRecyclerViewDoctorDetailPackage.setAdapter(mPackageRVAdapter);
+    }
+
+    @Override
+    public void showGroupMemberList(ArrayList<DoctorDetailGroupMemberBean> groupMemberList) {
+        if (null == mMemberRVAdapter) {
+            mMemberRVAdapter = new DoctorDetailMemberRVAdapter();
+        }
+        mMemberRVAdapter.setDatas(groupMemberList);
+        mRecyclerViewDoctorDetailMemberOrGroup.setAdapter(mMemberRVAdapter);
+    }
+
+    @Override
+    public void showGroupOfDoctorList(ArrayList<DoctorDetailGroupOfDoctorBean> groupOfDoctorList) {
+        if (null == mGroupOfDoctorRVAdapter) {
+            mGroupOfDoctorRVAdapter = new DoctorDetailGroupOfDoctorRVAdapter();
+        }
+        mGroupOfDoctorRVAdapter.setDatas(groupOfDoctorList);
+        mRecyclerViewDoctorDetailMemberOrGroup.setAdapter(mGroupOfDoctorRVAdapter);
+    }
+
+    @Override
+    public void showError(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
 }
