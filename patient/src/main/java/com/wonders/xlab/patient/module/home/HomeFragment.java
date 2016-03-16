@@ -1,5 +1,6 @@
 package com.wonders.xlab.patient.module.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -11,8 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.module.dailyrecord.DailyRecordActivity;
 import com.wonders.xlab.patient.module.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.patient.module.home.adapter.bean.HomeItemBean;
 
@@ -70,6 +73,16 @@ public class HomeFragment extends BaseFragment {
 
     private void setupBottomFunctionView() {
         HomeRVAdapter homeRVAdapter = new HomeRVAdapter();
+        homeRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                switch (position) {
+                    case 0:
+                        startActivity(new Intent(getActivity(), DailyRecordActivity.class));
+                        break;
+                }
+            }
+        });
         ArrayList<HomeItemBean> beanArrayList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             HomeItemBean homeItemBean = new HomeItemBean();

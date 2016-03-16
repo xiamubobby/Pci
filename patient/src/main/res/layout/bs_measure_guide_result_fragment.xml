@@ -1,0 +1,137 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rl_bs_result_bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="36dp"
+                android:layout_marginTop="36dp"
+                android:src="@drawable/pic_blood_sugar"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="?listPreferredItemHeightSmall"
+                android:background="@color/bg_gray"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/item_interval_small"
+                android:text="当前测量结果"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_large"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/item_interval_large"
+                android:paddingTop="@dimen/item_interval_large">
+
+                <TextView
+                    android:id="@+id/tv_bs_result_sugar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text_size_large"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" mmol/L"
+                    android:textSize="@dimen/text_size_large"/>
+
+                <Spinner
+                    android:id="@+id/sp_bs_result_period"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/item_interval_small"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_bs_result_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/selector_white_selected_primary_normal"
+                android:text="保存"
+                android:textColor="@drawable/selector_text_color_selected_accent"
+                android:textSize="@dimen/text_size_large"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="?listPreferredItemHeightSmall"
+                android:layout_marginTop="@dimen/item_interval_large"
+                android:background="@color/bg_gray"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/item_interval_small"
+                android:text="理想范围"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_large"/>
+
+            <TextView
+                android:id="@+id/tv_bs_result_ideal_range"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="8dp"
+                android:paddingLeft="@dimen/item_interval_large"
+                android:paddingRight="@dimen/item_interval_large"
+                android:paddingTop="@dimen/item_interval_large"
+                android:textSize="@dimen/text_size_large"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/rl_bs_result_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bg_gray"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/item_interval_small"
+        android:paddingLeft="@dimen/item_interval_small"
+        android:paddingRight="@dimen/item_interval_small"
+        android:paddingTop="@dimen/item_interval_small">
+
+        <ImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/pic_bs_device"/>
+
+        <im.hua.uikit.LoadingDotView
+            android:id="@+id/ldv_bs_result"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"/>
+
+        <ImageView
+            android:id="@+id/iv_bs_result_bluetooth"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_bluetooth"/>
+
+        <TextView
+            android:id="@+id/tv_bs_result_connection_status"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:text="正在连接"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_size_large"
+            android:visibility="invisible"/>
+    </LinearLayout>
+</RelativeLayout>

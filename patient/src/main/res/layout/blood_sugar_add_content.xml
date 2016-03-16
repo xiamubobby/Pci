@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".module.dailyrecord.bs.AddBSActivity"
+    tools:showIn="@layout/blood_sugar_add_activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?listPreferredItemHeightSmall"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_measure_date"
+                android:textSize="@dimen/text_size_large"/>
+
+            <TextView
+                android:id="@+id/tv_add_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:textSize="@dimen/text_size_large"/>
+        </LinearLayout>
+
+        <include layout="@layout/divider_vertical"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?listPreferredItemHeightSmall"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_measure_time"
+                android:textSize="@dimen/text_size_large"/>
+
+            <TextView
+                android:id="@+id/tv_add_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:textSize="@dimen/text_size_large"/>
+        </LinearLayout>
+
+        <include layout="@layout/divider_vertical"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?listPreferredItemHeightSmall"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_measure_period"
+                android:textSize="@dimen/text_size_large"/>
+
+            <TextView
+                android:id="@+id/tv_add_bs_period"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:text="@string/text_before_breakfast"
+                android:textSize="@dimen/text_size_large"/>
+        </LinearLayout>
+
+        <include layout="@layout/divider_vertical"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?listPreferredItemHeightSmall"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_blood_sugar"
+                android:textSize="@dimen/text_size_large"/>
+
+            <EditText
+                android:id="@+id/et_add_bs"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="numberDecimal"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical|right"
+                android:hint="@string/_0"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_large"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/unit_mol_l"
+                android:textSize="@dimen/text_size_large"/>
+        </LinearLayout>
+
+        <include layout="@layout/divider_vertical"/>
+    </LinearLayout>
+</ScrollView>

@@ -39,7 +39,7 @@
         <!-- umeng -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="567b627867e58eae8b0056e9"/>
+            android:value="56e8df59e0f55abf8a000364"/>
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="internal"/>
@@ -97,7 +97,26 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".module.chatroom.ChatRoomActivity"
+        <activity
+            android:name=".module.chatroom.ChatRoomActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.dailyrecord.DailyRecordActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.dailyrecord.bp.AddBPActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.dailyrecord.bs.AddBSActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.dailyrecord.bp.MeasureBPGuideActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.dailyrecord.bs.MeasureBSGuideActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.dailyrecord.AddRetrieveSymptomActivity"
             android:screenOrientation="portrait"/>
     </application>
 
