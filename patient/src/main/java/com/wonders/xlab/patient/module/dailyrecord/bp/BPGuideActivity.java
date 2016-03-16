@@ -214,7 +214,7 @@ public class BPGuideActivity extends NConnActivity{
     public void onDataReceived(BPEntityList bpEntityList) {
         cancel();
 //        dismissDialog();
-//        mAddRecordModel.saveBP(AIManager.getInstance(this).getUserId(), bpEntityList);
+//        mAddRecordModel.saveBP(AIManager.getInstance(this).getPatientId(), bpEntityList);
     }
 
     @Subscribe

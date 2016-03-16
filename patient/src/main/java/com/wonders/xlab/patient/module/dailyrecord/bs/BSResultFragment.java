@@ -124,7 +124,7 @@ public class BSResultFragment extends BaseFragment implements IRecordAddPresente
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         OttoManager.register(this);
-        mIdealRangePresenter.fetchIdealBSRange(AIManager.getInstance(getActivity()).getUserId());
+        mIdealRangePresenter.fetchIdealBSRange(AIManager.getInstance(getActivity()).getPatientId());
 
         mSpBsResultPeriod.setAdapter(new SimpleAdapter(getActivity(), mPeriodList, R.layout.item_spinner_text, new String[]{"name"}, new int[]{R.id.tv_spinner}));
     }
@@ -135,7 +135,7 @@ public class BSResultFragment extends BaseFragment implements IRecordAddPresente
 
         if (Float.compare(bsValue, 0) > 0 && mTvBsResultSugar.getTag() != null) {
             mIsSaveSingle = true;
-            mRecordSavePresenter.saveBSSingle(AIManager.getInstance(getActivity()).getUserId(), Long.parseLong(mTvBsResultSugar.getTag().toString()), mSpBsResultPeriod.getSelectedItemPosition(), bsValue);
+            mRecordSavePresenter.saveBSSingle(AIManager.getInstance(getActivity()).getPatientId(), Long.parseLong(mTvBsResultSugar.getTag().toString()), mSpBsResultPeriod.getSelectedItemPosition(), bsValue);
         } else {
             Toast.makeText(getActivity(), "请先测量您的血糖，然后点击保存!", Toast.LENGTH_SHORT).show();
         }
@@ -169,7 +169,7 @@ public class BSResultFragment extends BaseFragment implements IRecordAddPresente
         bsEntityList.getBs().remove(0);
         if (bsEntityList.getBs().size() > 0) {
             mIsSaveSingle = false;
-            mRecordSavePresenter.saveBS(AIManager.getInstance(getActivity()).getUserId(), bsEntityList);
+            mRecordSavePresenter.saveBS(AIManager.getInstance(getActivity()).getPatientId(), bsEntityList);
         }
     }
 

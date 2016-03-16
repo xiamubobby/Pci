@@ -91,7 +91,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             cacheEntity.setName(name);
             cacheEntity.setPortrait(portrait);
             cacheEntity.setMessage(false);
-            cacheEntity.setUserId(AIManager.getInstance(context).getUserId());
+            cacheEntity.setUserId(AIManager.getInstance(context).getPatientId());
 
             realm.commitTransaction();
 
@@ -114,7 +114,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             cacheEntity.setPortrait(portrait);
             cacheEntity.setMessage(true);
             cacheEntity.setContent(content);
-            cacheEntity.setUserId(AIManager.getInstance(context).getUserId());
+            cacheEntity.setUserId(AIManager.getInstance(context).getPatientId());
 
             realm.commitTransaction();
 
@@ -143,7 +143,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 cacheEntity.setUpdateTime(Calendar.getInstance().getTimeInMillis());
                 cacheEntity.setTitle(new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8"));
                 cacheEntity.setMessage(false);
-                cacheEntity.setUserId(AIManager.getInstance(context).getUserId());
+                cacheEntity.setUserId(AIManager.getInstance(context).getPatientId());
 
                 realm.commitTransaction();
 

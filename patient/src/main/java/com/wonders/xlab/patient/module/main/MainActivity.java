@@ -1,5 +1,6 @@
 package com.wonders.xlab.patient.module.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,8 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.module.auth.login.LoginActivity;
 import com.wonders.xlab.patient.module.doctors.DoctorsFragment;
 import com.wonders.xlab.patient.module.home.HomeFragment;
 import com.wonders.xlab.patient.module.me.MeFragment;
@@ -35,8 +38,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (!AIManager.getInstance(this).hasLogin()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
         setTheme(R.style.AppTheme_NoActionBar);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);

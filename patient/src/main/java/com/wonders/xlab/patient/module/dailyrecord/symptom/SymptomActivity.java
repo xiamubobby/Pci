@@ -95,7 +95,7 @@ public class SymptomActivity extends AppbarActivity implements ISymptomPresenter
             dialog.setMessage("正在保存，请稍候...");
             dialog.show();
 
-            mSymptomPresenter.saveSymptom(AIManager.getInstance(this).getUserId(), symptomStr);
+            mSymptomPresenter.saveSymptom(AIManager.getInstance(this).getPatientId(), symptomStr);
         } else {
             Toast.makeText(this, "请选择您的症状", Toast.LENGTH_SHORT).show();
         }

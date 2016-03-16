@@ -85,7 +85,7 @@ public class BPResultFragment extends BaseFragment implements IRecordAddPresente
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         OttoManager.register(this);
-        mIdealRangePresenter.fetchIdealBPRange(AIManager.getInstance(getActivity()).getUserId());
+        mIdealRangePresenter.fetchIdealBPRange(AIManager.getInstance(getActivity()).getPatientId());
     }
 
     @Subscribe
@@ -110,7 +110,7 @@ public class BPResultFragment extends BaseFragment implements IRecordAddPresente
     public void onDataReceived(BPEntityList bpEntityList) {
 
         List<BPEntity> bpEntities = bpEntityList.getBp();
-        mRecordSavePresenter.saveBP(AIManager.getInstance(getActivity()).getUserId(), bpEntityList);
+        mRecordSavePresenter.saveBP(AIManager.getInstance(getActivity()).getPatientId(), bpEntityList);
 
         if (null != bpEntities && bpEntities.size() > 0) {
             mTvBpResultPressure.setText(String.format(Locale.CHINA, "%d/%d", bpEntities.get(0).getSystolicPressure(), bpEntities.get(0).getDiastolicPressure()));

@@ -13,9 +13,11 @@ public class AIManager {
     /**
      * Preference key
      */
-    public final static String PRE_USER_ID = "userId";
-    public final static String PRE_USER_TEL = "userTel";
-    public final static String PRE_USER_MEDICARE_CARD = "userMedicareCard";
+    public final static String PRE_PATIENT_ID = "patientId";
+    public final static String PRE_PATIENT_TEL = "patientTel";
+    public final static String PRE_PATIENT_NAME = "patientName";
+    public final static String PRE_PATIENT_PORTRAIT_URL = "patientPortraitUrl";
+    public final static String PRE_PATIENT_MEDICARE_CARD = "patientMedicareCard";
     public final static String PRE_IS_HOME_SHOWING = "isShowingHome";
 
     private static AIManager aiManager;
@@ -38,41 +40,58 @@ public class AIManager {
     }
 
     public boolean hasLogin() {
-        return !TextUtils.isEmpty(getUserId());
+        return !TextUtils.isEmpty(getPatientId());
     }
 
-    public String getUserId() {
-        return spManager.getString(PRE_USER_ID, "");
+    public String getPatientId() {
+        return spManager.getString(PRE_PATIENT_ID, "");
     }
 
-    public String getUserTel() {
-        return spManager.getString(PRE_USER_TEL, "");
+    public String getPatientTel() {
+        return spManager.getString(PRE_PATIENT_TEL, "");
+    }
+
+    public String getPatientPortraitUrl() {
+        return spManager.getString(PRE_PATIENT_PORTRAIT_URL, "");
+    }
+
+    public String getPatientName() {
+        return spManager.getString(PRE_PATIENT_NAME, "");
     }
 
     public String getMedicareCard() {
-        return spManager.getString(PRE_USER_MEDICARE_CARD, "");
+        return spManager.getString(PRE_PATIENT_MEDICARE_CARD, "");
     }
 
     public boolean isHomeShowing() {
         return spManager.getBoolean(PRE_IS_HOME_SHOWING, false);
     }
 
-    public void saveUserInfo(String userId, String tel, String medicareCard) {
-        saveUserId(userId);
-        saveUserTel(tel);
-        saveMedicareCard(medicareCard);
+    public void savePatientInfo(String patientId, String tel, String portraitUrl,String patientName) {
+        savePatientId(patientId);
+        savePatientTel(tel);
+        savePatientPortraitUrl(portraitUrl);
+        savePatientName(patientName);
     }
 
-    public void saveUserId(String userId) {
-        spManager.putString(PRE_USER_ID, userId);
+    public void savePatientId(String patientId) {
+        spManager.putString(PRE_PATIENT_ID, patientId);
     }
 
-    public void saveUserTel(String tel) {
-        spManager.putString(PRE_USER_TEL, tel);
+    public void savePatientName(String patientName) {
+        spManager.putString(PRE_PATIENT_NAME, patientName);
+    }
+
+    public void savePatientPortraitUrl(String portraitUrl) {
+        spManager.putString(PRE_PATIENT_PORTRAIT_URL, portraitUrl);
+    }
+
+    public void savePatientTel(String tel) {
+        spManager.putString(PRE_PATIENT_TEL, tel);
     }
 
     public void saveMedicareCard(String medicareCard) {
-        spManager.putString(PRE_USER_MEDICARE_CARD, medicareCard);
+        spManager.putString(PRE_PATIENT_MEDICARE_CARD, medicareCard);
     }
 
     public void saveHomeShowing(boolean isShowing) {

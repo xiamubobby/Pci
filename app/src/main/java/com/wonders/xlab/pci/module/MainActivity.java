@@ -47,6 +47,7 @@ public class MainActivity extends BaseActivity {
         if (!AIManager.getInstance(this).hasLogin()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
+            return;
         }
 
         setContentView(R.layout.activity_new_main);

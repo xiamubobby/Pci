@@ -136,7 +136,7 @@ public class XEMChatService extends Service {
      * login em chat
      */
     private void login() {
-        String tel = AIManager.getInstance(this).getUserTel();
+        String tel = AIManager.getInstance(this).getPatientTel();
         if (TextUtils.isEmpty(tel)) {
             stopSelf();
             return;

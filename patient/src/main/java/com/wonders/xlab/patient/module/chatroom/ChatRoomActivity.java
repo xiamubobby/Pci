@@ -102,7 +102,7 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
             }
         });
 
-        mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance(this).getUserId());
+        mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance(this).getPatientId());
         addPresenter(mChatRoomPresenter);
 
         mChatRoomPresenter.getChatList(groupId);
@@ -148,7 +148,7 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
 
             mEtChatRoomInput.setText("");
 
-//            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getUserTel(), groupId, sendTime);
+//            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getPatientTel(), groupId, sendTime);
         }
     }
 

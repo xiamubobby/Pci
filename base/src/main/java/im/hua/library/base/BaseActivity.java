@@ -1,8 +1,10 @@
 package im.hua.library.base;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +17,30 @@ import im.hua.library.base.mvp.BasePresenter;
 public class BaseActivity extends AppCompatActivity {
 
     private List<BasePresenter> mBasePresenterList;
+
+    private ProgressDialog mDialog;
+
+    public void showProgressDialog(String title, String message) {
+        if (null == mDialog) {
+            mDialog = new ProgressDialog(this);
+        }
+        if (!TextUtils.isEmpty(title)) {
+            mDialog.setTitle(title);
+        }
+        if (!TextUtils.isEmpty(message)) {
+            mDialog.setMessage(message);
+        }
+        if (!mDialog.isShowing()) {
+            mDialog.show();
+        }
+
+    }
+
+    public void dismissProgressDialog() {
+        if (null != mDialog && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
