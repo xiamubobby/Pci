@@ -12,7 +12,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <android.support.v4.view.ViewPager
+        <com.wonders.xlab.common.viewpager.LooperViewPager
             android:id="@+id/view_pager_home"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

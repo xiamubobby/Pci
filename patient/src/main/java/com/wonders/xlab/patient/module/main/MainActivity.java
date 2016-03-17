@@ -54,6 +54,7 @@ public class MainActivity extends BaseActivity {
         mFragmentVPAdapter.addFragment(HomeFragment.getInstance());
         mFragmentVPAdapter.addFragment(DoctorsFragment.getInstance());
         mFragmentVPAdapter.addFragment(MeFragment.getInstance());
+        mViewPagerMain.setOffscreenPageLimit(3);
         mViewPagerMain.setAdapter(mFragmentVPAdapter);
 
         setupBottomTab();
