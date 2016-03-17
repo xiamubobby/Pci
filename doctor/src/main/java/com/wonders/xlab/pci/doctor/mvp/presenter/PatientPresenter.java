@@ -3,24 +3,24 @@ package com.wonders.xlab.pci.doctor.mvp.presenter;
 import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.PatientEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.PatientModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.IPatientModel;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IPatientPresenter;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.PatientModelListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.PatientPresenterListener;
 
 import java.util.ArrayList;
 
-import im.hua.library.base.mvp.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePresenter;
 
 /**
  * Created by hua on 16/2/22.
  */
-public class PatientPresenter extends BasePresenter implements IPatientModel {
-    private IPatientPresenter mIPatientPresenter;
+public class PatientPresenter extends BasePresenter implements PatientModelListener {
+    private PatientPresenterListener mIPatientPresenter;
     private PatientModel mPatientModel;
 
     private int mPageIndex = 0;
     private boolean mIsLast = false;
 
-    public PatientPresenter(IPatientPresenter IPatientPresenter) {
+    public PatientPresenter(PatientPresenterListener IPatientPresenter) {
         mIPatientPresenter = IPatientPresenter;
         mPatientModel = new PatientModel(this);
         addModel(mPatientModel);

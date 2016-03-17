@@ -10,8 +10,9 @@ import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.main.MainActivity;
-import com.wonders.xlab.patient.mvp.presenter.LoginPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.ILoginPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.LoginPresenter;
+import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
+import com.wonders.xlab.patient.mvp.presenter.listener.LoginPresenterListenerListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,15 +21,16 @@ import im.hua.library.base.BaseActivity;
 import im.hua.utils.KeyboardUtil;
 import im.hua.utils.ViewHelper;
 
-public class LoginActivity extends BaseActivity implements ILoginPresenter {
+public class LoginActivity extends BaseActivity implements LoginPresenterListenerListener {
 
-    private LoginPresenter mLoginPresenter;
     @Bind(R.id.login_phone_number)
     EditText mEtPhoneNumber;
     @Bind(R.id.login_password)
     EditText mEtPassword;
     @Bind(R.id.container)
     LinearLayout mContainer;
+
+    private ILoginPresenter mLoginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +47,12 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter {
         String tel = mEtPhoneNumber.getText().toString();
         if (TextUtils.isEmpty(tel)) {
             ViewHelper.shakeEdit(mEtPhoneNumber, this);
-            showShortToast("请输入手机号！");
+            showShortToast("手机号不能为空！");
+            return;
+        }
+        if (tel.length() != 11) {
+            ViewHelper.shakeEdit(mEtPhoneNumber, this);
+            showShortToast("请输入11位的手机号！");
             return;
         }
         String password = mEtPassword.getText().toString();
@@ -55,7 +62,7 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter {
             return;
         }
 
-        showProgressDialog("", "正在登陆，请稍候...");
+        showProgressDialog("", "正在登录，请稍候...");
         mLoginPresenter.login(tel, password);
     }
 

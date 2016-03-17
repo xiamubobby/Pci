@@ -3,7 +3,7 @@ package com.wonders.xlab.patient.mvp.entity;
 
 import java.util.List;
 
-import im.hua.library.base.mvp.BaseEntity;
+import im.hua.library.base.mvp.entity.BaseEntity;
 
 /**
  * Created by hua on 15/12/22.

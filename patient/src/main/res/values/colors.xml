@@ -9,4 +9,5 @@
     <color name="text_color_primary_black">#212121</color>
     <color name="background_gray">#eaebeb</color>
     <color name="white_pressed">#f1f1f1</color>
+    <color name="appYellow">#fed256</color>
 </resources>

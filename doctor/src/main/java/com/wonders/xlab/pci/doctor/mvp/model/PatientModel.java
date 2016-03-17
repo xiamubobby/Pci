@@ -3,17 +3,17 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.PatientAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.PatientEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.IPatientModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.PatientModelListener;
 
 /**
  * Created by hua on 16/2/19.
  */
 public class PatientModel extends DoctorBaseModel<PatientEntity> {
 
-    private IPatientModel mIPatientPresenter;
+    private PatientModelListener mIPatientPresenter;
     private PatientAPI mPatientAPI;
 
-    public PatientModel(IPatientModel presenter) {
+    public PatientModel(PatientModelListener presenter) {
         mIPatientPresenter = presenter;
         mPatientAPI = mRetrofit.create(PatientAPI.class);
     }

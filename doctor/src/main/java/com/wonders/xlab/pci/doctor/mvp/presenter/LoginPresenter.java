@@ -2,20 +2,20 @@ package com.wonders.xlab.pci.doctor.mvp.presenter;
 
 import com.wonders.xlab.pci.doctor.mvp.entity.LoginEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.LoginModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.ILoginModel;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.ILoginPresenter;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.LoginModelListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.LoginPresenterListener;
 
-import im.hua.library.base.mvp.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePresenter;
 import im.hua.utils.MD5Util;
 
 /**
  * Created by hua on 16/2/25.
  */
-public class LoginPresenter extends BasePresenter implements ILoginModel {
-    private ILoginPresenter mILoginPresenter;
+public class LoginPresenter extends BasePresenter implements LoginModelListener {
+    private LoginPresenterListener mILoginPresenter;
     private LoginModel mLoginModel;
 
-    public LoginPresenter(ILoginPresenter iLoginPresenter) {
+    public LoginPresenter(LoginPresenterListener iLoginPresenter) {
         mILoginPresenter = iLoginPresenter;
         mLoginModel = new LoginModel(this);
         addModel(mLoginModel);

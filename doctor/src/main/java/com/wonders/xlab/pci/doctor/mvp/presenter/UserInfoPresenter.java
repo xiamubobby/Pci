@@ -3,23 +3,23 @@ package com.wonders.xlab.pci.doctor.mvp.presenter;
 import com.wonders.xlab.pci.doctor.module.userinfo.bean.UserInfoBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.UserInfoEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.UserInfoModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.IUserInfoModel;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IUserInfoPresenter;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.UserInfoModelListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.UserInfoPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import im.hua.library.base.mvp.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePresenter;
 
 /**
  * Created by hua on 16/2/23.
  */
-public class UserInfoPresenter extends BasePresenter implements IUserInfoModel {
+public class UserInfoPresenter extends BasePresenter implements UserInfoModelListener {
     private UserInfoModel mUserInfoModel;
-    private IUserInfoPresenter mUserInfoPresenter;
+    private UserInfoPresenterListener mUserInfoPresenter;
 
 
-    public UserInfoPresenter(IUserInfoPresenter userInfoPresenter) {
+    public UserInfoPresenter(UserInfoPresenterListener userInfoPresenter) {
         mUserInfoPresenter = userInfoPresenter;
         mUserInfoModel = new UserInfoModel(this);
         addModel(mUserInfoModel);

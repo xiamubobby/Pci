@@ -8,20 +8,20 @@ import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.ChatRoomEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.ChatRoomModel;
 import com.wonders.xlab.pci.doctor.mvp.model.SendMessageModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.IChatRoomModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.ISendMessageModel;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IChatRoomPresenter;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.ChatRoomModelListener;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.SendMessageModelListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.ChatRoomPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import im.hua.library.base.mvp.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePresenter;
 import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/2/22.
  */
-public class ChatRoomPresenter extends BasePresenter implements IChatRoomModel, ISendMessageModel {
+public class ChatRoomPresenter extends BasePresenter implements ChatRoomModelListener, SendMessageModelListener {
 
     private String mDoctorId = "";
     private final String TYPE_USER = "User";
@@ -30,9 +30,9 @@ public class ChatRoomPresenter extends BasePresenter implements IChatRoomModel, 
     private ChatRoomModel mChatRoomModel;
     private SendMessageModel mSendMessageModel;
 
-    private IChatRoomPresenter mIChatRoomPresenter;
+    private ChatRoomPresenterListener mIChatRoomPresenter;
 
-    public ChatRoomPresenter(IChatRoomPresenter presenter, @NonNull String doctorId) {
+    public ChatRoomPresenter(ChatRoomPresenterListener presenter, @NonNull String doctorId) {
         mDoctorId = doctorId;
         mIChatRoomPresenter = presenter;
         mChatRoomModel = new ChatRoomModel(this);

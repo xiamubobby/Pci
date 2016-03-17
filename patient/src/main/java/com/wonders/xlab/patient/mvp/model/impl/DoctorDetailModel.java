@@ -1,0 +1,32 @@
+package com.wonders.xlab.patient.mvp.model.impl;
+
+import com.wonders.xlab.patient.module.base.PatientBaseModel;
+import com.wonders.xlab.patient.mvp.entity.DoctorDetailEntity;
+import com.wonders.xlab.patient.mvp.model.IDoctorDetailModel;
+import com.wonders.xlab.patient.mvp.model.listener.DoctorDetailModelListener;
+
+/**
+ * Created by hua on 16/3/17.
+ */
+public class DoctorDetailModel extends PatientBaseModel<DoctorDetailEntity> implements IDoctorDetailModel{
+    private DoctorDetailModelListener mDetailModelListener;
+
+    public DoctorDetailModel(DoctorDetailModelListener detailModelListener) {
+        mDetailModelListener = detailModelListener;
+    }
+
+    @Override
+    protected void onSuccess(DoctorDetailEntity response) {
+        mDetailModelListener.onReceiveDoctorDetailSuccess();
+    }
+
+    @Override
+    protected void onFailed(Throwable e) {
+        mDetailModelListener.onReceiveFailed(e.getMessage());
+    }
+
+    @Override
+    public void getDoctorDetailInfo(String groupId) {
+        onSuccess(null);
+    }
+}

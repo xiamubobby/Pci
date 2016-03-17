@@ -1,12 +1,16 @@
 package com.wonders.xlab.patient.module.doctors.detail;
 
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.DoctorDetailGroupOfDoctorRVAdapter;
@@ -15,15 +19,16 @@ import com.wonders.xlab.patient.module.doctors.detail.adapter.DoctorDetailPackag
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailGroupMemberBean;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailGroupOfDoctorBean;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailPackageBean;
-import com.wonders.xlab.patient.mvp.presenter.DoctorDetailPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.IDoctorDetailPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.DoctorDetailPresenter;
+import com.wonders.xlab.patient.mvp.presenter.IDoctorDetailPresenter;
+import com.wonders.xlab.patient.mvp.presenter.listener.DoctorDetailPresenterListener;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class DoctorDetailActivity extends AppbarActivity implements IDoctorDetailPresenter {
+public class DoctorDetailActivity extends AppbarActivity implements DoctorDetailPresenterListener {
     public final static String EXTRA_TITLE = "title";
     public final static String EXTRA_GROUP_ID = "group_id";
 
@@ -41,7 +46,7 @@ public class DoctorDetailActivity extends AppbarActivity implements IDoctorDetai
     private DoctorDetailMemberRVAdapter mMemberRVAdapter;
     private DoctorDetailGroupOfDoctorRVAdapter mGroupOfDoctorRVAdapter;
 
-    private DoctorDetailPresenter mDoctorDetailPresenter;
+    private IDoctorDetailPresenter mDoctorDetailPresenter;
 
     @Override
     public int getContentLayout() {
@@ -70,12 +75,12 @@ public class DoctorDetailActivity extends AppbarActivity implements IDoctorDetai
 
         setToolbarTitle(title);
         mRecyclerViewDoctorDetailPackage.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false));
-        mRecyclerViewDoctorDetailMemberOrGroup.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false));
+        mRecyclerViewDoctorDetailMemberOrGroup.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         mDoctorDetailPresenter = new DoctorDetailPresenter(this);
         addPresenter(mDoctorDetailPresenter);
 
-        mDoctorDetailPresenter.fetchDoctorDetailInfo();
+        mDoctorDetailPresenter.fetchDoctorDetailInfo(groupId);
     }
 
     @Override
@@ -87,6 +92,16 @@ public class DoctorDetailActivity extends AppbarActivity implements IDoctorDetai
     public void showPackageList(ArrayList<DoctorDetailPackageBean> packageList) {
         if (null == mPackageRVAdapter) {
             mPackageRVAdapter = new DoctorDetailPackageRVAdapter();
+            mPackageRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    BottomSheetDialog dialog = new BottomSheetDialog(DoctorDetailActivity.this);
+                    View view = LayoutInflater.from(DoctorDetailActivity.this).inflate(R.layout.doctor_detail_bottom_sheet, null);
+                    dialog.setContentView(view);
+                    dialog.show();
+
+                }
+            });
         }
         mPackageRVAdapter.setDatas(packageList);
         mRecyclerViewDoctorDetailPackage.setAdapter(mPackageRVAdapter);

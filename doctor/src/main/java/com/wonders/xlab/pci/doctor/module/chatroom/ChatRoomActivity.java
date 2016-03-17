@@ -25,7 +25,7 @@ import com.wonders.xlab.pci.doctor.module.medicalrecord.MedicalRecordActivity;
 import com.wonders.xlab.pci.doctor.module.symptom.SymptomActivity;
 import com.wonders.xlab.pci.doctor.module.userinfo.UserInfoActivity;
 import com.wonders.xlab.pci.doctor.mvp.presenter.ChatRoomPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IChatRoomPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.ChatRoomPresenterListener;
 
 import java.util.Calendar;
 import java.util.List;
@@ -36,7 +36,7 @@ import butterknife.OnClick;
 import im.hua.uikit.BadgeView;
 import im.hua.utils.DateUtil;
 
-public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresenter {
+public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresenterListener {
     public final static String EXTRA_PATIENT_ID = "PATIENT_ID";
     public final static String EXTRA_PATIENT_NAME = "PATIENT_NAME";
     public final static String EXTRA_PATIENT_PHONE_NUMBER = "PATIENT_NUMBER";

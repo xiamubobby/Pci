@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import im.hua.library.base.mvp.BaseEntity;
+import im.hua.library.base.mvp.entity.BaseEntity;
 
 /**
  * Created by hua on 15/12/18.

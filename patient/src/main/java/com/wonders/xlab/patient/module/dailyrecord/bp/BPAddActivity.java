@@ -18,8 +18,9 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
-import com.wonders.xlab.patient.mvp.presenter.RecordSavePresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.IRecordAddPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.RecordSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.IRecordSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.listener.RecordAddPresenterListener;
 import com.wonders.xlab.patient.module.dailyrecord.otto.TaskRefreshOtto;
 
 import java.util.Calendar;
@@ -30,7 +31,7 @@ import butterknife.OnClick;
 import im.hua.utils.DateUtil;
 import im.hua.utils.KeyboardUtil;
 
-public class BPAddActivity extends AppbarActivity implements IRecordAddPresenter {
+public class BPAddActivity extends AppbarActivity implements RecordAddPresenterListener {
 
     @Bind(R.id.tv_add_bp_date)
     TextView mTvAddBpDate;
@@ -49,7 +50,7 @@ public class BPAddActivity extends AppbarActivity implements IRecordAddPresenter
 
     private Calendar mCalendar = Calendar.getInstance();
 
-    private RecordSavePresenter mRecordSavePresenter;
+    private IRecordSavePresenter mRecordSavePresenter;
     private ProgressDialog dialog;
 
     @Override

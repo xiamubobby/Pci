@@ -3,16 +3,16 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.MedicalRecordAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.MedicalRecordEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.IMedicalRecordModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.MedicalRecordModelListener;
 
 /**
  * Created by hua on 16/2/25.
  */
 public class MedicalRecordModel extends DoctorBaseModel<MedicalRecordEntity> {
-    private IMedicalRecordModel mIMedicalRecordModel;
+    private MedicalRecordModelListener mIMedicalRecordModel;
     private MedicalRecordAPI mMedicalRecordAPI;
 
-    public MedicalRecordModel(IMedicalRecordModel medicalRecordModel) {
+    public MedicalRecordModel(MedicalRecordModelListener medicalRecordModel) {
         mIMedicalRecordModel = medicalRecordModel;
         mMedicalRecordAPI = mRetrofit.create(MedicalRecordAPI.class);
     }

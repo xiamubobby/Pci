@@ -4,7 +4,7 @@ package com.wonders.xlab.patient.mvp.api;
 import com.wonders.xlab.patient.assist.deviceconnection.entity.BPEntityList;
 import com.wonders.xlab.patient.assist.deviceconnection.entity.BSEntityList;
 
-import im.hua.library.base.mvp.SimpleEntity;
+import im.hua.library.base.mvp.entity.SimpleEntity;
 import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;

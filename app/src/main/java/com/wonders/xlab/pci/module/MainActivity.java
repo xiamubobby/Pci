@@ -10,6 +10,7 @@ import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.squareup.otto.Subscribe;
+import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.R;
@@ -18,7 +19,6 @@ import com.wonders.xlab.pci.module.base.BaseActivity;
 import com.wonders.xlab.pci.module.home.HomeFragment;
 import com.wonders.xlab.pci.module.login.LoginActivity;
 import com.wonders.xlab.pci.module.message.ChatFragment;
-import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.pci.module.mydoctor.MyDoctorFragment;
 import com.wonders.xlab.pci.module.otto.ExitBus;
 import com.wonders.xlab.pci.module.usercenter.UserCenterActivity;
@@ -43,6 +43,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
+        OttoManager.register(this);
 
         if (!AIManager.getInstance(this).hasLogin()) {
             startActivity(new Intent(this, LoginActivity.class));
@@ -52,7 +53,6 @@ public class MainActivity extends BaseActivity {
 
         setContentView(R.layout.activity_new_main);
         ButterKnife.bind(this);
-        OttoManager.register(this);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

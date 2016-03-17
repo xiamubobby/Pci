@@ -14,11 +14,13 @@ import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.doctors.adapter.AllDoctorRVAdapter;
 import com.wonders.xlab.patient.module.doctors.adapter.bean.AllDoctorItemBean;
 import com.wonders.xlab.patient.module.doctors.detail.DoctorDetailActivity;
-import com.wonders.xlab.patient.mvp.presenter.DoctorAllPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.IDoctorAllPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.DoctorAllPresenter;
+import com.wonders.xlab.patient.mvp.presenter.IDoctorAllPresenter;
+import com.wonders.xlab.patient.mvp.presenter.listener.DoctorAllPresenterListener;
 
 import java.util.ArrayList;
 
@@ -29,12 +31,13 @@ import im.hua.library.base.BaseFragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DoctorAllFragment extends BaseFragment implements IDoctorAllPresenter {
+public class DoctorAllFragment extends BaseFragment implements DoctorAllPresenterListener {
 
     @Bind(R.id.recycler_view_doctor_all)
     PullLoadMoreRecyclerView mRecyclerView;
 
-    private DoctorAllPresenter mDoctorAllPresenter;
+    private IDoctorAllPresenter mDoctorAllPresenter;
+
     private AllDoctorRVAdapter mAllDoctorRVAdapter;
 
     public DoctorAllFragment() {
@@ -63,7 +66,7 @@ public class DoctorAllFragment extends BaseFragment implements IDoctorAllPresent
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
-                mDoctorAllPresenter.getAllDoctor();
+                mDoctorAllPresenter.getAllDoctors(AIManager.getInstance(getActivity()).getPatientId());
             }
 
             @Override
@@ -73,7 +76,7 @@ public class DoctorAllFragment extends BaseFragment implements IDoctorAllPresent
         });
 
         mDoctorAllPresenter = new DoctorAllPresenter(this);
-        mDoctorAllPresenter.getAllDoctor();
+        mDoctorAllPresenter.getAllDoctors(AIManager.getInstance(getActivity()).getPatientId());
     }
 
     @Override
@@ -109,5 +112,15 @@ public class DoctorAllFragment extends BaseFragment implements IDoctorAllPresent
         initRecyclerViewAdapter();
         mAllDoctorRVAdapter.appendDatas(myDoctorBeanList);
         mRecyclerView.setAdapter(mAllDoctorRVAdapter);
+    }
+
+    @Override
+    public void showError(String message) {
+        showShortToast(message);
+    }
+
+    @Override
+    public void hideLoading() {
+        mRecyclerView.setPullLoadMoreCompleted();
     }
 }

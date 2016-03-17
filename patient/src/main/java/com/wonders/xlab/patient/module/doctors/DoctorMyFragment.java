@@ -15,11 +15,13 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.patient.module.doctors.adapter.MyDoctorRVAdapter;
 import com.wonders.xlab.patient.module.doctors.adapter.bean.MyDoctorItemBean;
-import com.wonders.xlab.patient.mvp.presenter.DoctorMyPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.IDoctorMyPresenter;
+import com.wonders.xlab.patient.mvp.presenter.IDoctorMyPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.DoctorMyPresenter;
+import com.wonders.xlab.patient.mvp.presenter.listener.DoctorMyPresenterListener;
 
 import java.util.ArrayList;
 
@@ -30,14 +32,14 @@ import im.hua.library.base.BaseFragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DoctorMyFragment extends BaseFragment implements IDoctorMyPresenter {
+public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterListener {
 
     @Bind(R.id.recycler_view_doctor_my)
     PullLoadMoreRecyclerView mRecyclerView;
 
     private MyDoctorRVAdapter mMyDoctorRVAdapter;
 
-    private DoctorMyPresenter mDoctorMyPresenter;
+    private IDoctorMyPresenter mDoctorMyPresenter;
 
     public DoctorMyFragment() {
         // Required empty public constructor
@@ -45,6 +47,11 @@ public class DoctorMyFragment extends BaseFragment implements IDoctorMyPresenter
 
     public static DoctorMyFragment newInstance() {
         return new DoctorMyFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -65,7 +72,7 @@ public class DoctorMyFragment extends BaseFragment implements IDoctorMyPresenter
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
-
+                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance(getActivity()).getPatientId());
             }
 
             @Override
@@ -77,7 +84,7 @@ public class DoctorMyFragment extends BaseFragment implements IDoctorMyPresenter
         mDoctorMyPresenter = new DoctorMyPresenter(this);
         addPresenter(mDoctorMyPresenter);
 
-        mDoctorMyPresenter.getMyDoctorList();
+        mDoctorMyPresenter.getMyDoctors(AIManager.getInstance(getActivity()).getPatientId());
     }
 
     @Override
@@ -113,5 +120,15 @@ public class DoctorMyFragment extends BaseFragment implements IDoctorMyPresenter
         }
         mMyDoctorRVAdapter.appendDatas(myDoctorBeanList);
         mRecyclerView.setAdapter(mMyDoctorRVAdapter);
+    }
+
+    @Override
+    public void showError(String message) {
+        showShortToast(message);
+    }
+
+    @Override
+    public void hideLoading() {
+        mRecyclerView.setPullLoadMoreCompleted();
     }
 }

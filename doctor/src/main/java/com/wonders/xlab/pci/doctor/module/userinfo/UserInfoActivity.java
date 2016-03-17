@@ -13,7 +13,7 @@ import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.userinfo.adapter.UserInfoRVAdapter;
 import com.wonders.xlab.pci.doctor.module.userinfo.bean.UserInfoBean;
 import com.wonders.xlab.pci.doctor.mvp.presenter.UserInfoPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IUserInfoPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.UserInfoPresenterListener;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class UserInfoActivity extends AppbarActivity implements IUserInfoPresenter {
+public class UserInfoActivity extends AppbarActivity implements UserInfoPresenterListener {
     public final static String EXTRA_PATIENT_ID = "patientId";
 
     private String mPatientId;

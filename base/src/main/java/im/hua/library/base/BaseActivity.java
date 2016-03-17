@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import im.hua.library.base.mvp.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.IBasePresenter;
 
 /**
  * Created by hua on 15/12/14.
@@ -20,6 +21,8 @@ import im.hua.library.base.mvp.BasePresenter;
 public class BaseActivity extends AppCompatActivity {
 
     private List<BasePresenter> mBasePresenterList;
+
+    private List<IBasePresenter> mIBasePresenterList;
 
     private ProgressDialog mDialog;
 
@@ -93,6 +96,15 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void addPresenter(IBasePresenter presenter) {
+        if (mIBasePresenterList == null) {
+            mIBasePresenterList = new ArrayList<>();
+        }
+        if (presenter != null) {
+            mIBasePresenterList.add(presenter);
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -102,6 +114,13 @@ public class BaseActivity extends AppCompatActivity {
             }
             mBasePresenterList.clear();
             mBasePresenterList = null;
+        }
+        if (null != mIBasePresenterList) {
+            for (IBasePresenter presenter : mIBasePresenterList) {
+                presenter.onDestroy();
+            }
+            mIBasePresenterList.clear();
+            mIBasePresenterList = null;
         }
     }
 }

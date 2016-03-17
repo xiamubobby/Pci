@@ -12,7 +12,7 @@ import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.medicalrecord.adapter.MedicalRecordRVAdapter;
 import com.wonders.xlab.pci.doctor.module.medicalrecord.bean.MedicalRecordBean;
 import com.wonders.xlab.pci.doctor.mvp.presenter.MedicalRecordPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IMedicalRecordPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.MedicalRecordPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +21,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import me.iwf.photopicker.PhotoPagerActivity;
 
-public class MedicalRecordActivity extends AppbarActivity implements IMedicalRecordPresenter {
+public class MedicalRecordActivity extends AppbarActivity implements MedicalRecordPresenterListener {
 
     public static final String EXTRA_PATIENT_ID = "patientId";
 

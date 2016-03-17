@@ -4,23 +4,23 @@ import com.wonders.xlab.pci.doctor.module.medicalrecord.bean.MedicalRecordBean;
 import com.wonders.xlab.pci.doctor.module.medicalrecord.bean.MedicalRecordPhotoBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.MedicalRecordEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.MedicalRecordModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.IMedicalRecordModel;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IMedicalRecordPresenter;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.MedicalRecordModelListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.MedicalRecordPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import im.hua.library.base.mvp.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePresenter;
 import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/2/25.
  */
-public class MedicalRecordPresenter extends BasePresenter implements IMedicalRecordModel {
-    private IMedicalRecordPresenter mIMedicalRecordPresenter;
+public class MedicalRecordPresenter extends BasePresenter implements MedicalRecordModelListener {
+    private MedicalRecordPresenterListener mIMedicalRecordPresenter;
     private MedicalRecordModel mMedicalRecordModel;
 
-    public MedicalRecordPresenter(IMedicalRecordPresenter iMedicalRecordPresenter) {
+    public MedicalRecordPresenter(MedicalRecordPresenterListener iMedicalRecordPresenter) {
         mIMedicalRecordPresenter = iMedicalRecordPresenter;
         mMedicalRecordModel = new MedicalRecordModel(this);
         addModel(mMedicalRecordModel);

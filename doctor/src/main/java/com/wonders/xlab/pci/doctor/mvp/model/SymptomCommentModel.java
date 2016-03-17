@@ -3,16 +3,16 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.SymptomAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.SymptomCommentEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.ISymptomCommentModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.SymptomCommentModelListener;
 
 /**
  * Created by hua on 16/2/26.
  */
 public class SymptomCommentModel extends DoctorBaseModel<SymptomCommentEntity> {
-    private ISymptomCommentModel mISymptomCommentModel;
+    private SymptomCommentModelListener mISymptomCommentModel;
     private SymptomAPI mSymptomAPI;
 
-    public SymptomCommentModel(ISymptomCommentModel iSymptomCommentModel) {
+    public SymptomCommentModel(SymptomCommentModelListener iSymptomCommentModel) {
         mISymptomCommentModel = iSymptomCommentModel;
         mSymptomAPI = mRetrofit.create(SymptomAPI.class);
     }

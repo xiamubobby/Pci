@@ -118,7 +118,7 @@
             android:name=".module.dailyrecord.bs.BSGuideActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".module.dailyrecord.symptom.SymptomActivity"
+            android:name=".module.dailyrecord.symptom.SymptomActivityListener"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".module.doctors.detail.DoctorDetailActivity"

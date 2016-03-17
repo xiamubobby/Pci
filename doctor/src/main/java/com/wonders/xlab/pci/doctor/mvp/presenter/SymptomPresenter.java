@@ -5,26 +5,26 @@ import com.wonders.xlab.pci.doctor.mvp.entity.SymptomCommentEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.SymptomEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.SymptomCommentModel;
 import com.wonders.xlab.pci.doctor.mvp.model.SymptomModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.ISymptomCommentModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.ISymptomModel;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.ISymptomPresenter;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.SymptomCommentModelListener;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.SymptomModelListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.SymptomPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import im.hua.library.base.mvp.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePresenter;
 import im.hua.utils.DateUtil;
 
 
 /**
  * Created by hua on 16/2/24.
  */
-public class SymptomPresenter extends BasePresenter implements ISymptomModel, ISymptomCommentModel {
-    private ISymptomPresenter mISymptomPresenter;
+public class SymptomPresenter extends BasePresenter implements SymptomModelListener, SymptomCommentModelListener {
+    private SymptomPresenterListener mISymptomPresenter;
     private SymptomModel mSymptomModel;
     private SymptomCommentModel mSymptomCommentModel;
 
-    public SymptomPresenter(ISymptomPresenter ISymptomPresenter) {
+    public SymptomPresenter(SymptomPresenterListener ISymptomPresenter) {
         mISymptomPresenter = ISymptomPresenter;
         mSymptomModel = new SymptomModel(this);
         mSymptomCommentModel = new SymptomCommentModel(this);

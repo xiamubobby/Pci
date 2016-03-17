@@ -2,7 +2,7 @@ package com.wonders.xlab.pci.doctor.mvp.entity;
 
 import java.util.List;
 
-import im.hua.library.base.mvp.BaseEntity;
+import im.hua.library.base.mvp.entity.BaseEntity;
 
 /**
  * Created by hua on 16/2/19.

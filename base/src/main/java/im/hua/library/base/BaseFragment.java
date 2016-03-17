@@ -10,13 +10,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import im.hua.library.base.mvp.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.IBasePresenter;
 
 /**
  * Created by hua on 15/12/14.
  */
 public class BaseFragment extends Fragment {
     private List<BasePresenter> mBasePresenterList;
+
+    private List<IBasePresenter> mIBasePresenterList;
 
     private ProgressDialog mDialog;
 
@@ -83,6 +86,15 @@ public class BaseFragment extends Fragment {
         mBasePresenterList.add(presenter);
     }
 
+    public void addPresenter(IBasePresenter presenter) {
+        if (mIBasePresenterList == null) {
+            mIBasePresenterList = new ArrayList<>();
+        }
+        if (presenter != null) {
+            mIBasePresenterList.add(presenter);
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -92,6 +104,13 @@ public class BaseFragment extends Fragment {
             }
             mBasePresenterList.clear();
             mBasePresenterList = null;
+        }
+        if (null != mIBasePresenterList) {
+            for (IBasePresenter presenter : mIBasePresenterList) {
+                presenter.onDestroy();
+            }
+            mIBasePresenterList.clear();
+            mIBasePresenterList = null;
         }
     }
 }

@@ -3,8 +3,8 @@ package com.wonders.xlab.patient.module.base;
 
 import com.wonders.xlab.patient.Constant;
 
-import im.hua.library.base.mvp.BaseEntity;
-import im.hua.library.base.mvp.BaseModel;
+import im.hua.library.base.mvp.entity.BaseEntity;
+import im.hua.library.base.mvp.impl.BaseModel;
 
 /**
  * Created by hua on 16/2/19.

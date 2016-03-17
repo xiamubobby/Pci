@@ -12,14 +12,13 @@ import android.widget.Toast;
 
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
 import com.wonders.xlab.patient.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.patient.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.patient.module.doctors.detail.DoctorDetailActivity;
-import com.wonders.xlab.patient.mvp.presenter.ChatRoomPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.IChatRoomPresenter;
+import com.wonders.xlab.patient.mvp.presenter.IChatRoomPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.ChatRoomPresenter;
 
 import java.util.Calendar;
 import java.util.List;
@@ -29,7 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import im.hua.utils.DateUtil;
 
-public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresenter {
+public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresenter.ChatRoomPresenterListener {
     public final static String EXTRA_GROUP_NAME = "group_name";
     /**
      * 患者和医生所在聊天组的id
@@ -45,7 +44,7 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
     @Bind(R.id.et_chat_room_input)
     EditText mEtChatRoomInput;
 
-    private ChatRoomPresenter mChatRoomPresenter;
+    private IChatRoomPresenter mChatRoomPresenter;
 
     @Bind(R.id.recycler_view_chat_room)
     PullLoadMoreRecyclerView mRecyclerView;
@@ -80,7 +79,6 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
             return;
         }
         groupName = intent.getStringExtra(EXTRA_GROUP_NAME);
-
         setToolbarTitle(groupName);
 
         mLoadingView.setVisibility(View.GONE);
@@ -102,7 +100,7 @@ public class ChatRoomActivity extends AppbarActivity implements IChatRoomPresent
             }
         });
 
-        mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance(this).getPatientId());
+        mChatRoomPresenter = new ChatRoomPresenter(this);
         addPresenter(mChatRoomPresenter);
 
         mChatRoomPresenter.getChatList(groupId);

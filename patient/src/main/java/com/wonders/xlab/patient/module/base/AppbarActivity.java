@@ -48,6 +48,7 @@ public abstract class AppbarActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(getContentLayout());
 
+        UmengUpdateAgent.setUpdateOnlyWifi(false);
         UmengUpdateAgent.update(this);
 
         mContentView = findViewById(android.R.id.content);

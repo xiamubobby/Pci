@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.umeng.update.UmengUpdateAgent;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
@@ -56,6 +57,9 @@ public class MainActivity extends BaseActivity {
         mViewPagerMain.setAdapter(mFragmentVPAdapter);
 
         setupBottomTab();
+
+        UmengUpdateAgent.setUpdateOnlyWifi(false);
+        UmengUpdateAgent.update(this);
     }
 
     private void setupBottomTab() {

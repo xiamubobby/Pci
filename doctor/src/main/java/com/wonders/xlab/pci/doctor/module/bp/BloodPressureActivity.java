@@ -23,7 +23,7 @@ import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.bp.adapter.BPRVAdapter;
 import com.wonders.xlab.pci.doctor.module.bp.bean.BPListBean;
 import com.wonders.xlab.pci.doctor.mvp.presenter.BPPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IBPPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IBPPresenterListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,7 +31,7 @@ import java.util.Calendar;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class BloodPressureActivity extends AppbarActivity implements IBPPresenter {
+public class BloodPressureActivity extends AppbarActivity implements IBPPresenterListener {
     public static final String EXTRA_PATIENT_ID = "patientId";
     private String mPatientId;
 

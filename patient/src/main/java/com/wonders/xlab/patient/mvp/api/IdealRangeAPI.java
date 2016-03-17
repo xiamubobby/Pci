@@ -1,7 +1,7 @@
 package com.wonders.xlab.patient.mvp.api;
 
 
-import im.hua.library.base.mvp.SimpleEntity;
+import im.hua.library.base.mvp.entity.SimpleEntity;
 import retrofit.http.GET;
 import retrofit.http.Path;
 import rx.Observable;

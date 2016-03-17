@@ -48,6 +48,7 @@ public class MainActivity extends BaseActivity {
             setContentView(R.layout.main_activity);
             ButterKnife.bind(this);
 
+            UmengUpdateAgent.setUpdateOnlyWifi(false);
             UmengUpdateAgent.update(this);
 
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

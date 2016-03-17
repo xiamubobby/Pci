@@ -2,8 +2,8 @@ package com.wonders.xlab.pci.doctor.base;
 
 import com.wonders.xlab.pci.doctor.Constant;
 
-import im.hua.library.base.mvp.BaseEntity;
-import im.hua.library.base.mvp.BaseModel;
+import im.hua.library.base.mvp.entity.BaseEntity;
+import im.hua.library.base.mvp.impl.BaseModel;
 
 /**
  * Created by hua on 16/2/19.

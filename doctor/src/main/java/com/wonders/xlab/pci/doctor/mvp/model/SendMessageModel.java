@@ -4,7 +4,7 @@ import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.SendMessageAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.SendMessageEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.request.SendMessageBody;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.ISendMessageModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.SendMessageModelListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +13,10 @@ import java.util.List;
  * Created by hua on 16/3/2.
  */
 public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
-    private ISendMessageModel mISendMessageModel;
+    private SendMessageModelListener mISendMessageModel;
     private SendMessageAPI mSendMessageAPI;
 
-    public SendMessageModel(ISendMessageModel iSendMessageModel) {
+    public SendMessageModel(SendMessageModelListener iSendMessageModel) {
         mISendMessageModel = iSendMessageModel;
         mSendMessageAPI = mRetrofit.create(SendMessageAPI.class);
     }

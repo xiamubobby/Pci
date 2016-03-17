@@ -21,7 +21,7 @@ import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.symptom.adapter.SymptomRVAdapter;
 import com.wonders.xlab.pci.doctor.module.symptom.bean.SymptomBean;
 import com.wonders.xlab.pci.doctor.mvp.presenter.SymptomPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.ISymptomPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.SymptomPresenterListener;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.utils.KeyboardUtil;
 
-public class SymptomActivity extends AppbarActivity implements ISymptomPresenter {
+public class SymptomActivity extends AppbarActivity implements SymptomPresenterListener {
     public static final String EXTRA_PATIENT_ID = "patientId";
     @Bind(R.id.coordinate)
     CoordinatorLayout mCoordinate;
@@ -139,9 +139,9 @@ public class SymptomActivity extends AppbarActivity implements ISymptomPresenter
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        showProgressDialog("正在保存，请稍候...");
+                        showProgressDialog("", "正在保存，请稍候...");
 
-                        mSymptomPresenter.saveComment(mEditingSymptomBean.getSymptomId(), AIManager.getInstance(SymptomActivity.this).getUserId(), text.getText().toString(),checkBox.isChecked());
+                        mSymptomPresenter.saveComment(mEditingSymptomBean.getSymptomId(), AIManager.getInstance(SymptomActivity.this).getUserId(), text.getText().toString(), checkBox.isChecked());
 
                         mTmpSymptomBean.setComment(text.getText().toString());
                         mTmpSymptomBean.setIsChecked(checkBox.isChecked());
@@ -187,6 +187,7 @@ public class SymptomActivity extends AppbarActivity implements ISymptomPresenter
         if (null != mDialog) {
             mDialog.dismiss();
         }
+        KeyboardUtil.hide(this, mCoordinate.getWindowToken());
         dismissProgressDialog();
 
         mEditingSymptomBean.setIsChecked(mTmpSymptomBean.getIsChecked());
@@ -199,6 +200,7 @@ public class SymptomActivity extends AppbarActivity implements ISymptomPresenter
         if (null != mDialog) {
             mDialog.dismiss();
         }
+        KeyboardUtil.hide(this, mCoordinate.getWindowToken());
         dismissProgressDialog();
 
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -207,22 +209,5 @@ public class SymptomActivity extends AppbarActivity implements ISymptomPresenter
     @Override
     public void hideLoading() {
 
-    }
-
-    private void showProgressDialog(String message) {
-        if (null == mProgressDialog) {
-            mProgressDialog = new ProgressDialog(this);
-        }
-        mProgressDialog.setMessage(message);
-        if (!mProgressDialog.isShowing()) {
-            mProgressDialog.show();
-        }
-    }
-
-    private void dismissProgressDialog() {
-        KeyboardUtil.hide(this, mCoordinate.getWindowToken());
-        if (null != mProgressDialog) {
-            mProgressDialog.dismiss();
-        }
     }
 }

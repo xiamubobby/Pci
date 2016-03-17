@@ -13,14 +13,14 @@ import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.bs.adapter.BSRVAdapter;
 import com.wonders.xlab.pci.doctor.module.bs.bean.BSBean;
 import com.wonders.xlab.pci.doctor.mvp.presenter.BSPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IBSPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IBSPresenterListener;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class BloodSugarActivity extends AppbarActivity implements IBSPresenter {
+public class BloodSugarActivity extends AppbarActivity implements IBSPresenterListener {
     public static final String EXTRA_PATIENT_ID = "patientId";
     private String mPatientId;
 

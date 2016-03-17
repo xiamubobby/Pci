@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+    <TextView
+        android:id="@+id/tv_doctor_detail_bottom_sheet_package_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/item_interval_middle"
+        android:layout_marginTop="@dimen/item_interval_middle"
+        android:text="包月套餐"
+        android:textColor="@color/text_color_primary_black"
+        android:textSize="@dimen/text_size_large"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/item_interval_middle"
+        android:layout_marginTop="@dimen/item_interval_middle"
+        android:text="120元/月"
+        android:textColor="@color/appYellow"
+        android:textSize="@dimen/text_size_large"/>
+
+    <TextView
+        android:id="@+id/tv_doctor_detail_bottom_sheet_service_counts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv_doctor_detail_bottom_sheet_package_name"
+        android:layout_marginRight="@dimen/item_interval_middle"
+        android:layout_marginTop="@dimen/item_interval_small"
+        android:text="54人已购买"
+        android:textColor="@color/text_color_primary_gray"
+        android:textSize="@dimen/text_size_middle"/>
+
+    <TextView
+        android:id="@+id/tv_doctor_detail_bottom_sheet_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv_doctor_detail_bottom_sheet_package_name"
+        android:layout_marginLeft="@dimen/item_interval_middle"
+        android:layout_marginRight="@dimen/item_interval_very_small"
+        android:layout_marginTop="@dimen/item_interval_small"
+        android:layout_toLeftOf="@+id/tv_doctor_detail_bottom_sheet_service_counts"
+        android:text="套餐简介啦睡觉的开发及阿里圣诞节疯狂拉升惊呆了开发及阿里山的积分拉进来的开始\n换行"
+        android:textColor="@color/text_color_primary_gray"
+        android:textSize="@dimen/text_size_middle"/>
+
+    <Button
+        android:id="@+id/btn_doctor_detail_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_doctor_detail_bottom_sheet_desc"
+        android:layout_marginTop="@dimen/item_interval_middle"
+        android:background="@color/colorPrimary"
+        android:text="立即购买"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_middle"/>
+</RelativeLayout>

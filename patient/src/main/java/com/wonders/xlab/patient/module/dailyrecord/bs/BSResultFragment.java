@@ -25,10 +25,12 @@ import com.wonders.xlab.patient.assist.deviceconnection.otto.ConnStatusOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.EmptyDataOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.RequestDataFailed;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.ScanStartOtto;
-import com.wonders.xlab.patient.mvp.presenter.RecordSavePresenter;
-import com.wonders.xlab.patient.mvp.presenter.IdealRangePresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.IRecordAddPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.IIdealRangePresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.IdealRangePresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.RecordSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.IIdealRangePresenter;
+import com.wonders.xlab.patient.mvp.presenter.IRecordSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.listener.IdealRangePresenterListener;
+import com.wonders.xlab.patient.mvp.presenter.listener.RecordAddPresenterListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +45,7 @@ import im.hua.uikit.LoadingDotView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BSResultFragment extends BaseFragment implements IRecordAddPresenter, IIdealRangePresenter {
+public class BSResultFragment extends BaseFragment implements RecordAddPresenterListener, IdealRangePresenterListener {
 
     @Bind(R.id.tv_bs_result_sugar)
     TextView mTvBsResultSugar;
@@ -56,8 +58,8 @@ public class BSResultFragment extends BaseFragment implements IRecordAddPresente
     @Bind(R.id.sp_bs_result_period)
     Spinner mSpBsResultPeriod;
 
-    private RecordSavePresenter mRecordSavePresenter;
-    private IdealRangePresenter mIdealRangePresenter;
+    private IRecordSavePresenter mRecordSavePresenter;
+    private IIdealRangePresenter mIdealRangePresenter;
 
     private Animation rotateAnimation;
 
