@@ -17,6 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/item_interval_small"
         android:layout_marginTop="@dimen/item_interval_small"
+        android:gravity="center"
         android:orientation="horizontal"
         android:visibility="gone">
 

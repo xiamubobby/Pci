@@ -5,8 +5,6 @@ import com.wonders.xlab.patient.mvp.api.DoctorAPI;
 import com.wonders.xlab.patient.mvp.entity.DoctorAllEntity;
 import com.wonders.xlab.patient.mvp.model.IDoctorAllModel;
 
-import java.util.List;
-
 import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
@@ -35,10 +33,10 @@ public class DoctorAllModel extends PatientBaseModel<DoctorAllEntity> implements
 
     @Override
     public void getAllDoctorList(String patientId) {
-        mDoctorAPI.getAllDoctors(patientId);
+        fetchData(mDoctorAPI.getAllDoctors(patientId), true);
     }
 
     public interface DoctorAllModelListener extends BaseModelListener {
-        void onReceiveAllDoctorListSuccess(List<DoctorAllEntity.RetValuesEntity> valuesEntity);
+        void onReceiveAllDoctorListSuccess(DoctorAllEntity.RetValuesEntity valuesEntity);
     }
 }

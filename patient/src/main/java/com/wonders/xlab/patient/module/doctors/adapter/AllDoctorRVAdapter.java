@@ -1,12 +1,15 @@
 package com.wonders.xlab.patient.module.doctors.adapter;
 
+import android.graphics.Color;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.wonders.xlab.common.manager.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
@@ -34,13 +37,16 @@ public class AllDoctorRVAdapter extends SimpleRVAdapter<AllDoctorItemBean> {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         AllDoctorItemBean itemBean = getBean(position);
         viewHolder.binding.setBean(itemBean);
+        if (!TextUtils.isEmpty(itemBean.getTagColor())) {
+            viewHolder.mTvTag.setTextColor(Color.parseColor(itemBean.getTagColor()));
+        }
         ImageViewManager.setImageViewWithUrl(viewHolder.itemView.getContext(), viewHolder.mIvDoctorAllItemPortrait, itemBean.getPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
 
-        viewHolder.mRecyclerView.setLayoutManager(new LinearLayoutManager(viewHolder.itemView.getContext(),LinearLayoutManager.HORIZONTAL,false));
+        viewHolder.mRecyclerView.setLayoutManager(new LinearLayoutManager(viewHolder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         viewHolder.mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        ServiceIconRVAdapter serviceIconRVAdapter = new ServiceIconRVAdapter();
-        serviceIconRVAdapter.setDatas(itemBean.getServiceIconUrl());
-        viewHolder.mRecyclerView.setAdapter(serviceIconRVAdapter);
+        PackageIconRVAdapter packageIconRVAdapter = new PackageIconRVAdapter();
+        packageIconRVAdapter.setDatas(itemBean.getServiceIconUrl());
+        viewHolder.mRecyclerView.setAdapter(packageIconRVAdapter);
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -48,12 +54,14 @@ public class AllDoctorRVAdapter extends SimpleRVAdapter<AllDoctorItemBean> {
         ImageView mIvDoctorAllItemPortrait;
         @Bind(R.id.recycler_view_doctor_all_item_services)
         RecyclerView mRecyclerView;
+        @Bind(R.id.tv_doctor_all_item_tag)
+        TextView mTvTag;
 
         DoctorAllItemBinding binding;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             binding = DoctorAllItemBinding.bind(itemView);
         }
     }
@@ -61,7 +69,7 @@ public class AllDoctorRVAdapter extends SimpleRVAdapter<AllDoctorItemBean> {
     /**
      * 服务图标
      */
-    class ServiceIconRVAdapter extends SimpleRVAdapter<String> {
+    class PackageIconRVAdapter extends SimpleRVAdapter<String> {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -82,7 +90,7 @@ public class AllDoctorRVAdapter extends SimpleRVAdapter<AllDoctorItemBean> {
 
             public ServiceIconViewHolder(View itemView) {
                 super(itemView);
-                ButterKnife.bind(this,itemView);
+                ButterKnife.bind(this, itemView);
             }
         }
     }

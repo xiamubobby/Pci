@@ -6,6 +6,6 @@
 
     <ImageView
         android:id="@+id/iv_doctor_all_item_service_icon"
-        android:layout_width="36dp"
-        android:layout_height="36dp"/>
+        android:layout_width="@dimen/doctor_all_item_package_icons_size"
+        android:layout_height="@dimen/doctor_all_item_package_icons_size"/>
 </LinearLayout>

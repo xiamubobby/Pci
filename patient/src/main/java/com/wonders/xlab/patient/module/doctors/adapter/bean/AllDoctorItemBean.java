@@ -47,6 +47,11 @@ public class AllDoctorItemBean extends BaseObservable {
      */
     private String tagStr;
 
+    /**
+     * 标签颜色
+     */
+    private String tagColor;
+
     private List<String> serviceIconUrl;
 
     @Bindable
@@ -155,5 +160,15 @@ public class AllDoctorItemBean extends BaseObservable {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    @Bindable
+    public String getTagColor() {
+        return tagColor;
+    }
+
+    public void setTagColor(String tagColor) {
+        this.tagColor = tagColor;
+        notifyPropertyChanged(BR.tagColor);
     }
 }
