@@ -3,7 +3,7 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.ChatRoomAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.ChatRoomEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.ChatRoomModelListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.ChatRoomModelListener;
 
 /**
  * Created by hua on 16/2/19.
@@ -23,7 +23,7 @@ public class ChatRoomModel extends DoctorBaseModel<ChatRoomEntity> {
         if (!isLast()) {
             fetchData(mChatRoomAPI.getChatHistory(groupId, getPageIndex() + 1, getSize()), true);
         } else {
-            mChatRoomModelListener.silenceRequest();
+            mChatRoomModelListener.noMoreData("");
         }
     }
 

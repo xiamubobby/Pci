@@ -3,16 +3,16 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.BSAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.BSEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.IBSModelListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.BSModelListener;
 
 /**
  * Created by hua on 16/2/22.
  */
 public class BSModel extends DoctorBaseModel<BSEntity> {
     private BSAPI mBSAPI;
-    private IBSModelListener mBloodPressureModel;
+    private BSModelListener mBloodPressureModel;
 
-    public BSModel(IBSModelListener bloodPressureModel) {
+    public BSModel(BSModelListener bloodPressureModel) {
         mBloodPressureModel = bloodPressureModel;
         mBSAPI = mRetrofit.create(BSAPI.class);
     }

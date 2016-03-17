@@ -12,7 +12,7 @@ import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.medicalrecord.adapter.MedicalRecordRVAdapter;
 import com.wonders.xlab.pci.doctor.module.medicalrecord.bean.MedicalRecordBean;
 import com.wonders.xlab.pci.doctor.mvp.presenter.MedicalRecordPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.MedicalRecordPresenterListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.listener.MedicalRecordPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;

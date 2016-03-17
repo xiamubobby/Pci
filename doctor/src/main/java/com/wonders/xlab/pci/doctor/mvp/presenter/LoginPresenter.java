@@ -2,8 +2,8 @@ package com.wonders.xlab.pci.doctor.mvp.presenter;
 
 import com.wonders.xlab.pci.doctor.mvp.entity.LoginEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.LoginModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.LoginModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.LoginPresenterListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.LoginModelListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.listener.LoginPresenterListener;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
 import im.hua.utils.MD5Util;

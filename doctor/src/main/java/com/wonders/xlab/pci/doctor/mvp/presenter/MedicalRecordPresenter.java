@@ -4,8 +4,8 @@ import com.wonders.xlab.pci.doctor.module.medicalrecord.bean.MedicalRecordBean;
 import com.wonders.xlab.pci.doctor.module.medicalrecord.bean.MedicalRecordPhotoBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.MedicalRecordEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.MedicalRecordModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.MedicalRecordModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.MedicalRecordPresenterListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.MedicalRecordModelListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.listener.MedicalRecordPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +70,7 @@ public class MedicalRecordPresenter extends BasePresenter implements MedicalReco
     }
 
     @Override
-    public void silenceRequest() {
+    public void noMoreData(String message) {
         mIMedicalRecordPresenter.hideLoading();
     }
 }

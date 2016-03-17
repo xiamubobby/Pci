@@ -6,6 +6,7 @@ package im.hua.library.base.mvp.listener;
 public interface BasePageModelListener extends BaseModelListener {
     /**
      * 没有进行任何请求
+     * @param message
      */
-    void silenceRequest();
+    void noMoreData(String message);
 }

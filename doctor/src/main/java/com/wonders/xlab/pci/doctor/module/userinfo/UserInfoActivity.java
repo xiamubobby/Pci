@@ -13,7 +13,7 @@ import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.userinfo.adapter.UserInfoRVAdapter;
 import com.wonders.xlab.pci.doctor.module.userinfo.bean.UserInfoBean;
 import com.wonders.xlab.pci.doctor.mvp.presenter.UserInfoPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.UserInfoPresenterListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.listener.UserInfoPresenterListener;
 
 import java.util.List;
 

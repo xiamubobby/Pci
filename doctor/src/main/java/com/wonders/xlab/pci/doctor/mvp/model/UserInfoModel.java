@@ -3,7 +3,7 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.UserInfoAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.UserInfoEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.UserInfoModelListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.UserInfoModelListener;
 
 /**
  * Created by hua on 16/2/23.

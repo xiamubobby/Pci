@@ -21,7 +21,7 @@ import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.symptom.adapter.SymptomRVAdapter;
 import com.wonders.xlab.pci.doctor.module.symptom.bean.SymptomBean;
 import com.wonders.xlab.pci.doctor.mvp.presenter.SymptomPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.SymptomPresenterListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.listener.SymptomPresenterListener;
 
 import java.util.List;
 

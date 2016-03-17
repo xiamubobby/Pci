@@ -15,8 +15,8 @@ import com.wonders.xlab.pci.doctor.module.bp.bean.BPChartBean;
 import com.wonders.xlab.pci.doctor.module.bp.bean.BPListBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.BPEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.BPModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.IBPModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IBPPresenterListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.BPModelListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.listener.BPPresenterListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,11 +28,11 @@ import im.hua.utils.DateUtil;
 /**
  * Created by hua on 16/2/22.
  */
-public class BPPresenter extends BasePresenter implements IBPModelListener {
-    private IBPPresenterListener mBloodPressurePresenter;
+public class BPPresenter extends BasePresenter implements BPModelListener {
+    private BPPresenterListener mBloodPressurePresenter;
     private BPModel mBPModel;
 
-    public BPPresenter(@NonNull IBPPresenterListener bloodPressurePresenter) {
+    public BPPresenter(@NonNull BPPresenterListener bloodPressurePresenter) {
         mBloodPressurePresenter = bloodPressurePresenter;
 
         mBPModel = new BPModel(this);

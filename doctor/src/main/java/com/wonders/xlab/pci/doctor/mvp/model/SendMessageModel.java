@@ -4,7 +4,7 @@ import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.SendMessageAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.SendMessageEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.request.SendMessageBody;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.SendMessageModelListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.SendMessageModelListener;
 
 import java.util.ArrayList;
 import java.util.List;

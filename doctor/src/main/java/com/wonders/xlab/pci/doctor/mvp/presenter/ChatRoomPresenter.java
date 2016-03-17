@@ -8,9 +8,9 @@ import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.ChatRoomEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.ChatRoomModel;
 import com.wonders.xlab.pci.doctor.mvp.model.SendMessageModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.ChatRoomModelListener;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.SendMessageModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.ChatRoomPresenterListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.ChatRoomModelListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.SendMessageModelListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.listener.ChatRoomPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +101,7 @@ public class ChatRoomPresenter extends BasePresenter implements ChatRoomModelLis
     }
 
     @Override
-    public void silenceRequest() {
+    public void noMoreData(String message) {
         mIChatRoomPresenter.hideLoading();
     }
 }

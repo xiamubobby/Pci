@@ -3,8 +3,8 @@ package com.wonders.xlab.pci.doctor.mvp.presenter;
 import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.PatientEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.PatientModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.PatientModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.PatientPresenterListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.PatientModelListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.listener.PatientPresenterListener;
 
 import java.util.ArrayList;
 

@@ -3,7 +3,7 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.MedicalRecordAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.MedicalRecordEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.MedicalRecordModelListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.MedicalRecordModelListener;
 
 /**
  * Created by hua on 16/2/25.
@@ -21,7 +21,7 @@ public class MedicalRecordModel extends DoctorBaseModel<MedicalRecordEntity> {
         if (!isLast()) {
             fetchData(mMedicalRecordAPI.getMedicalRecordList(userId, getPageIndex() + 1, getSize()), true);
         } else {
-            mIMedicalRecordModel.silenceRequest();
+            mIMedicalRecordModel.noMoreData("");
         }
     }
 

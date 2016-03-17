@@ -5,9 +5,9 @@ import com.wonders.xlab.pci.doctor.mvp.entity.SymptomCommentEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.SymptomEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.SymptomCommentModel;
 import com.wonders.xlab.pci.doctor.mvp.model.SymptomModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.SymptomCommentModelListener;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.SymptomModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.SymptomPresenterListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.SymptomCommentModelListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.SymptomModelListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.listener.SymptomPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;

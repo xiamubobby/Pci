@@ -3,7 +3,7 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.SymptomAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.SymptomCommentEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.SymptomCommentModelListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.SymptomCommentModelListener;
 
 /**
  * Created by hua on 16/2/26.

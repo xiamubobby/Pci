@@ -36,4 +36,9 @@
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+    <style name="PhotoPickerTheme" parent="AppTheme.NoActionBar">
+        <item name="navigationIcon">@drawable/ic_arrow_back_white</item>
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+    </style>
 </resources>

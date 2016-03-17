@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_medical_record_photo_upload"
+        android:icon="@drawable/ic_camera_alt_white_48dp"
+        android:title="病历照片"
+        app:showAsAction="always"/>
+</menu>

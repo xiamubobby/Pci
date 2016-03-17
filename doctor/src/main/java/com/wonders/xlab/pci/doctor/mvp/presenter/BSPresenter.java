@@ -6,8 +6,8 @@ import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.module.bs.bean.BSBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.BSEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.BSModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.IBSModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.IBSPresenterListener;
+import com.wonders.xlab.pci.doctor.mvp.model.listener.BSModelListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.listener.BSPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,11 +18,11 @@ import im.hua.utils.DateUtil;
 /**
  * Created by hua on 16/2/22.
  */
-public class BSPresenter extends BasePresenter implements IBSModelListener {
-    private IBSPresenterListener mBloodPressurePresenter;
+public class BSPresenter extends BasePresenter implements BSModelListener {
+    private BSPresenterListener mBloodPressurePresenter;
     private BSModel mBSModel;
 
-    public BSPresenter(@NonNull IBSPresenterListener bloodPressurePresenter) {
+    public BSPresenter(@NonNull BSPresenterListener bloodPressurePresenter) {
         mBloodPressurePresenter = bloodPressurePresenter;
 
         mBSModel = new BSModel(this);

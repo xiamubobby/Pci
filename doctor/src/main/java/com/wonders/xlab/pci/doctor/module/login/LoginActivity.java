@@ -19,7 +19,7 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.MainActivity;
 import com.wonders.xlab.pci.doctor.mvp.presenter.LoginPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.LoginPresenterListener;
+import com.wonders.xlab.pci.doctor.mvp.presenter.listener.LoginPresenterListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
