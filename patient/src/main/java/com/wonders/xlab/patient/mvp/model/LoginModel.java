@@ -1,10 +1,10 @@
-package com.wonders.xlab.patient.module.auth.login.mvn.model;
+package com.wonders.xlab.patient.mvp.model;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import com.wonders.xlab.patient.module.auth.login.mvn.api.LoginAPI;
-import com.wonders.xlab.patient.module.auth.login.mvn.model.impl.ILoginModel;
+import com.wonders.xlab.patient.mvp.api.LoginAPI;
+import com.wonders.xlab.patient.mvp.model.impl.ILoginModel;
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.entity.LoginEntity;
 

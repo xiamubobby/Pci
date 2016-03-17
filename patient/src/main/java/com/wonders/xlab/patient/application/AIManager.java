@@ -43,6 +43,10 @@ public class AIManager {
         return !TextUtils.isEmpty(getPatientId());
     }
 
+    public void exit() {
+        spManager.clear();
+    }
+
     public String getPatientId() {
         return spManager.getString(PRE_PATIENT_ID, "");
     }

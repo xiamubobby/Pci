@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import im.hua.library.base.mvp.BasePresenter;
@@ -19,6 +22,40 @@ public class BaseActivity extends AppCompatActivity {
     private List<BasePresenter> mBasePresenterList;
 
     private ProgressDialog mDialog;
+
+    /**
+     * 发起两次toast的时间间隔的最小值，否则不显示第二次
+     *
+     * ms
+     */
+    private long mShowToastInterval = 800;
+
+    private long mLastToastTime = 0;
+
+    public void showShortToast(String message) {
+        long nowTime = Calendar.getInstance().getTimeInMillis();
+        Log.d("BaseActivity", "nowTime:" + nowTime);
+        if (nowTime - mLastToastTime < mShowToastInterval) {
+            return;
+        }
+        mLastToastTime = nowTime;
+
+        if (!TextUtils.isEmpty(message)) {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void showLongToast(String message) {
+        long nowTime = Calendar.getInstance().getTimeInMillis();
+        if (nowTime - mLastToastTime < mShowToastInterval) {
+            return;
+        }
+        mLastToastTime = nowTime;
+
+        if (!TextUtils.isEmpty(message)) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }
+    }
 
     public void showProgressDialog(String title, String message) {
         if (null == mDialog) {

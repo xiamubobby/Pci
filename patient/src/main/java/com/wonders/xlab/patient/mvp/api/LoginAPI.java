@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.auth.login.mvn.api;
+package com.wonders.xlab.patient.mvp.api;
 
 
 import com.wonders.xlab.patient.mvp.entity.LoginEntity;

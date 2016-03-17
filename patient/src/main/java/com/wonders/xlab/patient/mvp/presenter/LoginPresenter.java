@@ -1,9 +1,9 @@
-package com.wonders.xlab.patient.module.auth.login.mvn.presenter;
+package com.wonders.xlab.patient.mvp.presenter;
 
 import com.wonders.xlab.patient.Constant;
-import com.wonders.xlab.patient.module.auth.login.mvn.model.LoginModel;
-import com.wonders.xlab.patient.module.auth.login.mvn.model.impl.ILoginModel;
-import com.wonders.xlab.patient.module.auth.login.mvn.presenter.impl.ILoginPresenter;
+import com.wonders.xlab.patient.mvp.model.LoginModel;
+import com.wonders.xlab.patient.mvp.model.impl.ILoginModel;
+import com.wonders.xlab.patient.mvp.presenter.impl.ILoginPresenter;
 import com.wonders.xlab.patient.mvp.entity.LoginEntity;
 
 import im.hua.library.base.mvp.BasePresenter;

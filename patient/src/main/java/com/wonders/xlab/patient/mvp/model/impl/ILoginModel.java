@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.auth.login.mvn.model.impl;
+package com.wonders.xlab.patient.mvp.model.impl;
 
 import com.wonders.xlab.patient.mvp.entity.LoginEntity;
 

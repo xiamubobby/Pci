@@ -5,14 +5,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.module.auth.login.mvn.presenter.LoginPresenter;
-import com.wonders.xlab.patient.module.auth.login.mvn.presenter.impl.ILoginPresenter;
 import com.wonders.xlab.patient.module.main.MainActivity;
+import com.wonders.xlab.patient.mvp.presenter.LoginPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.ILoginPresenter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,13 +45,13 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter {
         String tel = mEtPhoneNumber.getText().toString();
         if (TextUtils.isEmpty(tel)) {
             ViewHelper.shakeEdit(mEtPhoneNumber, this);
-            Toast.makeText(this, "请输入手机号！", Toast.LENGTH_SHORT).show();
+            showShortToast("请输入手机号！");
             return;
         }
         String password = mEtPassword.getText().toString();
         if (TextUtils.isEmpty(password)) {
             ViewHelper.shakeEdit(mEtPassword, this);
-            Toast.makeText(this, "请输入密码！", Toast.LENGTH_SHORT).show();
+            showShortToast("请输入密码！");
             return;
         }
 
@@ -63,7 +62,7 @@ public class LoginActivity extends BaseActivity implements ILoginPresenter {
 
     @Override
     public void showError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        showShortToast(message);
     }
 
     @Override

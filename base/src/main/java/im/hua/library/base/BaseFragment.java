@@ -1,8 +1,13 @@
 package im.hua.library.base;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
+import android.text.TextUtils;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import im.hua.library.base.mvp.BasePresenter;
@@ -12,6 +17,64 @@ import im.hua.library.base.mvp.BasePresenter;
  */
 public class BaseFragment extends Fragment {
     private List<BasePresenter> mBasePresenterList;
+
+    private ProgressDialog mDialog;
+
+    /**
+     * 发起两次toast的时间间隔的最小值，否则不显示第二次
+     *
+     * ms
+     */
+    private long mShowToastInterval = 800;
+
+    private long mLastToastTime = 0;
+
+    public void showShortToast(String message) {
+        long nowTime = Calendar.getInstance().getTimeInMillis();
+        Log.d("BaseActivity", "nowTime:" + nowTime);
+        if (nowTime - mLastToastTime < mShowToastInterval) {
+            return;
+        }
+        mLastToastTime = nowTime;
+
+        if (!TextUtils.isEmpty(message)) {
+            Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void showLongToast(String message) {
+        long nowTime = Calendar.getInstance().getTimeInMillis();
+        if (nowTime - mLastToastTime < mShowToastInterval) {
+            return;
+        }
+        mLastToastTime = nowTime;
+
+        if (!TextUtils.isEmpty(message)) {
+            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void showProgressDialog(String title, String message) {
+        if (null == mDialog) {
+            mDialog = new ProgressDialog(getActivity());
+        }
+        if (!TextUtils.isEmpty(title)) {
+            mDialog.setTitle(title);
+        }
+        if (!TextUtils.isEmpty(message)) {
+            mDialog.setMessage(message);
+        }
+        if (!mDialog.isShowing()) {
+            mDialog.show();
+        }
+
+    }
+
+    public void dismissProgressDialog() {
+        if (null != mDialog && mDialog.isShowing()) {
+            mDialog.dismiss();
+        }
+    }
 
     public void addPresenter(BasePresenter presenter) {
         if (mBasePresenterList == null) {

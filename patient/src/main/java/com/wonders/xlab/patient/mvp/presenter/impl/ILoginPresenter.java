@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.auth.login.mvn.presenter.impl;
+package com.wonders.xlab.patient.mvp.presenter.impl;
 
 import im.hua.library.base.mvp.impl.IBasePresenter;
 
