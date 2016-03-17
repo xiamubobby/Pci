@@ -18,10 +18,9 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
-import com.wonders.xlab.patient.mvp.presenter.impl.RecordSavePresenter;
-import com.wonders.xlab.patient.mvp.presenter.IRecordSavePresenter;
-import com.wonders.xlab.patient.mvp.presenter.listener.RecordAddPresenterListener;
 import com.wonders.xlab.patient.module.dailyrecord.otto.TaskRefreshOtto;
+import com.wonders.xlab.patient.mvp.presenter.IRecordSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.RecordSavePresenter;
 
 import java.util.Calendar;
 
@@ -31,7 +30,7 @@ import butterknife.OnClick;
 import im.hua.utils.DateUtil;
 import im.hua.utils.KeyboardUtil;
 
-public class BPAddActivity extends AppbarActivity implements RecordAddPresenterListener {
+public class BPAddActivity extends AppbarActivity implements RecordSavePresenter.RecordSavePresenterListener {
 
     @Bind(R.id.tv_add_bp_date)
     TextView mTvAddBpDate;

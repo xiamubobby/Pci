@@ -22,8 +22,8 @@ import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
 import com.wonders.xlab.patient.module.dailyrecord.otto.TaskRefreshOtto;
 import com.wonders.xlab.patient.mvp.entity.SymptomEntity;
-import com.wonders.xlab.patient.mvp.presenter.impl.SymptomPresenter;
 import com.wonders.xlab.patient.mvp.presenter.ISymptomPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.SymptomPresenter;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.util.HashMap;
@@ -32,7 +32,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SymptomActivityListener extends AppbarActivity implements com.wonders.xlab.patient.mvp.presenter.listener.SymptomPresenterListener {
+public class SymptomActivityListener extends AppbarActivity implements SymptomPresenter.SymptomPresenterListener {
 
     @Bind(R.id.container_add_symptom)
     LinearLayout mContainerAddSymptom;

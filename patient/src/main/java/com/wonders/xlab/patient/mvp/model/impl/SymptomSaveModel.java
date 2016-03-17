@@ -3,9 +3,9 @@ package com.wonders.xlab.patient.mvp.model.impl;
 
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.AddRecordAPI;
-import com.wonders.xlab.patient.mvp.model.listener.SymptomSaveModelListener;
 
 import im.hua.library.base.mvp.entity.SimpleEntity;
+import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
  * Created by hua on 15/12/18.
@@ -37,5 +37,9 @@ public class SymptomSaveModel extends PatientBaseModel<SimpleEntity> {
     @Override
     protected void onFailed(Throwable e) {
         mSymptomSaveModelListener.onReceiveFailed("保存数据失败，请重试！");
+    }
+
+    public interface SymptomSaveModelListener extends BaseModelListener {
+        void onSaveSymptomSuccess(String message);
     }
 }

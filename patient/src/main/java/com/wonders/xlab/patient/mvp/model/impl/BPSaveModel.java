@@ -4,9 +4,9 @@ package com.wonders.xlab.patient.mvp.model.impl;
 import com.wonders.xlab.patient.assist.deviceconnection.entity.BPEntityList;
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.AddRecordAPI;
-import com.wonders.xlab.patient.mvp.model.listener.BPSaveModelListener;
 
 import im.hua.library.base.mvp.entity.SimpleEntity;
+import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
  * Created by hua on 15/12/18.
@@ -51,5 +51,9 @@ public class BPSaveModel extends PatientBaseModel<SimpleEntity> {
     @Override
     protected void onFailed(Throwable e) {
         mBPSaveModelListener.onReceiveFailed("保存血压失败，请重试！");
+    }
+
+    public interface BPSaveModelListener extends BaseModelListener {
+        void onSaveBPSuccess(String message);
     }
 }

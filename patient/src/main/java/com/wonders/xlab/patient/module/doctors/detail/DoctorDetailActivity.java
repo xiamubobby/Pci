@@ -19,16 +19,15 @@ import com.wonders.xlab.patient.module.doctors.detail.adapter.DoctorDetailPackag
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailGroupMemberBean;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailGroupOfDoctorBean;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailPackageBean;
-import com.wonders.xlab.patient.mvp.presenter.impl.DoctorDetailPresenter;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorDetailPresenter;
-import com.wonders.xlab.patient.mvp.presenter.listener.DoctorDetailPresenterListener;
+import com.wonders.xlab.patient.mvp.presenter.impl.DoctorDetailPresenter;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class DoctorDetailActivity extends AppbarActivity implements DoctorDetailPresenterListener {
+public class DoctorDetailActivity extends AppbarActivity implements DoctorDetailPresenter.DoctorDetailPresenterListener {
     public final static String EXTRA_TITLE = "title";
     public final static String EXTRA_GROUP_ID = "group_id";
 

@@ -5,26 +5,23 @@ import com.wonders.xlab.patient.assist.deviceconnection.entity.BSEntityList;
 import com.wonders.xlab.patient.mvp.model.impl.BPSaveModel;
 import com.wonders.xlab.patient.mvp.model.impl.BSSaveModel;
 import com.wonders.xlab.patient.mvp.model.impl.SymptomSaveModel;
-import com.wonders.xlab.patient.mvp.model.listener.BPSaveModelListener;
-import com.wonders.xlab.patient.mvp.model.listener.BSSaveModelListener;
-import com.wonders.xlab.patient.mvp.model.listener.SymptomSaveModelListener;
 import com.wonders.xlab.patient.mvp.presenter.IRecordSavePresenter;
-import com.wonders.xlab.patient.mvp.presenter.listener.RecordAddPresenterListener;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 
 /**
  * Created by hua on 16/3/16.
  */
-public class RecordSavePresenter extends BasePresenter implements IRecordSavePresenter, BPSaveModelListener, SymptomSaveModelListener, BSSaveModelListener {
-    private RecordAddPresenterListener mRecordAddPresenterListener;
+public class RecordSavePresenter extends BasePresenter implements IRecordSavePresenter, BPSaveModel.BPSaveModelListener, SymptomSaveModel.SymptomSaveModelListener, BSSaveModel.BSSaveModelListener {
+    private RecordSavePresenterListener mRecordSavePresenterListener;
 
     private BPSaveModel mBPSaveModel;
     private BSSaveModel mBSSaveModel;
     private SymptomSaveModel mSymptomSaveModel;
 
-    public RecordSavePresenter(RecordAddPresenterListener RecordAddPresenterListener) {
-        mRecordAddPresenterListener = RecordAddPresenterListener;
+    public RecordSavePresenter(RecordSavePresenterListener RecordSavePresenterListener) {
+        mRecordSavePresenterListener = RecordSavePresenterListener;
         mBPSaveModel = new BPSaveModel(this);
         mBSSaveModel = new BSSaveModel(this);
         mSymptomSaveModel = new SymptomSaveModel(this);
@@ -57,25 +54,29 @@ public class RecordSavePresenter extends BasePresenter implements IRecordSavePre
 
     @Override
     public void onSaveBPSuccess(String message) {
-        mRecordAddPresenterListener.hideLoading();
-        mRecordAddPresenterListener.onSaveRecordSuccess(message);
+        mRecordSavePresenterListener.hideLoading();
+        mRecordSavePresenterListener.onSaveRecordSuccess(message);
     }
 
     @Override
     public void onSaveBSSuccess(String message) {
-        mRecordAddPresenterListener.hideLoading();
-        mRecordAddPresenterListener.onSaveRecordSuccess(message);
+        mRecordSavePresenterListener.hideLoading();
+        mRecordSavePresenterListener.onSaveRecordSuccess(message);
     }
 
     @Override
     public void onSaveSymptomSuccess(String message) {
-        mRecordAddPresenterListener.hideLoading();
-        mRecordAddPresenterListener.onSaveRecordSuccess(message);
+        mRecordSavePresenterListener.hideLoading();
+        mRecordSavePresenterListener.onSaveRecordSuccess(message);
     }
 
     @Override
     public void onReceiveFailed(String message) {
-        mRecordAddPresenterListener.hideLoading();
-        mRecordAddPresenterListener.showError(message);
+        mRecordSavePresenterListener.hideLoading();
+        mRecordSavePresenterListener.showError(message);
+    }
+
+    public interface RecordSavePresenterListener extends BasePresenterListener {
+        void onSaveRecordSuccess(String message);
     }
 }

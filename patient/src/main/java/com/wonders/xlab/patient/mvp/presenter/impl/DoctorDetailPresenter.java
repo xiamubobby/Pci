@@ -6,18 +6,17 @@ import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailG
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailPackageBean;
 import com.wonders.xlab.patient.mvp.model.IDoctorDetailModel;
 import com.wonders.xlab.patient.mvp.model.impl.DoctorDetailModel;
-import com.wonders.xlab.patient.mvp.model.listener.DoctorDetailModelListener;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorDetailPresenter;
-import com.wonders.xlab.patient.mvp.presenter.listener.DoctorDetailPresenterListener;
 
 import java.util.ArrayList;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 
 /**
  * Created by hua on 16/3/16.
  */
-public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetailPresenter, DoctorDetailModelListener {
+public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetailPresenter, DoctorDetailModel.DoctorDetailModelListener {
 
     private DoctorDetailPresenterListener mDoctorDetailListener;
     private IDoctorDetailModel mDoctorDetailModel;
@@ -101,5 +100,15 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
     public void onReceiveFailed(String message) {
         mDoctorDetailListener.hideLoading();
         mDoctorDetailListener.showError(message);
+    }
+
+    public interface DoctorDetailPresenterListener extends BasePresenterListener {
+        void showBasicInfo();
+
+        void showPackageList(ArrayList<DoctorDetailPackageBean> packageList);
+
+        void showGroupMemberList(ArrayList<DoctorDetailGroupMemberBean> groupMemberList);
+
+        void showGroupOfDoctorList(ArrayList<DoctorDetailGroupOfDoctorBean> groupOfDoctorList);
     }
 }

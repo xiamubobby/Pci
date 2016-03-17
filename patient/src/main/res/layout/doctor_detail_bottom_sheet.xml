@@ -33,7 +33,7 @@
         android:layout_marginRight="@dimen/item_interval_middle"
         android:layout_marginTop="@dimen/item_interval_small"
         android:text="54人已购买"
-        android:textColor="@color/text_color_primary_gray"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_size_middle"/>
 
     <TextView

@@ -5,7 +5,7 @@ import com.wonders.xlab.patient.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.OthersChatRoomBean;
 import com.wonders.xlab.patient.mvp.model.IChatRoomRecordsModel;
-import com.wonders.xlab.patient.mvp.model.impl.ChatRoomRecordsRecordsModel;
+import com.wonders.xlab.patient.mvp.model.impl.ChatRoomRecordsModel;
 import com.wonders.xlab.patient.mvp.presenter.IChatRoomPresenter;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import im.hua.utils.DateUtil;
 /**
  * Created by hua on 16/2/22.
  */
-public class ChatRoomPresenter extends BasePresenter implements IChatRoomPresenter, ChatRoomRecordsRecordsModel.ChatRoomModelListener {
+public class ChatRoomPresenter extends BasePresenter implements IChatRoomPresenter, ChatRoomRecordsModel.ChatRoomModelListener {
 
     private IChatRoomRecordsModel mChatRoomRecordsModel;
 
@@ -29,7 +29,7 @@ public class ChatRoomPresenter extends BasePresenter implements IChatRoomPresent
     public ChatRoomPresenter(ChatRoomPresenterListener presenter) {
         mChatRoomPresenterListener = presenter;
 
-        mChatRoomRecordsModel = new ChatRoomRecordsRecordsModel(this);
+        mChatRoomRecordsModel = new ChatRoomRecordsModel(this);
         addModel(mChatRoomRecordsModel);
     }
 

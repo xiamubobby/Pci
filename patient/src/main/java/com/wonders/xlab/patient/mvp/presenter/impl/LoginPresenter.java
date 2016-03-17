@@ -3,23 +3,22 @@ package com.wonders.xlab.patient.mvp.presenter.impl;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.mvp.entity.LoginEntity;
 import com.wonders.xlab.patient.mvp.model.impl.LoginModel;
-import com.wonders.xlab.patient.mvp.model.listener.LoginModelListener;
 import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
-import com.wonders.xlab.patient.mvp.presenter.listener.LoginPresenterListenerListener;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 import im.hua.utils.MD5Util;
 
 
 /**
  * Created by hua on 16/3/16.
  */
-public class LoginPresenter extends BasePresenter implements ILoginPresenter, LoginModelListener {
+public class LoginPresenter extends BasePresenter implements ILoginPresenter, LoginModel.LoginModelListener {
 
-    private LoginPresenterListenerListener mLoginPresenterListener;
+    private LoginPresenterListener mLoginPresenterListener;
     private LoginModel mLoginModel;
 
-    public LoginPresenter(LoginPresenterListenerListener loginPresenterListener) {
+    public LoginPresenter(LoginPresenterListener loginPresenterListener) {
         mLoginPresenterListener = loginPresenterListener;
 
         mLoginModel = new LoginModel(this);
@@ -41,5 +40,9 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter, Lo
     public void onReceiveFailed(String message) {
         mLoginPresenterListener.hideLoading();
         mLoginPresenterListener.showError(message);
+    }
+
+    public interface LoginPresenterListener extends BasePresenterListener {
+        void loginSuccess(String patientId,String tel,String portraitUrl,String patientName);
     }
 }

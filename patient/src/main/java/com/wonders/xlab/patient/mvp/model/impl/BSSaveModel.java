@@ -4,9 +4,9 @@ package com.wonders.xlab.patient.mvp.model.impl;
 import com.wonders.xlab.patient.assist.deviceconnection.entity.BSEntityList;
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.AddRecordAPI;
-import com.wonders.xlab.patient.mvp.model.listener.BSSaveModelListener;
 
 import im.hua.library.base.mvp.entity.SimpleEntity;
+import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
  * Created by hua on 15/12/18.
@@ -50,5 +50,9 @@ public class BSSaveModel extends PatientBaseModel<SimpleEntity> {
     @Override
     protected void onFailed(Throwable e) {
         mBSSaveModelListener.onReceiveFailed("保存血糖失败，请重试！");
+    }
+
+    public interface BSSaveModelListener extends BaseModelListener {
+        void onSaveBSSuccess(String message);
     }
 }

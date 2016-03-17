@@ -3,24 +3,23 @@ package com.wonders.xlab.patient.mvp.presenter.impl;
 import com.wonders.xlab.patient.mvp.entity.SymptomEntity;
 import com.wonders.xlab.patient.mvp.model.impl.SymptomRetrieveModel;
 import com.wonders.xlab.patient.mvp.model.impl.SymptomSaveModel;
-import com.wonders.xlab.patient.mvp.model.listener.SymptomRetrieveModelListener;
-import com.wonders.xlab.patient.mvp.model.listener.SymptomSaveModelListener;
 import com.wonders.xlab.patient.mvp.presenter.ISymptomPresenter;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 
 
 /**
  * Created by hua on 16/3/16.
  */
-public class SymptomPresenter extends BasePresenter implements ISymptomPresenter,SymptomRetrieveModelListener, SymptomSaveModelListener {
-    private com.wonders.xlab.patient.mvp.presenter.listener.SymptomPresenterListener mSymptomPresenterListener;
+public class SymptomPresenter extends BasePresenter implements ISymptomPresenter,SymptomRetrieveModel.SymptomRetrieveModelListener, SymptomSaveModel.SymptomSaveModelListener {
+    private SymptomPresenterListener mSymptomPresenterListener;
 
     private SymptomRetrieveModel mSymptomRetrieveModel;
 
     private SymptomSaveModel mSymptomSaveModel;
 
-    public SymptomPresenter(com.wonders.xlab.patient.mvp.presenter.listener.SymptomPresenterListener symptomPresenterListener) {
+    public SymptomPresenter(SymptomPresenterListener symptomPresenterListener) {
         mSymptomPresenterListener = symptomPresenterListener;
 
         mSymptomRetrieveModel = new SymptomRetrieveModel(this);
@@ -55,5 +54,11 @@ public class SymptomPresenter extends BasePresenter implements ISymptomPresenter
     public void onSaveSymptomSuccess(String message) {
         mSymptomPresenterListener.hideLoading();
         mSymptomPresenterListener.onSaveSymptomSuccess(message);
+    }
+
+    public interface SymptomPresenterListener extends BasePresenterListener {
+        void showSymptoms(SymptomEntity.RetValuesEntity valuesEntity);
+
+        void onSaveSymptomSuccess(String message);
     }
 }

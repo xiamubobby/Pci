@@ -3,7 +3,8 @@ package com.wonders.xlab.patient.mvp.model.impl;
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.entity.DoctorDetailEntity;
 import com.wonders.xlab.patient.mvp.model.IDoctorDetailModel;
-import com.wonders.xlab.patient.mvp.model.listener.DoctorDetailModelListener;
+
+import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
  * Created by hua on 16/3/17.
@@ -28,5 +29,9 @@ public class DoctorDetailModel extends PatientBaseModel<DoctorDetailEntity> impl
     @Override
     public void getDoctorDetailInfo(String groupId) {
         onSuccess(null);
+    }
+
+    public interface DoctorDetailModelListener extends BaseModelListener {
+        void onReceiveDoctorDetailSuccess();
     }
 }

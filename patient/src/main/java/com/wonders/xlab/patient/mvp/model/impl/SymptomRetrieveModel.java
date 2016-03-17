@@ -3,8 +3,9 @@ package com.wonders.xlab.patient.mvp.model.impl;
 
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.SymptomAPI;
-import com.wonders.xlab.patient.mvp.model.listener.SymptomRetrieveModelListener;
 import com.wonders.xlab.patient.mvp.entity.SymptomEntity;
+
+import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
  * Created by hua on 15/12/18.
@@ -34,4 +35,7 @@ public class SymptomRetrieveModel extends PatientBaseModel<SymptomEntity> {
         mSymptomRetrieveModelListener.onReceiveFailed("获取不适症状列表失败！");
     }
 
+    public interface SymptomRetrieveModelListener extends BaseModelListener {
+        void onReceiveSymptomsSuccess(SymptomEntity.RetValuesEntity valuesEntity);
+    }
 }

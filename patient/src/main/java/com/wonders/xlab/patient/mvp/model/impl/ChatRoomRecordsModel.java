@@ -10,13 +10,13 @@ import im.hua.library.base.mvp.listener.BaseModelListener;
 /**
  * Created by hua on 16/3/17.
  */
-public class ChatRoomRecordsRecordsModel extends PatientBaseModel<ChatRoomEntity> implements IChatRoomRecordsModel {
+public class ChatRoomRecordsModel extends PatientBaseModel<ChatRoomEntity> implements IChatRoomRecordsModel {
 
     private ChatRoomModelListener mChatRoomModelListener;
 
     private ChatRoomAPI mChatRoomAPI;
 
-    public ChatRoomRecordsRecordsModel(ChatRoomModelListener chatRoomModelListener) {
+    public ChatRoomRecordsModel(ChatRoomModelListener chatRoomModelListener) {
         mChatRoomModelListener = chatRoomModelListener;
         mChatRoomAPI = mRetrofit.create(ChatRoomAPI.class);
     }

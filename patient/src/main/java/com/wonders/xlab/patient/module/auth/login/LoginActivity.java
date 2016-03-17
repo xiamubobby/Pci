@@ -10,9 +10,8 @@ import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.main.MainActivity;
-import com.wonders.xlab.patient.mvp.presenter.impl.LoginPresenter;
 import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
-import com.wonders.xlab.patient.mvp.presenter.listener.LoginPresenterListenerListener;
+import com.wonders.xlab.patient.mvp.presenter.impl.LoginPresenter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,7 +20,7 @@ import im.hua.library.base.BaseActivity;
 import im.hua.utils.KeyboardUtil;
 import im.hua.utils.ViewHelper;
 
-public class LoginActivity extends BaseActivity implements LoginPresenterListenerListener {
+public class LoginActivity extends BaseActivity implements LoginPresenter.LoginPresenterListener {
 
     @Bind(R.id.login_phone_number)
     EditText mEtPhoneNumber;

@@ -25,12 +25,10 @@ import com.wonders.xlab.patient.assist.deviceconnection.otto.ConnStatusOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.EmptyDataOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.RequestDataFailed;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.ScanStartOtto;
-import com.wonders.xlab.patient.mvp.presenter.impl.IdealRangePresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.RecordSavePresenter;
 import com.wonders.xlab.patient.mvp.presenter.IIdealRangePresenter;
 import com.wonders.xlab.patient.mvp.presenter.IRecordSavePresenter;
-import com.wonders.xlab.patient.mvp.presenter.listener.IdealRangePresenterListener;
-import com.wonders.xlab.patient.mvp.presenter.listener.RecordAddPresenterListener;
+import com.wonders.xlab.patient.mvp.presenter.impl.IdealRangePresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.RecordSavePresenter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +43,7 @@ import im.hua.uikit.LoadingDotView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BSResultFragment extends BaseFragment implements RecordAddPresenterListener, IdealRangePresenterListener {
+public class BSResultFragment extends BaseFragment implements RecordSavePresenter.RecordSavePresenterListener, IdealRangePresenter.IdealRangePresenterListener {
 
     @Bind(R.id.tv_bs_result_sugar)
     TextView mTvBsResultSugar;

@@ -3,9 +3,9 @@ package com.wonders.xlab.patient.mvp.model.impl;
 
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.IdealRangeAPI;
-import com.wonders.xlab.patient.mvp.model.listener.IdealRangeModelListener;
 
 import im.hua.library.base.mvp.entity.SimpleEntity;
+import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
  * Created by hua on 16/1/6.
@@ -50,4 +50,7 @@ public class IdealRangeModel extends PatientBaseModel<SimpleEntity> {
         mIdealRangeModelListener.onReceiveFailed("获取理想范围失败！");
     }
 
+    public interface IdealRangeModelListener extends BaseModelListener {
+        void onReceiveIdealRangeSuccess(String message);
+    }
 }

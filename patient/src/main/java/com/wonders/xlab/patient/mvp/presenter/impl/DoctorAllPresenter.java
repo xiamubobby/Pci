@@ -5,19 +5,18 @@ import com.wonders.xlab.patient.module.doctors.adapter.bean.AllDoctorItemBean;
 import com.wonders.xlab.patient.mvp.entity.DoctorAllEntity;
 import com.wonders.xlab.patient.mvp.model.IDoctorAllModel;
 import com.wonders.xlab.patient.mvp.model.impl.DoctorAllModel;
-import com.wonders.xlab.patient.mvp.model.listener.DoctorAllModelListener;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorAllPresenter;
-import com.wonders.xlab.patient.mvp.presenter.listener.DoctorAllPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 
 /**
  * Created by hua on 16/3/15.
  */
-public class DoctorAllPresenter extends BasePresenter implements IDoctorAllPresenter, DoctorAllModelListener {
+public class DoctorAllPresenter extends BasePresenter implements IDoctorAllPresenter, DoctorAllModel.DoctorAllModelListener {
 
     private DoctorAllPresenterListener mDoctorAllListener;
     private IDoctorAllModel mDoctorAllModel;
@@ -77,5 +76,11 @@ public class DoctorAllPresenter extends BasePresenter implements IDoctorAllPrese
     public void onReceiveFailed(String message) {
         mDoctorAllListener.hideLoading();
         mDoctorAllListener.showError(message);
+    }
+
+    public interface DoctorAllPresenterListener extends BasePresenterListener {
+        void showAllDoctorList(ArrayList<AllDoctorItemBean> myDoctorBeanList);
+
+        void appendAllDoctorList(ArrayList<AllDoctorItemBean> myDoctorBeanList);
     }
 }

@@ -21,7 +21,6 @@ import com.wonders.xlab.patient.module.doctors.adapter.MyDoctorRVAdapter;
 import com.wonders.xlab.patient.module.doctors.adapter.bean.MyDoctorItemBean;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorMyPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.DoctorMyPresenter;
-import com.wonders.xlab.patient.mvp.presenter.listener.DoctorMyPresenterListener;
 
 import java.util.ArrayList;
 
@@ -32,7 +31,7 @@ import im.hua.library.base.BaseFragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterListener {
+public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.DoctorMyPresenterListener {
 
     @Bind(R.id.recycler_view_doctor_my)
     PullLoadMoreRecyclerView mRecyclerView;

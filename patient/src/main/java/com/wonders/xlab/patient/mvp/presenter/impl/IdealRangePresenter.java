@@ -1,16 +1,15 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
 import com.wonders.xlab.patient.mvp.model.impl.IdealRangeModel;
-import com.wonders.xlab.patient.mvp.model.listener.IdealRangeModelListener;
 import com.wonders.xlab.patient.mvp.presenter.IIdealRangePresenter;
-import com.wonders.xlab.patient.mvp.presenter.listener.IdealRangePresenterListener;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 
 /**
  * Created by hua on 16/3/16.
  */
-public class IdealRangePresenter extends BasePresenter implements IIdealRangePresenter,IdealRangeModelListener {
+public class IdealRangePresenter extends BasePresenter implements IIdealRangePresenter,IdealRangeModel.IdealRangeModelListener {
     private IdealRangePresenterListener mIdealRangePresenterListener;
 
     private IdealRangeModel mIdealRangeModel;
@@ -42,5 +41,9 @@ public class IdealRangePresenter extends BasePresenter implements IIdealRangePre
     public void onReceiveFailed(String message) {
         mIdealRangePresenterListener.hideLoading();
         mIdealRangePresenterListener.showError(message);
+    }
+
+    public interface IdealRangePresenterListener extends BasePresenterListener {
+        void showRange(String range);
     }
 }

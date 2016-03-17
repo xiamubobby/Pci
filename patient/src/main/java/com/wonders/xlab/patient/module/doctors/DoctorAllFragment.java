@@ -18,9 +18,8 @@ import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.doctors.adapter.AllDoctorRVAdapter;
 import com.wonders.xlab.patient.module.doctors.adapter.bean.AllDoctorItemBean;
 import com.wonders.xlab.patient.module.doctors.detail.DoctorDetailActivity;
-import com.wonders.xlab.patient.mvp.presenter.impl.DoctorAllPresenter;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorAllPresenter;
-import com.wonders.xlab.patient.mvp.presenter.listener.DoctorAllPresenterListener;
+import com.wonders.xlab.patient.mvp.presenter.impl.DoctorAllPresenter;
 
 import java.util.ArrayList;
 
@@ -31,7 +30,7 @@ import im.hua.library.base.BaseFragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DoctorAllFragment extends BaseFragment implements DoctorAllPresenterListener {
+public class DoctorAllFragment extends BaseFragment implements DoctorAllPresenter.DoctorAllPresenterListener {
 
     @Bind(R.id.recycler_view_doctor_all)
     PullLoadMoreRecyclerView mRecyclerView;
