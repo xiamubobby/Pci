@@ -5,6 +5,8 @@
 
         <import type="android.view.View"/>
 
+        <import type="android.graphics.Color"/>
+
         <import type="android.text.TextUtils"/>
 
         <variable
@@ -45,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/item_interval_small"
                     android:text='@{"("+bean.tagStr+")"}'
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@{TextUtils.isEmpty(bean.tagColor) ? @color/text_color_primary_black : Color.parseColor(bean.tagColor)}"
                     android:textSize="@dimen/text_size_small"
                     android:visibility="@{bean.tagStr == null ? View.GONE : View.VISIBLE}"/>
             </LinearLayout>
@@ -77,7 +79,7 @@
                 android:textColor="@color/text_color_primary_black"
                 android:textSize="@dimen/text_size_middle"/>
 
-            <TextView android:id="@+id/tv_doctor_all_item_tag"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -86,6 +88,7 @@
                 android:gravity="center_vertical"
                 android:minWidth="20dp"
                 android:text='@{TextUtils.isEmpty(bean.tagStr) ? "":"("+bean.tagStr+")"}'
+                android:textColor="@{TextUtils.isEmpty(bean.tagColor) ? @color/text_color_primary_black : Color.parseColor(bean.tagColor)}"
                 android:textSize="@dimen/text_size_small"
                 android:visibility="@{bean.personal &amp;&amp; !TextUtils.isEmpty(bean.tagStr) ? View.VISIBLE : View.GONE}"/>
 
