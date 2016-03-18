@@ -1,17 +1,93 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".module.me.MeFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingTop="@dimen/item_interval_middle"
+              tools:context=".module.me.MeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <Button android:id="@+id/btn_me_exit"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/item_interval_middle"
-        android:background="@color/colorPrimary"
-        android:text="@string/text_exit"
-        android:textColor="@android:color/white"
-        />
+        android:layout_marginBottom="@dimen/item_interval_small"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/item_interval_middle"
+        android:paddingRight="@dimen/item_interval_middle">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/iv_me_portrait"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/item_interval_middle"
+            android:text="张三"
+            android:textColor="@color/text_color_primary_black"
+            android:textSize="@dimen/text_size_large"/>
+    </LinearLayout>
+
+    <include layout="@layout/divider_vertical_large"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/item_height_min"
+        android:paddingLeft="@dimen/item_interval_middle"
+        android:paddingRight="@dimen/item_interval_middle"
+        android:text="个人资料"
+        android:textColor="@color/text_color_primary_gray"
+        android:textSize="@dimen/text_size_middle"/>
+
+    <include layout="@layout/divider_vertical"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/item_height_min"
+        android:paddingLeft="@dimen/item_interval_middle"
+        android:paddingRight="@dimen/item_interval_middle"
+        android:text="消息"
+        android:textColor="@color/text_color_primary_gray"
+        android:textSize="@dimen/text_size_middle"/>
+
+    <include layout="@layout/divider_vertical"/>
+
+    <TextView
+        android:id="@+id/tv_me_setting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/item_height_min"
+        android:paddingLeft="@dimen/item_interval_middle"
+        android:paddingRight="@dimen/item_interval_middle"
+        android:text="设置"
+        android:textColor="@color/text_color_primary_gray"
+        android:textSize="@dimen/text_size_middle"/>
+
+    <include layout="@layout/divider_vertical"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/item_height_min"
+        android:paddingLeft="@dimen/item_interval_middle"
+        android:paddingRight="@dimen/item_interval_middle"
+        android:text="关于"
+        android:textColor="@color/text_color_primary_gray"
+        android:textSize="@dimen/text_size_middle"/>
+
+    <include layout="@layout/divider_vertical"/>
+
+</LinearLayout>

@@ -7,11 +7,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.module.auth.login.LoginActivity;
+import com.wonders.xlab.patient.module.me.setting.SettingActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,9 +23,10 @@ import im.hua.library.base.BaseFragment;
  */
 public class MeFragment extends BaseFragment {
 
-
-    @Bind(R.id.btn_me_exit)
-    Button mBtnMeExit;
+    @Bind(R.id.iv_me_portrait)
+    ImageView mIvMePortrait;
+    @Bind(R.id.tv_me_setting)
+    TextView mTvMeSetting;
 
     public MeFragment() {
         // Required empty public constructor
@@ -44,11 +45,9 @@ public class MeFragment extends BaseFragment {
         return view;
     }
 
-    @OnClick(R.id.btn_me_exit)
-    public void exit() {
-        AIManager.getInstance(getActivity()).exit();
-        startActivity(new Intent(getActivity(), LoginActivity.class));
-        getActivity().finish();
+    @OnClick(R.id.tv_me_setting)
+    public void goToSettingActivity() {
+        startActivity(new Intent(getActivity(), SettingActivity.class));
     }
 
     @Override

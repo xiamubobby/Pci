@@ -10,8 +10,10 @@ import android.view.MenuItem;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.squareup.otto.Subscribe;
 import com.umeng.update.UmengUpdateAgent;
 import com.wonders.xlab.common.flyco.TabEntity;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
@@ -19,12 +21,14 @@ import com.wonders.xlab.patient.module.auth.login.LoginActivity;
 import com.wonders.xlab.patient.module.doctors.DoctorsFragment;
 import com.wonders.xlab.patient.module.home.HomeFragment;
 import com.wonders.xlab.patient.module.me.MeFragment;
+import com.wonders.xlab.patient.otto.ForceExitOtto;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseActivity;
+import im.hua.utils.NotifyUtil;
 
 public class MainActivity extends BaseActivity {
 
@@ -39,6 +43,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        OttoManager.register(this);
         if (!AIManager.getInstance(this).hasLogin()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -128,5 +133,25 @@ public class MainActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        OttoManager.unregister(this);
+    }
+
+    /**
+     * 优雅的退出全部Activity
+     * @param bean
+     */
+    @Subscribe
+    public void forceExit(ForceExitOtto bean) {
+        new NotifyUtil().cancelAll(this);
+        AIManager.getInstance(this).exit();
+
+        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 }

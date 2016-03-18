@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_key_use_equipment"
+        android:summary="使用全程健康设备测量血压/血糖"
+        android:title="使用健康设备"/>
+
+    <Preference
+        android:summary="@string/app_version"
+        android:title="版本"/>
+
+</PreferenceScreen>

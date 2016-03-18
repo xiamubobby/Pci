@@ -48,6 +48,7 @@
         <activity
             android:name=".module.main.MainActivity"
             android:label="@string/app_name"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.MaterialColdStart">
             <intent-filter>
@@ -60,6 +61,7 @@
             android:name=".module.auth.login.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
@@ -127,6 +129,9 @@
         <activity
             android:name=".module.doctors.detail.DoctorDetailActivity"
             android:label="@string/title_activity_doctor_detail"/>
+        <activity
+            android:name=".module.me.setting.SettingActivity"
+            android:label="@string/title_activity_setting"/>
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:theme="@style/PhotoPickerTheme"/>
