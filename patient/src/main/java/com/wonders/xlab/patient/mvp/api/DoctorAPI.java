@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.mvp.api;
 
 import com.wonders.xlab.patient.mvp.entity.DoctorAllEntity;
 import com.wonders.xlab.patient.mvp.entity.DoctorDetailEntity;
+import com.wonders.xlab.patient.mvp.entity.DoctorGroupDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.DoctorMyEntity;
 
 import retrofit.http.GET;
@@ -18,6 +19,19 @@ public interface DoctorAPI {
     @GET("v1/doctors/listAllDoctors/{patientId}")
     Observable<DoctorAllEntity> getAllDoctors(@Path("patientId") String patientId);
 
+    /**
+     * 获取医生小组信息（包括个人和多人的）
+     * @param doctorGroupId
+     * @return
+     */
     @GET("v1/doctors/retrieveDoctorGroupInfo/{groupId}")
-    Observable<DoctorDetailEntity> getDoctorGroupDetailInfo(@Path("groupId") String doctorGroupId);
+    Observable<DoctorGroupDetailEntity> getDoctorGroupDetailInfo(@Path("groupId") String doctorGroupId);
+
+    /**
+     * 获取医生个人信息
+     * @param doctorId
+     * @return
+     */
+    @GET("v1/doctors/retrieveDoctorInfo/{doctorId}")
+    Observable<DoctorDetailEntity> getDoctorDetailInfo(@Path("doctorId") String doctorId);
 }

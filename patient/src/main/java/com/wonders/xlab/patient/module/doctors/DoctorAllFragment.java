@@ -99,7 +99,7 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
                 public void onItemClick(int position) {
                     Intent intent = new Intent(getActivity(), DoctorDetailActivity.class);
                     intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, mAllDoctorRVAdapter.getBean(position).getDoctorGroupName());
-                    intent.putExtra(DoctorDetailActivity.EXTRA_GROUP_ID, mAllDoctorRVAdapter.getBean(position).getGroupId());
+                    intent.putExtra(DoctorDetailActivity.EXTRA_ID, mAllDoctorRVAdapter.getBean(position).getGroupId());
                     startActivity(intent);
                 }
             });

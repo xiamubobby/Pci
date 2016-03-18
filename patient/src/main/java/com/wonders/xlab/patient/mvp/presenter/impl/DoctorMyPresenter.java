@@ -42,7 +42,8 @@ public class DoctorMyPresenter extends BasePresenter implements IDoctorMyPresent
         for (DoctorMyEntity.RetValuesEntity.ServiceTrueEntity entity : inServiceEntityList) {
             MyDoctorItemBean itemBean = new MyDoctorItemBean();
             itemBean.setHeaderId(MyDoctorItemBean.HEADER_ID_IN_SERVICE);
-            itemBean.setGroupId(entity.getImGroupId());
+            itemBean.setGroupId(entity.getDoctorGroupId());
+            itemBean.setImGroupId(entity.getImGroupId());
             itemBean.setDoctorGroupName(entity.getName());
             itemBean.setLatestChatMessage(entity.getContent());
             itemBean.setTimeStr(entity.getTimeExp());

@@ -113,7 +113,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
                     case R.id.menu_chat_room_detail:
                         Intent intent = new Intent(ChatRoomActivity.this, DoctorDetailActivity.class);
                         intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, groupName);
-                        intent.putExtra(DoctorDetailActivity.EXTRA_GROUP_ID, groupId);
+                        intent.putExtra(DoctorDetailActivity.EXTRA_ID, groupId);
                         startActivity(intent);
                         break;
                 }
@@ -146,7 +146,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             mEtChatRoomInput.setText("");
 
-//            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getPatientTel(), groupId, sendTime);
+//            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getPatientTel(), doctorId, sendTime);
         }
     }
 

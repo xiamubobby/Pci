@@ -30,8 +30,8 @@ public class DoctorDetailModel extends PatientBaseModel<DoctorDetailEntity> impl
     }
 
     @Override
-    public void getDoctorDetailInfo(String doctorGroupId) {
-        fetchData(mDoctorAPI.getDoctorGroupDetailInfo(doctorGroupId), true);
+    public void getDoctorDetailInfo(String doctorId) {
+        fetchData(mDoctorAPI.getDoctorDetailInfo(doctorId), true);
     }
 
     public interface DoctorDetailModelListener extends BaseModelListener {

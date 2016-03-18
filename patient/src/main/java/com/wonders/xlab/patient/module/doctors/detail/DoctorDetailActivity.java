@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -25,9 +27,11 @@ import com.wonders.xlab.patient.module.doctors.detail.adapter.DoctorDetailPackag
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailGroupMemberBean;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailGroupOfDoctorBean;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailPackageBean;
-import com.wonders.xlab.patient.module.doctors.detail.bean.DoctorGroupBasicInfoBean;
+import com.wonders.xlab.patient.module.doctors.detail.bean.DoctorBasicInfoBean;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorDetailPresenter;
+import com.wonders.xlab.patient.mvp.presenter.IDoctorGroupDetailPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.DoctorDetailPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.DoctorGroupDetailPresenter;
 
 import java.util.ArrayList;
 
@@ -35,14 +39,34 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseActivity;
 
-public class DoctorDetailActivity extends BaseActivity implements DoctorDetailPresenter.DoctorDetailPresenterListener {
+/**
+ *
+ */
+public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDetailPresenter.DoctorDetailPresenterListener, DoctorDetailPresenter.DoctorDetailPresenterListener {
+    public final static int TYPE_DOCTOR = 0;
+    public final static int TYPE_DOCTOR_GROUP = 1;
+
     public final static String EXTRA_TITLE = "title";
-    public final static String EXTRA_GROUP_ID = "group_id";
+
+    /**
+     * {@link DoctorDetailActivity.TYPE_DOCTOR}
+     * {@link DoctorDetailActivity.TYPE_DOCTOR_GROUP}
+     */
+    public final static String EXTRA_TYPE = "type";
+
+    /**
+     * 可能是小组id或者医生个人的id
+     */
+    public final static String EXTRA_ID = "extraId";
+
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
+    @Bind(R.id.refresh_doctor_detail)
+    SwipeRefreshLayout mRefresh;
 
     private String title;
-    private String groupId;
+    private String id;
+    private int type;
 
     @Bind(R.id.iv_doctor_detail_portrait)
     ImageView mIvDoctorDetailPortrait;
@@ -55,6 +79,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailPr
     private DoctorDetailMemberRVAdapter mMemberRVAdapter;
     private DoctorDetailGroupOfDoctorRVAdapter mGroupOfDoctorRVAdapter;
 
+    private IDoctorGroupDetailPresenter mDoctorGroupDetailPresenter;
     private IDoctorDetailPresenter mDoctorDetailPresenter;
 
     private DoctorDetailActivityBinding binding;
@@ -63,6 +88,8 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailPr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.doctor_detail_activity);
+        //we'd better initial the bean here
+        binding.setBean(new DoctorBasicInfoBean());
         ButterKnife.bind(this);
 
         Bundle data = getIntent().getExtras();
@@ -73,21 +100,59 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailPr
         }
 
         title = data.getString(EXTRA_TITLE);
-        groupId = data.getString(EXTRA_GROUP_ID);
+        type = data.getInt(EXTRA_TYPE,TYPE_DOCTOR_GROUP);
+        id = data.getString(EXTRA_ID);
+
+        if (TextUtils.isEmpty(id)) {
+            Toast.makeText(this, "获取医生详情失败，请重试！", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         mToolbar.setTitle(title);
 
         mRecyclerViewDoctorDetailPackage.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false));
         mRecyclerViewDoctorDetailMemberOrGroup.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        mDoctorDetailPresenter = new DoctorDetailPresenter(this);
-        addPresenter(mDoctorDetailPresenter);
+        switch (type) {
+            case TYPE_DOCTOR:
+                mDoctorDetailPresenter = new DoctorDetailPresenter(this);
+                addPresenter(mDoctorDetailPresenter);
+                break;
+            case TYPE_DOCTOR_GROUP:
+                mDoctorGroupDetailPresenter = new DoctorGroupDetailPresenter(this);
+                addPresenter(mDoctorGroupDetailPresenter);
+                break;
+        }
 
-        mDoctorDetailPresenter.fetchDoctorDetailInfo(groupId);
+        mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                requestData();
+            }
+        });
+        mRefresh.post(new Runnable() {
+            @Override
+            public void run() {
+                mRefresh.setRefreshing(true);
+            }
+        });
+        requestData();
+    }
+
+    private void requestData() {
+        switch (type) {
+            case TYPE_DOCTOR:
+                mDoctorDetailPresenter.fetchDoctorDetailInfo(id);
+                break;
+            case TYPE_DOCTOR_GROUP:
+                mDoctorGroupDetailPresenter.fetchDoctorGroupDetailInfo(id);
+                break;
+        }
     }
 
     @Override
-    public void showBasicInfo(DoctorGroupBasicInfoBean basicInfoBean) {
+    public void showBasicInfo(DoctorBasicInfoBean basicInfoBean) {
         ImageViewManager.setImageViewWithUrl(this, mIvDoctorDetailPortrait, basicInfoBean.groupAvatar.get(), ImageViewManager.PLACE_HOLDER_EMPTY);
         binding.setBean(basicInfoBean);
 
@@ -137,7 +202,8 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailPr
                 public void onItemClick(int position) {
                     Intent intent = new Intent(DoctorDetailActivity.this, DoctorDetailActivity.class);
                     intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, mMemberRVAdapter.getBean(position).name.get());
-                    intent.putExtra(DoctorDetailActivity.EXTRA_GROUP_ID, mMemberRVAdapter.getBean(position).groupId);
+                    intent.putExtra(DoctorDetailActivity.EXTRA_ID, mMemberRVAdapter.getBean(position).doctorId.get());
+                    intent.putExtra(DoctorDetailActivity.EXTRA_TYPE, DoctorDetailActivity.TYPE_DOCTOR);
                     startActivity(intent);
                 }
             });
@@ -155,7 +221,8 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailPr
                 public void onItemClick(int position) {
                     Intent intent = new Intent(DoctorDetailActivity.this, DoctorDetailActivity.class);
                     intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, mGroupOfDoctorRVAdapter.getBean(position).name.get());
-                    intent.putExtra(DoctorDetailActivity.EXTRA_GROUP_ID, mGroupOfDoctorRVAdapter.getBean(position).groupId);
+                    intent.putExtra(DoctorDetailActivity.EXTRA_ID, mGroupOfDoctorRVAdapter.getBean(position).groupId.get());
+                    intent.putExtra(DoctorDetailActivity.EXTRA_TYPE, DoctorDetailActivity.TYPE_DOCTOR_GROUP);
                     startActivity(intent);
                 }
             });
@@ -171,6 +238,11 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailPr
 
     @Override
     public void hideLoading() {
-
+        mRefresh.post(new Runnable() {
+            @Override
+            public void run() {
+                mRefresh.setRefreshing(false);
+            }
+        });
     }
 }

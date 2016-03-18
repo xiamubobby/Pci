@@ -5,22 +5,23 @@ import java.util.List;
 import im.hua.library.base.mvp.entity.BaseEntity;
 
 /**
- * Created by hua on 16/3/18.
- * 医生个人详情
+ * Created by hua on 16/3/17.
+ * 医生小组详情（包括个人和多人）
  */
-public class DoctorDetailEntity extends BaseEntity {
+public class DoctorGroupDetailEntity extends BaseEntity {
+
 
     /**
-     * ownerName : 张医生edit11
      * servingPeople : 0
-     * belongGroup : [{"doctorGroupId":1,"name":"心血管","avatars":["http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg"]}]
+     * groupAvatar : ["http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg"]
+     * members : [{"doctorId":6,"avatarUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","name":"张医生edit11","jobTitle":"医生edit11"},{"doctorId":5,"avatarUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","name":"张医生edit11","jobTitle":"医生edit11"}]
      * jobTitle : 医生edit11
-     * sPackage : [{"dPackageId":2,"name":"健康报1","iconUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","price":10,"unit":"月","description":"速度快减肥服减肥"}]
-     * description : 介绍介绍介t
+     * sPackage : [{"dPackageId":1,"name":"健康报1","iconUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","price":10,"unit":"月","description":"速度快减肥服减肥"}]
+     * description : 阿里肯德基放辣椒的
      * servedPeopleCount : 0
      * department : 儿科
      * hospital : 瑞金医院
-     * doctorAvatar : http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg
+     * multi : true
      */
 
     private RetValuesEntity ret_values;
@@ -35,30 +36,37 @@ public class DoctorDetailEntity extends BaseEntity {
 
     public static class RetValuesEntity {
         private String ownerName;
-        private String servingPeople;
         private String jobTitle;
         private String description;
+        private String servingPeople;
         private String servedPeopleCount;
         private String department;
         private String hospital;
-        private String doctorAvatar;
+        private boolean multi;
+        private List<String> groupAvatar;
         /**
-         * doctorGroupId : 1
+         * doctorId : 6
+         * avatarUrl : http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg
+         * name : 张医生edit11
+         * jobTitle : 医生edit11
+         */
+
+        private List<MembersEntity> members;
+
+        /**
          * name : 心血管
          * avatars : ["http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg"]
          */
 
         private List<BelongGroupEntity> belongGroup;
-        /**
-         * dPackageId : 2
-         * name : 健康报1
-         * iconUrl : http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg
-         * price : 10.0
-         * unit : 月
-         * description : 速度快减肥服减肥
-         */
 
-        private List<SPackageEntity> sPackage;
+        public List<BelongGroupEntity> getBelongGroup() {
+            return belongGroup;
+        }
+
+        public void setBelongGroup(List<BelongGroupEntity> belongGroup) {
+            this.belongGroup = belongGroup;
+        }
 
         public String getOwnerName() {
             return ownerName;
@@ -67,6 +75,47 @@ public class DoctorDetailEntity extends BaseEntity {
         public void setOwnerName(String ownerName) {
             this.ownerName = ownerName;
         }
+
+        public static class BelongGroupEntity {
+            private String name;
+            private String doctorGroupId;
+            private List<String> avatars;
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public List<String> getAvatars() {
+                return avatars;
+            }
+
+            public void setAvatars(List<String> avatars) {
+                this.avatars = avatars;
+            }
+
+            public String getDoctorGroupId() {
+                return doctorGroupId;
+            }
+
+            public void setDoctorGroupId(String doctorGroupId) {
+                this.doctorGroupId = doctorGroupId;
+            }
+        }
+
+        /**
+         * dPackageId : 1
+         * name : 健康报1
+         * iconUrl : http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg
+         * price : 10.0
+         * unit : 月
+         * description : 速度快减肥服减肥
+         */
+
+        private List<SPackageEntity> sPackage;
 
         public String getServingPeople() {
             return servingPeople;
@@ -116,20 +165,28 @@ public class DoctorDetailEntity extends BaseEntity {
             this.hospital = hospital;
         }
 
-        public String getDoctorAvatar() {
-            return doctorAvatar;
+        public boolean isMulti() {
+            return multi;
         }
 
-        public void setDoctorAvatar(String doctorAvatar) {
-            this.doctorAvatar = doctorAvatar;
+        public void setMulti(boolean multi) {
+            this.multi = multi;
         }
 
-        public List<BelongGroupEntity> getBelongGroup() {
-            return belongGroup;
+        public List<String> getGroupAvatar() {
+            return groupAvatar;
         }
 
-        public void setBelongGroup(List<BelongGroupEntity> belongGroup) {
-            this.belongGroup = belongGroup;
+        public void setGroupAvatar(List<String> groupAvatar) {
+            this.groupAvatar = groupAvatar;
+        }
+
+        public List<MembersEntity> getMembers() {
+            return members;
+        }
+
+        public void setMembers(List<MembersEntity> members) {
+            this.members = members;
         }
 
         public List<SPackageEntity> getSPackage() {
@@ -140,17 +197,26 @@ public class DoctorDetailEntity extends BaseEntity {
             this.sPackage = sPackage;
         }
 
-        public static class BelongGroupEntity {
-            private String doctorGroupId;
+        public static class MembersEntity {
+            private String doctorId;
+            private String avatarUrl;
             private String name;
-            private List<String> avatars;
+            private String jobTitle;
 
-            public String getDoctorGroupId() {
-                return doctorGroupId;
+            public String getDoctorId() {
+                return doctorId;
             }
 
-            public void setDoctorGroupId(String doctorGroupId) {
-                this.doctorGroupId = doctorGroupId;
+            public void setDoctorId(String doctorId) {
+                this.doctorId = doctorId;
+            }
+
+            public String getAvatarUrl() {
+                return avatarUrl;
+            }
+
+            public void setAvatarUrl(String avatarUrl) {
+                this.avatarUrl = avatarUrl;
             }
 
             public String getName() {
@@ -161,12 +227,12 @@ public class DoctorDetailEntity extends BaseEntity {
                 this.name = name;
             }
 
-            public List<String> getAvatars() {
-                return avatars;
+            public String getJobTitle() {
+                return jobTitle;
             }
 
-            public void setAvatars(List<String> avatars) {
-                this.avatars = avatars;
+            public void setJobTitle(String jobTitle) {
+                this.jobTitle = jobTitle;
             }
         }
 
@@ -174,7 +240,7 @@ public class DoctorDetailEntity extends BaseEntity {
             private String dPackageId;
             private String name;
             private String iconUrl;
-            private double price;
+            private String price;
             private String unit;
             private String description;
 
@@ -202,11 +268,11 @@ public class DoctorDetailEntity extends BaseEntity {
                 this.iconUrl = iconUrl;
             }
 
-            public double getPrice() {
+            public String getPrice() {
                 return price;
             }
 
-            public void setPrice(double price) {
+            public void setPrice(String price) {
                 this.price = price;
             }
 
