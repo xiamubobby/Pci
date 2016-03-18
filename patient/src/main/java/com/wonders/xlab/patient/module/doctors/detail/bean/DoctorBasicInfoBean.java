@@ -20,5 +20,9 @@ public class DoctorBasicInfoBean {
      * 是否为医生小组
      */
     public ObservableField<Boolean> isMulti = new ObservableField<>();
+    /**
+     * 是否提供服务套餐
+     */
+    public ObservableField<Boolean> hasServicePackage = new ObservableField<>(false);
 
 }

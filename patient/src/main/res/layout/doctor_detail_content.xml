@@ -6,6 +6,8 @@
         <variable
             name="bean"
             type="com.wonders.xlab.patient.module.doctors.detail.bean.DoctorBasicInfoBean"/>
+
+        <import type="android.view.View"/>
     </data>
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -164,16 +166,21 @@
                     android:padding="@dimen/item_interval_small"
                     android:text="提供服务"
                     android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_size_middle"/>
+                    android:textSize="@dimen/text_size_middle"
+                    android:visibility="@{bean.hasServicePackage ? View.VISIBLE : View.GONE}"/>
 
-                <include layout="@layout/divider_vertical"/>
+                <include
+                    layout="@layout/divider_vertical"
+                    android:visibility="@{bean.hasServicePackage ? View.VISIBLE : View.GONE}"/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_doctor_detail_package"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="@{bean.hasServicePackage ? View.VISIBLE : View.GONE}"/>
 
-                <include layout="@layout/divider_vertical_large"/>
+                <include layout="@layout/divider_vertical_large"
+                         android:visibility="@{bean.hasServicePackage ? View.VISIBLE : View.GONE}"/>
 
                 <TextView
                     android:layout_width="match_parent"

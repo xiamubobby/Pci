@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -112,7 +113,9 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
         mToolbar.setTitle(title);
 
         mRecyclerViewDoctorDetailPackage.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false));
+        mRecyclerViewDoctorDetailPackage.setItemAnimator(new DefaultItemAnimator());
         mRecyclerViewDoctorDetailMemberOrGroup.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerViewDoctorDetailMemberOrGroup.setItemAnimator(new DefaultItemAnimator());
 
         switch (type) {
             case TYPE_DOCTOR:

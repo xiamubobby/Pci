@@ -42,6 +42,7 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
     public void onReceiveDoctorGroupDetailSuccess(DoctorGroupDetailEntity.RetValuesEntity valuesEntity) {
         mDoctorDetailListener.hideLoading();
 
+        List<DoctorGroupDetailEntity.RetValuesEntity.SPackageEntity> sPackage = valuesEntity.getSPackage();
         /**
          * 基本信息
          */
@@ -56,6 +57,8 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
         basicInfoBean.hospital.set(valuesEntity.getHospital());
         basicInfoBean.servedPeopleCount.set(valuesEntity.getServedPeopleCount());
         basicInfoBean.servingPeople.set(valuesEntity.getServingPeople());
+        basicInfoBean.hasServicePackage.set(null != sPackage && sPackage.size() > 0);
+
         mDoctorDetailListener.showBasicInfo(basicInfoBean);
 
         /**
@@ -63,17 +66,20 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
          */
         ArrayList<DoctorDetailPackageBean> packageList = new ArrayList<>();
 
-        for (DoctorGroupDetailEntity.RetValuesEntity.SPackageEntity entity : valuesEntity.getSPackage()) {
-            DoctorDetailPackageBean bean = new DoctorDetailPackageBean();
-            bean.packageId.set(entity.getDPackageId());
-            bean.name.set(entity.getName());
-            bean.description.set(entity.getDescription());
-            bean.priceStr.set(entity.getPrice() + entity.getUnit());
-            bean.iconUrl.set(entity.getIconUrl());
+        if (null != sPackage) {
+            for (DoctorGroupDetailEntity.RetValuesEntity.SPackageEntity entity : sPackage) {
+                DoctorDetailPackageBean bean = new DoctorDetailPackageBean();
+                bean.packageId.set(entity.getDPackageId());
+                bean.name.set(entity.getName());
+                bean.description.set(entity.getDescription());
+                bean.priceStr.set(entity.getPrice() + entity.getUnit());
+                bean.iconUrl.set(entity.getIconUrl());
 
-            packageList.add(bean);
+                packageList.add(bean);
+            }
+            mDoctorDetailListener.showPackageList(packageList);
+
         }
-        mDoctorDetailListener.showPackageList(packageList);
 
         if (valuesEntity.isMulti()) {
             //医生小组

@@ -41,6 +41,7 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
     public void onReceiveDoctorDetailSuccess(DoctorDetailEntity.RetValuesEntity valuesEntity) {
         mDoctorDetailListener.hideLoading();
 
+        List<DoctorDetailEntity.RetValuesEntity.SPackageEntity> sPackage = valuesEntity.getSPackage();
         /**
          * 基本信息
          */
@@ -54,13 +55,14 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
         basicInfoBean.hospital.set(valuesEntity.getHospital());
         basicInfoBean.servedPeopleCount.set(valuesEntity.getServedPeopleCount());
         basicInfoBean.servingPeople.set(valuesEntity.getServingPeople());
+        basicInfoBean.hasServicePackage.set(null != sPackage && sPackage.size() > 0);
 
         mDoctorDetailListener.showBasicInfo(basicInfoBean);
 
         /**
          * 提供套餐
          */
-        setupPackageList(valuesEntity.getSPackage());
+        setupPackageList(sPackage);
 
         List<DoctorDetailEntity.RetValuesEntity.BelongGroupEntity> belongGroup = valuesEntity.getBelongGroup();
         ArrayList<DoctorDetailGroupOfDoctorBean> memberBeanList = new ArrayList<>();
