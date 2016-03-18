@@ -9,16 +9,16 @@ import com.wonders.xlab.patient.BR;
  * Created by hua on 16/3/14.
  */
 public class MyDoctorItemBean extends BaseObservable{
-    public final static long HEADER_ID_IN_SERVICE = 0;
-    public final static long HEADER_ID_OUT_OF_SERVICE = 1;
+    public final static long TYPE_IN_SERVICE = 0;
+    public final static long TYPE_OUT_OF_SERVICE = 1;
 
     private String groupId;
     private String imGroupId;
     /**
-     * {@link HEADER_ID_IN_SERVICE}：正在服务
-     * {@link HEADER_ID_OUT_OF_SERVICE}：历史记录
+     * {@link TYPE_IN_SERVICE}：正在服务
+     * {@link TYPE_OUT_OF_SERVICE}：历史记录
      */
-    private long headerId;
+    private long type;
     private String portraitUrl;
     private String doctorGroupName;
     private String timeStr;
@@ -62,12 +62,12 @@ public class MyDoctorItemBean extends BaseObservable{
         notifyPropertyChanged(BR.latestChatMessage);
     }
 
-    public long getHeaderId() {
-        return headerId;
+    public long getType() {
+        return type;
     }
 
-    public void setHeaderId(long headerId) {
-        this.headerId = headerId;
+    public void setType(long type) {
+        this.type = type;
     }
 
     public String getGroupId() {

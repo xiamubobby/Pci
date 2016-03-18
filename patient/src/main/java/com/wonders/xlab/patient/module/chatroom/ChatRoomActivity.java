@@ -6,8 +6,10 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
@@ -29,17 +31,26 @@ import butterknife.OnClick;
 import im.hua.utils.DateUtil;
 
 public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresenter.ChatRoomPresenterListener {
-    public final static String EXTRA_GROUP_NAME = "group_name";
+    public final static String EXTRA_GROUP_NAME = "groupName";
     /**
      * 患者和医生所在聊天组的id
      */
-    public final static String EXTRA_GROUP_ID = "GROUP_ID";
+    public final static String EXTRA_GROUP_ID = "groupId";
+
+    public final static String EXTRA_CAN_CHAT = "canChat";
+
+    private String groupId;
+    private String groupName;
+    private boolean canChat;
 
     @Bind(R.id.ll_chat_room_loading)
     LinearLayout mLoadingView;
 
-    private String groupId;
-    private String groupName;
+    @Bind(R.id.rl_chat_room_input_area)
+    RelativeLayout mRlChatRoomInputArea;
+
+    @Bind(R.id.btn_chat_room_buy_again)
+    Button mBtnChatRoomBuyAgain;
 
     @Bind(R.id.et_chat_room_input)
     EditText mEtChatRoomInput;
@@ -79,6 +90,10 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             return;
         }
         groupName = intent.getStringExtra(EXTRA_GROUP_NAME);
+        canChat = intent.getBooleanExtra(EXTRA_CAN_CHAT, false);
+
+        initServiceStatus(canChat);
+
         setToolbarTitle(groupName);
 
         mLoadingView.setVisibility(View.GONE);
@@ -111,10 +126,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_chat_room_detail:
-                        Intent intent = new Intent(ChatRoomActivity.this, DoctorDetailActivity.class);
-                        intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, groupName);
-                        intent.putExtra(DoctorDetailActivity.EXTRA_ID, groupId);
-                        startActivity(intent);
+                        goToDoctorDetailActivity();
                         break;
                 }
                 return false;
@@ -122,10 +134,37 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         });
     }
 
+    private void goToDoctorDetailActivity() {
+        Intent intent = new Intent(ChatRoomActivity.this, DoctorDetailActivity.class);
+        intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, groupName);
+        intent.putExtra(DoctorDetailActivity.EXTRA_ID, groupId);
+        startActivity(intent);
+    }
+
+    /**
+     * 初始化底部为聊天或者提示为重新购买
+     *
+     * @param canChat 是否可以继续聊天
+     */
+    private void initServiceStatus(boolean canChat) {
+        if (canChat) {
+            mRlChatRoomInputArea.setVisibility(View.VISIBLE);
+            mBtnChatRoomBuyAgain.setVisibility(View.GONE);
+        } else {
+            mRlChatRoomInputArea.setVisibility(View.GONE);
+            mBtnChatRoomBuyAgain.setVisibility(View.VISIBLE);
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    @OnClick(R.id.btn_chat_room_buy_again)
+    public void buyAgain() {
+        goToDoctorDetailActivity();
     }
 
     @OnClick(R.id.btn_chat_room_send)

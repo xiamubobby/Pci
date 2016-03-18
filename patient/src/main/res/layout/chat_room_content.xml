@@ -49,6 +49,7 @@
         android:layout_alignParentBottom="true">
 
         <RelativeLayout
+            android:id="@+id/rl_chat_room_input_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/item_interval_small">
@@ -70,5 +71,16 @@
                 android:contentDescription="@string/text_send"
                 android:src="@drawable/ic_send_black_36dp"/>
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_chat_room_buy_again"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_doctor_detail_bottom_sheet_desc"
+            android:layout_centerVertical="true"
+            android:background="@color/colorPrimary"
+            android:text="@string/btn_chat_room_buy_again"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_middle"/>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

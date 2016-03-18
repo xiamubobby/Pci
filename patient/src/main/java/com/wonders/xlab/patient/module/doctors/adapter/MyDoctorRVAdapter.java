@@ -40,7 +40,7 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
 
     @Override
     public long getHeaderId(int position) {
-        return getBean(position).getHeaderId();
+        return getBean(position).getType();
     }
 
     @Override
@@ -52,9 +52,9 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
         ItemHeaderViewHolder viewHolder = (ItemHeaderViewHolder) holder;
-        if (MyDoctorItemBean.HEADER_ID_IN_SERVICE == getHeaderId(position)) {
+        if (MyDoctorItemBean.TYPE_IN_SERVICE == getHeaderId(position)) {
             viewHolder.mTvDoctorMyItemHeader.setText("服务中");
-        } else if (MyDoctorItemBean.HEADER_ID_OUT_OF_SERVICE == getHeaderId(position)) {
+        } else if (MyDoctorItemBean.TYPE_OUT_OF_SERVICE == getHeaderId(position)) {
             viewHolder.mTvDoctorMyItemHeader.setText("历史记录");
         }
     }

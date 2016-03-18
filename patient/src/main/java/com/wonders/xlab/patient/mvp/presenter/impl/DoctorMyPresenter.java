@@ -41,7 +41,7 @@ public class DoctorMyPresenter extends BasePresenter implements IDoctorMyPresent
         List<DoctorMyEntity.RetValuesEntity.ServiceTrueEntity> inServiceEntityList = valuesEntity.getServiceTrue();
         for (DoctorMyEntity.RetValuesEntity.ServiceTrueEntity entity : inServiceEntityList) {
             MyDoctorItemBean itemBean = new MyDoctorItemBean();
-            itemBean.setHeaderId(MyDoctorItemBean.HEADER_ID_IN_SERVICE);
+            itemBean.setType(MyDoctorItemBean.TYPE_IN_SERVICE);
             itemBean.setGroupId(entity.getDoctorGroupId());
             itemBean.setImGroupId(entity.getImGroupId());
             itemBean.setDoctorGroupName(entity.getName());
@@ -56,7 +56,7 @@ public class DoctorMyPresenter extends BasePresenter implements IDoctorMyPresent
         List<DoctorMyEntity.RetValuesEntity.ServiceFalseEntity.ContentEntity> contentEntityList = serviceFalseEntityList.getContent();
         for (DoctorMyEntity.RetValuesEntity.ServiceFalseEntity.ContentEntity entity : contentEntityList) {
             MyDoctorItemBean itemBean = new MyDoctorItemBean();
-            itemBean.setHeaderId(MyDoctorItemBean.HEADER_ID_OUT_OF_SERVICE);
+            itemBean.setType(MyDoctorItemBean.TYPE_OUT_OF_SERVICE);
             itemBean.setImGroupId(entity.getImGroupId());
             itemBean.setGroupId(entity.getDoctorGroupId());
             itemBean.setDoctorGroupName(entity.getName());
