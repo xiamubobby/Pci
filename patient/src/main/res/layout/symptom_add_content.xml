@@ -6,16 +6,15 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               app:layout_behavior="@string/appbar_scrolling_view_behavior"
-              tools:context=".module.home.dailyrecord.symptom.SymptomActivityListener"
+              tools:context=".module.home.dailyrecord.symptom.SymptomActivity"
               tools:showIn="@layout/symptom_add_activity">
 
     <TextView
         android:id="@+id/tv_add_symptom_tip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/bg_gray"
+        android:background="@color/background_gray"
         android:padding="@dimen/item_interval_small"
-        android:text="@string/text_tips"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="@dimen/text_size_small"/>
 
@@ -39,9 +38,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingBottom="@dimen/activity_vertical_margin"
-                    android:paddingLeft="@dimen/activity_horizontal_margin"
-                    android:paddingRight="@dimen/activity_horizontal_margin"
-                    android:paddingTop="@dimen/activity_vertical_margin"
                     />
 
             </ScrollView>

@@ -13,7 +13,7 @@
         android:background="@drawable/selector_primary_selected_white_normal"
         android:clickable="true"
         android:padding="@dimen/item_interval_small"
-        android:textColor="@drawable/selector_text_color_selected_white"
+        android:textColor="@drawable/selector_text_color_unselected_gray_selected_white"
         android:textSize="@dimen/text_size_small"/>
 
     <TextView

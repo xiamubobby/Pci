@@ -10,8 +10,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.wonders.xlab.common.manager.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.databinding.DoctorDetailActivityBinding;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.DoctorDetailGroupOfDoctorRVAdapter;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.DoctorDetailMemberRVAdapter;
@@ -19,6 +21,7 @@ import com.wonders.xlab.patient.module.doctors.detail.adapter.DoctorDetailPackag
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailGroupMemberBean;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailGroupOfDoctorBean;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailPackageBean;
+import com.wonders.xlab.patient.module.doctors.detail.bean.DoctorGroupBasicInfoBean;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorDetailPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.DoctorDetailPresenter;
 
@@ -83,7 +86,10 @@ public class DoctorDetailActivity extends AppbarActivity implements DoctorDetail
     }
 
     @Override
-    public void showBasicInfo() {
+    public void showBasicInfo(DoctorGroupBasicInfoBean basicInfoBean) {
+        ImageViewManager.setImageViewWithUrl(this,mIvDoctorDetailPortrait,basicInfoBean.groupAvatar.get(),ImageViewManager.PLACE_HOLDER_EMPTY);
+        DoctorDetailActivityBinding binding = DoctorDetailActivityBinding.inflate(getLayoutInflater());
+        binding.setBean(basicInfoBean);
 
     }
 

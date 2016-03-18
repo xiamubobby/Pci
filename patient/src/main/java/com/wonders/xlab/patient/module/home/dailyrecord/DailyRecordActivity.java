@@ -11,7 +11,7 @@ import com.wonders.xlab.patient.module.home.dailyrecord.bp.BPAddActivity;
 import com.wonders.xlab.patient.module.home.dailyrecord.bp.BPGuideActivity;
 import com.wonders.xlab.patient.module.home.dailyrecord.bs.BSAddActivity;
 import com.wonders.xlab.patient.module.home.dailyrecord.bs.BSGuideActivity;
-import com.wonders.xlab.patient.module.home.dailyrecord.symptom.SymptomActivityListener;
+import com.wonders.xlab.patient.module.home.dailyrecord.symptom.SymptomActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -60,7 +60,7 @@ public class DailyRecordActivity extends AppbarActivity {
 
     @OnClick(R.id.fam_daily_task_symptom)
     public void onRecordSymptomClick() {
-        recordNewData(SymptomActivityListener.class);
+        recordNewData(SymptomActivity.class);
     }
 
     private void recordNewData(Class targetActivity) {

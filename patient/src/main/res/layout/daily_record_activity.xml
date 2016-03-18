@@ -32,7 +32,7 @@
             app:fab_colorNormal="@android:color/white"
             app:fab_colorPressed="@color/white_pressed"
             app:fab_size="mini"
-            app:fab_title="主诉症状"/>
+            app:fab_title="不适症状"/>
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/fam_daily_task_bp"

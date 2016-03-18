@@ -18,7 +18,7 @@ public class DoctorDetailModel extends PatientBaseModel<DoctorDetailEntity> impl
 
     @Override
     protected void onSuccess(DoctorDetailEntity response) {
-        mDetailModelListener.onReceiveDoctorDetailSuccess();
+        mDetailModelListener.onReceiveDoctorDetailSuccess(response.getRet_values());
     }
 
     @Override
@@ -27,11 +27,11 @@ public class DoctorDetailModel extends PatientBaseModel<DoctorDetailEntity> impl
     }
 
     @Override
-    public void getDoctorDetailInfo(String groupId) {
+    public void getDoctorDetailInfo(String doctorGroupId) {
         onSuccess(null);
     }
 
     public interface DoctorDetailModelListener extends BaseModelListener {
-        void onReceiveDoctorDetailSuccess();
+        void onReceiveDoctorDetailSuccess(DoctorDetailEntity.RetValuesEntity valuesEntity);
     }
 }

@@ -1,14 +1,19 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
+import android.text.TextUtils;
+
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailGroupMemberBean;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailGroupOfDoctorBean;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailPackageBean;
+import com.wonders.xlab.patient.module.doctors.detail.bean.DoctorGroupBasicInfoBean;
+import com.wonders.xlab.patient.mvp.entity.DoctorDetailEntity;
 import com.wonders.xlab.patient.mvp.model.IDoctorDetailModel;
 import com.wonders.xlab.patient.mvp.model.impl.DoctorDetailModel;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorDetailPresenter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
@@ -29,8 +34,61 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
     }
 
     @Override
-    public void fetchDoctorDetailInfo(String groupId) {
-        mDoctorDetailModel.getDoctorDetailInfo(groupId);
+    public void fetchDoctorDetailInfo(String doctorGroupId) {
+        mDoctorDetailModel.getDoctorDetailInfo(doctorGroupId);
+    }
+
+    @Override
+    public void onReceiveDoctorDetailSuccess(DoctorDetailEntity.RetValuesEntity valuesEntity) {
+        mDoctorDetailListener.hideLoading();
+
+        /**
+         * 基本信息
+         */
+        DoctorGroupBasicInfoBean basicInfoBean = new DoctorGroupBasicInfoBean();
+        basicInfoBean.groupName.set(valuesEntity.getDescription());
+        basicInfoBean.isMulti.set(valuesEntity.isMulti());
+        basicInfoBean.groupAvatar.set(valuesEntity.getGroupAvatar());
+        basicInfoBean.description.set(valuesEntity.getDescription());
+        basicInfoBean.servedPeopleCount.set(valuesEntity.getServedPeopleCount());
+        basicInfoBean.servingPeople.set(valuesEntity.getServingPeople());
+        mDoctorDetailListener.showBasicInfo(basicInfoBean);
+
+        /**
+         * 提供套餐
+         */
+        setupPackageList(valuesEntity.getSPackage());
+
+        if (valuesEntity.isMulti()) {
+            //医生小组
+            List<DoctorDetailEntity.RetValuesEntity.MembersEntity> members = valuesEntity.getMembers();
+            ArrayList<DoctorDetailGroupMemberBean> memberBeanList = new ArrayList<>();
+            for (DoctorDetailEntity.RetValuesEntity.MembersEntity entity : members) {
+                DoctorDetailGroupMemberBean bean = new DoctorDetailGroupMemberBean();
+                bean.name.set(entity.getName());
+                bean.portraitUrl.set(TextUtils.isEmpty(entity.getAvatarUrl()) ? Constant.DEFAULT_PORTRAIT : entity.getAvatarUrl());
+                bean.title.set(entity.getJobTitle());
+
+                memberBeanList.add(bean);
+            }
+            mDoctorDetailListener.showGroupMemberList(memberBeanList);
+        } else {
+            //个人医生
+//            setupGroupOfDoctorList();
+            List<DoctorDetailEntity.RetValuesEntity.BelongGroupEntity> belongGroup = valuesEntity.getBelongGroup();
+            ArrayList<DoctorDetailGroupOfDoctorBean> memberBeanList = new ArrayList<>();
+            for (DoctorDetailEntity.RetValuesEntity.BelongGroupEntity entity : belongGroup) {
+                DoctorDetailGroupOfDoctorBean bean = new DoctorDetailGroupOfDoctorBean();
+                bean.name.set(entity.getName());
+                List<String> avatars = entity.getAvatars();
+                bean.groupPortraitUrl.set(null != avatars && avatars.size() > 0 && !TextUtils.isEmpty(avatars.get(0)) ? avatars.get(0) : Constant.DEFAULT_PORTRAIT);
+
+                memberBeanList.add(bean);
+            }
+            mDoctorDetailListener.showGroupOfDoctorList(memberBeanList);
+        }
+
+
     }
 
     private void setupMemberList() {
@@ -58,7 +116,7 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
         mDoctorDetailListener.showGroupOfDoctorList(memberBeanList);
     }
 
-    private void setupPackageList() {
+    private void setupPackageList(List<DoctorDetailEntity.RetValuesEntity.SPackageEntity> packageEntityList) {
         ArrayList<DoctorDetailPackageBean> packageList = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
@@ -86,24 +144,13 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
     }
 
     @Override
-    public void onReceiveDoctorDetailSuccess() {
-        mDoctorDetailListener.hideLoading();
-
-        setupPackageList();
-
-//        setupMemberList();
-
-        setupGroupOfDoctorList();
-    }
-
-    @Override
     public void onReceiveFailed(String message) {
         mDoctorDetailListener.hideLoading();
         mDoctorDetailListener.showError(message);
     }
 
     public interface DoctorDetailPresenterListener extends BasePresenterListener {
-        void showBasicInfo();
+        void showBasicInfo(DoctorGroupBasicInfoBean basicInfoBean);
 
         void showPackageList(ArrayList<DoctorDetailPackageBean> packageList);
 

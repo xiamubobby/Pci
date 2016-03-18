@@ -6,18 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".module.home.dailyrecord.symptom.SymptomActivityListener">
+    tools:context=".module.home.dailyrecord.symptom.SymptomActivity">
 
     <include layout="@layout/appbar"/>
 
     <include layout="@layout/symptom_add_content"/>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_add_symptom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_check_white"/>
 
 </android.support.design.widget.CoordinatorLayout>

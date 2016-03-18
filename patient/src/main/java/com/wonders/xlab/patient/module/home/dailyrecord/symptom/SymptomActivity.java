@@ -1,13 +1,13 @@
 package com.wonders.xlab.patient.module.home.dailyrecord.symptom;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,14 +30,11 @@ import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class SymptomActivityListener extends AppbarActivity implements SymptomPresenter.SymptomPresenterListener {
+public class SymptomActivity extends AppbarActivity implements SymptomPresenter.SymptomPresenterListener {
 
     @Bind(R.id.container_add_symptom)
     LinearLayout mContainerAddSymptom;
-    @Bind(R.id.fab_add_symptom)
-    FloatingActionButton mFabAddSymptom;
     @Bind(R.id.refresh_add_symptom)
     SwipeRefreshLayout mRefresh;
     @Bind(R.id.empty)
@@ -58,7 +55,7 @@ public class SymptomActivityListener extends AppbarActivity implements SymptomPr
 
     @Override
     public String getToolbarTitle() {
-        return "主诉症状";
+        return "不适症状";
     }
 
     @Override
@@ -66,6 +63,29 @@ public class SymptomActivityListener extends AppbarActivity implements SymptomPr
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
+        getToolbar().inflateMenu(R.menu.menu_symptom);
+        getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_symptom_save:
+                        if (mSelectedSymptomMap.size() > 0) {
+                            String[] symptomStr = new String[mSelectedSymptomMap.size()];
+                            for (int i = 0; i < mSelectedSymptomMap.values().size(); i++) {
+                                symptomStr[i] = mSelectedSymptomMap.values().toArray()[i].toString();
+                            }
+
+                            showProgressDialog("","正在保存，请稍候...");
+
+                            mSymptomPresenter.saveSymptom(AIManager.getInstance(SymptomActivity.this).getPatientId(), symptomStr);
+                        } else {
+                            showShortToast("请选择您的症状");
+                        }
+                        break;
+                }
+                return false;
+            }
+        });
         mEmpty.setVisibility(View.GONE);
 
         mSymptomPresenter = new SymptomPresenter(this);
@@ -80,25 +100,13 @@ public class SymptomActivityListener extends AppbarActivity implements SymptomPr
             }
         });
 
-        mSymptomPresenter.getSymptoms();
-    }
-
-    @OnClick(R.id.fab_add_symptom)
-    public void save() {
-        if (mSelectedSymptomMap.size() > 0) {
-            String[] symptomStr = new String[mSelectedSymptomMap.size()];
-            for (int i = 0; i < mSelectedSymptomMap.values().size(); i++) {
-                symptomStr[i] = mSelectedSymptomMap.values().toArray()[i].toString();
+        mRefresh.post(new Runnable() {
+            @Override
+            public void run() {
+                mRefresh.setRefreshing(true);
             }
-
-            dialog = new ProgressDialog(this);
-            dialog.setMessage("正在保存，请稍候...");
-            dialog.show();
-
-            mSymptomPresenter.saveSymptom(AIManager.getInstance(this).getPatientId(), symptomStr);
-        } else {
-            Toast.makeText(this, "请选择您的症状", Toast.LENGTH_SHORT).show();
-        }
+        });
+        mSymptomPresenter.getSymptoms();
     }
 
     @Override
@@ -135,13 +143,13 @@ public class SymptomActivityListener extends AppbarActivity implements SymptomPr
                             View dialogView = mInflater.inflate(R.layout.dialog_add_symptom_guide, null, false);
                             ImageView imageView = (ImageView) dialogView.findViewById(R.id.iv_dialog_add_symptom);
 
-                            Glide.with(SymptomActivityListener.this)
+                            Glide.with(SymptomActivity.this)
                                     .load(url)
                                     .crossFade()
                                     .fitCenter()
                                     .into(imageView);
 
-                            final Dialog dialog = new Dialog(SymptomActivityListener.this, R.style.dialog);
+                            final Dialog dialog = new Dialog(SymptomActivity.this, R.style.dialog);
                             dialogView.setOnTouchListener(new View.OnTouchListener() {
                                 @Override
                                 public boolean onTouch(View v, MotionEvent event) {
@@ -187,7 +195,6 @@ public class SymptomActivityListener extends AppbarActivity implements SymptomPr
 
     @Override
     public void onSaveSymptomSuccess(String message) {
-        mFabAddSymptom.setClickable(false);
         Toast.makeText(this, "数据保存成功", Toast.LENGTH_SHORT).show();
 
         OttoManager.post(new TaskRefreshOtto());
@@ -200,11 +207,8 @@ public class SymptomActivityListener extends AppbarActivity implements SymptomPr
         }, 400);
     }
 
-    private ProgressDialog dialog;
-
     @Override
     public void showError(String message) {
-        mFabAddSymptom.setClickable(true);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -218,8 +222,6 @@ public class SymptomActivityListener extends AppbarActivity implements SymptomPr
                 }
             }
         });
-        if (dialog != null && dialog.isShowing()) {
-            dialog.dismiss();
-        }
+        dismissProgressDialog();
     }
 }
