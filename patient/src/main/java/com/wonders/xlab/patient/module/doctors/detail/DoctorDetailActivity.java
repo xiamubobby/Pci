@@ -1,5 +1,6 @@
 package com.wonders.xlab.patient.module.doctors.detail;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
@@ -9,7 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wonders.xlab.common.manager.ImageViewManager;
@@ -98,7 +101,23 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailPr
                 @Override
                 public void onItemClick(int position) {
                     BottomSheetDialog dialog = new BottomSheetDialog(DoctorDetailActivity.this);
-                    View view = LayoutInflater.from(DoctorDetailActivity.this).inflate(R.layout.doctor_detail_bottom_sheet, null);
+                    View view = LayoutInflater.from(DoctorDetailActivity.this).inflate(R.layout.doctor_detail_bottom_sheet, null, false);
+                    TextView name = (TextView) view.findViewById(R.id.tv_doctor_detail_bottom_sheet_package_name);
+                    TextView price = (TextView) view.findViewById(R.id.tv_doctor_detail_bottom_sheet_price);
+                    TextView desc = (TextView) view.findViewById(R.id.tv_doctor_detail_bottom_sheet_desc);
+                    Button btnBuy = (Button) view.findViewById(R.id.btn_doctor_detail_bottom_sheet);
+                    btnBuy.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showShortToast("buy buy buy");
+                        }
+                    });
+
+                    DoctorDetailPackageBean bean = mPackageRVAdapter.getBean(position);
+                    name.setText(bean.name.get());
+                    price.setText(bean.priceStr.get());
+                    desc.setText(bean.description.get());
+
                     dialog.setContentView(view);
                     dialog.show();
 
@@ -113,6 +132,15 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailPr
     public void showGroupMemberList(ArrayList<DoctorDetailGroupMemberBean> groupMemberList) {
         if (null == mMemberRVAdapter) {
             mMemberRVAdapter = new DoctorDetailMemberRVAdapter();
+            mMemberRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    Intent intent = new Intent(DoctorDetailActivity.this, DoctorDetailActivity.class);
+                    intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, mMemberRVAdapter.getBean(position).name.get());
+                    intent.putExtra(DoctorDetailActivity.EXTRA_GROUP_ID, mMemberRVAdapter.getBean(position).groupId);
+                    startActivity(intent);
+                }
+            });
         }
         mMemberRVAdapter.setDatas(groupMemberList);
         mRecyclerViewDoctorDetailMemberOrGroup.setAdapter(mMemberRVAdapter);
@@ -122,6 +150,15 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailPr
     public void showGroupOfDoctorList(ArrayList<DoctorDetailGroupOfDoctorBean> groupOfDoctorList) {
         if (null == mGroupOfDoctorRVAdapter) {
             mGroupOfDoctorRVAdapter = new DoctorDetailGroupOfDoctorRVAdapter();
+            mGroupOfDoctorRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    Intent intent = new Intent(DoctorDetailActivity.this, DoctorDetailActivity.class);
+                    intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, mGroupOfDoctorRVAdapter.getBean(position).name.get());
+                    intent.putExtra(DoctorDetailActivity.EXTRA_GROUP_ID, mGroupOfDoctorRVAdapter.getBean(position).groupId);
+                    startActivity(intent);
+                }
+            });
         }
         mGroupOfDoctorRVAdapter.setDatas(groupOfDoctorList);
         mRecyclerViewDoctorDetailMemberOrGroup.setAdapter(mGroupOfDoctorRVAdapter);

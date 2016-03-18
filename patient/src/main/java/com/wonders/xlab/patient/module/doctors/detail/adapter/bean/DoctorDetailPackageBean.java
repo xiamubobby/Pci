@@ -8,6 +8,8 @@ import com.wonders.xlab.patient.Constant;
  * Created by hua on 16/3/16.
  */
 public class DoctorDetailPackageBean {
+    public ObservableField<String> packageId = new ObservableField<>();
+
     /**
      * 套餐名称
      */
@@ -20,5 +22,10 @@ public class DoctorDetailPackageBean {
      * 套餐价格
      */
     public ObservableField<String> priceStr = new ObservableField<>();
+
+    /**
+     * 简介
+     */
+    public ObservableField<String> description = new ObservableField<>();
 
 }

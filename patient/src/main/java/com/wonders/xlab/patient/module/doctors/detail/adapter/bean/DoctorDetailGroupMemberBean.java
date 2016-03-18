@@ -9,6 +9,8 @@ import com.wonders.xlab.patient.Constant;
  * 小组详情中的小组成员
  */
 public class DoctorDetailGroupMemberBean {
+    public ObservableField<String> groupId = new ObservableField<>();
+
     /**
      * 组员姓名
      */

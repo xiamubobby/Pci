@@ -230,7 +230,7 @@ public class DoctorDetailEntity extends BaseEntity {
             private String dPackageId;
             private String name;
             private String iconUrl;
-            private double price;
+            private String price;
             private String unit;
             private String description;
 
@@ -258,11 +258,11 @@ public class DoctorDetailEntity extends BaseEntity {
                 this.iconUrl = iconUrl;
             }
 
-            public double getPrice() {
+            public String getPrice() {
                 return price;
             }
 
-            public void setPrice(double price) {
+            public void setPrice(String price) {
                 this.price = price;
             }
 

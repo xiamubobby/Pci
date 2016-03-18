@@ -70,6 +70,8 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
             for (DoctorDetailEntity.RetValuesEntity.MembersEntity entity : members) {
                 DoctorDetailGroupMemberBean bean = new DoctorDetailGroupMemberBean();
                 bean.name.set(entity.getName());
+                //TODO 此处应该还有groupId，因为doctorId无法进入详情界面
+                bean.groupId.set(entity.getDoctorId());
                 bean.portraitUrl.set(TextUtils.isEmpty(entity.getAvatarUrl()) ? Constant.DEFAULT_PORTRAIT : entity.getAvatarUrl());
                 bean.title.set(entity.getJobTitle());
 
@@ -84,6 +86,8 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
             for (DoctorDetailEntity.RetValuesEntity.BelongGroupEntity entity : belongGroup) {
                 DoctorDetailGroupOfDoctorBean bean = new DoctorDetailGroupOfDoctorBean();
                 bean.name.set(entity.getName());
+                //TODO 此处应该还有groupId，因为doctorId无法进入详情界面
+//                bean.groupId.set(entity.());
                 List<String> avatars = entity.getAvatars();
                 bean.groupPortraitUrl.set(null != avatars && avatars.size() > 0 && !TextUtils.isEmpty(avatars.get(0)) ? avatars.get(0) : Constant.DEFAULT_PORTRAIT);
 
@@ -123,7 +127,16 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
     private void setupPackageList(List<DoctorDetailEntity.RetValuesEntity.SPackageEntity> packageEntityList) {
         ArrayList<DoctorDetailPackageBean> packageList = new ArrayList<>();
 
-        for (int i = 0; i < 3; i++) {
+        for (DoctorDetailEntity.RetValuesEntity.SPackageEntity entity : packageEntityList) {
+            DoctorDetailPackageBean bean = new DoctorDetailPackageBean();
+            bean.packageId.set(entity.getDPackageId());
+            bean.name.set(entity.getName());
+            bean.priceStr.set(entity.getPrice() + entity.getUnit());
+            bean.iconUrl.set(entity.getIconUrl());
+
+            packageList.add(bean);
+        }
+        /*for (int i = 0; i < 3; i++) {
             DoctorDetailPackageBean bean = new DoctorDetailPackageBean();
             switch (i) {
                 case 0:
@@ -142,7 +155,7 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
             bean.iconUrl.set(Constant.DEFAULT_PORTRAIT);
 
             packageList.add(bean);
-        }
+        }*/
 
         mDoctorDetailListener.showPackageList(packageList);
     }
