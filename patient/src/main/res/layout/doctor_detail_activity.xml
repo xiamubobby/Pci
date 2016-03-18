@@ -8,18 +8,21 @@
             type="com.wonders.xlab.patient.module.doctors.detail.bean.DoctorGroupBasicInfoBean"/>
     </data>
 
-    <android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".module.doctors.detail.DoctorDetailActivity">
+    <merge>
 
-        <include layout="@layout/appbar"/>
+        <android.support.design.widget.CoordinatorLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".module.doctors.detail.DoctorDetailActivity">
 
-        <include
-            layout="@layout/doctor_detail_content"
-            bind:bean="@{bean}"/>
+            <include layout="@layout/appbar"/>
 
-    </android.support.design.widget.CoordinatorLayout>
+            <include
+                layout="@layout/doctor_detail_content"
+                bind:bean="@{bean}"/>
+        </android.support.design.widget.CoordinatorLayout>
+    </merge>
+
 </layout>

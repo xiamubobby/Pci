@@ -56,7 +56,8 @@ public class DoctorMyPresenter extends BasePresenter implements IDoctorMyPresent
         for (DoctorMyEntity.RetValuesEntity.ServiceFalseEntity.ContentEntity entity : contentEntityList) {
             MyDoctorItemBean itemBean = new MyDoctorItemBean();
             itemBean.setHeaderId(MyDoctorItemBean.HEADER_ID_OUT_OF_SERVICE);
-            itemBean.setGroupId(entity.getImGroupId());
+            itemBean.setImGroupId(entity.getImGroupId());
+            itemBean.setGroupId(entity.getDoctorGroupId());
             itemBean.setDoctorGroupName(entity.getName());
             itemBean.setLatestChatMessage(entity.getContent());
             itemBean.setTimeStr(entity.getTimeExp());

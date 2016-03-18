@@ -46,10 +46,14 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
          * 基本信息
          */
         DoctorGroupBasicInfoBean basicInfoBean = new DoctorGroupBasicInfoBean();
-        basicInfoBean.groupName.set(valuesEntity.getDescription());
+        basicInfoBean.groupName.set(valuesEntity.getOwnerName());
         basicInfoBean.isMulti.set(valuesEntity.isMulti());
-        basicInfoBean.groupAvatar.set(valuesEntity.getGroupAvatar());
+        List<String> groupAvatar = valuesEntity.getGroupAvatar();
+        basicInfoBean.groupAvatar.set(null != groupAvatar && groupAvatar.size() > 0 && !TextUtils.isEmpty(groupAvatar.get(0)) ? groupAvatar.get(0) : Constant.DEFAULT_PORTRAIT);
         basicInfoBean.description.set(valuesEntity.getDescription());
+        basicInfoBean.jobTitle.set(valuesEntity.getJobTitle());
+        basicInfoBean.department.set(valuesEntity.getDepartment());
+        basicInfoBean.hospital.set(valuesEntity.getHospital());
         basicInfoBean.servedPeopleCount.set(valuesEntity.getServedPeopleCount());
         basicInfoBean.servingPeople.set(valuesEntity.getServingPeople());
         mDoctorDetailListener.showBasicInfo(basicInfoBean);

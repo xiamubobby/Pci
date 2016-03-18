@@ -97,6 +97,7 @@ public class DoctorMyEntity extends BaseEntity {
 
             public static class ContentEntity {
                 private String imGroupId;
+                private String doctorGroupId;
                 private String name;
                 private String content;
                 private String timeExp;
@@ -140,6 +141,14 @@ public class DoctorMyEntity extends BaseEntity {
 
                 public void setAvatars(List<String> avatars) {
                     this.avatars = avatars;
+                }
+
+                public String getDoctorGroupId() {
+                    return doctorGroupId;
+                }
+
+                public void setDoctorGroupId(String doctorGroupId) {
+                    this.doctorGroupId = doctorGroupId;
                 }
             }
         }

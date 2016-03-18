@@ -1,10 +1,12 @@
 package com.wonders.xlab.patient.module.doctors.detail;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,7 +16,6 @@ import com.wonders.xlab.common.manager.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.DoctorDetailActivityBinding;
-import com.wonders.xlab.patient.module.base.AppbarActivity;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.DoctorDetailGroupOfDoctorRVAdapter;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.DoctorDetailMemberRVAdapter;
 import com.wonders.xlab.patient.module.doctors.detail.adapter.DoctorDetailPackageRVAdapter;
@@ -29,10 +30,13 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.hua.library.base.BaseActivity;
 
-public class DoctorDetailActivity extends AppbarActivity implements DoctorDetailPresenter.DoctorDetailPresenterListener {
+public class DoctorDetailActivity extends BaseActivity implements DoctorDetailPresenter.DoctorDetailPresenterListener {
     public final static String EXTRA_TITLE = "title";
     public final static String EXTRA_GROUP_ID = "group_id";
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
 
     private String title;
     private String groupId;
@@ -50,19 +54,12 @@ public class DoctorDetailActivity extends AppbarActivity implements DoctorDetail
 
     private IDoctorDetailPresenter mDoctorDetailPresenter;
 
-    @Override
-    public int getContentLayout() {
-        return R.layout.doctor_detail_activity;
-    }
-
-    @Override
-    public String getToolbarTitle() {
-        return "医生详情";
-    }
+    private DoctorDetailActivityBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(this, R.layout.doctor_detail_activity);
         ButterKnife.bind(this);
 
         Bundle data = getIntent().getExtras();
@@ -75,7 +72,8 @@ public class DoctorDetailActivity extends AppbarActivity implements DoctorDetail
         title = data.getString(EXTRA_TITLE);
         groupId = data.getString(EXTRA_GROUP_ID);
 
-        setToolbarTitle(title);
+        mToolbar.setTitle(title);
+
         mRecyclerViewDoctorDetailPackage.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false));
         mRecyclerViewDoctorDetailMemberOrGroup.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
@@ -87,8 +85,7 @@ public class DoctorDetailActivity extends AppbarActivity implements DoctorDetail
 
     @Override
     public void showBasicInfo(DoctorGroupBasicInfoBean basicInfoBean) {
-        ImageViewManager.setImageViewWithUrl(this,mIvDoctorDetailPortrait,basicInfoBean.groupAvatar.get(),ImageViewManager.PLACE_HOLDER_EMPTY);
-        DoctorDetailActivityBinding binding = DoctorDetailActivityBinding.inflate(getLayoutInflater());
+        ImageViewManager.setImageViewWithUrl(this, mIvDoctorDetailPortrait, basicInfoBean.groupAvatar.get(), ImageViewManager.PLACE_HOLDER_EMPTY);
         binding.setBean(basicInfoBean);
 
     }

@@ -9,16 +9,19 @@ import im.hua.library.base.mvp.entity.BaseEntity;
  */
 public class DoctorDetailEntity extends BaseEntity {
 
+
     /**
      * servingPeople : 0
-     * groupAvatar :
-     * members : [{"doctorId":5,"avatarUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","name":"张医生edit11","jobTitle":"医生edit11"}]
+     * groupAvatar : ["http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg"]
+     * members : [{"doctorId":6,"avatarUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","name":"张医生edit11","jobTitle":"医生edit11"},{"doctorId":5,"avatarUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","name":"张医生edit11","jobTitle":"医生edit11"}]
+     * jobTitle : 医生edit11
      * sPackage : [{"dPackageId":1,"name":"健康报1","iconUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","price":10,"unit":"月","description":"速度快减肥服减肥"}]
      * description : 阿里肯德基放辣椒的
      * servedPeopleCount : 0
+     * department : 儿科
+     * hospital : 瑞金医院
      * multi : true
      */
-
 
     private RetValuesEntity ret_values;
 
@@ -31,94 +34,30 @@ public class DoctorDetailEntity extends BaseEntity {
     }
 
     public static class RetValuesEntity {
-        private String servingPeople;
-        private String groupAvatar;
+        private String ownerName;
+        private String jobTitle;
         private String description;
+        private String servingPeople;
         private String servedPeopleCount;
-        /**
-         * 是否为医生小组
-         */
+        private String department;
+        private String hospital;
         private boolean multi;
+        private List<String> groupAvatar;
         /**
-         * doctorId : 5
+         * doctorId : 6
          * avatarUrl : http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg
          * name : 张医生edit11
          * jobTitle : 医生edit11
-         **/
-        private List<MembersEntity> members;
-
-        /**
-         * dPackageId : 1
-         * name : 健康报1
-         * iconUrl : http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg
-         * price : 10.0
-         * unit : 月
-         * description : 速度快减肥服减肥
          */
-        private List<SPackageEntity> sPackage;
+
+        private List<MembersEntity> members;
 
         /**
          * name : 心血管
          * avatars : ["http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg"]
          */
+
         private List<BelongGroupEntity> belongGroup;
-
-
-        public String getServingPeople() {
-            return servingPeople;
-        }
-
-        public void setServingPeople(String servingPeople) {
-            this.servingPeople = servingPeople;
-        }
-
-        public String getGroupAvatar() {
-            return groupAvatar;
-        }
-
-        public void setGroupAvatar(String groupAvatar) {
-            this.groupAvatar = groupAvatar;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public String getServedPeopleCount() {
-            return servedPeopleCount;
-        }
-
-        public void setServedPeopleCount(String servedPeopleCount) {
-            this.servedPeopleCount = servedPeopleCount;
-        }
-
-        public boolean isMulti() {
-            return multi;
-        }
-
-        public void setMulti(boolean multi) {
-            this.multi = multi;
-        }
-
-        public List<MembersEntity> getMembers() {
-            return members;
-        }
-
-        public void setMembers(List<MembersEntity> members) {
-            this.members = members;
-        }
-
-        public List<SPackageEntity> getSPackage() {
-            return sPackage;
-        }
-
-        public void setSPackage(List<SPackageEntity> sPackage) {
-            this.sPackage = sPackage;
-        }
 
         public List<BelongGroupEntity> getBelongGroup() {
             return belongGroup;
@@ -126,6 +65,14 @@ public class DoctorDetailEntity extends BaseEntity {
 
         public void setBelongGroup(List<BelongGroupEntity> belongGroup) {
             this.belongGroup = belongGroup;
+        }
+
+        public String getOwnerName() {
+            return ownerName;
+        }
+
+        public void setOwnerName(String ownerName) {
+            this.ownerName = ownerName;
         }
 
         public static class BelongGroupEntity {
@@ -147,6 +94,97 @@ public class DoctorDetailEntity extends BaseEntity {
             public void setAvatars(List<String> avatars) {
                 this.avatars = avatars;
             }
+        }
+
+        /**
+         * dPackageId : 1
+         * name : 健康报1
+         * iconUrl : http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg
+         * price : 10.0
+         * unit : 月
+         * description : 速度快减肥服减肥
+         */
+
+        private List<SPackageEntity> sPackage;
+
+        public String getServingPeople() {
+            return servingPeople;
+        }
+
+        public void setServingPeople(String servingPeople) {
+            this.servingPeople = servingPeople;
+        }
+
+        public String getJobTitle() {
+            return jobTitle;
+        }
+
+        public void setJobTitle(String jobTitle) {
+            this.jobTitle = jobTitle;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getServedPeopleCount() {
+            return servedPeopleCount;
+        }
+
+        public void setServedPeopleCount(String servedPeopleCount) {
+            this.servedPeopleCount = servedPeopleCount;
+        }
+
+        public String getDepartment() {
+            return department;
+        }
+
+        public void setDepartment(String department) {
+            this.department = department;
+        }
+
+        public String getHospital() {
+            return hospital;
+        }
+
+        public void setHospital(String hospital) {
+            this.hospital = hospital;
+        }
+
+        public boolean isMulti() {
+            return multi;
+        }
+
+        public void setMulti(boolean multi) {
+            this.multi = multi;
+        }
+
+        public List<String> getGroupAvatar() {
+            return groupAvatar;
+        }
+
+        public void setGroupAvatar(List<String> groupAvatar) {
+            this.groupAvatar = groupAvatar;
+        }
+
+        public List<MembersEntity> getMembers() {
+            return members;
+        }
+
+        public void setMembers(List<MembersEntity> members) {
+            this.members = members;
+        }
+
+        public List<SPackageEntity> getSPackage() {
+            return sPackage;
+        }
+
+        public void setSPackage(List<SPackageEntity> sPackage) {
+            this.sPackage = sPackage;
         }
 
         public static class MembersEntity {

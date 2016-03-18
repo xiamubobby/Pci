@@ -13,6 +13,7 @@ public class MyDoctorItemBean extends BaseObservable{
     public final static long HEADER_ID_OUT_OF_SERVICE = 1;
 
     private String groupId;
+    private String imGroupId;
     /**
      * {@link HEADER_ID_IN_SERVICE}：正在服务
      * {@link HEADER_ID_OUT_OF_SERVICE}：历史记录
@@ -75,5 +76,13 @@ public class MyDoctorItemBean extends BaseObservable{
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public String getImGroupId() {
+        return imGroupId;
+    }
+
+    public void setImGroupId(String imGroupId) {
+        this.imGroupId = imGroupId;
     }
 }

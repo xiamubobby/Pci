@@ -65,7 +65,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        onFailed(new Throwable("请求出错，请检查网络后重试！"));
+                        onFailed(new Throwable(e.getMessage()));
                     }
 
                     @Override
