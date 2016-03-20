@@ -4,14 +4,14 @@
 
     <item
         android:id="@+id/menu_daily_record_bs"
-        android:title="测量血糖"
+        android:title="@string/title_activity_bs_measure"
         app:showAsAction="never"/>
     <item
         android:id="@+id/menu_daily_record_bp"
-        android:title="测量血压"
+        android:title="@string/title_activity_bp_measure"
         app:showAsAction="never"/>
     <item
         android:id="@+id/menu_daily_record_symptom"
-        android:title="不适症状"
+        android:title="@string/title_activity_symptom"
         app:showAsAction="never"/>
 </menu>

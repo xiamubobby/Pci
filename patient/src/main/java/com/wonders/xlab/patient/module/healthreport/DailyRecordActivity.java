@@ -15,6 +15,7 @@ import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.manager.SPManager;
+import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
 import com.wonders.xlab.patient.module.healthrecord.bp.BPAddActivity;
@@ -41,6 +42,8 @@ public class DailyRecordActivity extends AppbarActivity {
     @Bind(R.id.tab_daily_record)
     CommonTabLayout mTab;
 
+    private FragmentVPAdapter mFragmentVPAdapter;
+
     @Override
     public int getContentLayout() {
         return R.layout.daily_record_activity;
@@ -55,10 +58,20 @@ public class DailyRecordActivity extends AppbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        setupTopTab();
+        initViewPager();
     }
 
-    private void setupTopTab() {
+    private void initViewPager() {
+        //1
+        if (null == mFragmentVPAdapter) {
+            mFragmentVPAdapter = new FragmentVPAdapter(getFragmentManager());
+            mFragmentVPAdapter.addFragment(BSReportFragment.newInstance());
+            mFragmentVPAdapter.addFragment(BPReportFragment.newInstance());
+            mFragmentVPAdapter.addFragment(SymptomReportFragment.newInstance());
+        }
+        mViewPager.setAdapter(mFragmentVPAdapter);
+
+        //2
         ArrayList<CustomTabEntity> tabEntities = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             switch (i) {
@@ -107,6 +120,58 @@ public class DailyRecordActivity extends AppbarActivity {
         startActivity(new Intent(this, targetActivity));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_daily_record, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean hasSetDefault = SPManager.get(DailyRecordActivity.this).getBoolean(getString(R.string.setting_pref_key_measure_default), false);
+
+        boolean useEquipment = SPManager.get(DailyRecordActivity.this).getBoolean(getString(R.string.setting_pref_key_use_equipment), false);
+
+        switch (item.getItemId()) {
+            case R.id.menu_daily_record_bp:
+                if (hasSetDefault) {
+                    if (useEquipment) {
+                        recordNewData(BPGuideActivity.class);
+                    } else {
+                        recordNewData(BPAddActivity.class);
+                    }
+                } else {
+                    showConfirmDialog(0);
+                }
+                break;
+            case R.id.menu_daily_record_bs:
+
+                if (hasSetDefault) {
+                    if (useEquipment) {
+                        recordNewData(BSGuideActivity.class);
+                    } else {
+                        recordNewData(BSAddActivity.class);
+                    }
+                } else {
+                    showConfirmDialog(1);
+                }
+                break;
+            case R.id.menu_daily_record_symptom:
+                recordNewData(SymptomActivity.class);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+    }
+
+    /**
+     * @param type 0:血压   1：血糖
+     */
     private void showConfirmDialog(final int type) {
         RadioGroup customView = (RadioGroup) LayoutInflater.from(this).inflate(R.layout.item_daily_record_dialog_multi_check, null);
         customView.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -117,12 +182,20 @@ public class DailyRecordActivity extends AppbarActivity {
                     case R.id.rb_item_daily_record_dialog_single_check_auto:
                         showLongToast("如果需要切换输入方式，只需要在：主界面->我->设置中开启或者关闭使用健康设备即可");
 
+                        SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
+                        SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_measure_default), true);
+
                         break;
                     case R.id.rb_item_daily_record_dialog_single_check_manual:
                         showLongToast("如果需要切换输入方式，只需要在：主界面->我->设置中开启或者关闭使用健康设备即可");
 
+                        SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), false);
+                        SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_measure_default), true);
+
                         break;
                     case R.id.rb_item_daily_record_dialog_single_check_clear:
+                        SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_measure_default), false);
+
                         break;
                 }
             }
@@ -158,36 +231,6 @@ public class DailyRecordActivity extends AppbarActivity {
                     }
                 });
         builder.create().show();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_daily_record, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        boolean useEquipment = SPManager.get(DailyRecordActivity.this).getBoolean(getString(R.string.pref_key_use_equipment), false);
-
-        switch (item.getItemId()) {
-            case R.id.menu_daily_record_bp:
-                showConfirmDialog(0);
-                break;
-            case R.id.menu_daily_record_bs:
-                showConfirmDialog(1);
-                break;
-            case R.id.menu_daily_record_symptom:
-                recordNewData(SymptomActivity.class);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
     }
 
 }

@@ -57,7 +57,7 @@ public class BPAddActivity extends AppbarActivity implements RecordSavePresenter
 
     @Override
     public int getContentLayout() {
-        return R.layout.blood_pressure_add_activity;
+        return R.layout.bp_add_activity;
     }
 
     @Override

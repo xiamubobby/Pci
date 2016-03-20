@@ -10,9 +10,9 @@ import com.wonders.xlab.patient.Constant;
 public class DoctorBasicInfoBean {
     public ObservableField<String> ownerName = new ObservableField<>("");
     public ObservableField<String> servingPeople = new ObservableField<>("0");
+    public ObservableField<String> servedPeopleCount = new ObservableField<>("0");
     public ObservableField<String> groupAvatar = new ObservableField<>(Constant.DEFAULT_PORTRAIT);
     public ObservableField<String> description = new ObservableField<>("");
-    public ObservableField<String> servedPeopleCount = new ObservableField<>("0");
     public ObservableField<String> jobTitle = new ObservableField<>("");
     public ObservableField<String> department = new ObservableField<>("");
     public ObservableField<String> hospital = new ObservableField<>("");

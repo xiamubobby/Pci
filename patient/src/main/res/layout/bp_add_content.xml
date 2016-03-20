@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".module.healthrecord.bp.BPAddActivity"
-    tools:showIn="@layout/blood_pressure_add_activity">
+    tools:showIn="@layout/bp_add_activity">
 
     <LinearLayout
         android:layout_width="match_parent"

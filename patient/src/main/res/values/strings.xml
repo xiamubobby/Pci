@@ -5,9 +5,10 @@
     <string name="title_activity_login">登录</string>
 
     <!--preference key-->
-    <string name="pref_key_use_equipment">use_equipment</string>
-    <!--默认使用健康设备测量-->
-    <string name="pref_key_use_equipment_default">use_equipment_default</string>
+    <!--是否设置了默认使用健康设备记录数据-->
+    <string name="setting_pref_key_use_equipment">use_equipment</string>
+    <!--是否开启了默认健康数据记录方式-->
+    <string name="setting_pref_key_measure_default">use_equipment_default</string>
 
     <string name="title_activity_setting">设置</string>
     <string name="title_activity_web">网页</string>
@@ -48,7 +49,13 @@
     <string name="text_blood_sugar_measure_value_title">测量值</string>
     <string name="text_daily_record_dialog_auto">健康设备</string>
     <string name="text_daily_record_dialog_manual">手动录入</string>
-    <string name="cb_item_daily_record_dialog_single_check_auto">总是使用健康设备</string>
-    <string name="cb_item_daily_record_dialog_single_check_manual">总是手动输入</string>
-    <string name="cb_item_daily_record_dialog_single_check_clear">每次都弹出窗口选择</string>
+    <string name="cb_item_daily_record_dialog_single_check_auto">默认健康设备</string>
+    <string name="cb_item_daily_record_dialog_single_check_manual">默认手动输入</string>
+    <string name="cb_item_daily_record_dialog_single_check_clear">每次弹出窗口选择</string>
+    <string name="title_activity_bp_measure">测量血压</string>
+    <string name="title_activity_bs_measure">测量血糖</string>
+    <string name="title_activity_symptom">不适症状</string>
+    <string name="title_activity_medical_record">就诊记录</string>
+    <string name="title_activity_daily_record">每日记录</string>
+    <string name="title_activity_chat_room">聊天</string>
 </resources>

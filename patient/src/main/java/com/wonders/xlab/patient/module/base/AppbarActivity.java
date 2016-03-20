@@ -24,7 +24,9 @@ public abstract class AppbarActivity extends BaseActivity {
 
     public abstract int getContentLayout();
 
-    public abstract String getToolbarTitle();
+    public String getToolbarTitle() {
+        return "";
+    }
 
     public void setToolbarTitle(String title) {
         if (mToolbar != null && !TextUtils.isEmpty(title)) {
@@ -55,7 +57,6 @@ public abstract class AppbarActivity extends BaseActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
-            mToolbar.setTitle(getToolbarTitle());
             mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,7 +68,7 @@ public abstract class AppbarActivity extends BaseActivity {
                 }
             });
         } else {
-            Log.w("ToolbarActivity", "if you want the ToolbarActivity to manager your toolbar, you should set your toolbar's id to toolbar");
+            Log.w("ToolbarActivity", "if you want the ToolbarActivity to manager your toolbar, you should set your toolbar's id as toolbar");
         }
 
     }

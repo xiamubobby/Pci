@@ -4,9 +4,9 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -66,29 +66,6 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        getToolbar().inflateMenu(R.menu.menu_symptom);
-        getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_symptom_save:
-                        if (mSelectedSymptomMap.size() > 0) {
-                            String[] symptomStr = new String[mSelectedSymptomMap.size()];
-                            for (int i = 0; i < mSelectedSymptomMap.values().size(); i++) {
-                                symptomStr[i] = mSelectedSymptomMap.values().toArray()[i].toString();
-                            }
-
-                            showProgressDialog("","正在保存，请稍候...");
-
-                            mSymptomPresenter.saveSymptom(AIManager.getInstance(SymptomActivity.this).getPatientId(), symptomStr);
-                        } else {
-                            showShortToast("请选择您的症状");
-                        }
-                        break;
-                }
-                return false;
-            }
-        });
         mEmpty.setVisibility(View.GONE);
 
         mSymptomPresenter = new SymptomPresenter(this);
@@ -226,5 +203,32 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
             }
         });
         dismissProgressDialog();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_symptom,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_symptom_save:
+                if (mSelectedSymptomMap.size() > 0) {
+                    String[] symptomStr = new String[mSelectedSymptomMap.size()];
+                    for (int i = 0; i < mSelectedSymptomMap.values().size(); i++) {
+                        symptomStr[i] = mSelectedSymptomMap.values().toArray()[i].toString();
+                    }
+
+                    showProgressDialog("","正在保存，请稍候...");
+
+                    mSymptomPresenter.saveSymptom(AIManager.getInstance(SymptomActivity.this).getPatientId(), symptomStr);
+                } else {
+                    showShortToast("请选择您的症状");
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

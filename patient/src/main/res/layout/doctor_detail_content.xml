@@ -66,7 +66,7 @@
                         android:layout_marginTop="@dimen/item_interval_middle"
                         android:layout_toRightOf="@+id/iv_doctor_detail_portrait"
                         android:singleLine="true"
-                        android:text='@{bean.department +" " + bean.jobTitle}'
+                        android:text='@{(TextUtils.isEmpty(bean.department) ? "" : bean.department) +" " + (TextUtils.isEmpty(bean.jobTitle) ? "" : bean.jobTitle)}'
                         android:textColor="@color/text_color_primary_gray"
                         android:textSize="@dimen/text_size_small"/>
 
@@ -78,7 +78,7 @@
                         android:layout_marginTop="@dimen/item_interval_very_small"
                         android:layout_toRightOf="@+id/iv_doctor_detail_portrait"
                         android:singleLine="true"
-                        android:text="@{bean.hospital}"
+                        android:text='@{TextUtils.isEmpty(bean.hospital) ? "" : bean.hospital}'
                         android:textColor="@color/text_color_primary_gray"
                         android:textSize="@dimen/text_size_small"/>
                 </RelativeLayout>
@@ -108,7 +108,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text='@{bean.servingPeople + "人"}'
+                            android:text='@{TextUtils.isEmpty(bean.servingPeople) ? "0人" : bean.servingPeople + "人"}'
                             android:textColor="#9bdb5a"
                             android:textSize="@dimen/text_size_middle"/>
                     </LinearLayout>
@@ -135,7 +135,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text='@{bean.servedPeopleCount + "人"}'
+                            android:text='@{TextUtils.isEmpty(bean.servedPeopleCount) ? "0人" : bean.servedPeopleCount + "人"}'
                             android:textColor="#ffbd46"
                             android:textSize="@dimen/text_size_middle"/>
                     </LinearLayout>

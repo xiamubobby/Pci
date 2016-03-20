@@ -2,9 +2,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
         android:defaultValue="false"
-        android:key="@string/pref_key_use_equipment"
-        android:summary="使用全程健康设备测量血压/血糖"
-        android:title="使用健康设备"/>
+        android:key="@string/setting_pref_key_measure_default"
+        android:summaryOn="使用您选择的默认的记录方式来记录健康数据"
+        android:summaryOff="需要记录健康数据时，弹窗提示选择数据记录方式"
+        android:title="默认记录方式"/>
 
     <Preference
         android:summary="@string/app_version"

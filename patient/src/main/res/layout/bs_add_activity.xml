@@ -10,7 +10,7 @@
 
     <include layout="@layout/appbar"/>
 
-    <include layout="@layout/blood_sugar_add_content"/>
+    <include layout="@layout/bs_add_content"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add_bs"

@@ -102,30 +102,38 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".module.chatroom.ChatRoomActivity"
+            android:label="@string/title_activity_chat_room"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".module.healthreport.DailyRecordActivity"
             android:screenOrientation="portrait"
+            android:label="@string/title_activity_daily_record"
             android:theme="@style/AppTheme.NoActionBar.DailyRecordActionBar"/>
         <activity
             android:name=".module.healthrecord.bp.BPAddActivity"
+            android:label="@string/title_activity_bp_measure"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".module.healthrecord.bs.BSAddActivity"
+            android:label="@string/title_activity_bs_measure"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".module.healthrecord.bp.BPGuideActivity"
+            android:label="@string/title_activity_bp_measure"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".module.healthrecord.bs.BSGuideActivity"
+            android:label="@string/title_activity_bs_measure"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".module.healthrecord.symptom.SymptomActivity"
+            android:label="@string/title_activity_symptom"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".module.medicalrecord.MedicalRecordActivity"
+            android:label="@string/title_activity_medical_record"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".module.main.doctors.detail.DoctorDetailActivity"

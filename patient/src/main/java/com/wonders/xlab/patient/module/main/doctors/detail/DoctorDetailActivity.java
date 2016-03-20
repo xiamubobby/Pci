@@ -50,8 +50,8 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     public final static String EXTRA_TITLE = "title";
 
     /**
-     * {@link DoctorDetailActivity.TYPE_DOCTOR}
-     * {@link DoctorDetailActivity.TYPE_DOCTOR_GROUP}
+     * DoctorDetailActivity.TYPE_DOCTOR
+     * DoctorDetailActivity.TYPE_DOCTOR_GROUP
      */
     public final static String EXTRA_TYPE = "type";
 
@@ -109,6 +109,13 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
             finish();
             return;
         }
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         mToolbar.setTitle(title);
 

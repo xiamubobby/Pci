@@ -9,16 +9,21 @@ import android.view.ViewGroup;
 
 import com.wonders.xlab.patient.R;
 
+import im.hua.library.base.BaseFragment;
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SymptomReportFragment extends Fragment {
+public class SymptomReportFragment extends BaseFragment {
 
 
     public SymptomReportFragment() {
         // Required empty public constructor
     }
 
+    public static SymptomReportFragment newInstance() {
+        return new SymptomReportFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

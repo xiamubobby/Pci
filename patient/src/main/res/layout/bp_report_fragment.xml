@@ -3,12 +3,15 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context=".module.healthreport.BloodPressureReportFragment">
+              tools:context=".module.healthreport.BPReportFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/item_interval_middle"
+        android:paddingBottom="@dimen/item_interval_small"
+        android:paddingLeft="@dimen/item_interval_middle"
+        android:paddingRight="@dimen/item_interval_middle"
+        android:paddingTop="@dimen/item_interval_small"
         android:text="@string/text_blood_sugar_normal_range_title"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_size_large"/>
@@ -19,25 +22,31 @@
         android:id="@+id/text_blood_pressure_report_ideal_range"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lineSpacingExtra="5dp"
-        android:padding="@dimen/item_interval_middle"
+        android:lineSpacingExtra="10dp"
+        android:paddingBottom="@dimen/item_interval_small"
+        android:paddingLeft="@dimen/item_interval_large"
+        android:paddingRight="@dimen/item_interval_large"
+        android:paddingTop="@dimen/item_interval_small"
         android:text="高压：90mmHg ~ 140mmHg\n低压：60mmHg ~ 90mmHg\n心率：80次/分 ~ 95次/分"
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"/>
 
-    <include layout="@layout/divider_vertical"/>
+    <include layout="@layout/divider_vertical_large"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/item_interval_middle"
+        android:paddingBottom="@dimen/item_interval_small"
+        android:paddingLeft="@dimen/item_interval_middle"
+        android:paddingRight="@dimen/item_interval_middle"
+        android:paddingTop="@dimen/item_interval_small"
         android:text="@string/text_blood_sugar_measure_value_title"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_size_large"/>
 
     <include layout="@layout/divider_vertical"/>
 
-    <com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_blood_pressure_report"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
