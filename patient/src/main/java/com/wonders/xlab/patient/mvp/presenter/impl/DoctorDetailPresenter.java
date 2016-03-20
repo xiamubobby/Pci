@@ -3,9 +3,9 @@ package com.wonders.xlab.patient.mvp.presenter.impl;
 import android.text.TextUtils;
 
 import com.wonders.xlab.patient.Constant;
-import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailGroupOfDoctorBean;
-import com.wonders.xlab.patient.module.doctors.detail.adapter.bean.DoctorDetailPackageBean;
-import com.wonders.xlab.patient.module.doctors.detail.bean.DoctorBasicInfoBean;
+import com.wonders.xlab.patient.module.main.doctors.detail.adapter.bean.DoctorDetailGroupOfDoctorBean;
+import com.wonders.xlab.patient.module.main.doctors.detail.adapter.bean.DoctorDetailPackageBean;
+import com.wonders.xlab.patient.module.main.doctors.detail.bean.DoctorBasicInfoBean;
 import com.wonders.xlab.patient.mvp.entity.DoctorDetailEntity;
 import com.wonders.xlab.patient.mvp.model.IDoctorDetailModel;
 import com.wonders.xlab.patient.mvp.model.impl.DoctorDetailModel;

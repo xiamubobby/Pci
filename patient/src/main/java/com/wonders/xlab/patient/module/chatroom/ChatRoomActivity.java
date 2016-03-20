@@ -18,7 +18,7 @@ import com.wonders.xlab.patient.module.base.AppbarActivity;
 import com.wonders.xlab.patient.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.patient.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.MeChatRoomBean;
-import com.wonders.xlab.patient.module.doctors.detail.DoctorDetailActivity;
+import com.wonders.xlab.patient.module.main.doctors.detail.DoctorDetailActivity;
 import com.wonders.xlab.patient.mvp.presenter.IChatRoomPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.ChatRoomPresenter;
 

@@ -1,7 +1,7 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
 import com.wonders.xlab.patient.Constant;
-import com.wonders.xlab.patient.module.doctors.adapter.bean.MyDoctorItemBean;
+import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
 import com.wonders.xlab.patient.mvp.entity.DoctorMyEntity;
 import com.wonders.xlab.patient.mvp.model.IDoctorMyModel;
 import com.wonders.xlab.patient.mvp.model.impl.DoctorMyModel;

@@ -5,7 +5,7 @@
 
         <variable
             name="bean"
-            type="com.wonders.xlab.patient.module.doctors.detail.bean.DoctorBasicInfoBean"/>
+            type="com.wonders.xlab.patient.module.main.doctors.detail.bean.DoctorBasicInfoBean"/>
 
         <import type="android.view.View"/>
     </data>
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".module.doctors.detail.DoctorDetailActivity"
+        tools:context=".module.main.doctors.detail.DoctorDetailActivity"
         tools:showIn="@layout/doctor_detail_activity">
 
         <android.support.v4.widget.NestedScrollView

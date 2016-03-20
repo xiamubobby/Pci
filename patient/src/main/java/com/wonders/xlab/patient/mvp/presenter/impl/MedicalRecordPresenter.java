@@ -1,8 +1,8 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
 
-import com.wonders.xlab.patient.module.home.medicalrecord.bean.MedicalRecordBean;
-import com.wonders.xlab.patient.module.home.medicalrecord.bean.MedicalRecordPhotoBean;
+import com.wonders.xlab.patient.module.medicalrecord.bean.MedicalRecordBean;
+import com.wonders.xlab.patient.module.medicalrecord.bean.MedicalRecordPhotoBean;
 import com.wonders.xlab.patient.mvp.entity.MedicalRecordEntity;
 import com.wonders.xlab.patient.mvp.model.impl.MedicalRecordModel;
 

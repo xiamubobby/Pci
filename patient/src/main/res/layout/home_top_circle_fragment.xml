@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:background="@color/colorPrimary"
               android:orientation="horizontal"
-              tools:context=".module.home.HomeTopCircleFragment">
+              tools:context=".module.main.home.HomeTopCircleFragment">
 
     <LinearLayout
         android:layout_width="0dp"

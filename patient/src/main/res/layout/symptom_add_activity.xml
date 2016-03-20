@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".module.home.dailyrecord.symptom.SymptomActivity">
+    tools:context=".module.main.home.dailyrecord.symptom.SymptomActivity">
 
     <include layout="@layout/appbar"/>
 

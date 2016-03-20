@@ -18,9 +18,9 @@ import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.auth.login.LoginActivity;
-import com.wonders.xlab.patient.module.doctors.DoctorsFragment;
-import com.wonders.xlab.patient.module.home.HomeFragment;
-import com.wonders.xlab.patient.module.me.MeFragment;
+import com.wonders.xlab.patient.module.main.doctors.DoctorFragment;
+import com.wonders.xlab.patient.module.main.home.HomeFragment;
+import com.wonders.xlab.patient.module.main.me.MeFragment;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity {
 
         mFragmentVPAdapter = new FragmentVPAdapter(getFragmentManager());
         mFragmentVPAdapter.addFragment(HomeFragment.getInstance());
-        mFragmentVPAdapter.addFragment(DoctorsFragment.getInstance());
+        mFragmentVPAdapter.addFragment(DoctorFragment.getInstance());
         mFragmentVPAdapter.addFragment(MeFragment.getInstance());
         mViewPagerMain.setOffscreenPageLimit(3);
         mViewPagerMain.setAdapter(mFragmentVPAdapter);

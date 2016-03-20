@@ -26,6 +26,12 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
     private Observable<T> mObservable;
     private Subscription subscribe;
 
+    public abstract String getBaseUrl();
+
+    protected abstract void onSuccess(T response);
+
+    protected abstract void onFailed(Throwable e);
+
     public BaseModel() {
         /**
          * TODO 开启日志
@@ -35,7 +41,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
         OkHttpClient client = new OkHttpClient();
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-//        client.interceptors().add(logging);
+        client.interceptors().add(logging);
 //        client.setConnectTimeout(30, TimeUnit.SECONDS);
 //        client.setWriteTimeout(30, TimeUnit.SECONDS);
 //        client.setReadTimeout(30, TimeUnit.SECONDS);
@@ -45,8 +51,6 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                 .client(client)
                 .build();
     }
-
-    public abstract String getBaseUrl();
 
     private void fetchData() {
         if (mObservable == null) {
@@ -80,10 +84,6 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                     }
                 });
     }
-
-    protected abstract void onSuccess(T response);
-
-    protected abstract void onFailed(Throwable e);
 
     @Override
     public void cancel() {

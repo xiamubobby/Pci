@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".module.home.dailyrecord.bs.BSAddActivity"
+    tools:context=".module.healthrecord.bs.BSAddActivity"
     tools:showIn="@layout/blood_sugar_add_activity">
 
     <LinearLayout

@@ -104,33 +104,33 @@
             android:name=".module.chatroom.ChatRoomActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".module.home.dailyrecord.DailyRecordActivity"
+            android:name=".module.healthreport.DailyRecordActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".module.home.dailyrecord.bp.BPAddActivity"
+            android:name=".module.healthrecord.bp.BPAddActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
-            android:name=".module.home.dailyrecord.bs.BSAddActivity"
+            android:name=".module.healthrecord.bs.BSAddActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
-            android:name=".module.home.dailyrecord.bp.BPGuideActivity"
+            android:name=".module.healthrecord.bp.BPGuideActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".module.home.dailyrecord.bs.BSGuideActivity"
+            android:name=".module.healthrecord.bs.BSGuideActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".module.home.dailyrecord.symptom.SymptomActivity"
+            android:name=".module.healthrecord.symptom.SymptomActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".module.home.medicalrecord.MedicalRecordActivity"
+            android:name=".module.medicalrecord.MedicalRecordActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".module.doctors.detail.DoctorDetailActivity"
+            android:name=".module.main.doctors.detail.DoctorDetailActivity"
             android:label="@string/title_activity_doctor_detail"/>
         <activity
-            android:name=".module.me.setting.SettingActivity"
+            android:name=".module.main.me.setting.SettingActivity"
             android:label="@string/title_activity_setting"/>
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
