@@ -30,6 +30,9 @@ import butterknife.OnClick;
 import im.hua.utils.DateUtil;
 import im.hua.utils.KeyboardUtil;
 
+/**
+ * 手动录入血压数据
+ */
 public class BPAddActivity extends AppbarActivity implements RecordSavePresenter.RecordSavePresenterListener {
 
     @Bind(R.id.tv_add_bp_date)

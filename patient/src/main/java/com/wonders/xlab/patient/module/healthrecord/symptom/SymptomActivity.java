@@ -31,6 +31,9 @@ import java.util.HashMap;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 不适症状选择
+ */
 public class SymptomActivity extends AppbarActivity implements SymptomPresenter.SymptomPresenterListener {
 
     @Bind(R.id.container_add_symptom)

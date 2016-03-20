@@ -32,6 +32,9 @@ import butterknife.OnClick;
 import im.hua.utils.DateUtil;
 import im.hua.utils.KeyboardUtil;
 
+/**
+ * 手动测量血糖
+ */
 public class BSAddActivity extends AppbarActivity implements RecordSavePresenter.RecordSavePresenterListener {
 
     @Bind(R.id.tv_add_date)

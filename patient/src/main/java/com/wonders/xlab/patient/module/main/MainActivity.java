@@ -30,6 +30,9 @@ import butterknife.ButterKnife;
 import im.hua.library.base.BaseActivity;
 import im.hua.utils.NotifyUtil;
 
+/**
+ * 包含整个APP的入口，容纳Viewpager
+ */
 public class MainActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
@@ -73,7 +76,7 @@ public class MainActivity extends BaseActivity {
         for (int i = 0; i < 3; i++) {
             switch (i) {
                 case 0:
-                    tabEntities.add(new TabEntity("患者", R.drawable.tab_home_select, R.drawable.tab_home_unselect));
+                    tabEntities.add(new TabEntity("首页", R.drawable.tab_home_select, R.drawable.tab_home_unselect));
                     break;
                 case 1:
                     tabEntities.add(new TabEntity("医生", R.drawable.tab_contact_select, R.drawable.tab_contact_unselect));
@@ -83,6 +86,7 @@ public class MainActivity extends BaseActivity {
                     break;
             }
         }
+
         mTabMainBottom.setTabData(tabEntities);
         mTabMainBottom.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
@@ -95,6 +99,11 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+        mTabMainBottom.showDot(2);
+        mTabMainBottom.showMsg(1,100);
+        mTabMainBottom.setMsgMargin(1,0,8);
+        mTabMainBottom.setMsgMargin(2,0,8);
+
         mViewPagerMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

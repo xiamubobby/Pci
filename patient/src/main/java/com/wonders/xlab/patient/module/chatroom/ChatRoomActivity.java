@@ -30,6 +30,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import im.hua.utils.DateUtil;
 
+/**
+ * 聊天界面
+ */
 public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresenter.ChatRoomPresenterListener {
     public final static String EXTRA_GROUP_NAME = "groupName";
     /**
@@ -37,6 +40,9 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
      */
     public final static String EXTRA_GROUP_ID = "groupId";
 
+    /**
+     * 该小组提供的服务是否已过期
+     */
     public final static String EXTRA_CAN_CHAT = "canChat";
 
     private String groupId;

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".module.main.doctors.detail.DoctorDetailActivity"
+    tools:showIn="@layout/doctor_detail_activity">
 
     <data>
 
@@ -8,18 +13,16 @@
             type="com.wonders.xlab.patient.module.main.doctors.detail.bean.DoctorBasicInfoBean"/>
 
         <import type="android.view.View"/>
+
+        <import type="android.text.TextUtils"/>
     </data>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/refresh_doctor_detail"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".module.main.doctors.detail.DoctorDetailActivity"
-        tools:showIn="@layout/doctor_detail_activity">
+        >
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -144,7 +147,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/item_interval_small"
-                    android:text='@{null != bean &amp;&amp; null != bean.isMulti ? (bean.isMulti ? "小组简介" : "个人简介"):"简介"}'
+                    android:text='@{null != bean ? (bean.isMulti ? "小组简介" : "个人简介") : ""}'
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/text_size_middle"/>
 
@@ -167,20 +170,21 @@
                     android:text="提供服务"
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/text_size_middle"
-                    android:visibility="@{bean.hasServicePackage ? View.VISIBLE : View.GONE}"/>
+                    android:visibility='@{null != bean &amp;&amp; bean.hasServicePackage ? View.VISIBLE : View.GONE}'/>
 
                 <include
                     layout="@layout/divider_vertical"
-                    android:visibility="@{bean.hasServicePackage ? View.VISIBLE : View.GONE}"/>
+                    android:visibility='@{null != bean &amp;&amp; bean.hasServicePackage ? View.VISIBLE : View.GONE}'/>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_doctor_detail_package"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="@{bean.hasServicePackage ? View.VISIBLE : View.GONE}"/>
+                    android:visibility='@{null != bean &amp;&amp; bean.hasServicePackage ? View.VISIBLE : View.GONE}'/>
 
-                <include layout="@layout/divider_vertical_large"
-                         android:visibility="@{bean.hasServicePackage ? View.VISIBLE : View.GONE}"/>
+                <include
+                    layout="@layout/divider_vertical_large"
+                    android:visibility='@{null != bean &amp;&amp; bean.hasServicePackage ? View.VISIBLE : View.GONE}'/>
 
                 <TextView
                     android:layout_width="match_parent"

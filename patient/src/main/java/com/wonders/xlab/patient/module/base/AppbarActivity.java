@@ -54,6 +54,7 @@ public abstract class AppbarActivity extends BaseActivity {
         mContentView = findViewById(android.R.id.content);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {
+            setSupportActionBar(mToolbar);
             mToolbar.setTitle(getToolbarTitle());
             mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

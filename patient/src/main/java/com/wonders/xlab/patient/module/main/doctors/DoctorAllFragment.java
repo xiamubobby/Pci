@@ -3,7 +3,6 @@ package com.wonders.xlab.patient.module.main.doctors;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +27,7 @@ import butterknife.ButterKnife;
 import im.hua.library.base.BaseFragment;
 
 /**
- * A simple {@link Fragment} subclass.
+ * 所有医生
  */
 public class DoctorAllFragment extends BaseFragment implements DoctorAllPresenter.DoctorAllPresenterListener {
 

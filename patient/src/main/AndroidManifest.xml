@@ -60,8 +60,8 @@
         <activity
             android:name=".module.auth.login.LoginActivity"
             android:label="@string/title_activity_login"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
@@ -105,7 +105,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".module.healthreport.DailyRecordActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.DailyRecordActionBar"/>
         <activity
             android:name=".module.healthrecord.bp.BPAddActivity"
             android:screenOrientation="portrait"

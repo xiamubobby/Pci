@@ -1,13 +1,18 @@
 package com.wonders.xlab.patient.module.healthreport;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.RadioGroup;
 
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.patient.R;
@@ -22,12 +27,15 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
+/**
+ * 每日记录
+ * 血压和血糖数据在每次记录，服务器返回成功后缓存在本地，不从服务器获取，不考虑跨设备需要看到其他设备记录的情况，这么做主要是为了界面的流畅以及省流量，
+ * 因为这个界面进入的频率很高
+ * 不适症状需要从服务器获取，因为其中有医生的建议和确认的状态
+ */
 public class DailyRecordActivity extends AppbarActivity {
 
-    @Bind(R.id.fam_daily_task)
-    FloatingActionsMenu mFamDailyTask;
     @Bind(R.id.view_pager_daily_record)
     ViewPager mViewPager;
     @Bind(R.id.tab_daily_record)
@@ -47,19 +55,21 @@ public class DailyRecordActivity extends AppbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-
         setupTopTab();
     }
 
     private void setupTopTab() {
         ArrayList<CustomTabEntity> tabEntities = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             switch (i) {
                 case 0:
-                    tabEntities.add(new TabEntity("我的医生", R.drawable.tab_home_select, R.drawable.tab_home_unselect));
+                    tabEntities.add(new TabEntity("血糖", R.drawable.tab_home_select, R.drawable.tab_home_unselect));
                     break;
                 case 1:
-                    tabEntities.add(new TabEntity("所有医生", R.drawable.tab_contact_select, R.drawable.tab_contact_unselect));
+                    tabEntities.add(new TabEntity("血压", R.drawable.tab_home_select, R.drawable.tab_home_unselect));
+                    break;
+                case 2:
+                    tabEntities.add(new TabEntity("不适症状", R.drawable.tab_home_select, R.drawable.tab_home_unselect));
                     break;
             }
         }
@@ -93,34 +103,85 @@ public class DailyRecordActivity extends AppbarActivity {
         });
     }
 
-    @OnClick(R.id.fam_daily_task_bp)
-    public void onRecordBpClick() {
-        boolean useEquipment = SPManager.get(this).getBoolean(getString(R.string.pref_key_use_equipment), false);
-        if (useEquipment) {
-            recordNewData(BPGuideActivity.class);
-        } else {
-            recordNewData(BPAddActivity.class);
-        }
-    }
-
-    @OnClick(R.id.fam_daily_task_bs)
-    public void onRecordBsClick() {
-        boolean useEquipment = SPManager.get(this).getBoolean(getString(R.string.pref_key_use_equipment), false);
-        if (useEquipment) {
-            recordNewData(BSGuideActivity.class);
-        } else {
-            recordNewData(BSAddActivity.class);
-        }
-    }
-
-    @OnClick(R.id.fam_daily_task_symptom)
-    public void onRecordSymptomClick() {
-        recordNewData(SymptomActivity.class);
-    }
-
     private void recordNewData(Class targetActivity) {
         startActivity(new Intent(this, targetActivity));
-        mFamDailyTask.collapse();
+    }
+
+    private void showConfirmDialog(final int type) {
+        RadioGroup customView = (RadioGroup) LayoutInflater.from(this).inflate(R.layout.item_daily_record_dialog_multi_check, null);
+        customView.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                switch (checkedId) {
+                    case R.id.rb_item_daily_record_dialog_single_check_auto:
+                        showLongToast("如果需要切换输入方式，只需要在：主界面->我->设置中开启或者关闭使用健康设备即可");
+
+                        break;
+                    case R.id.rb_item_daily_record_dialog_single_check_manual:
+                        showLongToast("如果需要切换输入方式，只需要在：主界面->我->设置中开启或者关闭使用健康设备即可");
+
+                        break;
+                    case R.id.rb_item_daily_record_dialog_single_check_clear:
+                        break;
+                }
+            }
+        });
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setMessage("请选择健康数据的测量方式")
+                .setView(customView)
+                .setPositiveButton(getResources().getString(R.string.text_daily_record_dialog_auto), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (type) {
+                            case 0:
+                                recordNewData(BPGuideActivity.class);
+                                break;
+                            case 1:
+                                recordNewData(BSGuideActivity.class);
+                                break;
+                        }
+                    }
+                })
+                .setNegativeButton(getResources().getString(R.string.text_daily_record_dialog_manual), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (type) {
+                            case 0:
+                                recordNewData(BPAddActivity.class);
+                                break;
+                            case 1:
+                                recordNewData(BSAddActivity.class);
+                                break;
+                        }
+                    }
+                });
+        builder.create().show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_daily_record, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean useEquipment = SPManager.get(DailyRecordActivity.this).getBoolean(getString(R.string.pref_key_use_equipment), false);
+
+        switch (item.getItemId()) {
+            case R.id.menu_daily_record_bp:
+                showConfirmDialog(0);
+                break;
+            case R.id.menu_daily_record_bs:
+                showConfirmDialog(1);
+                break;
+            case R.id.menu_daily_record_symptom:
+                recordNewData(SymptomActivity.class);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

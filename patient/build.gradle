@@ -22,7 +22,7 @@ android {
     }
     buildTypes {
 
-        debug{
+        debug {
             resValue "string", "app_version", AppVersion
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -47,10 +47,10 @@ dependencies {
     compile project(':common')
     compile project(':uikit')
     testCompile 'junit:junit:4.12'
+    //    compile 'com.google.dagger:dagger:2.1'
+//    apt 'com.google.dagger:dagger-compiler:2.1'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.android.support:support-v4:23.2.1'
     compile 'com.getbase:floatingactionbutton:1.10.1'
     compile 'me.drakeet.labelview:labelview:0.8'
-//    compile 'com.google.dagger:dagger:2.1'
-//    apt 'com.google.dagger:dagger-compiler:2.1'
 }

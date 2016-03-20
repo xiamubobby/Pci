@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_daily_record_bs"
+        android:title="测量血糖"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_daily_record_bp"
+        android:title="测量血压"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_daily_record_symptom"
+        android:title="不适症状"
+        app:showAsAction="never"/>
+</menu>

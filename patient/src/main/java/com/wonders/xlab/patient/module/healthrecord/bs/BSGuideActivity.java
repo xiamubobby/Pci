@@ -30,6 +30,9 @@ import com.wonders.xlab.patient.module.healthrecord.bp.otto.GuideOtto;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+/**
+ * 健康设备测量血糖
+ */
 public class BSGuideActivity extends NConnActivity {
 
     @Bind(R.id.vp_measure_bs_guide)

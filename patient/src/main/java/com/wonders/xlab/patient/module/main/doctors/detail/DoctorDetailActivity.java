@@ -90,7 +90,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.doctor_detail_activity);
         //we'd better initial the bean here
-        binding.setBean(new DoctorBasicInfoBean());
+//        binding.setBean(new DoctorBasicInfoBean());
         ButterKnife.bind(this);
 
         Bundle data = getIntent().getExtras();

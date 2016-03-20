@@ -2,8 +2,8 @@ package com.wonders.xlab.patient.module.medicalrecord;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -78,21 +78,6 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
             finish();
             return;
         }
-
-        getToolbar().inflateMenu(R.menu.menu_medical_record);
-        getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_medical_record_photo_upload:
-                        PhotoPickerIntent intent = new PhotoPickerIntent(MedicalRecordActivity.this);
-                        intent.setPhotoCount(9);
-                        startActivityForResult(intent, REQUEST_CODE);
-                        break;
-                }
-                return false;
-            }
-        });
 
         mRecyclerView.setLinearLayout(false);
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 5));
@@ -221,5 +206,24 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
     @Override
     public void uploadPicsSuccess(String message) {
         showShortToast(message);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_medical_record, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_medical_record_photo_upload:
+                PhotoPickerIntent intent = new PhotoPickerIntent(MedicalRecordActivity.this);
+                intent.setPhotoCount(9);
+                startActivityForResult(intent, REQUEST_CODE);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
