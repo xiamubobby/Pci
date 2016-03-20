@@ -32,7 +32,7 @@ public class BSReportAdapter extends SimpleRVAdapter<BSReportBean> {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         BSReportBean bean = getBean(position);
         viewHolder.mTvBs.setText(String.format("%s：%smmol/L", bean.getMeasurePeriod(), bean.getBloodSugar()));
-        viewHolder.mTvTime.setText(String.format("测量时间：%s", DateUtil.format(bean.getMeasureTime(), "HH:mm")));
+        viewHolder.mTvTime.setText(String.format("记录时间：%s", DateUtil.format(bean.getRecordTimeInMill(), "HH:mm")));
 
         Drawable drawableUp = viewHolder.itemView.getContext().getResources().getDrawable(R.drawable.pic_arrow_up);
         if (drawableUp != null) {

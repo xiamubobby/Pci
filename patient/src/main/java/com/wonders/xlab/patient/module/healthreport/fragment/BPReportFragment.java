@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.healthreport;
+package com.wonders.xlab.patient.module.healthreport.fragment;
 
 
 import android.os.Bundle;
@@ -74,7 +74,7 @@ public class BPReportFragment extends BaseFragment {
             bean.setHighPressureStatus(0);
             bean.setLowPressure(String.valueOf(i+60));
             bean.setLowPressureStatus(-1);
-            bean.setMeasureTime(Calendar.getInstance().getTimeInMillis());
+            bean.setRecordTimeInMill(Calendar.getInstance().getTimeInMillis());
 
             bpReportBeanList.add(bean);
         }

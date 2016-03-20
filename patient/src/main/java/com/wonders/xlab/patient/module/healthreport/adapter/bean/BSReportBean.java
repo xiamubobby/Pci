@@ -15,7 +15,7 @@ public class BSReportBean {
     private String bloodSugar;
     private int bloodSugarStatus;
     private String measurePeriod;
-    private long measureTime;
+    private long recordTimeInMill;
 
     public String getId() {
         return id;
@@ -41,12 +41,12 @@ public class BSReportBean {
         this.bloodSugarStatus = bloodSugarStatus;
     }
 
-    public long getMeasureTime() {
-        return measureTime;
+    public long getRecordTimeInMill() {
+        return recordTimeInMill;
     }
 
-    public void setMeasureTime(long measureTime) {
-        this.measureTime = measureTime;
+    public void setRecordTimeInMill(long recordTimeInMill) {
+        this.recordTimeInMill = recordTimeInMill;
     }
 
     public String getMeasurePeriod() {

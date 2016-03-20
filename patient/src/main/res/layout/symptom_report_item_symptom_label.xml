@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginRight="@dimen/item_interval_small"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_symptom_report_item_symptom_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_symptom_label_not_confirm"
+        android:padding="@dimen/item_interval_small"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearance"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_small"/>
+</LinearLayout>

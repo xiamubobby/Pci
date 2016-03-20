@@ -23,6 +23,9 @@ import com.wonders.xlab.patient.module.healthrecord.bp.BPGuideActivity;
 import com.wonders.xlab.patient.module.healthrecord.bs.BSAddActivity;
 import com.wonders.xlab.patient.module.healthrecord.bs.BSGuideActivity;
 import com.wonders.xlab.patient.module.healthrecord.symptom.SymptomActivity;
+import com.wonders.xlab.patient.module.healthreport.fragment.BPReportFragment;
+import com.wonders.xlab.patient.module.healthreport.fragment.BSReportFragment;
+import com.wonders.xlab.patient.module.healthreport.fragment.SymptomReportFragment;
 
 import java.util.ArrayList;
 

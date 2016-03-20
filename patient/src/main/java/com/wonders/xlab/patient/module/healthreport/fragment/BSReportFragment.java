@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.healthreport;
+package com.wonders.xlab.patient.module.healthreport.fragment;
 
 
 import android.os.Bundle;
@@ -71,7 +71,7 @@ public class BSReportFragment extends BaseFragment {
             bean.setBloodSugar(String.valueOf(0.4 * i));
             bean.setBloodSugarStatus(1);
             bean.setMeasurePeriod("晚餐前");
-            bean.setMeasureTime(Calendar.getInstance().getTimeInMillis());
+            bean.setRecordTimeInMill(Calendar.getInstance().getTimeInMillis());
 
             bsReportBeanList.add(bean);
         }
