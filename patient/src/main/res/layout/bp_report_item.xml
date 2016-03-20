@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:gravity="right|center_vertical"
         android:padding="@dimen/item_interval_small"
-        android:text="测量时间：14:15"
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"/>
 
@@ -22,7 +21,6 @@
         android:gravity="center_vertical"
         android:padding="@dimen/item_interval_small"
         android:singleLine="true"
-        android:text="高压：140mmHg"
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"/>
 
@@ -40,7 +38,6 @@
             android:gravity="center_vertical"
             android:padding="@dimen/item_interval_small"
             android:singleLine="true"
-            android:text="低压：80mmHg"
             android:textColor="@color/text_color_primary_gray"
             android:textSize="@dimen/text_size_middle"/>
 
@@ -53,7 +50,6 @@
             android:gravity="center_vertical"
             android:padding="@dimen/item_interval_small"
             android:singleLine="true"
-            android:text="心率：91次/分"
             android:textColor="@color/text_color_primary_gray"
             android:textSize="@dimen/text_size_middle"/>
     </LinearLayout>
