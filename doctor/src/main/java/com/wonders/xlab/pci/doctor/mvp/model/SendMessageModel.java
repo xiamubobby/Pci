@@ -21,6 +21,13 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
         mSendMessageAPI = mRetrofit.create(SendMessageAPI.class);
     }
 
+    /**
+     *
+     * @param message
+     * @param doctorTel
+     * @param groupId  环信id
+     * @param time
+     */
     public void sendMessage(String message, String doctorTel, String groupId,long time) {
         SendMessageBody body = new SendMessageBody();
 
@@ -49,7 +56,7 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
     }
 
     @Override
-    protected void onFailed(Throwable e) {
+    protected void onFailed(Throwable e, String message) {
         mISendMessageModel.onReceiveFailed("发送失败，请重试！");
     }
 }

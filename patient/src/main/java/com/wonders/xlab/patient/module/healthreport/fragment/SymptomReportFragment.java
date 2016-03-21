@@ -10,10 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.otto.Subscribe;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.healthreport.adapter.SymptomReportAdapter;
 import com.wonders.xlab.patient.module.healthreport.adapter.bean.SymptomReportBean;
+import com.wonders.xlab.patient.module.healthreport.otto.SymptomSaveSuccessOtto;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -44,7 +47,7 @@ public class SymptomReportFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        OttoManager.register(this);
         View view = inflater.inflate(R.layout.symptom_report_fragment, container, false);
         ButterKnife.bind(this, view);
         return view;
@@ -83,9 +86,15 @@ public class SymptomReportFragment extends BaseFragment {
 
     }
 
+    @Subscribe
+    public void refresh(SymptomSaveSuccessOtto otto) {
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
 }

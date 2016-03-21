@@ -59,7 +59,7 @@ public class UploadPicModel extends PatientBaseModel<SimpleEntity> implements IU
     }
 
     @Override
-    protected void onFailed(Throwable e) {
+    protected void onFailed(Throwable e, String message) {
         mUploadPicModelListener.onReceiveFailed(e.getMessage());
     }
 

@@ -8,7 +8,9 @@ import com.wonders.xlab.patient.module.main.doctors.detail.adapter.bean.DoctorDe
 import com.wonders.xlab.patient.module.main.doctors.detail.bean.DoctorBasicInfoBean;
 import com.wonders.xlab.patient.mvp.entity.DoctorDetailEntity;
 import com.wonders.xlab.patient.mvp.model.IDoctorDetailModel;
+import com.wonders.xlab.patient.mvp.model.IOrderPackageServiceModel;
 import com.wonders.xlab.patient.mvp.model.impl.DoctorDetailModel;
+import com.wonders.xlab.patient.mvp.model.impl.OrderPackageServiceModel;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorDetailPresenter;
 
 import java.util.ArrayList;
@@ -20,21 +22,29 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
 /**
  * Created by hua on 16/3/16.
  */
-public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetailPresenter, DoctorDetailModel.DoctorDetailModelListener {
+public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetailPresenter, DoctorDetailModel.DoctorDetailModelListener, OrderPackageServiceModel.OrderPackageServiceModelListener {
 
     private DoctorDetailPresenterListener mDoctorDetailListener;
     private IDoctorDetailModel mDoctorDetailModel;
+    private IOrderPackageServiceModel mOrderPackageServiceModel;
 
     public DoctorDetailPresenter(DoctorDetailPresenterListener doctorDetailListener) {
         mDoctorDetailListener = doctorDetailListener;
 
         mDoctorDetailModel = new DoctorDetailModel(this);
+        mOrderPackageServiceModel = new OrderPackageServiceModel(this);
+        addModel(mOrderPackageServiceModel);
         addModel(mDoctorDetailModel);
     }
 
     @Override
     public void fetchDoctorDetailInfo(String doctorId) {
         mDoctorDetailModel.getDoctorDetailInfo(doctorId);
+    }
+
+    @Override
+    public void orderPackage(String patientId, String packageId) {
+        mOrderPackageServiceModel.orderPackage(patientId, packageId);
     }
 
     @Override
@@ -102,11 +112,18 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
         mDoctorDetailListener.showError(message);
     }
 
+    @Override
+    public void onOrderPackageServiceSuccess(String message) {
+        mDoctorDetailListener.orderPackageSuccess(message);
+    }
+
     public interface DoctorDetailPresenterListener extends BasePresenterListener {
         void showBasicInfo(DoctorBasicInfoBean basicInfoBean);
 
         void showPackageList(ArrayList<DoctorDetailPackageBean> packageList);
 
         void showGroupOfDoctorList(ArrayList<DoctorDetailGroupOfDoctorBean> groupOfDoctorList);
+
+        void orderPackageSuccess(String message);
     }
 }

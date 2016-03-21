@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.wonders.xlab.common.manager.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.databinding.DoctorDetailActivityBinding;
 import com.wonders.xlab.patient.module.main.doctors.detail.adapter.DoctorDetailGroupOfDoctorRVAdapter;
 import com.wonders.xlab.patient.module.main.doctors.detail.adapter.DoctorDetailMemberRVAdapter;
@@ -43,7 +44,7 @@ import im.hua.library.base.BaseActivity;
 /**
  *
  */
-public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDetailPresenter.DoctorDetailPresenterListener, DoctorDetailPresenter.DoctorDetailPresenterListener {
+public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDetailPresenter.DoctorGroupDetailPresenterListener, DoctorDetailPresenter.DoctorDetailPresenterListener {
     public final static int TYPE_DOCTOR = 0;
     public final static int TYPE_DOCTOR_GROUP = 1;
 
@@ -60,15 +61,14 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
      */
     public final static String EXTRA_ID = "extraId";
 
+    private String title;
+    private String doctorId;
+    private int type;
+
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
     @Bind(R.id.refresh_doctor_detail)
     SwipeRefreshLayout mRefresh;
-
-    private String title;
-    private String id;
-    private int type;
-
     @Bind(R.id.iv_doctor_detail_portrait)
     ImageView mIvDoctorDetailPortrait;
     @Bind(R.id.recycler_view_doctor_detail_package)
@@ -84,6 +84,9 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     private IDoctorDetailPresenter mDoctorDetailPresenter;
 
     private DoctorDetailActivityBinding binding;
+
+    private BottomSheetDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,10 +104,10 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
         }
 
         title = data.getString(EXTRA_TITLE);
-        type = data.getInt(EXTRA_TYPE,TYPE_DOCTOR_GROUP);
-        id = data.getString(EXTRA_ID);
+        type = data.getInt(EXTRA_TYPE, TYPE_DOCTOR_GROUP);
+        doctorId = data.getString(EXTRA_ID);
 
-        if (TextUtils.isEmpty(id)) {
+        if (TextUtils.isEmpty(doctorId)) {
             Toast.makeText(this, "获取医生详情失败，请重试！", Toast.LENGTH_SHORT).show();
             finish();
             return;
@@ -153,10 +156,10 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     private void requestData() {
         switch (type) {
             case TYPE_DOCTOR:
-                mDoctorDetailPresenter.fetchDoctorDetailInfo(id);
+                mDoctorDetailPresenter.fetchDoctorDetailInfo(doctorId);
                 break;
             case TYPE_DOCTOR_GROUP:
-                mDoctorGroupDetailPresenter.fetchDoctorGroupDetailInfo(id);
+                mDoctorGroupDetailPresenter.fetchDoctorGroupDetailInfo(doctorId);
                 break;
         }
     }
@@ -169,13 +172,15 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     }
 
     @Override
-    public void showPackageList(ArrayList<DoctorDetailPackageBean> packageList) {
+    public void showPackageList(final ArrayList<DoctorDetailPackageBean> packageList) {
         if (null == mPackageRVAdapter) {
             mPackageRVAdapter = new DoctorDetailPackageRVAdapter();
             mPackageRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
                 @Override
-                public void onItemClick(int position) {
-                    BottomSheetDialog dialog = new BottomSheetDialog(DoctorDetailActivity.this);
+                public void onItemClick(final int position) {
+                    if (null == dialog) {
+                        dialog = new BottomSheetDialog(DoctorDetailActivity.this);
+                    }
                     View view = LayoutInflater.from(DoctorDetailActivity.this).inflate(R.layout.doctor_detail_bottom_sheet, null, false);
                     TextView name = (TextView) view.findViewById(R.id.tv_doctor_detail_bottom_sheet_package_name);
                     TextView price = (TextView) view.findViewById(R.id.tv_doctor_detail_bottom_sheet_price);
@@ -184,7 +189,14 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
                     btnBuy.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            showShortToast("buy buy buy");
+                            switch (type) {
+                                case TYPE_DOCTOR:
+                                    mDoctorDetailPresenter.orderPackage(AIManager.getInstance(DoctorDetailActivity.this).getPatientId(),packageList.get(position).packageId.get());
+                                    break;
+                                case TYPE_DOCTOR_GROUP:
+                                    mDoctorGroupDetailPresenter.orderPackage(AIManager.getInstance(DoctorDetailActivity.this).getPatientId(),packageList.get(position).packageId.get());
+                                    break;
+                            }
                         }
                     });
 
@@ -239,6 +251,12 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
         }
         mGroupOfDoctorRVAdapter.setDatas(groupOfDoctorList);
         mRecyclerViewDoctorDetailMemberOrGroup.setAdapter(mGroupOfDoctorRVAdapter);
+    }
+
+    @Override
+    public void orderPackageSuccess(String message) {
+        showShortToast(message);
+        dialog.dismiss();
     }
 
     @Override

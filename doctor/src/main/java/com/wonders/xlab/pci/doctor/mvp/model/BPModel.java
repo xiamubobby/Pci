@@ -27,7 +27,7 @@ public class BPModel extends DoctorBaseModel<BPEntity> {
     }
 
     @Override
-    protected void onFailed(Throwable e) {
+    protected void onFailed(Throwable e, String message) {
         mBloodPressureModel.onReceiveFailed("获取血压数据失败，请重试！");
     }
 }

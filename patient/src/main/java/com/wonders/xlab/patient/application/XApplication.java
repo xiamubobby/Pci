@@ -7,10 +7,15 @@ import com.easemob.chat.EMChatManager;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 /**
  * Created by hua on 15/12/13.
  */
 public class XApplication extends Application {
+    public static Realm realm;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -18,6 +23,11 @@ public class XApplication extends Application {
 //        if (BuildConfig.DEBUG) {
 //            BlockCanary.install(this, new AppBlockCanaryContext()).start();
 //        }
+
+        // The realm file will be located in Context.getFilesDir() with name "default.realm"
+        RealmConfiguration config = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
+        Realm.setDefaultConfiguration(config);
+        realm = Realm.getDefaultInstance();
 
         EMChat.getInstance().init(this);
         EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);//不发通知，而是走广播
@@ -28,4 +38,5 @@ public class XApplication extends Application {
         AnalyticsConfig.enableEncrypt(true);
         MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式，这样将不会再自动统计Activity。
     }
+
 }

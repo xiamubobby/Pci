@@ -14,15 +14,14 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
-import com.wonders.xlab.patient.module.healthreport.otto.TaskRefreshOtto;
 import com.wonders.xlab.patient.mvp.presenter.IRecordSavePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.RecordSavePresenter;
 
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -170,14 +169,17 @@ public class BPAddActivity extends AppbarActivity implements RecordSavePresenter
         mFabAddBp.setClickable(false);
         Toast.makeText(this, "数据保存成功", Toast.LENGTH_SHORT).show();
 
-        OttoManager.post(new TaskRefreshOtto());
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 finish();
             }
         }, 400);
+    }
+
+    @Override
+    public void showBSPeriodDicList(List<String> periodList, int currentPeriodIndex) {
+
     }
 
     @Override

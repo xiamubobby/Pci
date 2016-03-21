@@ -28,7 +28,7 @@ public class PatientModel extends DoctorBaseModel<PatientEntity> {
     }
 
     @Override
-    protected void onFailed(Throwable e) {
+    protected void onFailed(Throwable e, String message) {
         mIPatientPresenter.onReceiveFailed("获取患者列表失败，请重试！");
     }
 }

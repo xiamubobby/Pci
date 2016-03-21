@@ -1,6 +1,5 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
-import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.mvp.entity.LoginEntity;
 import com.wonders.xlab.patient.mvp.model.impl.LoginModel;
 import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
@@ -33,7 +32,7 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter, Lo
     @Override
     public void loginSuccess(LoginEntity.RetValuesEntity value) {
         mLoginPresenterListener.hideLoading();
-        mLoginPresenterListener.loginSuccess(value.getId(), value.getTel(), Constant.DEFAULT_PORTRAIT, "");
+        mLoginPresenterListener.loginSuccess(value.getId(), value.getTel(), value.getAvatarUrl(), value.getName());
     }
 
     @Override

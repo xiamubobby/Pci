@@ -28,7 +28,7 @@ public class UserInfoModel extends DoctorBaseModel<UserInfoEntity> {
     }
 
     @Override
-    protected void onFailed(Throwable e) {
+    protected void onFailed(Throwable e, String message) {
         mUserInfoModel.onReceiveFailed("获取患者基本信息失败，请重试！");
     }
 }

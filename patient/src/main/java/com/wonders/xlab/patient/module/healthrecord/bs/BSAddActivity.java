@@ -6,25 +6,25 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.widget.PopupMenu;
 import android.text.TextUtils;
-import android.view.Gravity;
-import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
-import com.wonders.xlab.patient.module.healthreport.otto.TaskRefreshOtto;
 import com.wonders.xlab.patient.mvp.presenter.IRecordSavePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.RecordSavePresenter;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -41,12 +41,12 @@ public class BSAddActivity extends AppbarActivity implements RecordSavePresenter
     TextView mTvAddBsDate;
     @Bind(R.id.tv_add_time)
     TextView mTvAddBsTime;
-    @Bind(R.id.tv_add_bs_period)
-    TextView mTvAddBsPeriod;
     @Bind(R.id.et_add_bs)
     EditText mEtAddBs;
     @Bind(R.id.fab_add_bs)
     FloatingActionButton mFabAddBs;
+    @Bind(R.id.sp_add_bs_period)
+    Spinner mSpAddBsPeriod;
 
     private Calendar mCalendar = Calendar.getInstance();
 
@@ -73,6 +73,8 @@ public class BSAddActivity extends AppbarActivity implements RecordSavePresenter
         addPresenter(mRecordSavePresenter);
 
         initView();
+
+        mRecordSavePresenter.getBSPeriodDic();
     }
 
     private void initView() {
@@ -104,33 +106,7 @@ public class BSAddActivity extends AppbarActivity implements RecordSavePresenter
             return;
         }
 
-        int periodIndex;
-        String period = mTvAddBsPeriod.getText().toString();
-        switch (period) {
-            case "早餐前":
-                periodIndex = 0;
-                break;
-            case "早餐后":
-                periodIndex = 1;
-                break;
-            case "午餐前":
-                periodIndex = 2;
-                break;
-            case "午餐后":
-                periodIndex = 3;
-                break;
-            case "晚餐前":
-                periodIndex = 4;
-                break;
-            case "晚餐后":
-                periodIndex = 5;
-                break;
-            case "睡前":
-                periodIndex = 6;
-                break;
-            default:
-                periodIndex = 0;
-        }
+        int periodIndex = mSpAddBsPeriod.getSelectedItemPosition();
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("正在保存，请稍候...");
@@ -170,22 +146,6 @@ public class BSAddActivity extends AppbarActivity implements RecordSavePresenter
         dialog.show();
     }
 
-    @OnClick(R.id.tv_add_bs_period)
-    public void onPeriodClick() {
-        KeyboardUtil.hide(this, mTvAddBsPeriod.getWindowToken());
-        PopupMenu popupMenu = new PopupMenu(this, mTvAddBsPeriod, Gravity.RIGHT);
-        popupMenu.inflate(R.menu.menu_meal_period);
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                mTvAddBsPeriod.setText(item.getTitle());
-                return false;
-            }
-        });
-        popupMenu.show();
-
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -200,14 +160,27 @@ public class BSAddActivity extends AppbarActivity implements RecordSavePresenter
         mFabAddBs.setClickable(false);
         Toast.makeText(this, "数据保存成功", Toast.LENGTH_SHORT).show();
 
-        OttoManager.post(new TaskRefreshOtto());
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 finish();
             }
         }, 400);
+    }
+
+    @Override
+    public void showBSPeriodDicList(List<String> periodList, int currentPeriodIndex) {
+        List<HashMap<String, String>> mPeriodList = new ArrayList<>();
+
+        for (String periodStr : periodList) {
+            HashMap<String, String> periodMap = new HashMap<>();
+            periodMap.put("name", periodStr);
+            mPeriodList.add(periodMap);
+        }
+
+        mSpAddBsPeriod.setAdapter(new SimpleAdapter(this, mPeriodList, R.layout.item_spinner_text, new String[]{"name"}, new int[]{R.id.tv_spinner}));
+        mSpAddBsPeriod.setSelection(currentPeriodIndex);
+
     }
 
     @Override

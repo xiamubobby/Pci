@@ -46,7 +46,7 @@ public class ChatRoomModel extends DoctorBaseModel<ChatRoomEntity> {
     }
 
     @Override
-    protected void onFailed(Throwable e) {
+    protected void onFailed(Throwable e, String message) {
         if (mChatRoomModelListener != null) {
             mChatRoomModelListener.onReceiveFailed("获取聊天记录失败，请重试！");
         }

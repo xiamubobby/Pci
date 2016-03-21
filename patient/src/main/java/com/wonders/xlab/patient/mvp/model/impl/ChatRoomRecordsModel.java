@@ -23,20 +23,20 @@ public class ChatRoomRecordsModel extends PatientBaseModel<ChatRoomEntity> imple
 
     @Override
     public void getChatRecords(String groupId) {
-        mChatRoomAPI.getChatRecords(groupId);
+        fetchData(mChatRoomAPI.getChatRecords(groupId),true);
     }
 
     @Override
     protected void onSuccess(ChatRoomEntity response) {
-        mChatRoomModelListener.onReceiveChatRecordSuccess();
+        mChatRoomModelListener.onReceiveChatRecordSuccess(response.getRet_values());
     }
 
     @Override
-    protected void onFailed(Throwable e) {
+    protected void onFailed(Throwable e, String message) {
         mChatRoomModelListener.onReceiveFailed(e.getMessage());
     }
 
     public interface ChatRoomModelListener extends BaseModelListener {
-        void onReceiveChatRecordSuccess();
+        void onReceiveChatRecordSuccess(ChatRoomEntity.RetValuesEntity valuesEntity);
     }
 }

@@ -61,6 +61,7 @@
         </LinearLayout>
 
         <include layout="@layout/divider_vertical"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?listPreferredItemHeightSmall"
@@ -68,21 +69,22 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/text_measure_period"
                 android:textSize="@dimen/text_size_large"/>
 
-            <TextView
-                android:id="@+id/tv_add_bs_period"
-                android:layout_width="match_parent"
+            <Spinner
+                android:id="@+id/sp_add_bs_period"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical|right"
-                android:text="@string/text_before_breakfast"
-                android:textSize="@dimen/text_size_large"/>
+                android:layout_marginLeft="@dimen/item_interval_small"
+                android:gravity="right|center_vertical"/>
         </LinearLayout>
 
         <include layout="@layout/divider_vertical"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?listPreferredItemHeightSmall"
@@ -100,10 +102,10 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:inputType="numberDecimal"
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical|right"
                 android:hint="@string/_0"
+                android:inputType="numberDecimal"
                 android:singleLine="true"
                 android:textSize="@dimen/text_size_large"/>
 

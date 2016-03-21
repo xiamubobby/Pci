@@ -7,4 +7,6 @@ import im.hua.library.base.mvp.IBasePresenter;
  */
 public interface IDoctorDetailPresenter extends IBasePresenter {
     void fetchDoctorDetailInfo(String doctorId);
+
+    void orderPackage(String patientId, String packageId);
 }

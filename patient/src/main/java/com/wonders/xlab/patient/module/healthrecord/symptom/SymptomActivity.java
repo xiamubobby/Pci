@@ -16,11 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
-import com.wonders.xlab.patient.module.healthreport.otto.TaskRefreshOtto;
 import com.wonders.xlab.patient.mvp.entity.SymptomEntity;
 import com.wonders.xlab.patient.mvp.presenter.ISymptomPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.SymptomPresenter;
@@ -176,8 +174,6 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
     @Override
     public void onSaveSymptomSuccess(String message) {
         Toast.makeText(this, "数据保存成功", Toast.LENGTH_SHORT).show();
-
-        OttoManager.post(new TaskRefreshOtto());
 
         new Handler().postDelayed(new Runnable() {
             @Override

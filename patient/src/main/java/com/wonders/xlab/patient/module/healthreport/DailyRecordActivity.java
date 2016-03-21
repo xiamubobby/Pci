@@ -13,7 +13,9 @@ import android.widget.RadioGroup;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.flyco.TabEntity;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
@@ -26,6 +28,9 @@ import com.wonders.xlab.patient.module.healthrecord.symptom.SymptomActivity;
 import com.wonders.xlab.patient.module.healthreport.fragment.BPReportFragment;
 import com.wonders.xlab.patient.module.healthreport.fragment.BSReportFragment;
 import com.wonders.xlab.patient.module.healthreport.fragment.SymptomReportFragment;
+import com.wonders.xlab.patient.module.healthreport.otto.BPSaveSuccessOtto;
+import com.wonders.xlab.patient.module.healthreport.otto.BSSaveSuccessOtto;
+import com.wonders.xlab.patient.module.healthreport.otto.SymptomSaveSuccessOtto;
 
 import java.util.ArrayList;
 
@@ -60,6 +65,7 @@ public class DailyRecordActivity extends AppbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OttoManager.register(this);
         ButterKnife.bind(this);
         initViewPager();
     }
@@ -166,12 +172,6 @@ public class DailyRecordActivity extends AppbarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
-    }
-
     /**
      * @param type 0:血压   1：血糖
      */
@@ -236,4 +236,31 @@ public class DailyRecordActivity extends AppbarActivity {
         builder.create().show();
     }
 
+    @Subscribe
+    public void showBP(BPSaveSuccessOtto otto) {
+        changeShowPager(1);
+    }
+
+    @Subscribe
+    public void showBS(BSSaveSuccessOtto otto) {
+        changeShowPager(0);
+    }
+
+    @Subscribe
+    public void showSymptom(SymptomSaveSuccessOtto otto) {
+        changeShowPager(2);
+    }
+
+    private void changeShowPager(int position) {
+        if (null != mViewPager) {
+            mViewPager.setCurrentItem(position,true);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        OttoManager.unregister(this);
+        ButterKnife.unbind(this);
+    }
 }

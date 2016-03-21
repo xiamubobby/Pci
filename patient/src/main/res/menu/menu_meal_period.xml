@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <item
+        android:title="@string/meal_early_morning"/>
     <item
         android:title="@string/meal_before_breakfast"/>
     <item
@@ -14,5 +15,5 @@
     <item
         android:title="@string/meal_after_dinner"/>
     <item
-        android:title="@string/meal_before_sleep"/>
+        android:title="@string/meal_random"/>
 </menu>

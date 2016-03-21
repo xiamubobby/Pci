@@ -25,7 +25,7 @@ public class DoctorDetailModel extends PatientBaseModel<DoctorDetailEntity> impl
     }
 
     @Override
-    protected void onFailed(Throwable e) {
+    protected void onFailed(Throwable e, String message) {
         mDetailModelListener.onReceiveFailed(e.getMessage());
     }
 

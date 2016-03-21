@@ -27,7 +27,7 @@ public class SymptomModel extends DoctorBaseModel<SymptomEntity> {
     }
 
     @Override
-    protected void onFailed(Throwable e) {
+    protected void onFailed(Throwable e, String message) {
         mISymptomModel.onReceiveFailed("获取不适症状失败，请重试！");
     }
 }

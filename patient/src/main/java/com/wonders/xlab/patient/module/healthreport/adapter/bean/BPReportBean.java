@@ -1,16 +1,25 @@
 package com.wonders.xlab.patient.module.healthreport.adapter.bean;
 
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+import io.realm.annotations.Required;
+
 /**
  * Created by hua on 16/3/20.
  */
-public class BPReportBean {
+public class BPReportBean extends RealmObject {
     /**
      * 血压，心率的状态值
      */
+    @Ignore
     public final static int STATUS_LOW = -1;//偏低
+    @Ignore
     public final static int STATUS_NORMAL = 0;//正常
+    @Ignore
     public final static int STATUS_HIGH = 1;//偏高
 
+    @Required
+    private String patientId;
     private String id;
     private String highPressure;
     private int highPressureStatus;
@@ -84,5 +93,13 @@ public class BPReportBean {
 
     public void setHeartRateStatus(int heartRateStatus) {
         this.heartRateStatus = heartRateStatus;
+    }
+
+    public String getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
     }
 }

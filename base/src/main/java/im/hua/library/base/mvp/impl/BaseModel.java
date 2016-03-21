@@ -30,7 +30,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
 
     protected abstract void onSuccess(T response);
 
-    protected abstract void onFailed(Throwable e);
+    protected abstract void onFailed(Throwable e, String message);
 
     public BaseModel() {
         /**
@@ -69,15 +69,15 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        onFailed(new Throwable(e.getMessage()));
+                        onFailed(new Throwable(e.getMessage()), "");
                     }
 
                     @Override
                     public void onNext(T result) {
                         if (null == result) {
-                            onFailed(new Throwable("请求出错，请检查网络后重试！"));
+                            onFailed(new Throwable("请求出错，请检查网络后重试！"), "");
                         } else if (0 != result.getRet_code()) {
-                            onFailed(new Throwable(result.getMessage()));
+                            onFailed(new Throwable(result.getMessage()),result.getMessage());
                         } else {
                             onSuccess(result);
                         }

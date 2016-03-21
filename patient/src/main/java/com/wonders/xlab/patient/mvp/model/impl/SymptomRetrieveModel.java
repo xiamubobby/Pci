@@ -31,7 +31,7 @@ public class SymptomRetrieveModel extends PatientBaseModel<SymptomEntity> {
     }
 
     @Override
-    protected void onFailed(Throwable e) {
+    protected void onFailed(Throwable e, String message) {
         mSymptomRetrieveModelListener.onReceiveFailed("获取不适症状列表失败！");
     }
 

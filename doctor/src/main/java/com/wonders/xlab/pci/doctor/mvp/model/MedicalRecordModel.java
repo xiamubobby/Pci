@@ -42,7 +42,7 @@ public class MedicalRecordModel extends DoctorBaseModel<MedicalRecordEntity> {
     }
 
     @Override
-    protected void onFailed(Throwable e) {
+    protected void onFailed(Throwable e, String message) {
         mIMedicalRecordModel.onReceiveFailed("获取就诊记录失败，请重试！");
     }
 }

@@ -61,8 +61,6 @@ public class BSResultFragment extends BaseFragment implements RecordSavePresente
 
     private Animation rotateAnimation;
 
-    private List<HashMap<String, String>> mPeriodList = new ArrayList<>();
-
     private boolean mIsSaveSingle = false;
 
     public BSResultFragment() {
@@ -80,35 +78,6 @@ public class BSResultFragment extends BaseFragment implements RecordSavePresente
         if (rotateAnimation == null) {
             rotateAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
         }
-        if (mPeriodList.size() == 0) {
-            for (int i = 0; i < 7; i++) {
-                HashMap<String, String> period = new HashMap<>();
-                switch (i) {
-                    case 0:
-                        period.put("name", "早餐前");
-                        break;
-                    case 1:
-                        period.put("name", "早餐后");
-                        break;
-                    case 2:
-                        period.put("name", "午餐前");
-                        break;
-                    case 3:
-                        period.put("name", "午餐后");
-                        break;
-                    case 4:
-                        period.put("name", "晚餐前");
-                        break;
-                    case 5:
-                        period.put("name", "晚餐后");
-                        break;
-                    case 6:
-                        period.put("name", "睡觉前");
-                        break;
-                }
-                mPeriodList.add(period);
-            }
-        }
     }
 
     @Override
@@ -125,8 +94,8 @@ public class BSResultFragment extends BaseFragment implements RecordSavePresente
         super.onViewCreated(view, savedInstanceState);
         OttoManager.register(this);
         mIdealRangePresenter.fetchIdealBSRange(AIManager.getInstance(getActivity()).getPatientId());
+        mRecordSavePresenter.getBSPeriodDic();
 
-        mSpBsResultPeriod.setAdapter(new SimpleAdapter(getActivity(), mPeriodList, R.layout.item_spinner_text, new String[]{"name"}, new int[]{R.id.tv_spinner}));
     }
 
     @OnClick(R.id.btn_bs_result_save)
@@ -191,6 +160,19 @@ public class BSResultFragment extends BaseFragment implements RecordSavePresente
             Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
         }
         getActivity().finish();
+    }
+
+    @Override
+    public void showBSPeriodDicList(List<String> periodList, int currentPeriodIndex) {
+        List<HashMap<String, String>> mPeriodList = new ArrayList<>();
+
+        for (String periodStr : periodList) {
+            HashMap<String, String> period = new HashMap<>();
+            period.put("name", periodStr);
+            mPeriodList.add(period);
+        }
+        mSpBsResultPeriod.setAdapter(new SimpleAdapter(getActivity(), mPeriodList, R.layout.item_spinner_text, new String[]{"name"}, new int[]{R.id.tv_spinner}));
+
     }
 
     @Override

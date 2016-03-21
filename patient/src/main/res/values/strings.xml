@@ -32,13 +32,14 @@
     <string name="text_blood_sugar">血糖</string>
     <string name="unit_mol_l">mmol/L</string>
 
+    <string name="meal_early_morning">凌晨</string>
     <string name="meal_before_breakfast">早餐前</string>
     <string name="meal_after_breakfast">早餐后</string>
     <string name="meal_after_lunch">午餐后</string>
     <string name="meal_before_lunch">午餐前</string>
     <string name="meal_before_dinner">晚餐前</string>
     <string name="meal_after_dinner">晚餐后</string>
-    <string name="meal_before_sleep">睡前</string>
+    <string name="meal_random">随机</string>
     <string name="text_login">登录</string>
     <string name="text_password">请输入密码</string>
     <string name="text_phone_number">请输入手机号</string>

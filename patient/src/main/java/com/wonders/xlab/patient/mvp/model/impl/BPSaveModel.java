@@ -1,8 +1,12 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
 
+import android.text.TextUtils;
+
+import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.assist.deviceconnection.entity.BPEntityList;
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
+import com.wonders.xlab.patient.module.healthreport.adapter.bean.BPReportBean;
 import com.wonders.xlab.patient.mvp.api.AddRecordAPI;
 
 import im.hua.library.base.mvp.entity.SimpleEntity;
@@ -12,6 +16,9 @@ import im.hua.library.base.mvp.listener.BaseModelListener;
  * Created by hua on 15/12/18.
  */
 public class BPSaveModel extends PatientBaseModel<SimpleEntity> {
+
+    private BPReportBean mTmpReportBean = new BPReportBean();
+
     private BPSaveModelListener mBPSaveModelListener;
     private AddRecordAPI mAddRecordAPI;
 
@@ -33,24 +40,45 @@ public class BPSaveModel extends PatientBaseModel<SimpleEntity> {
     /**
      * 保存一条血压数据
      *
-     * @param userId
+     * @param patientId
      * @param date
      * @param heartRate
      * @param systolicPressure
      * @param diastolicPressure
      */
-    public void saveBPSingle(String userId, long date, int heartRate, int systolicPressure, int diastolicPressure) {
-        fetchData(mAddRecordAPI.saveBPSingle(userId, date, heartRate, systolicPressure, diastolicPressure),true);
+    public void saveBPSingle(String patientId, long date, int heartRate, int systolicPressure, int diastolicPressure) {
+        /**
+         * cache the bp bean
+         */
+        mTmpReportBean.setPatientId(patientId);
+        mTmpReportBean.setId(String.valueOf(date));
+        mTmpReportBean.setLowPressure(String.valueOf(diastolicPressure));
+        mTmpReportBean.setHighPressure(String.valueOf(systolicPressure));
+        mTmpReportBean.setHeartRate(String.valueOf(heartRate));
+        mTmpReportBean.setRecordTimeInMill(date);
+
+        fetchData(mAddRecordAPI.saveBPSingle(patientId, date, heartRate, systolicPressure, diastolicPressure),true);
     }
 
     @Override
     protected void onSuccess(SimpleEntity response) {
+        /**
+         * save
+         */
+        XApplication.realm.beginTransaction();
+        BPReportBean bean = XApplication.realm.copyToRealm(mTmpReportBean);
+        XApplication.realm.commitTransaction();
+
         mBPSaveModelListener.onSaveBPSuccess("保存血压成功！");
     }
 
     @Override
-    protected void onFailed(Throwable e) {
-        mBPSaveModelListener.onReceiveFailed("保存血压失败，请重试！");
+    protected void onFailed(Throwable e, String message) {
+        if (TextUtils.isEmpty(message)) {
+            mBPSaveModelListener.onReceiveFailed("保存血压失败，请重试！");
+        } else {
+            mBPSaveModelListener.onReceiveFailed(message);
+        }
     }
 
     public interface BPSaveModelListener extends BaseModelListener {

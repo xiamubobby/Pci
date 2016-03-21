@@ -32,6 +32,9 @@ public abstract class AppbarActivity extends BaseActivity {
         if (mToolbar != null && !TextUtils.isEmpty(title)) {
             mToolbar.setTitle(title);
         }
+        if (null != getSupportActionBar()) {
+            getSupportActionBar().setTitle(title);
+        }
     }
 
     public void setOnNavigationClickListener(OnNavigationClickListener onNavigationClickListener) {

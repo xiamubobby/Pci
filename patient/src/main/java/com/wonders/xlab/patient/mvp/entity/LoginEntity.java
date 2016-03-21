@@ -31,7 +31,8 @@ public class LoginEntity extends BaseEntity {
     public static class RetValuesEntity {
         private String id;
         private String tel;
-        private String password;
+        private String name;
+        private String avatarUrl;
         private String medicareCard;
 
         public void setId(String id) {
@@ -40,10 +41,6 @@ public class LoginEntity extends BaseEntity {
 
         public void setTel(String tel) {
             this.tel = tel;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
         }
 
         public void setMedicareCard(String medicareCard) {
@@ -58,12 +55,24 @@ public class LoginEntity extends BaseEntity {
             return tel;
         }
 
-        public String getPassword() {
-            return password;
-        }
-
         public String getMedicareCard() {
             return medicareCard;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getAvatarUrl() {
+            return avatarUrl;
+        }
+
+        public void setAvatarUrl(String avatarUrl) {
+            this.avatarUrl = avatarUrl;
         }
     }
 }

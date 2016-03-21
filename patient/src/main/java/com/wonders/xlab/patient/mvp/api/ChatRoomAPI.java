@@ -1,17 +1,22 @@
 package com.wonders.xlab.patient.mvp.api;
 
 import com.wonders.xlab.patient.mvp.entity.ChatRoomEntity;
+import com.wonders.xlab.patient.mvp.entity.SendMessageEntity;
+import com.wonders.xlab.patient.mvp.entity.request.SendMessageBody;
 
-import im.hua.library.base.mvp.entity.SimpleEntity;
+import retrofit.http.Body;
 import retrofit.http.GET;
+import retrofit.http.POST;
+import retrofit.http.Path;
 import rx.Observable;
 
 /**
  * Created by hua on 16/3/17.
  */
 public interface ChatRoomAPI {
-    @GET("")
-    Observable<ChatRoomEntity> getChatRecords(String groupId);
+    @GET("v1/imContents/listImChatHistory/{groupId}")
+    Observable<ChatRoomEntity> getChatRecords(@Path("groupId") String groupId);
 
-    Observable<SimpleEntity> sendMessage();
+    @POST("v1/ims/sendContentToDoctor/{time}")
+    Observable<SendMessageEntity> sendMessage(@Body SendMessageBody body, @Path("time") long time);
 }

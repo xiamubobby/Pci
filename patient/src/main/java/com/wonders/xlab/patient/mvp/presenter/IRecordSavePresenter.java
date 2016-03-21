@@ -9,6 +9,7 @@ import im.hua.library.base.mvp.IBasePresenter;
  * Created by hua on 16/3/17.
  */
 public interface IRecordSavePresenter extends IBasePresenter {
+    void getBSPeriodDic();
     /**
      * 保存一条血糖数据
      *

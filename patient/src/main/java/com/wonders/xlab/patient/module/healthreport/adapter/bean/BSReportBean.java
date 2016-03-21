@@ -1,16 +1,23 @@
 package com.wonders.xlab.patient.module.healthreport.adapter.bean;
 
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+
 /**
  * Created by hua on 16/3/20.
  */
-public class BSReportBean {
+public class BSReportBean extends RealmObject{
     /**
      * 血糖的状态值
      */
+    @Ignore
     public final static int STATUS_LOW = -1;//偏低
+    @Ignore
     public final static int STATUS_NORMAL = 0;//正常
+    @Ignore
     public final static int STATUS_HIGH = 1;//偏高
 
+    private String patientId;
     private String id;
     private String bloodSugar;
     private int bloodSugarStatus;
@@ -55,5 +62,13 @@ public class BSReportBean {
 
     public void setMeasurePeriod(String measurePeriod) {
         this.measurePeriod = measurePeriod;
+    }
+
+    public String getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
     }
 }

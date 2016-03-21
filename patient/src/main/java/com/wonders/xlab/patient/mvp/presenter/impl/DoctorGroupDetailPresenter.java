@@ -9,7 +9,9 @@ import com.wonders.xlab.patient.module.main.doctors.detail.adapter.bean.DoctorDe
 import com.wonders.xlab.patient.module.main.doctors.detail.bean.DoctorBasicInfoBean;
 import com.wonders.xlab.patient.mvp.entity.DoctorGroupDetailEntity;
 import com.wonders.xlab.patient.mvp.model.IDoctorGroupDetailModel;
+import com.wonders.xlab.patient.mvp.model.IOrderPackageServiceModel;
 import com.wonders.xlab.patient.mvp.model.impl.DoctorGroupDetailModel;
+import com.wonders.xlab.patient.mvp.model.impl.OrderPackageServiceModel;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorGroupDetailPresenter;
 
 import java.util.ArrayList;
@@ -21,21 +23,29 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
 /**
  * Created by hua on 16/3/16.
  */
-public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctorGroupDetailPresenter, DoctorGroupDetailModel.DoctorGroupDetailModelListener {
+public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctorGroupDetailPresenter, DoctorGroupDetailModel.DoctorGroupDetailModelListener, OrderPackageServiceModel.OrderPackageServiceModelListener {
 
-    private DoctorDetailPresenterListener mDoctorDetailListener;
+    private DoctorGroupDetailPresenterListener mDoctorDetailListener;
     private IDoctorGroupDetailModel mDoctorDetailModel;
+    private IOrderPackageServiceModel mOrderPackageServiceModel;
 
-    public DoctorGroupDetailPresenter(DoctorDetailPresenterListener doctorDetailListener) {
+    public DoctorGroupDetailPresenter(DoctorGroupDetailPresenterListener doctorDetailListener) {
         mDoctorDetailListener = doctorDetailListener;
 
         mDoctorDetailModel = new DoctorGroupDetailModel(this);
+        mOrderPackageServiceModel = new OrderPackageServiceModel(this);
+        addModel(mOrderPackageServiceModel);
         addModel(mDoctorDetailModel);
     }
 
     @Override
     public void fetchDoctorGroupDetailInfo(String doctorGroupId) {
         mDoctorDetailModel.getDoctorGroupDetailInfo(doctorGroupId);
+    }
+
+    @Override
+    public void orderPackage(String patientId, String packageId) {
+        mOrderPackageServiceModel.orderPackage(patientId,packageId);
     }
 
     @Override
@@ -120,7 +130,12 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
         mDoctorDetailListener.showError(message);
     }
 
-    public interface DoctorDetailPresenterListener extends BasePresenterListener {
+    @Override
+    public void onOrderPackageServiceSuccess(String message) {
+        mDoctorDetailListener.orderPackageSuccess(message);
+    }
+
+    public interface DoctorGroupDetailPresenterListener extends BasePresenterListener {
         void showBasicInfo(DoctorBasicInfoBean basicInfoBean);
 
         void showPackageList(ArrayList<DoctorDetailPackageBean> packageList);
@@ -128,5 +143,7 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
         void showGroupMemberList(ArrayList<DoctorDetailGroupMemberBean> groupMemberList);
 
         void showGroupOfDoctorList(ArrayList<DoctorDetailGroupOfDoctorBean> groupOfDoctorList);
+
+        void orderPackageSuccess(String message);
     }
 }

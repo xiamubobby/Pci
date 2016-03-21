@@ -174,6 +174,11 @@ public class BPResultFragment extends BaseFragment implements RecordSavePresente
     }
 
     @Override
+    public void showBSPeriodDicList(List<String> periodList, int currentPeriodIndex) {
+
+    }
+
+    @Override
     public void showError(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }

@@ -37,7 +37,7 @@ public class LoginModel extends PatientBaseModel<LoginEntity> {
     }
 
     @Override
-    protected void onFailed(Throwable e) {
+    protected void onFailed(Throwable e, String message) {
         mLoginModelListener.onReceiveFailed(TextUtils.isEmpty(e.getMessage()) ? "登录失败，请重试！" : e.getMessage());
     }
 

@@ -10,10 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
 import com.wonders.xlab.patient.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.patient.module.chatroom.bean.ChatRoomBean;
@@ -85,13 +85,13 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
         Intent intent = getIntent();
         if (intent == null) {
-            Toast.makeText(this, getResources().getString(R.string.query_patient_info_failed), Toast.LENGTH_SHORT).show();
+            showShortToast(getResources().getString(R.string.query_patient_info_failed));
             finish();
             return;
         }
         groupId = intent.getStringExtra(EXTRA_GROUP_ID);
         if (TextUtils.isEmpty(groupId)) {
-            Toast.makeText(this, getResources().getString(R.string.query_patient_info_failed), Toast.LENGTH_SHORT).show();
+            showShortToast(getResources().getString(R.string.query_patient_info_failed));
             finish();
             return;
         }
@@ -121,7 +121,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             }
         });
 
-        mChatRoomPresenter = new ChatRoomPresenter(this);
+        mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance(this).getPatientId());
         addPresenter(mChatRoomPresenter);
 
         mChatRoomPresenter.getChatList(groupId);
@@ -181,7 +181,8 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             MeChatRoomBean bean = new MeChatRoomBean();
             bean.text.set(message);
-//            bean.portraitUrl.set(AIManager.getInstance(this).getAvatarUrl());
+            //TODO 需要登录接口返回
+            bean.portraitUrl.set(AIManager.getInstance(this).getPatientPortraitUrl());
             bean.recordTime.set(DateUtil.format(sendTime, "yyyy-MM-dd HH:mm"));
             bean.recordTimeInMill.set(sendTime);
             bean.isSending.set(true);
@@ -191,7 +192,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             mEtChatRoomInput.setText("");
 
-//            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getPatientTel(), doctorId, sendTime);
+            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getPatientTel(), groupId, sendTime);
         }
     }
 
@@ -233,7 +234,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
     @Override
     public void showError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        showShortToast(message);
     }
 
     @Override

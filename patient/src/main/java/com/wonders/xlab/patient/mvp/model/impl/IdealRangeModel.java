@@ -46,7 +46,7 @@ public class IdealRangeModel extends PatientBaseModel<SimpleEntity> {
     }
 
     @Override
-    protected void onFailed(Throwable e) {
+    protected void onFailed(Throwable e, String message) {
         mIdealRangeModelListener.onReceiveFailed("获取理想范围失败！");
     }
 
