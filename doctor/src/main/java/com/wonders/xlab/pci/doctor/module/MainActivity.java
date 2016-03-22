@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.squareup.otto.Subscribe;
 import com.umeng.update.UmengUpdateAgent;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
@@ -17,12 +18,15 @@ import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.login.LoginActivity;
 import com.wonders.xlab.pci.doctor.module.me.MeFragment;
 import com.wonders.xlab.pci.doctor.module.patient.PatientFragment;
+import com.wonders.xlab.pci.doctor.otto.ForceExitOtto;
+import com.wonders.xlab.pci.doctor.service.XEMChatService;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseActivity;
+import im.hua.utils.NotifyUtil;
 
 public class MainActivity extends BaseActivity {
 
@@ -56,6 +60,17 @@ public class MainActivity extends BaseActivity {
 
             initViewPager();
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                startService(new Intent(MainActivity.this, XEMChatService.class));
+            }
+        }).start();
     }
 
     private void initViewPager() {
@@ -103,5 +118,19 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+    }
+
+    /**
+     * 优雅的退出全部Activity
+     * @param bean
+     */
+    @Subscribe
+    public void forceExit(ForceExitOtto bean) {
+        new NotifyUtil().cancelAll(this);
+        AIManager.getInstance(this).logout();
+
+        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 }

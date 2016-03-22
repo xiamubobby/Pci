@@ -16,6 +16,7 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.healthreport.adapter.SymptomReportAdapter;
 import com.wonders.xlab.patient.module.healthreport.adapter.bean.SymptomReportBean;
+import com.wonders.xlab.patient.module.healthreport.adapter.bean.SymptomReportLabelBean;
 import com.wonders.xlab.patient.module.healthreport.otto.SymptomSaveSuccessOtto;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseFragment;
+import io.realm.RealmList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,9 +71,11 @@ public class SymptomReportFragment extends BaseFragment {
                 bean.setHasConfirmed(i % 3 == 0);
                 bean.setRecordTimeInMill(Calendar.getInstance().getTimeInMillis());
 
-                List<String> symptoms = new ArrayList<>();
+                RealmList<SymptomReportLabelBean> symptoms = new RealmList<>();
                 for (int j = 0; j < i + 1; j++) {
-                    symptoms.add("症状" + j);
+                    SymptomReportLabelBean labelBean = new SymptomReportLabelBean();
+                    labelBean.setSymptomStr("症状" + j);
+                    symptoms.add(labelBean);
                 }
                 bean.setSymptomList(symptoms);
 

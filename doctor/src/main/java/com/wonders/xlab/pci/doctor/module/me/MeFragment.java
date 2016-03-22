@@ -1,7 +1,6 @@
 package com.wonders.xlab.pci.doctor.module.me;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,9 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
-import com.wonders.xlab.pci.doctor.module.login.LoginActivity;
+import com.wonders.xlab.pci.doctor.otto.ForceExitOtto;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -60,8 +60,7 @@ public class MeFragment extends BaseFragment {
 
     @OnClick(R.id.btn_me_exit)
     public void exit() {
-        AIManager.getInstance(getActivity()).logout();
-        startActivity(new Intent(getActivity(), LoginActivity.class));
+        OttoManager.post(new ForceExitOtto());
         getActivity().finish();
     }
 

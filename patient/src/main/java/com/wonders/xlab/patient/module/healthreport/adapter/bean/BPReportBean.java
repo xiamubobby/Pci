@@ -21,13 +21,13 @@ public class BPReportBean extends RealmObject {
     @Required
     private String patientId;
     private String id;
-    private String highPressure;
+    private String highPressure = "";
     private int highPressureStatus;
 
-    private String lowPressure;
+    private String lowPressure = "";
     private int lowPressureStatus;
 
-    private String heartRate;
+    private String heartRate = "";
     private int heartRateStatus;
     private long recordTimeInMill;
 

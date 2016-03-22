@@ -97,6 +97,9 @@ public class BSGuideActivity extends NConnActivity {
                 if (state == ViewPager.SCROLL_STATE_IDLE) {
                     switch (mVpMeasureBSGuide.getCurrentItem()) {
                         case 2:
+                            if (null == mBluetoothAdapter) {
+                                return;
+                            }
                             if (!mBluetoothAdapter.isEnabled()) {
                                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                                 startActivityForResult(enableBtIntent, NConnActivity.REQUEST_ENABLE_BOND);

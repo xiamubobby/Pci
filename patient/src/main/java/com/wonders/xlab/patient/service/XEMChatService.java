@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.easemob.EMCallBack;
@@ -151,6 +152,7 @@ public class XEMChatService extends Service {
         EMChatManager.getInstance().login(tel, new MD5Util().encrypt("pci_user" + tel).toLowerCase(Locale.CHINA), new EMCallBack() {//回调
             @Override
             public void onSuccess() {
+                Log.e("XEMChatService", "患者登录成功");
                 EMChat.getInstance().setAppInited();
                 //注册一个监听连接状态的listener
                 EMChatManager.getInstance().addConnectionListener(new MyConnectionListener());
@@ -163,6 +165,7 @@ public class XEMChatService extends Service {
 
             @Override
             public void onError(int code, String message) {
+                Log.e("XEMChatService", "患者登录是失败");
                 if (mCurrentRetryTime++ < RETRY_TIMES) {
                     login();
                 } else {
@@ -214,8 +217,8 @@ public class XEMChatService extends Service {
                                 message = "显示帐号已经被移除,请联系客服";
                             } else if (error == EMError.CONNECTION_CONFLICT) {
                                 //帐号在其他设备登陆
-//                                message = "帐号在其他设备登陆";
-//                                OttoManager.post(new ExitBus());
+                                message = "帐号在其他设备登陆";
+                                OttoManager.post(new ForceExitOtto());
                             } else {
                                 if (NetUtils.hasNetwork(XEMChatService.this)) {
                                     //连接不到聊天服务器,请重新打开应用

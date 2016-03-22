@@ -19,9 +19,9 @@ public class BSReportBean extends RealmObject{
 
     private String patientId;
     private String id;
-    private String bloodSugar;
+    private String bloodSugar = "";
     private int bloodSugarStatus;
-    private String measurePeriod;
+    private String measurePeriod = "";
     private long recordTimeInMill;
 
     public String getId() {

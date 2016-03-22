@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.healthreport.adapter.bean.SymptomReportBean;
+import com.wonders.xlab.patient.module.healthreport.adapter.bean.SymptomReportLabelBean;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import butterknife.Bind;
@@ -50,7 +51,7 @@ public class SymptomReportAdapter extends SimpleRVAdapter<SymptomReportBean> {
         viewHolder.mFlSymptoms.removeAllViews();
 
         LayoutInflater layoutInflater = LayoutInflater.from(viewHolder.itemView.getContext());
-        for (String symptom : bean.getSymptomList()) {
+        for (SymptomReportLabelBean symptom : bean.getSymptomList()) {
             final View itemView = layoutInflater.inflate(R.layout.symptom_report_item_symptom_label, (ViewGroup) viewHolder.itemView, false);
             TextView tvSymptom = (TextView) itemView.findViewById(R.id.tv_symptom_report_item_symptom_label);
             if (bean.isHasConfirmed()) {
@@ -58,7 +59,7 @@ public class SymptomReportAdapter extends SimpleRVAdapter<SymptomReportBean> {
             } else {
                 tvSymptom.setBackgroundDrawable(resources.getDrawable(R.drawable.shape_symptom_label_not_confirm));
             }
-            tvSymptom.setText(symptom);
+            tvSymptom.setText(symptom.getSymptomStr());
             viewHolder.mFlSymptoms.addView(itemView);
         }
 

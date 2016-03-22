@@ -22,6 +22,7 @@ import com.wonders.xlab.patient.module.main.doctors.DoctorFragment;
 import com.wonders.xlab.patient.module.main.home.HomeFragment;
 import com.wonders.xlab.patient.module.main.me.MeFragment;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
+import com.wonders.xlab.patient.service.XEMChatService;
 
 import java.util.ArrayList;
 
@@ -67,8 +68,18 @@ public class MainActivity extends BaseActivity {
 
         setupBottomTab();
 
-        UmengUpdateAgent.setUpdateOnlyWifi(false);
         UmengUpdateAgent.update(this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                startService(new Intent(MainActivity.this, XEMChatService.class));
+            }
+        }).start();
     }
 
     private void setupBottomTab() {
@@ -157,7 +168,7 @@ public class MainActivity extends BaseActivity {
     @Subscribe
     public void forceExit(ForceExitOtto bean) {
         new NotifyUtil().cancelAll(this);
-        AIManager.getInstance(this).exit();
+        AIManager.getInstance(this).logout();
 
         startActivity(new Intent(this, MainActivity.class));
         startActivity(new Intent(this, LoginActivity.class));

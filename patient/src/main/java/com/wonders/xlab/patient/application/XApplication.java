@@ -2,10 +2,12 @@ package com.wonders.xlab.patient.application;
 
 import android.app.Application;
 
+import com.bugtags.library.Bugtags;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -23,7 +25,9 @@ public class XApplication extends Application {
 //        if (BuildConfig.DEBUG) {
 //            BlockCanary.install(this, new AppBlockCanaryContext()).start();
 //        }
+        UmengUpdateAgent.setUpdateOnlyWifi(false);
 
+        Bugtags.start("b3d8dc7b153c16bb34d741d78b03e4d1", this, Bugtags.BTGInvocationEventShake);
         // The realm file will be located in Context.getFilesDir() with name "default.realm"
         RealmConfiguration config = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(config);

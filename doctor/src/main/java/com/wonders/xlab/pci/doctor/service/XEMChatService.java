@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.easemob.EMCallBack;
@@ -26,7 +27,7 @@ import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.MainActivity;
-import com.wonders.xlab.pci.doctor.otto.ExitBus;
+import com.wonders.xlab.pci.doctor.otto.ForceExitOtto;
 import com.wonders.xlab.pci.doctor.receiver.EMChatMessageBroadcastReceiver;
 import com.wonders.xlab.pci.doctor.receiver.TimeClickReceiver;
 
@@ -119,7 +120,7 @@ public class XEMChatService extends Service {
     }
 
     @Subscribe
-    public void forceExit(ExitBus bean) {
+    public void forceExit(ForceExitOtto bean) {
         mIsNormalStop = true;
         SPManager.get(this).clear();
         stopSelf();
@@ -131,7 +132,7 @@ public class XEMChatService extends Service {
     private void login() {
         String tel = AIManager.getInstance(this).getUserTel();
         if (TextUtils.isEmpty(tel)) {
-            OttoManager.post(new ExitBus());
+            OttoManager.post(new ForceExitOtto());
             stopSelf();
             return;
         }
@@ -142,9 +143,10 @@ public class XEMChatService extends Service {
             intentFilter.setPriority(999);
             registerReceiver(msgReceiver, intentFilter);
         }
-        EMChatManager.getInstance().login(tel, new MD5Util().encrypt("pci_doctor" + tel).toLowerCase(Locale.CHINA), new EMCallBack() {//回调
+        EMChatManager.getInstance().login("doctor" + tel, new MD5Util().encrypt("pci_doctor" + tel).toLowerCase(Locale.CHINA), new EMCallBack() {//回调
             @Override
             public void onSuccess() {
+                Log.e("XEMChatService", "医生登录成功");
                 EMChat.getInstance().setAppInited();
                 //注册一个监听连接状态的listener
                 EMChatManager.getInstance().addConnectionListener(new MyConnectionListener());
@@ -157,6 +159,7 @@ public class XEMChatService extends Service {
 
             @Override
             public void onError(int code, String message) {
+                Log.e("XEMChatService", "医生登录失败");
                 if (mCurrentRetryTime++ < RETRY_TIMES) {
                     login();
                 } else {
@@ -204,8 +207,8 @@ public class XEMChatService extends Service {
                                 message = "帐号已经被移除,请联系客服";
                             } else if (error == EMError.CONNECTION_CONFLICT) {
                                 //帐号在其他设备登陆
-//                                message = "帐号在其他设备登陆";
-//                                OttoManager.post(new ExitBus());
+                                message = "帐号在其他设备登陆";
+                                OttoManager.post(new ForceExitOtto());
                             } else {
                                 if (NetUtils.hasNetwork(XEMChatService.this)) {
                                     //连接不到聊天服务器,请重新打开应用

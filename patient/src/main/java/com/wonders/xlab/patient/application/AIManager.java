@@ -43,7 +43,7 @@ public class AIManager {
         return !TextUtils.isEmpty(getPatientId());
     }
 
-    public void exit() {
+    public void logout() {
         spManager.clear();
     }
 

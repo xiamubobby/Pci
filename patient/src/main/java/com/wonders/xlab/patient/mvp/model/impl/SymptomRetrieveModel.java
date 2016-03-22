@@ -21,7 +21,7 @@ public class SymptomRetrieveModel extends PatientBaseModel<SymptomEntity> {
     }
 
     public void getSymptoms() {
-        fetchData(mSymptomAPI.getSymptoms(), true);
+        fetchData(mSymptomAPI.getSymptomDicList(), true);
     }
 
 

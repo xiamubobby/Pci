@@ -70,8 +70,9 @@
 
         <activity
             android:name=".module.MainActivity"
-            android:theme="@style/AppTheme.MaterialColdStart"
-            android:screenOrientation="portrait">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.MaterialColdStart">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -82,6 +83,7 @@
             android:name=".module.login.LoginActivity"
             android:excludeFromRecents="true"
             android:label="@string/title_activity_login"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize">

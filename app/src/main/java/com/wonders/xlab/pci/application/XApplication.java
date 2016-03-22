@@ -7,6 +7,9 @@ import com.easemob.chat.EMChatManager;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 /**
  * Created by hua on 15/12/13.
  */
@@ -18,6 +21,10 @@ public class XApplication extends Application {
 //        if (BuildConfig.DEBUG) {
 //            BlockCanary.install(this, new AppBlockCanaryContext()).start();
 //        }
+
+        // The realm file will be located in Context.getFilesDir() with name "default.realm"
+        RealmConfiguration config = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
+        Realm.setDefaultConfiguration(config);
 
         EMChat.getInstance().init(this);
         EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);//不发通知，而是走广播
