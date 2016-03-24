@@ -30,6 +30,7 @@ import com.wonders.xlab.patient.module.healthreport.fragment.BSReportFragment;
 import com.wonders.xlab.patient.module.healthreport.fragment.SymptomReportFragment;
 import com.wonders.xlab.patient.module.healthreport.otto.BPSaveSuccessOtto;
 import com.wonders.xlab.patient.module.healthreport.otto.BSSaveSuccessOtto;
+import com.wonders.xlab.patient.module.healthreport.otto.ShowMeasureChooseDialogOtto;
 import com.wonders.xlab.patient.module.healthreport.otto.SymptomSaveSuccessOtto;
 
 import java.util.ArrayList;
@@ -250,6 +251,11 @@ public class DailyRecordActivity extends AppbarActivity {
     @Subscribe
     public void showSymptom(SymptomSaveSuccessOtto otto) {
         changeShowPager(2);
+    }
+
+    @Subscribe
+    public void showChooseDialog(ShowMeasureChooseDialogOtto otto) {
+        showConfirmDialog(otto.getMeasureType());
     }
 
     private void changeShowPager(int position) {

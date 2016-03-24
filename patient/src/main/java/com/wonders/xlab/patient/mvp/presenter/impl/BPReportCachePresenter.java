@@ -28,12 +28,16 @@ public class BPReportCachePresenter extends BasePresenter implements IBPReportPr
     public void getBPCacheList(String patientId) {
 
         RealmQuery<BPReportBean> query = XApplication.realm.where(BPReportBean.class)
-                .equalTo("patientId",patientId)
+                .equalTo("patientId", patientId)
                 .between("recordTimeInMill", DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday());
 
         RealmResults<BPReportBean> results = query.findAll();
         results.sort("recordTimeInMill", Sort.DESCENDING);
 
+        if (results.size() <= 0) {
+            listener.showEmptyView();
+            return;
+        }
         List<BPReportBean> bpReportBeanList = new ArrayList<>();
         for (BPReportBean bean : results) {
             bpReportBeanList.add(bean);
@@ -44,5 +48,7 @@ public class BPReportCachePresenter extends BasePresenter implements IBPReportPr
 
     public interface BPReportCachePresenterListener extends BasePresenterListener {
         void showBPList(List<BPReportBean> beanList);
+
+        void showEmptyView();
     }
 }

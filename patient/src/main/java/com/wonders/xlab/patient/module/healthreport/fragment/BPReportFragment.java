@@ -1,9 +1,9 @@
 package com.wonders.xlab.patient.module.healthreport.fragment;
 
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +20,7 @@ import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.healthreport.adapter.BPReportAdapter;
 import com.wonders.xlab.patient.module.healthreport.adapter.bean.BPReportBean;
 import com.wonders.xlab.patient.module.healthreport.otto.BPSaveSuccessOtto;
+import com.wonders.xlab.patient.module.healthreport.otto.ShowMeasureChooseDialogOtto;
 import com.wonders.xlab.patient.mvp.presenter.IBPReportPresenter;
 import com.wonders.xlab.patient.mvp.presenter.IIdealRangePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.BPReportCachePresenter;
@@ -30,6 +31,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseFragment;
+import im.hua.uikit.CommonRecyclerView;
 
 /**
  * 今日血压
@@ -42,7 +44,7 @@ public class BPReportFragment extends BaseFragment implements BPReportCachePrese
     @Bind(R.id.text_blood_pressure_report_ideal_range)
     TextView mTextIdealRange;
     @Bind(R.id.recycler_view_blood_pressure_report)
-    RecyclerView mRecyclerView;
+    CommonRecyclerView mRecyclerView;
 
     private BPReportAdapter mBPReportAdapter;
 
@@ -83,6 +85,14 @@ public class BPReportFragment extends BaseFragment implements BPReportCachePrese
         }
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        TextView tvMeasure = (TextView) mRecyclerView.findViewById(R.id.tv_bp_bs_report_empty_measure);
+        tvMeasure.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        tvMeasure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OttoManager.post(new ShowMeasureChooseDialogOtto(0));
+            }
+        });
 
         mBPReportPresenter.getBPCacheList(AIManager.getInstance(getActivity()).getPatientId());
     }
@@ -101,11 +111,17 @@ public class BPReportFragment extends BaseFragment implements BPReportCachePrese
 
     @Override
     public void showBPList(List<BPReportBean> beanList) {
+        mRecyclerView.showRecyclerView();
         if (null == mBPReportAdapter) {
             mBPReportAdapter = new BPReportAdapter();
         }
         mBPReportAdapter.setDatas(beanList);
         mRecyclerView.setAdapter(mBPReportAdapter);
+    }
+
+    @Override
+    public void showEmptyView() {
+        mRecyclerView.showEmptyView();
     }
 
     @Override

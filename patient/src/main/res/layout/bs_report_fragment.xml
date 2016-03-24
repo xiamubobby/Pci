@@ -45,10 +45,9 @@
 
     <include layout="@layout/divider_vertical"/>
 
-    <android.support.v7.widget.RecyclerView
+    <im.hua.uikit.CommonRecyclerView
         android:id="@+id/recycler_view_blood_sugar_report"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layoutManager="LinearLayoutManager"/>
+        app:emptyView="@layout/bp_bs_report_empty"/>
 </LinearLayout>
