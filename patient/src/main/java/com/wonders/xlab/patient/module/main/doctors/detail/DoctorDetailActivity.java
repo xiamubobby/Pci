@@ -62,7 +62,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     public final static String EXTRA_ID = "extraId";
 
     private String title;
-    private String doctorId;
+    private String doctorOrGroupId;
     private int type;
 
     @Bind(R.id.toolbar)
@@ -75,6 +75,8 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     RecyclerView mRecyclerViewDoctorDetailPackage;
     @Bind(R.id.recycler_view_doctor_detail_member_or_group)
     RecyclerView mRecyclerViewDoctorDetailMemberOrGroup;
+    @Bind(R.id.tv_doctor_detail_title_members_or_group_of_doctor)
+    TextView mTvTitleMembersOrGroupOfDoctor;
 
     private DoctorDetailPackageRVAdapter mPackageRVAdapter;
     private DoctorDetailMemberRVAdapter mMemberRVAdapter;
@@ -87,15 +89,8 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
 
     private BottomSheetDialog dialog;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.doctor_detail_activity);
-        //we'd better initial the bean here
-//        binding.setBean(new DoctorBasicInfoBean());
-        ButterKnife.bind(this);
-
         Bundle data = getIntent().getExtras();
         if (null == data) {
             Toast.makeText(this, "获取医生详情失败，请重试！", Toast.LENGTH_SHORT).show();
@@ -105,13 +100,20 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
 
         title = data.getString(EXTRA_TITLE);
         type = data.getInt(EXTRA_TYPE, TYPE_DOCTOR_GROUP);
-        doctorId = data.getString(EXTRA_ID);
+        doctorOrGroupId = data.getString(EXTRA_ID);
 
-        if (TextUtils.isEmpty(doctorId)) {
+        if (TextUtils.isEmpty(doctorOrGroupId)) {
             Toast.makeText(this, "获取医生详情失败，请重试！", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
+
+        super.onCreate(savedInstanceState);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.doctor_detail_activity);
+        //we'd better initial the bean here
+//        binding.setBean(new DoctorBasicInfoBean());
+        ButterKnife.bind(this);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,10 +158,10 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     private void requestData() {
         switch (type) {
             case TYPE_DOCTOR:
-                mDoctorDetailPresenter.fetchDoctorDetailInfo(doctorId);
+                mDoctorDetailPresenter.fetchDoctorDetailInfo(doctorOrGroupId);
                 break;
             case TYPE_DOCTOR_GROUP:
-                mDoctorGroupDetailPresenter.fetchDoctorGroupDetailInfo(doctorId);
+                mDoctorGroupDetailPresenter.fetchDoctorGroupDetailInfo(doctorOrGroupId);
                 break;
         }
     }
@@ -191,10 +193,10 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
                         public void onClick(View v) {
                             switch (type) {
                                 case TYPE_DOCTOR:
-                                    mDoctorDetailPresenter.orderPackage(AIManager.getInstance(DoctorDetailActivity.this).getPatientId(),packageList.get(position).packageId.get());
+                                    mDoctorDetailPresenter.orderPackage(AIManager.getInstance(DoctorDetailActivity.this).getPatientId(), packageList.get(position).packageId.get());
                                     break;
                                 case TYPE_DOCTOR_GROUP:
-                                    mDoctorGroupDetailPresenter.orderPackage(AIManager.getInstance(DoctorDetailActivity.this).getPatientId(),packageList.get(position).packageId.get());
+                                    mDoctorGroupDetailPresenter.orderPackage(AIManager.getInstance(DoctorDetailActivity.this).getPatientId(), packageList.get(position).packageId.get());
                                     break;
                             }
                         }
@@ -217,6 +219,12 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
 
     @Override
     public void showGroupMemberList(ArrayList<DoctorDetailGroupMemberBean> groupMemberList) {
+        if (groupMemberList.size() > 0) {
+            mRecyclerViewDoctorDetailMemberOrGroup.setVisibility(View.VISIBLE);
+        } else {
+            mRecyclerViewDoctorDetailMemberOrGroup.setVisibility(View.GONE);
+            return;
+        }
         if (null == mMemberRVAdapter) {
             mMemberRVAdapter = new DoctorDetailMemberRVAdapter();
             mMemberRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
@@ -236,6 +244,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
 
     @Override
     public void showGroupOfDoctorList(ArrayList<DoctorDetailGroupOfDoctorBean> groupOfDoctorList) {
+
         if (null == mGroupOfDoctorRVAdapter) {
             mGroupOfDoctorRVAdapter = new DoctorDetailGroupOfDoctorRVAdapter();
             mGroupOfDoctorRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
@@ -251,6 +260,26 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
         }
         mGroupOfDoctorRVAdapter.setDatas(groupOfDoctorList);
         mRecyclerViewDoctorDetailMemberOrGroup.setAdapter(mGroupOfDoctorRVAdapter);
+    }
+
+    @Override
+    public void showMemberOrGroupOfDoctorRV() {
+        if (null != mTvTitleMembersOrGroupOfDoctor) {
+            mTvTitleMembersOrGroupOfDoctor.setVisibility(View.VISIBLE);
+        }
+        if (null != mRecyclerViewDoctorDetailMemberOrGroup) {
+            mRecyclerViewDoctorDetailMemberOrGroup.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void hideMemberOrGroupOfDoctorRV() {
+        if (null != mTvTitleMembersOrGroupOfDoctor) {
+            mTvTitleMembersOrGroupOfDoctor.setVisibility(View.GONE);
+        }
+        if (null != mRecyclerViewDoctorDetailMemberOrGroup) {
+            mRecyclerViewDoctorDetailMemberOrGroup.setVisibility(View.GONE);
+        }
     }
 
     @Override

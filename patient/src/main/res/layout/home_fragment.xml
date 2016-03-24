@@ -25,9 +25,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/item_interval_small"
             app:fillColor="@android:color/white"
+            app:paddingEnd="2dp"
             app:pageColor="#bdffffff"
             app:showWhenSingle="false"
-            app:paddingEnd="2dp"
             app:strokeWidth="0dp"/>
 
     </RelativeLayout>

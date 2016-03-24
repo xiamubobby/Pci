@@ -8,7 +8,6 @@ import android.widget.Toast;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.pci.doctor.R;
-import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.userinfo.adapter.UserInfoRVAdapter;
 import com.wonders.xlab.pci.doctor.module.userinfo.bean.UserInfoBean;
@@ -67,7 +66,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
-                mUserInfoPresenter.getUserInfo(AIManager.getInstance(UserInfoActivity.this).getUserId());
+                mUserInfoPresenter.getUserInfo(mPatientId);
             }
 
             @Override

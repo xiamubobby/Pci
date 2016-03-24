@@ -2,8 +2,8 @@ package com.wonders.xlab.patient.module.chatroom;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +36,7 @@ import im.hua.utils.DateUtil;
 public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresenter.ChatRoomPresenterListener {
     public final static String EXTRA_GROUP_NAME = "groupName";
     /**
-     * 患者和医生所在聊天组的id
+     * 患者和医生所在聊天组的id(不是环信id)
      */
     public final static String EXTRA_GROUP_ID = "groupId";
 
@@ -125,19 +125,22 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         addPresenter(mChatRoomPresenter);
 
         mChatRoomPresenter.getChatList(groupId);
+    }
 
-        getToolbar().inflateMenu(R.menu.menu_chat_room);
-        getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_chat_room_detail:
-                        goToDoctorDetailActivity();
-                        break;
-                }
-                return false;
-            }
-        });
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_chat_room, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_chat_room_detail:
+                goToDoctorDetailActivity();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void goToDoctorDetailActivity() {

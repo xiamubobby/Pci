@@ -45,7 +45,7 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
 
     @Override
     public void orderPackage(String patientId, String packageId) {
-        mOrderPackageServiceModel.orderPackage(patientId,packageId);
+        mOrderPackageServiceModel.orderPackage(patientId, packageId);
     }
 
     @Override
@@ -104,11 +104,16 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
 
                 memberBeanList.add(bean);
             }
-            mDoctorDetailListener.showGroupMemberList(memberBeanList);
+            if (members.size() > 0) {
+                mDoctorDetailListener.showMemberOrGroupOfDoctorRV();
+                mDoctorDetailListener.showGroupMemberList(memberBeanList);
+            } else {
+                mDoctorDetailListener.hideMemberOrGroupOfDoctorRV();
+            }
         } else {
             //个人医生
             List<DoctorGroupDetailEntity.RetValuesEntity.BelongGroupEntity> belongGroup = valuesEntity.getBelongGroup();
-            ArrayList<DoctorDetailGroupOfDoctorBean> memberBeanList = new ArrayList<>();
+            ArrayList<DoctorDetailGroupOfDoctorBean> godList = new ArrayList<>();
             for (DoctorGroupDetailEntity.RetValuesEntity.BelongGroupEntity entity : belongGroup) {
                 DoctorDetailGroupOfDoctorBean bean = new DoctorDetailGroupOfDoctorBean();
                 bean.name.set(entity.getName());
@@ -116,9 +121,14 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
                 List<String> avatars = entity.getAvatars();
                 bean.groupPortraitUrl.set(null != avatars && avatars.size() > 0 && !TextUtils.isEmpty(avatars.get(0)) ? avatars.get(0) : Constant.DEFAULT_PORTRAIT);
 
-                memberBeanList.add(bean);
+                godList.add(bean);
             }
-            mDoctorDetailListener.showGroupOfDoctorList(memberBeanList);
+            if (godList.size() > 0) {
+                mDoctorDetailListener.showMemberOrGroupOfDoctorRV();
+                mDoctorDetailListener.showGroupOfDoctorList(godList);
+            } else {
+                mDoctorDetailListener.hideMemberOrGroupOfDoctorRV();
+            }
         }
 
 
@@ -143,6 +153,10 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
         void showGroupMemberList(ArrayList<DoctorDetailGroupMemberBean> groupMemberList);
 
         void showGroupOfDoctorList(ArrayList<DoctorDetailGroupOfDoctorBean> groupOfDoctorList);
+
+        void showMemberOrGroupOfDoctorRV();
+
+        void hideMemberOrGroupOfDoctorRV();
 
         void orderPackageSuccess(String message);
     }

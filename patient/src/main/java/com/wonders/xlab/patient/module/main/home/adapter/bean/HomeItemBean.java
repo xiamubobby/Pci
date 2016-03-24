@@ -11,6 +11,7 @@ import com.wonders.xlab.patient.BR;
 public class HomeItemBean extends BaseObservable {
     private String title;
     private int drawableResId;
+    private int backgroundDrawableId;
 
     @Bindable
     public String getTitle() {
@@ -30,5 +31,13 @@ public class HomeItemBean extends BaseObservable {
     public void setDrawableResId(int drawableResId) {
         this.drawableResId = drawableResId;
         notifyPropertyChanged(BR.drawableResId);
+    }
+
+    public int getBackgroundDrawableId() {
+        return backgroundDrawableId;
+    }
+
+    public void setBackgroundDrawableId(int backgroundDrawableId) {
+        this.backgroundDrawableId = backgroundDrawableId;
     }
 }

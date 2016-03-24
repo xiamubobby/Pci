@@ -16,9 +16,9 @@ import com.wonders.xlab.common.viewpager.LooperViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.module.healthreport.DailyRecordActivity;
 import com.wonders.xlab.patient.module.main.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.patient.module.main.home.adapter.bean.HomeItemBean;
-import com.wonders.xlab.patient.module.healthreport.DailyRecordActivity;
 import com.wonders.xlab.patient.module.medicalrecord.MedicalRecordActivity;
 
 import java.util.ArrayList;
@@ -98,26 +98,33 @@ public class HomeFragment extends BaseFragment {
             ArrayList<HomeItemBean> beanArrayList = new ArrayList<>();
             for (int i = 0; i < 4; i++) {
                 HomeItemBean homeItemBean = new HomeItemBean();
-                int drawableResId = R.drawable.ic_home_health_data;
+                int drawableResId = R.drawable.ic_home_daily_record;
+                int backgroundDrawableId = R.drawable.shape_home_label_daily_record;
                 String title = null;
+
                 switch (i) {
                     case 0:
-                        drawableResId = R.drawable.ic_home_health_data;
+                        backgroundDrawableId = R.drawable.shape_home_label_daily_record;
+                        drawableResId = R.drawable.ic_home_daily_record;
                         title = "每日记录";
                         break;
                     case 1:
-                        drawableResId = R.drawable.ic_home_health_data;
+                        backgroundDrawableId = R.drawable.shape_home_label_medical_report;
+                        drawableResId = R.drawable.ic_home_medical_record;
                         title = "就诊记录";
                         break;
                     case 2:
-                        drawableResId = R.drawable.ic_home_health_data;
+                        backgroundDrawableId = R.drawable.shape_home_label_medicine_remind;
+                        drawableResId = R.drawable.ic_home_medicine_remind;
                         title = "用药提醒";
                         break;
                     case 3:
-                        drawableResId = R.drawable.ic_home_health_data;
+                        backgroundDrawableId = R.drawable.shape_home_label_health_report;
+                        drawableResId = R.drawable.ic_home_health_report;
                         title = "数据报表";
                         break;
                 }
+                homeItemBean.setBackgroundDrawableId(backgroundDrawableId);
                 homeItemBean.setDrawableResId(drawableResId);
                 homeItemBean.setTitle(title);
 

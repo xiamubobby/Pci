@@ -186,7 +186,7 @@
                     layout="@layout/divider_vertical_large"
                     android:visibility='@{null != bean &amp;&amp; bean.hasServicePackage ? View.VISIBLE : View.GONE}'/>
 
-                <TextView
+                <TextView android:id="@+id/tv_doctor_detail_title_members_or_group_of_doctor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/item_interval_small"
@@ -199,7 +199,8 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_doctor_detail_member_or_group"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"/>
 
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>

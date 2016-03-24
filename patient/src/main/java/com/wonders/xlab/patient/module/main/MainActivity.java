@@ -113,7 +113,7 @@ public class MainActivity extends BaseActivity {
         mTabMainBottom.showDot(2);
         mTabMainBottom.showMsg(1,100);
         mTabMainBottom.setMsgMargin(1,0,8);
-        mTabMainBottom.setMsgMargin(2,0,8);
+        mTabMainBottom.setMsgMargin(2,0,6);
 
         mViewPagerMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

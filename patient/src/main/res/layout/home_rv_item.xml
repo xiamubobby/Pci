@@ -8,26 +8,28 @@
             type="com.wonders.xlab.patient.module.main.home.adapter.bean.HomeItemBean"/>
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout android:id="@+id/ll_home_rv_item"
+                  xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="match_parent"
-                  android:layout_height="?attr/listPreferredItemHeightLarge"
+                  android:layout_height="?attr/listPreferredItemHeightSmall"
                   android:layout_margin="@dimen/item_interval_small"
-                  android:background="@drawable/shape_rectangle_primary_border_translate_bg"
-                  android:gravity="center"
+                  android:background="@drawable/shape_home_label_daily_record"
+                  android:gravity="center_vertical"
                   android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:src="@{home.drawableResId}"/>
+            android:id="@+id/iv_home_rv_item"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginLeft="@dimen/item_interval_middle"
+            android:scaleType="fitXY"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/item_interval_small"
             android:text="@{home.title}"
-            android:textColor="@color/text_color_primary_black"
+            android:textColor="@color/text_color_primary_gray"
             android:textSize="@dimen/text_size_large"/>
 
     </LinearLayout>
