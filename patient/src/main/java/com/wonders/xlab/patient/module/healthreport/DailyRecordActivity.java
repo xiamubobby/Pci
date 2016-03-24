@@ -78,6 +78,7 @@ public class DailyRecordActivity extends AppbarActivity {
             mFragmentVPAdapter.addFragment(BPReportFragment.newInstance());
             mFragmentVPAdapter.addFragment(SymptomReportFragment.newInstance());
         }
+        mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(mFragmentVPAdapter);
 
         //2

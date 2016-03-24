@@ -1,30 +1,24 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
 
-import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
-import com.wonders.xlab.patient.module.healthreport.adapter.bean.SymptomReportBean;
-import com.wonders.xlab.patient.module.healthreport.adapter.bean.SymptomReportLabelBean;
-import com.wonders.xlab.patient.mvp.api.AddRecordAPI;
-
-import java.util.Calendar;
+import com.wonders.xlab.patient.mvp.api.SymptomAPI;
+import com.wonders.xlab.patient.mvp.model.ISymptomSaveModel;
 
 import im.hua.library.base.mvp.entity.SimpleEntity;
 import im.hua.library.base.mvp.listener.BaseModelListener;
-import io.realm.RealmList;
 
 /**
  * Created by hua on 15/12/18.
  */
-public class SymptomSaveModel extends PatientBaseModel<SimpleEntity> {
-    private SymptomReportBean mSymptomReportBeanTmp = new SymptomReportBean();
+public class SymptomSaveModel extends PatientBaseModel<SimpleEntity> implements ISymptomSaveModel {
 
     private SymptomSaveModelListener mSymptomSaveModelListener;
-    private AddRecordAPI mAddRecordAPI;
+    private SymptomAPI mSymptomAPI;
 
     public SymptomSaveModel(SymptomSaveModelListener symptomSaveModelListener) {
         mSymptomSaveModelListener = symptomSaveModelListener;
-        mAddRecordAPI = mRetrofit.create(AddRecordAPI.class);
+        mSymptomAPI = mRetrofit.create(SymptomAPI.class);
     }
 
     /**
@@ -34,30 +28,11 @@ public class SymptomSaveModel extends PatientBaseModel<SimpleEntity> {
      * @param symptomIdsStr
      */
     public void saveSymptom(String userId, String[] symptomIdsStr) {
-        mSymptomReportBeanTmp.setRecordTimeInMill(Calendar.getInstance().getTimeInMillis());
-        mSymptomReportBeanTmp.setHasConfirmed(false);
-        mSymptomReportBeanTmp.setAdvice("");
-
-        RealmList<SymptomReportLabelBean> labelBeanList = new RealmList<>();
-        for (String symptom : symptomIdsStr) {
-            SymptomReportLabelBean bean = new SymptomReportLabelBean();
-            bean.setSymptomStr(symptom);
-            labelBeanList.add(bean);
-        }
-        mSymptomReportBeanTmp.setSymptomList(labelBeanList);
-
-        fetchData(mAddRecordAPI.saveSymptom(userId, symptomIdsStr), true);
+        fetchData(mSymptomAPI.saveSymptom(userId, symptomIdsStr), true);
     }
 
     @Override
     protected void onSuccess(SimpleEntity response) {
-        /**
-         * save
-         */
-        XApplication.realm.beginTransaction();
-        SymptomReportBean bean = XApplication.realm.copyToRealm(mSymptomReportBeanTmp);
-        XApplication.realm.commitTransaction();
-
         mSymptomSaveModelListener.onSaveSymptomSuccess("保存不适症状成功！");
     }
 

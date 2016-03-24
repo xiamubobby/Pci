@@ -4,6 +4,7 @@ package com.wonders.xlab.patient.module.healthreport.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +12,18 @@ import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
+import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
+import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.healthreport.adapter.BPReportAdapter;
 import com.wonders.xlab.patient.module.healthreport.adapter.bean.BPReportBean;
 import com.wonders.xlab.patient.module.healthreport.otto.BPSaveSuccessOtto;
 import com.wonders.xlab.patient.mvp.presenter.IBPReportPresenter;
+import com.wonders.xlab.patient.mvp.presenter.IIdealRangePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.BPReportCachePresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.IdealRangePresenter;
 
 import java.util.List;
 
@@ -29,9 +34,10 @@ import im.hua.library.base.BaseFragment;
 /**
  * 今日血压
  */
-public class BPReportFragment extends BaseFragment implements BPReportCachePresenter.BPReportCachePresenterListener {
+public class BPReportFragment extends BaseFragment implements BPReportCachePresenter.BPReportCachePresenterListener, IdealRangePresenter.IdealRangePresenterListener {
 
     private IBPReportPresenter mBPReportPresenter;
+    private IIdealRangePresenter mIdealRangePresenter;
 
     @Bind(R.id.text_blood_pressure_report_ideal_range)
     TextView mTextIdealRange;
@@ -52,6 +58,8 @@ public class BPReportFragment extends BaseFragment implements BPReportCachePrese
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBPReportPresenter = new BPReportCachePresenter(this);
+        mIdealRangePresenter = new IdealRangePresenter(this);
+        addPresenter(mIdealRangePresenter);
         addPresenter(mBPReportPresenter);
     }
 
@@ -67,7 +75,12 @@ public class BPReportFragment extends BaseFragment implements BPReportCachePrese
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        String rangeStr = SPManager.get(getActivity()).getString(Constant.PREF_KEY_IDEAL_BP_RANGE, "");
+        if (TextUtils.isEmpty(rangeStr)) {
+            mIdealRangePresenter.fetchIdealBPRange(AIManager.getInstance(getActivity()).getPatientId());
+        } else {
+            mTextIdealRange.setText(rangeStr);
+        }
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -103,5 +116,10 @@ public class BPReportFragment extends BaseFragment implements BPReportCachePrese
     @Override
     public void hideLoading() {
 
+    }
+
+    @Override
+    public void showRange(String range) {
+        mTextIdealRange.setText(range);
     }
 }

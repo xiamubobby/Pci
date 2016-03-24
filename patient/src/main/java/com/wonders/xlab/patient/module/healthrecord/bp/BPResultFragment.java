@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.module.healthrecord.bp;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
+import com.wonders.xlab.common.manager.SPManager;
+import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.assist.deviceconnection.entity.BPEntity;
@@ -23,10 +26,10 @@ import com.wonders.xlab.patient.assist.deviceconnection.otto.ConnStatusOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.EmptyDataOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.RequestDataFailed;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.ScanStartOtto;
+import com.wonders.xlab.patient.mvp.presenter.IBPSavePresenter;
 import com.wonders.xlab.patient.mvp.presenter.IIdealRangePresenter;
-import com.wonders.xlab.patient.mvp.presenter.IRecordSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.BPSavePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.IdealRangePresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.RecordSavePresenter;
 
 import java.util.List;
 import java.util.Locale;
@@ -37,7 +40,7 @@ import im.hua.library.base.BaseFragment;
 import im.hua.uikit.LoadingDotView;
 import me.drakeet.labelview.LabelView;
 
-public class BPResultFragment extends BaseFragment implements RecordSavePresenter.RecordSavePresenterListener, IdealRangePresenter.IdealRangePresenterListener {
+public class BPResultFragment extends BaseFragment implements  IdealRangePresenter.IdealRangePresenterListener, BPSavePresenter.RecordSavePresenterListener {
 
     @Bind(R.id.tv_bp_result_pressure)
     LabelView mTvBpResultPressure;
@@ -50,7 +53,7 @@ public class BPResultFragment extends BaseFragment implements RecordSavePresente
     @Bind(R.id.tv_bp_result_ideal_range)
     TextView mTvBpResultIdealRange;
 
-    private IRecordSavePresenter mRecordSavePresenter;
+    private IBPSavePresenter mIBPSavePresenter;
     private IIdealRangePresenter mIdealRangePresenter;
 
     private Animation rotateAnimation;
@@ -62,10 +65,10 @@ public class BPResultFragment extends BaseFragment implements RecordSavePresente
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRecordSavePresenter = new RecordSavePresenter(this);
+        mIBPSavePresenter = new BPSavePresenter(this);
         mIdealRangePresenter = new IdealRangePresenter(this);
 
-        addPresenter(mRecordSavePresenter);
+        addPresenter(mIBPSavePresenter);
         addPresenter(mIdealRangePresenter);
 
         if (rotateAnimation == null) {
@@ -85,7 +88,13 @@ public class BPResultFragment extends BaseFragment implements RecordSavePresente
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         OttoManager.register(this);
-        mIdealRangePresenter.fetchIdealBPRange(AIManager.getInstance(getActivity()).getPatientId());
+
+        String rangeStr = SPManager.get(getActivity()).getString(Constant.PREF_KEY_IDEAL_BP_RANGE, "");
+        if (TextUtils.isEmpty(rangeStr)) {
+            mIdealRangePresenter.fetchIdealBPRange(AIManager.getInstance(getActivity()).getPatientId());
+        } else {
+            mTvBpResultIdealRange.setText(rangeStr);
+        }
     }
 
     @Subscribe
@@ -110,7 +119,7 @@ public class BPResultFragment extends BaseFragment implements RecordSavePresente
     public void onDataReceived(BPEntityList bpEntityList) {
 
         List<BPEntity> bpEntities = bpEntityList.getBp();
-        mRecordSavePresenter.saveBP(AIManager.getInstance(getActivity()).getPatientId(), bpEntityList);
+        mIBPSavePresenter.saveBP(AIManager.getInstance(getActivity()).getPatientId(), bpEntityList);
 
         if (null != bpEntities && bpEntities.size() > 0) {
             mTvBpResultPressure.setText(String.format(Locale.CHINA, "%d/%d", bpEntities.get(0).getSystolicPressure(), bpEntities.get(0).getDiastolicPressure()));
@@ -144,6 +153,7 @@ public class BPResultFragment extends BaseFragment implements RecordSavePresente
 
     @Override
     public void showRange(String range) {
+        SPManager.get(getActivity()).putString(Constant.PREF_KEY_IDEAL_BP_RANGE,range);
         mTvBpResultIdealRange.setText(range);
     }
 
@@ -167,18 +177,6 @@ public class BPResultFragment extends BaseFragment implements RecordSavePresente
     }
 
     @Override
-    public void onSaveRecordSuccess(String message) {
-        stopConnectingAnim();
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-        getActivity().finish();
-    }
-
-    @Override
-    public void showBSPeriodDicList(List<String> periodList, int currentPeriodIndex) {
-
-    }
-
-    @Override
     public void showError(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
@@ -186,5 +184,12 @@ public class BPResultFragment extends BaseFragment implements RecordSavePresente
     @Override
     public void hideLoading() {
 
+    }
+
+    @Override
+    public void onSaveBPSuccess(String message) {
+        stopConnectingAnim();
+        showShortToast(message);
+        getActivity().finish();
     }
 }

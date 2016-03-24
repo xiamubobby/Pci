@@ -21,42 +21,46 @@
     <string name="text_tips">小贴士</string>
     <string name="question_mark">\?</string>
 
+    <!--血压、血糖界面-->
     <string name="text_measure_date">测量日期</string>
     <string name="text_measure_time">测量时间</string>
-    <string name="text_systolic_pressure">收缩压</string>
+    <string name="text_systolic_pressure">高压</string>
+    <string name="text_diastolic_pressure">低压</string>
     <string name="_0">0</string>
-    <string name="text_diastolic_pressure">舒张压</string>
     <string name="text_heart_rate">心率</string>
     <string name="text_measure_period">测量时段</string>
-    <string name="text_before_breakfast">早餐前</string>
     <string name="text_blood_sugar">血糖</string>
     <string name="unit_mol_l">mmol/L</string>
 
-    <string name="meal_early_morning">凌晨</string>
-    <string name="meal_before_breakfast">早餐前</string>
-    <string name="meal_after_breakfast">早餐后</string>
-    <string name="meal_after_lunch">午餐后</string>
-    <string name="meal_before_lunch">午餐前</string>
-    <string name="meal_before_dinner">晚餐前</string>
-    <string name="meal_after_dinner">晚餐后</string>
-    <string name="meal_random">随机</string>
-    <string name="text_login">登录</string>
-    <string name="text_password">请输入密码</string>
-    <string name="text_phone_number">请输入手机号</string>
+    <!--登录-->
+    <string name="login_btn_login">登录</string>
+    <string name="login_et_password_hint">请输入密码</string>
+    <string name="login_et_phone_hint">请输入手机号</string>
+    <string name="login_text_forgot_password">忘记密码？</string>
+    <string name="login_text_register">注册</string>
+
     <string name="text_exit">退出</string>
     <string name="text_save">保存</string>
+
+    <!--聊天界面-->
     <string name="btn_chat_room_buy_again">再次购买</string>
-    <string name="text_blood_sugar_normal_range_title">正常值</string>
-    <string name="text_blood_sugar_measure_value_title">测量值</string>
-    <string name="text_daily_record_dialog_auto">健康设备</string>
-    <string name="text_daily_record_dialog_manual">手动录入</string>
-    <string name="cb_item_daily_record_dialog_single_check_auto">默认健康设备</string>
-    <string name="cb_item_daily_record_dialog_single_check_manual">默认手动输入</string>
-    <string name="cb_item_daily_record_dialog_single_check_clear">每次弹出窗口选择</string>
+
+    <!--界面label-->
     <string name="title_activity_bp_measure">测量血压</string>
     <string name="title_activity_bs_measure">测量血糖</string>
     <string name="title_activity_symptom">不适症状</string>
     <string name="title_activity_medical_record">就诊记录</string>
     <string name="title_activity_daily_record">每日记录</string>
     <string name="title_activity_chat_room">聊天</string>
+
+    <!--每日记录界面-->
+    <string name="text_daily_record_dialog_auto">健康设备</string>
+    <string name="text_daily_record_dialog_manual">手动录入</string>
+    <string name="cb_item_daily_record_dialog_single_check_auto">默认健康设备</string>
+    <string name="cb_item_daily_record_dialog_single_check_manual">默认手动输入</string>
+    <string name="cb_item_daily_record_dialog_single_check_clear">每次弹出窗口选择</string>
+
+    <string name="measure_normal_title">正常值</string>
+    <string name="measure_value_title">测量值</string>
+
 </resources>

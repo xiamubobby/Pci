@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.module.healthreport.adapter;
 
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/3/21.
+ * daily report  -> symptom list
  */
 public class SymptomReportAdapter extends SimpleRVAdapter<SymptomReportBean> {
 
@@ -36,7 +38,14 @@ public class SymptomReportAdapter extends SimpleRVAdapter<SymptomReportBean> {
 
         Resources resources = viewHolder.itemView.getContext().getResources();
 
-        viewHolder.mTvAdvice.setText(bean.getAdvice());
+        if (!TextUtils.isEmpty(bean.getAdvice())) {
+            viewHolder.mTvAdvice.setText(bean.getAdvice());
+            viewHolder.mTvAdvice.setVisibility(View.VISIBLE);
+            viewHolder.mDivider.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.mTvAdvice.setVisibility(View.GONE);
+            viewHolder.mDivider.setVisibility(View.GONE);
+        }
         viewHolder.mTvTime.setText(String.format("记录时间：%s", DateUtil.format(bean.getRecordTimeInMill(), "HH:mm")));
         if (bean.isHasConfirmed()) {
             viewHolder.mTvStatus.setText("已确认");
@@ -74,7 +83,8 @@ public class SymptomReportAdapter extends SimpleRVAdapter<SymptomReportBean> {
         FlowLayout mFlSymptoms;
         @Bind(R.id.tv_symptom_report_item_advice)
         TextView mTvAdvice;
-
+        @Bind(R.id.divider_symptom_above_advice)
+        View mDivider;
 
         public ItemViewHolder(View itemView) {
             super(itemView);

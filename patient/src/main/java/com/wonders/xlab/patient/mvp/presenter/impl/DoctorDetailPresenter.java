@@ -85,7 +85,12 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
 
             memberBeanList.add(bean);
         }
-        mDoctorDetailListener.showGroupOfDoctorList(memberBeanList);
+        if (memberBeanList.size() > 0) {
+            mDoctorDetailListener.showMemberOrGroupOfDoctorRV();
+            mDoctorDetailListener.showGroupOfDoctorList(memberBeanList);
+        } else {
+            mDoctorDetailListener.hideMemberOrGroupOfDoctorRV();
+        }
 
 
     }
@@ -123,6 +128,10 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
         void showPackageList(ArrayList<DoctorDetailPackageBean> packageList);
 
         void showGroupOfDoctorList(ArrayList<DoctorDetailGroupOfDoctorBean> groupOfDoctorList);
+
+        void showMemberOrGroupOfDoctorRV();
+
+        void hideMemberOrGroupOfDoctorRV();
 
         void orderPackageSuccess(String message);
     }

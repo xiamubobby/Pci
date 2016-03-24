@@ -1,6 +1,8 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
 
+import android.text.TextUtils;
+
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.IdealRangeAPI;
 
@@ -42,12 +44,21 @@ public class IdealRangeModel extends PatientBaseModel<SimpleEntity> {
 
     @Override
     protected void onSuccess(SimpleEntity response) {
-        mIdealRangeModelListener.onReceiveIdealRangeSuccess(response.getRet_values());
+        String ret_values = response.getRet_values();
+        if (null == ret_values) {
+            mIdealRangeModelListener.onReceiveFailed("获取正常值范围失败！");
+        } else {
+            mIdealRangeModelListener.onReceiveIdealRangeSuccess(ret_values);
+        }
     }
 
     @Override
     protected void onFailed(Throwable e, String message) {
-        mIdealRangeModelListener.onReceiveFailed("获取理想范围失败！");
+        if (TextUtils.isEmpty(message)) {
+            mIdealRangeModelListener.onReceiveFailed("获取正常值范围失败！");
+        } else {
+            mIdealRangeModelListener.onReceiveFailed(e.getMessage());
+        }
     }
 
     public interface IdealRangeModelListener extends BaseModelListener {

@@ -5,11 +5,11 @@ import com.wonders.xlab.patient.module.healthreport.adapter.bean.BPReportBean;
 import com.wonders.xlab.patient.mvp.presenter.IBPReportPresenter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
+import im.hua.utils.DateUtil;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -20,19 +20,8 @@ import io.realm.Sort;
 public class BPReportCachePresenter extends BasePresenter implements IBPReportPresenter {
     private BPReportCachePresenterListener listener;
 
-    private Calendar beginTime = Calendar.getInstance();
-    private Calendar endTime = Calendar.getInstance();
-
     public BPReportCachePresenter(BPReportCachePresenterListener listener) {
         this.listener = listener;
-
-        beginTime.set(Calendar.HOUR_OF_DAY, 0);
-        beginTime.set(Calendar.MINUTE, 0);
-        beginTime.set(Calendar.SECOND, 0);
-
-        endTime.set(Calendar.HOUR_OF_DAY, 23);
-        endTime.set(Calendar.MINUTE, 59);
-        endTime.set(Calendar.SECOND, 59);
     }
 
     @Override
@@ -40,7 +29,7 @@ public class BPReportCachePresenter extends BasePresenter implements IBPReportPr
 
         RealmQuery<BPReportBean> query = XApplication.realm.where(BPReportBean.class)
                 .equalTo("patientId",patientId)
-                .between("recordTimeInMill", beginTime.getTimeInMillis(), endTime.getTimeInMillis());
+                .between("recordTimeInMill", DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday());
 
         RealmResults<BPReportBean> results = query.findAll();
         results.sort("recordTimeInMill", Sort.DESCENDING);

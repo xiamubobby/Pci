@@ -10,9 +10,8 @@
         android:layout_height="wrap_content"
         android:gravity="right|center_vertical"
         android:padding="@dimen/item_interval_small"
-        android:text="测量时间：14:15"
-        android:textColor="@color/text_color_primary_gray"
-        android:textSize="@dimen/text_size_middle"/>
+        android:textColor="@color/text_color_secondary_gray"
+        android:textSize="@dimen/text_size_small"/>
 
     <TextView
         android:id="@+id/tv_bs_report_item"
@@ -22,7 +21,6 @@
         android:gravity="center_vertical"
         android:padding="@dimen/item_interval_small"
         android:singleLine="true"
-        android:text="晚饭后：140mmol/L"
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"/>
 </LinearLayout>

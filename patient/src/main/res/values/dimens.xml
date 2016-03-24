@@ -7,6 +7,7 @@
     <dimen name="text_size_large">18sp</dimen>
     <dimen name="text_size_middle">15sp</dimen>
     <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_very_small">8sp</dimen>
     <dimen name="item_height_min">48dp</dimen>
     <dimen name="doctor_list_icon_size">64dp</dimen>
     <dimen name="portrait_list_item_size">48dp</dimen>

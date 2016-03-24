@@ -18,8 +18,8 @@ import android.widget.Toast;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
-import com.wonders.xlab.patient.mvp.presenter.IRecordSavePresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.RecordSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.IBSSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.BSSavePresenter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +35,7 @@ import im.hua.utils.KeyboardUtil;
 /**
  * 手动测量血糖
  */
-public class BSAddActivity extends AppbarActivity implements RecordSavePresenter.RecordSavePresenterListener {
+public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSSavePresenterListener {
 
     @Bind(R.id.tv_add_date)
     TextView mTvAddBsDate;
@@ -50,7 +50,7 @@ public class BSAddActivity extends AppbarActivity implements RecordSavePresenter
 
     private Calendar mCalendar = Calendar.getInstance();
 
-    private IRecordSavePresenter mRecordSavePresenter;
+    private IBSSavePresenter mRecordSavePresenter;
 
     private ProgressDialog dialog;
 
@@ -69,7 +69,7 @@ public class BSAddActivity extends AppbarActivity implements RecordSavePresenter
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        mRecordSavePresenter = new RecordSavePresenter(this);
+        mRecordSavePresenter = new BSSavePresenter(this);
         addPresenter(mRecordSavePresenter);
 
         initView();
@@ -156,7 +156,7 @@ public class BSAddActivity extends AppbarActivity implements RecordSavePresenter
     }
 
     @Override
-    public void onSaveRecordSuccess(String message) {
+    public void onSaveBSSuccess(String message) {
         mFabAddBs.setClickable(false);
         Toast.makeText(this, "数据保存成功", Toast.LENGTH_SHORT).show();
 

@@ -17,11 +17,10 @@ import android.widget.Toast;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
-import com.wonders.xlab.patient.mvp.presenter.IRecordSavePresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.RecordSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.IBPSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.BPSavePresenter;
 
 import java.util.Calendar;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,7 +31,7 @@ import im.hua.utils.KeyboardUtil;
 /**
  * 手动录入血压数据
  */
-public class BPAddActivity extends AppbarActivity implements RecordSavePresenter.RecordSavePresenterListener {
+public class BPAddActivity extends AppbarActivity implements BPSavePresenter.RecordSavePresenterListener {
 
     @Bind(R.id.tv_add_bp_date)
     TextView mTvAddBpDate;
@@ -51,7 +50,7 @@ public class BPAddActivity extends AppbarActivity implements RecordSavePresenter
 
     private Calendar mCalendar = Calendar.getInstance();
 
-    private IRecordSavePresenter mRecordSavePresenter;
+    private IBPSavePresenter mIBPSavePresenter;
     private ProgressDialog dialog;
 
     @Override
@@ -69,8 +68,8 @@ public class BPAddActivity extends AppbarActivity implements RecordSavePresenter
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        mRecordSavePresenter = new RecordSavePresenter(this);
-        addPresenter(mRecordSavePresenter);
+        mIBPSavePresenter = new BPSavePresenter(this);
+        addPresenter(mIBPSavePresenter);
 
         initView();
     }
@@ -120,7 +119,7 @@ public class BPAddActivity extends AppbarActivity implements RecordSavePresenter
         dialog.setMessage("正在保存，请稍候...");
         dialog.show();
 
-        mRecordSavePresenter.saveBPSingle(AIManager.getInstance(this).getPatientId(), date, Integer.valueOf(heartRate), Integer.valueOf(systolicPressure), Integer.valueOf(diastolicPressure));
+        mIBPSavePresenter.saveBPSingle(AIManager.getInstance(this).getPatientId(), date, Integer.valueOf(heartRate), Integer.valueOf(systolicPressure), Integer.valueOf(diastolicPressure));
     }
 
     @OnClick(R.id.tv_add_bp_date)
@@ -165,24 +164,6 @@ public class BPAddActivity extends AppbarActivity implements RecordSavePresenter
     }
 
     @Override
-    public void onSaveRecordSuccess(String message) {
-        mFabAddBp.setClickable(false);
-        Toast.makeText(this, "数据保存成功", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-            }
-        }, 400);
-    }
-
-    @Override
-    public void showBSPeriodDicList(List<String> periodList, int currentPeriodIndex) {
-
-    }
-
-    @Override
     public void showError(String message) {
         mFabAddBp.setClickable(true);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -193,5 +174,17 @@ public class BPAddActivity extends AppbarActivity implements RecordSavePresenter
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
+    }
+
+    @Override
+    public void onSaveBPSuccess(String message) {
+        mFabAddBp.setClickable(false);
+        showShortToast(message);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 400);
     }
 }

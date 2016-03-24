@@ -122,6 +122,7 @@ public class XEMChatService extends Service {
     @Subscribe
     public void forceExit(ForceExitOtto bean) {
         mIsNormalStop = true;
+        new NotifyUtil().cancelAll(this);
         SPManager.get(this).clear();
         stopSelf();
     }

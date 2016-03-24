@@ -23,7 +23,7 @@
             android:paddingTop="@dimen/item_interval_very_small"
             android:text="已确认"
             android:textColor="@color/colorAccent"
-            android:textSize="@dimen/text_size_small"/>
+            android:textSize="@dimen/text_size_very_small"/>
 
         <TextView
             android:id="@+id/tv_symptom_report_item_time"
@@ -37,12 +37,14 @@
             android:textSize="@dimen/text_size_middle"/>
     </LinearLayout>
 
+
     <com.zhy.view.flowlayout.FlowLayout
         android:id="@+id/fl_symptom_report_item_symptoms"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/item_interval_middle"/>
 
-    <include layout="@layout/divider_vertical"/>
+    <include android:id="@+id/divider_symptom_above_advice" layout="@layout/divider_vertical"/>
 
     <TextView
         android:id="@+id/tv_symptom_report_item_advice"

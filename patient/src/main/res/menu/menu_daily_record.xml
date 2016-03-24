@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <item
-        android:id="@+id/menu_daily_record_bs"
-        android:title="@string/title_activity_bs_measure"
-        app:showAsAction="never"/>
     <item
         android:id="@+id/menu_daily_record_bp"
         android:title="@string/title_activity_bp_measure"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_daily_record_bs"
+        android:title="@string/title_activity_bs_measure"
+        app:showAsAction="never"/>
+
     <item
         android:id="@+id/menu_daily_record_symptom"
         android:title="@string/title_activity_symptom"

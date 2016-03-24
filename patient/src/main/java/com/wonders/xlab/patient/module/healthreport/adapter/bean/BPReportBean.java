@@ -2,7 +2,6 @@ package com.wonders.xlab.patient.module.healthreport.adapter.bean;
 
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
-import io.realm.annotations.Required;
 
 /**
  * Created by hua on 16/3/20.
@@ -18,7 +17,6 @@ public class BPReportBean extends RealmObject {
     @Ignore
     public final static int STATUS_HIGH = 1;//偏高
 
-    @Required
     private String patientId;
     private String id;
     private String highPressure = "";

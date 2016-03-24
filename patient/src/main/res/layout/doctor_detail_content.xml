@@ -157,7 +157,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/item_interval_small"
-                    android:text="@{bean.description}"
+                    android:text='@{TextUtils.isEmpty(bean.description) ? "医生还没有编写简介哦" :bean.description}'
                     android:textColor="@color/text_color_primary_gray"
                     android:textSize="@dimen/text_size_small"/>
 

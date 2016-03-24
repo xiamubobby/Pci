@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.module.healthrecord.bs;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
+import com.wonders.xlab.common.manager.SPManager;
+import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.assist.deviceconnection.entity.BSEntity;
@@ -26,9 +29,9 @@ import com.wonders.xlab.patient.assist.deviceconnection.otto.EmptyDataOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.RequestDataFailed;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.ScanStartOtto;
 import com.wonders.xlab.patient.mvp.presenter.IIdealRangePresenter;
-import com.wonders.xlab.patient.mvp.presenter.IRecordSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.IBSSavePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.IdealRangePresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.RecordSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.BSSavePresenter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,7 +46,7 @@ import im.hua.uikit.LoadingDotView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BSResultFragment extends BaseFragment implements RecordSavePresenter.RecordSavePresenterListener, IdealRangePresenter.IdealRangePresenterListener {
+public class BSResultFragment extends BaseFragment implements BSSavePresenter.BSSavePresenterListener, IdealRangePresenter.IdealRangePresenterListener {
 
     @Bind(R.id.tv_bs_result_sugar)
     TextView mTvBsResultSugar;
@@ -56,7 +59,7 @@ public class BSResultFragment extends BaseFragment implements RecordSavePresente
     @Bind(R.id.sp_bs_result_period)
     Spinner mSpBsResultPeriod;
 
-    private IRecordSavePresenter mRecordSavePresenter;
+    private IBSSavePresenter mRecordSavePresenter;
     private IIdealRangePresenter mIdealRangePresenter;
 
     private Animation rotateAnimation;
@@ -70,7 +73,7 @@ public class BSResultFragment extends BaseFragment implements RecordSavePresente
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRecordSavePresenter = new RecordSavePresenter(this);
+        mRecordSavePresenter = new BSSavePresenter(this);
         mIdealRangePresenter = new IdealRangePresenter(this);
         addPresenter(mRecordSavePresenter);
         addPresenter(mIdealRangePresenter);
@@ -93,8 +96,14 @@ public class BSResultFragment extends BaseFragment implements RecordSavePresente
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         OttoManager.register(this);
-        mIdealRangePresenter.fetchIdealBSRange(AIManager.getInstance(getActivity()).getPatientId());
+        String rangeStr = SPManager.get(getActivity()).getString(Constant.PREF_KEY_IDEAL_BS_RANGE, "");
         mRecordSavePresenter.getBSPeriodDic();
+
+        if (TextUtils.isEmpty(rangeStr)) {
+            mIdealRangePresenter.fetchIdealBSRange(AIManager.getInstance(getActivity()).getPatientId());
+        } else {
+            mTvBsResultIdealRange.setText(rangeStr);
+        }
 
     }
 
@@ -153,7 +162,7 @@ public class BSResultFragment extends BaseFragment implements RecordSavePresente
     }
 
     @Override
-    public void onSaveRecordSuccess(String message) {
+    public void onSaveBSSuccess(String message) {
         stopConnectingAnim();
         if (mIsSaveSingle) {
             mTvBsResultSugar.setText("0");
@@ -172,11 +181,12 @@ public class BSResultFragment extends BaseFragment implements RecordSavePresente
             mPeriodList.add(period);
         }
         mSpBsResultPeriod.setAdapter(new SimpleAdapter(getActivity(), mPeriodList, R.layout.item_spinner_text, new String[]{"name"}, new int[]{R.id.tv_spinner}));
-
+        mSpBsResultPeriod.setSelection(currentPeriodIndex);
     }
 
     @Override
     public void showRange(String range) {
+        SPManager.get(getActivity()).putString(Constant.PREF_KEY_IDEAL_BS_RANGE,range);
         mTvBsResultIdealRange.setText(range);
     }
 

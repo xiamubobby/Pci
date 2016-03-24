@@ -1,7 +1,11 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
+import com.wonders.xlab.common.manager.OttoManager;
+import com.wonders.xlab.patient.module.healthreport.otto.SymptomSaveSuccessOtto;
 import com.wonders.xlab.patient.mvp.entity.SymptomEntity;
-import com.wonders.xlab.patient.mvp.model.impl.SymptomRetrieveModel;
+import com.wonders.xlab.patient.mvp.model.ISymptomDictModel;
+import com.wonders.xlab.patient.mvp.model.ISymptomSaveModel;
+import com.wonders.xlab.patient.mvp.model.impl.SymptomDictModel;
 import com.wonders.xlab.patient.mvp.model.impl.SymptomSaveModel;
 import com.wonders.xlab.patient.mvp.presenter.ISymptomPresenter;
 
@@ -12,25 +16,25 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
 /**
  * Created by hua on 16/3/16.
  */
-public class SymptomPresenter extends BasePresenter implements ISymptomPresenter,SymptomRetrieveModel.SymptomRetrieveModelListener, SymptomSaveModel.SymptomSaveModelListener {
+public class SymptomPresenter extends BasePresenter implements ISymptomPresenter,SymptomDictModel.SymptomDictModelListener, SymptomSaveModel.SymptomSaveModelListener {
     private SymptomPresenterListener mSymptomPresenterListener;
 
-    private SymptomRetrieveModel mSymptomRetrieveModel;
+    private ISymptomDictModel mSymptomDictModel;
 
-    private SymptomSaveModel mSymptomSaveModel;
+    private ISymptomSaveModel mSymptomSaveModel;
 
     public SymptomPresenter(SymptomPresenterListener symptomPresenterListener) {
         mSymptomPresenterListener = symptomPresenterListener;
 
-        mSymptomRetrieveModel = new SymptomRetrieveModel(this);
+        mSymptomDictModel = new SymptomDictModel(this);
         mSymptomSaveModel = new SymptomSaveModel(this);
-        addModel(mSymptomRetrieveModel);
+        addModel(mSymptomDictModel);
         addModel(mSymptomSaveModel);
     }
 
     @Override
     public void getSymptoms() {
-        mSymptomRetrieveModel.getSymptoms();
+        mSymptomDictModel.getSymptoms();
     }
 
     @Override
@@ -52,6 +56,11 @@ public class SymptomPresenter extends BasePresenter implements ISymptomPresenter
 
     @Override
     public void onSaveSymptomSuccess(String message) {
+        /**
+         * notify the daily report to refresh
+         */
+        OttoManager.post(new SymptomSaveSuccessOtto());
+
         mSymptomPresenterListener.hideLoading();
         mSymptomPresenterListener.onSaveSymptomSuccess(message);
     }

@@ -13,7 +13,7 @@
         android:paddingLeft="@dimen/item_interval_middle"
         android:paddingRight="@dimen/item_interval_middle"
         android:paddingTop="@dimen/item_interval_small"
-        android:text="@string/text_blood_sugar_normal_range_title"
+        android:text="@string/measure_normal_title"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_size_large"/>
 
@@ -28,7 +28,6 @@
         android:paddingLeft="@dimen/item_interval_large"
         android:paddingRight="@dimen/item_interval_large"
         android:paddingTop="@dimen/item_interval_small"
-        android:text="高压：90mmHg ~ 140mmHg\n低压：60mmHg ~ 90mmHg\n心率：80次/分 ~ 95次/分"
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"/>
 
@@ -41,7 +40,7 @@
         android:paddingLeft="@dimen/item_interval_middle"
         android:paddingRight="@dimen/item_interval_middle"
         android:paddingTop="@dimen/item_interval_small"
-        android:text="@string/text_blood_sugar_measure_value_title"
+        android:text="@string/measure_value_title"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_size_large"/>
 

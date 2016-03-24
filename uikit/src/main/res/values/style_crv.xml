@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CommonRecyclerView">
+        <attr name="emptyView" format="reference"/>
+        <attr name="loadingView" format="reference"/>
+        <attr name="networkErrorView" format="reference"/>
+        <attr name="serverErrorView" format="reference"/>
+        <attr name="crvLayoutManager" format="integer">
+            <enum name="LinearLayoutManager" value="0"/>
+            <enum name="GridLayoutManager" value="1"/>
+            <enum name="StaggeredGridLayoutManager" value="2"/>
+        </attr>
+        <attr name="crvReverseLayout" format="boolean"/>
+        <attr name="crvSpanCount" format="integer"/>
+        <attr name="orientation" format="integer">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+    </declare-styleable>
+</resources>

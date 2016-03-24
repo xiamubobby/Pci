@@ -1,41 +1,47 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
+import android.text.TextUtils;
 
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.SymptomAPI;
-import com.wonders.xlab.patient.mvp.entity.SymptomEntity;
+import com.wonders.xlab.patient.mvp.entity.SymptomRetrieveEntity;
+import com.wonders.xlab.patient.mvp.model.ISymptomRetrieveModel;
 
 import im.hua.library.base.mvp.listener.BaseModelListener;
+import im.hua.utils.DateUtil;
 
 /**
- * Created by hua on 15/12/18.
+ * Created by hua on 16/3/24.
  */
-public class SymptomRetrieveModel extends PatientBaseModel<SymptomEntity> {
-
-    private SymptomRetrieveModelListener mSymptomRetrieveModelListener;
+public class SymptomRetrieveModel extends PatientBaseModel<SymptomRetrieveEntity> implements ISymptomRetrieveModel{
+    private SymptomRetrieveModelListener mListener;
     private SymptomAPI mSymptomAPI;
 
-    public SymptomRetrieveModel(SymptomRetrieveModelListener symptomRetrieveModelListener) {
-        mSymptomRetrieveModelListener = symptomRetrieveModelListener;
+    public SymptomRetrieveModel(SymptomRetrieveModelListener listener) {
+        mListener = listener;
         mSymptomAPI = mRetrofit.create(SymptomAPI.class);
     }
 
-    public void getSymptoms() {
-        fetchData(mSymptomAPI.getSymptomDicList(), true);
-    }
-
-
     @Override
-    protected void onSuccess(SymptomEntity response) {
-        mSymptomRetrieveModelListener.onReceiveSymptomsSuccess(response.getRet_values());
+    protected void onSuccess(SymptomRetrieveEntity response) {
+        mListener.onReceiveSymptomListSuccess(response.getRet_values());
     }
 
     @Override
     protected void onFailed(Throwable e, String message) {
-        mSymptomRetrieveModelListener.onReceiveFailed("获取不适症状列表失败！");
+        if (TextUtils.isEmpty(message)) {
+            mListener.onReceiveFailed(e.getMessage());
+        } else {
+            mListener.onReceiveFailed(message);
+        }
     }
 
-    public interface SymptomRetrieveModelListener extends BaseModelListener {
-        void onReceiveSymptomsSuccess(SymptomEntity.RetValuesEntity valuesEntity);
+    @Override
+    public void getSymptomList(String patientId) {
+        fetchData(mSymptomAPI.getSymptomList(patientId, DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday()),true);
+    }
+
+    public interface SymptomRetrieveModelListener extends BaseModelListener{
+        void onReceiveSymptomListSuccess(SymptomRetrieveEntity.RetValuesEntity valuesEntity);
     }
 }

@@ -11,7 +11,7 @@ public class BSPeriodEntity extends BaseEntity {
 
 
     /**
-     * currentTime : 早餐前
+     * currentTime : 0
      * timeString : ["早餐前","早餐后","午餐前","午餐后","晚餐前","晚餐后","凌晨","随机"]
      */
 
