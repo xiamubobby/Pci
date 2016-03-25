@@ -92,6 +92,11 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
 
     @Override
     public void showMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList) {
+        initMyDoctorAdapter();
+        mMyDoctorRVAdapter.setDatas(myDoctorBeanList);
+    }
+
+    private void initMyDoctorAdapter() {
         if (null == mMyDoctorRVAdapter) {
             mMyDoctorRVAdapter = new MyDoctorRVAdapter();
             mMyDoctorRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
@@ -99,6 +104,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
                 public void onItemClick(int position) {
                     Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
                     intent.putExtra(ChatRoomActivity.EXTRA_GROUP_ID, mMyDoctorRVAdapter.getBean(position).getGroupId());
+                    intent.putExtra(ChatRoomActivity.EXTRA_IM_GROUP_ID, mMyDoctorRVAdapter.getBean(position).getImGroupId());
                     intent.putExtra(ChatRoomActivity.EXTRA_GROUP_NAME, mMyDoctorRVAdapter.getBean(position).getDoctorGroupName());
                     intent.putExtra(ChatRoomActivity.EXTRA_CAN_CHAT, MyDoctorItemBean.TYPE_IN_SERVICE == mMyDoctorRVAdapter.getBean(position).getType());
                     startActivity(intent);
@@ -107,17 +113,13 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
             StickyRecyclerHeadersDecoration stickyRecyclerHeadersDecoration = new StickyRecyclerHeadersDecoration(mMyDoctorRVAdapter);
             mRecyclerView.getRecyclerView().addItemDecoration(stickyRecyclerHeadersDecoration);
         }
-        mMyDoctorRVAdapter.setDatas(myDoctorBeanList);
         mRecyclerView.setAdapter(mMyDoctorRVAdapter);
     }
 
     @Override
     public void appendMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList) {
-        if (null == mMyDoctorRVAdapter) {
-            mMyDoctorRVAdapter = new MyDoctorRVAdapter();
-        }
+        initMyDoctorAdapter();
         mMyDoctorRVAdapter.appendDatas(myDoctorBeanList);
-        mRecyclerView.setAdapter(mMyDoctorRVAdapter);
     }
 
     @Override

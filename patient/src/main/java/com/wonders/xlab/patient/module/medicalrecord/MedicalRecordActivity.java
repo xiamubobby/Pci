@@ -84,12 +84,12 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
-                mMedicalRecordPresenter.getMedicalRecordList(mPatientId);
+                mMedicalRecordPresenter.getMedicalRecordList(mPatientId, true);
             }
 
             @Override
             public void onLoadMore() {
-
+                mMedicalRecordPresenter.getMedicalRecordList(mPatientId, false);
             }
         });
 
@@ -98,7 +98,7 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
         addPresenter(mMedicalRecordPresenter);
 
         mRecyclerView.setRefreshing(true);
-        mMedicalRecordPresenter.getMedicalRecordList(mPatientId);
+        mMedicalRecordPresenter.getMedicalRecordList(mPatientId, true);
     }
 
     private Subscriber subscription;
@@ -167,7 +167,12 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
 
     @Override
     public void showMedicalRecordList(List<MedicalRecordBean> beanList) {
-        mRecyclerView.setPullLoadMoreCompleted();
+        initMedicalRecordRVAdapter();
+        mRecyclerView.setAdapter(mMedicalRecordRVAdapter);
+        mMedicalRecordRVAdapter.setDatas(beanList);
+    }
+
+    private void initMedicalRecordRVAdapter() {
         if (null == mMedicalRecordRVAdapter) {
             mMedicalRecordRVAdapter = new MedicalRecordRVAdapter();
             mMedicalRecordRVAdapter.setOnPhotoClickListener(new MedicalRecordRVAdapter.OnPhotoClickListener() {
@@ -181,9 +186,18 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
                 }
             });
         }
-        mMedicalRecordRVAdapter.setDatas(beanList);
+    }
 
+    @Override
+    public void appendMedicalRecordList(List<MedicalRecordBean> beanList) {
+        initMedicalRecordRVAdapter();
         mRecyclerView.setAdapter(mMedicalRecordRVAdapter);
+        mMedicalRecordRVAdapter.appendDatas(beanList);
+    }
+
+    @Override
+    public void showReachTheLastPageNotice(String message) {
+        showShortToast(message);
     }
 
     @Override

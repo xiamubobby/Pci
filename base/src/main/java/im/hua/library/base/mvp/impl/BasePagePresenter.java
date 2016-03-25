@@ -9,13 +9,23 @@ public class BasePagePresenter extends BasePresenter {
      */
     protected int DEFAULT_PAGE_SIZE = 20;
     protected int mCurrentIndex = -1;
+    protected boolean mIsFirst = true;
+    protected boolean mIsLast = false;
 
     protected void updatePageInfo(int currentIndex) {
         mCurrentIndex = currentIndex;
     }
 
+    protected void updatePageInfo(int currentIndex, boolean isFirst, boolean isLast) {
+        mCurrentIndex = currentIndex;
+        mIsFirst = isFirst;
+        mIsLast = isLast;
+    }
+
     protected void resetPageInfo() {
         mCurrentIndex = -1;
+        mIsFirst = true;
+        mIsLast = false;
     }
 
     protected int getNextPageIndex() {

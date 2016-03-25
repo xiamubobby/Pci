@@ -39,6 +39,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
      * 患者和医生所在聊天组的id(不是环信id)
      */
     public final static String EXTRA_GROUP_ID = "groupId";
+    public final static String EXTRA_IM_GROUP_ID = "imGroupId";
 
     /**
      * 该小组提供的服务是否已过期
@@ -46,6 +47,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     public final static String EXTRA_CAN_CHAT = "canChat";
 
     private String groupId;
+    private String imGroupId;
     private String groupName;
     private boolean canChat;
 
@@ -90,7 +92,8 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             return;
         }
         groupId = intent.getStringExtra(EXTRA_GROUP_ID);
-        if (TextUtils.isEmpty(groupId)) {
+        imGroupId = intent.getStringExtra(EXTRA_IM_GROUP_ID);
+        if (TextUtils.isEmpty(groupId) || TextUtils.isEmpty(imGroupId)) {
             showShortToast(getResources().getString(R.string.query_patient_info_failed));
             finish();
             return;
@@ -104,6 +107,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
         mLoadingView.setVisibility(View.GONE);
 
+        mRecyclerView.setVisibility(View.GONE);
         mRecyclerView.setLinearLayout(true);
         mRecyclerView.setPullRefreshEnable(false);
         mRecyclerView.setPushRefreshEnable(true);
@@ -117,14 +121,14 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             @Override
             public void onLoadMore() {
                 mLoadingView.setVisibility(View.VISIBLE);
-                mChatRoomPresenter.getChatList(groupId, false);
+                mChatRoomPresenter.getChatList(imGroupId, false);
             }
         });
 
         mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance(this).getPatientId());
         addPresenter(mChatRoomPresenter);
 
-        mChatRoomPresenter.getChatList(groupId, true);
+        mChatRoomPresenter.getChatList(imGroupId, true);
     }
 
     @Override
@@ -189,21 +193,24 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             bean.recordTime.set(DateUtil.format(sendTime, "yyyy-MM-dd HH:mm"));
             bean.recordTimeInMill.set(sendTime);
             bean.isSending.set(true);
+
+            initChatRoomAdapter();
             mChatRoomRVAdapter.insertToTop(bean);
 
             mRecyclerView.getRecyclerView().smoothScrollToPosition(0);
 
             mEtChatRoomInput.setText("");
 
-            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getPatientTel(), groupId, sendTime);
+            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getPatientTel(), imGroupId, sendTime);
         }
     }
 
     private void initChatRoomAdapter() {
+        mRecyclerView.setVisibility(View.VISIBLE);
         if (mChatRoomRVAdapter == null) {
             mChatRoomRVAdapter = new ChatRoomRVAdapter();
-            mRecyclerView.setAdapter(mChatRoomRVAdapter);
         }
+        mRecyclerView.setAdapter(mChatRoomRVAdapter);
     }
 
     @Override

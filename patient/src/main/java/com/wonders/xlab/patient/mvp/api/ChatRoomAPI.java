@@ -15,8 +15,8 @@ import rx.Observable;
  * Created by hua on 16/3/17.
  */
 public interface ChatRoomAPI {
-    @GET("v1/imContents/listImChatHistory/{groupId}")
-    Observable<ChatRoomEntity> getChatRecords(@Path("groupId") String groupId, @Query("page") int page,@Query("size") int size);
+    @GET("v1/imContents/listImChatHistory/{imGroupId}")
+    Observable<ChatRoomEntity> getChatRecords(@Path("imGroupId") String imGroupId, @Query("page") int page,@Query("size") int size);
 
     @POST("v1/ims/sendContentToDoctor/{time}")
     Observable<SendMessageEntity> sendMessage(@Body SendMessageBody body, @Path("time") long time);

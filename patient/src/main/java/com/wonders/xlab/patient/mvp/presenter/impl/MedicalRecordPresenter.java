@@ -9,38 +9,46 @@ import com.wonders.xlab.patient.mvp.model.impl.MedicalRecordModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
 import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/2/25.
  */
-public class MedicalRecordPresenter extends BasePresenter implements MedicalRecordModel.MedicalRecordModelListener {
-    private MedicalRecordPresenterListener mIMedicalRecordPresenter;
+public class MedicalRecordPresenter extends BasePagePresenter implements MedicalRecordModel.MedicalRecordModelListener {
+    private MedicalRecordPresenterListener mPresenterListener;
     private MedicalRecordModel mMedicalRecordModel;
 
     public MedicalRecordPresenter(MedicalRecordPresenterListener iMedicalRecordPresenter) {
-        mIMedicalRecordPresenter = iMedicalRecordPresenter;
+        mPresenterListener = iMedicalRecordPresenter;
         mMedicalRecordModel = new MedicalRecordModel(this);
         addModel(mMedicalRecordModel);
     }
 
-    public void getMedicalRecordList(String userId) {
-        mMedicalRecordModel.getMedicalRecordList(userId);
+    public void getMedicalRecordList(String userId, boolean isRefresh) {
+        if (isRefresh) {
+            resetPageInfo();
+        }
+        if (mIsLast) {
+            mPresenterListener.hideLoading();
+            mPresenterListener.showReachTheLastPageNotice("没有更多数据了");
+            return;
+        }
+        mMedicalRecordModel.getMedicalRecordList(userId, getNextPageIndex(), DEFAULT_PAGE_SIZE);
     }
 
     @Override
     public void onReceiveMedicalRecordSuccess(MedicalRecordEntity entity) {
+        mPresenterListener.hideLoading();
+
         MedicalRecordEntity.RetValuesEntity valuesEntity = entity.getRet_values();
-        if (null == valuesEntity) {
-            mIMedicalRecordPresenter.showError("获取数据失败，请重试！");
-            return;
-        }
+
+        updatePageInfo(valuesEntity.getNumber(), valuesEntity.isFirst(), valuesEntity.isLast());
 
         List<MedicalRecordBean> beanList = new ArrayList<>();
-        for (int i = 0; i < entity.getRet_values().getContent().size(); i++) {
-            MedicalRecordEntity.RetValuesEntity.ContentEntity contentEntity = entity.getRet_values().getContent().get(i);
+        for (int i = 0; i < valuesEntity.getContent().size(); i++) {
+            MedicalRecordEntity.RetValuesEntity.ContentEntity contentEntity = valuesEntity.getContent().get(i);
 
             List<MedicalRecordEntity.RetValuesEntity.ContentEntity.UserCasesEntity> userCasesEntityList = contentEntity.getUserCases();
 
@@ -60,21 +68,27 @@ public class MedicalRecordPresenter extends BasePresenter implements MedicalReco
             beanList.add(bean);
         }
 
-        mIMedicalRecordPresenter.showMedicalRecordList(beanList);
+        if (shouldAppend()) {
+            mPresenterListener.appendMedicalRecordList(beanList);
+        } else {
+            mPresenterListener.showMedicalRecordList(beanList);
+        }
 
     }
 
     @Override
     public void onReceiveFailed(String message) {
-        mIMedicalRecordPresenter.showError(message);
+        mPresenterListener.showError(message);
     }
 
     @Override
     public void noMoreData(String message) {
-        mIMedicalRecordPresenter.hideLoading();
+        mPresenterListener.hideLoading();
     }
 
     public interface MedicalRecordPresenterListener extends BasePresenterListener {
         void showMedicalRecordList(List<MedicalRecordBean> beanList);
+        void appendMedicalRecordList(List<MedicalRecordBean> beanList);
+        void showReachTheLastPageNotice(String message);
     }
 }

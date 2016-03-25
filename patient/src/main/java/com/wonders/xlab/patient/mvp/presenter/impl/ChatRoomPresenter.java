@@ -43,23 +43,28 @@ public class ChatRoomPresenter extends BasePagePresenter implements IChatRoomPre
     }
 
     @Override
-    public void getChatList(String groupId, boolean isRefresh) {
+    public void getChatList(String imGroupId, boolean isRefresh) {
         if (isRefresh) {
             resetPageInfo();
         }
-        mChatRoomRecordsModel.getChatRecords(groupId, getNextPageIndex(), DEFAULT_PAGE_SIZE);
+        if (mIsLast) {
+            mChatRoomPresenterListener.hideLoading();
+            mChatRoomPresenterListener.showReachTheLastPageNotice("没有更多数据了");
+            return;
+        }
+        mChatRoomRecordsModel.getChatRecords(imGroupId, getNextPageIndex(), DEFAULT_PAGE_SIZE);
     }
 
     @Override
-    public void sendMessage(String message, String patientTel, String groupId, long time) {
-        mSendMessageModel.sendMessage(message, patientTel, groupId, time);
+    public void sendMessage(String message, String patientTel, String imGroupId, long time) {
+        mSendMessageModel.sendMessage(message, patientTel, imGroupId, time);
     }
 
     @Override
     public void onReceiveChatRecordSuccess(ChatRoomEntity.RetValuesEntity valuesEntity) {
         mChatRoomPresenterListener.hideLoading();
 
-        updatePageInfo(valuesEntity.getNumber());
+        updatePageInfo(valuesEntity.getNumber(),valuesEntity.isFirst(),valuesEntity.isLast());
 
         List<ChatRoomEntity.RetValuesEntity.ContentEntity> entityList = valuesEntity.getContent();
 

@@ -28,11 +28,11 @@ public class SendMessageModel extends PatientBaseModel<SendMessageEntity> implem
      *
      * @param message
      * @param patientTel
-     * @param groupId  环信id
+     * @param imGroupId  环信id
      * @param time
      */
     @Override
-    public void sendMessage(String message, String patientTel, String groupId, long time) {
+    public void sendMessage(String message, String patientTel, String imGroupId, long time) {
         SendMessageBody body = new SendMessageBody();
 
         SendMessageBody.MsgEntity msgEntity = new SendMessageBody.MsgEntity();
@@ -40,7 +40,7 @@ public class SendMessageModel extends PatientBaseModel<SendMessageEntity> implem
         msgEntity.setMsg(message);
 
         List<String> targets = new ArrayList<>();
-        targets.add(groupId);
+        targets.add(imGroupId);
 
         body.setMsg(msgEntity);
         body.setFrom(patientTel);

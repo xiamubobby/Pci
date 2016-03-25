@@ -19,12 +19,8 @@ public class MedicalRecordModel extends PatientBaseModel<MedicalRecordEntity> {
         mMedicalRecordAPI = mRetrofit.create(MedicalRecordAPI.class);
     }
 
-    public void getMedicalRecordList(String userId) {
-        if (!isLast()) {
-            fetchData(mMedicalRecordAPI.getMedicalRecordList(userId, getPageIndex() + 1, getSize()), true);
-        } else {
-            mIMedicalRecordModel.noMoreData("没有就诊数据了。");
-        }
+    public void getMedicalRecordList(String userId, int page, int pageSize) {
+        fetchData(mMedicalRecordAPI.getMedicalRecordList(userId, page, pageSize), true);
     }
 
     @Override
@@ -35,10 +31,6 @@ public class MedicalRecordModel extends PatientBaseModel<MedicalRecordEntity> {
             mIMedicalRecordModel.onReceiveFailed("获取就诊记录失败，请重试！");
             return;
         }
-
-        setPageIndex(ret_values.getNumber());
-        setLast(ret_values.isLast());
-        setFirst(ret_values.isFirst());
 
         mIMedicalRecordModel.onReceiveMedicalRecordSuccess(response);
     }
