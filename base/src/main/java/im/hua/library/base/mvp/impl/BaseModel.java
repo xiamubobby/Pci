@@ -40,7 +40,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
          */
         OkHttpClient client = new OkHttpClient();
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logging.setLevel(HttpLoggingInterceptor.Level.NONE);
         client.interceptors().add(logging);
 //        client.setConnectTimeout(30, TimeUnit.SECONDS);
 //        client.setWriteTimeout(30, TimeUnit.SECONDS);
@@ -69,7 +69,12 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        onFailed(new Throwable(e.getMessage()), "");
+                        if (e.getMessage().contains("10000ms")) {
+                            onFailed(new Throwable("连接超时，请检查网络后重试！"), "连接超时，请检查网络后重试！");
+                        } else {
+                            onFailed(new Throwable(e.getMessage()), "");
+                        }
+
                     }
 
                     @Override

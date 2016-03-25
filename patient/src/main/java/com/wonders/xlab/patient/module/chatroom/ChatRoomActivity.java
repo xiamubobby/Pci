@@ -117,14 +117,14 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             @Override
             public void onLoadMore() {
                 mLoadingView.setVisibility(View.VISIBLE);
-                mChatRoomPresenter.getChatList(groupId);
+                mChatRoomPresenter.getChatList(groupId, false);
             }
         });
 
         mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance(this).getPatientId());
         addPresenter(mChatRoomPresenter);
 
-        mChatRoomPresenter.getChatList(groupId);
+        mChatRoomPresenter.getChatList(groupId, true);
     }
 
     @Override
@@ -233,6 +233,11 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
                     break;
             }
         }
+    }
+
+    @Override
+    public void showReachTheLastPageNotice(String message) {
+        showShortToast(message);
     }
 
     @Override

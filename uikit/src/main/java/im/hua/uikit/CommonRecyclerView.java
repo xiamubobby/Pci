@@ -73,6 +73,7 @@ public class CommonRecyclerView extends NestedScrollView {
             containerView.addView(mEmptyView);
         }
         if (null != mLoadingView) {
+            mLoadingView.setVisibility(GONE);
             containerView.addView(mLoadingView);
         }
         mRecyclerView = (RecyclerView) LayoutInflater.from(context).inflate(R.layout.crv_recycler_view, null);

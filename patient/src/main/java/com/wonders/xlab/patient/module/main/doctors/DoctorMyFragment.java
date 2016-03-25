@@ -7,7 +7,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
@@ -70,19 +69,19 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
-                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance(getActivity()).getPatientId());
+                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance(getActivity()).getPatientId(), true);
             }
 
             @Override
             public void onLoadMore() {
-                Toast.makeText(getActivity(), "onLoadMore", Toast.LENGTH_SHORT).show();
+                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance(getActivity()).getPatientId(), false);
             }
         });
 
         mDoctorMyPresenter = new DoctorMyPresenter(this);
         addPresenter(mDoctorMyPresenter);
 
-        mDoctorMyPresenter.getMyDoctors(AIManager.getInstance(getActivity()).getPatientId());
+        mDoctorMyPresenter.getMyDoctors(AIManager.getInstance(getActivity()).getPatientId(), true);
     }
 
     @Override
@@ -119,6 +118,11 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
         }
         mMyDoctorRVAdapter.appendDatas(myDoctorBeanList);
         mRecyclerView.setAdapter(mMyDoctorRVAdapter);
+    }
+
+    @Override
+    public void showReachTheLastPageNotice(String message) {
+        showShortToast(message);
     }
 
     @Override

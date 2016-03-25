@@ -8,6 +8,7 @@ import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import rx.Observable;
 
 /**
@@ -15,7 +16,7 @@ import rx.Observable;
  */
 public interface ChatRoomAPI {
     @GET("v1/imContents/listImChatHistory/{groupId}")
-    Observable<ChatRoomEntity> getChatRecords(@Path("groupId") String groupId);
+    Observable<ChatRoomEntity> getChatRecords(@Path("groupId") String groupId, @Query("page") int page,@Query("size") int size);
 
     @POST("v1/ims/sendContentToDoctor/{time}")
     Observable<SendMessageEntity> sendMessage(@Body SendMessageBody body, @Path("time") long time);

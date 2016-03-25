@@ -10,13 +10,13 @@ import com.wonders.xlab.patient.mvp.presenter.IDoctorMyPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
 
 /**
  * Created by hua on 16/3/14.
  */
-public class DoctorMyPresenter extends BasePresenter implements IDoctorMyPresenter, DoctorMyModel.DoctorMyModelListener {
+public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPresenter, DoctorMyModel.DoctorMyModelListener {
     private DoctorMyPresenterListener mDoctorMyListener;
     private IDoctorMyModel mDoctorMyModel;
 
@@ -28,13 +28,18 @@ public class DoctorMyPresenter extends BasePresenter implements IDoctorMyPresent
     }
 
     @Override
-    public void getMyDoctors(String patientId) {
-        mDoctorMyModel.getMyDoctors(patientId);
+    public void getMyDoctors(String patientId, boolean isRefresh) {
+        if (isRefresh) {
+            resetPageInfo();
+        }
+        mDoctorMyModel.getMyDoctors(patientId, getNextPageIndex(), DEFAULT_PAGE_SIZE);
     }
 
     @Override
     public void onReceiveMyDoctorListSuccess(DoctorMyEntity.RetValuesEntity valuesEntity) {
         mDoctorMyListener.hideLoading();
+
+        updatePageInfo(valuesEntity.getServiceFalse().getPage());
 
         ArrayList<MyDoctorItemBean> doctorItemBeanArrayList = new ArrayList<>();
 
@@ -67,6 +72,10 @@ public class DoctorMyPresenter extends BasePresenter implements IDoctorMyPresent
             doctorItemBeanArrayList.add(itemBean);
         }
 
+        if (doctorItemBeanArrayList.size() <= 0) {
+            mDoctorMyListener.showReachTheLastPageNotice("没有更多数据了");
+            return;
+        }
         mDoctorMyListener.showMyDoctorList(doctorItemBeanArrayList);
     }
 
@@ -80,5 +89,7 @@ public class DoctorMyPresenter extends BasePresenter implements IDoctorMyPresent
         void showMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList);
 
         void appendMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList);
+
+        void showReachTheLastPageNotice(String message);
     }
 }

@@ -9,13 +9,13 @@ import com.wonders.xlab.patient.mvp.presenter.IDoctorAllPresenter;
 
 import java.util.ArrayList;
 
-import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
 
 /**
  * Created by hua on 16/3/15.
  */
-public class DoctorAllPresenter extends BasePresenter implements IDoctorAllPresenter, DoctorAllModel.DoctorAllModelListener {
+public class DoctorAllPresenter extends BasePagePresenter implements IDoctorAllPresenter, DoctorAllModel.DoctorAllModelListener {
 
     private DoctorAllPresenterListener mDoctorAllListener;
     private IDoctorAllModel mDoctorAllModel;
@@ -25,13 +25,19 @@ public class DoctorAllPresenter extends BasePresenter implements IDoctorAllPrese
         mDoctorAllModel = new DoctorAllModel(this);
     }
 
-    public void getAllDoctors(String patientId) {
-        mDoctorAllModel.getAllDoctorList(patientId);
+    public void getAllDoctors(String patientId, boolean isRefresh) {
+        if (isRefresh) {
+            resetPageInfo();
+        }
+        mDoctorAllModel.getAllDoctorList(patientId, getNextPageIndex(), DEFAULT_PAGE_SIZE);
     }
 
     @Override
     public void onReceiveAllDoctorListSuccess(DoctorAllEntity.RetValuesEntity valuesEntity) {
         mDoctorAllListener.hideLoading();
+
+        updatePageInfo(valuesEntity.getPage());
+
         ArrayList<AllDoctorItemBean> doctorItemBeanArrayList = new ArrayList<>();
 
         for (DoctorAllEntity.RetValuesEntity.ResultEntity entity : valuesEntity.getResult()) {
@@ -58,6 +64,10 @@ public class DoctorAllPresenter extends BasePresenter implements IDoctorAllPrese
             doctorItemBeanArrayList.add(itemBean);
         }
 
+        if (doctorItemBeanArrayList.size() <= 0) {
+            mDoctorAllListener.showReachTheLastPageNotice("没有更多数据了");
+            return;
+        }
         mDoctorAllListener.showAllDoctorList(doctorItemBeanArrayList);
     }
 
@@ -71,5 +81,7 @@ public class DoctorAllPresenter extends BasePresenter implements IDoctorAllPrese
         void showAllDoctorList(ArrayList<AllDoctorItemBean> myDoctorBeanList);
 
         void appendAllDoctorList(ArrayList<AllDoctorItemBean> myDoctorBeanList);
+
+        void showReachTheLastPageNotice(String message);
     }
 }

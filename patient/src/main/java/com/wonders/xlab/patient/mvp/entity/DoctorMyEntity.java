@@ -60,8 +60,8 @@ public class DoctorMyEntity extends BaseEntity {
         }
 
         public static class ServiceFalseEntity {
-            private String size;
-            private String page;
+            private int size;
+            private int page;
             /**
              * doctorGroupId : 1
              * imGroupId : 166710012339552740
@@ -73,19 +73,19 @@ public class DoctorMyEntity extends BaseEntity {
 
             private List<ContentEntity> content;
 
-            public String getSize() {
+            public int getSize() {
                 return size;
             }
 
-            public void setSize(String size) {
+            public void setSize(int size) {
                 this.size = size;
             }
 
-            public String getPage() {
+            public int getPage() {
                 return page;
             }
 
-            public void setPage(String page) {
+            public void setPage(int page) {
                 this.page = page;
             }
 

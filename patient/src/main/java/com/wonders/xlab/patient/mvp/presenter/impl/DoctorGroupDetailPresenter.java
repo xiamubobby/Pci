@@ -39,8 +39,8 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
     }
 
     @Override
-    public void fetchDoctorGroupDetailInfo(String doctorGroupId) {
-        mDoctorDetailModel.getDoctorGroupDetailInfo(doctorGroupId);
+    public void fetchDoctorGroupDetailInfo(String patientId,String doctorGroupId) {
+        mDoctorDetailModel.getDoctorGroupDetailInfo(patientId,doctorGroupId);
     }
 
     @Override
@@ -81,6 +81,7 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
                 DoctorDetailPackageBean bean = new DoctorDetailPackageBean();
                 bean.packageId.set(entity.getDPackageId());
                 bean.name.set(entity.getName());
+                bean.orderStatus.set(entity.getOrderStatus());
                 bean.description.set(entity.getDescription());
                 bean.priceStr.set(entity.getPrice() + entity.getUnit());
                 bean.iconUrl.set(entity.getIconUrl());

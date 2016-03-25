@@ -26,8 +26,8 @@ public class DoctorAllEntity extends BaseEntity {
     }
 
     public static class RetValuesEntity {
-        private String size;
-        private String page;
+        private int size;
+        private int page;
         /**
          * doctorGroupId : 1
          * groupName : 心血管
@@ -47,19 +47,19 @@ public class DoctorAllEntity extends BaseEntity {
 
         private List<ResultEntity> result;
 
-        public String getSize() {
+        public int getSize() {
             return size;
         }
 
-        public void setSize(String size) {
+        public void setSize(int size) {
             this.size = size;
         }
 
-        public String getPage() {
+        public int getPage() {
             return page;
         }
 
-        public void setPage(String page) {
+        public void setPage(int page) {
             this.page = page;
         }
 

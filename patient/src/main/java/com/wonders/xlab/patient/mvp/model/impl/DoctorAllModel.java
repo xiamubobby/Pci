@@ -32,8 +32,8 @@ public class DoctorAllModel extends PatientBaseModel<DoctorAllEntity> implements
     }
 
     @Override
-    public void getAllDoctorList(String patientId) {
-        fetchData(mDoctorAPI.getAllDoctors(patientId), true);
+    public void getAllDoctorList(String patientId, int page, int pageSize) {
+        fetchData(mDoctorAPI.getAllDoctors(patientId, page, pageSize), true);
     }
 
     public interface DoctorAllModelListener extends BaseModelListener {

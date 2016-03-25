@@ -242,6 +242,10 @@ public class DoctorGroupDetailEntity extends BaseEntity {
             private String iconUrl;
             private String price;
             private String unit;
+            /**
+             * 0 未购买 1 购买 2过期
+             */
+            private int orderStatus;
             private String description;
 
             public String getDPackageId() {
@@ -290,6 +294,14 @@ public class DoctorGroupDetailEntity extends BaseEntity {
 
             public void setDescription(String description) {
                 this.description = description;
+            }
+
+            public int getOrderStatus() {
+                return orderStatus;
+            }
+
+            public void setOrderStatus(int orderStatus) {
+                this.orderStatus = orderStatus;
             }
         }
     }

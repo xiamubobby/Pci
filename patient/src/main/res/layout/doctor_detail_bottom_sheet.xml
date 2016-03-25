@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_doctor_detail_bottom_sheet_desc"
         android:layout_marginTop="@dimen/item_interval_middle"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/selector_btn_primary_bg"
         android:text="立即购买"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_middle"/>

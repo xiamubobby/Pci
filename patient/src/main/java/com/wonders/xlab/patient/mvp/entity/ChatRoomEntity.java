@@ -33,12 +33,12 @@ public class ChatRoomEntity extends BaseEntity {
 
     public static class RetValuesEntity {
         private boolean last;
-        private String totalElements;
-        private String totalPages;
-        private String size;
-        private String number;
+        private int totalElements;
+        private int totalPages;
+        private int size;
+        private int number;
         private boolean first;
-        private String numberOfElements;
+        private int numberOfElements;
         /**
          * id : 60
          * fromWho : 5
@@ -69,35 +69,35 @@ public class ChatRoomEntity extends BaseEntity {
             this.last = last;
         }
 
-        public String getTotalElements() {
+        public int getTotalElements() {
             return totalElements;
         }
 
-        public void setTotalElements(String totalElements) {
+        public void setTotalElements(int totalElements) {
             this.totalElements = totalElements;
         }
 
-        public String getTotalPages() {
+        public int getTotalPages() {
             return totalPages;
         }
 
-        public void setTotalPages(String totalPages) {
+        public void setTotalPages(int totalPages) {
             this.totalPages = totalPages;
         }
 
-        public String getSize() {
+        public int getSize() {
             return size;
         }
 
-        public void setSize(String size) {
+        public void setSize(int size) {
             this.size = size;
         }
 
-        public String getNumber() {
+        public int getNumber() {
             return number;
         }
 
-        public void setNumber(String number) {
+        public void setNumber(int number) {
             this.number = number;
         }
 
@@ -109,11 +109,11 @@ public class ChatRoomEntity extends BaseEntity {
             this.first = first;
         }
 
-        public String getNumberOfElements() {
+        public int getNumberOfElements() {
             return numberOfElements;
         }
 
-        public void setNumberOfElements(String numberOfElements) {
+        public void setNumberOfElements(int numberOfElements) {
             this.numberOfElements = numberOfElements;
         }
 

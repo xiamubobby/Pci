@@ -10,6 +10,7 @@ import im.hua.library.base.mvp.IBasePresenter;
  * Created by hua on 16/2/22.
  */
 public class BasePresenter implements IBasePresenter {
+
     private List<BaseModel> mBaseModelList;
     private List<IBaseModel> mIBaseModelList;
 

@@ -24,7 +24,7 @@ public class OrderPackageServiceModel extends PatientBaseModel<SimpleEntity> imp
 
     @Override
     protected void onSuccess(SimpleEntity response) {
-        mServiceModelListener.onOrderPackageServiceSuccess(response.getMessage());
+        mServiceModelListener.onOrderPackageServiceSuccess("购买成功！");
     }
 
     @Override

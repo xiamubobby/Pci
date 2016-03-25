@@ -22,8 +22,8 @@ public class ChatRoomRecordsModel extends PatientBaseModel<ChatRoomEntity> imple
     }
 
     @Override
-    public void getChatRecords(String groupId) {
-        fetchData(mChatRoomAPI.getChatRecords(groupId),true);
+    public void getChatRecords(String groupId, int page, int pageSize) {
+        fetchData(mChatRoomAPI.getChatRecords(groupId, page, pageSize),true);
     }
 
     @Override

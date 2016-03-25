@@ -158,10 +158,10 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     private void requestData() {
         switch (type) {
             case TYPE_DOCTOR:
-                mDoctorDetailPresenter.fetchDoctorDetailInfo(doctorOrGroupId);
+                mDoctorDetailPresenter.fetchDoctorDetailInfo(AIManager.getInstance(this).getPatientId(), doctorOrGroupId);
                 break;
             case TYPE_DOCTOR_GROUP:
-                mDoctorGroupDetailPresenter.fetchDoctorGroupDetailInfo(doctorOrGroupId);
+                mDoctorGroupDetailPresenter.fetchDoctorGroupDetailInfo(AIManager.getInstance(this).getPatientId(), doctorOrGroupId);
                 break;
         }
     }
@@ -173,6 +173,10 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
 
     }
 
+    /**
+     * 点击套餐显示BottomSheet
+     * @param packageList
+     */
     @Override
     public void showPackageList(final ArrayList<DoctorDetailPackageBean> packageList) {
         if (null == mPackageRVAdapter) {
@@ -188,16 +192,34 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
                     TextView price = (TextView) view.findViewById(R.id.tv_doctor_detail_bottom_sheet_price);
                     TextView desc = (TextView) view.findViewById(R.id.tv_doctor_detail_bottom_sheet_desc);
                     Button btnBuy = (Button) view.findViewById(R.id.btn_doctor_detail_bottom_sheet);
+
+                    final int status = mPackageRVAdapter.getBean(position).orderStatus.get();
+                    switch (status) {
+                        case DoctorDetailPackageBean.STATUS_IN_SERVICE:
+                            btnBuy.setText("已购买");
+                            btnBuy.setBackgroundColor(getResources().getColor(R.color.text_color_secondary_gray));
+                            break;
+                        case DoctorDetailPackageBean.STATUS_OUT_SERVICE:
+                            btnBuy.setText("再次购买");
+                            break;
+                        case DoctorDetailPackageBean.STATUS_NEVER_BUY:
+                            btnBuy.setText("立即购买");
+                            break;
+                    }
                     btnBuy.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            switch (type) {
-                                case TYPE_DOCTOR:
-                                    mDoctorDetailPresenter.orderPackage(AIManager.getInstance(DoctorDetailActivity.this).getPatientId(), packageList.get(position).packageId.get());
-                                    break;
-                                case TYPE_DOCTOR_GROUP:
-                                    mDoctorGroupDetailPresenter.orderPackage(AIManager.getInstance(DoctorDetailActivity.this).getPatientId(), packageList.get(position).packageId.get());
-                                    break;
+                            if (status == DoctorDetailPackageBean.STATUS_IN_SERVICE) {
+                                showShortToast("您已购买本套餐");
+                            } else {
+                                switch (type) {
+                                    case TYPE_DOCTOR:
+                                        mDoctorDetailPresenter.orderPackage(AIManager.getInstance(DoctorDetailActivity.this).getPatientId(), packageList.get(position).packageId.get());
+                                        break;
+                                    case TYPE_DOCTOR_GROUP:
+                                        mDoctorGroupDetailPresenter.orderPackage(AIManager.getInstance(DoctorDetailActivity.this).getPatientId(), packageList.get(position).packageId.get());
+                                        break;
+                                }
                             }
                         }
                     });
@@ -285,6 +307,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     @Override
     public void orderPackageSuccess(String message) {
         showShortToast(message);
+        requestData();
         dialog.dismiss();
     }
 

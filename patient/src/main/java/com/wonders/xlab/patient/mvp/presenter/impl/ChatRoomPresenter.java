@@ -13,7 +13,7 @@ import com.wonders.xlab.patient.mvp.presenter.IChatRoomPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
 import im.hua.utils.DateUtil;
 
@@ -21,7 +21,7 @@ import im.hua.utils.DateUtil;
 /**
  * Created by hua on 16/2/22.
  */
-public class ChatRoomPresenter extends BasePresenter implements IChatRoomPresenter, ChatRoomRecordsModel.ChatRoomModelListener, SendMessageModel.SendMessageModelListener {
+public class ChatRoomPresenter extends BasePagePresenter implements IChatRoomPresenter, ChatRoomRecordsModel.ChatRoomModelListener, SendMessageModel.SendMessageModelListener {
     private final String TYPE_USER = "User";
     private final String TYPE_DOCTOR = "Doctor";
 
@@ -43,8 +43,11 @@ public class ChatRoomPresenter extends BasePresenter implements IChatRoomPresent
     }
 
     @Override
-    public void getChatList(String groupId) {
-        mChatRoomRecordsModel.getChatRecords(groupId);
+    public void getChatList(String groupId, boolean isRefresh) {
+        if (isRefresh) {
+            resetPageInfo();
+        }
+        mChatRoomRecordsModel.getChatRecords(groupId, getNextPageIndex(), DEFAULT_PAGE_SIZE);
     }
 
     @Override
@@ -55,6 +58,9 @@ public class ChatRoomPresenter extends BasePresenter implements IChatRoomPresent
     @Override
     public void onReceiveChatRecordSuccess(ChatRoomEntity.RetValuesEntity valuesEntity) {
         mChatRoomPresenterListener.hideLoading();
+
+        updatePageInfo(valuesEntity.getNumber());
+
         List<ChatRoomEntity.RetValuesEntity.ContentEntity> entityList = valuesEntity.getContent();
 
         List<ChatRoomBean> chatRoomBeanList = new ArrayList<>();
@@ -79,7 +85,15 @@ public class ChatRoomPresenter extends BasePresenter implements IChatRoomPresent
                 chatRoomBeanList.add(bean);
             }
         }
-        mChatRoomPresenterListener.showChatMessageList(chatRoomBeanList);
+        if (chatRoomBeanList.size() <= 0) {
+            mChatRoomPresenterListener.showReachTheLastPageNotice("没有更多数据了");
+            return;
+        }
+        if (shouldAppend()) {
+            mChatRoomPresenterListener.appendChatMessageList(chatRoomBeanList);
+        } else {
+            mChatRoomPresenterListener.showChatMessageList(chatRoomBeanList);
+        }
     }
 
     @Override
@@ -99,5 +113,7 @@ public class ChatRoomPresenter extends BasePresenter implements IChatRoomPresent
         void appendChatMessageList(List<ChatRoomBean> chatRoomBeanList);
 
         void sendMessageSuccess(long time);
+
+        void showReachTheLastPageNotice(String message);
     }
 }

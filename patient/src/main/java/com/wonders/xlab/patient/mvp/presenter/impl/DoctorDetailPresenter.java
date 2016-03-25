@@ -38,8 +38,8 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
     }
 
     @Override
-    public void fetchDoctorDetailInfo(String doctorId) {
-        mDoctorDetailModel.getDoctorDetailInfo(doctorId);
+    public void fetchDoctorDetailInfo(String patientId,String doctorId) {
+        mDoctorDetailModel.getDoctorDetailInfo(patientId,doctorId);
     }
 
     @Override
@@ -102,6 +102,7 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
             DoctorDetailPackageBean bean = new DoctorDetailPackageBean();
             bean.packageId.set(entity.getDPackageId());
             bean.name.set(entity.getName());
+            bean.orderStatus.set(entity.getOrderStatus());
             bean.description.set(entity.getDescription());
             bean.priceStr.set(entity.getPrice() + entity.getUnit());
             bean.iconUrl.set(entity.getIconUrl());

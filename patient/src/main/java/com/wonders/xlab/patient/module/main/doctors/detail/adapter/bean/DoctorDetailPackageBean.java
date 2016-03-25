@@ -28,4 +28,12 @@ public class DoctorDetailPackageBean {
      */
     public ObservableField<String> description = new ObservableField<>();
 
+    public final static int STATUS_OUT_SERVICE = 2;
+    public final static int STATUS_IN_SERVICE = 1;
+    public final static int STATUS_NEVER_BUY = 0;
+    /**
+     * 0 未购买 1 购买 2过期
+     */
+    public ObservableField<Integer> orderStatus = new ObservableField<>();
+
 }
