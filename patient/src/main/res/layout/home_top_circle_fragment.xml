@@ -6,68 +6,143 @@
               android:orientation="horizontal"
               tools:context=".module.main.home.HomeTopCircleFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/pic_home_top_circle_bg"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:src="@drawable/pic_home_top_circle_bg"/>
+
+        <TextView
+            android:id="@+id/tv_home_top_circle_left"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignBottom="@+id/ll_home_top_circle_middle"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="@dimen/item_interval_small"
+            android:layout_toLeftOf="@+id/ll_home_top_circle_middle"
+            android:background="@drawable/shape_home_top_circle_small"
+            android:gravity="center"
+            android:lineSpacingExtra="2dp"
+            android:padding="18dp"
+            android:textColor="#006b93"
+            android:textSize="@dimen/text_size_small"/>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_home_top_circle_left"
+            android:layout_alignRight="@+id/tv_home_top_circle_left"
+            android:layout_below="@+id/ll_home_top_circle_middle"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_home_top_bs"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="正常\n7.5\nmmol/L"
+                android:layout_marginLeft="@dimen/item_interval_small"
+                android:text="血糖"
                 android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_middle"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_home_top_circle_middle"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/pic_home_top_circle_big_circle"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_home_top_circle_middle_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/item_interval_middle"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_large"/>
+
+            <TextView
+                android:id="@+id/tv_home_top_circle_middle_value"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="#30bdf2"
                 android:textSize="@dimen/text_size_large"/>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/ll_home_top_circle_middle"
+            android:layout_alignRight="@+id/ll_home_top_circle_middle"
+            android:layout_below="@+id/ll_home_top_circle_middle"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_home_top_bp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="正常"
+                android:layout_marginLeft="@dimen/item_interval_small"
+                android:text="血压"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_large"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/item_interval_small"
-                android:gravity="center"
-                android:text="120/75\nmmHg"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_large"/>
+                android:textSize="@dimen/text_size_middle"/>
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_home_top_circle_right"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignBottom="@+id/ll_home_top_circle_middle"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="@dimen/item_interval_small"
+            android:layout_toRightOf="@+id/ll_home_top_circle_middle"
+            android:background="@drawable/shape_home_top_circle_small"
+            android:gravity="center"
+            android:padding="18dp"
+            android:textColor="#006b93"
+            android:textSize="@dimen/text_size_small"/>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_home_top_circle_right"
+            android:layout_alignRight="@+id/tv_home_top_circle_right"
+            android:layout_below="@+id/ll_home_top_circle_middle"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_home_top_heart_rate"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="正常\n87\n次/分"
+                android:layout_marginLeft="@dimen/item_interval_small"
+                android:text="心率"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_large"/>
+                android:textSize="@dimen/text_size_middle"/>
         </LinearLayout>
-    </LinearLayout>
-
+    </RelativeLayout>
 
 </LinearLayout>

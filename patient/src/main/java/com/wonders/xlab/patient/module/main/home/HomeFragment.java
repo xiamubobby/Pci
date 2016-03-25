@@ -121,7 +121,7 @@ public class HomeFragment extends BaseFragment {
                     case 3:
                         backgroundDrawableId = R.drawable.shape_home_label_health_report;
                         drawableResId = R.drawable.ic_home_health_report;
-                        title = "数据报表";
+                        title = "健康报表";
                         break;
                 }
                 homeItemBean.setBackgroundDrawableId(backgroundDrawableId);

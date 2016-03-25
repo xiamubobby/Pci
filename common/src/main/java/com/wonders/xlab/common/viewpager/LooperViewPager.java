@@ -13,11 +13,15 @@ import android.view.View;
  * Created by hua on 16/3/17.
  */
 public class LooperViewPager extends ViewPager {
-    private Handler mHandler = new Handler();
+    private Handler mHandler;
 
     private int mTopCounts = 0;
 
     private long mIntervalTimeInMill = 5000;
+
+    private boolean mLoop = true;
+
+    private boolean mStopLoopWhenTouch = true;
 
     public LooperViewPager(Context context) {
         super(context);
@@ -49,38 +53,67 @@ public class LooperViewPager extends ViewPager {
                         mIsTouching = false;
                         break;
                 }
-                return false;
-            }
-        });
-
-        mHandler = new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-                if (!mIsTouching) {
-                    PagerAdapter adapter = getAdapter();
-                    if (null != adapter) {
-                        mTopCounts = adapter.getCount();
-                        if (mTopCounts > 0) {
-                            int currentItem = getCurrentItem();
-                            if (currentItem < mTopCounts - 1) {
-                                setCurrentItem(currentItem + 1, true);
-                            } else {
-                                setCurrentItem(0, true);
-                            }
-                        }
-                    }
+                if (mIsTouching && mStopLoopWhenTouch) {
+                    stopLoop();
                 }
-                mHandler.sendEmptyMessageDelayed(0, mIntervalTimeInMill);
-
                 return false;
             }
         });
 
-        mHandler.sendEmptyMessageDelayed(0, mIntervalTimeInMill);
+        startLoop();
     }
 
     public void setLooperIntervalTimeInMill(long intervalTimeInMill) {
         mIntervalTimeInMill = intervalTimeInMill;
+    }
+
+    public void startLoop() {
+        mLoop = true;
+        if (null == mHandler) {
+            mHandler = new Handler(new Handler.Callback() {
+                @Override
+                public boolean handleMessage(Message msg) {
+                    if (mLoop) {
+                        if (!mIsTouching) {
+                            PagerAdapter adapter = getAdapter();
+                            if (null != adapter) {
+                                mTopCounts = adapter.getCount();
+                                if (mTopCounts > 0) {
+                                    int currentItem = getCurrentItem();
+                                    if (currentItem < mTopCounts - 1) {
+                                        setCurrentItem(currentItem + 1, true);
+                                    } else {
+                                        setCurrentItem(0, true);
+                                    }
+                                }
+                            }
+                        }
+                        if (null != mHandler) {
+                            mHandler.sendEmptyMessageDelayed(0, mIntervalTimeInMill);
+                        }
+
+                    }
+
+                    return false;
+                }
+            });
+        }
+
+        mHandler.sendEmptyMessageDelayed(0, mIntervalTimeInMill);
+    }
+
+    public void stopLoop() {
+        mLoop = false;
+        if (null != mHandler) {
+            mHandler.removeMessages(0);
+            mHandler = null;
+        }
+    }
+
+    public void stopLoopWhenTouch(boolean stop) {
+        if (stop) {
+            stopLoop();
+        }
     }
 
 }

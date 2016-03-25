@@ -45,6 +45,13 @@ import butterknife.ButterKnife;
  * 不适症状需要从服务器获取，因为其中有医生的建议和确认的状态
  */
 public class DailyRecordActivity extends AppbarActivity {
+    public final static int SHOW_TAB_POSITION_BS = 0;
+    public final static int SHOW_TAB_POSITION_BP = 1;
+    public final static int SHOW_TAB_POSITION_SYMPTOM = 2;
+
+    public final static String DEFAULT_SHOW_TAB_POSITION = "defaultShowTabPositiion";
+
+    private int mDefaultShowTabPosition = 0;
 
     @Bind(R.id.view_pager_daily_record)
     ViewPager mViewPager;
@@ -66,6 +73,14 @@ public class DailyRecordActivity extends AppbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if (null != intent) {
+            Bundle data = intent.getExtras();
+            if (null != data) {
+                mDefaultShowTabPosition = data.getInt(DEFAULT_SHOW_TAB_POSITION, 0);
+            }
+        }
+
         OttoManager.register(this);
         ButterKnife.bind(this);
         initViewPager();
@@ -125,6 +140,7 @@ public class DailyRecordActivity extends AppbarActivity {
 
             }
         });
+        mViewPager.setCurrentItem(mDefaultShowTabPosition,true);
     }
 
     private void recordNewData(Class targetActivity) {

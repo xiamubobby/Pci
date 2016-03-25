@@ -16,12 +16,10 @@
             android:id="@+id/tv_symptom_report_item_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_symptom_tv_not_confirm"
             android:paddingBottom="@dimen/item_interval_very_small"
             android:paddingLeft="@dimen/item_interval_middle"
             android:paddingRight="@dimen/item_interval_middle"
             android:paddingTop="@dimen/item_interval_very_small"
-            android:text="已确认"
             android:textColor="@color/colorAccent"
             android:textSize="@dimen/text_size_very_small"/>
 
@@ -32,9 +30,8 @@
             android:gravity="right|center_vertical"
             android:paddingBottom="@dimen/item_interval_small"
             android:paddingTop="@dimen/item_interval_small"
-            android:text="记录时间：12:12"
             android:textColor="@color/text_color_primary_gray"
-            android:textSize="@dimen/text_size_middle"/>
+            android:textSize="@dimen/text_size_small"/>
     </LinearLayout>
 
 
@@ -52,7 +49,6 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/item_interval_small"
         android:paddingTop="@dimen/item_interval_small"
-        android:text="医生建议："
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_size_middle"/>
 </LinearLayout>
