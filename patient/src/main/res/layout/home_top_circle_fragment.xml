@@ -7,59 +7,67 @@
               tools:context=".module.main.home.HomeTopCircleFragment">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:background="@drawable/pic_home_top_circle_bg"
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="正常\n7.5\nmmol/L"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_large"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="正常\n7.5\nmmol/L"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_large"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正常"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_large"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_interval_small"
+                android:gravity="center"
+                android:text="120/75\nmmHg"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_large"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="正常\n87\n次/分"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_large"/>
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="正常"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_large"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_interval_small"
-            android:gravity="center"
-            android:text="120/75\nmmHg"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_large"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="正常\n87\n次/分"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_large"/>
-    </LinearLayout>
 
 </LinearLayout>

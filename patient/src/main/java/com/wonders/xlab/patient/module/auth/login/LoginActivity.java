@@ -40,6 +40,11 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
         addPresenter(mLoginPresenter);
     }
 
+    @OnClick(R.id.container)
+    public void hideKeyboard() {
+        KeyboardUtil.hide(this, mContainer.getWindowToken());
+    }
+
     @OnClick(R.id.btn_login)
     public void login() {
         KeyboardUtil.hide(this, mContainer.getWindowToken());
