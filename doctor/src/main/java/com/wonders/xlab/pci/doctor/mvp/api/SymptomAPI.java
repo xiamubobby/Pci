@@ -3,11 +3,11 @@ package com.wonders.xlab.pci.doctor.mvp.api;
 import com.wonders.xlab.pci.doctor.mvp.entity.SymptomCommentEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.SymptomEntity;
 
-import retrofit.http.Field;
-import retrofit.http.FormUrlEncoded;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.Path;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**

@@ -26,7 +26,6 @@ public class XApplication extends Application {
 //        }
         UmengUpdateAgent.setUpdateOnlyWifi(false);
 
-//        Bugtags.start("b3d8dc7b153c16bb34d741d78b03e4d1", this, Bugtags.BTGInvocationEventShake);
         // The realm file will be located in Context.getFilesDir() with name "default.realm"
         RealmConfiguration config = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(config);

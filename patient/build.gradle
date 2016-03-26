@@ -1,14 +1,6 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'realm-android'
-//应用插件
-/*apply plugin: 'com.bugtags.library.plugin'
-
-//必须配置，否则自动上传符号表功能不会生效
-bugtags {
-    appKey "b3d8dc7b153c16bb34d741d78b03e4d1"
-    appSecret  "441869beee3f2ab222f5c12d51a85be2"
-}*/
 
 def AppVersion = "0.1"
 

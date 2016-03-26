@@ -4,11 +4,11 @@ import com.wonders.xlab.patient.mvp.entity.ChatRoomEntity;
 import com.wonders.xlab.patient.mvp.entity.SendMessageEntity;
 import com.wonders.xlab.patient.mvp.entity.request.SendMessageBody;
 
-import retrofit.http.Body;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**

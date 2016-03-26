@@ -5,9 +5,9 @@ import com.wonders.xlab.patient.mvp.entity.DoctorDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.DoctorGroupDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.DoctorMyEntity;
 
-import retrofit.http.GET;
-import retrofit.http.Path;
-import retrofit.http.Query;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**

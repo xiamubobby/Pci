@@ -2,8 +2,8 @@ package com.wonders.xlab.pci.doctor.mvp.api;
 
 import com.wonders.xlab.pci.doctor.mvp.entity.UserInfoEntity;
 
-import retrofit.http.GET;
-import retrofit.http.Path;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**

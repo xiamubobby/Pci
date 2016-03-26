@@ -3,14 +3,13 @@ package im.hua.library.base.mvp.impl;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.squareup.okhttp.OkHttpClient;
-
 import im.hua.library.base.mvp.IBaseModel;
 import im.hua.library.base.mvp.entity.BaseEntity;
 import im.hua.library.base.retrofit.HttpLoggingInterceptor;
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -39,9 +38,9 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
          * 如果后面okhttp更新了，可去掉，而用square的
          */
         OkHttpClient client = new OkHttpClient();
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.NONE);
-        client.interceptors().add(logging);
+//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+//        logging.setLevel(HttpLoggingInterceptor.Level.NONE);
+//        client.interceptors().add(logging);
 //        client.setConnectTimeout(30, TimeUnit.SECONDS);
 //        client.setWriteTimeout(30, TimeUnit.SECONDS);
 //        client.setReadTimeout(30, TimeUnit.SECONDS);

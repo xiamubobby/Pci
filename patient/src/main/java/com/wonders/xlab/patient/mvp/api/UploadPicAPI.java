@@ -1,14 +1,15 @@
 package com.wonders.xlab.patient.mvp.api;
 
-import com.squareup.okhttp.RequestBody;
 
 import java.util.IdentityHashMap;
 
 import im.hua.library.base.mvp.entity.SimpleEntity;
-import retrofit.http.Multipart;
-import retrofit.http.POST;
-import retrofit.http.Part;
-import retrofit.http.PartMap;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import rx.Observable;
 
 /**
@@ -17,5 +18,9 @@ import rx.Observable;
 public interface UploadPicAPI {
     @Multipart
     @POST("userCase/uploadPic")
-    Observable<SimpleEntity> upload(@Part("userId") RequestBody userId, @PartMap IdentityHashMap<String, RequestBody> files);
+    Observable<SimpleEntity> upload(@Part("userId") RequestBody userId, @PartMap IdentityHashMap<String, MultipartBody> files);
+
+    @Multipart
+    @POST("userCase/uploadPic")
+    Observable<SimpleEntity> upload(@Part("userId") RequestBody userId, @Part("file") MultipartBody multipartBody);
 }

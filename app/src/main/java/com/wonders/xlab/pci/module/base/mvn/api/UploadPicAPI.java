@@ -5,10 +5,10 @@ import com.wonders.xlab.pci.module.base.mvn.entity.SimpleEntity;
 
 import java.util.IdentityHashMap;
 
-import retrofit.http.Multipart;
-import retrofit.http.POST;
-import retrofit.http.Part;
-import retrofit.http.PartMap;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import rx.Observable;
 
 /**

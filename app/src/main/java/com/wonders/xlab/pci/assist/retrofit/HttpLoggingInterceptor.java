@@ -1,36 +1,40 @@
-package com.wonders.xlab.common.retrofit;
+package com.wonders.xlab.pci.assist.retrofit;
 
-
-import com.squareup.okhttp.Connection;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.Interceptor;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Protocol;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.ResponseBody;
-import com.squareup.okhttp.internal.Platform;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Connection;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
+import okhttp3.MediaType;
+import okhttp3.Protocol;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+import okhttp3.internal.Platform;
 import okio.Buffer;
 import okio.BufferedSource;
 
 /**
  * An OkHttp interceptor which logs request and response information. Can be applied as an
- * {@linkplain OkHttpClient#interceptors() application interceptor} or as a
- * {@linkplain OkHttpClient#networkInterceptors() network interceptor}.
+ * {@linkplain okhttp3.OkHttpClient#interceptors() application interceptor} or as a
+ * {@linkplain okhttp3.OkHttpClient#networkInterceptors() network interceptor}.
  * <p/>
  * The format of the logs created by this class should not be considered stable and may change
  * slightly between releases. If you need a stable logging format, use your own interceptor.
  */
 public final class HttpLoggingInterceptor implements Interceptor {
     private static final Charset UTF8 = Charset.forName("UTF-8");
+
+    private OnResponseListener mOnResponseListener;
+
+    public void setOnResponseListener(OnResponseListener onResponseListener) {
+        mOnResponseListener = onResponseListener;
+    }
 
     public enum Level {
         /**
@@ -139,9 +143,9 @@ public final class HttpLoggingInterceptor implements Interceptor {
         boolean hasRequestBody = requestBody != null;
 
         Connection connection = chain.connection();
-        Protocol protocol = connection != null ? connection.getProtocol() : Protocol.HTTP_1_1;
+        Protocol protocol = connection != null ? connection.protocol() : Protocol.HTTP_1_1;
         String requestStartMessage =
-                "--> " + request.method() + ' ' + requestPath(request.httpUrl()) + ' ' + protocol(protocol);
+                "--> " + request.method() + ' ' + requestPath(request.url()) + ' ' + protocol(protocol);
         if (!logHeaders && hasRequestBody) {
             requestStartMessage += " (" + requestBody.contentLength() + "-byte body)";
         }
@@ -174,6 +178,33 @@ public final class HttpLoggingInterceptor implements Interceptor {
 
         long startNs = System.nanoTime();
         Response response = chain.proceed(request);
+
+        int code = response.code();
+        if (null != mOnResponseListener) {
+            switch (code) {
+                case 401:
+                    mOnResponseListener.onErrorCodeMessage("请确保在正确授权的情况下，再重试哦！");
+                case 403:
+                    mOnResponseListener.onErrorCodeMessage("服务器拒绝了你的请求，请稍候重试吧！");
+                case 404:
+                    mOnResponseListener.onErrorCodeMessage("好像没有找到服务器哦，请稍候重试吧！");
+                    break;
+                case 405:
+                    mOnResponseListener.onErrorCodeMessage("一定是你请求的方式有问题，换个方法吧！");
+                    break;
+                case 415:
+                    mOnResponseListener.onErrorCodeMessage("你上传了不支持的媒体类型哦，请先确认上传的类型是对的吧！");
+                    break;
+                case 500:
+                    mOnResponseListener.onErrorCodeMessage("服务器内部出错啦，请稍候重试！");
+                    break;
+                case 503:
+                    mOnResponseListener.onErrorCodeMessage("服务不可用咯，请稍候重试！");
+                    break;
+
+            }
+        }
+
         long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
 
         ResponseBody responseBody = response.body();
@@ -220,5 +251,9 @@ public final class HttpLoggingInterceptor implements Interceptor {
         String path = url.encodedPath();
         String query = url.encodedQuery();
         return query != null ? (path + '?' + query) : path;
+    }
+
+    public interface OnResponseListener{
+        void onErrorCodeMessage(String message);
     }
 }

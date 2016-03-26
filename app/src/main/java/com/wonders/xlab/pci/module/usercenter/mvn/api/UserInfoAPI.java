@@ -2,8 +2,8 @@ package com.wonders.xlab.pci.module.usercenter.mvn.api;
 
 import com.wonders.xlab.pci.module.base.mvn.entity.record.userinfo.UserInfoEntity;
 
-import retrofit.http.GET;
-import retrofit.http.Path;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**

@@ -5,9 +5,9 @@ import com.wonders.xlab.patient.mvp.entity.LoginEntity;
 
 import java.util.HashMap;
 
-import retrofit.http.FieldMap;
-import retrofit.http.FormUrlEncoded;
-import retrofit.http.POST;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
 import rx.Observable;
 
 /**

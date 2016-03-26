@@ -18,7 +18,6 @@ public class XApplication extends Application {
 //        if (BuildConfig.DEBUG) {
 //            BlockCanary.install(this, new AppBlockCanaryContext()).start();
 //        }
-//        Bugtags.start("08cac51dafe59b7c0682fd0acc983332", this, Bugtags.BTGInvocationEventShake);
         EMChat.getInstance().init(this);
         EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);//不发通知，而是走广播
         //TODO 在做打包混淆时，要关闭debug模式，避免消耗不必要的资源

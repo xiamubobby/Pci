@@ -2,9 +2,9 @@ package com.wonders.xlab.pci.module.record.report.mvn.api;
 
 import com.wonders.xlab.pci.module.base.mvn.entity.record.report.ReportDetailEntity;
 
-import retrofit.http.Field;
-import retrofit.http.FormUrlEncoded;
-import retrofit.http.POST;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
 import rx.Observable;
 
 /**

@@ -3,8 +3,8 @@ package com.wonders.xlab.pci.module.base.mvn.model;
 import android.support.annotation.NonNull;
 
 import com.squareup.okhttp.OkHttpClient;
-import com.wonders.xlab.common.retrofit.HttpLoggingInterceptor;
 import com.wonders.xlab.pci.Constant;
+import com.wonders.xlab.pci.assist.retrofit.HttpLoggingInterceptor;
 import com.wonders.xlab.pci.module.base.mvn.entity.BaseEntity;
 
 import retrofit.GsonConverterFactory;

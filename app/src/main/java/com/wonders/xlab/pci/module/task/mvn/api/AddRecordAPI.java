@@ -4,11 +4,11 @@ import com.wonders.xlab.pci.assist.deviceconnection.entity.BPEntityList;
 import com.wonders.xlab.pci.assist.deviceconnection.entity.BSEntityList;
 import com.wonders.xlab.pci.module.base.mvn.entity.SimpleEntity;
 
-import retrofit.http.Body;
-import retrofit.http.Field;
-import retrofit.http.FormUrlEncoded;
-import retrofit.http.POST;
-import retrofit.http.Path;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
