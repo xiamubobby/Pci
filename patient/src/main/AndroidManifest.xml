@@ -36,7 +36,10 @@
             android:value="xlab#pci"/>
         <!-- 声明sdk所需的service SDK核心功能 -->
         <service android:name="com.easemob.chat.EMChatService"/>
-
+        <!--growingio-->
+        <meta-data
+            android:name="com.growingio.android.GConfig.Channel"
+            android:value="内测"/>
         <!-- umeng -->
         <meta-data
             android:name="UMENG_APPKEY"
@@ -53,8 +56,14 @@
             android:theme="@style/AppTheme.MaterialColdStart">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
+                <data android:scheme="growing.223989e1f246cb1c"/>
+                <action android:name="android.intent.action.VIEW"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
         </activity>
         <activity

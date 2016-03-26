@@ -8,10 +8,6 @@ import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.umeng.analytics.MobclickAgent;
-import im.hua.utils.KeyboardUtil;
-import im.hua.utils.MD5Util;
-import im.hua.utils.ViewHelper;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.MainActivity;
@@ -23,6 +19,9 @@ import com.wonders.xlab.pci.module.login.mvn.view.LoginView;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import im.hua.utils.KeyboardUtil;
+import im.hua.utils.MD5Util;
+import im.hua.utils.ViewHelper;
 
 public class LoginActivity extends BaseActivity implements LoginView {
 
@@ -83,16 +82,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @Override
     public void hideLoading() {
 
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 
     @Override

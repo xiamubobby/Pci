@@ -96,6 +96,7 @@
 -keep class com.google.gson.stream.** { *; }
 
 -keep class javax.** { *; }
+-keep class java.lang.invoke.** { *; }
 -keep class org.** { *; }
 
 #appcompat
@@ -124,5 +125,3 @@
 #retrofit
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
--keepattributes Signature
--keepattributes Exceptions

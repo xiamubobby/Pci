@@ -159,7 +159,7 @@ public class HomeTopCircleFragment extends BaseFragment {
             mTvMiddleStatus.setTextColor(Color.WHITE);
             mTvMiddleValue.setText("0/0\nmmHg");
 
-            mTvRight.setText("点击记录\n0\n次/分");
+            mTvRight.setText("记录\n0\n次/分");
             mTvRight.setTextColor(Color.parseColor("#006b93"));
         }
     }
@@ -177,7 +177,7 @@ public class HomeTopCircleFragment extends BaseFragment {
                 mTvLeft.setText(msp);
             }
         } else {
-            mTvLeft.setText("点击记录\n0\nmmol/L");
+            mTvLeft.setText("记录\n0\nmmol/L");
             mTvLeft.setTextColor(Color.parseColor("#006b93"));
         }
     }

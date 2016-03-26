@@ -7,7 +7,6 @@ import com.wonders.xlab.patient.mvp.api.UploadPicAPI;
 import com.wonders.xlab.patient.mvp.model.IUploadModel;
 
 import java.io.File;
-import java.util.IdentityHashMap;
 import java.util.List;
 
 import im.hua.library.base.mvp.entity.SimpleEntity;
@@ -33,7 +32,7 @@ public class UploadPicModel extends PatientBaseModel<SimpleEntity> implements IU
         if (fileList != null && fileList.size() > 0) {
             RequestBody iUserId = RequestBody.create(MediaType.parse("text"), userId);
 
-            IdentityHashMap<String, MultipartBody> identityHashMap = new IdentityHashMap<>();
+//            IdentityHashMap<String, MultipartBody> identityHashMap = new IdentityHashMap<>();
 
             MultipartBody.Builder builder = new MultipartBody.Builder();
 
@@ -42,8 +41,8 @@ public class UploadPicModel extends PatientBaseModel<SimpleEntity> implements IU
 //                    MultipartBody.Part part = MultipartBody.Part.create(RequestBody.create(MediaType.parse("image/*"), itemFile));
                     builder.addFormDataPart("file",itemFile.getName(),RequestBody.create(MediaType.parse("image/*"), itemFile));
 
-                    MultipartBody multipartBody = new MultipartBody.Builder().addFormDataPart("file", itemFile.getName(), RequestBody.create(MediaType.parse("image/*"), itemFile)).build();
-                    identityHashMap.put(new String("file"), multipartBody);
+//                    MultipartBody multipartBody = new MultipartBody.Builder().addFormDataPart("file", itemFile.getName(), RequestBody.create(MediaType.parse("image/*"), itemFile)).build();
+//                    identityHashMap.put(new String("file"), multipartBody);
                 }
             }
 

@@ -10,26 +10,23 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.Toast;
 
-import com.jakewharton.rxbinding.view.RxView;
-import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.recyclerview.LoadMoreRecyclerView;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.application.RxBus;
 import com.wonders.xlab.pci.application.ToastManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
+import com.wonders.xlab.pci.module.base.mvn.model.UploadPicModel;
+import com.wonders.xlab.pci.module.base.mvn.view.UploadPicView;
+import com.wonders.xlab.pci.module.record.otto.ReportDetailBus;
 import com.wonders.xlab.pci.module.record.report.bean.ReportDetailBean;
 import com.wonders.xlab.pci.module.record.report.mvn.model.ReportDetailModel;
 import com.wonders.xlab.pci.module.record.report.mvn.view.ReportDetailView;
-import com.wonders.xlab.pci.module.record.otto.ReportDetailBus;
-import com.wonders.xlab.pci.module.base.mvn.model.UploadPicModel;
-import com.wonders.xlab.pci.module.base.mvn.view.UploadPicView;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -105,17 +102,14 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
                 schedule = 0;
         }
 
-        RxView.clicks(mFabReportDetail)
-                .throttleFirst(500, TimeUnit.MILLISECONDS, AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Void>() {
-                    @Override
-                    public void call(Void aVoid) {
-                        PhotoPickerIntent intent = new PhotoPickerIntent(ReportDetailActivity.this);
-                        intent.setPhotoCount(9);
-                        startActivityForResult(intent, REQUEST_CODE);
-                    }
-                });
+        mFabReportDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PhotoPickerIntent intent = new PhotoPickerIntent(ReportDetailActivity.this);
+                intent.setPhotoCount(9);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
 
         mRvReportDetail.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRvReportDetail.setOnLoadMoreListener(new LoadMoreRecyclerView.OnLoadMoreListener() {
@@ -274,18 +268,6 @@ public class ReportDetailActivity extends AppbarActivity implements ReportDetail
 
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("病历报告");
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("病历报告");
-        MobclickAgent.onPause(this);
-    }
-    @Override
     public void onDestroy() {
         super.onDestroy();
         if (dialog != null && dialog.isShowing()) {

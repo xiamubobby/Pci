@@ -11,9 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.squareup.otto.Subscribe;
-import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
-import im.hua.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
@@ -29,6 +27,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.hua.utils.DateUtil;
 import rx.subscriptions.CompositeSubscription;
 
 public class UserCenterActivity extends AppbarActivity implements UserInfoView {
@@ -83,18 +82,6 @@ public class UserCenterActivity extends AppbarActivity implements UserInfoView {
             }
         });
         mUserInfoModel.getUserInfo(AIManager.getInstance(this).getUserId());
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("个人中心");
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("个人中心");
-        MobclickAgent.onPause(this);
     }
 
     @Subscribe

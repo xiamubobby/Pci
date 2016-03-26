@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
-import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
@@ -234,18 +233,6 @@ public class BSResultFragment extends BaseFragment implements MeasureResultView,
     private void stopConnectingAnim() {
         mIvBsResultBluetooth.clearAnimation();
         mLdvBsResult.stopAnimation();
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("血糖测量(结果)");
-        MobclickAgent.onResume(getActivity());
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("血糖测量(结果)");
-        MobclickAgent.onPause(getActivity());
     }
 
     @Override

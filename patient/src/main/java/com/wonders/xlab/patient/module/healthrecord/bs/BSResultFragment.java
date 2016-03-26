@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
-import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.patient.Constant;
@@ -28,10 +27,10 @@ import com.wonders.xlab.patient.assist.deviceconnection.otto.ConnStatusOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.EmptyDataOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.RequestDataFailed;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.ScanStartOtto;
-import com.wonders.xlab.patient.mvp.presenter.IIdealRangePresenter;
 import com.wonders.xlab.patient.mvp.presenter.IBSSavePresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.IdealRangePresenter;
+import com.wonders.xlab.patient.mvp.presenter.IIdealRangePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.BSSavePresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.IdealRangePresenter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -202,18 +201,6 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
     private void stopConnectingAnim() {
         mIvBsResultBluetooth.clearAnimation();
         mLdvBsResult.stopAnimation();
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("血糖测量(结果)");
-        MobclickAgent.onResume(getActivity());
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("血糖测量(结果)");
-        MobclickAgent.onPause(getActivity());
     }
 
     @Override

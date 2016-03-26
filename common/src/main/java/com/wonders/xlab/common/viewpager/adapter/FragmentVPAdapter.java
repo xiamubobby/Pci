@@ -13,8 +13,12 @@ import java.util.List;
  * Created by hua on 15/12/14.
  */
 public class FragmentVPAdapter extends FragmentPagerAdapter {
-    private List<Fragment> mFragmentList;
+    private List<Fragment> mFragmentList = new ArrayList<>();
     private List<String> mTitleList;
+
+    public List<String> getTitleList() {
+        return mTitleList;
+    }
 
     public void clear() {
         if (mFragmentList != null) {

@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
-import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.patient.Constant;
@@ -155,18 +154,6 @@ public class BPResultFragment extends BaseFragment implements  IdealRangePresent
     public void showRange(String range) {
         SPManager.get(getActivity()).putString(Constant.PREF_KEY_IDEAL_BP_RANGE,range);
         mTvBpResultIdealRange.setText(range);
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("血压测量(结果)");
-        MobclickAgent.onResume(getActivity());
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("血压测量(结果)");
-        MobclickAgent.onPause(getActivity());
     }
 
     @Override

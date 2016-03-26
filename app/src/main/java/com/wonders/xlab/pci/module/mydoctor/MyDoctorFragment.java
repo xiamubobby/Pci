@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
@@ -53,18 +52,6 @@ public class MyDoctorFragment extends BaseFragment implements MyDoctorView {
         mRvMyDoctor.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 12));
 
         mMyDoctorModel.getDoctorList(AIManager.getInstance(getActivity()).getUserId(), AIManager.getInstance(getActivity()).getUserTel());
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("我的医生");
-        MobclickAgent.onResume(getActivity());
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("我的医生");
-        MobclickAgent.onPause(getActivity());
     }
 
     @Override

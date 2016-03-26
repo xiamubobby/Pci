@@ -15,7 +15,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.squareup.otto.Subscribe;
-import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.R;
@@ -129,18 +128,6 @@ public class HealthPlanActivity extends AppbarActivity {
         } else {
             Snackbar.make(mWvHealthPlan, getResources().getString(R.string.network_disconnected), Snackbar.LENGTH_SHORT).show();
         }
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("健康计划");
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("健康计划");
-        MobclickAgent.onPause(this);
     }
 
     @Override

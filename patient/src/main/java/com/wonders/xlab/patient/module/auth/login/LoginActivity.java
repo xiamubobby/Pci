@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.main.MainActivity;
@@ -79,16 +78,6 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
     @Override
     public void hideLoading() {
         dismissProgressDialog();
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 
     @Override

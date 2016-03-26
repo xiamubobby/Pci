@@ -35,6 +35,7 @@
 -keepattributes *Annotation*
 #-keepattributes InnerClasses
 -keepattributes EnclosingMethod
+-keepattributes InnerClasses
 
 # 不混淆本地方法,includedescriptorclasses选项指定不重命名方法返回类型与参数类型
 -keepclasseswithmembernames,includedescriptorclasses class * {
@@ -89,8 +90,6 @@
 -dontshrink
 -dontoptimize
 
--keep class android.** {*;}
-
 # Keep GSON stuff
 -keep class sun.misc.Unsafe { *; }
 -keep class com.google.gson.** { *; }
@@ -101,8 +100,13 @@
 -keep public class com.google.vending.licensing.ILicensingService
 -keep public class com.android.vending.licensing.ILicensingService
 
-#-keep class javax.** { *; }
-#-keep class org.** { *; }
+-keep class com.android.*
+
+# Okio
+-keep class sun.misc.Unsafe { *; }
+-dontwarn java.nio.file.*
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
+-dontwarn okio.**
 
 #appcompat
 -keep public class android.support.v7.widget.** { *; }
@@ -173,8 +177,6 @@
 
 -dontwarn butterknife.internal.**
 
-#Retrofit
--keep class retrofit.** { *; }
 -keep class okio.** { *; }
 -keep class rx.** { *; }
 -keep class com.squareup.** {*;}
@@ -182,17 +184,11 @@
 
 -dontwarn com.squareup.**
 -dontwarn io.reactivex.**
--dontwarn retrofit.**
 -dontwarn okio.**
 -dontwarn rx.**
 
 #不混淆网络请求实体
 -keep class com.wonders.xlab.pci.doctor.mvp.entity.** {*;}
-
-
-#Bugtags
--keep class com.bugtags.library.** {*;}
--dontwarn com.bugtags.**
 
 #glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
@@ -212,17 +208,7 @@
 #   public (org.json.JSONObject);
 #}
 
-#bugtags
--keepattributes LineNumberTable,SourceFile
-
--keep class com.bugtags.library.** {*;}
--dontwarn org.apache.http.**
--dontwarn android.net.http.AndroidHttpClient
--dontwarn com.bugtags.library.**
--dontwarn com.bugtags.library.vender.**
-
 # RxJava 0.21
-
 -keep class rx.schedulers.Schedulers {
     public static <methods>;
 }
@@ -236,10 +222,9 @@
     public static ** test();
 }
 
-## AndroidAnnotations specific rules ##
-
-# Only required if not using the Spring RestTemplate
--dontwarn org.androidannotations.api.rest.**
+#retrofit
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
 
 #blood pressure and blood bloodSugar
 -keep class cn.com.contec.jar.cmssxt.** { *;}
@@ -259,11 +244,13 @@
 -dontwarn javax.**
 -dontwarn io.realm.**
 
-#bugtags
--keepattributes LineNumberTable,SourceFile
+#growingio
+-keep class com.growingio.android.sdk.** {
+      public *;
+  }
 
--keep class com.bugtags.library.** {*;}
--dontwarn org.apache.http.**
--dontwarn android.net.http.AndroidHttpClient
--dontwarn com.bugtags.library.vender.**
--dontwarn com.bugtags.library.**
+#common
+-keep class com.wonders.xlab.common.** { *; }
+
+#base
+-keep class im.hua.library.base.** { *; }

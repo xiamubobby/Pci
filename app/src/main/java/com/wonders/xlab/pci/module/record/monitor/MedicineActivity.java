@@ -6,7 +6,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
@@ -98,18 +97,6 @@ public class MedicineActivity extends AppbarActivity implements MedicineView {
                 }
             }
         });
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("身体体征(用药)");
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("身体体征(用药)");
-        MobclickAgent.onPause(this);
     }
 
     @Override

@@ -2,14 +2,14 @@ package com.wonders.xlab.pci.module.base.mvn.model;
 
 import android.support.annotation.NonNull;
 
-import com.squareup.okhttp.OkHttpClient;
 import com.wonders.xlab.pci.Constant;
 import com.wonders.xlab.pci.assist.retrofit.HttpLoggingInterceptor;
 import com.wonders.xlab.pci.module.base.mvn.entity.BaseEntity;
 
-import retrofit.GsonConverterFactory;
-import retrofit.Retrofit;
-import retrofit.RxJavaCallAdapterFactory;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;

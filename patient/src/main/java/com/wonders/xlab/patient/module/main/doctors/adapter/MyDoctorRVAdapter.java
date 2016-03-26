@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.marshalchen.ultimaterecyclerview.UltimateRecyclerviewViewHolder;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.wonders.xlab.common.manager.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
@@ -59,7 +58,7 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
         }
     }
 
-    class ItemHeaderViewHolder extends UltimateRecyclerviewViewHolder {
+    class ItemHeaderViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.tv_doctor_my_item_header)
         TextView mTvDoctorMyItemHeader;
 
@@ -69,7 +68,7 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
         }
     }
 
-    class ItemViewHolder extends UltimateRecyclerviewViewHolder {
+    class ItemViewHolder extends RecyclerView.ViewHolder {
         ImageView mIvPortrait;
 
         DoctorMyItemBinding binding;

@@ -9,8 +9,6 @@ import android.widget.TextView;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
-import com.umeng.analytics.MobclickAgent;
-import im.hua.utils.DateUtil;
 import com.wonders.xlab.pci.R;
 import com.wonders.xlab.pci.application.AIManager;
 import com.wonders.xlab.pci.module.base.AppbarActivity;
@@ -25,6 +23,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import im.hua.utils.DateUtil;
 
 public class BPActivity extends AppbarActivity implements BPView {
 
@@ -188,18 +187,6 @@ public class BPActivity extends AppbarActivity implements BPView {
             endTime = DateUtil.calculateLastDayOfYear(endTime);
         }
         return DateUtil.format(endTime, "yyyy-MM-dd");
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart("身体体征(血压)");
-        MobclickAgent.onResume(this);
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd("身体体征(血压)");
-        MobclickAgent.onPause(this);
     }
 
     @Override

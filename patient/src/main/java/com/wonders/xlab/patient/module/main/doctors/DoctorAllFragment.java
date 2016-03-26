@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.marshalchen.ultimaterecyclerview.ui.DividerItemDecoration;
+import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.patient.R;
@@ -59,7 +59,7 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView.setLinearLayout(false);
-        mRecyclerView.getRecyclerView().addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(),getResources().getColor(R.color.divider),1));
         mRecyclerView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
