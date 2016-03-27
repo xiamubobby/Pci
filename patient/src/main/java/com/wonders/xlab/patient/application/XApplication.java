@@ -34,7 +34,8 @@ public class XApplication extends Application {
         realm = Realm.getDefaultInstance();
 
         EMChat.getInstance().init(this);
-        EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);//不发通知，而是走广播
+        EMChatManager.getInstance().getChatOptions().setNotifyBySoundAndVibrate(false);//不发通知，而是走广播
+        EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);
         //TODO 在做打包混淆时，要关闭debug模式，避免消耗不必要的资源
         EMChat.getInstance().setDebugMode(false);
     }

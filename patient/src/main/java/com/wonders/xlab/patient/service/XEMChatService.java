@@ -58,7 +58,7 @@ public class XEMChatService extends Service {
     public void onCreate() {
         super.onCreate();
         OttoManager.register(this);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(getResources().getString(R.string.app_name))
                 .setContentText("正在运行")
                 .setAutoCancel(false);
@@ -75,9 +75,8 @@ public class XEMChatService extends Service {
         startForeground(Constant.NOTIFY_ID, notification);
 
         initAutoStart();
-
+        login();
         initBroadcastReceiver();
-
     }
 
     private void initBroadcastReceiver() {
@@ -118,11 +117,6 @@ public class XEMChatService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        login();
-
-        new NotifyUtil().showNotification(getApplicationContext(), Constant.NOTIFY_ID, getApplicationContext().getResources().getString(R.string.app_name), "正在运行", MainActivity.class, R.mipmap.ic_launcher, false);
-
         return START_STICKY;
     }
 

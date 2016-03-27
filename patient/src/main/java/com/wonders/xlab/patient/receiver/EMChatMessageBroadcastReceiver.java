@@ -55,6 +55,10 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         String content = message.getStringAttribute("content", "");
         int type = message.getIntAttribute("type", -1);//-1:默认处理，即通过环信后台发送 0:提醒 1:内容 2：强制退出(由于用户锁定账户等等原因的安全考虑)
 
+        int notifyId = Constant.NOTIFY_ID;
+        if (TextUtils.isDigitsOnly(msgId)) {
+            notifyId = (int) Long.parseLong(msgId);
+        }
         /**
          * -1:默认处理，即通过环信后台发送
          * 0:提醒
@@ -64,11 +68,11 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         if (type == 0) {
 
             if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.mipmap.ic_launcher, true);
+                new NotifyUtil().showNotification(context, notifyId, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.drawable.ic_notification, true, true);
             }
         } else if (type == 1) {
             if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.mipmap.ic_launcher, true);
+                new NotifyUtil().showNotification(context, notifyId, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.drawable.ic_notification, true, true);
             }
         } else if (type == 2) {
             OttoManager.post(new ForceExitOtto());
@@ -79,7 +83,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 e.printStackTrace();
             }
             if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.mipmap.ic_launcher, true);
+                new NotifyUtil().showNotification(context, notifyId, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.drawable.ic_notification, true, true);
             }
         }
 
