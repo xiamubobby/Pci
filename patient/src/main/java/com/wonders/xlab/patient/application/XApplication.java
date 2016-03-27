@@ -24,7 +24,7 @@ public class XApplication extends Application {
 //            BlockCanary.install(this, new AppBlockCanaryContext()).start();
 //        }
         //在这里初始化
-        Bugtags.start("b3d8dc7b153c16bb34d741d78b03e4d1", this, Bugtags.BTGInvocationEventBubble);
+        Bugtags.start("b3d8dc7b153c16bb34d741d78b03e4d1", this, Bugtags.BTGInvocationEventShake);
 
         UmengUpdateAgent.setUpdateOnlyWifi(false);
 

@@ -1,4 +1,13 @@
 apply plugin: 'com.android.application'
+//应用插件
+apply plugin: 'com.bugtags.library.plugin'
+
+//必须配置，否则自动上传符号表功能不会生效
+bugtags {
+    appKey "08cac51dafe59b7c0682fd0acc983332"
+    appSecret  "486c647cf800b381d87baa9f016ad88f"
+    trackingNetworkEnabled true
+}
 
 android {
     compileSdkVersion 23

@@ -185,9 +185,6 @@
 -dontwarn okio.**
 -dontwarn rx.**
 
-#不混淆网络请求实体
--keep class com.wonders.xlab.pci.doctor.mvp.entity.** {*;}
-
 #glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
 -keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
@@ -258,7 +255,6 @@
 -keep class com.timehop.** { *; }
 -keep class me.iwf.** { *; }
 -keep class com.nineoldandroids.** { *; }
-
 -keep class rx.** { *; }
 
 #growingio
@@ -273,3 +269,7 @@
 
 #base
 -keep class im.hua.library.base.** { *; }
+
+
+#不混淆网络请求实体
+-keep class com.wonders.xlab.pci.doctor.mvp.entity.** {*;}
