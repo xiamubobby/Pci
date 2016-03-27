@@ -6,7 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.Toast;
+
+import com.bugtags.library.Bugtags;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -104,7 +107,6 @@ public class BaseActivity extends AppCompatActivity {
             mIBasePresenterList.add(presenter);
         }
     }
-/*
 
     @Override
     protected void onResume() {
@@ -126,7 +128,6 @@ public class BaseActivity extends AppCompatActivity {
         Bugtags.onDispatchTouchEvent(this, event);
         return super.dispatchTouchEvent(event);
     }
-*/
 
     @Override
     public void onDestroy() {

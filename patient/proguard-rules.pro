@@ -83,13 +83,12 @@
 }
 
 # 忽略support包新版本警告
+-keep class android.support.** { *; }
 -dontwarn android.support.**
 
 # 不混淆第三方jar包
 -dontshrink
 -dontoptimize
-
--keep class com.android.*
 
 # Keep GSON stuff
 -keep class sun.misc.Unsafe { *; }
@@ -98,8 +97,8 @@
 -keep class com.google.gson.stream.** { *; }
 
 # 不混淆ILicensingService类，单向的进程间通讯接口，这个接口的许可检查请求来自google play客户端
--keep public class com.google.vending.licensing.ILicensingService
--keep public class com.android.vending.licensing.ILicensingService
+#-keep public class com.google.vending.licensing.ILicensingService
+#-keep public class com.android.vending.licensing.ILicensingService
 
 # Okio
 -keep class sun.misc.Unsafe { *; }
@@ -115,7 +114,34 @@
 -keep public class * extends android.support.v4.view.ActionProvider {
     public <init>(android.content.Context);
 }
+#环信
+-keep class com.easemob.** {*;}
+-keep class org.jivesoftware.** {*;}
+-keep class org.apache.** {*;}
+-dontwarn  com.easemob.**
+#2.0.9后的不需要加下面这个keep
+#-keep class org.xbill.DNS.** {*;}
+#另外，demo中发送表情的时候使用到反射，需要keep SmileUtils
+-keep class com.easemob.chatuidemo.utils.SmileUtils {*;}
+#注意前面的包名，如果把这个类复制到自己的项目底下，比如放在com.example.utils底下，应该这么写(实际要去掉#)
+#-keep class com.example.utils.SmileUtils {*;}
+#如果使用easeui库，需要这么写
+-keep class com.easemob.easeui.utils.EaseSmileUtils {*;}
 
+#2.0.9后加入语音通话功能，如需使用此功能的api，加入以下keep
+-dontwarn ch.imvs.**
+-dontwarn org.slf4j.**
+-keep class org.ice4j.** {*;}
+-keep class net.java.sip.** {*;}
+-keep class org.webrtc.voiceengine.** {*;}
+-keep class org.bitlet.** {*;}
+-keep class org.slf4j.** {*;}
+-keep class ch.imvs.** {*;}
+-keep class internal.** {*;}
+-keep class net.** {*;}
+-keep class org.** {*;}
+
+-keep class rx.** { *; }
 #realm
 -keep class io.realm.annotations.RealmModule
 -keep @io.realm.annotations.RealmModule class *
@@ -138,9 +164,32 @@
     public static ** test();
 }
 
+# for RxJava:
+ -dontwarn sun.misc.Unsafe
+ -dontwarn java.lang.invoke.*
+
+  -keep class android.support.v4.** { *; }
+  -keep interface android.support.v4.** { *; }
+  -keep class android.support.v7.** { *; }
+
 #retrofit
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
+
+#butterknife
+-keep class butterknife.** { *; }
+-dontwarn butterknife.internal.**
+-keep class **$$ViewBinder { *; }
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <fields>;
+}
+
+-keepclasseswithmembernames class * {
+    @butterknife.* <methods>;
+}
+
+-dontwarn butterknife.internal.**
 
 #Umeng
 -keep class com.umeng.**
@@ -154,11 +203,37 @@
       public *;
   }
 
+#bugtags
+-keepattributes LineNumberTable,SourceFile
+
+-keep class com.bugtags.library.** {*;}
+-dontwarn org.apache.http.**
+-dontwarn android.net.http.AndroidHttpClient
+-dontwarn com.bugtags.library.vender.**
+-dontwarn com.bugtags.library.**
+
+#flyco
+-keep class com.flyco.** { *; }
+-keep class com.github.** { *; }
+-keep class com.zhy.** { *; }
+-keep class com.timehop.** { *; }
+-keep class me.iwf.** { *; }
+-keep class com.nineoldandroids.** { *; }
+
+#fullway health device
+-keep class cn.com.contec.jar.cmssxt.** { *;}
+-keep class com.contec.jar.** { *;}
+-dontwarn cn.com.contec.jar.cmssxt.**
+-dontwarn com.contec.jar.**
+
 #entity
+-keep class com.wonders.xlab.patient.mvp.api.** {*;}
 -keep class com.wonders.xlab.patient.mvp.entity.** {*;}
 
 #common
 -keep class com.wonders.xlab.common.** { *; }
+-keep class im.hua.utils.** { *; }
+-keep class im.hua.uikit.** { *; }
 
 #base
 -keep class im.hua.library.base.** { *; }

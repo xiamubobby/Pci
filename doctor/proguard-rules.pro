@@ -97,10 +97,8 @@
 -keep class com.google.gson.stream.** { *; }
 
 # 不混淆ILicensingService类，单向的进程间通讯接口，这个接口的许可检查请求来自google play客户端
--keep public class com.google.vending.licensing.ILicensingService
--keep public class com.android.vending.licensing.ILicensingService
-
--keep class com.android.*
+#-keep public class com.google.vending.licensing.ILicensingService
+#-keep public class com.android.vending.licensing.ILicensingService
 
 # Okio
 -keep class sun.misc.Unsafe { *; }
@@ -197,6 +195,15 @@
     public *;
 }
 
+#bugtags
+-keepattributes LineNumberTable,SourceFile
+
+-keep class com.bugtags.library.** {*;}
+-dontwarn org.apache.http.**
+-dontwarn android.net.http.AndroidHttpClient
+-dontwarn com.bugtags.library.vender.**
+-dontwarn com.bugtags.library.**
+
 #Umeng
 -keep class com.umeng.**
 -keep public interface com.umeng.socialize.**
@@ -222,15 +229,16 @@
     public static ** test();
 }
 
+# for RxJava:
+-dontwarn sun.misc.Unsafe
+-dontwarn java.lang.invoke.*
+-keep class android.support.v4.** { *; }
+-keep interface android.support.v4.** { *; }
+-keep class android.support.v7.** { *; }
+
 #retrofit
 -dontwarn retrofit2.**
 -keep class retrofit2.** { *; }
-
-#blood pressure and blood bloodSugar
--keep class cn.com.contec.jar.cmssxt.** { *;}
--keep class com.contec.jar.** { *;}
--dontwarn cn.com.contec.jar.cmssxt.**
--dontwarn com.contec.jar.**
 
 #github
 -keep class com.github.** {*;}
@@ -244,6 +252,15 @@
 -dontwarn javax.**
 -dontwarn io.realm.**
 
+-keep class com.flyco.** { *; }
+-keep class com.github.** { *; }
+-keep class com.zhy.** { *; }
+-keep class com.timehop.** { *; }
+-keep class me.iwf.** { *; }
+-keep class com.nineoldandroids.** { *; }
+
+-keep class rx.** { *; }
+
 #growingio
 -keep class com.growingio.android.sdk.** {
       public *;
@@ -251,6 +268,8 @@
 
 #common
 -keep class com.wonders.xlab.common.** { *; }
+-keep class im.hua.utils.** { *; }
+-keep class im.hua.uikit.** { *; }
 
 #base
 -keep class im.hua.library.base.** { *; }
