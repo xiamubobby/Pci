@@ -39,7 +39,7 @@ public class Migration implements RealmMigration {
 
         // Migrate from version 0 to version 1
         if (oldVersion == 3) {
-            RealmObjectSchema messageSchema = schema.get("ChatRealmEntity");
+            RealmObjectSchema messageSchema = schema.get("ChatRecordRealm");
 
             messageSchema
                     .addField("isMessage", Boolean.class)

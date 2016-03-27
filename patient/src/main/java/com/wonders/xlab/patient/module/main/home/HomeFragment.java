@@ -95,6 +95,8 @@ public class HomeFragment extends BaseFragment {
                             intent.putExtra(MedicalRecordActivity.EXTRA_PATIENT_ID, AIManager.getInstance(getActivity()).getPatientId());
                             startActivity(intent);
                             break;
+                        default:
+                            showShortToast("即将开放，敬请期待...");
                     }
                 }
             });

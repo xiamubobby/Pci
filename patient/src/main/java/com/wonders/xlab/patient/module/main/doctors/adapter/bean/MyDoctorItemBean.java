@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.module.main.doctors.adapter.bean;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.support.v7.widget.RecyclerView;
 
 import com.wonders.xlab.patient.BR;
 
@@ -12,16 +13,30 @@ public class MyDoctorItemBean extends BaseObservable{
     public final static long TYPE_IN_SERVICE = 0;
     public final static long TYPE_OUT_OF_SERVICE = 1;
 
+    /**
+     * 医生小组id
+     */
     private String groupId;
+    /**
+     * 环信id
+     */
     private String imGroupId;
     /**
-     * {@link TYPE_IN_SERVICE}：正在服务
-     * {@link TYPE_OUT_OF_SERVICE}：历史记录
+     * 因为这个type要用与{@link RecyclerView.Adapter}的分类HeaderId，所以必须要定义成long
+     *
+     * {@link #TYPE_IN_SERVICE}：正在服务
+     * {@link #TYPE_OUT_OF_SERVICE}：历史记录
      */
     private long type;
     private String portraitUrl;
     private String doctorGroupName;
+    /**
+     * 最新一条聊天记录时间
+     */
     private String timeStr;
+    /**
+     * 最新一条聊天记录
+     */
     private String latestChatMessage;
 
     public String getPortraitUrl() {

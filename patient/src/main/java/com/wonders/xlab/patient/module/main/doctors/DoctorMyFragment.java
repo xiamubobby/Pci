@@ -47,16 +47,14 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.doctor_my_fragment, container, false);
         ButterKnife.bind(this, view);
+
+        mDoctorMyPresenter = new DoctorMyPresenter(this);
+        addPresenter(mDoctorMyPresenter);
         return view;
     }
 
@@ -77,9 +75,6 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
                 mDoctorMyPresenter.getMyDoctors(AIManager.getInstance(getActivity()).getPatientId(), false);
             }
         });
-
-        mDoctorMyPresenter = new DoctorMyPresenter(this);
-        addPresenter(mDoctorMyPresenter);
 
         mDoctorMyPresenter.getMyDoctors(AIManager.getInstance(getActivity()).getPatientId(), true);
     }

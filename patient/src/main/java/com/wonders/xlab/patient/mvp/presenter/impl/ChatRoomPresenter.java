@@ -11,6 +11,7 @@ import com.wonders.xlab.patient.mvp.model.impl.SendMessageModel;
 import com.wonders.xlab.patient.mvp.presenter.IChatRoomPresenter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePagePresenter;
@@ -49,7 +50,6 @@ public class ChatRoomPresenter extends BasePagePresenter implements IChatRoomPre
         }
         if (mIsLast) {
             mChatRoomPresenterListener.hideLoading();
-            mChatRoomPresenterListener.showReachTheLastPageNotice("没有更多数据了");
             return;
         }
         mChatRoomRecordsModel.getChatRecords(imGroupId, getNextPageIndex(), DEFAULT_PAGE_SIZE);
@@ -64,34 +64,39 @@ public class ChatRoomPresenter extends BasePagePresenter implements IChatRoomPre
     public void onReceiveChatRecordSuccess(ChatRoomEntity.RetValuesEntity valuesEntity) {
         mChatRoomPresenterListener.hideLoading();
 
-        updatePageInfo(valuesEntity.getNumber(),valuesEntity.isFirst(),valuesEntity.isLast());
+        updatePageInfo(valuesEntity.getNumber(), valuesEntity.isFirst(), valuesEntity.isLast());
 
         List<ChatRoomEntity.RetValuesEntity.ContentEntity> entityList = valuesEntity.getContent();
 
         List<ChatRoomBean> chatRoomBeanList = new ArrayList<>();
 
+        long todayTimeInMill = Calendar.getInstance().getTimeInMillis();
         for (ChatRoomEntity.RetValuesEntity.ContentEntity contentEntity : entityList) {
+            ChatRoomBean bean;
             if (TYPE_USER.equals(contentEntity.getType()) && mPatientId.equals(String.valueOf(contentEntity.getFromWho()))) {
                 //current login doctor's message
-                MeChatRoomBean bean = new MeChatRoomBean();
-                bean.portraitUrl.set(contentEntity.getAvatarUrl());
-                bean.recordTime.set(DateUtil.format(contentEntity.getSendTime(), "yyy-MM-dd HH:mm"));
-                bean.text.set(contentEntity.getContent());
-                bean.isSending.set(false);
-
-                chatRoomBeanList.add(bean);
+                bean = new MeChatRoomBean();
             } else {
-                OthersChatRoomBean bean = new OthersChatRoomBean();
-                bean.name.set(contentEntity.getName());
-                bean.portraitUrl.set(contentEntity.getAvatarUrl());
-                bean.recordTime.set(DateUtil.format(contentEntity.getSendTime(), "yyy-MM-dd HH:mm"));
-                bean.text.set(contentEntity.getContent());
-
-                chatRoomBeanList.add(bean);
+                bean = new OthersChatRoomBean();
             }
+            bean.messageId.set(contentEntity.getId());
+            bean.userId.set(mPatientId);
+            bean.name.set(contentEntity.getName());
+            bean.portraitUrl.set(contentEntity.getAvatarUrl());
+            bean.recordTimeInMill.set(contentEntity.getSendTime());
+            if (DateUtil.isTheSameDay(todayTimeInMill, contentEntity.getSendTime())) {
+                bean.recordTime.set(DateUtil.format(contentEntity.getSendTime(), "HH:mm"));
+            } else if (DateUtil.isTheSameYear(contentEntity.getSendTime(), todayTimeInMill)) {
+                bean.recordTime.set(DateUtil.format(contentEntity.getSendTime(), "MM-dd HH:mm"));
+            } else {
+                bean.recordTime.set(DateUtil.format(contentEntity.getSendTime(), "yyyy-MM-dd HH:mm"));
+            }
+            bean.text.set(contentEntity.getContent());
+            bean.isSending.set(false);
+            chatRoomBeanList.add(bean);
+
         }
         if (chatRoomBeanList.size() <= 0) {
-            mChatRoomPresenterListener.showReachTheLastPageNotice("没有更多数据了");
             return;
         }
         if (shouldAppend()) {

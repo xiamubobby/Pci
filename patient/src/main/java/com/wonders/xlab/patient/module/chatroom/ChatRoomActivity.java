@@ -188,9 +188,8 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             MeChatRoomBean bean = new MeChatRoomBean();
             bean.text.set(message);
-            //TODO 需要登录接口返回
             bean.portraitUrl.set(AIManager.getInstance(this).getPatientPortraitUrl());
-            bean.recordTime.set(DateUtil.format(sendTime, "yyyy-MM-dd HH:mm"));
+            bean.recordTime.set(DateUtil.format(sendTime, "HH:mm"));
             bean.recordTimeInMill.set(sendTime);
             bean.isSending.set(true);
 

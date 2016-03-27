@@ -5,7 +5,7 @@ import io.realm.RealmObject;
 /**
  * Created by hua on 16/2/17.
  */
-public class ChatRealmEntity extends RealmObject {
+public class ChatRecordRealm extends RealmObject {
     /**
      * 当前登录用户id
      */

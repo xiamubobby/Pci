@@ -120,8 +120,6 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-        mTabMainBottom.showDot(2);
-        mTabMainBottom.showMsg(1,100);
         mTabMainBottom.setMsgMargin(1,0,8);
         mTabMainBottom.setMsgMargin(2,0,6);
 
@@ -143,6 +141,24 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    @Subscribe
+    public void changeDoctorNotifyCounts(DoctorNotifyCountOtto otto) {
+        if (otto.increase) {
+            mTabMainBottom.showMsg(1, 100);
+        } else {
+
+        }
+    }
+
+    @Subscribe
+    public void changeMeNotifyCounts(MeNotifyCountOtto otto) {
+        if (otto.increase) {
+            mTabMainBottom.showDot(2);
+        } else {
+            mTabMainBottom.hideMsg(2);
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -161,5 +177,47 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, MainActivity.class));
         startActivity(new Intent(this, LoginActivity.class));
         finish();
+    }
+
+    public class DoctorNotifyCountOtto {
+        private boolean increase;
+        private int counts;
+
+        public boolean isIncrease() {
+            return increase;
+        }
+
+        public void setIncrease(boolean increase) {
+            this.increase = increase;
+        }
+
+        public int getCounts() {
+            return counts;
+        }
+
+        public void setCounts(int counts) {
+            this.counts = counts;
+        }
+    }
+
+    public class MeNotifyCountOtto {
+        private boolean increase;
+        private int counts;
+
+        public boolean isIncrease() {
+            return increase;
+        }
+
+        public void setIncrease(boolean increase) {
+            this.increase = increase;
+        }
+
+        public int getCounts() {
+            return counts;
+        }
+
+        public void setCounts(int counts) {
+            this.counts = counts;
+        }
     }
 }
