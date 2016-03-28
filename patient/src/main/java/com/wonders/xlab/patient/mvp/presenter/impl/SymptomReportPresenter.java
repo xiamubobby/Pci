@@ -1,5 +1,7 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
+import android.text.TextUtils;
+
 import com.wonders.xlab.patient.module.healthreport.adapter.bean.SymptomReportBean;
 import com.wonders.xlab.patient.module.healthreport.adapter.bean.SymptomReportLabelBean;
 import com.wonders.xlab.patient.mvp.entity.SymptomRetrieveEntity;
@@ -17,7 +19,7 @@ import io.realm.RealmList;
 /**
  * Created by hua on 16/3/24.
  */
-public class SymptomReportPresenter extends BasePresenter implements ISymptomReportPresenter,SymptomRetrieveModel.SymptomRetrieveModelListener {
+public class SymptomReportPresenter extends BasePresenter implements ISymptomReportPresenter, SymptomRetrieveModel.SymptomRetrieveModelListener {
     private SymptomReportPresenterListener mListener;
     private ISymptomRetrieveModel mSymptomRetrieveModel;
 
@@ -45,7 +47,9 @@ public class SymptomReportPresenter extends BasePresenter implements ISymptomRep
         for (SymptomRetrieveEntity.RetValuesEntity.ContentEntity contentEntity : symptomList) {
             SymptomReportBean bean = new SymptomReportBean();
             bean.setId(contentEntity.getId());
-            bean.setAdvice(contentEntity.getDoctorRemark());
+            if (!TextUtils.isEmpty(contentEntity.getDoctorRemark())) {
+                bean.setAdvice("医生建议：" + contentEntity.getDoctorRemark());
+            }
             bean.setHasConfirmed(contentEntity.isChecked());
             bean.setRecordTimeInMill(contentEntity.getRecordTime());
 
@@ -70,7 +74,7 @@ public class SymptomReportPresenter extends BasePresenter implements ISymptomRep
         mListener.showError(message);
     }
 
-    public interface SymptomReportPresenterListener extends BasePresenterListener{
+    public interface SymptomReportPresenterListener extends BasePresenterListener {
         void showTodaysSymtomList(List<SymptomReportBean> reportBeanList);
 
         void showEmptyView();

@@ -88,15 +88,15 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         Intent intent = getIntent();
         if (intent == null) {
             showShortToast(getResources().getString(R.string.query_patient_info_failed));
-            finish();
-            return;
+//            finish();
+//            return;
         }
         groupId = intent.getStringExtra(EXTRA_GROUP_ID);
         imGroupId = intent.getStringExtra(EXTRA_IM_GROUP_ID);
         if (TextUtils.isEmpty(groupId) || TextUtils.isEmpty(imGroupId)) {
             showShortToast(getResources().getString(R.string.query_patient_info_failed));
-            finish();
-            return;
+//            finish();
+//            return;
         }
         groupName = intent.getStringExtra(EXTRA_GROUP_NAME);
         canChat = intent.getBooleanExtra(EXTRA_CAN_CHAT, false);
@@ -148,10 +148,14 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     }
 
     private void goToDoctorDetailActivity() {
-        Intent intent = new Intent(ChatRoomActivity.this, DoctorDetailActivity.class);
-        intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, groupName);
-        intent.putExtra(DoctorDetailActivity.EXTRA_ID, groupId);
-        startActivity(intent);
+        if (!TextUtils.isEmpty(groupName) && !TextUtils.isEmpty(groupId)) {
+            Intent intent = new Intent(ChatRoomActivity.this, DoctorDetailActivity.class);
+            intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, groupName);
+            intent.putExtra(DoctorDetailActivity.EXTRA_ID, groupId);
+            startActivity(intent);
+        } else {
+            showShortToast("请重新进入聊天");
+        }
     }
 
     /**

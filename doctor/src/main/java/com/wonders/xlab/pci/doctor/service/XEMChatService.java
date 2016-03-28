@@ -1,15 +1,12 @@
 package com.wonders.xlab.pci.doctor.service;
 
 import android.app.Notification;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -55,20 +52,8 @@ public class XEMChatService extends Service {
     public void onCreate() {
         super.onCreate();
         OttoManager.register(this);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(getResources().getString(R.string.app_name))
-                .setContentText("正在运行")
-                .setAutoCancel(false);
 
-        Intent intent = new Intent(this, MainActivity.class);
-        Bundle data = new Bundle();
-        intent.putExtras(data);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);
-
-        Notification notification = builder.build();
-        notification.flags = Notification.FLAG_NO_CLEAR;
+        Notification notification = new NotifyUtil().generateNotification(this, getResources().getString(R.string.app_name), "正在运行", MainActivity.class, R.drawable.ic_notification, false, false, false, 0xff30bdf2);
         startForeground(Constant.NOTIFY_ID, notification);
 
         initAutoStart();

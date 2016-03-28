@@ -12,6 +12,7 @@
         android:layout_marginBottom="@dimen/item_interval_small"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
+        android:visibility="gone"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/item_interval_middle"
         android:paddingRight="@dimen/item_interval_middle">
@@ -42,6 +43,7 @@
         android:paddingLeft="@dimen/item_interval_middle"
         android:paddingRight="@dimen/item_interval_middle"
         android:text="个人资料"
+        android:visibility="gone"
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"/>
 
@@ -56,6 +58,7 @@
         android:paddingLeft="@dimen/item_interval_middle"
         android:paddingRight="@dimen/item_interval_middle"
         android:text="消息"
+        android:visibility="gone"
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"/>
 
@@ -85,6 +88,7 @@
         android:paddingLeft="@dimen/item_interval_middle"
         android:paddingRight="@dimen/item_interval_middle"
         android:text="关于"
+        android:visibility="gone"
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"/>
 

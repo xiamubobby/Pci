@@ -12,6 +12,7 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.patient.module.main.MainActivity;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 
@@ -20,6 +21,7 @@ import java.io.UnsupportedEncodingException;
 import im.hua.utils.NotifyUtil;
 
 public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
+
     public EMChatMessageBroadcastReceiver() {
 
     }
@@ -64,15 +66,17 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
          * 0:提醒
          * 1:内容
          * 2：强制退出(由于用户锁定账户等等原因的安全考虑)
+         * 3:聊天信息
          */
+        int notifyColor = 0xff30bdf2;
         if (type == 0) {
 
             if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, notifyId, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.drawable.ic_notification, true, true);
+                new NotifyUtil().showNotification(context, notifyId, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.drawable.ic_notification, true, true, true, notifyColor);
             }
         } else if (type == 1) {
             if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, notifyId, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.drawable.ic_notification, true, true);
+                new NotifyUtil().showNotification(context, notifyId, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.drawable.ic_notification, true, true, true, notifyColor);
             }
         } else if (type == 2) {
             OttoManager.post(new ForceExitOtto());
@@ -83,7 +87,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 e.printStackTrace();
             }
             if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, notifyId, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.drawable.ic_notification, true, true);
+                new NotifyUtil().showNotification(context, notifyId, context.getResources().getString(R.string.app_name), title, ChatRoomActivity.class, R.drawable.ic_notification, true, true, true, notifyColor);
             }
         }
 
