@@ -1,6 +1,7 @@
 package com.wonders.xlab.pci.doctor.mvp.entity.request;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hua on 16/3/1.
@@ -23,6 +24,7 @@ public class SendMessageBody {
     private MsgEntity msg;
     private String from;
     private List<String> target;
+    private Map<String,Object> ext;
 
     public void setTarget_type(String target_type) {
         this.target_type = target_type;
@@ -54,6 +56,14 @@ public class SendMessageBody {
 
     public List<String> getTarget() {
         return target;
+    }
+
+    public Map<String, Object> getExt() {
+        return ext;
+    }
+
+    public void setExt(Map<String, Object> ext) {
+        this.ext = ext;
     }
 
     public static class MsgEntity {

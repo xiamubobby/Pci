@@ -68,6 +68,9 @@ public class BPGuideActivity extends NConnActivity{
                     case R.id.menu_measure_retry:
                         connectBondedDevice();
                         break;
+                    case R.id.menu_measure_direct:
+                        OttoManager.post(new GuideOtto(1));
+                        break;
                 }
                 return false;
             }
@@ -113,6 +116,7 @@ public class BPGuideActivity extends NConnActivity{
                             break;
                         default:
                             getToolbar().getMenu().clear();
+                            getToolbar().inflateMenu(R.menu.menu_measure_direct);
                             if (mProgressDialog != null) {
                                 mProgressDialog.hide();
                             }

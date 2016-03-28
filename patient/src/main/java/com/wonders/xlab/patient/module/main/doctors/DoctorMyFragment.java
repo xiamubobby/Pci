@@ -67,16 +67,16 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
-                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance(getActivity()).getPatientId(), true);
+                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
             }
 
             @Override
             public void onLoadMore() {
-                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance(getActivity()).getPatientId(), false);
+                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), false);
             }
         });
 
-        mDoctorMyPresenter.getMyDoctors(AIManager.getInstance(getActivity()).getPatientId(), true);
+        mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
     }
 
     @Override

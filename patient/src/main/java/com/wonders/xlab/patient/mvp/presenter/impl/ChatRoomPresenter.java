@@ -56,8 +56,8 @@ public class ChatRoomPresenter extends BasePagePresenter implements IChatRoomPre
     }
 
     @Override
-    public void sendMessage(String message, String patientTel, String imGroupId, long time) {
-        mSendMessageModel.sendMessage(message, patientTel, imGroupId, time);
+    public void sendMessage(String message, String patientTel, String imGroupId, String groupId, String groupName, long time) {
+        mSendMessageModel.sendMessage(message, patientTel, imGroupId, groupId, groupName, time);
     }
 
     @Override

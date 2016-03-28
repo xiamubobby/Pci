@@ -63,11 +63,11 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         if (type == 0) {
 
             if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.drawable.ic_notification, true, true, true, 0xff30bdf2);
+                new NotifyUtil().showNotification(context, MainActivity.class, null, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), title, R.drawable.ic_notification, true, true, true, 0xff30bdf2);
             }
         } else if (type == 1) {
             if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.drawable.ic_notification, true, true, true, 0xff30bdf2);
+                new NotifyUtil().showNotification(context, MainActivity.class, null, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), title, R.drawable.ic_notification, true, true, true, 0xff30bdf2);
             }
         } else if (type == 2) {
             OttoManager.post(new ForceExitOtto());
@@ -78,7 +78,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 e.printStackTrace();
             }
             if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.drawable.ic_notification, true, true, true, 0xff30bdf2);
+                new NotifyUtil().showNotification(context, MainActivity.class, null, Constant.NOTIFY_ID, context.getResources().getString(R.string.app_name), title, R.drawable.ic_notification, true, true, true, 0xff30bdf2);
             }
         }
     }

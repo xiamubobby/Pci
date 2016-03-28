@@ -12,11 +12,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.wonders.xlab.common.manager.OttoManager;
+import com.wonders.xlab.patient.BuildConfig;
 import com.wonders.xlab.patient.assist.deviceconnection.BPConnectedThread;
 import com.wonders.xlab.patient.assist.deviceconnection.BSConnectedThread;
+import com.wonders.xlab.patient.assist.deviceconnection.aamodel.BPAAModel;
+import com.wonders.xlab.patient.assist.deviceconnection.aamodel.BSAAModel;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.ConnStatusOtto;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
-import com.wonders.xlab.patient.BuildConfig;
 
 import java.util.Set;
 

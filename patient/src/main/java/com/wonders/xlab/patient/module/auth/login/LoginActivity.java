@@ -88,7 +88,6 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
 
     @Override
     public void loginSuccess(String patientId, String tel, String portraitUrl, String patientName) {
-        AIManager.getInstance(this).savePatientInfo(patientId, tel, portraitUrl, patientName);
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }

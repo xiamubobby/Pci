@@ -91,7 +91,7 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
 
         String rangeStr = SPManager.get(getActivity()).getString(Constant.PREF_KEY_IDEAL_BP_RANGE, "");
         if (TextUtils.isEmpty(rangeStr)) {
-            mIdealRangePresenter.fetchIdealBPRange(AIManager.getInstance(getActivity()).getPatientId());
+            mIdealRangePresenter.fetchIdealBPRange(AIManager.getInstance().getPatientId());
         } else {
             mTvBpResultIdealRange.setText(rangeStr);
         }
@@ -131,6 +131,7 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
     public void onDataReceived(BPEntityList bpEntityList) {
 
         if (null == bpEntityList || null == bpEntityList.getBp() || bpEntityList.getBp().size() <= 0) {
+            showShortToast("未读取到测量数据，请重新测量！");
             return;
         }
 
@@ -139,11 +140,11 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
         BPEntity bpEntity = bpEntities.get(0);
         mTvBpResultPressure.setText(String.format(Locale.CHINA, "%d/%d", bpEntity.getSystolicPressure(), bpEntity.getDiastolicPressure()));
         mTvBpResultPulseRate.setText(String.format(Locale.CHINA, "%d", bpEntity.getHeartRate()));
-        mIBPSavePresenter.saveBPSingle(AIManager.getInstance(getActivity()).getPatientId(), bpEntity.getDate(), bpEntity.getHeartRate(), bpEntity.getSystolicPressure(), bpEntity.getDiastolicPressure());
+        mIBPSavePresenter.saveBPSingle(AIManager.getInstance().getPatientId(), bpEntity.getDate(), bpEntity.getHeartRate(), bpEntity.getSystolicPressure(), bpEntity.getDiastolicPressure());
 
         bpEntities.remove(0);
         if (bpEntities.size() > 0) {
-            mIBPSavePresenter.saveBP(AIManager.getInstance(getActivity()).getPatientId(), bpEntityList);
+            mIBPSavePresenter.saveBP(AIManager.getInstance().getPatientId(), bpEntityList);
         }
     }
 

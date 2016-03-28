@@ -13,7 +13,7 @@ public class TimeClickReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (AIManager.getInstance(context).hasLogin()) {
+        if (AIManager.getInstance().hasLogin()) {
             context.startService(new Intent(context, XEMChatService.class));
         }
     }

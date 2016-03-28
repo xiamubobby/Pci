@@ -125,7 +125,7 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
                                 }
                             }
                             if (canUpload) {
-                                mUploadPicPresenter.upload(AIManager.getInstance(MedicalRecordActivity.this).getPatientId(), fileList);
+                                mUploadPicPresenter.upload(AIManager.getInstance().getPatientId(), fileList);
                             }
                         }
 

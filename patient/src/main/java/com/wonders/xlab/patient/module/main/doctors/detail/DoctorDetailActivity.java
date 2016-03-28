@@ -158,10 +158,10 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     private void requestData() {
         switch (type) {
             case TYPE_DOCTOR:
-                mDoctorDetailPresenter.fetchDoctorDetailInfo(AIManager.getInstance(this).getPatientId(), doctorOrGroupId);
+                mDoctorDetailPresenter.fetchDoctorDetailInfo(AIManager.getInstance().getPatientId(), doctorOrGroupId);
                 break;
             case TYPE_DOCTOR_GROUP:
-                mDoctorGroupDetailPresenter.fetchDoctorGroupDetailInfo(AIManager.getInstance(this).getPatientId(), doctorOrGroupId);
+                mDoctorGroupDetailPresenter.fetchDoctorGroupDetailInfo(AIManager.getInstance().getPatientId(), doctorOrGroupId);
                 break;
         }
     }
@@ -214,10 +214,10 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
                             } else {
                                 switch (type) {
                                     case TYPE_DOCTOR:
-                                        mDoctorDetailPresenter.orderPackage(AIManager.getInstance(DoctorDetailActivity.this).getPatientId(), packageList.get(position).packageId.get());
+                                        mDoctorDetailPresenter.orderPackage(AIManager.getInstance().getPatientId(), packageList.get(position).packageId.get());
                                         break;
                                     case TYPE_DOCTOR_GROUP:
-                                        mDoctorGroupDetailPresenter.orderPackage(AIManager.getInstance(DoctorDetailActivity.this).getPatientId(), packageList.get(position).packageId.get());
+                                        mDoctorGroupDetailPresenter.orderPackage(AIManager.getInstance().getPatientId(), packageList.get(position).packageId.get());
                                         break;
                                 }
                             }

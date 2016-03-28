@@ -92,7 +92,7 @@ public class HomeFragment extends BaseFragment {
                             break;
                         case 1:
                             Intent intent = new Intent(getActivity(), MedicalRecordActivity.class);
-                            intent.putExtra(MedicalRecordActivity.EXTRA_PATIENT_ID, AIManager.getInstance(getActivity()).getPatientId());
+                            intent.putExtra(MedicalRecordActivity.EXTRA_PATIENT_ID, AIManager.getInstance().getPatientId());
                             startActivity(intent);
                             break;
                         default:

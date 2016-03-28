@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.easemob.chat.EMChatManager;
@@ -41,7 +42,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             return;
         }
         //忽略自己发送的消息
-        if (!TextUtils.isEmpty(username) && username.equals(AIManager.getInstance(context).getPatientTel())) {
+        if (!TextUtils.isEmpty(username) && username.equals(AIManager.getInstance().getPatientTel())) {
             return;
         }
         // 如果是群聊消息，获取到group id
@@ -52,9 +53,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
 //            }
 //        }
 
-        String name = message.getStringAttribute("name", "");
         String title = message.getStringAttribute("title", "");
-        String content = message.getStringAttribute("content", "");
         int type = message.getIntAttribute("type", -1);//-1:默认处理，即通过环信后台发送 0:提醒 1:内容 2：强制退出(由于用户锁定账户等等原因的安全考虑)
 
         int notifyId = Constant.NOTIFY_ID;
@@ -70,25 +69,32 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
          */
         int notifyColor = 0xff30bdf2;
         if (type == 0) {
-
-            if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, notifyId, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.drawable.ic_notification, true, true, true, notifyColor);
-            }
+            new NotifyUtil().showNotification(context, MainActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), title, R.drawable.ic_notification, true, true, true, notifyColor);
         } else if (type == 1) {
-            if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, notifyId, context.getResources().getString(R.string.app_name), title, MainActivity.class, R.drawable.ic_notification, true, true, true, notifyColor);
-            }
+            new NotifyUtil().showNotification(context, MainActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), title, R.drawable.ic_notification, true, true, true, notifyColor);
         } else if (type == 2) {
             OttoManager.post(new ForceExitOtto());
+        } else if (3 == type) {
+            String groupId = message.getStringAttribute("groupId", "");
+            String groupName = message.getStringAttribute("groupName", "");
+            String imGroupId = message.getStringAttribute("imGroupId", "");
+            String txtContent = message.getStringAttribute("txtContent", "");
+
+            Bundle data = new Bundle();
+            data.putString(ChatRoomActivity.EXTRA_GROUP_ID,groupId);
+            data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID,imGroupId);
+            data.putString(ChatRoomActivity.EXTRA_GROUP_NAME,groupName);
+            data.putBoolean(ChatRoomActivity.EXTRA_CAN_CHAT,true);
+
+            new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, notifyId, context.getResources().getString(R.string.app_name), txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
+
         } else if (type == -1) {
             try {
                 title = new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            if (!AIManager.getInstance(context).isHomeShowing()) {
-                new NotifyUtil().showNotification(context, notifyId, context.getResources().getString(R.string.app_name), title, ChatRoomActivity.class, R.drawable.ic_notification, true, true, true, notifyColor);
-            }
+            new NotifyUtil().showNotification(context, ChatRoomActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), title, R.drawable.ic_notification, true, true, true, notifyColor);
         }
 
     }

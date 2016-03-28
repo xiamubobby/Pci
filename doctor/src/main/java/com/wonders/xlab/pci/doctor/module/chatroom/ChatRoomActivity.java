@@ -44,11 +44,14 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
      * 患者和医生所在聊天组的id
      */
     public final static String EXTRA_PATIENT_GROUP_ID = "GROUP_ID";
+    public final static String EXTRA_PATIENT_GROUP_NAME = "GROUP_NAME";
+
     @Bind(R.id.ll_chat_room_loading)
     LinearLayout mLoadingView;
 
     private String patientId;
     private String groupId;
+    private String groupName;
     private String patientName;
     private String patientPhoneNumber;
 
@@ -88,7 +91,8 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         }
         patientId = intent.getStringExtra(EXTRA_PATIENT_ID);
         groupId = intent.getStringExtra(EXTRA_PATIENT_GROUP_ID);
-        if (TextUtils.isEmpty(patientId)) {
+        groupName = intent.getStringExtra(EXTRA_PATIENT_GROUP_NAME);
+        if (TextUtils.isEmpty(patientId) || TextUtils.isEmpty(groupName)) {
             Toast.makeText(this, "获取患者信息失败，请重试！", Toast.LENGTH_SHORT).show();
             finish();
             return;
@@ -152,7 +156,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             mEtChatRoomInput.setText("");
 
-            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getUserTel(), groupId, sendTime);
+            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getUserTel(), groupId, groupName, "", sendTime);
         }
     }
 

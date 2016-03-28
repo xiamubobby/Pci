@@ -53,7 +53,7 @@ public class XEMChatService extends Service {
         super.onCreate();
         OttoManager.register(this);
 
-        Notification notification = new NotifyUtil().generateNotification(this, getResources().getString(R.string.app_name), "正在运行", MainActivity.class, R.drawable.ic_notification, false, false, false, 0xff30bdf2);
+        Notification notification = new NotifyUtil().generateNotification(this, MainActivity.class, null, getResources().getString(R.string.app_name), "正在运行", R.drawable.ic_notification, false, false, false, 0xff30bdf2);
         startForeground(Constant.NOTIFY_ID, notification);
 
         initAutoStart();

@@ -88,15 +88,15 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         Intent intent = getIntent();
         if (intent == null) {
             showShortToast(getResources().getString(R.string.query_patient_info_failed));
-//            finish();
-//            return;
+            finish();
+            return;
         }
         groupId = intent.getStringExtra(EXTRA_GROUP_ID);
         imGroupId = intent.getStringExtra(EXTRA_IM_GROUP_ID);
         if (TextUtils.isEmpty(groupId) || TextUtils.isEmpty(imGroupId)) {
             showShortToast(getResources().getString(R.string.query_patient_info_failed));
-//            finish();
-//            return;
+            finish();
+            return;
         }
         groupName = intent.getStringExtra(EXTRA_GROUP_NAME);
         canChat = intent.getBooleanExtra(EXTRA_CAN_CHAT, false);
@@ -125,7 +125,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             }
         });
 
-        mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance(this).getPatientId());
+        mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance().getPatientId());
         addPresenter(mChatRoomPresenter);
 
         mChatRoomPresenter.getChatList(imGroupId, true);
@@ -192,7 +192,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             MeChatRoomBean bean = new MeChatRoomBean();
             bean.text.set(message);
-            bean.portraitUrl.set(AIManager.getInstance(this).getPatientPortraitUrl());
+            bean.portraitUrl.set(AIManager.getInstance().getPatientPortraitUrl());
             bean.recordTime.set(DateUtil.format(sendTime, "HH:mm"));
             bean.recordTimeInMill.set(sendTime);
             bean.isSending.set(true);
@@ -204,7 +204,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             mEtChatRoomInput.setText("");
 
-            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getPatientTel(), imGroupId, sendTime);
+            mChatRoomPresenter.sendMessage(message, AIManager.getInstance().getPatientTel(), imGroupId, groupId, groupName, sendTime);
         }
     }
 

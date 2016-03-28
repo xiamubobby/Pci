@@ -111,7 +111,7 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
         dialog = new ProgressDialog(this);
         dialog.setMessage("正在保存，请稍候...");
         dialog.show();
-        mRecordSavePresenter.saveBSSingle(AIManager.getInstance(this).getPatientId(), date, periodIndex, Float.parseFloat(bloodSugar));
+        mRecordSavePresenter.saveBSSingle(AIManager.getInstance().getPatientId(), date, periodIndex, Float.parseFloat(bloodSugar));
     }
 
     @OnClick(R.id.tv_add_date)

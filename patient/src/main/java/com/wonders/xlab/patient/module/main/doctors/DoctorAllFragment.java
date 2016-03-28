@@ -67,7 +67,7 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
-                mDoctorAllPresenter.getAllDoctors(AIManager.getInstance(getActivity()).getPatientId(), true);
+                mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
             }
 
             @Override
@@ -76,7 +76,7 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
             }
         });
 
-        mDoctorAllPresenter.getAllDoctors(AIManager.getInstance(getActivity()).getPatientId(), true);
+        mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
     }
 
     @Override

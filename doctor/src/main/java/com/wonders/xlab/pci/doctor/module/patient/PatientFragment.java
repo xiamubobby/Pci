@@ -47,18 +47,14 @@ public class PatientFragment extends BaseFragment implements PatientPresenterLis
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mPatientPresenter = new PatientPresenter(this);
-        addPresenter(mPatientPresenter);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.patient_fragment, container, false);
         ButterKnife.bind(this, view);
+
+        mPatientPresenter = new PatientPresenter(this);
+        addPresenter(mPatientPresenter);
         return view;
     }
 
@@ -101,6 +97,7 @@ public class PatientFragment extends BaseFragment implements PatientPresenterLis
                     intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_NAME, mPatientRVAdapter.getBean(position).getPatientName());
                     intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER, mPatientRVAdapter.getBean(position).getPhoneNumber());
                     intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_GROUP_ID, mPatientRVAdapter.getBean(position).getGroupId());
+                    intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_GROUP_NAME, mPatientRVAdapter.getBean(position).getGroupName());
                     getActivity().startActivity(intent);
                 }
             });

@@ -14,9 +14,9 @@ import android.support.v4.app.TaskStackBuilder;
  * Created by hua on 15/12/24.
  */
 public class NotifyUtil {
-    public void showNotification(Context context, int id, String title, String message, Class targetClass, @DrawableRes int smallIconResId, boolean autoCancel, boolean vibrate, boolean hasParent, int color) {
+    public void showNotification(Context context, Class targetClass, Bundle data, int id, String title, String message, @DrawableRes int smallIconResId, boolean autoCancel, boolean vibrate, boolean hasParent, int color) {
 
-        Notification notification = generateNotification(context, title, message, targetClass, smallIconResId, autoCancel, vibrate, hasParent, color);
+        Notification notification = generateNotification(context, targetClass, data, title, message, smallIconResId, autoCancel, vibrate, hasParent, color);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(id, notification);
@@ -25,17 +25,17 @@ public class NotifyUtil {
     /**
      * 创建一个Notification
      * @param context
-     * @param title
-     * @param message
      * @param targetClass
+     * @param data
+     *@param title
+     * @param message
      * @param smallIconResId
      * @param autoCancel
      * @param vibrate
      * @param hasParent
-     * @param color
-     * @return
+     * @param color        @return
      */
-    public Notification generateNotification(Context context, String title, String message, Class targetClass, @DrawableRes int smallIconResId, boolean autoCancel, boolean vibrate, boolean hasParent, int color) {
+    public Notification generateNotification(Context context, Class targetClass, Bundle data, String title, String message, @DrawableRes int smallIconResId, boolean autoCancel, boolean vibrate, boolean hasParent, int color) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(smallIconResId)
                 .setContentTitle(title)
@@ -46,9 +46,10 @@ public class NotifyUtil {
         }
 
         Intent intent = new Intent(context, targetClass);
-        Bundle data = new Bundle();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  //使用context启动activity时使用
-        intent.putExtras(data);
+        if (null != data) {
+            intent.putExtras(data);
+        }
 
         PendingIntent pendingIntent;
         if (hasParent) {

@@ -8,7 +8,9 @@ import com.wonders.xlab.patient.mvp.entity.request.SendMessageBody;
 import com.wonders.xlab.patient.mvp.model.ISendMessageModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import im.hua.library.base.mvp.listener.BaseModelListener;
 
@@ -25,14 +27,15 @@ public class SendMessageModel extends PatientBaseModel<SendMessageEntity> implem
     }
 
     /**
-     *
      * @param message
      * @param patientTel
      * @param imGroupId  环信id
+     * @param groupId
+     * @param groupName
      * @param time
      */
     @Override
-    public void sendMessage(String message, String patientTel, String imGroupId, long time) {
+    public void sendMessage(String message, String patientTel, String imGroupId, String groupId, String groupName, long time) {
         SendMessageBody body = new SendMessageBody();
 
         SendMessageBody.MsgEntity msgEntity = new SendMessageBody.MsgEntity();
@@ -46,6 +49,14 @@ public class SendMessageModel extends PatientBaseModel<SendMessageEntity> implem
         body.setFrom(patientTel);
         body.setTarget_type("chatgroups");
         body.setTarget(targets);
+
+        Map<String, Object> ext = new HashMap<>();
+        ext.put("type", 3);//3:表示聊天信息
+        ext.put("imGroupId", imGroupId);
+        ext.put("groupId", groupId);
+        ext.put("groupName", groupName);
+        ext.put("txtContent", message);
+        body.setExt(ext);
 
         fetchData(mSendMessageAPI.sendMessage(body,time), false);
     }

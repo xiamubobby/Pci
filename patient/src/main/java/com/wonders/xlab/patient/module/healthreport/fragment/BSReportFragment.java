@@ -74,7 +74,7 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
         super.onViewCreated(view, savedInstanceState);
         String rangeStr = SPManager.get(getActivity()).getString(Constant.PREF_KEY_IDEAL_BS_RANGE, "");
         if (TextUtils.isEmpty(rangeStr)) {
-            mIdealRangePresenter.fetchIdealBSRange(AIManager.getInstance(getActivity()).getPatientId());
+            mIdealRangePresenter.fetchIdealBSRange(AIManager.getInstance().getPatientId());
         } else {
             mTvIdealRange.setText(rangeStr);
         }
@@ -90,12 +90,12 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
             }
         });
 
-        mBSReportPresenter.getBSCacheList(AIManager.getInstance(getActivity()).getPatientId());
+        mBSReportPresenter.getBSCacheList(AIManager.getInstance().getPatientId());
     }
 
     @Subscribe
     public void refresh(BSSaveSuccessOtto otto) {
-        mBSReportPresenter.getBSCacheList(AIManager.getInstance(getActivity()).getPatientId());
+        mBSReportPresenter.getBSCacheList(AIManager.getInstance().getPatientId());
     }
 
     @Override

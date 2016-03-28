@@ -219,7 +219,7 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
 
                     showProgressDialog("","正在保存，请稍候...");
 
-                    mSymptomPresenter.saveSymptom(AIManager.getInstance(SymptomActivity.this).getPatientId(), symptomStr);
+                    mSymptomPresenter.saveSymptom(AIManager.getInstance().getPatientId(), symptomStr);
                 } else {
                     showShortToast("请选择您的症状");
                 }

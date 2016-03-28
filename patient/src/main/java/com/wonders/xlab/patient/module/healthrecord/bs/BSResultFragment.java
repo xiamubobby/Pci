@@ -101,7 +101,7 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
         mRecordSavePresenter.getBSPeriodDic();
 
         if (TextUtils.isEmpty(rangeStr)) {
-            mIdealRangePresenter.fetchIdealBSRange(AIManager.getInstance(getActivity()).getPatientId());
+            mIdealRangePresenter.fetchIdealBSRange(AIManager.getInstance().getPatientId());
         } else {
             mTvBsResultIdealRange.setText(rangeStr);
         }
@@ -114,7 +114,7 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
 
         if (Float.compare(bsValue, 0) > 0 && mTvBsResultSugar.getTag() != null) {
             mIsSaveSingle = true;
-            mRecordSavePresenter.saveBSSingle(AIManager.getInstance(getActivity()).getPatientId(), Long.parseLong(mTvBsResultSugar.getTag().toString()), mSpBsResultPeriod.getSelectedItemPosition(), bsValue);
+            mRecordSavePresenter.saveBSSingle(AIManager.getInstance().getPatientId(), Long.parseLong(mTvBsResultSugar.getTag().toString()), mSpBsResultPeriod.getSelectedItemPosition(), bsValue);
         } else {
             Toast.makeText(getActivity(), "请先测量您的血糖，然后点击保存!", Toast.LENGTH_SHORT).show();
         }
@@ -141,6 +141,7 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
     @Subscribe
     public void onDataReceived(BSEntityList bsEntityList) {
         if (null == bsEntityList || null == bsEntityList.getBs() || bsEntityList.getBs().size() <= 0) {
+            showShortToast("未读取到测量数据，请重新测量！");
             return;
         }
         BSEntity bsEntity = bsEntityList.getBs().get(0);
@@ -151,7 +152,7 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
         bsEntityList.getBs().remove(0);
         if (bsEntityList.getBs().size() > 0) {
             mIsSaveSingle = false;
-            mRecordSavePresenter.saveBS(AIManager.getInstance(getActivity()).getPatientId(), bsEntityList);
+            mRecordSavePresenter.saveBS(AIManager.getInstance().getPatientId(), bsEntityList);
         }
     }
 

@@ -191,7 +191,7 @@ public class HomeTopCircleFragment extends BaseFragment {
         XApplication.realm.beginTransaction();
         RealmResults<BPReportBean> beanRealmResults = XApplication.realm
                 .where(BPReportBean.class)
-                .equalTo("patientId", AIManager.getInstance(getActivity()).getPatientId())
+                .equalTo("patientId", AIManager.getInstance().getPatientId())
                 .findAllSorted("recordTimeInMill", Sort.DESCENDING);
         BPReportBean first;
         if (beanRealmResults.size() > 0) {
@@ -212,7 +212,7 @@ public class HomeTopCircleFragment extends BaseFragment {
         XApplication.realm.beginTransaction();
         RealmResults<BSReportBean> beanRealmResults = XApplication.realm
                 .where(BSReportBean.class)
-                .equalTo("patientId", AIManager.getInstance(getActivity()).getPatientId())
+                .equalTo("patientId", AIManager.getInstance().getPatientId())
                 .findAllSorted("recordTimeInMill", Sort.DESCENDING);
         BSReportBean first;
         if (beanRealmResults.size() > 0) {

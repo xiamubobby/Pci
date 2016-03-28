@@ -119,7 +119,7 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
         dialog.setMessage("正在保存，请稍候...");
         dialog.show();
 
-        mIBPSavePresenter.saveBPSingle(AIManager.getInstance(this).getPatientId(), date, Integer.valueOf(heartRate), Integer.valueOf(systolicPressure), Integer.valueOf(diastolicPressure));
+        mIBPSavePresenter.saveBPSingle(AIManager.getInstance().getPatientId(), date, Integer.valueOf(heartRate), Integer.valueOf(systolicPressure), Integer.valueOf(diastolicPressure));
     }
 
     @OnClick(R.id.tv_add_bp_date)

@@ -47,7 +47,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         OttoManager.register(this);
-        AIManager aiManager = AIManager.getInstance(this);
+        AIManager aiManager = AIManager.getInstance();
         if (!aiManager.hasLogin()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
@@ -172,7 +172,7 @@ public class MainActivity extends BaseActivity {
     @Subscribe
     public void forceExit(ForceExitOtto bean) {
         new NotifyUtil().cancelAll(this);
-        AIManager.getInstance(this).logout();
+        AIManager.getInstance().logout();
 
         startActivity(new Intent(this, MainActivity.class));
         startActivity(new Intent(this, LoginActivity.class));

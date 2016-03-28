@@ -81,15 +81,15 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
         mRefreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mSymptomReportPresenter.getSymptomList(AIManager.getInstance(getActivity()).getPatientId());
+                mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId());
             }
         });
-        mSymptomReportPresenter.getSymptomList(AIManager.getInstance(getActivity()).getPatientId());
+        mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId());
     }
 
     @Subscribe
     public void refresh(SymptomSaveSuccessOtto otto) {
-        mSymptomReportPresenter.getSymptomList(AIManager.getInstance(getActivity()).getPatientId());
+        mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId());
     }
 
     @Override

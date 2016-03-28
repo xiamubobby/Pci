@@ -6,7 +6,6 @@ import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
-import im.hua.utils.MD5Util;
 
 
 /**
@@ -26,7 +25,7 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter, Lo
 
     @Override
     public void login(String tel, String password) {
-        mLoginModel.login(tel, new MD5Util().encrypt(password));
+        mLoginModel.login(tel, password);
     }
 
     @Override
