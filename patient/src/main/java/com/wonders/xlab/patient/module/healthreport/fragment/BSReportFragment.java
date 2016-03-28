@@ -4,7 +4,6 @@ package com.wonders.xlab.patient.module.healthreport.fragment;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,7 @@ import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
-import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
-import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.healthreport.adapter.BSReportAdapter;
@@ -72,12 +69,7 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        String rangeStr = SPManager.get(getActivity()).getString(Constant.PREF_KEY_IDEAL_BS_RANGE, "");
-        if (TextUtils.isEmpty(rangeStr)) {
-            mIdealRangePresenter.fetchIdealBSRange(AIManager.getInstance().getPatientId());
-        } else {
-            mTvIdealRange.setText(rangeStr);
-        }
+        mIdealRangePresenter.fetchIdealBSRange(AIManager.getInstance().getPatientId());
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
@@ -132,7 +124,6 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
 
     @Override
     public void showRange(String range) {
-        SPManager.get(getActivity()).putString(Constant.PREF_KEY_IDEAL_BS_RANGE, range);
         mTvIdealRange.setText(range);
     }
 }

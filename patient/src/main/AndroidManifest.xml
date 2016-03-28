@@ -112,16 +112,16 @@
         <activity
             android:name=".module.chatroom.ChatRoomActivity"
             android:label="@string/title_activity_chat_room"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".module.main.MainActivity">
+            android:parentActivityName=".module.main.MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".module.main.MainActivity"/>
         </activity>
         <activity
             android:name=".module.healthreport.DailyRecordActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_daily_record"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.DailyRecordActionBar"/>
         <activity
             android:name=".module.healthrecord.bp.BPAddActivity"

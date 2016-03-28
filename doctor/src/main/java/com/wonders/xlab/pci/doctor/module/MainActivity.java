@@ -39,27 +39,25 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme_NoActionBar);
-
-        Constant.setBaseUrl(this);
-
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme_NoActionBar);
+        Constant.setBaseUrl(this);
 
         if (!AIManager.getInstance(this).hasLogin()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
-        } else {
-            setContentView(R.layout.main_activity);
-            ButterKnife.bind(this);
-
-            UmengUpdateAgent.setUpdateOnlyWifi(false);
-            UmengUpdateAgent.update(this);
-
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-
-            initViewPager();
+            return;
         }
+        setContentView(R.layout.main_activity);
+        ButterKnife.bind(this);
+
+        UmengUpdateAgent.setUpdateOnlyWifi(false);
+        UmengUpdateAgent.update(this);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        initViewPager();
     }
 
     @Override
@@ -130,7 +128,5 @@ public class MainActivity extends BaseActivity {
         AIManager.getInstance(this).logout();
 
         startActivity(new Intent(this, MainActivity.class));
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
     }
 }

@@ -43,13 +43,15 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     /**
      * 患者和医生所在聊天组的id
      */
-    public final static String EXTRA_PATIENT_GROUP_ID = "GROUP_ID";
-    public final static String EXTRA_PATIENT_GROUP_NAME = "GROUP_NAME";
+    public final static String EXTRA_GROUP_ID = "GROUP_ID";
+    public final static String EXTRA_IM_GROUP_ID = "IM_GROUP_ID";
+    public final static String EXTRA_GROUP_NAME = "GROUP_NAME";
 
     @Bind(R.id.ll_chat_room_loading)
     LinearLayout mLoadingView;
 
     private String patientId;
+    private String imGroupId;
     private String groupId;
     private String groupName;
     private String patientName;
@@ -90,9 +92,10 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             return;
         }
         patientId = intent.getStringExtra(EXTRA_PATIENT_ID);
-        groupId = intent.getStringExtra(EXTRA_PATIENT_GROUP_ID);
-        groupName = intent.getStringExtra(EXTRA_PATIENT_GROUP_NAME);
-        if (TextUtils.isEmpty(patientId) || TextUtils.isEmpty(groupName)) {
+        groupId = intent.getStringExtra(EXTRA_GROUP_ID);
+        imGroupId = intent.getStringExtra(EXTRA_IM_GROUP_ID);
+        groupName = intent.getStringExtra(EXTRA_GROUP_NAME);
+        if (TextUtils.isEmpty(patientId) || TextUtils.isEmpty(groupName) || TextUtils.isEmpty(imGroupId)) {
             Toast.makeText(this, "获取患者信息失败，请重试！", Toast.LENGTH_SHORT).show();
             finish();
             return;
@@ -122,14 +125,14 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             @Override
             public void onLoadMore() {
                 mLoadingView.setVisibility(View.VISIBLE);
-                mChatRoomPresenter.getChatList(groupId);
+                mChatRoomPresenter.getChatList(imGroupId);
             }
         });
 
         mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance(this).getUserId());
         addPresenter(mChatRoomPresenter);
 
-        mChatRoomPresenter.getChatList(groupId);
+        mChatRoomPresenter.getChatList(imGroupId);
     }
 
     @Override
@@ -156,7 +159,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             mEtChatRoomInput.setText("");
 
-            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getUserTel(), groupId, groupName, "", sendTime);
+            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getUserTel(), groupId, groupName, imGroupId, patientId, patientName, patientPhoneNumber, sendTime);
         }
     }
 

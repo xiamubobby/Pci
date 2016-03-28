@@ -57,6 +57,7 @@
             android:layout_marginTop="@dimen/item_interval_middle"
             android:layout_toRightOf="@+id/iv_doctor_my_item_portrait"
             android:maxLines="3"
+            android:singleLine="true"
             android:text="@{doctorBean.latestChatMessage}"
             android:textColor='@{doctorBean.type == MyDoctorItemBean.TYPE_IN_SERVICE ? @color/text_color_primary_gray : @color/text_color_secondary_gray}'
             android:textSize="@dimen/text_size_middle"/>

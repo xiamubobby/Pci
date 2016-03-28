@@ -17,7 +17,7 @@ public class PatientEntity extends BaseEntity {
      * age : 19
      * gender : 女
      * lastOperationTime : 术后1个月
-     * groupId : 1
+     * doctorGroupId : 1
      * groupName : “”
      */
 
@@ -40,8 +40,9 @@ public class PatientEntity extends BaseEntity {
         private String tel;
         private String gender;
         private String lastOperationTime;
-        private String groupId;
+        private String doctorGroupId;
         private String groupName;
+        private String imGroupId;
 
         public void setId(String id) {
             this.id = id;
@@ -71,8 +72,8 @@ public class PatientEntity extends BaseEntity {
             this.lastOperationTime = lastOperationTime;
         }
 
-        public void setGroupId(String groupId) {
-            this.groupId = groupId;
+        public void setDoctorGroupId(String doctorGroupId) {
+            this.doctorGroupId = doctorGroupId;
         }
 
         public void setGroupName(String groupName) {
@@ -107,8 +108,8 @@ public class PatientEntity extends BaseEntity {
             return lastOperationTime;
         }
 
-        public String getGroupId() {
-            return groupId;
+        public String getDoctorGroupId() {
+            return doctorGroupId;
         }
 
         public String getGroupName() {
@@ -121,6 +122,14 @@ public class PatientEntity extends BaseEntity {
 
         public void setTel(String tel) {
             this.tel = tel;
+        }
+
+        public String getImGroupId() {
+            return imGroupId;
+        }
+
+        public void setImGroupId(String imGroupId) {
+            this.imGroupId = imGroupId;
         }
     }
 }

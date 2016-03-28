@@ -49,7 +49,8 @@ public class PatientPresenter extends BasePresenter implements PatientModelListe
             bean.setPatientName(valuesEntity.getName());
             bean.setTimeAfterSurgery(valuesEntity.getLastOperationTime());
             bean.setGroupName(valuesEntity.getGroupName());
-            bean.setGroupId(valuesEntity.getGroupId());
+            bean.setGroupId(valuesEntity.getDoctorGroupId());
+            bean.setImGroupId(valuesEntity.getImGroupId());
             bean.setPhoneNumber(valuesEntity.getTel());
 
             patientBeen.add(bean);

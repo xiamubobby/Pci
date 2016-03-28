@@ -46,14 +46,15 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
+        super.onCreate(savedInstanceState);
         OttoManager.register(this);
         AIManager aiManager = AIManager.getInstance();
         if (!aiManager.hasLogin()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
+            return;
         }
-        setTheme(R.style.AppTheme_NoActionBar);
-        super.onCreate(savedInstanceState);
 
         //TODO GrowingIO 自动埋点统计
         GrowingIO growingIO = GrowingIO.getInstance();
@@ -175,8 +176,6 @@ public class MainActivity extends BaseActivity {
         AIManager.getInstance().logout();
 
         startActivity(new Intent(this, MainActivity.class));
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
     }
 
     public class DoctorNotifyCountOtto {

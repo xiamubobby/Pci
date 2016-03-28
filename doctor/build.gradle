@@ -20,7 +20,7 @@ android {
         applicationId "com.wonders.xlab.pci.doctor"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 3
+        versionCode 1
         versionName "1.0"
     }
     signingConfigs {

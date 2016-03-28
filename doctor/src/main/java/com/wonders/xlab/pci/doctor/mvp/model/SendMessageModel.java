@@ -24,14 +24,17 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
     }
 
     /**
-     *  @param message
+     * @param message
      * @param doctorTel
      * @param groupId  环信id
      * @param groupName
      * @param imGroupId
      * @param time
+     * @param patientId
+     * @param patientName
+     * @param patientTel
      */
-    public void sendMessage(String message, String doctorTel, String groupId, String groupName, String imGroupId, long time) {
+    public void sendMessage(String message, String doctorTel, String groupId, String groupName, String imGroupId, long time, String patientId, String patientName, String patientTel) {
         SendMessageBody body = new SendMessageBody();
 
         SendMessageBody.MsgEntity msgEntity = new SendMessageBody.MsgEntity();
@@ -39,7 +42,7 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
         msgEntity.setMsg(message);
 
         List<String> targets = new ArrayList<>();
-        targets.add(groupId);
+        targets.add(imGroupId);
 
         body.setMsg(msgEntity);
         body.setFrom(doctorTel);
@@ -51,6 +54,9 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
         ext.put("imGroupId", imGroupId);
         ext.put("groupId", groupId);
         ext.put("groupName", groupName);
+        ext.put("patientId", patientId);
+        ext.put("patientName", patientName);
+        ext.put("patientTel", patientTel);
         ext.put("txtContent", message);
         body.setExt(ext);
 

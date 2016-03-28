@@ -57,9 +57,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         int type = message.getIntAttribute("type", -1);//-1:默认处理，即通过环信后台发送 0:提醒 1:内容 2：强制退出(由于用户锁定账户等等原因的安全考虑)
 
         int notifyId = Constant.NOTIFY_ID;
-        if (TextUtils.isDigitsOnly(msgId)) {
-            notifyId = (int) Long.parseLong(msgId);
-        }
+
         /**
          * -1:默认处理，即通过环信后台发送
          * 0:提醒
@@ -86,7 +84,11 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             data.putString(ChatRoomActivity.EXTRA_GROUP_NAME,groupName);
             data.putBoolean(ChatRoomActivity.EXTRA_CAN_CHAT,true);
 
-            new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, notifyId, context.getResources().getString(R.string.app_name), txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
+            if (TextUtils.isDigitsOnly(imGroupId)) {
+                notifyId = (int) Long.parseLong(imGroupId);
+            }
+
+            new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, notifyId, groupName, txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
 
         } else if (type == -1) {
             try {

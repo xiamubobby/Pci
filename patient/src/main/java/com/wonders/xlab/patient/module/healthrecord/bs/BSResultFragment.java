@@ -3,7 +3,6 @@ package com.wonders.xlab.patient.module.healthrecord.bs;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,6 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
-import com.wonders.xlab.common.manager.SPManager;
-import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.assist.deviceconnection.entity.BSEntity;
@@ -97,15 +94,9 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         OttoManager.register(this);
-        String rangeStr = SPManager.get(getActivity()).getString(Constant.PREF_KEY_IDEAL_BS_RANGE, "");
         mRecordSavePresenter.getBSPeriodDic();
 
-        if (TextUtils.isEmpty(rangeStr)) {
-            mIdealRangePresenter.fetchIdealBSRange(AIManager.getInstance().getPatientId());
-        } else {
-            mTvBsResultIdealRange.setText(rangeStr);
-        }
-
+        mIdealRangePresenter.fetchIdealBSRange(AIManager.getInstance().getPatientId());
     }
 
     @OnClick(R.id.btn_bs_result_save)
@@ -191,7 +182,6 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
 
     @Override
     public void showRange(String range) {
-        SPManager.get(getActivity()).putString(Constant.PREF_KEY_IDEAL_BS_RANGE,range);
         mTvBsResultIdealRange.setText(range);
     }
 

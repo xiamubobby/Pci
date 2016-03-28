@@ -20,6 +20,7 @@ public class PatientBean extends BaseObservable {
     private String phoneNumber;
     private String groupName;
     private String groupId;
+    private String imGroupId;
 
     @Bindable
     public String getPortrait() {
@@ -115,5 +116,13 @@ public class PatientBean extends BaseObservable {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public String getImGroupId() {
+        return imGroupId;
+    }
+
+    public void setImGroupId(String imGroupId) {
+        this.imGroupId = imGroupId;
     }
 }

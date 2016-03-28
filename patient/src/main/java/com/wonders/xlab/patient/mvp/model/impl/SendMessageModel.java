@@ -1,6 +1,7 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
 
+import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.ChatRoomAPI;
 import com.wonders.xlab.patient.mvp.entity.SendMessageEntity;
@@ -56,6 +57,9 @@ public class SendMessageModel extends PatientBaseModel<SendMessageEntity> implem
         ext.put("groupId", groupId);
         ext.put("groupName", groupName);
         ext.put("txtContent", message);
+        ext.put("patientId", AIManager.getInstance().getPatientId());
+        ext.put("patientName", AIManager.getInstance().getPatientName());
+        ext.put("patientTel", AIManager.getInstance().getPatientTel());
         body.setExt(ext);
 
         fetchData(mSendMessageAPI.sendMessage(body,time), false);
