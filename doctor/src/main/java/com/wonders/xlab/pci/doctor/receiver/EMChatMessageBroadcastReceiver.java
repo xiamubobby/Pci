@@ -88,7 +88,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             data.putString(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER,patientTel);
 
             if (TextUtils.isDigitsOnly(imGroupId)) {
-                notifyId = (int) Long.parseLong(imGroupId);
+                notifyId = Integer.parseInt(groupId);
             }
 
             new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, notifyId, groupName, txtContent, R.drawable.ic_notification, true, true, true, notifyColor);

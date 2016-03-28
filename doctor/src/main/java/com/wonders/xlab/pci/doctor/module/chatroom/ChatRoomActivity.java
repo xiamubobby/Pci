@@ -35,6 +35,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import im.hua.uikit.BadgeView;
 import im.hua.utils.DateUtil;
+import im.hua.utils.NotifyUtil;
 
 public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresenterListener {
     public final static String EXTRA_PATIENT_ID = "PATIENT_ID";
@@ -102,6 +103,9 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         }
         patientName = intent.getStringExtra(EXTRA_PATIENT_NAME);
         patientPhoneNumber = intent.getStringExtra(EXTRA_PATIENT_PHONE_NUMBER);
+
+        //cancel notification
+        new NotifyUtil().cancel(this, Integer.parseInt(groupId));
 
         setupToolbar();
 

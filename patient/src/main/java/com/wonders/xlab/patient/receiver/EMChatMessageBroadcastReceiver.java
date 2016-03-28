@@ -85,7 +85,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             data.putBoolean(ChatRoomActivity.EXTRA_CAN_CHAT,true);
 
             if (TextUtils.isDigitsOnly(imGroupId)) {
-                notifyId = (int) Long.parseLong(imGroupId);
+                notifyId = Integer.parseInt(groupId);
             }
 
             new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, notifyId, groupName, txtContent, R.drawable.ic_notification, true, true, true, notifyColor);

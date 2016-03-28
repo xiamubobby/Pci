@@ -29,6 +29,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import im.hua.utils.DateUtil;
+import im.hua.utils.NotifyUtil;
 
 /**
  * 聊天界面
@@ -81,6 +82,11 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
@@ -100,6 +106,9 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         }
         groupName = intent.getStringExtra(EXTRA_GROUP_NAME);
         canChat = intent.getBooleanExtra(EXTRA_CAN_CHAT, false);
+
+        //cancel notification
+        new NotifyUtil().cancel(this, Integer.parseInt(groupId));
 
         initServiceStatus(canChat);
 
