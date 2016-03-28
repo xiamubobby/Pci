@@ -39,7 +39,7 @@ import im.hua.library.base.BaseFragment;
 import im.hua.uikit.LoadingDotView;
 import me.drakeet.labelview.LabelView;
 
-public class BPResultFragment extends BaseFragment implements  IdealRangePresenter.IdealRangePresenterListener, BPSavePresenter.RecordSavePresenterListener {
+public class BPResultFragment extends BaseFragment implements IdealRangePresenter.IdealRangePresenterListener, BPSavePresenter.RecordSavePresenterListener {
 
     @Bind(R.id.tv_bp_result_pressure)
     LabelView mTvBpResultPressure;
@@ -64,11 +64,6 @@ public class BPResultFragment extends BaseFragment implements  IdealRangePresent
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mIBPSavePresenter = new BPSavePresenter(this);
-        mIdealRangePresenter = new IdealRangePresenter(this);
-
-        addPresenter(mIBPSavePresenter);
-        addPresenter(mIdealRangePresenter);
 
         if (rotateAnimation == null) {
             rotateAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
@@ -80,6 +75,12 @@ public class BPResultFragment extends BaseFragment implements  IdealRangePresent
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.bp_measure_guide_result_fragment, container, false);
         ButterKnife.bind(this, view);
+
+        mIBPSavePresenter = new BPSavePresenter(this);
+        mIdealRangePresenter = new IdealRangePresenter(this);
+
+        addPresenter(mIBPSavePresenter);
+        addPresenter(mIdealRangePresenter);
         return view;
     }
 
@@ -94,6 +95,18 @@ public class BPResultFragment extends BaseFragment implements  IdealRangePresent
         } else {
             mTvBpResultIdealRange.setText(rangeStr);
         }
+
+        /*BPEntityList bpEntityList = new BPEntityList();
+        List<BPEntity> entities = new ArrayList<>();
+        BPEntity entity = new BPEntity();
+        entity.setDate(Calendar.getInstance().getTimeInMillis());
+        entity.setHeartRate(76);
+        entity.setDiastolicPressure(90);
+        entity.setSystolicPressure(150);
+        entities.add(entity);
+        bpEntityList.setBp(entities);
+
+        onDataReceived(bpEntityList);*/
     }
 
     @Subscribe
@@ -117,12 +130,20 @@ public class BPResultFragment extends BaseFragment implements  IdealRangePresent
     @Subscribe
     public void onDataReceived(BPEntityList bpEntityList) {
 
-        List<BPEntity> bpEntities = bpEntityList.getBp();
-        mIBPSavePresenter.saveBP(AIManager.getInstance(getActivity()).getPatientId(), bpEntityList);
+        if (null == bpEntityList || null == bpEntityList.getBp() || bpEntityList.getBp().size() <= 0) {
+            return;
+        }
 
-        if (null != bpEntities && bpEntities.size() > 0) {
-            mTvBpResultPressure.setText(String.format(Locale.CHINA, "%d/%d", bpEntities.get(0).getSystolicPressure(), bpEntities.get(0).getDiastolicPressure()));
-            mTvBpResultPulseRate.setText(String.format(Locale.CHINA, "%d", bpEntities.get(0).getHeartRate()));
+        List<BPEntity> bpEntities = bpEntityList.getBp();
+
+        BPEntity bpEntity = bpEntities.get(0);
+        mTvBpResultPressure.setText(String.format(Locale.CHINA, "%d/%d", bpEntity.getSystolicPressure(), bpEntity.getDiastolicPressure()));
+        mTvBpResultPulseRate.setText(String.format(Locale.CHINA, "%d", bpEntity.getHeartRate()));
+        mIBPSavePresenter.saveBPSingle(AIManager.getInstance(getActivity()).getPatientId(), bpEntity.getDate(), bpEntity.getHeartRate(), bpEntity.getSystolicPressure(), bpEntity.getDiastolicPressure());
+
+        bpEntities.remove(0);
+        if (bpEntities.size() > 0) {
+            mIBPSavePresenter.saveBP(AIManager.getInstance(getActivity()).getPatientId(), bpEntityList);
         }
     }
 
@@ -152,7 +173,7 @@ public class BPResultFragment extends BaseFragment implements  IdealRangePresent
 
     @Override
     public void showRange(String range) {
-        SPManager.get(getActivity()).putString(Constant.PREF_KEY_IDEAL_BP_RANGE,range);
+        SPManager.get(getActivity()).putString(Constant.PREF_KEY_IDEAL_BP_RANGE, range);
         mTvBpResultIdealRange.setText(range);
     }
 

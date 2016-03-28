@@ -72,10 +72,6 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRecordSavePresenter = new BSSavePresenter(this);
-        mIdealRangePresenter = new IdealRangePresenter(this);
-        addPresenter(mRecordSavePresenter);
-        addPresenter(mIdealRangePresenter);
 
         if (rotateAnimation == null) {
             rotateAnimation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
@@ -88,6 +84,12 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.bs_measure_guide_result_fragment, container, false);
         ButterKnife.bind(this, view);
+
+        mRecordSavePresenter = new BSSavePresenter(this);
+        mIdealRangePresenter = new IdealRangePresenter(this);
+        addPresenter(mRecordSavePresenter);
+        addPresenter(mIdealRangePresenter);
+
         return view;
     }
 
@@ -138,6 +140,9 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
 
     @Subscribe
     public void onDataReceived(BSEntityList bsEntityList) {
+        if (null == bsEntityList || null == bsEntityList.getBs() || bsEntityList.getBs().size() <= 0) {
+            return;
+        }
         BSEntity bsEntity = bsEntityList.getBs().get(0);
         mTvBsResultSugar.setText(String.valueOf(bsEntity.getBloodSugarValue()));
         mTvBsResultSugar.setTag(bsEntity.getDate());

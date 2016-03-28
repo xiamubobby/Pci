@@ -52,6 +52,9 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.doctor_all_fragment, container, false);
         ButterKnife.bind(this, view);
+
+        mDoctorAllPresenter = new DoctorAllPresenter(this);
+        addPresenter(mDoctorAllPresenter);
         return view;
     }
 
@@ -59,7 +62,7 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView.setLinearLayout(false);
-        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(),getResources().getColor(R.color.divider),1));
+        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
         mRecyclerView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
@@ -73,7 +76,6 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
             }
         });
 
-        mDoctorAllPresenter = new DoctorAllPresenter(this);
         mDoctorAllPresenter.getAllDoctors(AIManager.getInstance(getActivity()).getPatientId(), true);
     }
 

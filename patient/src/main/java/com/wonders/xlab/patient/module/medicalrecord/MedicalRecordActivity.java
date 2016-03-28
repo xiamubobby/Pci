@@ -96,6 +96,7 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
         mMedicalRecordPresenter = new MedicalRecordPresenter(this);
         mUploadPicPresenter = new UploadPicPresenter(this);
         addPresenter(mMedicalRecordPresenter);
+        addPresenter(mUploadPicPresenter);
 
         mRecyclerView.setRefreshing(true);
         mMedicalRecordPresenter.getMedicalRecordList(mPatientId, true);

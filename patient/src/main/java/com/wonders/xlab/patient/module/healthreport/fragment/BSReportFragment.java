@@ -56,20 +56,16 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mBSReportPresenter = new BSReportCachePresenter(this);
-        mIdealRangePresenter = new IdealRangePresenter(this);
-        addPresenter(mIdealRangePresenter);
-        addPresenter(mBSReportPresenter);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         OttoManager.register(this);
         View view = inflater.inflate(R.layout.bs_report_fragment, container, false);
         ButterKnife.bind(this, view);
+
+        mBSReportPresenter = new BSReportCachePresenter(this);
+        mIdealRangePresenter = new IdealRangePresenter(this);
+        addPresenter(mIdealRangePresenter);
+        addPresenter(mBSReportPresenter);
         return view;
     }
 

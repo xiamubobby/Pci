@@ -54,6 +54,7 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mSymptomReportPresenter = new SymptomReportPresenter(this);
+        addPresenter(mSymptomReportPresenter);
     }
 
     @Override

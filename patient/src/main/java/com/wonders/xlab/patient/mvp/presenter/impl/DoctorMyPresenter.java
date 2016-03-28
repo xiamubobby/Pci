@@ -73,10 +73,15 @@ public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPre
         }
 
         if (doctorItemBeanArrayList.size() <= 0) {
-            mDoctorMyListener.showReachTheLastPageNotice("没有更多数据了");
+            mDoctorMyListener.showReachTheLastPageNotice("");
             return;
         }
-        mDoctorMyListener.showMyDoctorList(doctorItemBeanArrayList);
+
+        if (shouldAppend()) {
+            mDoctorMyListener.appendMyDoctorList(doctorItemBeanArrayList);
+        } else {
+            mDoctorMyListener.showMyDoctorList(doctorItemBeanArrayList);
+        }
     }
 
     @Override
