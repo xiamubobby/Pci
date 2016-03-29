@@ -47,10 +47,13 @@ public class BPSingleSaveModel extends PatientBaseModel<BPSaveEntity> {
         BPReportBean bean = XApplication.realm.createObject(BPReportBean.class);
         bean.setLowPressure(retValues.getDiastolicPressure());
         bean.setLowPressureStatus(retValues.getDiastolicStatus());
+        bean.setLowPressureRange(retValues.getDiastolicContent());
         bean.setHighPressure(retValues.getSystolicPressure());
         bean.setHighPressureStatus(retValues.getSystolicStatus());
+        bean.setHighPressureRange(retValues.getSystolicContent());
         bean.setHeartRate(retValues.getHeartRate());
         bean.setHeartRateStatus(retValues.getHeartStatus());
+        bean.setHeartRateRange(retValues.getHeartContent());
         bean.setId(retValues.getId());
         bean.setPatientId(retValues.getUserId());
         bean.setRecordTimeInMill(retValues.getRecordTime());

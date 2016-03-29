@@ -12,6 +12,6 @@ import rx.Observable;
  * Created by hua on 16/2/25.
  */
 public interface MedicalRecordAPI {
-    @GET("http://xlab-tech.com:45675/pci-doctor/v1/reviews/listReviews/{userId}")
+    @GET("userCaseReview/listUserCaseReviewRecords/{userId}")
     Observable<MedicalRecordEntity> getMedicalRecordList(@Path("userId") String userId, @Query("page") int page, @Query("size") int size);
 }

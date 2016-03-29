@@ -22,7 +22,7 @@ public class BPReportAdapter extends SimpleRVAdapter<BPReportBean> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bp_report_item, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bp_report_item, parent, false);
         return new ItemViewHolder(view);
     }
 
@@ -35,6 +35,9 @@ public class BPReportAdapter extends SimpleRVAdapter<BPReportBean> {
         viewHolder.mTvLow.setText(String.format("低压：%smmHg", bean.getLowPressure()));
         viewHolder.mTvHeartRate.setText(String.format("心率：%s次/分", bean.getHeartRate()));
         viewHolder.mTvTime.setText(String.format("记录时间：%s", DateUtil.format(bean.getRecordTimeInMill(), "HH:mm")));
+        viewHolder.mTvHighRange.setText(bean.getHighPressureRange());
+        viewHolder.mTvLowRange.setText(bean.getLowPressureRange());
+        viewHolder.mTvHeartRateRange.setText(bean.getHeartRateRange());
 
         Drawable drawableUp = viewHolder.itemView.getContext().getResources().getDrawable(R.drawable.pic_arrow_up);
         if (drawableUp != null) {
@@ -89,10 +92,16 @@ public class BPReportAdapter extends SimpleRVAdapter<BPReportBean> {
         TextView mTvLow;
         @Bind(R.id.tv_bp_report_item_heart_rate)
         TextView mTvHeartRate;
-
+        @Bind(R.id.tv_bp_report_item_high_range)
+        TextView mTvHighRange;
+        @Bind(R.id.tv_bp_report_item_low_range)
+        TextView mTvLowRange;
+        @Bind(R.id.tv_bp_report_item_heart_rate_range)
+        TextView mTvHeartRateRange;
+        
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

@@ -19,9 +19,7 @@ import com.wonders.xlab.patient.module.healthreport.adapter.bean.BSReportBean;
 import com.wonders.xlab.patient.module.healthreport.otto.BSSaveSuccessOtto;
 import com.wonders.xlab.patient.module.healthreport.otto.ShowMeasureChooseDialogOtto;
 import com.wonders.xlab.patient.mvp.presenter.IBSReportPresenter;
-import com.wonders.xlab.patient.mvp.presenter.IIdealRangePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.BSReportCachePresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.IdealRangePresenter;
 
 import java.util.List;
 
@@ -33,12 +31,9 @@ import im.hua.uikit.crv.CommonRecyclerView;
 /**
  * 今日血糖
  */
-public class BSReportFragment extends BaseFragment implements BSReportCachePresenter.BPReportCachePresenterListener, IdealRangePresenter.IdealRangePresenterListener {
+public class BSReportFragment extends BaseFragment implements BSReportCachePresenter.BPReportCachePresenterListener {
     private IBSReportPresenter mBSReportPresenter;
-    private IIdealRangePresenter mIdealRangePresenter;
 
-    @Bind(R.id.tv_bs_report_ideal_range)
-    TextView mTvIdealRange;
     @Bind(R.id.recycler_view_blood_sugar_report)
     CommonRecyclerView mRecyclerView;
 
@@ -60,8 +55,6 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
         ButterKnife.bind(this, view);
 
         mBSReportPresenter = new BSReportCachePresenter(this);
-        mIdealRangePresenter = new IdealRangePresenter(this);
-        addPresenter(mIdealRangePresenter);
         addPresenter(mBSReportPresenter);
         return view;
     }
@@ -69,11 +62,8 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mIdealRangePresenter.fetchIdealBSRange(AIManager.getInstance().getPatientId());
-
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
-        mRecyclerView.showEmptyView();
         TextView tvMeasure = (TextView) mRecyclerView.findViewById(R.id.tv_bp_bs_report_empty_measure);
         tvMeasure.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         tvMeasure.setOnClickListener(new View.OnClickListener() {
@@ -121,10 +111,5 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
     @Override
     public void hideLoading() {
 
-    }
-
-    @Override
-    public void showRange(String range) {
-        mTvIdealRange.setText(range);
     }
 }

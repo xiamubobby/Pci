@@ -22,6 +22,7 @@ public class BSReportBean extends RealmObject{
     private String bloodSugar = "";
     private int bloodSugarStatus;
     private String measurePeriod = "";
+    private String content;//正常值范围
     private long recordTimeInMill;
 
     public String getId() {
@@ -70,5 +71,13 @@ public class BSReportBean extends RealmObject{
 
     public void setPatientId(String patientId) {
         this.patientId = patientId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

@@ -32,6 +32,7 @@ public class BSSaveEntity extends BaseEntity {
         private String bloodSugarTime;
         private String id;
         private int status;
+        private String content;
 
         public String getBloodSugar() {
             return bloodSugar;
@@ -79,6 +80,14 @@ public class BSSaveEntity extends BaseEntity {
 
         public void setUserId(String userId) {
             this.userId = userId;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
         }
     }
 }

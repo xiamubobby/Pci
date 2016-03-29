@@ -1,17 +1,11 @@
-<LinearLayout android:id="@+id/refresh_symptom_report"
-                                              xmlns:android="http://schemas.android.com/apk/res/android"
-                                              xmlns:tools="http://schemas.android.com/tools"
-                                              android:layout_width="match_parent"
-                                              android:layout_height="match_parent"
-                                              tools:context=".module.healthreport.fragment.SymptomReportFragment"
-                                              xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <im.hua.uikit.crv.CommonRecyclerView
-        android:id="@+id/recycler_view_symptom_report"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="LinearLayoutManager"
-        app:reverseLayout="false"
-        app:emptyView="@layout/symptom_report_empty"/>
-
-</LinearLayout>
+<im.hua.uikit.crv.CommonRecyclerView
+    android:id="@+id/recycler_view_symptom_report"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:emptyView="@layout/symptom_report_empty"
+    app:layoutManager="LinearLayoutManager"
+    app:reverseLayout="false"
+    tools:context=".module.healthreport.fragment.SymptomReportFragment"/>

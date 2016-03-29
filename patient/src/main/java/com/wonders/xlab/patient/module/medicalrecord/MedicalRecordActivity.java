@@ -256,6 +256,7 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
     @Override
     public void uploadPicsSuccess(String message) {
         showShortToast(message);
+        mMedicalRecordPresenter.getMedicalRecordList(mPatientId, true);
     }
 
 

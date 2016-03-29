@@ -41,6 +41,12 @@ public class BPSaveEntity extends BaseEntity {
         private String diastolicPressure;
         private int diastolicStatus;
         private long recordTime;
+        /**
+         * 正常值范围
+         */
+        private String heartContent;
+        private String systolicContent;
+        private String diastolicContent;
 
         public String getId() {
             return id;
@@ -112,6 +118,30 @@ public class BPSaveEntity extends BaseEntity {
 
         public void setUserId(String userId) {
             this.userId = userId;
+        }
+
+        public String getHeartContent() {
+            return heartContent;
+        }
+
+        public void setHeartContent(String heartContent) {
+            this.heartContent = heartContent;
+        }
+
+        public String getSystolicContent() {
+            return systolicContent;
+        }
+
+        public void setSystolicContent(String systolicContent) {
+            this.systolicContent = systolicContent;
+        }
+
+        public String getDiastolicContent() {
+            return diastolicContent;
+        }
+
+        public void setDiastolicContent(String diastolicContent) {
+            this.diastolicContent = diastolicContent;
         }
     }
 }

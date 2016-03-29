@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.module.healthreport.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,8 +35,6 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
 
     @Bind(R.id.recycler_view_symptom_report)
     CommonRecyclerView mRecyclerView;
-//    @Bind(R.id.refresh_symptom_report)
-//    SwipeRefreshLayout mRefreshView;
 
     private SymptomReportAdapter adapter;
 
@@ -64,22 +63,22 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView.showEmptyView();
+        mRecyclerView.setEnabled(true);
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 3));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-       /* mRefreshView.post(new Runnable() {
+       mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
-                mRefreshView.setRefreshing(true);
+                mRecyclerView.setRefreshing(true);
             }
         });
-        mRefreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId());
             }
-        });*/
+        });
         mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId());
     }
 
@@ -117,13 +116,13 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
 
     @Override
     public void hideLoading() {
-        /*mRefreshView.post(new Runnable() {
+        mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
-                if (null != mRefreshView) {
-                    mRefreshView.setRefreshing(false);
+                if (null != mRecyclerView) {
+                    mRecyclerView.setRefreshing(false);
                 }
             }
-        });*/
+        });
     }
 }

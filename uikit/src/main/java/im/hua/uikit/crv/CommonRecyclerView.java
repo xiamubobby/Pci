@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -19,7 +18,7 @@ import im.hua.uikit.R;
 
 /**
  * Created by hua on 16/3/24.
- * 为了兼容SwipeRefresh的下拉刷新效果，此处继承NestedScrollView
+ * 默认disable下拉刷新
  */
 public class CommonRecyclerView extends SwipeRefreshLayout {
     private final int LAYOUT_MANGER_LINEAR = 0;
@@ -42,7 +41,6 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
     /**
      * 是否正在加载
      */
-    private boolean mLoadingMore;
     private boolean mIsLoadMore;
 
 
@@ -52,6 +50,8 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
 
     public CommonRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setEnabled(false);
+
         containerView = (NestedScrollView) LayoutInflater.from(context).inflate(R.layout.crv_container, null,false);
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CommonRecyclerView);
@@ -66,22 +66,6 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
         reverseLayout = array.getBoolean(R.styleable.CommonRecyclerView_crvReverseLayout, false);
 
         array.recycle();
-
-        setEnabled(true);
-
-        /*if (null != mNetworkErrorView) {
-            containerView.addView(mNetworkErrorView);
-            mNetworkErrorView.setVisibility(GONE);
-        }
-        if (null != mServerErrorView) {
-            containerView.addView(mServerErrorView);
-            mServerErrorView.setVisibility(GONE);
-        }
-
-        if (null != mLoadingView) {
-            containerView.addView(mLoadingView);
-            mLoadingView.setVisibility(GONE);
-        }*/
 
         mRecyclerView = (RecyclerView) LayoutInflater.from(context).inflate(R.layout.crv_recycler_view, null,false);
         if (null != mRecyclerView) {
@@ -103,6 +87,22 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
             }
         }
 
+        /*if (null != mLoadingView) {
+            containerView.addView(mLoadingView);
+            mLoadingView.setVisibility(GONE);
+        }
+        if (null != mNetworkErrorView) {
+            containerView.addView(mNetworkErrorView);
+            mNetworkErrorView.setVisibility(GONE);
+        }
+        if (null != mServerErrorView) {
+            containerView.addView(mServerErrorView);
+            mServerErrorView.setVisibility(GONE);
+        }
+        if (null != mRecyclerView) {
+            containerView.addView(mRecyclerView);
+            mRecyclerView.setVisibility(GONE);
+        }*/
         if (null != mEmptyView) {
             containerView.addView(mEmptyView);
         }
@@ -149,11 +149,11 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
 
     private void showView(View view) {
         if (null != view) {
-            if (view != containerView.getChildAt(0)) {
-                containerView.removeAllViews();
-                containerView.addView(view);
-            }
-            view.setVisibility(VISIBLE);
+            /*for (int i = 0; i < containerView.getChildCount(); i++) {
+                containerView.getChildAt(i).setVisibility(GONE);
+            }*/
+            containerView.removeAllViews();
+            containerView.addView(view);
         }
     }
 
@@ -178,7 +178,7 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
     }
 
     public boolean isLoadingMore() {
-        return mLoadingMore;
+        return mIsLoadMore;
     }
 
     public void setIsLoadMore(boolean isLoadMore) {
@@ -187,19 +187,5 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
 
     public void loadMore() {
         Toast.makeText(getContext(), "loadmore", Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * Solve IndexOutOfBoundsException exception
-     */
-    public class onTouchRecyclerViewListener implements OnTouchListener {
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-            if (mIsLoadMore) {
-                return false;
-            } else {
-                return false;
-            }
-        }
     }
 }

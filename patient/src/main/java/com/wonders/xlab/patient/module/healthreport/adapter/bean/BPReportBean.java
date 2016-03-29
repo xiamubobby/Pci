@@ -29,6 +29,10 @@ public class BPReportBean extends RealmObject {
     private int heartRateStatus;
     private long recordTimeInMill;
 
+    private String highPressureRange;
+    private String lowPressureRange;
+    private String heartRateRange;
+
     public String getId() {
         return id;
     }
@@ -99,5 +103,29 @@ public class BPReportBean extends RealmObject {
 
     public void setPatientId(String patientId) {
         this.patientId = patientId;
+    }
+
+    public String getHighPressureRange() {
+        return highPressureRange;
+    }
+
+    public void setHighPressureRange(String highPressureRange) {
+        this.highPressureRange = highPressureRange;
+    }
+
+    public String getLowPressureRange() {
+        return lowPressureRange;
+    }
+
+    public void setLowPressureRange(String lowPressureRange) {
+        this.lowPressureRange = lowPressureRange;
+    }
+
+    public String getHeartRateRange() {
+        return heartRateRange;
+    }
+
+    public void setHeartRateRange(String heartRateRange) {
+        this.heartRateRange = heartRateRange;
     }
 }

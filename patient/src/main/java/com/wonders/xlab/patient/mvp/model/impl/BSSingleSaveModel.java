@@ -43,6 +43,7 @@ public class BSSingleSaveModel extends PatientBaseModel<BSSaveEntity> {
         bean.setId(retValues.getId());
         bean.setMeasurePeriod(retValues.getBloodSugarTime());
         bean.setBloodSugar(retValues.getBloodSugar());
+        bean.setContent(retValues.getContent());
         bean.setRecordTimeInMill(retValues.getRecordTime());
         bean.setBloodSugarStatus(retValues.getStatus());
         bean.setPatientId(retValues.getUserId());

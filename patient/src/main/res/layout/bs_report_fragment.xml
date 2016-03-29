@@ -13,32 +13,6 @@
         android:paddingLeft="@dimen/item_interval_middle"
         android:paddingRight="@dimen/item_interval_middle"
         android:paddingTop="@dimen/item_interval_small"
-        android:text="@string/measure_normal_title"
-        android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_size_large"/>
-
-    <include layout="@layout/divider_vertical"/>
-
-    <TextView
-        android:id="@+id/tv_bs_report_ideal_range"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/item_interval_small"
-        android:paddingLeft="@dimen/item_interval_large"
-        android:paddingRight="@dimen/item_interval_large"
-        android:paddingTop="@dimen/item_interval_small"
-        android:textColor="@color/text_color_primary_gray"
-        android:textSize="@dimen/text_size_middle"/>
-
-    <include layout="@layout/divider_vertical_large"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/item_interval_small"
-        android:paddingLeft="@dimen/item_interval_middle"
-        android:paddingRight="@dimen/item_interval_middle"
-        android:paddingTop="@dimen/item_interval_small"
         android:text="@string/measure_value_title"
         android:textColor="@color/colorAccent"
         android:textSize="@dimen/text_size_large"/>

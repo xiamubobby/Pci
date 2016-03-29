@@ -34,7 +34,7 @@ public class UploadPicPresenter extends BasePresenter implements IUploadPicPrese
     @Override
     public void uploadPicsSuccess() {
         mUploadPicModelListener.hideLoading();
-        mUploadPicModelListener.uploadPicsSuccess("上传成功！我们将在整理好资料后同步给您。请耐心等待。");
+        mUploadPicModelListener.uploadPicsSuccess("上传成功！");
     }
 
     @Override

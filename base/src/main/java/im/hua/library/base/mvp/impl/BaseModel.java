@@ -1,6 +1,7 @@
 package im.hua.library.base.mvp.impl;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 
 import im.hua.library.base.mvp.IBaseModel;
@@ -68,12 +69,15 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e.getMessage().contains("10000ms")) {
-                            onFailed(new Throwable("连接超时，请检查网络后重试！"), "连接超时，请检查网络后重试！");
+                        if (TextUtils.isEmpty(e.getMessage())) {
+                            onFailed(new Throwable("连接出错，请检查网络后重试！"), "连接出错，请检查网络后重试！");
                         } else {
-                            onFailed(new Throwable(e.getMessage()), "");
+                            if (e.getMessage().contains("10000ms")) {
+                                onFailed(new Throwable("连接超时，请检查网络后重试！"), "连接超时，请检查网络后重试！");
+                            } else {
+                                onFailed(new Throwable("连接出错，请检查网络后重试！"), "连接出错，请检查网络后重试！");
+                            }
                         }
-
                     }
 
                     @Override
@@ -81,7 +85,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                         if (null == result) {
                             onFailed(new Throwable("请求出错，请检查网络后重试！"), "");
                         } else if (0 != result.getRet_code()) {
-                            onFailed(new Throwable(result.getMessage()),result.getMessage());
+                            onFailed(new Throwable(result.getMessage()), result.getMessage());
                         } else {
                             onSuccess(result);
                         }
