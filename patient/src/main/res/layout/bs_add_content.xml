@@ -28,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_measure_date"
+                android:textColor="@color/text_color_primary_black"
                 android:textSize="@dimen/text_size_large"/>
 
             <TextView
@@ -35,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_large"/>
         </LinearLayout>
 
@@ -50,6 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_measure_time"
+                android:textColor="@color/text_color_primary_black"
                 android:textSize="@dimen/text_size_large"/>
 
             <TextView
@@ -57,6 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_large"/>
         </LinearLayout>
 
@@ -70,9 +74,10 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/text_measure_period"
+                android:textColor="@color/text_color_primary_black"
                 android:textSize="@dimen/text_size_large"/>
 
             <Spinner
@@ -80,7 +85,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/item_interval_small"
-                android:gravity="right|center_vertical"/>
+                android:gravity="right|center_vertical"
+                android:textColor="@color/colorAccent"/>
         </LinearLayout>
 
         <include layout="@layout/divider_vertical"/>
@@ -95,6 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_blood_sugar"
+                android:textColor="@color/text_color_primary_black"
                 android:textSize="@dimen/text_size_large"/>
 
             <EditText
@@ -104,15 +111,19 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical|right"
-                android:hint="@string/_0"
+                android:hint="0"
                 android:inputType="numberDecimal"
+                android:maxLength="3"
                 android:singleLine="true"
+                android:textColor="@color/colorAccent"
+                android:textColorHint="@color/colorAccent"
                 android:textSize="@dimen/text_size_large"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/unit_mol_l"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_large"/>
         </LinearLayout>
 

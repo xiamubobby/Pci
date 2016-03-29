@@ -5,8 +5,9 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SimpleAdapter;
@@ -43,12 +44,8 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
     TextView mTvAddBsTime;
     @Bind(R.id.et_add_bs)
     EditText mEtAddBs;
-    @Bind(R.id.fab_add_bs)
-    FloatingActionButton mFabAddBs;
     @Bind(R.id.sp_add_bs_period)
     Spinner mSpAddBsPeriod;
-
-    private Calendar mCalendar = Calendar.getInstance();
 
     private IBSSavePresenter mRecordSavePresenter;
 
@@ -78,13 +75,12 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
     }
 
     private void initView() {
-        mTvAddBsDate.setText(String.format("%s-%s-%s", mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH) + 1, mCalendar.get(Calendar.DAY_OF_MONTH)));
-        mTvAddBsTime.setText(String.format("%s:%s", mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE)));
+        Calendar mCalendar = Calendar.getInstance();
+        mTvAddBsDate.setText(DateUtil.format(mCalendar.getTimeInMillis(),"yyyy.MM.dd"));
+        mTvAddBsTime.setText(DateUtil.format(mCalendar.getTimeInMillis(),"HH:mm"));
     }
 
-    @OnClick(R.id.fab_add_bs)
     public void save() {
-        mFabAddBs.setClickable(false);
 
         KeyboardUtil.hide(this, mContentView.getWindowToken());
 
@@ -93,16 +89,9 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
 
         long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), DateUtil.DEFAULT_FORMAT_FULL);
 
-        if (DateUtil.isBiggerThenToday(date)) {
-            Toast.makeText(this, "不能选择今天之后的日期", Toast.LENGTH_SHORT).show();
-            mFabAddBs.setClickable(true);
-            return;
-        }
-
         String bloodSugar = mEtAddBs.getText().toString();
         if (TextUtils.isEmpty(bloodSugar)) {
-            Toast.makeText(this, "请输入血糖", Toast.LENGTH_SHORT).show();
-            mFabAddBs.setClickable(true);
+            showShortToast("请输入血糖");
             return;
         }
 
@@ -116,11 +105,14 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
 
     @OnClick(R.id.tv_add_date)
     public void onDateClick() {
+        Calendar mCalendar = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        mTvAddBsDate.setText(String.format("%s-%s-%s", year, monthOfYear + 1, dayOfMonth));
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(year,monthOfYear,dayOfMonth);
+                        mTvAddBsDate.setText(DateUtil.format(calendar.getTimeInMillis(),"yyyy.MM.dd"));
                     }
                 },
                 mCalendar.get(Calendar.YEAR),
@@ -133,15 +125,33 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
 
     @OnClick(R.id.tv_add_time)
     public void onTimeClick() {
+        Calendar mCalendar = Calendar.getInstance();
+        int currentHour = mCalendar.get(Calendar.HOUR_OF_DAY);
+        int currentMinute = mCalendar.get(Calendar.MINUTE);
         TimePickerDialog dialog = new TimePickerDialog(this,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        String dateStr = mTvAddBsDate.getText().toString();
+                        long date = DateUtil.parseToLong(dateStr, "yyyy.MM.dd");
+                        if (DateUtil.isNewBiggerOrEvenThenOld(date,Calendar.getInstance().getTimeInMillis())) {
+                            Calendar calendar = Calendar.getInstance();
+                            int maxHour = calendar.get(Calendar.HOUR_OF_DAY);
+                            int maxMinute = calendar.get(Calendar.MINUTE);
+                            if (hourOfDay >= maxHour) {
+                                hourOfDay = maxHour;
+                                if (minute > maxMinute) {
+                                    showShortToast("不能选择大于当前的时间");
+                                    minute = maxMinute;
+                                }
+                            }
+                        }
+
                         mTvAddBsTime.setText(String.format("%s:%s", hourOfDay, minute));
                     }
                 },
-                mCalendar.get(Calendar.HOUR_OF_DAY),
-                mCalendar.get(Calendar.MINUTE),
+                currentHour,
+                currentMinute,
                 true);
         dialog.show();
     }
@@ -157,7 +167,6 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
 
     @Override
     public void onSaveBSSuccess(String message) {
-        mFabAddBs.setClickable(false);
         Toast.makeText(this, "数据保存成功", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(new Runnable() {
@@ -185,7 +194,6 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
 
     @Override
     public void showError(String message) {
-        mFabAddBs.setClickable(true);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -194,5 +202,21 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_save,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_save:
+                save();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

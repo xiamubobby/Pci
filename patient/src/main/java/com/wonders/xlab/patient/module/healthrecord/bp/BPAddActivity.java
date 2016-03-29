@@ -6,8 +6,9 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -43,8 +44,6 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
     EditText mEtAddBpSzy;
     @Bind(R.id.et_add_bp_rate)
     EditText mEtAddBpRate;
-    @Bind(R.id.fab_add_bp)
-    FloatingActionButton mFabAddBp;
     @Bind(R.id.coordinator)
     CoordinatorLayout mCoordinator;
 
@@ -75,43 +74,32 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
     }
 
     private void initView() {
-        mTvAddBpDate.setText(String.format("%s-%s-%s", mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH) + 1, mCalendar.get(Calendar.DAY_OF_MONTH)));
-        mTvAddBpTime.setText(String.format("%s:%s", mCalendar.get(Calendar.HOUR_OF_DAY), mCalendar.get(Calendar.MINUTE)));
+        mTvAddBpDate.setText(DateUtil.format(mCalendar.getTimeInMillis(),"yyyy.MM.dd"));
+        mTvAddBpTime.setText(DateUtil.format(mCalendar.getTimeInMillis(),"HH:mm"));
     }
 
-    @OnClick(R.id.fab_add_bp)
-    public void save() {
-        mFabAddBp.setClickable(false);
-
+    private void save() {
         KeyboardUtil.hide(this, mContentView.getWindowToken());
 
         String dateStr = mTvAddBpDate.getText().toString();
         String timeStr = mTvAddBpTime.getText().toString();
 
         long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), DateUtil.DEFAULT_FORMAT_FULL);
-        if (DateUtil.isBiggerThenToday(date)) {
-            Toast.makeText(this, "不能选择今天之后的日期", Toast.LENGTH_SHORT).show();
-            mFabAddBp.setClickable(true);
-            return;
-        }
 
         String systolicPressure = mEtAddBpSsy.getText().toString();
         if (TextUtils.isEmpty(systolicPressure)) {
-            Toast.makeText(this, "请输入收缩压", Toast.LENGTH_SHORT).show();
-            mFabAddBp.setClickable(true);
+            showShortToast("请输入收缩压");
             return;
         }
         String diastolicPressure = mEtAddBpSzy.getText().toString();
         if (TextUtils.isEmpty(diastolicPressure)) {
-            Toast.makeText(this, "请输入舒张压", Toast.LENGTH_SHORT).show();
-            mFabAddBp.setClickable(true);
+            showShortToast("请输入舒张压");
             return;
         }
         String heartRate = mEtAddBpRate.getText().toString();
 
         if (TextUtils.isEmpty(heartRate)) {
-            Toast.makeText(this, "请输入心率", Toast.LENGTH_SHORT).show();
-            mFabAddBp.setClickable(true);
+            showShortToast("请输入心率");
             return;
         }
 
@@ -128,7 +116,9 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        mTvAddBpDate.setText(String.format("%s-%s-%s", year, monthOfYear + 1, dayOfMonth));
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(year,monthOfYear,dayOfMonth);
+                        mTvAddBpDate.setText(DateUtil.format(calendar.getTimeInMillis(),"yyyy.MM.dd"));
                     }
                 },
                 mCalendar.get(Calendar.YEAR),
@@ -141,15 +131,32 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
 
     @OnClick(R.id.tv_add_bp_time)
     public void onTimeClick() {
+        int currentHour = mCalendar.get(Calendar.HOUR_OF_DAY);
+        int currentMinute = mCalendar.get(Calendar.MINUTE);
         TimePickerDialog dialog = new TimePickerDialog(this,
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        String dateStr = mTvAddBpDate.getText().toString();
+                        long date = DateUtil.parseToLong(dateStr, "yyyy.MM.dd");
+                        if (DateUtil.isNewBiggerOrEvenThenOld(date,Calendar.getInstance().getTimeInMillis())) {
+                            Calendar calendar = Calendar.getInstance();
+                            int maxHour = calendar.get(Calendar.HOUR_OF_DAY);
+                            int maxMinute = calendar.get(Calendar.MINUTE);
+                            if (hourOfDay >= maxHour) {
+                                hourOfDay = maxHour;
+                                if (minute > maxMinute) {
+                                    showShortToast("不能选择大于当前的时间");
+                                    minute = maxMinute;
+                                }
+                            }
+                        }
+
                         mTvAddBpTime.setText(String.format("%s:%s", hourOfDay, minute));
                     }
                 },
-                mCalendar.get(Calendar.HOUR_OF_DAY),
-                mCalendar.get(Calendar.MINUTE),
+                currentHour,
+                currentMinute,
                 true);
         dialog.show();
     }
@@ -165,7 +172,6 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
 
     @Override
     public void showError(String message) {
-        mFabAddBp.setClickable(true);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
@@ -178,7 +184,6 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
 
     @Override
     public void onSaveBPSuccess(String message) {
-        mFabAddBp.setClickable(false);
         showShortToast(message);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -186,5 +191,21 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
                 finish();
             }
         }, 400);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_save,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_save:
+                save();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

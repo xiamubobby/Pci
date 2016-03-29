@@ -28,6 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_measure_date"
+                android:textColor="@color/text_color_primary_black"
                 android:textSize="@dimen/text_size_large"/>
 
             <TextView
@@ -35,6 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_large"/>
         </LinearLayout>
 
@@ -50,6 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_measure_time"
+                android:textColor="@color/text_color_primary_black"
                 android:textSize="@dimen/text_size_large"/>
 
             <TextView
@@ -57,6 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|right"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_large"/>
         </LinearLayout>
 
@@ -72,17 +76,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_systolic_pressure"
+                android:textColor="@color/text_color_primary_black"
                 android:textSize="@dimen/text_size_large"/>
 
             <EditText
                 android:id="@+id/et_add_bp_ssy"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical|right"
+                android:hint="0"
+                android:textColorHint="@color/colorAccent"
+                android:inputType="number"
+                android:maxLength="3"
+                android:singleLine="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_large"/>
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical|right"
                 android:inputType="number"
                 android:singleLine="true"
-                android:hint="0 mmHg"
+                android:text="mmHg"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_large"/>
         </LinearLayout>
 
@@ -98,17 +118,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_diastolic_pressure"
+                android:textColor="@color/text_color_primary_black"
                 android:textSize="@dimen/text_size_large"/>
 
             <EditText
                 android:id="@+id/et_add_bp_szy"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical|right"
+                android:hint="0"
+                android:textColorHint="@color/colorAccent"
+                android:inputType="number"
+                android:maxLength="3"
+                android:singleLine="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_large"/>
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical|right"
                 android:inputType="number"
                 android:singleLine="true"
-                android:hint="0 mmHg"
+                android:text="mmHg"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_large"/>
         </LinearLayout>
 
@@ -124,17 +160,33 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_heart_rate"
+                android:textColor="@color/text_color_primary_black"
                 android:textSize="@dimen/text_size_large"/>
 
             <EditText
                 android:id="@+id/et_add_bp_rate"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:gravity="center_vertical|right"
+                android:hint="0"
+                android:textColorHint="@color/colorAccent"
+                android:inputType="number"
+                android:maxLength="3"
+                android:singleLine="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_large"/>
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical|right"
                 android:inputType="number"
                 android:singleLine="true"
-                android:hint="0 次/分"
+                android:text="次/分"
+                android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_large"/>
         </LinearLayout>
 

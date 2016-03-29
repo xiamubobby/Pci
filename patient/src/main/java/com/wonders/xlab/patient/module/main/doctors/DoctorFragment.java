@@ -11,9 +11,12 @@ import android.view.ViewGroup;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.flyco.TabEntity;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.module.main.doctors.otto.TabChangeOtto;
 
 import java.util.ArrayList;
 
@@ -43,6 +46,7 @@ public class DoctorFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        OttoManager.register(this);
         View view = inflater.inflate(R.layout.doctors_fragment, container, false);
         ButterKnife.bind(this, view);
         return view;
@@ -101,10 +105,16 @@ public class DoctorFragment extends BaseFragment {
             }
         });
     }
+
+    @Subscribe
+    public void changeTabPostion(TabChangeOtto otto) {
+        mViewPager.setCurrentItem(otto.getPosition(),true);
+    }
     
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
 }

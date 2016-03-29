@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
@@ -17,6 +18,7 @@ import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.patient.module.main.doctors.adapter.MyDoctorRVAdapter;
 import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
+import com.wonders.xlab.patient.module.main.doctors.otto.TabChangeOtto;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorMyPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.DoctorMyPresenter;
 
@@ -87,6 +89,10 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
 
     @Override
     public void showMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList) {
+        if (myDoctorBeanList.size() <= 0) {
+            OttoManager.post(new TabChangeOtto(1));
+            return;
+        }
         initMyDoctorAdapter();
         mMyDoctorRVAdapter.setDatas(myDoctorBeanList);
     }

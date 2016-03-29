@@ -72,12 +72,11 @@ public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPre
             doctorItemBeanArrayList.add(itemBean);
         }
 
-        if (doctorItemBeanArrayList.size() <= 0) {
-            mDoctorMyListener.showReachTheLastPageNotice("");
-            return;
-        }
-
         if (shouldAppend()) {
+            if (doctorItemBeanArrayList.size() <= 0) {
+                mDoctorMyListener.showReachTheLastPageNotice("");
+                return;
+            }
             mDoctorMyListener.appendMyDoctorList(doctorItemBeanArrayList);
         } else {
             mDoctorMyListener.showMyDoctorList(doctorItemBeanArrayList);
