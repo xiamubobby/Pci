@@ -176,6 +176,8 @@ public class MainActivity extends BaseActivity {
         AIManager.getInstance().logout();
 
         startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 
     public class DoctorNotifyCountOtto {

@@ -13,12 +13,6 @@ public class AIManager {
 
     private static AIManager aiManager;
 
-    private static PatientInfoRealm patientInfo;
-
-    static {
-        patientInfo = XApplication.realm.where(PatientInfoRealm.class).findFirst();
-    }
-
     private AIManager() {
 
     }
@@ -44,7 +38,12 @@ public class AIManager {
         XApplication.realm.commitTransaction();
     }
 
+    private PatientInfoRealm getPatientInfo() {
+         return XApplication.realm.where(PatientInfoRealm.class).findFirst();
+    }
+
     public String getPatientId() {
+        PatientInfoRealm patientInfo = getPatientInfo();
         if (null == patientInfo) {
             return "";
         }
@@ -52,6 +51,7 @@ public class AIManager {
     }
 
     public String getPatientTel() {
+        PatientInfoRealm patientInfo = getPatientInfo();
         if (null == patientInfo) {
             return "";
         }
@@ -59,6 +59,7 @@ public class AIManager {
     }
 
     public String getPatientPortraitUrl() {
+        PatientInfoRealm patientInfo = getPatientInfo();
         if (null == patientInfo) {
             return Constant.DEFAULT_PORTRAIT;
         }
@@ -66,6 +67,7 @@ public class AIManager {
     }
 
     public String getPatientName() {
+        PatientInfoRealm patientInfo = getPatientInfo();
         if (null == patientInfo) {
             return "";
         }
@@ -80,7 +82,5 @@ public class AIManager {
         patientInfoRealm.setPatientPhoneNumber(tel);
         patientInfoRealm.setPatientPortraitUrl(portraitUrl);
         XApplication.realm.commitTransaction();
-
-        patientInfo = XApplication.realm.where(PatientInfoRealm.class).findFirst();
     }
 }

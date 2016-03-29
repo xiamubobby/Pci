@@ -125,8 +125,10 @@ public class MainActivity extends BaseActivity {
     @Subscribe
     public void forceExit(ForceExitOtto bean) {
         new NotifyUtil().cancelAll(this);
-        AIManager.getInstance(this).logout();
 
+        AIManager.getInstance(this).logout();
         startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 }
