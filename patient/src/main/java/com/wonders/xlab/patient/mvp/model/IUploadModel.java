@@ -9,5 +9,5 @@ import im.hua.library.base.mvp.IBaseModel;
  * Created by hua on 16/3/17.
  */
 public interface IUploadModel extends IBaseModel {
-    void upload(String userId, List<File> fileList);
+    void upload(String userId, String title, List<File> fileList);
 }

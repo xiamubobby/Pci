@@ -27,10 +27,11 @@ public class UploadPicModel extends PatientBaseModel<SimpleEntity> implements IU
         mUploadPicAPI = mRetrofit.create(UploadPicAPI.class);
     }
 
-    public void upload(String userId, List<File> fileList) {
+    public void upload(String userId, String title, List<File> fileList) {
 
         if (fileList != null && fileList.size() > 0) {
             RequestBody iUserId = RequestBody.create(MediaType.parse("text"), userId);
+            RequestBody iTitle = RequestBody.create(MediaType.parse("text"), title);
 
 //            IdentityHashMap<String, MultipartBody> identityHashMap = new IdentityHashMap<>();
 
@@ -46,7 +47,7 @@ public class UploadPicModel extends PatientBaseModel<SimpleEntity> implements IU
                 }
             }
 
-            fetchData(mUploadPicAPI.upload(iUserId, builder.build()), true);
+            fetchData(mUploadPicAPI.upload(iUserId, iTitle, builder.build()), true);
 //            fetchData(mUploadPicAPI.upload(iUserId, identityHashMap), true);
         } else {
             onFailed(new Throwable("请选择要上传的图片"), "请选择要上传的图片");

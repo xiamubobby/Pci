@@ -26,9 +26,9 @@ public class UploadPicPresenter extends BasePresenter implements IUploadPicPrese
     }
 
     @Override
-    public void upload(String patientId, List<File> fileList) {
+    public void upload(String patientId, String title, List<File> fileList) {
         mUploadPicModelListener.uploading();
-        mUploadModel.upload(patientId, fileList);
+        mUploadModel.upload(patientId, title, fileList);
     }
 
     @Override

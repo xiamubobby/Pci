@@ -28,7 +28,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseFragment;
-import im.hua.uikit.CommonRecyclerView;
+import im.hua.uikit.crv.CommonRecyclerView;
 
 /**
  * 今日血压
@@ -73,6 +73,7 @@ public class BPReportFragment extends BaseFragment implements BPReportCachePrese
         mIdealRangePresenter.fetchIdealBPRange(AIManager.getInstance().getPatientId());
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.showEmptyView();
         TextView tvMeasure = (TextView) mRecyclerView.findViewById(R.id.tv_bp_bs_report_empty_measure);
         tvMeasure.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         tvMeasure.setOnClickListener(new View.OnClickListener() {

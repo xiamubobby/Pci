@@ -1,27 +1,32 @@
-package im.hua.uikit;
+package im.hua.uikit.crv;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.v4.widget.NestedScrollView;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.Toast;
+
+import im.hua.uikit.R;
 
 /**
  * Created by hua on 16/3/24.
  * 为了兼容SwipeRefresh的下拉刷新效果，此处继承NestedScrollView
  */
-public class CommonRecyclerView extends NestedScrollView {
+public class CommonRecyclerView extends SwipeRefreshLayout {
     private final int LAYOUT_MANGER_LINEAR = 0;
     private final int LAYOUT_MANGER_GRID = 1;
     private final int LAYOUT_MANGER_STAGGERED_GRID = 2;
 
-    private FrameLayout containerView;
+    private NestedScrollView containerView;
 
     private View mLoadingView;
     private View mEmptyView;
@@ -34,6 +39,11 @@ public class CommonRecyclerView extends NestedScrollView {
     private int orientation;
 
     private RecyclerView mRecyclerView;
+    /**
+     * 是否正在加载
+     */
+    private boolean mLoadingMore;
+    private boolean mIsLoadMore;
 
 
     public CommonRecyclerView(Context context) {
@@ -41,19 +51,15 @@ public class CommonRecyclerView extends NestedScrollView {
     }
 
     public CommonRecyclerView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
+        super(context, attrs);
+        containerView = (NestedScrollView) LayoutInflater.from(context).inflate(R.layout.crv_container, null,false);
 
-    public CommonRecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        containerView = (FrameLayout) LayoutInflater.from(context).inflate(R.layout.crv_container, null);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CommonRecyclerView);
 
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CommonRecyclerView, defStyleAttr, 0);
-
-        mEmptyView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_emptyView, R.layout.crv_empty), null);
-        mLoadingView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_loadingView, R.layout.crv_loading), null);
-        mNetworkErrorView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_networkErrorView, R.layout.crv_network_error), null);
-        mServerErrorView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_serverErrorView, R.layout.crv_server_error), null);
+        mEmptyView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_emptyView, R.layout.crv_empty), null,false);
+        mLoadingView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_loadingView, R.layout.crv_loading), null,false);
+        mNetworkErrorView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_networkErrorView, R.layout.crv_network_error), null,false);
+        mServerErrorView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_serverErrorView, R.layout.crv_server_error), null,false);
         layoutManager = array.getInteger(R.styleable.CommonRecyclerView_crvLayoutManager, LAYOUT_MANGER_LINEAR);
         spanCount = array.getInteger(R.styleable.CommonRecyclerView_crvSpanCount, 1);
         orientation = array.getInteger(R.styleable.CommonRecyclerView_orientation, RecyclerView.VERTICAL);
@@ -61,24 +67,29 @@ public class CommonRecyclerView extends NestedScrollView {
 
         array.recycle();
 
-        if (null != mNetworkErrorView) {
-            mNetworkErrorView.setVisibility(GONE);
+        setEnabled(true);
+
+        /*if (null != mNetworkErrorView) {
             containerView.addView(mNetworkErrorView);
+            mNetworkErrorView.setVisibility(GONE);
         }
         if (null != mServerErrorView) {
-            mServerErrorView.setVisibility(GONE);
             containerView.addView(mServerErrorView);
+            mServerErrorView.setVisibility(GONE);
         }
-        if (null != mEmptyView) {
-            containerView.addView(mEmptyView);
-        }
+
         if (null != mLoadingView) {
-            mLoadingView.setVisibility(GONE);
             containerView.addView(mLoadingView);
-        }
-        mRecyclerView = (RecyclerView) LayoutInflater.from(context).inflate(R.layout.crv_recycler_view, null);
+            mLoadingView.setVisibility(GONE);
+        }*/
+
+        mRecyclerView = (RecyclerView) LayoutInflater.from(context).inflate(R.layout.crv_recycler_view, null,false);
         if (null != mRecyclerView) {
-            mRecyclerView.setVisibility(GONE);
+            /**
+             * load more listener
+             */
+            mRecyclerView.addOnScrollListener(new RecyclerViewScrollListener(this));
+            mRecyclerView.setItemAnimator(new DefaultItemAnimator());
             switch (layoutManager) {
                 case LAYOUT_MANGER_LINEAR:
                     mRecyclerView.setLayoutManager(new LinearLayoutManager(context, orientation, reverseLayout));
@@ -90,10 +101,12 @@ public class CommonRecyclerView extends NestedScrollView {
                     mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(spanCount, orientation));
                     break;
             }
-            containerView.addView(mRecyclerView);
-
         }
-        this.addView(containerView);
+
+        if (null != mEmptyView) {
+            containerView.addView(mEmptyView);
+        }
+        addView(containerView);
     }
 
     public void addItemDecoration(RecyclerView.ItemDecoration decor) {
@@ -135,10 +148,10 @@ public class CommonRecyclerView extends NestedScrollView {
     }
 
     private void showView(View view) {
-        containerView.setVisibility(VISIBLE);
-        if (view != null) {
-            for (int i = 0; i < containerView.getChildCount(); i++) {
-                containerView.getChildAt(i).setVisibility(GONE);
+        if (null != view) {
+            if (view != containerView.getChildAt(0)) {
+                containerView.removeAllViews();
+                containerView.addView(view);
             }
             view.setVisibility(VISIBLE);
         }
@@ -158,5 +171,35 @@ public class CommonRecyclerView extends NestedScrollView {
 
     public RecyclerView getRecyclerView() {
         return mRecyclerView;
+    }
+
+    public boolean isReverse() {
+        return reverseLayout;
+    }
+
+    public boolean isLoadingMore() {
+        return mLoadingMore;
+    }
+
+    public void setIsLoadMore(boolean isLoadMore) {
+        mIsLoadMore = isLoadMore;
+    }
+
+    public void loadMore() {
+        Toast.makeText(getContext(), "loadmore", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Solve IndexOutOfBoundsException exception
+     */
+    public class onTouchRecyclerViewListener implements OnTouchListener {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (mIsLoadMore) {
+                return false;
+            } else {
+                return false;
+            }
+        }
     }
 }

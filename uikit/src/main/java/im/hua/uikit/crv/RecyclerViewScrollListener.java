@@ -1,4 +1,4 @@
-package com.wonders.xlab.common.recyclerview.pullloadmore;
+package im.hua.uikit.crv;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,10 +8,10 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 /**
  * Created by WuXiaolong on 2015/7/7.
  */
-public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
-    private PullLoadMoreRecyclerView mPullLoadMoreRecyclerView;
+public class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
+    private CommonRecyclerView mPullLoadMoreRecyclerView;
 
-    public RecyclerViewOnScroll(PullLoadMoreRecyclerView pullLoadMoreRecyclerView) {
+    public RecyclerViewScrollListener(CommonRecyclerView pullLoadMoreRecyclerView) {
         this.mPullLoadMoreRecyclerView = pullLoadMoreRecyclerView;
     }
 
@@ -40,19 +40,11 @@ public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
             lastCompletelyVisibleItem = findMax(lastPositions);
             firstVisibleItem = staggeredGridLayoutManager.findFirstVisibleItemPositions(lastPositions)[0];
         }
-        if (firstVisibleItem == 0) {
-            if (mPullLoadMoreRecyclerView.getPullRefreshEnable())
-                mPullLoadMoreRecyclerView.setSwipeRefreshEnable(true);
-        } else {
-            mPullLoadMoreRecyclerView.setSwipeRefreshEnable(false);
-        }
 
-        if (mPullLoadMoreRecyclerView.getPushRefreshEnable() &&
-                !mPullLoadMoreRecyclerView.isRefresh()
-                && mPullLoadMoreRecyclerView.isHasMore()
+        if (0 != firstVisibleItem
                 && (lastCompletelyVisibleItem == totalItemCount - 1)
                 && !mPullLoadMoreRecyclerView.isLoadingMore()
-                && ((!mPullLoadMoreRecyclerView.isReverse() && (dx > 0 || dy > 0)) || (mPullLoadMoreRecyclerView.isReverse() && (dx <= 0 || dy <= 0)))) {
+                && ((!mPullLoadMoreRecyclerView.isReverse() && (dx >= 0 || dy >= 0)) || (mPullLoadMoreRecyclerView.isReverse() && (dx <= 0 || dy <= 0)))) {
             mPullLoadMoreRecyclerView.setIsLoadMore(true);
             mPullLoadMoreRecyclerView.loadMore();
         }

@@ -3,7 +3,6 @@ package com.wonders.xlab.patient.module.healthreport.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +24,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseFragment;
-import im.hua.uikit.CommonRecyclerView;
+import im.hua.uikit.crv.CommonRecyclerView;
 
 
 /**
@@ -35,8 +34,8 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
 
     @Bind(R.id.recycler_view_symptom_report)
     CommonRecyclerView mRecyclerView;
-    @Bind(R.id.refresh_symptom_report)
-    SwipeRefreshLayout mRefreshView;
+//    @Bind(R.id.refresh_symptom_report)
+//    SwipeRefreshLayout mRefreshView;
 
     private SymptomReportAdapter adapter;
 
@@ -51,28 +50,25 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mSymptomReportPresenter = new SymptomReportPresenter(this);
-        addPresenter(mSymptomReportPresenter);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         OttoManager.register(this);
         View view = inflater.inflate(R.layout.symptom_report_fragment, container, false);
         ButterKnife.bind(this, view);
+
+        mSymptomReportPresenter = new SymptomReportPresenter(this);
+        addPresenter(mSymptomReportPresenter);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mRecyclerView.showEmptyView();
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 3));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mRefreshView.post(new Runnable() {
+       /* mRefreshView.post(new Runnable() {
             @Override
             public void run() {
                 mRefreshView.setRefreshing(true);
@@ -83,7 +79,7 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
             public void onRefresh() {
                 mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId());
             }
-        });
+        });*/
         mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId());
     }
 
@@ -121,13 +117,13 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
 
     @Override
     public void hideLoading() {
-        mRefreshView.post(new Runnable() {
+        /*mRefreshView.post(new Runnable() {
             @Override
             public void run() {
                 if (null != mRefreshView) {
                     mRefreshView.setRefreshing(false);
                 }
             }
-        });
+        });*/
     }
 }

@@ -1,10 +1,16 @@
 package com.wonders.xlab.patient.module.medicalrecord;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
@@ -24,6 +30,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.hua.utils.KeyboardUtil;
 import me.iwf.photopicker.PhotoPagerActivity;
 import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
@@ -125,7 +132,35 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
                                 }
                             }
                             if (canUpload) {
-                                mUploadPicPresenter.upload(AIManager.getInstance().getPatientId(), fileList);
+                                final EditText editText = (EditText) LayoutInflater.from(MedicalRecordActivity.this).inflate(R.layout.simple_single_line_edit_text,null,false);
+                                editText.setHint("请输入自传病历报告标题");
+                                final AlertDialog alertDialog = new AlertDialog.Builder(MedicalRecordActivity.this)
+                                        .setTitle("自传病历报告")
+                                        .setPositiveButton("确定",null)
+                                        .setNegativeButton("取消", null)
+                                        .setView(editText).create();
+
+                                alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+                                    @Override
+                                    public void onShow(DialogInterface dialog) {
+                                        Button btn = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                                        btn.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                String title = editText.getText().toString();
+                                                if (!TextUtils.isEmpty(title)) {
+                                                    KeyboardUtil.hide(MedicalRecordActivity.this,v.getWindowToken());
+                                                    mUploadPicPresenter.upload(AIManager.getInstance().getPatientId(), title, fileList);
+                                                    alertDialog.dismiss();
+                                                } else {
+                                                    Toast.makeText(MedicalRecordActivity.this, "请输入标题", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                                editText.requestFocus();
+                                alertDialog.show();
                             }
                         }
 

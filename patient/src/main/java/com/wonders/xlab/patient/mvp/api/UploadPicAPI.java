@@ -22,5 +22,5 @@ public interface UploadPicAPI {
 
     @Multipart
     @POST("userCase/uploadPic")
-    Observable<SimpleEntity> upload(@Part("userId") RequestBody userId, @Part("file") MultipartBody multipartBody);
+    Observable<SimpleEntity> upload(@Part("userId") RequestBody userId, @Part("title") RequestBody title, @Part("file") MultipartBody multipartBody);
 }

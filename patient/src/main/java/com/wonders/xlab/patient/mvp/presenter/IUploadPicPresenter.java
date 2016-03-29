@@ -9,5 +9,5 @@ import im.hua.library.base.mvp.IBasePresenter;
  * Created by hua on 16/3/17.
  */
 public interface IUploadPicPresenter extends IBasePresenter {
-    void upload(String patientId, List<File> fileList);
+    void upload(String patientId, String title, List<File> fileList);
 }

@@ -46,7 +46,7 @@
 
     <include layout="@layout/divider_vertical"/>
 
-    <im.hua.uikit.CommonRecyclerView
+    <im.hua.uikit.crv.CommonRecyclerView
         android:id="@+id/recycler_view_blood_pressure_report"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
