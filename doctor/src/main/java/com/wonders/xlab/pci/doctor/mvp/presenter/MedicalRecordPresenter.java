@@ -1,7 +1,7 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter;
 
-import com.wonders.xlab.pci.doctor.module.medicalrecord.bean.MedicalRecordBean;
-import com.wonders.xlab.pci.doctor.module.medicalrecord.bean.MedicalRecordPhotoBean;
+import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.bean.MedicalRecordBean;
+import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.bean.MedicalRecordPhotoBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.MedicalRecordEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.MedicalRecordModel;
 import com.wonders.xlab.pci.doctor.mvp.model.listener.MedicalRecordModelListener;

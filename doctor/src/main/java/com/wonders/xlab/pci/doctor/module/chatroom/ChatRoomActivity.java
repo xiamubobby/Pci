@@ -16,14 +16,14 @@ import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerVie
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
-import com.wonders.xlab.pci.doctor.module.bp.BloodPressureActivity;
-import com.wonders.xlab.pci.doctor.module.bs.BloodSugarActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.bp.BloodPressureActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.bs.BloodSugarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
-import com.wonders.xlab.pci.doctor.module.medicalrecord.MedicalRecordActivity;
-import com.wonders.xlab.pci.doctor.module.symptom.SymptomActivity;
-import com.wonders.xlab.pci.doctor.module.userinfo.UserInfoActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.MedicalRecordActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoActivity;
 import com.wonders.xlab.pci.doctor.mvp.presenter.ChatRoomPresenter;
 import com.wonders.xlab.pci.doctor.mvp.presenter.listener.ChatRoomPresenterListener;
 

@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter.listener;
 
-import com.wonders.xlab.pci.doctor.module.medicalrecord.bean.MedicalRecordBean;
+import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.bean.MedicalRecordBean;
 
 import java.util.List;
 

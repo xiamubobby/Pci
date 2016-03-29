@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter.listener;
 
-import com.wonders.xlab.pci.doctor.module.bs.bean.BSBean;
+import com.wonders.xlab.pci.doctor.module.chatroom.bs.bean.BSBean;
 
 import java.util.List;
 

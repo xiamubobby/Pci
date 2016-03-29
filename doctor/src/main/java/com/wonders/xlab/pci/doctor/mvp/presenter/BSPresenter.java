@@ -3,7 +3,7 @@ package com.wonders.xlab.pci.doctor.mvp.presenter;
 import android.support.annotation.NonNull;
 
 import com.wonders.xlab.pci.doctor.Constant;
-import com.wonders.xlab.pci.doctor.module.bs.bean.BSBean;
+import com.wonders.xlab.pci.doctor.module.chatroom.bs.bean.BSBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.BSEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.BSModel;
 import com.wonders.xlab.pci.doctor.mvp.model.listener.BSModelListener;

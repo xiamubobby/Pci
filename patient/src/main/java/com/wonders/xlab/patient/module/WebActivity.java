@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.growingio.android.sdk.collection.GrowingIO;
@@ -57,6 +58,9 @@ public class WebActivity extends AppbarActivity {
         webSettings.setDatabaseEnabled(true);
         webSettings.setAppCacheEnabled(false);
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        if (Build.VERSION.SDK_INT >= 21) {
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
         webSettings.setAllowFileAccess(true);
 
         if (Build.VERSION.SDK_INT >= 16) {
@@ -67,6 +71,7 @@ public class WebActivity extends AppbarActivity {
 
         GrowingIO.trackWebView(mWbWeb,webChromeClient);
 
+        mWbWeb.setWebViewClient(new MyWebViewClient());
         mWbWeb.setWebChromeClient(webChromeClient);
         mWbWeb.loadUrl(url);
     }
@@ -76,6 +81,13 @@ public class WebActivity extends AppbarActivity {
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
             setToolbarTitle(title);
+        }
+    }
+
+    private class MyWebViewClient extends WebViewClient{
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            return false;
         }
     }
 

@@ -5,7 +5,7 @@
 
         <variable
             name="userInfo"
-            type="com.wonders.xlab.pci.doctor.module.userinfo.bean.UserInfoBean"/>
+            type="com.wonders.xlab.pci.doctor.module.chatroom.userinfo.bean.UserInfoBean"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

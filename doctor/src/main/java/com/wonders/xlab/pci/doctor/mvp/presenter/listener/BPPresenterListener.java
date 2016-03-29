@@ -1,7 +1,7 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter.listener;
 
 import com.github.mikephil.charting.data.CombinedData;
-import com.wonders.xlab.pci.doctor.module.bp.bean.BPListBean;
+import com.wonders.xlab.pci.doctor.module.chatroom.bp.bean.BPListBean;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter;
 
-import com.wonders.xlab.pci.doctor.module.symptom.bean.SymptomBean;
+import com.wonders.xlab.pci.doctor.module.chatroom.symptom.bean.SymptomBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.SymptomCommentEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.SymptomEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.SymptomCommentModel;
