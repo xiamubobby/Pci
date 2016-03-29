@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.text.TextUtils;
+import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
@@ -110,6 +111,7 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
         mIBPSavePresenter.saveBPSingle(AIManager.getInstance().getPatientId(), date, Integer.valueOf(heartRate), Integer.valueOf(systolicPressure), Integer.valueOf(diastolicPressure));
     }
 
+    private boolean mIsToday = true;
     @OnClick(R.id.tv_add_bp_date)
     public void onDateClick() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
@@ -118,6 +120,7 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar calendar = Calendar.getInstance();
                         calendar.set(year,monthOfYear,dayOfMonth);
+                        mIsToday = DateUtils.isToday(calendar.getTimeInMillis());
                         mTvAddBpDate.setText(DateUtil.format(calendar.getTimeInMillis(),"yyyy.MM.dd"));
                     }
                 },
@@ -137,22 +140,24 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
                 new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        String dateStr = mTvAddBpDate.getText().toString();
-                        long date = DateUtil.parseToLong(dateStr, "yyyy.MM.dd");
-                        if (DateUtil.isNewBiggerOrEvenThenOld(date,Calendar.getInstance().getTimeInMillis())) {
-                            Calendar calendar = Calendar.getInstance();
+                        Calendar calendar = Calendar.getInstance();
+
+                        if (mIsToday) {
                             int maxHour = calendar.get(Calendar.HOUR_OF_DAY);
                             int maxMinute = calendar.get(Calendar.MINUTE);
                             if (hourOfDay >= maxHour) {
+                                if (hourOfDay > maxHour) {
+                                    showShortToast("不能选择大于当前的时间");
+                                }
                                 hourOfDay = maxHour;
                                 if (minute > maxMinute) {
-                                    showShortToast("不能选择大于当前的时间");
                                     minute = maxMinute;
                                 }
                             }
                         }
-
-                        mTvAddBpTime.setText(String.format("%s:%s", hourOfDay, minute));
+                        calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
+                        calendar.set(Calendar.MINUTE,minute);
+                        mTvAddBpTime.setText(DateUtil.format(calendar.getTimeInMillis(),"HH:mm"));
                     }
                 },
                 currentHour,
