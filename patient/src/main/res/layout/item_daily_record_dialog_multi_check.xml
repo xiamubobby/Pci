@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RadioGroup
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/item_interval_middle">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="@dimen/item_interval_middle">
 
-    <RadioButton
-        android:id="@+id/rb_item_daily_record_dialog_single_check_auto"
+    <RadioGroup android:id="@+id/rg_daily_record_dialog_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/cb_item_daily_record_dialog_single_check_auto"
-        android:textColor="@color/text_color_primary_black"
-        android:textSize="@dimen/text_size_middle"/>
+        >
 
-    <RadioButton
-        android:id="@+id/rb_item_daily_record_dialog_single_check_manual"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/item_interval_small"
-        android:text="@string/cb_item_daily_record_dialog_single_check_manual"
-        android:textColor="@color/text_color_primary_black"
-        android:textSize="@dimen/text_size_middle"/>
+        <RadioButton
+            android:id="@+id/rb_item_daily_record_dialog_single_check_auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/cb_item_daily_record_dialog_single_check_auto"
+            android:textColor="@color/text_color_primary_black"
+            android:textSize="@dimen/text_size_middle"/>
 
-    <RadioButton
-        android:id="@+id/rb_item_daily_record_dialog_single_check_clear"
-        android:layout_width="match_parent"
+        <RadioButton
+            android:id="@+id/rb_item_daily_record_dialog_single_check_manual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_interval_small"
+            android:text="@string/cb_item_daily_record_dialog_single_check_manual"
+            android:textColor="@color/text_color_primary_black"
+            android:textSize="@dimen/text_size_middle"/>
+
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/cb_item_daily_record_dialog_default"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/item_interval_small"
-        android:checked="true"
-        android:text="@string/cb_item_daily_record_dialog_single_check_clear"
-        android:textColor="@color/text_color_primary_black"
-        android:textSize="@dimen/text_size_middle"/>
-</RadioGroup>
+        android:layout_marginTop="@dimen/item_interval_large"
+        android:text="下次不再提醒"/>
+</LinearLayout>

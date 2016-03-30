@@ -7,8 +7,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -60,18 +60,6 @@ public class BSGuideActivity extends NConnActivity {
         ButterKnife.bind(this);
         OttoManager.register(this);
 
-        getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_measure_retry:
-                        connectBondedDevice();
-                        break;
-                }
-                return false;
-            }
-        });
-
         mFragmentVPAdapter = new FragmentVPAdapter(getFragmentManager());
         BSGuideOneFragment oneFragment = new BSGuideOneFragment();
         BSGuideTwoFragment twoFragment = new BSGuideTwoFragment();
@@ -106,10 +94,12 @@ public class BSGuideActivity extends NConnActivity {
                             } else {
                                 connectBondedDevice();
                             }
+                            getToolbar().getMenu().clear();
                             getToolbar().inflateMenu(R.menu.menu_measure_result_retry);
                             break;
                         default:
                             getToolbar().getMenu().clear();
+                            getToolbar().inflateMenu(R.menu.menu_measure_direct);
                             dismissDialog();
                             cancel();
                     }
@@ -254,5 +244,25 @@ public class BSGuideActivity extends NConnActivity {
         }
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_measure_direct,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_measure_retry:
+                connectBondedDevice();
+                break;
+            case R.id.menu_measure_direct:
+                OttoManager.post(new GuideOtto(1));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

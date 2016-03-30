@@ -11,6 +11,7 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.squareup.otto.Subscribe;
 import com.umeng.update.UmengUpdateAgent;
 import com.wonders.xlab.common.flyco.TabEntity;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.R;
@@ -40,6 +41,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OttoManager.register(this);
         setTheme(R.style.AppTheme_NoActionBar);
         Constant.setBaseUrl(this);
 
@@ -130,5 +132,11 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, MainActivity.class));
         startActivity(new Intent(this, LoginActivity.class));
         finish();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        OttoManager.unregister(this);
     }
 }

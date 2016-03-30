@@ -8,6 +8,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.flyco.tablayout.CommonTabLayout;
@@ -157,7 +160,7 @@ public class DailyRecordActivity extends AppbarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean hasSetDefault = SPManager.get(DailyRecordActivity.this).getBoolean(getString(R.string.setting_pref_key_measure_default), false);
 
-        boolean useEquipment = SPManager.get(DailyRecordActivity.this).getBoolean(getString(R.string.setting_pref_key_use_equipment), false);
+        boolean useEquipment = SPManager.get(DailyRecordActivity.this).getBoolean(getString(R.string.setting_pref_key_use_equipment), true);
 
         switch (item.getItemId()) {
             case R.id.menu_daily_record_bp:
@@ -194,61 +197,70 @@ public class DailyRecordActivity extends AppbarActivity {
      * @param type 0:血压   1：血糖
      */
     private void showConfirmDialog(final int type) {
-        RadioGroup customView = (RadioGroup) LayoutInflater.from(this).inflate(R.layout.item_daily_record_dialog_multi_check, null);
-        customView.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        LinearLayout customView = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.item_daily_record_dialog_multi_check, null);
+
+        RadioGroup radioGroup = (RadioGroup) customView.findViewById(R.id.rg_daily_record_dialog_item);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
                 switch (checkedId) {
                     case R.id.rb_item_daily_record_dialog_single_check_auto:
-                        showLongToast("如果需要切换输入方式，只需要在：主界面->我->设置中开启或者关闭使用健康设备即可");
-
                         SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
-                        SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_measure_default), true);
-
                         break;
                     case R.id.rb_item_daily_record_dialog_single_check_manual:
-                        showLongToast("如果需要切换输入方式，只需要在：主界面->我->设置中开启或者关闭使用健康设备即可");
-
                         SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), false);
-                        SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_measure_default), true);
-
-                        break;
-                    case R.id.rb_item_daily_record_dialog_single_check_clear:
-                        SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_measure_default), false);
-
                         break;
                 }
+            }
+        });
+        CheckBox checkBox = (CheckBox) customView.findViewById(R.id.cb_item_daily_record_dialog_default);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    showLongToast("如果需要切换输入方式，只需要在：主界面->我->设置中取消默认设置即可");
+                } else {
+                    SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
+                }
+                SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_measure_default), isChecked);
+
             }
         });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setMessage("请选择健康数据的测量方式")
                 .setView(customView)
-                .setPositiveButton(getResources().getString(R.string.text_daily_record_dialog_auto), new DialogInterface.OnClickListener() {
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        boolean hasSetDefault = SPManager.get(DailyRecordActivity.this).getBoolean(getString(R.string.setting_pref_key_measure_default), false);
+                        boolean useEquipment = SPManager.get(DailyRecordActivity.this).getBoolean(getString(R.string.setting_pref_key_use_equipment), true);
+                        if (!hasSetDefault) {
+                            SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
+                        }
                         switch (type) {
                             case 0:
-                                recordNewData(BPGuideActivity.class);
+                                if (useEquipment) {
+                                    recordNewData(BPGuideActivity.class);
+                                } else {
+                                    recordNewData(BPAddActivity.class);
+                                }
                                 break;
                             case 1:
-                                recordNewData(BSGuideActivity.class);
+                                if (useEquipment) {
+                                    recordNewData(BSGuideActivity.class);
+                                } else {
+                                    recordNewData(BSAddActivity.class);
+                                }
                                 break;
                         }
                     }
                 })
-                .setNegativeButton(getResources().getString(R.string.text_daily_record_dialog_manual), new DialogInterface.OnClickListener() {
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        switch (type) {
-                            case 0:
-                                recordNewData(BPAddActivity.class);
-                                break;
-                            case 1:
-                                recordNewData(BSAddActivity.class);
-                                break;
-                        }
+                        SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
                     }
                 });
         builder.create().show();

@@ -65,7 +65,7 @@ public class AIManager {
 
     public String getPatientPortraitUrl() {
         PatientInfoRealm patientInfo = getPatientInfo();
-        if (null == patientInfo) {
+        if (null == patientInfo || TextUtils.isEmpty(patientInfo.getPatientPortraitUrl())) {
             return Constant.DEFAULT_PORTRAIT;
         }
         return patientInfo.getPatientPortraitUrl();
