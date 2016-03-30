@@ -23,7 +23,7 @@ import xlab.wonders.com.common.R;
  */
 public class PullLoadMoreRecyclerView extends LinearLayout {
     private RecyclerView mRecyclerView;
-//    private View mEmptyView;
+    //    private View mEmptyView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private PullLoadMoreListener mPullLoadMoreListener;
     private boolean hasMore = true;
@@ -236,11 +236,21 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
 
     public void setPullLoadMoreCompleted() {
         isRefresh = false;
-        mSwipeRefreshLayout.setRefreshing(false);
+        if (null != mSwipeRefreshLayout) {
+            mSwipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (null != mSwipeRefreshLayout) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+            });
+        }
 
         isLoadMore = false;
-        mFooterView.setVisibility(View.GONE);
-
+        if (null != mFooterView) {
+            mFooterView.setVisibility(View.GONE);
+        }
     }
 
     public void setOnPullLoadMoreListener(PullLoadMoreListener listener) {

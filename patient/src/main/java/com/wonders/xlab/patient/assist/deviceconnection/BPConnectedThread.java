@@ -124,7 +124,7 @@ public class BPConnectedThread extends DataRequestThread {
                             } else {
                                 if (BuildConfig.DEBUG) Log.d(TAG, "发送删除数据命令");
                                 pType = 5;
-//                                mOutputStream.write(DeviceCommand.DELETE_BP());
+                                mOutputStream.write(DeviceCommand.DELETE_BP());
                             }
 //                        }
                             break;

@@ -103,8 +103,8 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
             containerView.addView(mRecyclerView);
             mRecyclerView.setVisibility(GONE);
         }*/
-        if (null != mEmptyView) {
-            containerView.addView(mEmptyView);
+        if (null != mRecyclerView) {
+            containerView.addView(mRecyclerView);
         }
         addView(containerView);
     }

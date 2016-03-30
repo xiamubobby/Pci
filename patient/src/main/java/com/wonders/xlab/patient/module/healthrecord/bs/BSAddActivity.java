@@ -88,7 +88,7 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
         String dateStr = mTvAddBsDate.getText().toString();
         String timeStr = mTvAddBsTime.getText().toString();
 
-        long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), DateUtil.DEFAULT_FORMAT_FULL);
+        long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), "yyyy.MM.dd HH:mm");
 
         String bloodSugar = mEtAddBs.getText().toString();
         if (TextUtils.isEmpty(bloodSugar)) {

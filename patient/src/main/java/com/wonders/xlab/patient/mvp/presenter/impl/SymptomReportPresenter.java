@@ -34,6 +34,11 @@ public class SymptomReportPresenter extends BasePresenter implements ISymptomRep
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public void onReceiveSymptomListSuccess(SymptomRetrieveEntity.RetValuesEntity valuesEntity) {
         mListener.hideLoading();
 

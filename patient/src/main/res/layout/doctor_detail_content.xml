@@ -43,8 +43,7 @@
                     <ImageView
                         android:id="@+id/iv_doctor_detail_portrait"
                         android:layout_width="@dimen/doctor_list_icon_size"
-                        android:layout_height="@dimen/doctor_list_icon_size"
-                        android:src="@mipmap/ic_launcher"/>
+                        android:layout_height="@dimen/doctor_list_icon_size"/>
 
                     <TextView
                         android:id="@+id/tv_doctor_detail_admin_name"
@@ -102,13 +101,13 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="正在服务："
+                            android:text='@{null == bean ? "" : "正在服务："}'
                             android:textSize="@dimen/text_size_middle"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text='@{TextUtils.isEmpty(bean.servingPeople) ? "0人" : bean.servingPeople + "人"}'
+                            android:text='@{null == bean ? "" : TextUtils.isEmpty(bean.servingPeople) ? "0人" : bean.servingPeople + "人"}'
                             android:textColor="#9bdb5a"
                             android:textSize="@dimen/text_size_middle"/>
                     </LinearLayout>
@@ -129,13 +128,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/item_interval_middle"
-                            android:text="已服务："
+                            android:text='@{null == bean ? "" : "已服务："}'
                             android:textSize="@dimen/text_size_middle"/>
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text='@{TextUtils.isEmpty(bean.servedPeopleCount) ? "0人" : bean.servedPeopleCount + "人"}'
+                            android:text='@{null == bean ? "" : TextUtils.isEmpty(bean.servedPeopleCount) ? "0人" : bean.servedPeopleCount + "人"}'
                             android:textColor="#ffbd46"
                             android:textSize="@dimen/text_size_middle"/>
                     </LinearLayout>
@@ -157,7 +156,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/item_interval_small"
-                    android:text='@{TextUtils.isEmpty(bean.description) ? "医生还没有编写简介哦" :bean.description}'
+                    android:text='@{null == bean ? "" : TextUtils.isEmpty(bean.description) ? "医生还没有编写简介哦" :bean.description}'
                     android:textColor="@color/text_color_primary_gray"
                     android:textSize="@dimen/text_size_small"/>
 
@@ -167,7 +166,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/item_interval_small"
-                    android:text="提供服务"
+                    android:text='@{null == bean ? "" : "提供服务"}'
                     android:textColor="@color/colorAccent"
                     android:textSize="@dimen/text_size_middle"
                     android:visibility='@{null != bean &amp;&amp; bean.hasServicePackage ? View.VISIBLE : View.GONE}'/>

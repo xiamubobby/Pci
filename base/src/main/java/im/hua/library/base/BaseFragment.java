@@ -3,15 +3,14 @@ package im.hua.library.base;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import im.hua.library.base.mvp.impl.BasePresenter;
 import im.hua.library.base.mvp.IBasePresenter;
+import im.hua.library.base.mvp.impl.BasePresenter;
 
 /**
  * Created by hua on 15/12/14.
@@ -34,13 +33,15 @@ public class BaseFragment extends Fragment {
 
     public void showShortToast(String message) {
         long nowTime = Calendar.getInstance().getTimeInMillis();
-        Log.d("BaseActivity", "nowTime:" + nowTime);
         if (nowTime - mLastToastTime < mShowToastInterval) {
             return;
         }
         mLastToastTime = nowTime;
 
         if (!TextUtils.isEmpty(message)) {
+            if (null == getActivity()) {
+                return;
+            }
             Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
         }
     }
@@ -101,6 +102,7 @@ public class BaseFragment extends Fragment {
         if (mBasePresenterList != null) {
             for (BasePresenter presenter : mBasePresenterList) {
                 presenter.onDestroy();
+                presenter = null;
             }
             mBasePresenterList.clear();
             mBasePresenterList = null;
@@ -108,6 +110,7 @@ public class BaseFragment extends Fragment {
         if (null != mIBasePresenterList) {
             for (IBasePresenter presenter : mIBasePresenterList) {
                 presenter.onDestroy();
+                presenter = null;
             }
             mIBasePresenterList.clear();
             mIBasePresenterList = null;

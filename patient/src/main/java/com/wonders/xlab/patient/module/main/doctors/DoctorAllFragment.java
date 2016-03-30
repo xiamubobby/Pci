@@ -33,6 +33,8 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
 
     @Bind(R.id.recycler_view_doctor_all)
     PullLoadMoreRecyclerView mRecyclerView;
+    @Bind(R.id.empty)
+    View mEmptyView;
 
     private IDoctorAllPresenter mDoctorAllPresenter;
 
@@ -61,6 +63,7 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mEmptyView.setVisibility(View.GONE);
         mRecyclerView.setLinearLayout(false);
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
         mRecyclerView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
@@ -76,6 +79,12 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
             }
         });
 
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setRefreshing(true);
+            }
+        });
         mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
     }
 
@@ -89,7 +98,6 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
     public void showAllDoctorList(ArrayList<AllDoctorItemBean> myDoctorBeanList) {
         initRecyclerViewAdapter();
         mAllDoctorRVAdapter.setDatas(myDoctorBeanList);
-        mRecyclerView.setAdapter(mAllDoctorRVAdapter);
     }
 
     private void initRecyclerViewAdapter() {
@@ -105,18 +113,27 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
                 }
             });
         }
+        mEmptyView.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mRecyclerView.setAdapter(mAllDoctorRVAdapter);
+
     }
 
     @Override
     public void appendAllDoctorList(ArrayList<AllDoctorItemBean> myDoctorBeanList) {
         initRecyclerViewAdapter();
         mAllDoctorRVAdapter.appendDatas(myDoctorBeanList);
-        mRecyclerView.setAdapter(mAllDoctorRVAdapter);
     }
 
     @Override
     public void showReachTheLastPageNotice(String message) {
         showShortToast(message);
+    }
+
+    @Override
+    public void showEmptyView() {
+        mRecyclerView.setVisibility(View.GONE);
+        mEmptyView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -126,6 +143,9 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
 
     @Override
     public void hideLoading() {
+        if (null == mRecyclerView) {
+            return;
+        }
         mRecyclerView.setPullLoadMoreCompleted();
     }
 }

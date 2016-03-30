@@ -10,4 +10,5 @@
     <color name="background_gray">#eaebeb</color>
     <color name="white_pressed">#f1f1f1</color>
     <color name="appYellow">#fed256</color>
+    <color name="light_gray">#c4c4c4</color>
 </resources>

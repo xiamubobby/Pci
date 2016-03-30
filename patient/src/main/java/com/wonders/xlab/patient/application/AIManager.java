@@ -11,6 +11,8 @@ import com.wonders.xlab.patient.realm.PatientInfoRealm;
  */
 public class AIManager {
 
+    private final static Object object = new Object();
+
     private static AIManager aiManager;
 
     private AIManager() {
@@ -33,13 +35,16 @@ public class AIManager {
     }
 
     public void logout() {
-        XApplication.realm.beginTransaction();
-        XApplication.realm.clear(PatientInfoRealm.class);
-        XApplication.realm.commitTransaction();
+        synchronized (object) {
+            XApplication.realm.beginTransaction();
+            XApplication.realm.clear(PatientInfoRealm.class);
+            XApplication.realm.commitTransaction();
+        }
+
     }
 
     private PatientInfoRealm getPatientInfo() {
-         return XApplication.realm.where(PatientInfoRealm.class).findFirst();
+        return XApplication.realm.where(PatientInfoRealm.class).findFirst();
     }
 
     public String getPatientId() {

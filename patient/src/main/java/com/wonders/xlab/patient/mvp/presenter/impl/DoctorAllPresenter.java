@@ -10,7 +10,7 @@ import com.wonders.xlab.patient.mvp.presenter.IDoctorAllPresenter;
 import java.util.ArrayList;
 
 import im.hua.library.base.mvp.impl.BasePagePresenter;
-import im.hua.library.base.mvp.listener.BasePresenterListener;
+import im.hua.library.base.mvp.listener.BasePagePresenterListener;
 
 /**
  * Created by hua on 16/3/15.
@@ -64,13 +64,17 @@ public class DoctorAllPresenter extends BasePagePresenter implements IDoctorAllP
             doctorItemBeanArrayList.add(itemBean);
         }
 
-        if (doctorItemBeanArrayList.size() <= 0) {
-            mDoctorAllListener.showReachTheLastPageNotice("");
-            return;
-        }
         if (shouldAppend()) {
+            if (doctorItemBeanArrayList.size() <= 0) {
+                mDoctorAllListener.showReachTheLastPageNotice("");
+                return;
+            }
             mDoctorAllListener.appendAllDoctorList(doctorItemBeanArrayList);
         } else {
+            if (doctorItemBeanArrayList.size() <= 0) {
+                mDoctorAllListener.showEmptyView();
+                return;
+            }
             mDoctorAllListener.showAllDoctorList(doctorItemBeanArrayList);
         }
     }
@@ -81,11 +85,9 @@ public class DoctorAllPresenter extends BasePagePresenter implements IDoctorAllP
         mDoctorAllListener.showError(message);
     }
 
-    public interface DoctorAllPresenterListener extends BasePresenterListener {
+    public interface DoctorAllPresenterListener extends BasePagePresenterListener {
         void showAllDoctorList(ArrayList<AllDoctorItemBean> myDoctorBeanList);
 
         void appendAllDoctorList(ArrayList<AllDoctorItemBean> myDoctorBeanList);
-
-        void showReachTheLastPageNotice(String message);
     }
 }

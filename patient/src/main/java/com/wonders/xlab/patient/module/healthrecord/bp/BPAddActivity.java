@@ -85,16 +85,16 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
         String dateStr = mTvAddBpDate.getText().toString();
         String timeStr = mTvAddBpTime.getText().toString();
 
-        long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), DateUtil.DEFAULT_FORMAT_FULL);
+        long date = DateUtil.parseToLong(String.format("%s %s", dateStr, timeStr), "yyyy.MM.dd HH:mm");
 
         String systolicPressure = mEtAddBpSsy.getText().toString();
         if (TextUtils.isEmpty(systolicPressure)) {
-            showShortToast("请输入收缩压");
+            showShortToast("请输入高压");
             return;
         }
         String diastolicPressure = mEtAddBpSzy.getText().toString();
         if (TextUtils.isEmpty(diastolicPressure)) {
-            showShortToast("请输入舒张压");
+            showShortToast("请输入低压");
             return;
         }
         String heartRate = mEtAddBpRate.getText().toString();

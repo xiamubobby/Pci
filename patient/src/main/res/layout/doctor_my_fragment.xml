@@ -1,7 +1,15 @@
-<com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView
-    android:id="@+id/recycler_view_doctor_my"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".module.main.doctors.DoctorMyFragment"/>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".module.main.doctors.DoctorMyFragment">
+
+    <com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView
+        android:id="@+id/recycler_view_doctor_my"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <include
+        android:id="@+id/empty"
+        layout="@layout/common_empty"/>
+</FrameLayout>

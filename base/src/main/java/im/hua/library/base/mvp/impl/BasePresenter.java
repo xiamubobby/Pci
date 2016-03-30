@@ -13,6 +13,7 @@ public class BasePresenter implements IBasePresenter {
 
     private List<BaseModel> mBaseModelList;
     private List<IBaseModel> mIBaseModelList;
+    private boolean mIsCanceled;
 
     protected void addModel(BaseModel model) {
         if (mBaseModelList == null) {
@@ -34,9 +35,11 @@ public class BasePresenter implements IBasePresenter {
 
     @Override
     public void onDestroy() {
+        mIsCanceled = true;
         if (mBaseModelList != null) {
             for (BaseModel model : mBaseModelList) {
                 model.cancel();
+                model = null;
             }
             mBaseModelList.clear();
             mBaseModelList = null;
@@ -44,9 +47,14 @@ public class BasePresenter implements IBasePresenter {
         if (mIBaseModelList != null) {
             for (IBaseModel model : mIBaseModelList) {
                 model.cancel();
+                model = null;
             }
             mIBaseModelList.clear();
             mIBaseModelList = null;
         }
+    }
+
+    public boolean isCanceled() {
+        return mIsCanceled;
     }
 }

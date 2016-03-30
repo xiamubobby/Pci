@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePagePresenter;
-import im.hua.library.base.mvp.listener.BasePresenterListener;
+import im.hua.library.base.mvp.listener.BasePagePresenterListener;
 
 /**
  * Created by hua on 16/3/14.
@@ -79,6 +79,10 @@ public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPre
             }
             mDoctorMyListener.appendMyDoctorList(doctorItemBeanArrayList);
         } else {
+            if (doctorItemBeanArrayList.size() <= 0) {
+                mDoctorMyListener.showEmptyView();
+                return;
+            }
             mDoctorMyListener.showMyDoctorList(doctorItemBeanArrayList);
         }
     }
@@ -89,11 +93,10 @@ public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPre
         mDoctorMyListener.showError(message);
     }
 
-    public interface DoctorMyPresenterListener extends BasePresenterListener {
+    public interface DoctorMyPresenterListener extends BasePagePresenterListener {
         void showMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList);
 
         void appendMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList);
 
-        void showReachTheLastPageNotice(String message);
     }
 }

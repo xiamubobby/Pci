@@ -35,6 +35,8 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
 
     @Bind(R.id.recycler_view_doctor_my)
     PullLoadMoreRecyclerView mRecyclerView;
+    @Bind(R.id.empty)
+    View mEmptyView;
 
     private MyDoctorRVAdapter mMyDoctorRVAdapter;
 
@@ -63,8 +65,9 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mEmptyView.setVisibility(View.GONE);
         mRecyclerView.setLinearLayout(false);
-        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(),getResources().getColor(R.color.divider),1));
+        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
         mRecyclerView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
@@ -77,7 +80,12 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
                 mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), false);
             }
         });
-
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setRefreshing(true);
+            }
+        });
         mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
     }
 
@@ -89,10 +97,6 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
 
     @Override
     public void showMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList) {
-        if (myDoctorBeanList.size() <= 0) {
-            OttoManager.post(new TabChangeOtto(1));
-            return;
-        }
         initMyDoctorAdapter();
         mMyDoctorRVAdapter.setDatas(myDoctorBeanList);
     }
@@ -114,6 +118,8 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
             StickyRecyclerHeadersDecoration stickyRecyclerHeadersDecoration = new StickyRecyclerHeadersDecoration(mMyDoctorRVAdapter);
             mRecyclerView.getRecyclerView().addItemDecoration(stickyRecyclerHeadersDecoration);
         }
+        mEmptyView.setVisibility(View.GONE);
+        mRecyclerView.setVisibility(View.VISIBLE);
         mRecyclerView.setAdapter(mMyDoctorRVAdapter);
     }
 
@@ -129,12 +135,22 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
     }
 
     @Override
+    public void showEmptyView() {
+        mRecyclerView.setVisibility(View.GONE);
+        mEmptyView.setVisibility(View.VISIBLE);
+        OttoManager.post(new TabChangeOtto(1));
+    }
+
+    @Override
     public void showError(String message) {
         showShortToast(message);
     }
 
     @Override
     public void hideLoading() {
+        if (null == mRecyclerView) {
+            return;
+        }
         mRecyclerView.setPullLoadMoreCompleted();
     }
 }

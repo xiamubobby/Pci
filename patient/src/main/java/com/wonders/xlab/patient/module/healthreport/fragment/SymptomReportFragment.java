@@ -106,6 +106,9 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
 
     @Override
     public void showEmptyView() {
+        if (null == mRecyclerView) {
+            return;
+        }
         mRecyclerView.showEmptyView();
     }
 
@@ -116,12 +119,16 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
 
     @Override
     public void hideLoading() {
+        if (null == mRecyclerView) {
+            return;
+        }
         mRecyclerView.post(new Runnable() {
             @Override
             public void run() {
-                if (null != mRecyclerView) {
-                    mRecyclerView.setRefreshing(false);
+                if (null == mRecyclerView) {
+                    return;
                 }
+                mRecyclerView.setRefreshing(false);
             }
         });
     }

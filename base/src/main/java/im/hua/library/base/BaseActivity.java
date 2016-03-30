@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
@@ -40,7 +39,6 @@ public class BaseActivity extends AppCompatActivity {
 
     public void showShortToast(String message) {
         long nowTime = Calendar.getInstance().getTimeInMillis();
-        Log.d("BaseActivity", "nowTime:" + nowTime);
         if (nowTime - mLastToastTime < mShowToastInterval) {
             return;
         }
@@ -135,6 +133,7 @@ public class BaseActivity extends AppCompatActivity {
         if (mBasePresenterList != null) {
             for (BasePresenter presenter : mBasePresenterList) {
                 presenter.onDestroy();
+                presenter = null;
             }
             mBasePresenterList.clear();
             mBasePresenterList = null;
@@ -142,6 +141,7 @@ public class BaseActivity extends AppCompatActivity {
         if (null != mIBasePresenterList) {
             for (IBasePresenter presenter : mIBasePresenterList) {
                 presenter.onDestroy();
+                presenter = null;
             }
             mIBasePresenterList.clear();
             mIBasePresenterList = null;
