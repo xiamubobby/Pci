@@ -46,7 +46,7 @@ public class LoginModel extends PatientBaseModel<LoginEntity> {
          */
         AIManager.getInstance().savePatientInfo(retValues.getId(), retValues.getTel(), retValues.getAvatarUrl(), retValues.getName());
 
-        mLoginModelListener.loginSuccess(response.getRet_values());
+        mLoginModelListener.loginSuccess();
     }
 
     @Override
@@ -55,6 +55,6 @@ public class LoginModel extends PatientBaseModel<LoginEntity> {
     }
 
     public interface LoginModelListener extends BaseModelListener {
-        void loginSuccess(LoginEntity.RetValuesEntity value);
+        void loginSuccess();
     }
 }

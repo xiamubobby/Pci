@@ -38,10 +38,13 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
          * 说明：由于当前的okhttp在jcenter库中并不是最新的，关于日志记录的代码在github中有，所以{@link HttpLoggingInterceptor}目前是手动在项目中新建的类
          * 如果后面okhttp更新了，可去掉，而用square的
          */
-        OkHttpClient client = new OkHttpClient();
-//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-//        logging.setLevel(HttpLoggingInterceptor.Level.NONE);
-//        client.interceptors().add(logging);
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        builder.addInterceptor(logging);
+
+        OkHttpClient client = builder.build();
 //        client.setConnectTimeout(30, TimeUnit.SECONDS);
 //        client.setWriteTimeout(30, TimeUnit.SECONDS);
 //        client.setReadTimeout(30, TimeUnit.SECONDS);

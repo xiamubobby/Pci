@@ -2,7 +2,6 @@ package com.wonders.xlab.pci.doctor.application;
 
 import android.app.Application;
 
-import com.bugtags.library.Bugtags;
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
 
@@ -17,8 +16,6 @@ public class XApplication extends Application {
 //        if (BuildConfig.DEBUG) {
 //            BlockCanary.install(this, new AppBlockCanaryContext()).start();
 //        }
-        //在这里初始化
-        Bugtags.start("08cac51dafe59b7c0682fd0acc983332", this, Bugtags.BTGInvocationEventShake);
 
         EMChat.getInstance().init(this);
         EMChatManager.getInstance().getChatOptions().setNotifyBySoundAndVibrate(false);//不发通知，而是走广播

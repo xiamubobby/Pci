@@ -7,7 +7,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.main.MainActivity;
 import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.LoginPresenter;
@@ -87,7 +86,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
     }
 
     @Override
-    public void loginSuccess(String patientId, String tel, String portraitUrl, String patientName) {
+    public void loginSuccess() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }

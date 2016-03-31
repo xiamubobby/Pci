@@ -192,15 +192,6 @@
     public *;
 }
 
-#bugtags
--keepattributes LineNumberTable,SourceFile
-
--keep class com.bugtags.library.** {*;}
--dontwarn org.apache.http.**
--dontwarn android.net.http.AndroidHttpClient
--dontwarn com.bugtags.library.vender.**
--dontwarn com.bugtags.library.**
-
 #Umeng
 -keep class com.umeng.**
 -keep public interface com.umeng.socialize.**
