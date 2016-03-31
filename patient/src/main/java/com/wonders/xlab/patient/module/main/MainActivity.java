@@ -8,7 +8,6 @@ import android.support.v7.widget.Toolbar;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
-import com.growingio.android.sdk.collection.GrowingIO;
 import com.squareup.otto.Subscribe;
 import com.umeng.update.UmengUpdateAgent;
 import com.wonders.xlab.common.flyco.TabEntity;
@@ -55,15 +54,6 @@ public class MainActivity extends BaseActivity {
             finish();
             return;
         }
-
-        //TODO GrowingIO 自动埋点统计
-        GrowingIO growingIO = GrowingIO.getInstance();
-        growingIO.setCS1("user_id", aiManager.getPatientId());
-        growingIO.setCS2("user_phone_number", aiManager.getPatientTel());
-        growingIO.setCS3("user_name", aiManager.getPatientName());
-
-        GrowingIO.startTracing(this, "ad3e7d22d5cc2d0a");
-        GrowingIO.setScheme("growing.223989e1f246cb1c");
 
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);

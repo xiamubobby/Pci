@@ -9,7 +9,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.growingio.android.sdk.collection.GrowingIO;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
 
@@ -68,8 +67,6 @@ public class WebActivity extends AppbarActivity {
         }
 
         MyWebChromeClient webChromeClient = new MyWebChromeClient();
-
-        GrowingIO.trackWebView(mWbWeb,webChromeClient);
 
         mWbWeb.setWebViewClient(new MyWebViewClient());
         mWbWeb.setWebChromeClient(webChromeClient);

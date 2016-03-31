@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.growingio.android.sdk.collection.GrowingIO;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.common.viewpager.LooperViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
@@ -77,7 +76,6 @@ public class HomeFragment extends BaseFragment {
         mViewPagerHome.setAdapter(topVPAdapter);
         mIndicatorHome.setViewPager(mViewPagerHome);
 
-        GrowingIO.getInstance().trackBanner(mViewPagerHome, topVPAdapter.getTitleList());
     }
 
     private void setupBottomFunctionView() {
