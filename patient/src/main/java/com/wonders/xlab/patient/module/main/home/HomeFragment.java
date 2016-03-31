@@ -16,7 +16,7 @@ import com.wonders.xlab.common.viewpager.LooperViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.module.healthreport.DailyRecordActivity;
+import com.wonders.xlab.patient.module.dailyreport.DailyRecordActivity;
 import com.wonders.xlab.patient.module.main.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.patient.module.main.home.adapter.bean.HomeItemBean;
 import com.wonders.xlab.patient.module.medicalrecord.MedicalRecordActivity;

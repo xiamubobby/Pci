@@ -1,7 +1,7 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
 import com.wonders.xlab.common.manager.OttoManager;
-import com.wonders.xlab.patient.module.healthreport.otto.SymptomSaveSuccessOtto;
+import com.wonders.xlab.patient.module.dailyreport.otto.SymptomSaveSuccessOtto;
 import com.wonders.xlab.patient.mvp.entity.SymptomEntity;
 import com.wonders.xlab.patient.mvp.model.ISymptomDictModel;
 import com.wonders.xlab.patient.mvp.model.ISymptomSaveModel;

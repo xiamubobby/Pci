@@ -1,7 +1,7 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.module.healthreport.adapter.bean.BPReportBean;
+import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportBean;
 import com.wonders.xlab.patient.mvp.presenter.IBPReportPresenter;
 
 import java.util.ArrayList;

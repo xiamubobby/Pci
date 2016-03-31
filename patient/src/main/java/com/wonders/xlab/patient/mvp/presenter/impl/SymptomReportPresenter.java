@@ -2,8 +2,8 @@ package com.wonders.xlab.patient.mvp.presenter.impl;
 
 import android.text.TextUtils;
 
-import com.wonders.xlab.patient.module.healthreport.adapter.bean.SymptomReportBean;
-import com.wonders.xlab.patient.module.healthreport.adapter.bean.SymptomReportLabelBean;
+import com.wonders.xlab.patient.module.dailyreport.adapter.bean.SymptomReportBean;
+import com.wonders.xlab.patient.module.dailyreport.adapter.bean.SymptomReportLabelBean;
 import com.wonders.xlab.patient.mvp.entity.SymptomRetrieveEntity;
 import com.wonders.xlab.patient.mvp.model.ISymptomRetrieveModel;
 import com.wonders.xlab.patient.mvp.model.impl.SymptomRetrieveModel;
