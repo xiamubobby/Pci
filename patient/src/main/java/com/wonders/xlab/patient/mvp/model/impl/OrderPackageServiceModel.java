@@ -1,7 +1,5 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
-import android.text.TextUtils;
-
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.OrderPackageServiceAPI;
 import com.wonders.xlab.patient.mvp.model.IOrderPackageServiceModel;
@@ -28,20 +26,16 @@ public class OrderPackageServiceModel extends PatientBaseModel<SimpleEntity> imp
     }
 
     @Override
-    protected void onFailed(Throwable e, String message) {
-        if (TextUtils.isEmpty(message)) {
-            mServiceModelListener.onReceiveFailed(e.getMessage());
-        } else {
-            mServiceModelListener.onReceiveFailed(message);
-        }
+    protected void onFailed(String message) {
+        mServiceModelListener.onReceiveFailed(message);
     }
 
     @Override
     public void orderPackage(String patientId, String packageId) {
-        fetchData(mPackageServiceAPI.orderPackage(patientId,packageId),true);
+        fetchData(mPackageServiceAPI.orderPackage(patientId, packageId), true);
     }
 
-    public interface OrderPackageServiceModelListener extends BaseModelListener{
+    public interface OrderPackageServiceModelListener extends BaseModelListener {
         void onOrderPackageServiceSuccess(String message);
     }
 }

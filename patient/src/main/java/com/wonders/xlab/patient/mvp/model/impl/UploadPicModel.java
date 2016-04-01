@@ -50,7 +50,7 @@ public class UploadPicModel extends PatientBaseModel<SimpleEntity> implements IU
             fetchData(mUploadPicAPI.upload(iUserId, iTitle, builder.build()), true);
 //            fetchData(mUploadPicAPI.upload(iUserId, identityHashMap), true);
         } else {
-            onFailed(new Throwable("请选择要上传的图片"), "请选择要上传的图片");
+            onFailed("请选择要上传的图片");
         }
     }
 
@@ -61,8 +61,8 @@ public class UploadPicModel extends PatientBaseModel<SimpleEntity> implements IU
     }
 
     @Override
-    protected void onFailed(Throwable e, String message) {
-        mUploadPicModelListener.onReceiveFailed(e.getMessage());
+    protected void onFailed(String message) {
+        mUploadPicModelListener.onReceiveFailed(message);
     }
 
 

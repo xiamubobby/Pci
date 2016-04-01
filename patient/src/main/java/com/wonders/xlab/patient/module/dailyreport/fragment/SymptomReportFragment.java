@@ -26,6 +26,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseFragment;
 import im.hua.uikit.crv.CommonRecyclerView;
+import im.hua.utils.DateUtil;
 
 
 /**
@@ -76,15 +77,15 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId());
+                mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId(), DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday());
             }
         });
-        mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId());
+        mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId(), DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday());
     }
 
     @Subscribe
     public void refresh(SymptomSaveSuccessOtto otto) {
-        mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId());
+        mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId(), DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday());
     }
 
     @Override
@@ -95,7 +96,7 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
     }
 
     @Override
-    public void showTodaysSymtomList(List<SymptomReportBean> reportBeanList) {
+    public void showSymptomList(List<SymptomReportBean> reportBeanList) {
         mRecyclerView.showRecyclerView();
         if (null == adapter) {
             adapter = new SymptomReportAdapter();

@@ -47,7 +47,7 @@ import butterknife.ButterKnife;
  * 因为这个界面进入的频率很高
  * 不适症状需要从服务器获取，因为其中有医生的建议和确认的状态
  */
-public class DailyRecordActivity extends AppbarActivity {
+public class DailyReportActivity extends AppbarActivity {
     public final static int SHOW_TAB_POSITION_BS = 0;
     public final static int SHOW_TAB_POSITION_BP = 1;
     public final static int SHOW_TAB_POSITION_SYMPTOM = 2;
@@ -158,9 +158,9 @@ public class DailyRecordActivity extends AppbarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        boolean hasSetDefault = SPManager.get(DailyRecordActivity.this).getBoolean(getString(R.string.setting_pref_key_measure_default), false);
+        boolean hasSetDefault = SPManager.get(DailyReportActivity.this).getBoolean(getString(R.string.setting_pref_key_measure_default), false);
 
-        boolean useEquipment = SPManager.get(DailyRecordActivity.this).getBoolean(getString(R.string.setting_pref_key_use_equipment), true);
+        boolean useEquipment = SPManager.get(DailyReportActivity.this).getBoolean(getString(R.string.setting_pref_key_use_equipment), true);
 
         switch (item.getItemId()) {
             case R.id.menu_daily_record_bp:
@@ -206,10 +206,10 @@ public class DailyRecordActivity extends AppbarActivity {
 
                 switch (checkedId) {
                     case R.id.rb_item_daily_record_dialog_single_check_auto:
-                        SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
+                        SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
                         break;
                     case R.id.rb_item_daily_record_dialog_single_check_manual:
-                        SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), false);
+                        SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), false);
                         break;
                 }
             }
@@ -221,9 +221,9 @@ public class DailyRecordActivity extends AppbarActivity {
                 if (isChecked) {
                     showLongToast("如果需要切换输入方式，只需要在：主界面->我->设置中取消默认设置即可");
                 } else {
-                    SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
+                    SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
                 }
-                SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_measure_default), isChecked);
+                SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_measure_default), isChecked);
 
             }
         });
@@ -234,10 +234,10 @@ public class DailyRecordActivity extends AppbarActivity {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        boolean hasSetDefault = SPManager.get(DailyRecordActivity.this).getBoolean(getString(R.string.setting_pref_key_measure_default), false);
-                        boolean useEquipment = SPManager.get(DailyRecordActivity.this).getBoolean(getString(R.string.setting_pref_key_use_equipment), true);
+                        boolean hasSetDefault = SPManager.get(DailyReportActivity.this).getBoolean(getString(R.string.setting_pref_key_measure_default), false);
+                        boolean useEquipment = SPManager.get(DailyReportActivity.this).getBoolean(getString(R.string.setting_pref_key_use_equipment), true);
                         if (!hasSetDefault) {
-                            SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
+                            SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
                         }
                         switch (type) {
                             case 0:
@@ -260,7 +260,7 @@ public class DailyRecordActivity extends AppbarActivity {
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SPManager.get(DailyRecordActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
+                        SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
                     }
                 });
         builder.create().show();

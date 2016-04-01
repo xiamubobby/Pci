@@ -97,8 +97,8 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
         }
 
         /*BPEntityList bpEntityList = new BPEntityList();
-        List<BPEntity> entities = new ArrayList<>();
-        BPEntity entity = new BPEntity();
+        List<BloodPressureEntity> entities = new ArrayList<>();
+        BloodPressureEntity entity = new BloodPressureEntity();
         entity.setDate(Calendar.getInstance().getTimeInMillis());
         entity.setHeartRate(76);
         entity.setDiastolicPressure(90);

@@ -2,15 +2,12 @@ package com.wonders.xlab.patient.module.dailyreport.adapter.bean;
 
 import java.util.List;
 
-import io.realm.RealmList;
-import io.realm.RealmObject;
-
 /**
  * Created by hua on 16/3/21.
  */
-public class SymptomReportBean extends RealmObject{
+public class SymptomReportBean{
     private String id;
-    private RealmList<SymptomReportLabelBean> symptomList;
+    private List<SymptomReportLabelBean> symptomList;
     private String advice;
     private long recordTimeInMill;
     private boolean hasConfirmed;
@@ -27,7 +24,7 @@ public class SymptomReportBean extends RealmObject{
         return symptomList;
     }
 
-    public void setSymptomList(RealmList<SymptomReportLabelBean> symptomList) {
+    public void setSymptomList(List<SymptomReportLabelBean> symptomList) {
         this.symptomList = symptomList;
     }
 

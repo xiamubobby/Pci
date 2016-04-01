@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".module.dailyreport.DailyRecordActivity"
+    tools:context=".module.dailyreport.DailyReportActivity"
     tools:showIn="@layout/daily_record_activity">
 
     <com.flyco.tablayout.CommonTabLayout

@@ -21,7 +21,7 @@ import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
 import com.wonders.xlab.patient.mvp.entity.SymptomEntity;
 import com.wonders.xlab.patient.mvp.presenter.ISymptomPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.SymptomPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.SymptomRecordPresenter;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.util.HashMap;
@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 /**
  * 不适症状选择
  */
-public class SymptomActivity extends AppbarActivity implements SymptomPresenter.SymptomPresenterListener {
+public class SymptomActivity extends AppbarActivity implements SymptomRecordPresenter.SymptomPresenterListener {
 
     @Bind(R.id.container_add_symptom)
     LinearLayout mContainerAddSymptom;
@@ -66,7 +66,7 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
 
         mEmpty.setVisibility(View.GONE);
 
-        mSymptomPresenter = new SymptomPresenter(this);
+        mSymptomPresenter = new SymptomRecordPresenter(this);
         addPresenter(mSymptomPresenter);
 
         mInflater = LayoutInflater.from(this);
@@ -99,7 +99,7 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
         mContainerAddSymptom.removeAllViews();
         mTvTip.setText(valuesEntity.getTips());
         for (SymptomEntity.RetValuesEntity.SymptomDtoEntity entity : valuesEntity.getSymptomDtos()) {
-            LinearLayout itemView = (LinearLayout) mInflater.inflate(R.layout.symptom_item, mContainerAddSymptom, false);
+            LinearLayout itemView = (LinearLayout) mInflater.inflate(R.layout.symptom_record_item, mContainerAddSymptom, false);
             TextView title = (TextView) itemView.findViewById(R.id.tv_item_symptom_title);
             title.setText(entity.getName());
 

@@ -16,7 +16,8 @@ import com.wonders.xlab.common.viewpager.LooperViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.module.dailyreport.DailyRecordActivity;
+import com.wonders.xlab.patient.module.dailyreport.DailyReportActivity;
+import com.wonders.xlab.patient.module.healthreport.HealthReportActivity;
 import com.wonders.xlab.patient.module.main.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.patient.module.main.home.adapter.bean.HomeItemBean;
 import com.wonders.xlab.patient.module.medicalrecord.MedicalRecordActivity;
@@ -86,12 +87,15 @@ public class HomeFragment extends BaseFragment {
                 public void onItemClick(int position) {
                     switch (position) {
                         case 0:
-                            startActivity(new Intent(getActivity(), DailyRecordActivity.class));
+                            startActivity(new Intent(getActivity(), DailyReportActivity.class));
                             break;
                         case 1:
                             Intent intent = new Intent(getActivity(), MedicalRecordActivity.class);
                             intent.putExtra(MedicalRecordActivity.EXTRA_PATIENT_ID, AIManager.getInstance().getPatientId());
                             startActivity(intent);
+                            break;
+                        case 3:
+                            startActivity(new Intent(getActivity(), HealthReportActivity.class));
                             break;
                         default:
                             showShortToast("即将开放，敬请期待...");

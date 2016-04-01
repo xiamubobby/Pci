@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.mvp.api;
 
 import com.wonders.xlab.patient.mvp.entity.MedicalRecordEntity;
 
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -13,5 +14,5 @@ import rx.Observable;
  */
 public interface MedicalRecordAPI {
     @GET("userCaseReview/listUserCaseReviewRecords/{userId}")
-    Observable<MedicalRecordEntity> getMedicalRecordList(@Path("userId") String userId, @Query("page") int page, @Query("size") int size);
+    Observable<Response<MedicalRecordEntity>> getMedicalRecordList(@Path("userId") String userId, @Query("page") int page, @Query("size") int size);
 }

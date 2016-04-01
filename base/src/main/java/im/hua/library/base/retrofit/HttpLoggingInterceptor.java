@@ -179,32 +179,6 @@ public final class HttpLoggingInterceptor implements Interceptor {
         long startNs = System.nanoTime();
         Response response = chain.proceed(request);
 
-        int code = response.code();
-        if (null != mOnResponseListener) {
-            switch (code) {
-                case 401:
-                    mOnResponseListener.onErrorCodeMessage("请确保在正确授权的情况下，再重试哦！");
-                case 403:
-                    mOnResponseListener.onErrorCodeMessage("服务器拒绝了你的请求，请稍候重试吧！");
-                case 404:
-                    mOnResponseListener.onErrorCodeMessage("好像没有找到服务器哦，请稍候重试吧！");
-                    break;
-                case 405:
-                    mOnResponseListener.onErrorCodeMessage("一定是你请求的方式有问题，换个方法吧！");
-                    break;
-                case 415:
-                    mOnResponseListener.onErrorCodeMessage("你上传了不支持的媒体类型哦，请先确认上传的类型是对的吧！");
-                    break;
-                case 500:
-                    mOnResponseListener.onErrorCodeMessage("服务器内部出错啦，请稍候重试！");
-                    break;
-                case 503:
-                    mOnResponseListener.onErrorCodeMessage("服务不可用咯，请稍候重试！");
-                    break;
-
-            }
-        }
-
         long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs);
 
         ResponseBody responseBody = response.body();

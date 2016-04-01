@@ -25,8 +25,8 @@ public class DoctorGroupDetailModel extends PatientBaseModel<DoctorGroupDetailEn
     }
 
     @Override
-    protected void onFailed(Throwable e, String message) {
-        mDetailModelListener.onReceiveFailed(e.getMessage());
+    protected void onFailed(String message) {
+        mDetailModelListener.onReceiveFailed(message);
     }
 
     @Override

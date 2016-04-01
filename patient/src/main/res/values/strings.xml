@@ -61,5 +61,7 @@
     <string name="measure_normal_title">正常值</string>
     <string name="measure_value_title">测量值</string>
     <string name="menu_title_save">保存</string>
+    <string name="btn_symptom_item_comment">建议</string>
+    <string name="title_activity_health_report">HealthReportActivity</string>
 
 </resources>

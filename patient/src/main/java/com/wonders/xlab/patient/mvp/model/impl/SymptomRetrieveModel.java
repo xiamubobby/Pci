@@ -1,19 +1,16 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
-import android.text.TextUtils;
-
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.SymptomAPI;
 import com.wonders.xlab.patient.mvp.entity.SymptomRetrieveEntity;
 import com.wonders.xlab.patient.mvp.model.ISymptomRetrieveModel;
 
 import im.hua.library.base.mvp.listener.BaseModelListener;
-import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/3/24.
  */
-public class SymptomRetrieveModel extends PatientBaseModel<SymptomRetrieveEntity> implements ISymptomRetrieveModel{
+public class SymptomRetrieveModel extends PatientBaseModel<SymptomRetrieveEntity> implements ISymptomRetrieveModel {
     private SymptomRetrieveModelListener mListener;
     private SymptomAPI mSymptomAPI;
 
@@ -28,20 +25,16 @@ public class SymptomRetrieveModel extends PatientBaseModel<SymptomRetrieveEntity
     }
 
     @Override
-    protected void onFailed(Throwable e, String message) {
-        if (TextUtils.isEmpty(message)) {
-            mListener.onReceiveFailed(e.getMessage());
-        } else {
-            mListener.onReceiveFailed(message);
-        }
+    protected void onFailed(String message) {
+        mListener.onReceiveFailed(message);
     }
 
     @Override
-    public void getSymptomList(String patientId) {
-        fetchData(mSymptomAPI.getSymptomList(patientId, DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday()),true);
+    public void getSymptomList(String patientId, long startTime, long endTime) {
+        fetchData(mSymptomAPI.getSymptomList(patientId, startTime, endTime), true);
     }
 
-    public interface SymptomRetrieveModelListener extends BaseModelListener{
+    public interface SymptomRetrieveModelListener extends BaseModelListener {
         void onReceiveSymptomListSuccess(SymptomRetrieveEntity.RetValuesEntity valuesEntity);
     }
 }

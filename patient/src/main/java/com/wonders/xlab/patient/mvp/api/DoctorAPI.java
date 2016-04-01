@@ -5,6 +5,7 @@ import com.wonders.xlab.patient.mvp.entity.DoctorDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.DoctorGroupDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.DoctorMyEntity;
 
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -15,10 +16,10 @@ import rx.Observable;
  */
 public interface DoctorAPI {
     @GET("v1/doctors/listDoctorGroups/{patientId}")
-    Observable<DoctorMyEntity> getMyDoctors(@Path("patientId") String patientId, @Query("page") int page,@Query("size") int size);
+    Observable<Response<DoctorMyEntity>> getMyDoctors(@Path("patientId") String patientId, @Query("page") int page, @Query("size") int size);
 
     @GET("v1/doctors/listAllDoctors/{patientId}")
-    Observable<DoctorAllEntity> getAllDoctors(@Path("patientId") String patientId, @Query("page") int page,@Query("size") int size);
+    Observable<Response<DoctorAllEntity>> getAllDoctors(@Path("patientId") String patientId, @Query("page") int page,@Query("size") int size);
 
     /**
      * 获取医生小组信息（包括个人和多人的）
@@ -26,7 +27,7 @@ public interface DoctorAPI {
      * @return
      */
     @GET("v1/doctors/retrieveDoctorGroupInfo/{patientId}/{groupId}")
-    Observable<DoctorGroupDetailEntity> getDoctorGroupDetailInfo(@Path("patientId") String patientId,@Path("groupId") String doctorGroupId);
+    Observable<Response<DoctorGroupDetailEntity>> getDoctorGroupDetailInfo(@Path("patientId") String patientId,@Path("groupId") String doctorGroupId);
 
     /**
      * 获取医生个人信息
@@ -34,5 +35,5 @@ public interface DoctorAPI {
      * @return
      */
     @GET("v1/doctors/retrieveDoctorInfo/{patientId}/{doctorId}")
-    Observable<DoctorDetailEntity> getDoctorDetailInfo(@Path("patientId") String patientId,@Path("doctorId") String doctorId);
+    Observable<Response<DoctorDetailEntity>> getDoctorDetailInfo(@Path("patientId") String patientId,@Path("doctorId") String doctorId);
 }

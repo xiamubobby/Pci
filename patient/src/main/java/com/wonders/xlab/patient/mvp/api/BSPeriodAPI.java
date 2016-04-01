@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.mvp.api;
 
 import com.wonders.xlab.patient.mvp.entity.BSPeriodEntity;
 
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -11,5 +12,5 @@ import rx.Observable;
  */
 public interface BSPeriodAPI {
     @GET("v1/bloodSugars/listBloodSugarTimes/{currentTime}")
-    Observable<BSPeriodEntity> getPeriodDic(@Path("currentTime") long currentTime);
+    Observable<Response<BSPeriodEntity>> getPeriodDic(@Path("currentTime") long currentTime);
 }

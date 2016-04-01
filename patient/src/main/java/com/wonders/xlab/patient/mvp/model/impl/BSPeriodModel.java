@@ -1,7 +1,5 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
-import android.text.TextUtils;
-
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.BSPeriodAPI;
 import com.wonders.xlab.patient.mvp.entity.BSPeriodEntity;
@@ -30,12 +28,8 @@ public class BSPeriodModel extends PatientBaseModel<BSPeriodEntity> implements I
     }
 
     @Override
-    protected void onFailed(Throwable e, String message) {
-        if (TextUtils.isEmpty(message)) {
-            mBSPeriodModelListener.onReceiveFailed(e.getMessage());
-        } else {
-            mBSPeriodModelListener.onReceiveFailed(message);
-        }
+    protected void onFailed(String message) {
+        mBSPeriodModelListener.onReceiveFailed(message);
     }
 
     @Override

@@ -1,0 +1,11 @@
+<im.hua.uikit.crv.CommonRecyclerView
+    android:id="@+id/recycler_view_symptom_health_report"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:emptyView="@layout/symptom_report_empty"
+    app:layoutManager="LinearLayoutManager"
+    app:reverseLayout="false"
+    tools:context=".module.dailyreport.fragment.SymptomReportFragment"/>

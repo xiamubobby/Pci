@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.doctor.mvp.api;
 
 import com.wonders.xlab.pci.doctor.mvp.entity.ChatRoomEntity;
 
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -12,5 +13,5 @@ import rx.Observable;
  */
 public interface ChatRoomAPI {
     @GET("imContent/listImChatHistory/{groupId}")
-    Observable<ChatRoomEntity> getChatHistory(@Path("groupId") String groupId, @Query("page") int page,@Query("size") int size);
+    Observable<Response<ChatRoomEntity>> getChatHistory(@Path("groupId") String groupId, @Query("page") int page, @Query("size") int size);
 }

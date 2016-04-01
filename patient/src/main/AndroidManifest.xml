@@ -36,7 +36,7 @@
             android:value="xlab#pci"/>
         <!-- 声明sdk所需的service SDK核心功能 -->
         <service android:name="com.easemob.chat.EMChatService"/>
-        <!--growingio-->
+        <!-- growingio -->
         <meta-data
             android:name="com.growingio.android.GConfig.Channel"
             android:value="内测"/>
@@ -56,10 +56,12 @@
             android:theme="@style/AppTheme.MaterialColdStart">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
             <intent-filter>
                 <data android:scheme="growing.223989e1f246cb1c"/>
+
                 <action android:name="android.intent.action.VIEW"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
@@ -112,15 +114,15 @@
         <activity
             android:name=".module.chatroom.ChatRoomActivity"
             android:label="@string/title_activity_chat_room"
-            android:windowSoftInputMode="adjustResize|stateHidden"
             android:parentActivityName=".module.main.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".module.main.MainActivity"/>
         </activity>
         <activity
-            android:name=".module.dailyreport.DailyRecordActivity"
+            android:name=".module.dailyreport.DailyReportActivity"
             android:label="@string/title_activity_daily_record"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.DailyRecordActionBar"/>
@@ -162,6 +164,11 @@
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/PhotoPickerTheme"/>
+        <activity
+            android:name=".module.healthreport.HealthReportActivity"
+            android:label="@string/title_activity_health_report"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

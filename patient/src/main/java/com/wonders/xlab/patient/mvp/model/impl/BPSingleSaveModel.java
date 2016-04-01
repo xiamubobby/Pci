@@ -63,7 +63,7 @@ public class BPSingleSaveModel extends PatientBaseModel<BPSaveEntity> {
     }
 
     @Override
-    protected void onFailed(Throwable e, String message) {
+    protected void onFailed(String message) {
         if (TextUtils.isEmpty(message)) {
             mBPSaveModelListener.onReceiveFailed("保存血压失败，请重试！");
         } else {

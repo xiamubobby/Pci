@@ -16,14 +16,14 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
 /**
  * Created by hua on 16/3/16.
  */
-public class SymptomPresenter extends BasePresenter implements ISymptomPresenter,SymptomDictModel.SymptomDictModelListener, SymptomSaveModel.SymptomSaveModelListener {
+public class SymptomRecordPresenter extends BasePresenter implements ISymptomPresenter,SymptomDictModel.SymptomDictModelListener, SymptomSaveModel.SymptomSaveModelListener {
     private SymptomPresenterListener mSymptomPresenterListener;
 
     private ISymptomDictModel mSymptomDictModel;
 
     private ISymptomSaveModel mSymptomSaveModel;
 
-    public SymptomPresenter(SymptomPresenterListener symptomPresenterListener) {
+    public SymptomRecordPresenter(SymptomPresenterListener symptomPresenterListener) {
         mSymptomPresenterListener = symptomPresenterListener;
 
         mSymptomDictModel = new SymptomDictModel(this);

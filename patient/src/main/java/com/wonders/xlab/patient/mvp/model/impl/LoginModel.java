@@ -1,7 +1,6 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
@@ -50,8 +49,8 @@ public class LoginModel extends PatientBaseModel<LoginEntity> {
     }
 
     @Override
-    protected void onFailed(Throwable e, String message) {
-        mLoginModelListener.onReceiveFailed(TextUtils.isEmpty(e.getMessage()) ? "登录失败，请重试！" : e.getMessage());
+    protected void onFailed(String message) {
+        mLoginModelListener.onReceiveFailed(message);
     }
 
     public interface LoginModelListener extends BaseModelListener {

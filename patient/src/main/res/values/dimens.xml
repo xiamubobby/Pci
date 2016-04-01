@@ -14,4 +14,8 @@
     <dimen name="divider_height_large">10dp</dimen>
     <dimen name="doctor_all_item_package_icons_size">30dp</dimen>
     <dimen name="symptom_label_corner_radius">5dp</dimen>
+
+    <dimen name="bs_cell_divider_width">0.25dp</dimen>
+
+    <dimen name="app_bar_height">256dp</dimen>
 </resources>

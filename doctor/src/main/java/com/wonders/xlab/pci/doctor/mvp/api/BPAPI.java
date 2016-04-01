@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.doctor.mvp.api;
 
 import com.wonders.xlab.pci.doctor.mvp.entity.BPEntity;
 
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -13,5 +14,5 @@ import rx.Observable;
 public interface BPAPI {
 
     @GET("bloodPressures/listUserPressures/{userId}")
-    Observable<BPEntity> getBPList(@Path("userId") String patientId, @Query("start") long startTime, @Query("end") long endTime);
+    Observable<Response<BPEntity>> getBPList(@Path("userId") String patientId, @Query("start") long startTime, @Query("end") long endTime);
 }

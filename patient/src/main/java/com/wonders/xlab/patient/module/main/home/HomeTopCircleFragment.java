@@ -19,7 +19,7 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.module.dailyreport.DailyRecordActivity;
+import com.wonders.xlab.patient.module.dailyreport.DailyReportActivity;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportBean;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportBean;
 import com.wonders.xlab.patient.module.dailyreport.otto.BPSaveSuccessOtto;
@@ -112,22 +112,22 @@ public class HomeTopCircleFragment extends BaseFragment {
 
     @OnClick(R.id.ll_home_top_circle_middle)
     public void onBPClick() {
-        goToDailyRecordActivity(DailyRecordActivity.SHOW_TAB_POSITION_BP);
+        goToDailyRecordActivity(DailyReportActivity.SHOW_TAB_POSITION_BP);
     }
 
     @OnClick(R.id.tv_home_top_circle_right)
     public void onHeartRateClick() {
-        goToDailyRecordActivity(DailyRecordActivity.SHOW_TAB_POSITION_BP);
+        goToDailyRecordActivity(DailyReportActivity.SHOW_TAB_POSITION_BP);
     }
 
     @OnClick(R.id.tv_home_top_circle_left)
     public void onBSClick() {
-        goToDailyRecordActivity(DailyRecordActivity.SHOW_TAB_POSITION_BS);
+        goToDailyRecordActivity(DailyReportActivity.SHOW_TAB_POSITION_BS);
     }
 
     private void goToDailyRecordActivity(int position) {
-        Intent intent = new Intent(getActivity(), DailyRecordActivity.class);
-        intent.putExtra(DailyRecordActivity.DEFAULT_SHOW_TAB_POSITION, position);
+        Intent intent = new Intent(getActivity(), DailyReportActivity.class);
+        intent.putExtra(DailyReportActivity.DEFAULT_SHOW_TAB_POSITION, position);
         startActivity(intent);
     }
 

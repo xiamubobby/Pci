@@ -4,6 +4,7 @@ import com.wonders.xlab.patient.mvp.entity.ChatRoomEntity;
 import com.wonders.xlab.patient.mvp.entity.SendMessageEntity;
 import com.wonders.xlab.patient.mvp.entity.request.SendMessageBody;
 
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -16,8 +17,8 @@ import rx.Observable;
  */
 public interface ChatRoomAPI {
     @GET("v1/imContents/listImChatHistory/{imGroupId}")
-    Observable<ChatRoomEntity> getChatRecords(@Path("imGroupId") String imGroupId, @Query("page") int page,@Query("size") int size);
+    Observable<Response<ChatRoomEntity>> getChatRecords(@Path("imGroupId") String imGroupId, @Query("page") int page, @Query("size") int size);
 
     @POST("v1/ims/sendContentToDoctor/{time}")
-    Observable<SendMessageEntity> sendMessage(@Body SendMessageBody body, @Path("time") long time);
+    Observable<Response<SendMessageEntity>> sendMessage(@Body SendMessageBody body, @Path("time") long time);
 }

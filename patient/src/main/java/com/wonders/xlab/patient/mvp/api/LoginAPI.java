@@ -5,6 +5,7 @@ import com.wonders.xlab.patient.mvp.entity.LoginEntity;
 
 import java.util.HashMap;
 
+import retrofit2.Response;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -17,5 +18,5 @@ public interface LoginAPI {
 
     @FormUrlEncoded
     @POST("user/login")
-    Observable<LoginEntity> login(@FieldMap HashMap<String, String> body);
+    Observable<Response<LoginEntity>> login(@FieldMap HashMap<String, String> body);
 }

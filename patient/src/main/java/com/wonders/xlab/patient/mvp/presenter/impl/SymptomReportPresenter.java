@@ -29,8 +29,8 @@ public class SymptomReportPresenter extends BasePresenter implements ISymptomRep
     }
 
     @Override
-    public void getSymptomList(String patientId) {
-        mSymptomRetrieveModel.getSymptomList(patientId);
+    public void getSymptomList(String patientId, long startTime, long endTime) {
+        mSymptomRetrieveModel.getSymptomList(patientId, startTime, endTime);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class SymptomReportPresenter extends BasePresenter implements ISymptomRep
             bean.setRecordTimeInMill(contentEntity.getRecordTime());
 
             List<SymptomRetrieveEntity.RetValuesEntity.ContentEntity.SymptomsEntity> contentEntitySymptoms = contentEntity.getSymptoms();
-            RealmList<SymptomReportLabelBean> symptoms = new RealmList<>();
+            List<SymptomReportLabelBean> symptoms = new RealmList<>();
             for (SymptomRetrieveEntity.RetValuesEntity.ContentEntity.SymptomsEntity symptomsEntity : contentEntitySymptoms) {
                 SymptomReportLabelBean labelBean = new SymptomReportLabelBean();
                 labelBean.setSymptomStr(symptomsEntity.getName());
@@ -69,7 +69,7 @@ public class SymptomReportPresenter extends BasePresenter implements ISymptomRep
 
             symptomReportBeanList.add(bean);
         }
-        mListener.showTodaysSymtomList(symptomReportBeanList);
+        mListener.showSymptomList(symptomReportBeanList);
 
     }
 
@@ -80,7 +80,7 @@ public class SymptomReportPresenter extends BasePresenter implements ISymptomRep
     }
 
     public interface SymptomReportPresenterListener extends BasePresenterListener {
-        void showTodaysSymtomList(List<SymptomReportBean> reportBeanList);
+        void showSymptomList(List<SymptomReportBean> reportBeanList);
 
         void showEmptyView();
     }

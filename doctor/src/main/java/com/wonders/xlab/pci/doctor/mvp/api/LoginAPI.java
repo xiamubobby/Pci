@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.doctor.mvp.api;
 
 import com.wonders.xlab.pci.doctor.mvp.entity.LoginEntity;
 
+import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -14,5 +15,5 @@ public interface LoginAPI {
 
     @FormUrlEncoded
     @POST("doctors/login")
-    Observable<LoginEntity> login(@Field("tel") String tel, @Field("password") String password);
+    Observable<Response<LoginEntity>> login(@Field("tel") String tel, @Field("password") String password);
 }

@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.doctor.mvp.api;
 
 import com.wonders.xlab.pci.doctor.mvp.entity.UserInfoEntity;
 
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -11,5 +12,5 @@ import rx.Observable;
  */
 public interface UserInfoAPI {
     @GET("userInfos/retrieveUserInfo/{userId}")
-    Observable<UserInfoEntity> getUserInfo(@Path("userId") String userId);
+    Observable<Response<UserInfoEntity>> getUserInfo(@Path("userId") String userId);
 }

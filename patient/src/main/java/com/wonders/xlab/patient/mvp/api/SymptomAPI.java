@@ -5,6 +5,7 @@ import com.wonders.xlab.patient.mvp.entity.SymptomEntity;
 import com.wonders.xlab.patient.mvp.entity.SymptomRetrieveEntity;
 
 import im.hua.library.base.mvp.entity.SimpleEntity;
+import retrofit2.Response;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -22,7 +23,7 @@ public interface SymptomAPI {
      * @return
      */
     @GET("symptom/retrieveSymptom")
-    Observable<SymptomEntity> getSymptomDicList();
+    Observable<Response<SymptomEntity>> getSymptomDicList();
 
     /**
      * 获取不适症状（每日记录界面）
@@ -33,10 +34,10 @@ public interface SymptomAPI {
      * @return
      */
     @GET("v1/symptoms/listUserSymptoms")
-    Observable<SymptomRetrieveEntity> getSymptomList(@Query("userId") String userId, @Query("start") long startTimeInMill, @Query("end") long endTimeInMill);
+    Observable<Response<SymptomRetrieveEntity>> getSymptomList(@Query("userId") String userId, @Query("start") long startTimeInMill, @Query("end") long endTimeInMill);
 
     @FormUrlEncoded
     @POST("v1/symptoms/saveUserSymptom")
-    Observable<SimpleEntity> saveSymptom(@Field("userId") String userId, @Field("symptomIdsStr") String[] symptomIdsStr);
+    Observable<Response<SimpleEntity>> saveSymptom(@Field("userId") String userId, @Field("symptomIdsStr") String[] symptomIdsStr);
 
 }

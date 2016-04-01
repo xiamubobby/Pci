@@ -73,7 +73,7 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
     }
 
     @Override
-    protected void onFailed(Throwable e, String message) {
+    protected void onFailed(String message) {
         mISendMessageModel.onReceiveFailed("发送失败，请重试！");
     }
 }

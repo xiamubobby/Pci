@@ -33,7 +33,7 @@ public class SymptomDictModel extends PatientBaseModel<SymptomEntity> implements
     }
 
     @Override
-    protected void onFailed(Throwable e, String message) {
+    protected void onFailed(String message) {
         mSymptomDictModelListener.onReceiveFailed("获取不适症状列表失败！");
     }
 
