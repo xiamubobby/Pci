@@ -19,8 +19,8 @@ public class BloodPressureModel extends PatientBaseModel<BloodPressureEntity> im
         mBPAPI = mRetrofit.create(BPAPI.class);
     }
 
-    public void getBPList(String patientId, long startTime, long endTime) {
-        fetchData(mBPAPI.getBPList(patientId, startTime, endTime), true);}
+    public void getBPList(String patientId, long startTime, long endTime, int page, int size) {
+        fetchData(mBPAPI.getBPList(patientId, startTime, endTime, page, size), true);}
 
     @Override
     protected void onSuccess(BloodPressureEntity response) {

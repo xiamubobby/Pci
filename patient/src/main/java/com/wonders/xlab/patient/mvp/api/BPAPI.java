@@ -27,6 +27,6 @@ public interface BPAPI {
     Observable<Response<SimpleEntity>> saveBP(@Path("userId") String userId, @Body BPEntityList bodyList);
 
     @GET("v1/bloodPressures/listUserPressures/{userId}")
-    Observable<Response<BloodPressureEntity>> getBPList(@Path("userId") String patientId, @Query("start") long startTime, @Query("end") long endTime);
+    Observable<Response<BloodPressureEntity>> getBPList(@Path("userId") String patientId, @Query("start") long startTime, @Query("end") long endTime,@Query("page") int page,@Query("size") int size);
 
 }

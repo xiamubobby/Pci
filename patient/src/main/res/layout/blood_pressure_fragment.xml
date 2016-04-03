@@ -14,7 +14,8 @@
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:fitsSystemWindows="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="0dp">
 
         <com.github.mikephil.charting.charts.CombinedChart
             android:id="@+id/chart_blood_pressure"
@@ -28,46 +29,61 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:gravity="center"
+        android:layout_marginLeft="@dimen/item_interval_small"
+        android:layout_marginRight="@dimen/item_interval_small"
         android:orientation="horizontal"
         app:layout_anchor="@+id/app_bar"
         app:layout_anchorGravity="bottom"
         app:tabGravity="fill"
         app:tabMode="fixed">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
+            android:layout_marginTop="@dimen/item_interval_small"
+            android:background="@drawable/shape_rectangle_primary_solid_corner"
             android:gravity="center"
-            android:text="时间"
-            android:textSize="@dimen/text_size_middle"/>
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="收缩压"
-            android:textSize="@dimen/text_size_middle"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="日期\n(时间)"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_small"/>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="舒张压"
-            android:textSize="@dimen/text_size_middle"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="高压\n(mmHg)"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_small"/>
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="心率"
-            android:textSize="@dimen/text_size_middle"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="低压\n(mmHg)"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_small"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="心率\n(次/分)"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_small"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <include layout="@layout/blood_pressure_content"/>

@@ -69,6 +69,12 @@ public class BloodSugarFragment extends BaseFragment implements BloodSugarPresen
             }
         });
 
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setRefreshing(true);
+            }
+        });
         mBSPresenter.getBSList(mPatientId, true);
     }
 

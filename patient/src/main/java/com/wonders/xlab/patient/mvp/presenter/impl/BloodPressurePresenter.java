@@ -20,14 +20,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
 import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/4/1.
  */
-public class BloodPressurePresenter extends BasePresenter implements IBloodPressurePresenter, BloodPressureModel.BPModelListener {
+public class BloodPressurePresenter extends BasePagePresenter implements IBloodPressurePresenter, BloodPressureModel.BPModelListener {
     private BloodPressurePresenterListener mListener;
     private IBloodPressureModel mBloodPressureModel;
 
@@ -38,45 +38,57 @@ public class BloodPressurePresenter extends BasePresenter implements IBloodPress
     }
 
     @Override
-    public void getBPList(String patientId, long startTime, long endTime) {
-        mBloodPressureModel.getBPList(patientId,startTime,endTime);
+    public void getBPList(String patientId, boolean isRefresh) {
+        if (isRefresh) {
+            resetPageInfo();
+        }
+        if (mIsLast) {
+            mListener.hideLoading();
+            return;
+        }
+        mBloodPressureModel.getBPList(patientId, 0, Calendar.getInstance().getTimeInMillis(), getNextPageIndex(), DEFAULT_PAGE_SIZE);
     }
 
     @Override
     public void onReceiveBPSuccess(BloodPressureEntity bpEntity) {
+        mListener.hideLoading();
+
         if (null == bpEntity.getRet_values() || null == bpEntity.getRet_values().getLine() || null == bpEntity.getRet_values().getTable()) {
             mListener.showError("获取血压数据失败，请重试！");
             return;
         }
 
+        /**
+         * table
+         */
         BloodPressureEntity.RetValuesEntity.TableEntity tableEntity = bpEntity.getRet_values().getTable();
+
+        //1
+        updatePageInfo(tableEntity.getNumber(), tableEntity.isFirst(), tableEntity.isLast());
 
         ArrayList<BPListBean> bpListBeanList = new ArrayList<>();
 
         List<BloodPressureEntity.RetValuesEntity.TableEntity.ContentEntity> contentEntityList = tableEntity.getContent();
-        long headerId = 0;
         for (int i = 0; i < contentEntityList.size(); i++) {
             BloodPressureEntity.RetValuesEntity.TableEntity.ContentEntity contentEntity = contentEntityList.get(i);
             BPListBean bean = new BPListBean();
 
-            String timeStr = DateUtil.format(contentEntity.getRecordTime(), "yyyy-MM-dd");
-            if (i > 0) {
-                String preTimeStr = DateUtil.format(contentEntityList.get(i - 1).getRecordTime(), "yyyy-MM-dd");
-                if (!timeStr.equals(preTimeStr)) {
-                    headerId++;
-                }
-            }
-            bean.setHeaderId(headerId);
             bean.setDiastolic(String.valueOf(contentEntity.getDiastolicPressure()));
             bean.setSystolic(String.valueOf(contentEntity.getSystolicPressure()));
             bean.setHeartRate(String.valueOf(contentEntity.getHeartRate()));
-            bean.setHeaderTime(DateUtil.format(contentEntity.getRecordTime(), "yyyy-MM-dd"));
-            bean.setDetailTime(DateUtil.format(contentEntity.getRecordTime(), "HH:mm"));
+            bean.setRecordTimeInMill(contentEntity.getRecordTime());
             bpListBeanList.add(bean);
         }
 
-        BloodPressureEntity.RetValuesEntity.LineEntity lineEntity = bpEntity.getRet_values().getLine();
+        if (shouldAppend()) {
+            mListener.appendBloodPressureList(bpListBeanList);
+            return;
+        }
 
+        /**
+         * line
+         */
+        BloodPressureEntity.RetValuesEntity.LineEntity lineEntity = bpEntity.getRet_values().getLine();
 
         ArrayList<BPChartBean> systolicList = new ArrayList<>();
         ArrayList<BPChartBean> diastolicList = new ArrayList<>();
@@ -91,7 +103,7 @@ public class BloodPressurePresenter extends BasePresenter implements IBloodPress
         for (int i = 0; i < chartSize; i++) {
 //            int day = calendar.get(Calendar.DAY_OF_MONTH);
 //            int month = calendar.get(Calendar.MONTH) + 1;
-            xVals[i] = DateUtil.format(lineEntity.getRecordTime().get(i), "MM-dd");
+            xVals[i] = DateUtil.format(lineEntity.getRecordTime().get(i), "MM/dd");
 //            calendar.add(Calendar.DAY_OF_MONTH, 1);
 
             BPChartBean systolicBean = new BPChartBean();
@@ -117,13 +129,18 @@ public class BloodPressurePresenter extends BasePresenter implements IBloodPress
 
     @Override
     public void onReceiveFailed(String message) {
+        mListener.hideLoading();
         mListener.showError(message);
     }
 
-    private float getRandom(float range, float startsfrom) {
-        return (float) (Math.random() * range) + startsfrom;
-    }
-
+    /**
+     * 组装血压线图数据
+     *
+     * @param systolicList
+     * @param diastolicList
+     * @param mChartXVals
+     * @return
+     */
     private LineData generateLineData(ArrayList<BPChartBean> systolicList, ArrayList<BPChartBean> diastolicList, String[] mChartXVals) {
 
         ArrayList<LineDataSet> dataSets = new ArrayList<>();
@@ -166,7 +183,14 @@ public class BloodPressurePresenter extends BasePresenter implements IBloodPress
         return new LineData(mChartXVals, dataSets);
     }
 
-    protected ScatterData generateScatterData(ArrayList<BPChartBean> heartRateList, String[] mChartXVals) {
+    /**
+     * 组装心率点图数据
+     *
+     * @param heartRateList
+     * @param mChartXVals
+     * @return
+     */
+    private ScatterData generateScatterData(ArrayList<BPChartBean> heartRateList, String[] mChartXVals) {
 
         ScatterData d = new ScatterData(mChartXVals);
 
@@ -189,5 +213,7 @@ public class BloodPressurePresenter extends BasePresenter implements IBloodPress
 
     public interface BloodPressurePresenterListener extends BasePresenterListener {
         void showBloodPressureList(ArrayList<BPListBean> bpListBeanList, CombinedData combinedData);
+
+        void appendBloodPressureList(ArrayList<BPListBean> bpListBeanList);
     }
 }

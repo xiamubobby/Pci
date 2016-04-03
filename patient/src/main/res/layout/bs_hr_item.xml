@@ -8,6 +8,8 @@
             type="com.wonders.xlab.patient.module.healthreport.bs.bean.BSBean"/>
 
         <import type="im.hua.utils.DateUtil"/>
+
+        <import type="java.lang.Float"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -35,7 +37,9 @@
             android:layout_weight="1"
             android:background="@android:color/white"
             android:gravity="center"
-            android:text="@{bs.breakfastBeforeBS}"
+            android:maxLength="3"
+            android:singleLine="true"
+            android:text='@{Float.compare(bs.breakfastBeforeBS,0.0f) != 0 ? bs.breakfastBeforeBS + "" : "---"}'
             android:textColor="@color/text_color_primary_black"
             android:textSize="@dimen/text_size_middle"/>
 
@@ -46,7 +50,9 @@
             android:layout_weight="1"
             android:background="@android:color/white"
             android:gravity="center"
-            android:text="@{bs.breakfastAfterBS}"
+            android:maxLength="3"
+            android:singleLine="true"
+            android:text='@{Float.compare(bs.breakfastAfterBS,0.0f) != 0 ? bs.breakfastAfterBS + "" : "---"}'
             android:textColor="@color/text_color_primary_black"
             android:textSize="@dimen/text_size_middle"/>
 
@@ -57,7 +63,9 @@
             android:layout_weight="1"
             android:background="@color/bs_cell_bg"
             android:gravity="center"
-            android:text="@{bs.lunchBeforeBS}"
+            android:maxLength="3"
+            android:singleLine="true"
+            android:text='@{Float.compare(bs.lunchBeforeBS,0.0f) != 0 ? bs.lunchBeforeBS + "" : "---"}'
             android:textColor="@color/text_color_primary_black"
             android:textSize="@dimen/text_size_middle"/>
 
@@ -68,7 +76,9 @@
             android:layout_weight="1"
             android:background="@color/bs_cell_bg"
             android:gravity="center"
-            android:text="@{bs.lunchAfterBS}"
+            android:maxLength="3"
+            android:singleLine="true"
+            android:text='@{Float.compare(bs.lunchAfterBS,0.0f) != 0 ? bs.lunchAfterBS + "" : "---"}'
             android:textColor="@color/text_color_primary_black"
             android:textSize="@dimen/text_size_middle"/>
 
@@ -79,7 +89,9 @@
             android:layout_weight="1"
             android:background="@android:color/white"
             android:gravity="center"
-            android:text="@{bs.dinnerBeforeBS}"
+            android:maxLength="3"
+            android:singleLine="true"
+            android:text='@{Float.compare(bs.dinnerBeforeBS,0.0f) != 0 ? bs.dinnerBeforeBS + "" : "---"}'
             android:textColor="@color/text_color_primary_black"
             android:textSize="@dimen/text_size_middle"/>
 
@@ -90,7 +102,9 @@
             android:layout_weight="1"
             android:background="@android:color/white"
             android:gravity="center"
-            android:text="@{bs.dinnerAfterBS}"
+            android:maxLength="3"
+            android:singleLine="true"
+            android:text='@{Float.compare(bs.dinnerAfterBS,0.0f) != 0 ? bs.dinnerAfterBS + "" : "---"}'
             android:textColor="@color/text_color_primary_black"
             android:textSize="@dimen/text_size_middle"/>
 
@@ -101,7 +115,9 @@
             android:layout_weight="1"
             android:background="@color/bs_cell_bg"
             android:gravity="center"
-            android:text="@{bs.randomBS}"
+            android:maxLength="3"
+            android:singleLine="true"
+            android:text='@{Float.compare(bs.randomBS,0.0f) != 0 ? bs.randomBS + "" : "---"}'
             android:textColor="@color/text_color_primary_black"
             android:textSize="@dimen/text_size_middle"/>
 

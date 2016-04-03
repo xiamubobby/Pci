@@ -4,8 +4,6 @@ package com.wonders.xlab.patient.module.healthreport.bp.bean;
  * Created by hua on 16/2/22.
  */
 public class BPListBean {
-    private String headerTime;
-    private String detailTime;
     /**
      * 收缩压
      */
@@ -16,14 +14,7 @@ public class BPListBean {
     private String diastolic;
     private String heartRate;
     private long headerId;
-
-    public String getHeaderTime() {
-        return headerTime;
-    }
-
-    public void setHeaderTime(String headerTime) {
-        this.headerTime = headerTime;
-    }
+    private long recordTimeInMill;
 
     public String getSystolic() {
         return systolic;
@@ -57,11 +48,11 @@ public class BPListBean {
         this.headerId = headerId;
     }
 
-    public String getDetailTime() {
-        return detailTime;
+    public long getRecordTimeInMill() {
+        return recordTimeInMill;
     }
 
-    public void setDetailTime(String detailTime) {
-        this.detailTime = detailTime;
+    public void setRecordTimeInMill(long recordTimeInMill) {
+        this.recordTimeInMill = recordTimeInMill;
     }
 }

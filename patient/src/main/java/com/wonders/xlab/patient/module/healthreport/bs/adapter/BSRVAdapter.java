@@ -93,7 +93,7 @@ public class BSRVAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycl
                 break;
             }
         }
-        viewHolder.bpTitle.setText(DateUtil.format(time,"yyyy-MM"));
+        viewHolder.bpTitle.setText(DateUtil.format(time,"yyyy/MM"));
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder{

@@ -24,7 +24,6 @@ import com.wonders.xlab.patient.mvp.presenter.IBloodPressurePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.BloodPressurePresenter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -39,7 +38,6 @@ public class BloodPressureFragment extends BaseFragment implements BloodPressure
 
     private final int itemMaxX = 30;
 
-    @Nullable
     @Bind(R.id.recycler_view_blood_pressure)
     PullLoadMoreRecyclerView mRecyclerView;
 
@@ -51,7 +49,7 @@ public class BloodPressureFragment extends BaseFragment implements BloodPressure
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.blood_pressure_fragment, container, false);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -60,34 +58,36 @@ public class BloodPressureFragment extends BaseFragment implements BloodPressure
         super.onViewCreated(view, savedInstanceState);
         initChart();
 
-        if (null != mRecyclerView) {
-            mRecyclerView.setLinearLayout(false);
-            mRecyclerView.setPullRefreshEnable(false);
-            mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
-            mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
-                @Override
-                public void onRefresh() {
-                    mBPPresenter.getBPList(AIManager.getInstance().getPatientId(),0, Calendar.getInstance().getTimeInMillis());
-                }
+        mRecyclerView.setLinearLayout(false);
+        mRecyclerView.setPullRefreshEnable(false);
+        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
+        mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+                mBPPresenter.getBPList(AIManager.getInstance().getPatientId(), true);
+            }
 
-                @Override
-                public void onLoadMore() {
-
-                }
-            });
-        }
+            @Override
+            public void onLoadMore() {
+                mBPPresenter.getBPList(AIManager.getInstance().getPatientId(), false);
+            }
+        });
 
         mBPPresenter = new BloodPressurePresenter(this);
         addPresenter(mBPPresenter);
 
-        if (null != mRecyclerView) {
-            mRecyclerView.setRefreshing(true);
-        }
-        mBPPresenter.getBPList(AIManager.getInstance().getPatientId(),0, Calendar.getInstance().getTimeInMillis());
+        mRecyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                mRecyclerView.setRefreshing(true);
+            }
+        });
+        mBPPresenter.getBPList(AIManager.getInstance().getPatientId(), true);
     }
 
     private void initChart() {
-        mChart.setPinchZoom(true);
+        mChart.setPinchZoom(false);
+        mChart.setScaleEnabled(false);
         mChart.setDescription("血压(mmHg)");
         mChart.setNoDataText("暂无数据");
         mChart.setBackgroundColor(Color.WHITE);
@@ -119,25 +119,8 @@ public class BloodPressureFragment extends BaseFragment implements BloodPressure
 
     @Override
     public void showBloodPressureList(ArrayList<BPListBean> bpListBeanList, CombinedData combinedData) {
-        if (mRecyclerView != null) {
-            mRecyclerView.setPullLoadMoreCompleted();
-        }
-        if (null != mRecyclerView) {
-            if (mBPRVAdapter == null) {
-                mBPRVAdapter = new BPRVAdapter();
-                mRecyclerView.setAdapter(mBPRVAdapter);
-                final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(mBPRVAdapter);
-                mRecyclerView.getRecyclerView().addItemDecoration(decoration);
-                mBPRVAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
-                    @Override
-                    public void onChanged() {
-                        decoration.invalidateHeaders();
-                    }
-                });
-            }
-
-            mBPRVAdapter.setDatas(bpListBeanList);
-        }
+        initAdapter();
+        mBPRVAdapter.setDatas(bpListBeanList);
 
         mChart.setData(combinedData);
         mChart.invalidate();
@@ -146,6 +129,27 @@ public class BloodPressureFragment extends BaseFragment implements BloodPressure
         mChart.setVisibleXRangeMaximum(itemMaxX);
         // move to the latest entry
         mChart.moveViewToX(combinedData.getXValCount() - itemMaxX - 1);
+    }
+
+    @Override
+    public void appendBloodPressureList(ArrayList<BPListBean> bpListBeanList) {
+        initAdapter();
+        mBPRVAdapter.appendDatas(bpListBeanList);
+    }
+
+    private void initAdapter() {
+        if (mBPRVAdapter == null) {
+            mBPRVAdapter = new BPRVAdapter();
+            final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(mBPRVAdapter);
+            mRecyclerView.getRecyclerView().addItemDecoration(decoration);
+            mBPRVAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+                @Override
+                public void onChanged() {
+                    decoration.invalidateHeaders();
+                }
+            });
+            mRecyclerView.setAdapter(mBPRVAdapter);
+        }
     }
 
     private void addLimitLines(YAxis leftAxis) {
@@ -203,9 +207,13 @@ public class BloodPressureFragment extends BaseFragment implements BloodPressure
 
     @Override
     public void hideLoading() {
-        if (mRecyclerView != null) {
-            mRecyclerView.setPullLoadMoreCompleted();
-        }
+        mRecyclerView.setPullLoadMoreCompleted();
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBPRVAdapter = null;
+    }
 }

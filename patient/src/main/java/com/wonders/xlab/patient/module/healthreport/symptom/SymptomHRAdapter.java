@@ -48,7 +48,7 @@ public class SymptomHRAdapter extends SimpleRVAdapter<SymptomReportBean> {
             viewHolder.mTvAdvice.setVisibility(View.GONE);
             viewHolder.mDivider.setVisibility(View.GONE);
         }
-        viewHolder.mTvTime.setText(String.format("记录时间：%s", DateUtil.format(bean.getRecordTimeInMill(), DateUtil.isTheSameDay(bean.getRecordTimeInMill(), Calendar.getInstance().getTimeInMillis()) ? "HH:mm" : "yyyy-MM-dd HH:mm")));
+        viewHolder.mTvTime.setText(String.format("记录时间：%s", DateUtil.format(bean.getRecordTimeInMill(), DateUtil.isTheSameDay(bean.getRecordTimeInMill(), Calendar.getInstance().getTimeInMillis()) ? "HH:mm" : "yyyy/MM/dd HH:mm")));
         if (bean.isHasConfirmed()) {
             viewHolder.mTvStatus.setText("已确认");
             viewHolder.mTvStatus.setTextColor(resources.getColor(R.color.appYellow));
