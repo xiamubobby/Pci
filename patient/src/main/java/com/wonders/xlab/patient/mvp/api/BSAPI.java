@@ -13,6 +13,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -27,5 +28,5 @@ public interface BSAPI {
     Observable<Response<SimpleEntity>> saveBS(@Path("userId") String userId, @Body BSEntityList bodyList);
 
     @GET("v1/bloodSugars/listBloodSugarRecord/{userId}")
-    Observable<Response<BloodSugarEntity>> getBSList(@Path("userId") String userId);
+    Observable<Response<BloodSugarEntity>> getBSList(@Path("userId") String userId, @Query("page") int page, @Query("size") int size);
 }

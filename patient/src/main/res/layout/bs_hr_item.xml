@@ -8,19 +8,20 @@
             type="com.wonders.xlab.patient.module.healthreport.bs.bean.BSBean"/>
 
     </data>
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:background="@android:color/darker_gray"
+                  android:background="@color/background_gray"
                   android:minHeight="?attr/listPreferredItemHeightSmall"
                   android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_margin="@dimen/bs_cell_divider_width"
-            android:background="@color/bs_cell_bg_dark"
+            android:layout_weight="1"
+            android:background="@android:color/white"
             android:gravity="center"
             android:text="@{bs.headerTime.substring(8)}"
             android:textColor="@color/text_color_primary_black"
@@ -31,7 +32,7 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/bs_cell_divider_width"
             android:layout_weight="1"
-            android:background="@color/bs_cell_bg_dark"
+            android:background="@android:color/white"
             android:gravity="center"
             android:text="@{bs.breakfastBeforeBS}"
             android:textColor="@color/text_color_primary_black"
@@ -40,9 +41,9 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_margin="@dimen/bs_cell_divider_width"
-            android:background="@color/bs_cell_bg_dark"
+            android:layout_weight="1"
+            android:background="@android:color/white"
             android:gravity="center"
             android:text="@{bs.breakfastAfterBS}"
             android:textColor="@color/text_color_primary_black"
@@ -75,7 +76,7 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/bs_cell_divider_width"
             android:layout_weight="1"
-            android:background="@color/bs_cell_bg_dark"
+            android:background="@android:color/white"
             android:gravity="center"
             android:text="@{bs.dinnerBeforeBS}"
             android:textColor="@color/text_color_primary_black"
@@ -86,7 +87,7 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/bs_cell_divider_width"
             android:layout_weight="1"
-            android:background="@color/bs_cell_bg_dark"
+            android:background="@android:color/white"
             android:gravity="center"
             android:text="@{bs.dinnerAfterBS}"
             android:textColor="@color/text_color_primary_black"
@@ -95,10 +96,10 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="@dimen/bs_cell_divider_width"
             android:layout_weight="1"
             android:background="@color/bs_cell_bg"
             android:gravity="center"
-            android:layout_margin="@dimen/bs_cell_divider_width"
             android:text="@{bs.randomBS}"
             android:textColor="@color/text_color_primary_black"
             android:textSize="@dimen/text_size_middle"/>

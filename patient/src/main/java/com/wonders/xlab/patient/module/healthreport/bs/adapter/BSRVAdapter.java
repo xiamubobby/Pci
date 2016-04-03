@@ -1,6 +1,7 @@
 package com.wonders.xlab.patient.module.healthreport.bs.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +13,55 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.BsHrItemBinding;
 import com.wonders.xlab.patient.module.healthreport.bs.bean.BSBean;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/2/23.
  */
 public class BSRVAdapter extends SimpleRVAdapter<BSBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>{
+
+    private void reunionList() {
+        List<BSBean> beanList = getBeanList();
+        Collections.sort(beanList, new Comparator<BSBean>() {
+            @Override
+            public int compare(BSBean lhs, BSBean rhs) {
+                long l = lhs.getRecordTimeInMill();
+                long r = rhs.getRecordTimeInMill();
+                return l < r ? 1 : (l == r ? 0 : -1);
+            }
+        });
+        long headerId = 0;
+        for (int i = 0; i < beanList.size(); i++) {
+            if (0 != i) {
+                if (!DateUtil.isTheSameMonth(beanList.get(i - 1).getRecordTimeInMill(), beanList.get(i).getRecordTimeInMill())) {
+                    headerId++;
+                    Log.d("BSRVAdapter", "headerId:" + headerId);
+                }
+            }
+            beanList.get(i).setHeaderId(headerId);
+        }
+        notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void setDatas(List<BSBean> mBeanList) {
+        super.setDatas(mBeanList);
+        reunionList();
+    }
+
+    @Override
+    public void appendDatas(List<BSBean> mBeanList) {
+        super.appendDatas(mBeanList);
+        reunionList();
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.bs_hr_item,parent,false));

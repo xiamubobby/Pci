@@ -12,16 +12,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
+        android:background="#d0d0d0"
         android:minHeight="?attr/listPreferredItemHeight"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/bs_cell_divider_width"
+            android:layout_marginLeft="@dimen/bs_cell_divider_width"
             android:layout_weight="1"
-            android:background="@color/bs_cell_bg_dark"
+            android:background="#eaebeb"
             android:gravity="center"
             android:text="日\n期"
             android:textColor="@color/text_color_primary_black"
@@ -30,15 +30,16 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/bs_cell_divider_width"
+            android:layout_marginLeft="@dimen/bs_cell_divider_width"
             android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/bs_cell_divider_width"
-                android:background="@color/bs_cell_bg_dark"
+                android:layout_marginBottom="@dimen/bs_cell_divider_width"
+                android:layout_marginLeft="@dimen/bs_cell_divider_width"
+                android:background="#eaebeb"
                 android:gravity="center"
                 android:paddingBottom="@dimen/item_interval_small"
                 android:paddingTop="@dimen/item_interval_small"
@@ -54,9 +55,9 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/bs_cell_divider_width"
+                    android:layout_marginLeft="@dimen/bs_cell_divider_width"
                     android:layout_weight="1"
-                    android:background="@color/bs_cell_bg_dark"
+                    android:background="#eaebeb"
                     android:gravity="center"
                     android:text="前"
                     android:textColor="@color/text_color_primary_black"
@@ -65,9 +66,9 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/bs_cell_divider_width"
+                    android:layout_marginLeft="@dimen/bs_cell_divider_width"
                     android:layout_weight="1"
-                    android:background="@color/bs_cell_bg_dark"
+                    android:background="#eaebeb"
                     android:gravity="center"
                     android:text="后"
                     android:textColor="@color/text_color_primary_black"
@@ -78,15 +79,16 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/bs_cell_divider_width"
+            android:layout_marginLeft="@dimen/bs_cell_divider_width"
             android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/bs_cell_divider_width"
-                android:background="@color/bs_cell_bg_dark"
+                android:layout_marginBottom="@dimen/bs_cell_divider_width"
+                android:layout_marginLeft="@dimen/bs_cell_divider_width"
+                android:background="#eaebeb"
                 android:gravity="center"
                 android:paddingBottom="@dimen/item_interval_small"
                 android:paddingTop="@dimen/item_interval_small"
@@ -102,9 +104,9 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/bs_cell_divider_width"
+                    android:layout_marginLeft="@dimen/bs_cell_divider_width"
                     android:layout_weight="1"
-                    android:background="@color/bs_cell_bg_dark"
+                    android:background="#eaebeb"
                     android:gravity="center"
                     android:text="前"
                     android:textColor="@color/text_color_primary_black"
@@ -113,9 +115,9 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/bs_cell_divider_width"
+                    android:layout_marginLeft="@dimen/bs_cell_divider_width"
                     android:layout_weight="1"
-                    android:background="@color/bs_cell_bg_dark"
+                    android:background="#eaebeb"
                     android:gravity="center"
                     android:text="后"
                     android:textColor="@color/text_color_primary_black"
@@ -126,15 +128,16 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/bs_cell_divider_width"
+            android:layout_marginLeft="@dimen/bs_cell_divider_width"
             android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/bs_cell_divider_width"
-                android:background="@color/bs_cell_bg_dark"
+                android:layout_marginBottom="@dimen/bs_cell_divider_width"
+                android:layout_marginLeft="@dimen/bs_cell_divider_width"
+                android:background="#eaebeb"
                 android:gravity="center"
                 android:paddingBottom="@dimen/item_interval_small"
 
@@ -151,9 +154,9 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/bs_cell_divider_width"
+                    android:layout_marginLeft="@dimen/bs_cell_divider_width"
                     android:layout_weight="1"
-                    android:background="@color/bs_cell_bg_dark"
+                    android:background="#eaebeb"
                     android:gravity="center"
                     android:text="前"
                     android:textColor="@color/text_color_primary_black"
@@ -162,9 +165,9 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/bs_cell_divider_width"
+                    android:layout_marginLeft="@dimen/bs_cell_divider_width"
                     android:layout_weight="1"
-                    android:background="@color/bs_cell_bg_dark"
+                    android:background="#eaebeb"
                     android:gravity="center"
                     android:text="后"
                     android:textColor="@color/text_color_primary_black"
@@ -177,7 +180,7 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/bs_cell_divider_width"
             android:layout_weight="1"
-            android:background="@color/bs_cell_bg_dark"
+            android:background="#eaebeb"
             android:gravity="center"
             android:text="随\n机"
             android:textColor="@color/text_color_primary_black"

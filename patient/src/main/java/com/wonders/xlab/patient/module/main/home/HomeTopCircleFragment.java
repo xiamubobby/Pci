@@ -27,6 +27,7 @@ import com.wonders.xlab.patient.module.dailyreport.otto.BSSaveSuccessOtto;
 import com.wonders.xlab.patient.module.main.home.bean.HomeTopCircleBean;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -188,8 +189,12 @@ public class HomeTopCircleFragment extends BaseFragment {
      * @return
      */
     private BPReportBean getBPReportBean() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -3);
+
         RealmResults<BPReportBean> beanRealmResults = XApplication.realm
                 .where(BPReportBean.class)
+                .greaterThan("recordTimeInMill", calendar.getTimeInMillis())
                 .equalTo("patientId", AIManager.getInstance().getPatientId())
                 .findAllSorted("recordTimeInMill", Sort.DESCENDING);
         BPReportBean first;
@@ -207,8 +212,12 @@ public class HomeTopCircleFragment extends BaseFragment {
      * @return
      */
     private BSReportBean getBSReportBean() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -3);
+
         RealmResults<BSReportBean> beanRealmResults = XApplication.realm
                 .where(BSReportBean.class)
+                .greaterThan("recordTimeInMill", calendar.getTimeInMillis())
                 .equalTo("patientId", AIManager.getInstance().getPatientId())
                 .findAllSorted("recordTimeInMill", Sort.DESCENDING);
         BSReportBean first;

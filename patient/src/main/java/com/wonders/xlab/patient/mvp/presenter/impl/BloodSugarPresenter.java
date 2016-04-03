@@ -7,9 +7,11 @@ import com.wonders.xlab.patient.mvp.model.impl.BloodSugarModel;
 import com.wonders.xlab.patient.mvp.presenter.IBloodSugarPresenter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
 import im.hua.utils.DateUtil;
 
@@ -17,12 +19,12 @@ import im.hua.utils.DateUtil;
 /**
  * Created by hua on 16/4/1.
  */
-public class BloodSugarPresenter extends BasePresenter implements IBloodSugarPresenter, BloodSugarModel.BloodSugarModelListener {
-    private BloodSugarPresenterListener mBloodSugarPresenterListener;
+public class BloodSugarPresenter extends BasePagePresenter implements IBloodSugarPresenter, BloodSugarModel.BloodSugarModelListener {
+    private BloodSugarPresenterListener mListener;
     private IBloodSugarModel mIBloodSugarModel;
 
-    public BloodSugarPresenter(BloodSugarPresenterListener bloodSugarPresenterListener) {
-        mBloodSugarPresenterListener = bloodSugarPresenterListener;
+    public BloodSugarPresenter(BloodSugarPresenterListener listener) {
+        mListener = listener;
 
         mIBloodSugarModel = new BloodSugarModel(this);
         addModel(mIBloodSugarModel);
@@ -30,33 +32,46 @@ public class BloodSugarPresenter extends BasePresenter implements IBloodSugarPre
 
 
     @Override
-    public void getBSList(String userId) {
-        mIBloodSugarModel.getBSList(userId);
+    public void getBSList(String patientId, boolean isRefresh) {
+        if (isRefresh) {
+            resetPageInfo();
+        }
+        if (mIsLast) {
+            mListener.hideLoading();
+            return;
+        }
+        mIBloodSugarModel.getBSList(patientId, getNextPageIndex(), DEFAULT_PAGE_SIZE);
     }
 
     @Override
     public void onReceiveBSSuccess(BloodSugarEntity bsEntity) {
-        List<BloodSugarEntity.RetValuesEntity.ContentEntity> contentEntityList = bsEntity.getRet_values().getContent();
+        mListener.hideLoading();
+
+        BloodSugarEntity.RetValuesEntity retValues = bsEntity.getRet_values();
+
+        updatePageInfo(retValues.getNumber(), retValues.isFirst(), retValues.isLast());
+
+        List<BloodSugarEntity.RetValuesEntity.ContentEntity> contentEntityList = retValues.getContent();
 
         if (null == contentEntityList) {
-            mBloodSugarPresenterListener.showError("获取血糖数据失败，请重试！");
+            mListener.showError("获取血糖数据失败，请重试！");
             return;
         }
 
-        long headerId = 0;
+        Collections.sort(contentEntityList, new Comparator<BloodSugarEntity.RetValuesEntity.ContentEntity>() {
+            @Override
+            public int compare(BloodSugarEntity.RetValuesEntity.ContentEntity lhs, BloodSugarEntity.RetValuesEntity.ContentEntity rhs) {
+                long l = lhs.getRecordTime2Long();
+                long r = rhs.getRecordTime2Long();
+                return l < r ? 1 : (l == r ? 0 : -1);
+            }
+        });
+
         List<BSBean> bsBeanList = new ArrayList<>();
         for (int i = 0; i < contentEntityList.size(); i++) {
             BloodSugarEntity.RetValuesEntity.ContentEntity contentEntity = contentEntityList.get(i);
 
-            if (0 != i) {
-                if (!DateUtil.isTheSameMonth(contentEntityList.get(i - 1).getRecordTime2Long(), contentEntity.getRecordTime2Long())) {
-                    headerId++;
-                }
-
-            }
-
             BSBean bean = new BSBean();
-            bean.setHeaderId(headerId);
             bean.setEarlyMorningBS(contentEntity.getBeforeDawn() + "");
             bean.setBreakfastBeforeBS(contentEntity.getBeforeBreakfast() + "");
             bean.setBreakfastAfterBS(contentEntity.getAfterBreakfast() + "");
@@ -65,19 +80,27 @@ public class BloodSugarPresenter extends BasePresenter implements IBloodSugarPre
             bean.setDinnerBeforeBS(contentEntity.getBeforeDinner() + "");
             bean.setDinnerAfterBS(contentEntity.getAfterDinner() + "");
             bean.setRandomBS(contentEntity.getRandomValue() + "");
+            bean.setRecordTimeInMill(contentEntity.getRecordTime2Long());
             bean.setHeaderTime(DateUtil.format(contentEntity.getRecordTime2Long(), "yyyy-MM-dd"));
             bsBeanList.add(bean);
         }
 
-        mBloodSugarPresenterListener.showBloodPressureList(bsBeanList);
+        if (shouldAppend()) {
+            mListener.appendBloodPressureList(bsBeanList);
+        } else {
+            mListener.showBloodPressureList(bsBeanList);
+        }
     }
 
     @Override
     public void onReceiveFailed(String message) {
-        mBloodSugarPresenterListener.showError(message);
+        mListener.hideLoading();
+        mListener.showError(message);
     }
 
-    public interface BloodSugarPresenterListener extends BasePresenterListener{
+    public interface BloodSugarPresenterListener extends BasePresenterListener {
         void showBloodPressureList(List<BSBean> bsBeanList);
+
+        void appendBloodPressureList(List<BSBean> bsBeanList);
     }
 }

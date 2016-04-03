@@ -16,6 +16,7 @@ public class BSBean extends BaseObservable{
     private String dinnerBeforeBS;
     private String dinnerAfterBS;
     private String randomBS;
+    private long recordTimeInMill;
 
     public long getHeaderId() {
         return headerId;
@@ -95,5 +96,13 @@ public class BSBean extends BaseObservable{
 
     public void setRandomBS(String randomBS) {
         this.randomBS = randomBS;
+    }
+
+    public long getRecordTimeInMill() {
+        return recordTimeInMill;
+    }
+
+    public void setRecordTimeInMill(long recordTimeInMill) {
+        this.recordTimeInMill = recordTimeInMill;
     }
 }

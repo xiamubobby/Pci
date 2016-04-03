@@ -60,21 +60,31 @@ public class BloodSugarFragment extends BaseFragment implements BloodSugarPresen
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
             public void onRefresh() {
-                mBSPresenter.getBSList(mPatientId);
+                mBSPresenter.getBSList(mPatientId, true);
             }
 
             @Override
             public void onLoadMore() {
-
+                mBSPresenter.getBSList(mPatientId, false);
             }
         });
 
-        mBSPresenter.getBSList(mPatientId);
+        mBSPresenter.getBSList(mPatientId, true);
     }
 
     @Override
     public void showBloodPressureList(List<BSBean> bsBeanList) {
-        mRecyclerView.setPullLoadMoreCompleted();
+        initAdapter();
+        mBSRVAdapter.setDatas(bsBeanList);
+    }
+
+    @Override
+    public void appendBloodPressureList(List<BSBean> bsBeanList) {
+        initAdapter();
+        mBSRVAdapter.appendDatas(bsBeanList);
+    }
+
+    private void initAdapter() {
         if (mBSRVAdapter == null) {
             mBSRVAdapter = new BSRVAdapter();
             final StickyRecyclerHeadersDecoration decoration = new StickyRecyclerHeadersDecoration(mBSRVAdapter);
@@ -86,9 +96,8 @@ public class BloodSugarFragment extends BaseFragment implements BloodSugarPresen
                     decoration.invalidateHeaders();
                 }
             });
+            mRecyclerView.setAdapter(mBSRVAdapter);
         }
-        mBSRVAdapter.setDatas(bsBeanList);
-        mRecyclerView.setAdapter(mBSRVAdapter);
     }
 
     @Override
@@ -101,5 +110,11 @@ public class BloodSugarFragment extends BaseFragment implements BloodSugarPresen
         if (null != mRecyclerView) {
             mRecyclerView.setPullLoadMoreCompleted();
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mBSRVAdapter = null;
     }
 }
