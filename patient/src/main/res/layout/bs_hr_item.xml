@@ -7,6 +7,7 @@
             name="bs"
             type="com.wonders.xlab.patient.module.healthreport.bs.bean.BSBean"/>
 
+        <import type="im.hua.utils.DateUtil"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,7 +24,7 @@
             android:layout_weight="1"
             android:background="@android:color/white"
             android:gravity="center"
-            android:text="@{bs.headerTime.substring(8)}"
+            android:text='@{DateUtil.format(bs.recordTimeInMill,"dd")}'
             android:textColor="@color/text_color_primary_black"
             android:textSize="@dimen/text_size_middle"/>
 

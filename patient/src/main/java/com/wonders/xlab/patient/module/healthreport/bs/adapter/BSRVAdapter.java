@@ -1,7 +1,6 @@
 package com.wonders.xlab.patient.module.healthreport.bs.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +40,6 @@ public class BSRVAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycl
             if (0 != i) {
                 if (!DateUtil.isTheSameMonth(beanList.get(i - 1).getRecordTimeInMill(), beanList.get(i).getRecordTimeInMill())) {
                     headerId++;
-                    Log.d("BSRVAdapter", "headerId:" + headerId);
                 }
             }
             beanList.get(i).setHeaderId(headerId);
@@ -88,14 +86,14 @@ public class BSRVAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycl
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
         final TitleViewHolder viewHolder = (TitleViewHolder) holder;
-        String time = "";
+        long time = 0;
         for (int i = 0; i < getItemCount(); i++) {
             if (getBean(i).getHeaderId() == getHeaderId(position)) {
-                time = getBean(i).getHeaderTime();
+                time = getBean(i).getRecordTimeInMill();
                 break;
             }
         }
-        viewHolder.bpTitle.setText(time.substring(0,7));
+        viewHolder.bpTitle.setText(DateUtil.format(time,"yyyy-MM"));
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder{

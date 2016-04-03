@@ -13,7 +13,6 @@ import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
-import im.hua.utils.DateUtil;
 
 
 /**
@@ -81,7 +80,6 @@ public class BloodSugarPresenter extends BasePagePresenter implements IBloodSuga
             bean.setDinnerAfterBS(contentEntity.getAfterDinner() + "");
             bean.setRandomBS(contentEntity.getRandomValue() + "");
             bean.setRecordTimeInMill(contentEntity.getRecordTime2Long());
-            bean.setHeaderTime(DateUtil.format(contentEntity.getRecordTime2Long(), "yyyy-MM-dd"));
             bsBeanList.add(bean);
         }
 
