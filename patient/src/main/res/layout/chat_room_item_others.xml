@@ -20,7 +20,7 @@
             android:layout_centerHorizontal="true"
             android:paddingBottom="2dp"
             android:paddingTop="2dp"
-            android:text="@{chat.recordTime}"
+            android:text="@{chat.recordTimeInStr}"
             android:textColor="@color/text_color_primary_gray"
             android:textSize="@dimen/text_size_small"/>
 

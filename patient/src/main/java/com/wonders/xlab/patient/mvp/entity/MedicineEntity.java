@@ -12,7 +12,7 @@ public class MedicineEntity extends BaseEntity {
 
     /**
      * name : 阿斯匹灵
-     * userMedicineRecords : [{"id":3,"measurement":"6","doseCount":4,"recordTime":1450710000000},{"id":2,"measurement":"3","doseCount":1,"recordTime":1450706400000},{"id":1,"measurement":"2","doseCount":2,"recordTime":1450627200000}]
+     * userMedicineRecords : [{"id":3,"measurement":"6","doseCount":4,"recordTimeInStr":1450710000000},{"id":2,"measurement":"3","doseCount":1,"recordTimeInStr":1450706400000},{"id":1,"measurement":"2","doseCount":2,"recordTimeInStr":1450627200000}]
      */
 
     private List<RetValuesEntity> ret_values;
@@ -31,7 +31,7 @@ public class MedicineEntity extends BaseEntity {
          * id : 3
          * measurement : 6
          * doseCount : 4
-         * recordTime : 1450710000000
+         * recordTimeInStr : 1450710000000
          */
 
         private List<UserMedicineRecordsEntity> userMedicineRecords;

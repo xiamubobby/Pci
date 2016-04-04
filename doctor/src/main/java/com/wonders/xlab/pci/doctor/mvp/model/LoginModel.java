@@ -29,6 +29,6 @@ public class LoginModel extends DoctorBaseModel<LoginEntity> {
 
     @Override
     protected void onFailed(String message) {
-        mILoginModel.onReceiveFailed(e.getMessage());
+        mILoginModel.onReceiveFailed(message);
     }
 }

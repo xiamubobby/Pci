@@ -11,12 +11,10 @@ import com.wonders.xlab.patient.mvp.model.impl.SendMessageModel;
 import com.wonders.xlab.patient.mvp.presenter.IChatRoomPresenter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
-import im.hua.utils.DateUtil;
 
 
 /**
@@ -70,7 +68,6 @@ public class ChatRoomPresenter extends BasePagePresenter implements IChatRoomPre
 
         List<ChatRoomBean> chatRoomBeanList = new ArrayList<>();
 
-        long todayTimeInMill = Calendar.getInstance().getTimeInMillis();
         for (ChatRoomEntity.RetValuesEntity.ContentEntity contentEntity : entityList) {
             ChatRoomBean bean;
             if (TYPE_USER.equals(contentEntity.getType()) && mPatientId.equals(String.valueOf(contentEntity.getFromWho()))) {
@@ -84,13 +81,6 @@ public class ChatRoomPresenter extends BasePagePresenter implements IChatRoomPre
             bean.name.set(contentEntity.getName());
             bean.portraitUrl.set(contentEntity.getAvatarUrl());
             bean.recordTimeInMill.set(contentEntity.getSendTime());
-            if (DateUtil.isTheSameDay(todayTimeInMill, contentEntity.getSendTime())) {
-                bean.recordTime.set(DateUtil.format(contentEntity.getSendTime(), "HH:mm"));
-            } else if (DateUtil.isTheSameYear(contentEntity.getSendTime(), todayTimeInMill)) {
-                bean.recordTime.set(DateUtil.format(contentEntity.getSendTime(), "MM-dd HH:mm"));
-            } else {
-                bean.recordTime.set(DateUtil.format(contentEntity.getSendTime(), "yyyy-MM-dd HH:mm"));
-            }
             bean.text.set(contentEntity.getContent());
             bean.isSending.set(false);
             chatRoomBeanList.add(bean);

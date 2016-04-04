@@ -163,7 +163,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             mEtChatRoomInput.setText("");
 
-            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getUserTel(), groupId, groupName, imGroupId, patientId, patientName, patientPhoneNumber, sendTime);
+            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getUserTel(), groupId, groupName, imGroupId, patientId, patientName, patientPhoneNumber, sendTime, AIManager.getInstance(this).getAvatarUrl(),AIManager.getInstance(this).getUserName());
         }
     }
 

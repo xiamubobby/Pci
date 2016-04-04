@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import com.wonders.xlab.common.manager.OttoManager;
+import com.wonders.xlab.patient.receiver.otto.ConnectStateOtto;
 
 public class ConnectionBroadcastReceiver extends BroadcastReceiver {
     public ConnectionBroadcastReceiver() {

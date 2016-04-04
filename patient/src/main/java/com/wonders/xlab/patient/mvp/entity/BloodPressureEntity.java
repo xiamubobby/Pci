@@ -10,8 +10,8 @@ import im.hua.library.base.mvp.entity.BaseEntity;
 public class BloodPressureEntity extends BaseEntity {
 
     /**
-     * line : {"systolic":[174,166,177,166,178,163],"diastolic":[88,89,76,98,78,91],"recordTime":[1454256000000,1454342400000,1454428800000,1454515200000,1454601600000,1454688000000],"heartRates":[85,76,89,80,74,88]}
-     * table : {"content":[{"id":41,"heartRate":85,"systolicPressure":174,"diastolicPressure":88,"recordTime":1454256000000},{"id":40,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045963000},{"id":39,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045963000},{"id":38,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045963000},{"id":37,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045913000},{"id":36,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045913000},{"id":35,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045913000},{"id":34,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045881000},{"id":33,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045881000},{"id":32,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045881000}],"last":false,"totalPages":2,"totalElements":17,"size":10,"number":0,"first":true,"sort":[{"direction":"DESC","property":"recordTime","ignoreCase":false,"nullHandling":"NATIVE","ascending":false}],"numberOfElements":10}
+     * line : {"systolic":[174,166,177,166,178,163],"diastolic":[88,89,76,98,78,91],"recordTimeInStr":[1454256000000,1454342400000,1454428800000,1454515200000,1454601600000,1454688000000],"heartRates":[85,76,89,80,74,88]}
+     * table : {"content":[{"id":41,"heartRate":85,"systolicPressure":174,"diastolicPressure":88,"recordTimeInStr":1454256000000},{"id":40,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045963000},{"id":39,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045963000},{"id":38,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045963000},{"id":37,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045913000},{"id":36,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045913000},{"id":35,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045913000},{"id":34,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045881000},{"id":33,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045881000},{"id":32,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045881000}],"last":false,"totalPages":2,"totalElements":17,"size":10,"number":0,"first":true,"sort":[{"direction":"DESC","property":"recordTimeInStr","ignoreCase":false,"nullHandling":"NATIVE","ascending":false}],"numberOfElements":10}
      */
 
     private RetValuesEntity ret_values;
@@ -27,14 +27,14 @@ public class BloodPressureEntity extends BaseEntity {
     public static class RetValuesEntity {
         private LineEntity line;
         /**
-         * content : [{"id":41,"heartRate":85,"systolicPressure":174,"diastolicPressure":88,"recordTime":1454256000000},{"id":40,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045963000},{"id":39,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045963000},{"id":38,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045963000},{"id":37,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045913000},{"id":36,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045913000},{"id":35,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045913000},{"id":34,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045881000},{"id":33,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045881000},{"id":32,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTime":1452045881000}]
+         * content : [{"id":41,"heartRate":85,"systolicPressure":174,"diastolicPressure":88,"recordTimeInStr":1454256000000},{"id":40,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045963000},{"id":39,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045963000},{"id":38,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045963000},{"id":37,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045913000},{"id":36,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045913000},{"id":35,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045913000},{"id":34,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045881000},{"id":33,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045881000},{"id":32,"heartRate":67,"systolicPressure":123,"diastolicPressure":68,"recordTimeInStr":1452045881000}]
          * last : false
          * totalPages : 2
          * totalElements : 17
          * size : 10
          * number : 0
          * first : true
-         * sort : [{"direction":"DESC","property":"recordTime","ignoreCase":false,"nullHandling":"NATIVE","ascending":false}]
+         * sort : [{"direction":"DESC","property":"recordTimeInStr","ignoreCase":false,"nullHandling":"NATIVE","ascending":false}]
          * numberOfElements : 10
          */
 
@@ -108,13 +108,13 @@ public class BloodPressureEntity extends BaseEntity {
              * heartRate : 85
              * systolicPressure : 174
              * diastolicPressure : 88
-             * recordTime : 1454256000000
+             * recordTimeInStr : 1454256000000
              */
 
             private List<ContentEntity> content;
             /**
              * direction : DESC
-             * property : recordTime
+             * property : recordTimeInStr
              * ignoreCase : false
              * nullHandling : NATIVE
              * ascending : false

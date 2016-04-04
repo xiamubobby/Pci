@@ -9,7 +9,7 @@ public class BSSaveEntity extends BaseEntity {
 
     /**
      * bloodSugar : 7.3
-     * recordTime : 1458800282604
+     * recordTimeInStr : 1458800282604
      * bloodSugarTime : 2
      * id : 91
      * status : 1

@@ -16,7 +16,7 @@ public class BloodSugarEntity extends BaseEntity {
      * totalPages : 1
      * size : 10
      * number : 0
-     * sort : [{"direction":"DESC","property":"recordTime","ignoreCase":false,"nullHandling":"NATIVE","ascending":false}]
+     * sort : [{"direction":"DESC","property":"recordTimeInStr","ignoreCase":false,"nullHandling":"NATIVE","ascending":false}]
      * first : true
      * numberOfElements : 1
      */
@@ -55,7 +55,7 @@ public class BloodSugarEntity extends BaseEntity {
         private List<ContentEntity> content;
         /**
          * direction : DESC
-         * property : recordTime
+         * property : recordTimeInStr
          * ignoreCase : false
          * nullHandling : NATIVE
          * ascending : false

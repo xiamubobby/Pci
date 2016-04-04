@@ -12,6 +12,7 @@ import com.wonders.xlab.patient.module.chatroom.bean.ChatRoomBean;
  * Created by hua on 16/2/19.
  */
 public class ChatRoomRVAdapter extends MultiRVAdapter<ChatRoomBean> {
+
     @Override
     public MultiViewHolder createViewHolder(View itemView, int viewType) {
         MultiViewHolder holder;
@@ -28,4 +29,5 @@ public class ChatRoomRVAdapter extends MultiRVAdapter<ChatRoomBean> {
         }
         return holder;
     }
+
 }

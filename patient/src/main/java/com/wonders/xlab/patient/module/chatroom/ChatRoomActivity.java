@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.squareup.otto.Subscribe;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
@@ -18,9 +20,11 @@ import com.wonders.xlab.patient.module.base.AppbarActivity;
 import com.wonders.xlab.patient.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.patient.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.MeChatRoomBean;
+import com.wonders.xlab.patient.module.chatroom.bean.OthersChatRoomBean;
 import com.wonders.xlab.patient.module.main.doctors.detail.DoctorDetailActivity;
 import com.wonders.xlab.patient.mvp.presenter.IChatRoomPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.ChatRoomPresenter;
+import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;
 
 import java.util.Calendar;
 import java.util.List;
@@ -89,6 +93,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OttoManager.register(this);
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
@@ -107,7 +112,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         groupName = intent.getStringExtra(EXTRA_GROUP_NAME);
         canChat = intent.getBooleanExtra(EXTRA_CAN_CHAT, false);
 
-        //cancel notification
+        //如果有的话，移除通知栏对应的通知，以groupId为通知id
         new NotifyUtil().cancel(this, Integer.parseInt(groupId));
 
         initServiceStatus(canChat);
@@ -185,6 +190,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     @Override
     public void onDestroy() {
         super.onDestroy();
+        OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
 
@@ -202,7 +208,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             MeChatRoomBean bean = new MeChatRoomBean();
             bean.text.set(message);
             bean.portraitUrl.set(AIManager.getInstance().getPatientPortraitUrl());
-            bean.recordTime.set(DateUtil.format(sendTime, "HH:mm"));
+            bean.recordTimeInStr.set(DateUtil.format(sendTime, "HH:mm"));
             bean.recordTimeInMill.set(sendTime);
             bean.isSending.set(true);
 
@@ -225,6 +231,30 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         mRecyclerView.setAdapter(mChatRoomRVAdapter);
     }
 
+    /**
+     * 接收其他人发给我的通知，加入显示列表，并且移除通知栏的该条通知
+     * @param otto
+     */
+    @Subscribe
+    public void receiveNotifyForUpdate(EMChatMessageOtto otto) {
+        if (groupId.equals(otto.getGroupId())) {
+            /**
+             * remove the notify with groupid as it's notify id
+             */
+            new NotifyUtil().cancel(this, Integer.parseInt(otto.getGroupId()));
+
+            OthersChatRoomBean bean = new OthersChatRoomBean();
+            bean.isSending.set(false);
+            bean.name.set(otto.getFromWhoName());
+            bean.text.set(otto.getTxtContent());
+            bean.recordTimeInMill.set(otto.getMessageTime());
+            bean.portraitUrl.set(otto.getFromWhoAvatarUrl());
+
+            mChatRoomRVAdapter.insertToTop(bean);
+            mRecyclerView.scrollToTop();
+        }
+    }
+
     @Override
     public void showChatMessageList(List<ChatRoomBean> chatRoomBeanList) {
         initChatRoomAdapter();
@@ -235,7 +265,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     public void appendChatMessageList(List<ChatRoomBean> chatRoomBeanList) {
         initChatRoomAdapter();
         mChatRoomRVAdapter.appendDatas(chatRoomBeanList);
-        mRecyclerView.getRecyclerView().smoothScrollToPosition(mChatRoomRVAdapter.getItemCount() - chatRoomBeanList.size());
     }
 
     @Override

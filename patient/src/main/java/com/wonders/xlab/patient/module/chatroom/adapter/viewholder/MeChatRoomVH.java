@@ -9,8 +9,11 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.ChatRoomItemMeBinding;
 import com.wonders.xlab.patient.module.chatroom.bean.MeChatRoomBean;
 
+import java.util.Calendar;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/2/19.
@@ -37,6 +40,16 @@ public class MeChatRoomVH extends MultiViewHolder<MeChatRoomBean> {
     @Override
     public void onBindViewHolder(MeChatRoomBean data) {
         ImageViewManager.setImageViewWithUrl(itemView.getContext(), mIvChatRoomItemMePortrait, data.portraitUrl.get(), xlab.wonders.com.common.R.drawable.portrait_default);
+
+        long todayTimeInMill = Calendar.getInstance().getTimeInMillis();
+        long sendTimeInMill = data.recordTimeInMill.get();
+        if (DateUtil.isTheSameDay(todayTimeInMill, sendTimeInMill)) {
+            data.recordTimeInStr.set(DateUtil.format(sendTimeInMill, "HH:mm"));
+        } else if (DateUtil.isTheSameYear(sendTimeInMill, todayTimeInMill)) {
+            data.recordTimeInStr.set(DateUtil.format(sendTimeInMill, "MM-dd HH:mm"));
+        } else {
+            data.recordTimeInStr.set(DateUtil.format(sendTimeInMill, "yyyy-MM-dd HH:mm"));
+        }
         binding.setChat(data);
     }
 }

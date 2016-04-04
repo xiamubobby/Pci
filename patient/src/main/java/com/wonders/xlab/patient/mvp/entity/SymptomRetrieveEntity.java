@@ -12,7 +12,7 @@ import im.hua.library.base.mvp.entity.BaseEntity;
 public class SymptomRetrieveEntity extends BaseEntity {
 
     /**
-     * content : [{"id":1,"checked":true,"symptomContent":"都是好的","doctorRemark":"汕头市运动员","recordTime":1450340368000,"symptoms":[{"id":1,"name":"感冒","symptomUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/case/Screenshot_2015-12-14-13-22-15.png","new":false},{"id":2,"name":"发热","symptomUrl":"","new":false}]},{"id":2,"checked":true,"symptomContent":"都痛！！","doctorRemark":"你好坏啊！！刘二地方规划Ddddd热热的地方湖光山色归根到底个大概的地方改革丰富的噩噩噩噩噩噩噩噩噩局","recordTime":1450340368000,"symptoms":[]},{"id":3,"checked":true,"symptomContent":"都痛！！","doctorRemark":"东湖地方Google","recordTime":1450340368000,"symptoms":[]},{"id":4,"checked":false,"symptomContent":"","doctorRemark":null,"recordTime":1457073898000,"symptoms":[]},{"id":5,"checked":false,"symptomContent":"","doctorRemark":null,"recordTime":1457074232000,"symptoms":[]},{"id":6,"checked":false,"symptomContent":"肩膀疼痛,胃疼","doctorRemark":null,"recordTime":1457318293000,"symptoms":[]},{"id":7,"checked":false,"symptomContent":"后背疼痛,肩膀疼痛","doctorRemark":null,"recordTime":1457318308000,"symptoms":[]},{"id":8,"checked":false,"symptomContent":"腹痛,牙龈出血,胃疼","doctorRemark":null,"recordTime":1458287573000,"symptoms":[]}]
+     * content : [{"id":1,"checked":true,"symptomContent":"都是好的","doctorRemark":"汕头市运动员","recordTimeInStr":1450340368000,"symptoms":[{"id":1,"name":"感冒","symptomUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/case/Screenshot_2015-12-14-13-22-15.png","new":false},{"id":2,"name":"发热","symptomUrl":"","new":false}]},{"id":2,"checked":true,"symptomContent":"都痛！！","doctorRemark":"你好坏啊！！刘二地方规划Ddddd热热的地方湖光山色归根到底个大概的地方改革丰富的噩噩噩噩噩噩噩噩噩局","recordTimeInStr":1450340368000,"symptoms":[]},{"id":3,"checked":true,"symptomContent":"都痛！！","doctorRemark":"东湖地方Google","recordTimeInStr":1450340368000,"symptoms":[]},{"id":4,"checked":false,"symptomContent":"","doctorRemark":null,"recordTimeInStr":1457073898000,"symptoms":[]},{"id":5,"checked":false,"symptomContent":"","doctorRemark":null,"recordTimeInStr":1457074232000,"symptoms":[]},{"id":6,"checked":false,"symptomContent":"肩膀疼痛,胃疼","doctorRemark":null,"recordTimeInStr":1457318293000,"symptoms":[]},{"id":7,"checked":false,"symptomContent":"后背疼痛,肩膀疼痛","doctorRemark":null,"recordTimeInStr":1457318308000,"symptoms":[]},{"id":8,"checked":false,"symptomContent":"腹痛,牙龈出血,胃疼","doctorRemark":null,"recordTimeInStr":1458287573000,"symptoms":[]}]
      * last : true
      * totalElements : 8
      * totalPages : 1
@@ -47,7 +47,7 @@ public class SymptomRetrieveEntity extends BaseEntity {
          * checked : true
          * symptomContent : 都是好的
          * doctorRemark : 汕头市运动员
-         * recordTime : 1450340368000
+         * recordTimeInStr : 1450340368000
          * symptoms : [{"id":1,"name":"感冒","symptomUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/case/Screenshot_2015-12-14-13-22-15.png","new":false},{"id":2,"name":"发热","symptomUrl":"","new":false}]
          */
 

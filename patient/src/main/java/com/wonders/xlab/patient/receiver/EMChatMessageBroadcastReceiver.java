@@ -16,6 +16,7 @@ import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.patient.module.main.MainActivity;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
+import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;
 
 import java.io.UnsupportedEncodingException;
 
@@ -77,6 +78,8 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             String groupName = message.getStringAttribute("groupName", "");
             String imGroupId = message.getStringAttribute("imGroupId", "");
             String txtContent = message.getStringAttribute("txtContent", "");
+            String fromWhoAvatarUrl = message.getStringAttribute("fromWhoAvatarUrl", Constant.DEFAULT_PORTRAIT);
+            String fromWhoName = message.getStringAttribute("fromWhoName", "");
 
             Bundle data = new Bundle();
             data.putString(ChatRoomActivity.EXTRA_GROUP_ID,groupId);
@@ -84,11 +87,19 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             data.putString(ChatRoomActivity.EXTRA_GROUP_NAME,groupName);
             data.putBoolean(ChatRoomActivity.EXTRA_CAN_CHAT,true);
 
+            /**
+             * set the groupid as the notify id
+             */
             if (TextUtils.isDigitsOnly(imGroupId)) {
                 notifyId = Integer.parseInt(groupId);
             }
 
             new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, notifyId, groupName, txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
+
+            /**
+             * post event, if the current chat is showing, then append this message to chat list, or update the mydoctor page
+             */
+            OttoManager.post(new EMChatMessageOtto(groupId,groupName,imGroupId,txtContent, fromWhoAvatarUrl, fromWhoName, message.getMsgTime()));
 
         } else if (type == -1) {
             try {

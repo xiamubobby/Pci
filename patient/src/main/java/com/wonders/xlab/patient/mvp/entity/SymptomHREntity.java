@@ -10,7 +10,7 @@ import im.hua.library.base.mvp.entity.BaseEntity;
 public class SymptomHREntity extends BaseEntity {
 
     /**
-     * content : [{"id":1,"checked":false,"symptomContent":"都痛","doctorRemark":"你好坏啊","recordTime":1450340368000},{"id":2,"checked":false,"symptomContent":"都痛！！","doctorRemark":"你好坏啊！！","recordTime":1450340368000}]
+     * content : [{"id":1,"checked":false,"symptomContent":"都痛","doctorRemark":"你好坏啊","recordTimeInStr":1450340368000},{"id":2,"checked":false,"symptomContent":"都痛！！","doctorRemark":"你好坏啊！！","recordTimeInStr":1450340368000}]
      * last : true
      * totalPages : 1
      * totalElements : 2
@@ -44,7 +44,7 @@ public class SymptomHREntity extends BaseEntity {
          * checked : false
          * symptomContent : 都痛
          * doctorRemark : 你好坏啊
-         * recordTime : 1450340368000
+         * recordTimeInStr : 1450340368000
          */
 
         private List<ContentEntity> content;

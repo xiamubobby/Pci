@@ -33,8 +33,9 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
      * @param patientId
      * @param patientName
      * @param patientTel
+     * @param fromWhoAvatarUrl
      */
-    public void sendMessage(String message, String doctorTel, String groupId, String groupName, String imGroupId, long time, String patientId, String patientName, String patientTel) {
+    public void sendMessage(String message, String doctorTel, String groupId, String groupName, String imGroupId, long time, String patientId, String patientName, String patientTel, String fromWhoAvatarUrl,String fromWhoName) {
         SendMessageBody body = new SendMessageBody();
 
         SendMessageBody.MsgEntity msgEntity = new SendMessageBody.MsgEntity();
@@ -58,6 +59,8 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
         ext.put("patientName", patientName);
         ext.put("patientTel", patientTel);
         ext.put("txtContent", message);
+        ext.put("fromWhoAvatarUrl", fromWhoAvatarUrl);
+        ext.put("fromWhoName", fromWhoName);
         body.setExt(ext);
 
         fetchData(mSendMessageAPI.sendMessage(body,time), false);

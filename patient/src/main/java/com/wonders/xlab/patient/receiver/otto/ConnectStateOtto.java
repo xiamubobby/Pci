@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.receiver;
+package com.wonders.xlab.patient.receiver.otto;
 
 /**
  * Created by hua on 16/3/8.

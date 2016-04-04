@@ -12,7 +12,7 @@ public class BPSaveEntity extends BaseEntity {
      * heartRate : 87
      * systolicPressure : 150
      * diastolicPressure : 98
-     * recordTime : 1458800282604
+     * recordTimeInStr : 1458800282604
      */
 
     private RetValuesEntity ret_values;

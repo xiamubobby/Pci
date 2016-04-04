@@ -17,9 +17,9 @@ public abstract class ChatRoomBean extends BaseBean {
     public ObservableField<String> messageId = new ObservableField<>();
     public ObservableField<String> portraitUrl = new ObservableField<>();
     public ObservableField<String> name = new ObservableField<>();
-    public ObservableField<String> recordTime = new ObservableField<>();
     public ObservableField<String> text = new ObservableField<>();
     public ObservableArrayList<String> imageUrls = new ObservableArrayList<>();
+    public ObservableField<String> recordTimeInStr = new ObservableField<>();
     public ObservableField<Long> recordTimeInMill = new ObservableField<>();
     public ObservableField<Boolean> isSending = new ObservableField<>(false);
     /**

@@ -7,20 +7,60 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.DoctorMyItemBinding;
 import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
+import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;
+
+import java.util.Calendar;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/3/14.
  */
 public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
+
+    @Subscribe
+    public void receiveNotifyForUpdate(EMChatMessageOtto otto) {
+
+        List<MyDoctorItemBean> beanList = getBeanList();
+        if (beanList.size() == 1) {
+            beanList.get(0).setLatestChatMessage(otto.getTxtContent());
+            beanList.get(0).setTimeStr(DateUtil.format(Calendar.getInstance().getTimeInMillis(), "HH:mm"));
+        } else {
+            MyDoctorItemBean bean = new MyDoctorItemBean();
+
+            for (int i = 0; i < beanList.size(); i++) {
+                if (beanList.get(i).getGroupId().equals(otto.getGroupId())) {
+                    bean.setPortraitUrl(beanList.get(i).getPortraitUrl());
+                    bean.setType(beanList.get(i).getType());
+                    remove(i);
+                    break;
+                }
+            }
+            bean.setGroupId(otto.getGroupId());
+            bean.setImGroupId(otto.getImGroupId());
+            bean.setDoctorGroupName(otto.getGroupName());
+            bean.setLatestChatMessage(otto.getTxtContent());
+            insertToFist(bean);
+        }
+
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+        OttoManager.register(this);
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -80,4 +120,9 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
         }
     }
 
+    @Override
+    public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        OttoManager.unregister(this);
+    }
 }
