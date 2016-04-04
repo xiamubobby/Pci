@@ -104,6 +104,7 @@ public class XEMChatService extends Service {
     public void forceExit(ForceExitOtto bean) {
         mIsNormalStop = true;
         new NotifyUtil().cancelAll(this);
+        AIManager.getInstance(this).logout();
         SPManager.get(this).clear();
         stopSelf();
     }

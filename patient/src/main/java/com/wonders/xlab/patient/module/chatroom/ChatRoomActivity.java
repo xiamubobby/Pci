@@ -75,6 +75,8 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
     private ChatRoomRVAdapter mChatRoomRVAdapter;
 
+    private boolean mIsPaused = false;
+
     @Override
     public int getContentLayout() {
         return R.layout.chat_room_activity;
@@ -143,6 +145,12 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         addPresenter(mChatRoomPresenter);
 
         mChatRoomPresenter.getChatList(imGroupId, true);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mIsPaused = false;
     }
 
     @Override
@@ -241,7 +249,9 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             /**
              * remove the notify with groupid as it's notify id
              */
-            new NotifyUtil().cancel(this, Integer.parseInt(otto.getGroupId()));
+            if (!mIsPaused) {
+                new NotifyUtil().cancel(this, Integer.parseInt(otto.getGroupId()));
+            }
 
             OthersChatRoomBean bean = new OthersChatRoomBean();
             bean.isSending.set(false);
@@ -297,5 +307,11 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     public void hideLoading() {
         mLoadingView.setVisibility(View.GONE);
         mRecyclerView.setPullLoadMoreCompleted();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mIsPaused = true;
     }
 }
