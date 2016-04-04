@@ -65,7 +65,6 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
         mRecyclerView.setRefreshEnable(false);
-        mRecyclerView.showEmptyView();
         TextView tvMeasure = (TextView) mRecyclerView.findViewById(R.id.tv_bp_bs_report_empty_measure);
         tvMeasure.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
         tvMeasure.setOnClickListener(new View.OnClickListener() {

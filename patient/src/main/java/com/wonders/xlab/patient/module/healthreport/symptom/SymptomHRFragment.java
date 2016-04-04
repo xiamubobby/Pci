@@ -56,21 +56,16 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 3));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 8));
 
-        mRecyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.setRefreshing(true);
-            }
-        });
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId(), 0, Calendar.getInstance().getTimeInMillis());
             }
         });
+        mRecyclerView.setRefreshing(true);
         mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId(), 0, Calendar.getInstance().getTimeInMillis());
     }
 
