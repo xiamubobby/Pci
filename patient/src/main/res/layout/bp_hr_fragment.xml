@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".module.healthreport.bp.BloodPressureFragment">
+    tools:context=".module.healthreport.bp.BPHRFragment">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -86,6 +86,6 @@
 
     </LinearLayout>
 
-    <include layout="@layout/blood_pressure_content"/>
+    <include layout="@layout/bp_hr_content"/>
 
 </android.support.design.widget.CoordinatorLayout>

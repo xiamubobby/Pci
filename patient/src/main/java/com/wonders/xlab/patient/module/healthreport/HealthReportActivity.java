@@ -10,8 +10,8 @@ import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
-import com.wonders.xlab.patient.module.healthreport.bp.BloodPressureFragment;
-import com.wonders.xlab.patient.module.healthreport.bs.BloodSugarFragment;
+import com.wonders.xlab.patient.module.healthreport.bp.BPHRFragment;
+import com.wonders.xlab.patient.module.healthreport.bs.BSHRFragment;
 import com.wonders.xlab.patient.module.healthreport.symptom.SymptomHRFragment;
 
 import java.util.ArrayList;
@@ -43,8 +43,8 @@ public class HealthReportActivity extends AppbarActivity {
         ButterKnife.bind(this);
 
         mFragmentVPAdapter = new FragmentVPAdapter(getFragmentManager());
-        mFragmentVPAdapter.addFragment(BloodSugarFragment.newInstance(), "血糖");
-        mFragmentVPAdapter.addFragment(BloodPressureFragment.newInstance(), "血压");
+        mFragmentVPAdapter.addFragment(BSHRFragment.newInstance(), "血糖");
+        mFragmentVPAdapter.addFragment(BPHRFragment.newInstance(), "血压");
         mFragmentVPAdapter.addFragment(SymptomHRFragment.newInstance(), "不适症状");
         mViewPager.setAdapter(mFragmentVPAdapter);
 

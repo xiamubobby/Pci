@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.databinding.BloodPressureItemBinding;
+import com.wonders.xlab.patient.databinding.BpHrItemBinding;
 import com.wonders.xlab.patient.module.healthreport.bp.bean.BPListBean;
 
 import java.util.Collections;
@@ -38,7 +38,7 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
         long headerId = 0;
         for (int i = 0; i < beanList.size(); i++) {
             if (0 != i) {
-                if (!DateUtil.isTheSameMonth(beanList.get(i - 1).getRecordTimeInMill(), beanList.get(i).getRecordTimeInMill())) {
+                if (!DateUtil.isTheSameDay(beanList.get(i - 1).getRecordTimeInMill(), beanList.get(i).getRecordTimeInMill())) {
                     headerId++;
                 }
             }
@@ -62,7 +62,7 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.blood_pressure_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bp_hr_item, parent, false);
         return new ItemViewHolder(view);
     }
 
@@ -99,11 +99,11 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        BloodPressureItemBinding mBinding;
+        BpHrItemBinding mBinding;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            mBinding = BloodPressureItemBinding.bind(itemView);
+            mBinding = BpHrItemBinding.bind(itemView);
         }
     }
 

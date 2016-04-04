@@ -63,6 +63,7 @@ public class BPReportFragment extends BaseFragment implements BPReportCachePrese
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mRecyclerView.setRefreshEnable(false);
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.showEmptyView();
@@ -92,12 +93,11 @@ public class BPReportFragment extends BaseFragment implements BPReportCachePrese
 
     @Override
     public void showBPList(List<BPReportBean> beanList) {
-        mRecyclerView.showRecyclerView();
         if (null == mBPReportAdapter) {
             mBPReportAdapter = new BPReportAdapter();
         }
-        mBPReportAdapter.setDatas(beanList);
         mRecyclerView.setAdapter(mBPReportAdapter);
+        mBPReportAdapter.setDatas(beanList);
     }
 
     @Override
@@ -115,6 +115,6 @@ public class BPReportFragment extends BaseFragment implements BPReportCachePrese
 
     @Override
     public void hideLoading() {
-
+        mRecyclerView.hideRefreshOrLoadMore(true,true);
     }
 }

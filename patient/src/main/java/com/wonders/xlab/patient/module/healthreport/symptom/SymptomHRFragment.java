@@ -56,7 +56,6 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView.setEnabled(true);
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 3));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -89,7 +88,6 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
 
     @Override
     public void showSymptomList(List<SymptomReportBean> reportBeanList) {
-        mRecyclerView.showRecyclerView();
         if (null == adapter) {
             adapter = new SymptomHRAdapter();
         }
@@ -115,14 +113,6 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
         if (null == mRecyclerView) {
             return;
         }
-        mRecyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                if (null == mRecyclerView) {
-                    return;
-                }
-                mRecyclerView.setRefreshing(false);
-            }
-        });
+        mRecyclerView.hideRefreshOrLoadMore(true,true);
     }
 }

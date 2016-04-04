@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.module.healthreport.bp;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +17,6 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.CombinedData;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
-import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.healthreport.bp.adapter.BPRVAdapter;
@@ -29,8 +29,9 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseFragment;
+import im.hua.uikit.crv.CommonRecyclerView;
 
-public class BloodPressureFragment extends BaseFragment implements BloodPressurePresenter.BloodPressurePresenterListener {
+public class BPHRFragment extends BaseFragment implements BloodPressurePresenter.BloodPressurePresenterListener {
     @Bind(R.id.chart_blood_pressure)
     CombinedChart mChart;
 
@@ -40,16 +41,16 @@ public class BloodPressureFragment extends BaseFragment implements BloodPressure
     private final int itemMaxX = 30;
 
     @Bind(R.id.recycler_view_blood_pressure)
-    PullLoadMoreRecyclerView mRecyclerView;
+    CommonRecyclerView mRecyclerView;
 
-    public static BloodPressureFragment newInstance() {
-        return new BloodPressureFragment();
+    public static BPHRFragment newInstance() {
+        return new BPHRFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.blood_pressure_fragment, container, false);
+        View view = inflater.inflate(R.layout.bp_hr_fragment, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -59,31 +60,26 @@ public class BloodPressureFragment extends BaseFragment implements BloodPressure
         super.onViewCreated(view, savedInstanceState);
         initChart();
 
-        mRecyclerView.setLinearLayout(false);
-        mRecyclerView.setPullRefreshEnable(false);
-        mRecyclerView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
-        mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
-            @Override
-            public void onRefresh() {
-                mBPPresenter.getBPList(AIManager.getInstance().getPatientId(), true);
-            }
-
+        mRecyclerView.setRefreshEnable(false);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
+        mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 mBPPresenter.getBPList(AIManager.getInstance().getPatientId(), false);
+            }
+        });
+        mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mBPPresenter.getBPList(AIManager.getInstance().getPatientId(), true);
             }
         });
 
         mBPPresenter = new BloodPressurePresenter(this);
         addPresenter(mBPPresenter);
 
-        mRecyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.setRefreshing(true);
-            }
-        });
+        mRecyclerView.setRefreshing(true);
         mBPPresenter.getBPList(AIManager.getInstance().getPatientId(), true);
     }
 
@@ -209,7 +205,7 @@ public class BloodPressureFragment extends BaseFragment implements BloodPressure
 
     @Override
     public void hideLoading() {
-        mRecyclerView.setPullLoadMoreCompleted();
+        mRecyclerView.hideRefreshOrLoadMore(true,true);
     }
 
 

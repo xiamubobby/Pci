@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView
+<im.hua.uikit.crv.CommonRecyclerView
     android:id="@+id/recycler_view_blood_pressure"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,8 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize"
+    app:emptyView="@layout/common_empty"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".module.healthreport.bp.BloodPressureFragment"
-    tools:showIn="@layout/blood_pressure_fragment">
-
-</com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView>
+    tools:context=".module.healthreport.bp.BPHRFragment"
+    tools:showIn="@layout/bp_hr_fragment"/>

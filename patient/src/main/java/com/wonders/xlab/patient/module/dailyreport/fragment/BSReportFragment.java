@@ -64,6 +64,7 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
+        mRecyclerView.setRefreshEnable(false);
         mRecyclerView.showEmptyView();
         TextView tvMeasure = (TextView) mRecyclerView.findViewById(R.id.tv_bp_bs_report_empty_measure);
         tvMeasure.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
@@ -91,12 +92,11 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
 
     @Override
     public void showBSList(List<BSReportBean> beanList) {
-        mRecyclerView.showRecyclerView();
         if (null == mBSReportAdapter) {
             mBSReportAdapter = new BSReportAdapter();
         }
-        mBSReportAdapter.setDatas(beanList);
         mRecyclerView.setAdapter(mBSReportAdapter);
+        mBSReportAdapter.setDatas(beanList);
     }
 
     @Override
@@ -114,6 +114,6 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
 
     @Override
     public void hideLoading() {
-
+        mRecyclerView.hideRefreshOrLoadMore(true,true);
     }
 }

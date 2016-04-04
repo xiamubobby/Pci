@@ -2,7 +2,7 @@ package im.hua.uikit.crv;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v4.widget.NestedScrollView;
+import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,20 +12,19 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.FrameLayout;
 
 import im.hua.uikit.R;
 
 /**
  * Created by hua on 16/3/24.
- * 默认disable下拉刷新
  */
-public class CommonRecyclerView extends SwipeRefreshLayout {
+public class CommonRecyclerView extends FrameLayout {
+    private OnLoadMoreListener mOnLoadMoreListener;
+
     private final int LAYOUT_MANGER_LINEAR = 0;
     private final int LAYOUT_MANGER_GRID = 1;
     private final int LAYOUT_MANGER_STAGGERED_GRID = 2;
-
-    private NestedScrollView containerView;
 
     private View mLoadingView;
     private View mEmptyView;
@@ -38,11 +37,9 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
     private int orientation;
 
     private RecyclerView mRecyclerView;
-    /**
-     * 是否正在加载
-     */
-    private boolean mIsLoadMore;
+    private SwipeRefreshLayout mRefreshView;
 
+    private boolean mIsLoadMore;
 
     public CommonRecyclerView(Context context) {
         this(context, null);
@@ -50,16 +47,13 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
 
     public CommonRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setEnabled(false);
-
-        containerView = (NestedScrollView) LayoutInflater.from(context).inflate(R.layout.crv_container, null,false);
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CommonRecyclerView);
 
-        mEmptyView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_emptyView, R.layout.crv_empty), null,false);
-        mLoadingView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_loadingView, R.layout.crv_loading), null,false);
-        mNetworkErrorView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_networkErrorView, R.layout.crv_network_error), null,false);
-        mServerErrorView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_serverErrorView, R.layout.crv_server_error), null,false);
+        mEmptyView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_emptyView, R.layout.crv_empty), null, false);
+        mLoadingView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_loadingView, R.layout.crv_loading), null, false);
+        mNetworkErrorView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_networkErrorView, R.layout.crv_network_error), null, false);
+        mServerErrorView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_serverErrorView, R.layout.crv_server_error), null, false);
         layoutManager = array.getInteger(R.styleable.CommonRecyclerView_crvLayoutManager, LAYOUT_MANGER_LINEAR);
         spanCount = array.getInteger(R.styleable.CommonRecyclerView_crvSpanCount, 1);
         orientation = array.getInteger(R.styleable.CommonRecyclerView_orientation, RecyclerView.VERTICAL);
@@ -67,7 +61,9 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
 
         array.recycle();
 
-        mRecyclerView = (RecyclerView) LayoutInflater.from(context).inflate(R.layout.crv_recycler_view, null,false);
+        mRefreshView = (SwipeRefreshLayout) LayoutInflater.from(context).inflate(R.layout.crv_recycler_view, null, false);
+        mRecyclerView = (RecyclerView) mRefreshView.findViewById(R.id.recycler_view_crv);
+
         if (null != mRecyclerView) {
             /**
              * load more listener
@@ -87,26 +83,25 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
             }
         }
 
-        /*if (null != mLoadingView) {
-            containerView.addView(mLoadingView);
+        if (null != mLoadingView) {
+            this.addView(mLoadingView);
             mLoadingView.setVisibility(GONE);
         }
+        if (null != mEmptyView) {
+            this.addView(mEmptyView);
+            mEmptyView.setVisibility(GONE);
+        }
         if (null != mNetworkErrorView) {
-            containerView.addView(mNetworkErrorView);
+            this.addView(mNetworkErrorView);
             mNetworkErrorView.setVisibility(GONE);
         }
         if (null != mServerErrorView) {
-            containerView.addView(mServerErrorView);
+            this.addView(mServerErrorView);
             mServerErrorView.setVisibility(GONE);
         }
-        if (null != mRecyclerView) {
-            containerView.addView(mRecyclerView);
-            mRecyclerView.setVisibility(GONE);
-        }*/
-        if (null != mRecyclerView) {
-            containerView.addView(mRecyclerView);
+        if (null != mRefreshView) {
+            this.addView(mRefreshView);
         }
-        addView(containerView);
     }
 
     public void addItemDecoration(RecyclerView.ItemDecoration decor) {
@@ -121,10 +116,20 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
         }
     }
 
-    public void setAdapter(RecyclerView.Adapter adapter) {
-        if (null != mRecyclerView) {
-            mRecyclerView.setAdapter(adapter);
+    public void setAdapter(@NonNull final RecyclerView.Adapter adapter) {
+        mRecyclerView.setAdapter(adapter);
+        if (adapter.getItemCount() > 0) {
+            showContentView();
         }
+        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                if (adapter.getItemCount() > 0) {
+                    showContentView();
+                }
+            }
+        });
     }
 
     public void showNetworkErrorView() {
@@ -139,8 +144,8 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
         showView(mEmptyView);
     }
 
-    public void showRecyclerView() {
-        showView(mRecyclerView);
+    public void showContentView() {
+        showView(mRefreshView);
     }
 
     public void showLoadingView() {
@@ -149,11 +154,10 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
 
     private void showView(View view) {
         if (null != view) {
-            /*for (int i = 0; i < containerView.getChildCount(); i++) {
-                containerView.getChildAt(i).setVisibility(GONE);
-            }*/
-            containerView.removeAllViews();
-            containerView.addView(view);
+            for (int i = 0; i < this.getChildCount(); i++) {
+                this.getChildAt(i).setVisibility(GONE);
+            }
+            view.setVisibility(VISIBLE);
         }
     }
 
@@ -186,6 +190,46 @@ public class CommonRecyclerView extends SwipeRefreshLayout {
     }
 
     public void loadMore() {
-        Toast.makeText(getContext(), "loadmore", Toast.LENGTH_SHORT).show();
+        if (null != mOnLoadMoreListener) {
+            mOnLoadMoreListener.onLoadMore();
+        }
+    }
+
+    public void setRefreshing(final boolean refreshing) {
+        if (null != mRefreshView) {
+            mRefreshView.post(new Runnable() {
+                @Override
+                public void run() {
+                    if (null != mRefreshView) {
+                        mRefreshView.setRefreshing(refreshing);
+                    }
+                }
+            });
+        }
+    }
+
+    public void setRefreshEnable(boolean enable) {
+        mRefreshView.setEnabled(enable);
+    }
+
+    public void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener listener) {
+        mRefreshView.setOnRefreshListener(listener);
+    }
+
+    public void hideRefreshOrLoadMore(boolean hideRefreshing,boolean hideLodeMore) {
+        if (hideRefreshing) {
+            setRefreshing(false);
+        }
+        if (hideLodeMore) {
+            setIsLoadMore(false);
+        }
+    }
+
+    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+        mOnLoadMoreListener = onLoadMoreListener;
+    }
+
+    public interface OnLoadMoreListener{
+        void onLoadMore();
     }
 }

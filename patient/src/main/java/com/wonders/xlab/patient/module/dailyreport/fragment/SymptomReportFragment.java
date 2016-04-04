@@ -97,7 +97,7 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
 
     @Override
     public void showSymptomList(List<SymptomReportBean> reportBeanList) {
-        mRecyclerView.showRecyclerView();
+        mRecyclerView.showEmptyView();
         if (null == adapter) {
             adapter = new SymptomReportAdapter();
         }
@@ -123,14 +123,6 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
         if (null == mRecyclerView) {
             return;
         }
-        mRecyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                if (null == mRecyclerView) {
-                    return;
-                }
-                mRecyclerView.setRefreshing(false);
-            }
-        });
+        mRecyclerView.hideRefreshOrLoadMore(true,true);
     }
 }
