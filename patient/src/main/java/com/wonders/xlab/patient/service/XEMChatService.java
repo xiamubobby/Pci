@@ -20,7 +20,6 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.util.NetUtils;
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
-import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
@@ -109,7 +108,7 @@ public class XEMChatService extends Service {
     public void forceExit(ForceExitOtto forceExitOtto) {
         mIsNormalStop = true;
         new NotifyUtil().cancelAll(this);
-        SPManager.get(this).clear();
+        AIManager.getInstance().logout();
         stopSelf();
     }
 

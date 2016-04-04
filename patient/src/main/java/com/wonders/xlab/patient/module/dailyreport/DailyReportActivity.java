@@ -143,54 +143,11 @@ public class DailyReportActivity extends AppbarActivity {
 
             }
         });
-        mViewPager.setCurrentItem(mDefaultShowTabPosition,true);
+        mViewPager.setCurrentItem(mDefaultShowTabPosition, true);
     }
 
     private void recordNewData(Class targetActivity) {
         startActivity(new Intent(this, targetActivity));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_daily_record, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        boolean hasSetDefault = SPManager.get(DailyReportActivity.this).getBoolean(getString(R.string.setting_pref_key_measure_default), false);
-
-        boolean useEquipment = SPManager.get(DailyReportActivity.this).getBoolean(getString(R.string.setting_pref_key_use_equipment), true);
-
-        switch (item.getItemId()) {
-            case R.id.menu_daily_record_bp:
-                if (hasSetDefault) {
-                    if (useEquipment) {
-                        recordNewData(BPGuideActivity.class);
-                    } else {
-                        recordNewData(BPAddActivity.class);
-                    }
-                } else {
-                    showConfirmDialog(0);
-                }
-                break;
-            case R.id.menu_daily_record_bs:
-
-                if (hasSetDefault) {
-                    if (useEquipment) {
-                        recordNewData(BSGuideActivity.class);
-                    } else {
-                        recordNewData(BSAddActivity.class);
-                    }
-                } else {
-                    showConfirmDialog(1);
-                }
-                break;
-            case R.id.menu_daily_record_symptom:
-                recordNewData(SymptomActivity.class);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -283,13 +240,80 @@ public class DailyReportActivity extends AppbarActivity {
 
     @Subscribe
     public void showChooseDialog(ShowMeasureChooseDialogOtto otto) {
-        showConfirmDialog(otto.getMeasureType());
+        boolean hasSetDefault = SPManager.get(DailyReportActivity.this).getBoolean(getString(R.string.setting_pref_key_measure_default), false);
+        boolean useEquipment = SPManager.get(DailyReportActivity.this).getBoolean(getString(R.string.setting_pref_key_use_equipment), true);
+        if (hasSetDefault) {
+            if (useEquipment) {
+                switch (otto.getMeasureType()) {
+                    case ShowMeasureChooseDialogOtto.TYPE_BP:
+                        recordNewData(BPGuideActivity.class);
+                        break;
+                    case ShowMeasureChooseDialogOtto.TYPE_BS:
+                        recordNewData(BSGuideActivity.class);
+                        break;
+                }
+            } else {
+                switch (otto.getMeasureType()) {
+                    case ShowMeasureChooseDialogOtto.TYPE_BP:
+                        recordNewData(BPAddActivity.class);
+                        break;
+                    case ShowMeasureChooseDialogOtto.TYPE_BS:
+                        recordNewData(BSAddActivity.class);
+                        break;
+                }
+            }
+        } else {
+            showConfirmDialog(otto.getMeasureType());
+        }
     }
 
     private void changeShowPager(int position) {
         if (null != mViewPager) {
-            mViewPager.setCurrentItem(position,true);
+            mViewPager.setCurrentItem(position, true);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_daily_record, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean hasSetDefault = SPManager.get(DailyReportActivity.this).getBoolean(getString(R.string.setting_pref_key_measure_default), false);
+
+        boolean useEquipment = SPManager.get(DailyReportActivity.this).getBoolean(getString(R.string.setting_pref_key_use_equipment), true);
+
+        switch (item.getItemId()) {
+            case R.id.menu_daily_record_bp:
+                if (hasSetDefault) {
+                    if (useEquipment) {
+                        recordNewData(BPGuideActivity.class);
+                    } else {
+                        recordNewData(BPAddActivity.class);
+                    }
+                } else {
+                    showConfirmDialog(0);
+                }
+                break;
+            case R.id.menu_daily_record_bs:
+
+                if (hasSetDefault) {
+                    if (useEquipment) {
+                        recordNewData(BSGuideActivity.class);
+                    } else {
+                        recordNewData(BSAddActivity.class);
+                    }
+                } else {
+                    showConfirmDialog(1);
+                }
+                break;
+            case R.id.menu_daily_record_symptom:
+                recordNewData(SymptomActivity.class);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

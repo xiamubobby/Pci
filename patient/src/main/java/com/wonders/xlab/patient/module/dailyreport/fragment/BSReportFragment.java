@@ -70,7 +70,7 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
         tvMeasure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OttoManager.post(new ShowMeasureChooseDialogOtto(1));
+                OttoManager.post(new ShowMeasureChooseDialogOtto(ShowMeasureChooseDialogOtto.TYPE_BS));
             }
         });
 

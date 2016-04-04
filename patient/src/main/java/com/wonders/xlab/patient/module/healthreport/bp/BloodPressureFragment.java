@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.module.healthreport.bp;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,7 @@ public class BloodPressureFragment extends BaseFragment implements BloodPressure
 
         mRecyclerView.setLinearLayout(false);
         mRecyclerView.setPullRefreshEnable(false);
+        mRecyclerView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
         mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
             @Override
