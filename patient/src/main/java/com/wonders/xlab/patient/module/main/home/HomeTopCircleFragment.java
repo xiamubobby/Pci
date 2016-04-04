@@ -19,11 +19,11 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.module.dailyreport.DailyReportActivity;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportBean;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportBean;
-import com.wonders.xlab.patient.module.dailyreport.otto.BPSaveSuccessOtto;
-import com.wonders.xlab.patient.module.dailyreport.otto.BSSaveSuccessOtto;
+import com.wonders.xlab.patient.module.main.home.dailyreport.DailyReportActivity;
+import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.BPReportBean;
+import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.BSReportBean;
+import com.wonders.xlab.patient.module.main.home.dailyreport.otto.BPSaveSuccessOtto;
+import com.wonders.xlab.patient.module.main.home.dailyreport.otto.BSSaveSuccessOtto;
 import com.wonders.xlab.patient.module.main.home.bean.HomeTopCircleBean;
 
 import java.util.ArrayList;

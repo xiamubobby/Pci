@@ -12,8 +12,8 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.SymptomReportBean;
-import com.wonders.xlab.patient.module.dailyreport.otto.SymptomSaveSuccessOtto;
+import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.SymptomReportBean;
+import com.wonders.xlab.patient.module.main.home.dailyreport.otto.SymptomSaveSuccessOtto;
 import com.wonders.xlab.patient.mvp.presenter.ISymptomReportPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.SymptomReportPresenter;
 

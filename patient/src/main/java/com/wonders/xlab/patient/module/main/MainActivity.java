@@ -17,10 +17,13 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.auth.login.LoginActivity;
 import com.wonders.xlab.patient.module.main.doctors.DoctorFragment;
+import com.wonders.xlab.patient.module.main.doctors.otto.DoctorNotifyCountOtto;
+import com.wonders.xlab.patient.module.main.doctors.otto.MeNotifyCountOtto;
 import com.wonders.xlab.patient.module.main.home.HomeFragment;
 import com.wonders.xlab.patient.module.main.me.MeFragment;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.service.XEMChatService;
+import com.wonders.xlab.patient.util.UnreadMessageUtil;
 
 import java.util.ArrayList;
 
@@ -111,8 +114,13 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-        mTabMainBottom.setMsgMargin(1,0,8);
-        mTabMainBottom.setMsgMargin(2,0,6);
+
+        mTabMainBottom.setMsgMargin(1, 0, -5);
+        int unreadMessageCounts = UnreadMessageUtil.getAllUnreadMessageCounts();
+        if (unreadMessageCounts > 0) {
+            mTabMainBottom.showMsg(1, unreadMessageCounts);
+        }
+        mTabMainBottom.setMsgMargin(2, 0, 6);
 
         mViewPagerMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -134,20 +142,17 @@ public class MainActivity extends BaseActivity {
 
     @Subscribe
     public void changeDoctorNotifyCounts(DoctorNotifyCountOtto otto) {
-        if (otto.increase) {
-            mTabMainBottom.showMsg(1, 100);
+        int counts = UnreadMessageUtil.getAllUnreadMessageCounts();
+        if (counts > 0) {
+            mTabMainBottom.showMsg(1, counts);
         } else {
-
+            mTabMainBottom.hideMsg(1);
         }
     }
 
     @Subscribe
     public void changeMeNotifyCounts(MeNotifyCountOtto otto) {
-        if (otto.increase) {
-            mTabMainBottom.showDot(2);
-        } else {
-            mTabMainBottom.hideMsg(2);
-        }
+        mTabMainBottom.showDot(2);
     }
 
     @Override
@@ -158,6 +163,7 @@ public class MainActivity extends BaseActivity {
 
     /**
      * 优雅的退出全部Activity
+     *
      * @param bean
      */
     @Subscribe
@@ -168,47 +174,5 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, MainActivity.class));
         startActivity(new Intent(this, LoginActivity.class));
         finish();
-    }
-
-    public class DoctorNotifyCountOtto {
-        private boolean increase;
-        private int counts;
-
-        public boolean isIncrease() {
-            return increase;
-        }
-
-        public void setIncrease(boolean increase) {
-            this.increase = increase;
-        }
-
-        public int getCounts() {
-            return counts;
-        }
-
-        public void setCounts(int counts) {
-            this.counts = counts;
-        }
-    }
-
-    public class MeNotifyCountOtto {
-        private boolean increase;
-        private int counts;
-
-        public boolean isIncrease() {
-            return increase;
-        }
-
-        public void setIncrease(boolean increase) {
-            this.increase = increase;
-        }
-
-        public int getCounts() {
-            return counts;
-        }
-
-        public void setCounts(int counts) {
-            this.counts = counts;
-        }
     }
 }

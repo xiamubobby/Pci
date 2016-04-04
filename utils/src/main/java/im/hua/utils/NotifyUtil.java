@@ -15,9 +15,7 @@ import android.support.v4.app.TaskStackBuilder;
  */
 public class NotifyUtil {
     public void showNotification(Context context, Class targetClass, Bundle data, int id, String title, String message, @DrawableRes int smallIconResId, boolean autoCancel, boolean vibrate, boolean hasParent, int color) {
-
         Notification notification = generateNotification(context, targetClass, data, title, message, smallIconResId, autoCancel, vibrate, hasParent, color);
-
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(id, notification);
     }

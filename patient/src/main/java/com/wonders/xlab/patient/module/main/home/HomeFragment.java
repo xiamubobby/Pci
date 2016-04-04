@@ -16,11 +16,11 @@ import com.wonders.xlab.common.viewpager.LooperViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.module.dailyreport.DailyReportActivity;
+import com.wonders.xlab.patient.module.main.home.dailyreport.DailyReportActivity;
 import com.wonders.xlab.patient.module.healthreport.HealthReportActivity;
 import com.wonders.xlab.patient.module.main.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.patient.module.main.home.adapter.bean.HomeItemBean;
-import com.wonders.xlab.patient.module.medicalrecord.MedicalRecordActivity;
+import com.wonders.xlab.patient.module.main.home.medicalrecord.MedicalRecordActivity;
 
 import java.util.ArrayList;
 

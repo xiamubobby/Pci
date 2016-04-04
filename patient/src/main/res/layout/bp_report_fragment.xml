@@ -4,7 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context=".module.dailyreport.fragment.BPReportFragment">
+              tools:context=".module.main.home.dailyreport.fragment.BPReportFragment">
 
     <TextView
         android:layout_width="match_parent"

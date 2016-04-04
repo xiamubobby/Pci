@@ -22,9 +22,11 @@ import com.wonders.xlab.patient.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.OthersChatRoomBean;
 import com.wonders.xlab.patient.module.main.doctors.detail.DoctorDetailActivity;
+import com.wonders.xlab.patient.module.main.doctors.otto.DoctorNotifyCountOtto;
 import com.wonders.xlab.patient.mvp.presenter.IChatRoomPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.ChatRoomPresenter;
 import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;
+import com.wonders.xlab.patient.util.UnreadMessageUtil;
 
 import java.util.Calendar;
 import java.util.List;
@@ -116,6 +118,9 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
         //如果有的话，移除通知栏对应的通知，以groupId为通知id
         new NotifyUtil().cancel(this, Integer.parseInt(groupId));
+        UnreadMessageUtil.readMessage(imGroupId);
+        //通知主界面更新未读通知数显示
+        OttoManager.post(new DoctorNotifyCountOtto());
 
         initServiceStatus(canChat);
 

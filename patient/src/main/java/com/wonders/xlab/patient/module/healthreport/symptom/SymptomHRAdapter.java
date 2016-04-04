@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.SymptomReportBean;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.SymptomReportLabelBean;
+import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.SymptomReportBean;
+import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.SymptomReportLabelBean;
 import com.zhy.view.flowlayout.FlowLayout;
 
 import java.util.Calendar;

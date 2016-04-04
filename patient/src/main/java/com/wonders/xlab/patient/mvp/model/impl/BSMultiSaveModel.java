@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.wonders.xlab.patient.assist.deviceconnection.entity.BSEntityList;
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportBean;
+import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.BSReportBean;
 import com.wonders.xlab.patient.mvp.api.BSAPI;
 
 import im.hua.library.base.mvp.entity.SimpleEntity;

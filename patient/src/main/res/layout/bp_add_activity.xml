@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".module.dailyreport.datarecord.bp.BPAddActivity">
+    tools:context=".module.main.home.dailyreport.datarecord.bp.BPAddActivity">
 
     <include layout="@layout/appbar"/>
 

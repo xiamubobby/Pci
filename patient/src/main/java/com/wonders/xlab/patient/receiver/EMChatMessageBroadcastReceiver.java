@@ -15,8 +15,11 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.patient.module.main.MainActivity;
+import com.wonders.xlab.patient.module.main.doctors.otto.DoctorNotifyCountOtto;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
+import com.wonders.xlab.patient.realm.UnreadMessageRealm;
 import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;
+import com.wonders.xlab.patient.util.UnreadMessageUtil;
 
 import java.io.UnsupportedEncodingException;
 
@@ -80,6 +83,12 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             String txtContent = message.getStringAttribute("txtContent", "");
             String fromWhoAvatarUrl = message.getStringAttribute("fromWhoAvatarUrl", Constant.DEFAULT_PORTRAIT);
             String fromWhoName = message.getStringAttribute("fromWhoName", "");
+
+            /**
+             * 缓存未读通知数量
+             */
+            UnreadMessageUtil.addNewUnread(new UnreadMessageRealm(groupId,imGroupId));
+            OttoManager.post(new DoctorNotifyCountOtto());
 
             Bundle data = new Bundle();
             data.putString(ChatRoomActivity.EXTRA_GROUP_ID,groupId);
