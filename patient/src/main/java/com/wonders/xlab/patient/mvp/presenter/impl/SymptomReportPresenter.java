@@ -12,14 +12,14 @@ import com.wonders.xlab.patient.mvp.presenter.ISymptomReportPresenter;
 import java.util.ArrayList;
 import java.util.List;
 
-import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
 import io.realm.RealmList;
 
 /**
  * Created by hua on 16/3/24.
  */
-public class SymptomReportPresenter extends BasePresenter implements ISymptomReportPresenter, SymptomRetrieveModel.SymptomRetrieveModelListener {
+public class SymptomReportPresenter extends BasePagePresenter implements ISymptomReportPresenter, SymptomRetrieveModel.SymptomRetrieveModelListener {
     private SymptomReportPresenterListener mListener;
     private ISymptomRetrieveModel mSymptomRetrieveModel;
 
@@ -29,25 +29,25 @@ public class SymptomReportPresenter extends BasePresenter implements ISymptomRep
     }
 
     @Override
-    public void getSymptomList(String patientId, long startTime, long endTime) {
-        mSymptomRetrieveModel.getSymptomList(patientId, startTime, endTime);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void getSymptomList(String patientId, long startTime, long endTime, boolean refresh) {
+        if (refresh) {
+            resetPageInfo();
+        }
+        if (mIsLast) {
+            mListener.hideLoading();
+            return;
+        }
+        mSymptomRetrieveModel.getSymptomList(patientId, startTime, endTime, getNextPageIndex(), DEFAULT_PAGE_SIZE);
     }
 
     @Override
     public void onReceiveSymptomListSuccess(SymptomRetrieveEntity.RetValuesEntity valuesEntity) {
         mListener.hideLoading();
 
+        updatePageInfo(valuesEntity.getNumber(), valuesEntity.isFirst(), valuesEntity.isLast());
+
         List<SymptomRetrieveEntity.RetValuesEntity.ContentEntity> symptomList = valuesEntity.getContent();
 
-        if (null == symptomList || symptomList.size() <= 0) {
-            mListener.showEmptyView();
-            return;
-        }
         List<SymptomReportBean> symptomReportBeanList = new ArrayList<>();
         for (SymptomRetrieveEntity.RetValuesEntity.ContentEntity contentEntity : symptomList) {
             SymptomReportBean bean = new SymptomReportBean();
@@ -69,7 +69,15 @@ public class SymptomReportPresenter extends BasePresenter implements ISymptomRep
 
             symptomReportBeanList.add(bean);
         }
-        mListener.showSymptomList(symptomReportBeanList);
+        if (shouldAppend()) {
+            mListener.appendSymptomList(symptomReportBeanList);
+        } else {
+            if (symptomList.size() <= 0) {
+                mListener.showEmptyView();
+                return;
+            }
+            mListener.showSymptomList(symptomReportBeanList);
+        }
 
     }
 
@@ -81,6 +89,8 @@ public class SymptomReportPresenter extends BasePresenter implements ISymptomRep
 
     public interface SymptomReportPresenterListener extends BasePresenterListener {
         void showSymptomList(List<SymptomReportBean> reportBeanList);
+
+        void appendSymptomList(List<SymptomReportBean> reportBeanList);
 
         void showEmptyView();
     }

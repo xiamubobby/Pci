@@ -31,10 +31,11 @@ public interface SymptomAPI {
      * @param userId
      * @param startTimeInMill
      * @param endTimeInMill
-     * @return
+     * @param page
+     *@param size @return
      */
     @GET("v1/symptoms/listUserSymptoms")
-    Observable<Response<SymptomRetrieveEntity>> getSymptomList(@Query("userId") String userId, @Query("start") long startTimeInMill, @Query("end") long endTimeInMill);
+    Observable<Response<SymptomRetrieveEntity>> getSymptomList(@Query("userId") String userId, @Query("start") long startTimeInMill, @Query("end") long endTimeInMill,@Query("page") int page,@Query("size") int size);
 
     @FormUrlEncoded
     @POST("v1/symptoms/saveUserSymptom")

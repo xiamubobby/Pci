@@ -67,41 +67,52 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 8));
 
-       mRecyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.setRefreshing(true);
-            }
-        });
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId(), DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday());
+                mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId(), DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday(), true);
             }
         });
-        mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId(), DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday());
+        mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId(), DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday(), false);
+            }
+        });
+        mRecyclerView.setRefreshing(true);
+        mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId(), DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday(), true);
     }
 
     @Subscribe
     public void refresh(SymptomSaveSuccessOtto otto) {
-        mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId(), DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday());
+        mSymptomReportPresenter.getSymptomList(AIManager.getInstance().getPatientId(), DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday(), true);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        adapter = null;
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public void showSymptomList(List<SymptomReportBean> reportBeanList) {
-        mRecyclerView.showEmptyView();
+    private void initAdapter() {
         if (null == adapter) {
             adapter = new SymptomReportAdapter();
+            mRecyclerView.setAdapter(adapter);
         }
+    }
+
+    @Override
+    public void showSymptomList(List<SymptomReportBean> reportBeanList) {
+        initAdapter();
         adapter.setDatas(reportBeanList);
-        mRecyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void appendSymptomList(List<SymptomReportBean> reportBeanList) {
+        initAdapter();
+        adapter.appendDatas(reportBeanList);
     }
 
     @Override
@@ -122,6 +133,6 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
         if (null == mRecyclerView) {
             return;
         }
-        mRecyclerView.hideRefreshOrLoadMore(true,true);
+        mRecyclerView.hideRefreshOrLoadMore(true, true);
     }
 }

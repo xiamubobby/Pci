@@ -30,8 +30,8 @@ public class SymptomRetrieveModel extends PatientBaseModel<SymptomRetrieveEntity
     }
 
     @Override
-    public void getSymptomList(String patientId, long startTime, long endTime) {
-        fetchData(mSymptomAPI.getSymptomList(patientId, startTime, endTime), true);
+    public void getSymptomList(String patientId, long startTime, long endTime, int page, int size) {
+        fetchData(mSymptomAPI.getSymptomList(patientId, startTime, endTime, page, size), true);
     }
 
     public interface SymptomRetrieveModelListener extends BaseModelListener {
