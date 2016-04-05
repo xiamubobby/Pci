@@ -385,6 +385,11 @@ public class CirclePageIndicator extends View implements PageIndicator {
 
     @Override
     public void notifyDataSetChanged() {
+        if (mViewPager.getAdapter().getCount() <= 1 && !mShowWhenSingle) {
+            this.setVisibility(INVISIBLE);
+        } else {
+            this.setVisibility(VISIBLE);
+        }
         invalidate();
     }
 

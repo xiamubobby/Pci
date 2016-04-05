@@ -121,7 +121,11 @@ public class CommonRecyclerView extends FrameLayout {
                 params.width = size;
                 params.height = size;
             }
-            params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+            if (reverseLayout) {
+                params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+            } else {
+                params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+            }
             params.bottomMargin = dp2px(10);
             mLoadMoreView.setLayoutParams(params);
         }
@@ -260,14 +264,14 @@ public class CommonRecyclerView extends FrameLayout {
         void onLoadMore();
     }
 
-    private TranslateAnimation hideAnimation = new TranslateAnimation(
+    private TranslateAnimation hideNoReverseAnimation = new TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
             Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f);
 
     private void hideLoadMore() {
-        hideAnimation.setDuration(400);
-        hideAnimation.setFillAfter(true);
-        hideAnimation.setAnimationListener(new Animation.AnimationListener() {
+        hideNoReverseAnimation.setDuration(400);
+        hideNoReverseAnimation.setFillAfter(true);
+        hideNoReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
 
@@ -286,19 +290,19 @@ public class CommonRecyclerView extends FrameLayout {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mLoadMoreView.startAnimation(hideAnimation);
+                mLoadMoreView.startAnimation(hideNoReverseAnimation);
             }
         }, 1000);
 
     }
 
-    private TranslateAnimation showAnimation = new TranslateAnimation(
+    private TranslateAnimation showNoReverseAnimation = new TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
             Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
 
     public void showLoadMore() {
-        showAnimation.setFillAfter(true);
-        showAnimation.setAnimationListener(new Animation.AnimationListener() {
+        showNoReverseAnimation.setFillAfter(true);
+        showNoReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
             }
@@ -313,8 +317,8 @@ public class CommonRecyclerView extends FrameLayout {
 
             }
         });
-        showAnimation.setDuration(400);
-        mLoadMoreView.startAnimation(showAnimation);
+        showNoReverseAnimation.setDuration(400);
+        mLoadMoreView.startAnimation(showNoReverseAnimation);
     }
 
     public int dp2px(float dpVal) {

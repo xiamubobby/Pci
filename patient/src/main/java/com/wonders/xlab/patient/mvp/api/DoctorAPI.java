@@ -15,9 +15,23 @@ import rx.Observable;
  * Created by hua on 16/3/17.
  */
 public interface DoctorAPI {
+    /**
+     * 我的医生
+     * @param patientId
+     * @param page
+     * @param size
+     * @return
+     */
     @GET("v1/doctors/listDoctorGroups/{patientId}")
     Observable<Response<DoctorMyEntity>> getMyDoctors(@Path("patientId") String patientId, @Query("page") int page, @Query("size") int size);
 
+    /**
+     * 所有医生
+     * @param patientId
+     * @param page
+     * @param size
+     * @return
+     */
     @GET("v1/doctors/listAllDoctors/{patientId}")
     Observable<Response<DoctorAllEntity>> getAllDoctors(@Path("patientId") String patientId, @Query("page") int page,@Query("size") int size);
 

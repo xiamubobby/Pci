@@ -1,6 +1,7 @@
 package com.wonders.xlab.patient.module.main.home;
 
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,13 +17,17 @@ import com.wonders.xlab.common.viewpager.LooperViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.module.main.home.dailyreport.DailyReportActivity;
 import com.wonders.xlab.patient.module.healthreport.HealthReportActivity;
 import com.wonders.xlab.patient.module.main.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.patient.module.main.home.adapter.bean.HomeItemBean;
+import com.wonders.xlab.patient.module.main.home.bean.HomeBannerBean;
+import com.wonders.xlab.patient.module.main.home.dailyreport.DailyReportActivity;
 import com.wonders.xlab.patient.module.main.home.medicalrecord.MedicalRecordActivity;
+import com.wonders.xlab.patient.mvp.presenter.IHomeTopPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.HomeTopPresenter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,7 +37,7 @@ import im.hua.uikit.viewpager.CirclePageIndicator;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeTopPresenterListener {
 
     @Bind(R.id.view_pager_home)
     LooperViewPager mViewPagerHome;
@@ -44,6 +49,8 @@ public class HomeFragment extends BaseFragment {
     private HomeRVAdapter homeRVAdapter;
 
     private FragmentVPAdapter topVPAdapter;
+
+    private IHomeTopPresenter mIHomeTopPresenter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,6 +66,9 @@ public class HomeFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_fragment, container, false);
         ButterKnife.bind(this, view);
+
+        mIHomeTopPresenter = new HomeTopPresenter(this);
+        addPresenter(mIHomeTopPresenter);
         return view;
     }
 
@@ -69,13 +79,21 @@ public class HomeFragment extends BaseFragment {
         mRecyclerViewHome.setItemAnimator(new DefaultItemAnimator());
         setupBottomFunctionView();
 
-        topVPAdapter = new FragmentVPAdapter(getActivity().getFragmentManager());
+        if (null == topVPAdapter) {
+            topVPAdapter = new FragmentVPAdapter(getActivity().getFragmentManager());
+            mViewPagerHome.setAdapter(topVPAdapter);
+            mIndicatorHome.setViewPager(mViewPagerHome);
+            topVPAdapter.registerDataSetObserver(new DataSetObserver() {
+                @Override
+                public void onChanged() {
+                    super.onChanged();
+                    mIndicatorHome.notifyDataSetChanged();
+                }
+            });
+        }
         topVPAdapter.addFragment(HomeTopCircleFragment.newInstance(null),"最近健康数据");
-        topVPAdapter.addFragment(HomeTopImageFragment.newInstance("http://mmbiz.qpic.cn/mmbiz/gj62mn6HWrkADfXmMmNEmic7BRTB30aZicwJ74R0ibLvAXco4dLTJtOAkAGRW4PklnevKvqJkNzmGtosU9HUbFQXQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5", "https://mp.weixin.qq.com/s?__biz=MzI3MTE0MzE4OA==&mid=402506650&idx=1&sn=835501fbff82d74eeb091705bad45908&scene=1&srcid=0313puhCxxMzCRem3xajbdJu&key=710a5d99946419d9a9ec354ed7c1757fbfb4f58a2db84028d9e611b33539e3f43e16d94e206510518e370b3bd8940838&ascene=0&uin=MjgwMjI2Mzc1&devicetype=iMac+MacBookPro11%2C5+OSX+OSX+10.11.2+build(15C50)&version=11020201&pass_ticket=CxvDr1ZlxeWQYh7f29QnAfCynylFVU0mB6pChMo2RpBt24d5WMM7S5RlQfwO1Ubj"),"广告1");
-        topVPAdapter.addFragment(HomeTopImageFragment.newInstance("http://mmbiz.qpic.cn/mmbiz/gj62mn6HWrmN80xGVWnvR6bTDzVHopNpt2bVa3U6DgA29wkia6WaMZXDomeib22BjpIRpD3AhdsJev9j50ia8FKpg/0?tp=webp&wxfrom=5&wx_lazy=1", "https://mp.weixin.qq.com/s?__biz=MzI3MTE0MzE4OA==&mid=403001788&idx=1&sn=2840b64b96e3ed32f35d4194b75f3aaa&scene=1&srcid=0313W1BPh2zSVgeHLN9KoOJ8&key=710a5d99946419d900fad65bd3cbdf05f4f85373e58259a5d49ccd4133930038e475e17397a142ffd6c3466ccc1b8191&ascene=0&uin=MjgwMjI2Mzc1&devicetype=iMac+MacBookPro11%2C5+OSX+OSX+10.11.2+build(15C50)&version=11020201&pass_ticket=CxvDr1ZlxeWQYh7f29QnAfCynylFVU0mB6pChMo2RpBt24d5WMM7S5RlQfwO1Ubj"),"广告2");
 
-        mViewPagerHome.setAdapter(topVPAdapter);
-        mIndicatorHome.setViewPager(mViewPagerHome);
+        mIHomeTopPresenter.getHomeBanner();
 
     }
 
@@ -147,7 +165,26 @@ public class HomeFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+        topVPAdapter.clear();
         topVPAdapter = null;
+        homeRVAdapter.clear();
         homeRVAdapter = null;
+    }
+
+    @Override
+    public void showHomeTopBanner(List<HomeBannerBean> homeBannerBeanList) {
+        for (HomeBannerBean bean : homeBannerBeanList) {
+            topVPAdapter.addFragment(HomeTopImageFragment.newInstance(bean.getImageUrl(), bean.getLinkUrl()),bean.getTitle());
+        }
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
     }
 }
