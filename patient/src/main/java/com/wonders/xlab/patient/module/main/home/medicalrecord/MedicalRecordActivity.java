@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.module.main.home.medicalrecord;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
-import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
@@ -30,6 +30,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.hua.uikit.crv.CommonRecyclerView;
 import im.hua.utils.KeyboardUtil;
 import me.iwf.photopicker.PhotoPagerActivity;
 import me.iwf.photopicker.PhotoPickerActivity;
@@ -49,7 +50,8 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
     private static final int REQUEST_PICTURES_CODE = 1124;
 
     @Bind(R.id.recycler_view_medical_record)
-    PullLoadMoreRecyclerView mRecyclerView;
+    CommonRecyclerView mRecyclerView;
+
     private MedicalRecordRVAdapter mMedicalRecordRVAdapter;
 
     private MedicalRecordPresenter mMedicalRecordPresenter;
@@ -86,17 +88,17 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
             return;
         }
 
-        mRecyclerView.setLinearLayout(false);
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 5));
-        mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
-            @Override
-            public void onRefresh() {
-                mMedicalRecordPresenter.getMedicalRecordList(mPatientId, true);
-            }
-
+        mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 mMedicalRecordPresenter.getMedicalRecordList(mPatientId, false);
+            }
+        });
+        mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mMedicalRecordPresenter.getMedicalRecordList(mPatientId, true);
             }
         });
 
@@ -132,11 +134,11 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
                                 }
                             }
                             if (canUpload) {
-                                final EditText editText = (EditText) LayoutInflater.from(MedicalRecordActivity.this).inflate(R.layout.simple_single_line_edit_text,null,false);
+                                final EditText editText = (EditText) LayoutInflater.from(MedicalRecordActivity.this).inflate(R.layout.simple_single_line_edit_text, null, false);
                                 editText.setHint("请输入自传病历报告标题(最多200个字符)");
                                 final AlertDialog alertDialog = new AlertDialog.Builder(MedicalRecordActivity.this)
                                         .setTitle("自传病历报告")
-                                        .setPositiveButton("确定",null)
+                                        .setPositiveButton("确定", null)
                                         .setNegativeButton("取消", null)
                                         .setView(editText).create();
 
@@ -201,13 +203,6 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
         }
     }
 
-    @Override
-    public void showMedicalRecordList(List<MedicalRecordBean> beanList) {
-        initMedicalRecordRVAdapter();
-        mRecyclerView.setAdapter(mMedicalRecordRVAdapter);
-        mMedicalRecordRVAdapter.setDatas(beanList);
-    }
-
     private void initMedicalRecordRVAdapter() {
         if (null == mMedicalRecordRVAdapter) {
             mMedicalRecordRVAdapter = new MedicalRecordRVAdapter();
@@ -222,6 +217,13 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
                 }
             });
         }
+    }
+
+    @Override
+    public void showMedicalRecordList(List<MedicalRecordBean> beanList) {
+        initMedicalRecordRVAdapter();
+        mRecyclerView.setAdapter(mMedicalRecordRVAdapter);
+        mMedicalRecordRVAdapter.setDatas(beanList);
     }
 
     @Override
@@ -243,8 +245,7 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
 
     @Override
     public void hideLoading() {
-        mRecyclerView.setPullLoadMoreCompleted();
-        mRecyclerView.setRefreshing(false);
+        mRecyclerView.hideRefreshOrLoadMore(true,true);
         dismissProgressDialog();
     }
 

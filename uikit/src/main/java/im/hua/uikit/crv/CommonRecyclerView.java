@@ -2,6 +2,7 @@ package im.hua.uikit.crv;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,8 +11,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 
 import im.hua.uikit.R;
@@ -30,6 +35,7 @@ public class CommonRecyclerView extends FrameLayout {
     private View mEmptyView;
     private View mNetworkErrorView;
     private View mServerErrorView;
+    private View mLoadMoreView;
 
     private int layoutManager;
     private boolean reverseLayout;
@@ -54,6 +60,7 @@ public class CommonRecyclerView extends FrameLayout {
         mLoadingView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_loadingView, R.layout.crv_loading), null, false);
         mNetworkErrorView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_networkErrorView, R.layout.crv_network_error), null, false);
         mServerErrorView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_serverErrorView, R.layout.crv_server_error), null, false);
+        mLoadMoreView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_loadMoreView, R.layout.crv_load_more), null, false);
         layoutManager = array.getInteger(R.styleable.CommonRecyclerView_crvLayoutManager, LAYOUT_MANGER_LINEAR);
         spanCount = array.getInteger(R.styleable.CommonRecyclerView_crvSpanCount, 1);
         orientation = array.getInteger(R.styleable.CommonRecyclerView_orientation, RecyclerView.VERTICAL);
@@ -101,6 +108,22 @@ public class CommonRecyclerView extends FrameLayout {
         }
         if (null != mRefreshView) {
             this.addView(mRefreshView);
+        }
+        if (null != mLoadMoreView) {
+            this.addView(mLoadMoreView);
+            mLoadMoreView.setVisibility(GONE);
+
+            FrameLayout.LayoutParams params = (LayoutParams) mLoadMoreView.getLayoutParams();
+            int size = dp2px(40);
+            if (params == null) {
+                params = new FrameLayout.LayoutParams(size, size);
+            } else {
+                params.width = size;
+                params.height = size;
+            }
+            params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+            params.bottomMargin = dp2px(10);
+            mLoadMoreView.setLayoutParams(params);
         }
     }
 
@@ -193,6 +216,7 @@ public class CommonRecyclerView extends FrameLayout {
 
     public void loadMore() {
         if (null != mOnLoadMoreListener) {
+            showLoadMore();
             mOnLoadMoreListener.onLoadMore();
         }
     }
@@ -218,11 +242,12 @@ public class CommonRecyclerView extends FrameLayout {
         mRefreshView.setOnRefreshListener(listener);
     }
 
-    public void hideRefreshOrLoadMore(boolean hideRefreshing,boolean hideLodeMore) {
+    public void hideRefreshOrLoadMore(boolean hideRefreshing, boolean hideLodeMore) {
         if (hideRefreshing) {
             setRefreshing(false);
         }
         if (hideLodeMore) {
+            hideLoadMore();
             setIsLoadMore(false);
         }
     }
@@ -231,7 +256,69 @@ public class CommonRecyclerView extends FrameLayout {
         mOnLoadMoreListener = onLoadMoreListener;
     }
 
-    public interface OnLoadMoreListener{
+    public interface OnLoadMoreListener {
         void onLoadMore();
+    }
+
+    private TranslateAnimation hideAnimation = new TranslateAnimation(
+            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f);
+
+    private void hideLoadMore() {
+        hideAnimation.setDuration(400);
+        hideAnimation.setFillAfter(true);
+        hideAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mLoadMoreView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mLoadMoreView.startAnimation(hideAnimation);
+            }
+        }, 1000);
+
+    }
+
+    private TranslateAnimation showAnimation = new TranslateAnimation(
+            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+            Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+
+    public void showLoadMore() {
+        showAnimation.setFillAfter(true);
+        showAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mLoadMoreView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        showAnimation.setDuration(400);
+        mLoadMoreView.startAnimation(showAnimation);
+    }
+
+    public int dp2px(float dpVal) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                dpVal, getResources().getDisplayMetrics());
     }
 }

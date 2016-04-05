@@ -5,6 +5,7 @@
         <attr name="loadingView" format="reference"/>
         <attr name="networkErrorView" format="reference"/>
         <attr name="serverErrorView" format="reference"/>
+        <attr name="loadMoreView" format="reference"/>
         <attr name="crvLayoutManager" format="integer">
             <enum name="LinearLayoutManager" value="0"/>
             <enum name="GridLayoutManager" value="1"/>

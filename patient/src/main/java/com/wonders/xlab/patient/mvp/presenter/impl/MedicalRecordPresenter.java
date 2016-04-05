@@ -32,7 +32,7 @@ public class MedicalRecordPresenter extends BasePagePresenter implements Medical
         }
         if (mIsLast) {
             mPresenterListener.hideLoading();
-            mPresenterListener.showReachTheLastPageNotice("没有更多数据了");
+            mPresenterListener.showReachTheLastPageNotice("");
             return;
         }
         mMedicalRecordModel.getMedicalRecordList(userId, getNextPageIndex(), DEFAULT_PAGE_SIZE);
