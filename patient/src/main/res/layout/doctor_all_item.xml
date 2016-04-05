@@ -65,8 +65,7 @@
             <ImageView
                 android:id="@+id/iv_doctor_detail_portrait"
                 android:layout_width="@dimen/doctor_list_icon_size"
-                android:layout_height="@dimen/doctor_list_icon_size"
-                android:src="@mipmap/ic_launcher"/>
+                android:layout_height="@dimen/doctor_list_icon_size"/>
 
             <TextView
                 android:id="@+id/tv_doctor_detail_admin_name"

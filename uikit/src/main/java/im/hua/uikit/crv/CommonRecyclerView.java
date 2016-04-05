@@ -127,6 +127,8 @@ public class CommonRecyclerView extends FrameLayout {
                 super.onChanged();
                 if (adapter.getItemCount() > 0) {
                     showContentView();
+                } else {
+                    showEmptyView();
                 }
             }
         });

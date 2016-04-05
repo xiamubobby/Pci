@@ -11,7 +11,7 @@ public class BasePagePresenter extends BasePresenter {
      * 3、{@link #updatePageInfo(int, boolean, boolean)} when get response from the server
      * 4、{@link #shouldAppend()} when you want to show the list view or append the data to your list view
      */
-    protected int DEFAULT_PAGE_SIZE = 10;
+    protected int DEFAULT_PAGE_SIZE = 20;
     protected int mCurrentIndex = -1;
     protected boolean mIsFirst = true;
     protected boolean mIsLast = false;

@@ -3,15 +3,14 @@ package com.wonders.xlab.patient.module.main.doctors;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
-import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.main.doctors.adapter.AllDoctorRVAdapter;
@@ -25,6 +24,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseFragment;
+import im.hua.uikit.crv.CommonRecyclerView;
 
 /**
  * 所有医生
@@ -32,9 +32,7 @@ import im.hua.library.base.BaseFragment;
 public class DoctorAllFragment extends BaseFragment implements DoctorAllPresenter.DoctorAllPresenterListener {
 
     @Bind(R.id.recycler_view_doctor_all)
-    PullLoadMoreRecyclerView mRecyclerView;
-    @Bind(R.id.empty)
-    View mEmptyView;
+    CommonRecyclerView mRecyclerView;
 
     private IDoctorAllPresenter mDoctorAllPresenter;
 
@@ -63,19 +61,18 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mEmptyView.setVisibility(View.GONE);
-        mRecyclerView.setLinearLayout(false);
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
         mRecyclerView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+        mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), false);
+            }
+        });
+        mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
-            }
-
-            @Override
-            public void onLoadMore() {
-                Toast.makeText(getActivity(), "onLoadMore", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -113,8 +110,6 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
                 }
             });
         }
-        mEmptyView.setVisibility(View.GONE);
-        mRecyclerView.setVisibility(View.VISIBLE);
         mRecyclerView.setAdapter(mAllDoctorRVAdapter);
 
     }
@@ -132,8 +127,7 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
 
     @Override
     public void showEmptyView() {
-        mRecyclerView.setVisibility(View.GONE);
-        mEmptyView.setVisibility(View.VISIBLE);
+        mRecyclerView.showEmptyView();
     }
 
     @Override
@@ -146,6 +140,6 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
         if (null == mRecyclerView) {
             return;
         }
-        mRecyclerView.setPullLoadMoreCompleted();
+        mRecyclerView.hideRefreshOrLoadMore(true,true);
     }
 }

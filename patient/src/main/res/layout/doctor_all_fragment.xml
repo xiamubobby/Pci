@@ -1,16 +1,9 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".module.main.doctors.DoctorAllFragment">
-
-    <com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView
-        android:id="@+id/recycler_view_doctor_all"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-    <include
-        android:id="@+id/empty"
-        layout="@layout/common_empty"/>
-</FrameLayout>
-
+<im.hua.uikit.crv.CommonRecyclerView
+    android:id="@+id/recycler_view_doctor_all"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:emptyView="@layout/common_empty"
+    tools:context=".module.main.doctors.DoctorAllFragment"/>

@@ -66,6 +66,7 @@ public class DoctorAllPresenter extends BasePagePresenter implements IDoctorAllP
 
         if (shouldAppend()) {
             if (doctorItemBeanArrayList.size() <= 0) {
+                mCurrentIndex--;
                 mDoctorAllListener.showReachTheLastPageNotice("");
                 return;
             }
