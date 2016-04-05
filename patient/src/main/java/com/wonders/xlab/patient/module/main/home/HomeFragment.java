@@ -165,7 +165,6 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-        topVPAdapter.clear();
         topVPAdapter = null;
         homeRVAdapter.clear();
         homeRVAdapter = null;

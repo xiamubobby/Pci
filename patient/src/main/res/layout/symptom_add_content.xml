@@ -46,7 +46,7 @@
 
         <include
             android:id="@+id/empty"
-            layout="@layout/common_error"
+            layout="@layout/common_network_error"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </FrameLayout>

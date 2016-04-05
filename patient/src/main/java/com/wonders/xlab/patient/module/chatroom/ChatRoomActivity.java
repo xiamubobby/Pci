@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.squareup.otto.Subscribe;
@@ -60,9 +59,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     private String imGroupId;
     private String groupName;
     private boolean canChat;
-
-    @Bind(R.id.ll_chat_room_loading)
-    LinearLayout mLoadingView;
 
     @Bind(R.id.rl_chat_room_input_area)
     RelativeLayout mRlChatRoomInputArea;
@@ -129,9 +125,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
         setToolbarTitle(groupName);
 
-        mLoadingView.setVisibility(View.GONE);
-
-        mRecyclerView.setVisibility(View.GONE);
         mRecyclerView.setRefreshEnable(false);
         mRecyclerView.getRecyclerView().setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -148,7 +141,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             @Override
             public void onLoadMore() {
-                mLoadingView.setVisibility(View.VISIBLE);
                 mChatRoomPresenter.getChatList(imGroupId, false);
             }
         });
@@ -156,6 +148,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance().getPatientId());
         addPresenter(mChatRoomPresenter);
 
+        mRecyclerView.showLoadMore();
         mChatRoomPresenter.getChatList(imGroupId, true);
     }
 
@@ -210,6 +203,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     @Override
     public void onDestroy() {
         super.onDestroy();
+        mChatRoomRVAdapter = null;
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
@@ -243,20 +237,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         }
     }
 
-    private void initChatRoomAdapter() {
-        mRecyclerView.setVisibility(View.VISIBLE);
-        if (mChatRoomRVAdapter == null) {
-            mChatRoomRVAdapter = new ChatRoomRVAdapter();
-            mChatRoomRVAdapter.setOnItemClickListener(new MultiRVAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    KeyboardUtil.hide(ChatRoomActivity.this);
-                }
-            });
-        }
-        mRecyclerView.setAdapter(mChatRoomRVAdapter);
-    }
-
     /**
      * 接收其他人发给我的通知，加入显示列表，并且移除通知栏的该条通知
      *
@@ -281,6 +261,19 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             mChatRoomRVAdapter.insertToTop(bean);
             mRecyclerView.getRecyclerView().scrollToPosition(0);
+        }
+    }
+
+    private void initChatRoomAdapter() {
+        if (mChatRoomRVAdapter == null) {
+            mChatRoomRVAdapter = new ChatRoomRVAdapter();
+            mChatRoomRVAdapter.setOnItemClickListener(new MultiRVAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    KeyboardUtil.hide(ChatRoomActivity.this);
+                }
+            });
+            mRecyclerView.setAdapter(mChatRoomRVAdapter);
         }
     }
 
@@ -324,7 +317,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
     @Override
     public void hideLoading() {
-        mLoadingView.setVisibility(View.GONE);
         mRecyclerView.hideRefreshOrLoadMore(true, true);
     }
 

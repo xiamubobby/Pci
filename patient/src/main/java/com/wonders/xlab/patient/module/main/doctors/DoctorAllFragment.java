@@ -61,8 +61,8 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
-        mRecyclerView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -76,25 +76,15 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
             }
         });
 
-        mRecyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.setRefreshing(true);
-            }
-        });
+        mRecyclerView.setRefreshing(true);
         mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mAllDoctorRVAdapter = null;
         ButterKnife.unbind(this);
-    }
-
-    @Override
-    public void showAllDoctorList(ArrayList<AllDoctorItemBean> myDoctorBeanList) {
-        initRecyclerViewAdapter();
-        mAllDoctorRVAdapter.setDatas(myDoctorBeanList);
     }
 
     private void initRecyclerViewAdapter() {
@@ -109,9 +99,14 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
                     startActivity(intent);
                 }
             });
+            mRecyclerView.setAdapter(mAllDoctorRVAdapter);
         }
-        mRecyclerView.setAdapter(mAllDoctorRVAdapter);
+    }
 
+    @Override
+    public void showAllDoctorList(ArrayList<AllDoctorItemBean> myDoctorBeanList) {
+        initRecyclerViewAdapter();
+        mAllDoctorRVAdapter.setDatas(myDoctorBeanList);
     }
 
     @Override

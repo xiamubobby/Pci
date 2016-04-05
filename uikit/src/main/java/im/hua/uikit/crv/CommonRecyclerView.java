@@ -47,6 +47,27 @@ public class CommonRecyclerView extends FrameLayout {
 
     private boolean mIsLoadMore;
 
+    /**
+     * 加载更多view动画
+     * 正序
+     */
+    private long mLoadMoreAnimationDuration = 400;
+    private TranslateAnimation showNoReverseAnimation = new TranslateAnimation(
+            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+            Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, -0.2f);
+
+    private TranslateAnimation hideNoReverseAnimation = new TranslateAnimation(
+            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+            Animation.RELATIVE_TO_SELF, -0.2f, Animation.RELATIVE_TO_SELF, 1.0f);
+
+    private TranslateAnimation showReverseAnimation = new TranslateAnimation(
+            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+            Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.2f);
+
+    private TranslateAnimation hideReverseAnimation = new TranslateAnimation(
+            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+            Animation.RELATIVE_TO_SELF, 0.2f, Animation.RELATIVE_TO_SELF, -1.0f);
+
     public CommonRecyclerView(Context context) {
         this(context, null);
     }
@@ -111,7 +132,6 @@ public class CommonRecyclerView extends FrameLayout {
         }
         if (null != mLoadMoreView) {
             this.addView(mLoadMoreView);
-            mLoadMoreView.setVisibility(GONE);
 
             FrameLayout.LayoutParams params = (LayoutParams) mLoadMoreView.getLayoutParams();
             int size = dp2px(40);
@@ -123,12 +143,94 @@ public class CommonRecyclerView extends FrameLayout {
             }
             if (reverseLayout) {
                 params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+                mLoadMoreView.setTop(-size);
+//                params.topMargin = dp2px(10);
             } else {
                 params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+                mLoadMoreView.setTop(getMeasuredHeight());
+//                params.bottomMargin = dp2px(10);
             }
-            params.bottomMargin = dp2px(10);
             mLoadMoreView.setLayoutParams(params);
+            mLoadMoreView.setVisibility(GONE);
         }
+
+        initLoadMoreAnimation();
+    }
+
+    private void initLoadMoreAnimation() {
+        hideNoReverseAnimation.setDuration(mLoadMoreAnimationDuration);
+        hideNoReverseAnimation.setFillAfter(true);
+        hideNoReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mLoadMoreView.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        hideReverseAnimation.setDuration(mLoadMoreAnimationDuration);
+        hideReverseAnimation.setFillAfter(true);
+        hideReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mLoadMoreView.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        showNoReverseAnimation.setDuration(mLoadMoreAnimationDuration);
+        showNoReverseAnimation.setFillAfter(true);
+        showNoReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mLoadMoreView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        showReverseAnimation.setDuration(mLoadMoreAnimationDuration);
+        showReverseAnimation.setFillAfter(true);
+        showReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mLoadMoreView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
     public void addItemDecoration(RecyclerView.ItemDecoration decor) {
@@ -175,10 +277,6 @@ public class CommonRecyclerView extends FrameLayout {
 
     public void showContentView() {
         showView(mRefreshView);
-    }
-
-    public void showLoadingView() {
-        showView(mLoadingView);
     }
 
     private void showView(View view) {
@@ -250,9 +348,8 @@ public class CommonRecyclerView extends FrameLayout {
         if (hideRefreshing) {
             setRefreshing(false);
         }
-        if (hideLodeMore) {
+        if (hideLodeMore && isLoadingMore()) {
             hideLoadMore();
-            setIsLoadMore(false);
         }
     }
 
@@ -264,61 +361,28 @@ public class CommonRecyclerView extends FrameLayout {
         void onLoadMore();
     }
 
-    private TranslateAnimation hideNoReverseAnimation = new TranslateAnimation(
-            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 1.0f);
-
-    private void hideLoadMore() {
-        hideNoReverseAnimation.setDuration(400);
-        hideNoReverseAnimation.setFillAfter(true);
-        hideNoReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mLoadMoreView.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
+    public synchronized void hideLoadMore() {
+        setIsLoadMore(false);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mLoadMoreView.startAnimation(hideNoReverseAnimation);
+                if (reverseLayout) {
+                    mLoadMoreView.startAnimation(hideReverseAnimation);
+                } else {
+                    mLoadMoreView.startAnimation(hideNoReverseAnimation);
+                }
             }
         }, 1000);
 
     }
 
-    private TranslateAnimation showNoReverseAnimation = new TranslateAnimation(
-            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-
-    public void showLoadMore() {
-        showNoReverseAnimation.setFillAfter(true);
-        showNoReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mLoadMoreView.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        showNoReverseAnimation.setDuration(400);
-        mLoadMoreView.startAnimation(showNoReverseAnimation);
+    public synchronized void showLoadMore() {
+        setIsLoadMore(true);
+        if (reverseLayout) {
+            mLoadMoreView.startAnimation(showReverseAnimation);
+        } else {
+            mLoadMoreView.startAnimation(showNoReverseAnimation);
+        }
     }
 
     public int dp2px(float dpVal) {
