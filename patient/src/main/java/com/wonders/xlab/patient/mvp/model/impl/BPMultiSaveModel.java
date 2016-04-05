@@ -1,8 +1,6 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
 
-import android.text.TextUtils;
-
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.assist.deviceconnection.entity.BPEntityList;
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
@@ -51,11 +49,7 @@ public class BPMultiSaveModel extends PatientBaseModel<SimpleEntity> {
 
     @Override
     protected void onFailed(String message) {
-        if (TextUtils.isEmpty(message)) {
-            mBPSaveModelListener.onReceiveFailed("保存血压失败，请重试！");
-        } else {
-            mBPSaveModelListener.onReceiveFailed(message);
-        }
+        mBPSaveModelListener.onReceiveFailed(message);
     }
 
     public interface BPMultiSaveModelListener extends BaseModelListener {

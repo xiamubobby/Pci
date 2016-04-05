@@ -82,7 +82,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenterListene
 
     @OnClick(R.id.btn_login)
     public void login() {
-        KeyboardUtil.hide(this, mCoordinate.getWindowToken());
+        KeyboardUtil.hide(this);
         String tel = mEtPhoneNumber.getText().toString();
         if (TextUtils.isEmpty(tel)) {
             ViewHelper.shakeEdit(mEtPhoneNumber, this);

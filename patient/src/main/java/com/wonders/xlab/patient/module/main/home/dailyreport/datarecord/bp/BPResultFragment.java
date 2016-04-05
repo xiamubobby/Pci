@@ -11,7 +11,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
@@ -95,18 +94,6 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
         } else {
             mTvBpResultIdealRange.setText(rangeStr);
         }
-
-        /*BPEntityList bpEntityList = new BPEntityList();
-        List<BloodPressureEntity> entities = new ArrayList<>();
-        BloodPressureEntity entity = new BloodPressureEntity();
-        entity.setDate(Calendar.getInstance().getTimeInMillis());
-        entity.setHeartRate(76);
-        entity.setDiastolicPressure(90);
-        entity.setSystolicPressure(150);
-        entities.add(entity);
-        bpEntityList.setBp(entities);
-
-        onDataReceived(bpEntityList);*/
     }
 
     @Subscribe
@@ -169,6 +156,7 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
 
     private void stopConnectingAnim() {
         mLdvBpResult.stopAnimation();
+        rotateAnimation.cancel();
         mIvBpResultBluetooth.clearAnimation();
     }
 
@@ -187,12 +175,12 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
 
     @Override
     public void showError(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        stopConnectingAnim();
     }
 
     @Override
     public void hideLoading() {
-
+        rotateAnimation.cancel();
     }
 
     @Override

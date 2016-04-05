@@ -187,7 +187,7 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenterL
         if (null != mDialog) {
             mDialog.dismiss();
         }
-        KeyboardUtil.hide(this, mCoordinate.getWindowToken());
+        KeyboardUtil.hide(this);
         dismissProgressDialog();
 
         mEditingSymptomBean.setIsChecked(mTmpSymptomBean.getIsChecked());
@@ -200,7 +200,7 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenterL
         if (null != mDialog) {
             mDialog.dismiss();
         }
-        KeyboardUtil.hide(this, mCoordinate.getWindowToken());
+        KeyboardUtil.hide(this);
         dismissProgressDialog();
 
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

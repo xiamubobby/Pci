@@ -126,12 +126,10 @@ public class BSConnectedThread extends DataRequestThread {
                         case 5://数据删除成功
                             if (BuildConfig.DEBUG) Log.d(TAG, "数据删除成功");
                             cancel();
-//                            mOutputStream.write(DeviceCommand.command_requestData());
                             break;
                         case 6://数据删除失败
-                            if (BuildConfig.DEBUG) Log.d(TAG, "数据删除失败，重新请求数据");
+                            if (BuildConfig.DEBUG) Log.d(TAG, "数据删除失败");
                             cancel();
-//                            mOutputStream.write(DeviceCommand.command_requestData());
                             break;
                         case 7://无数据
                             cancel();

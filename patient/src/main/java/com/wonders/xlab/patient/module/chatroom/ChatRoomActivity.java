@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
-import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
+import com.wonders.xlab.common.recyclerview.adapter.multi.MultiRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
@@ -34,7 +35,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import im.hua.uikit.crv.CommonRecyclerView;
 import im.hua.utils.DateUtil;
+import im.hua.utils.KeyboardUtil;
 import im.hua.utils.NotifyUtil;
 
 /**
@@ -73,7 +76,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     private IChatRoomPresenter mChatRoomPresenter;
 
     @Bind(R.id.recycler_view_chat_room)
-    PullLoadMoreRecyclerView mRecyclerView;
+    CommonRecyclerView mRecyclerView;
 
     private ChatRoomRVAdapter mChatRoomRVAdapter;
 
@@ -129,15 +132,19 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         mLoadingView.setVisibility(View.GONE);
 
         mRecyclerView.setVisibility(View.GONE);
-        mRecyclerView.setLinearLayout(true);
-        mRecyclerView.setPullRefreshEnable(false);
-        mRecyclerView.setPushRefreshEnable(true);
-        mRecyclerView.showHeaderOrFooterView(false);
-        mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+        mRecyclerView.setRefreshEnable(false);
+        mRecyclerView.getRecyclerView().setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onRefresh() {
-
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getActionMasked()) {
+                    case MotionEvent.ACTION_MOVE:
+                        KeyboardUtil.hide(ChatRoomActivity.this);
+                        break;
+                }
+                return false;
             }
+        });
+        mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
 
             @Override
             public void onLoadMore() {
@@ -240,12 +247,19 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         mRecyclerView.setVisibility(View.VISIBLE);
         if (mChatRoomRVAdapter == null) {
             mChatRoomRVAdapter = new ChatRoomRVAdapter();
+            mChatRoomRVAdapter.setOnItemClickListener(new MultiRVAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    KeyboardUtil.hide(ChatRoomActivity.this);
+                }
+            });
         }
         mRecyclerView.setAdapter(mChatRoomRVAdapter);
     }
 
     /**
      * 接收其他人发给我的通知，加入显示列表，并且移除通知栏的该条通知
+     *
      * @param otto
      */
     @Subscribe
@@ -266,7 +280,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             bean.portraitUrl.set(otto.getFromWhoAvatarUrl());
 
             mChatRoomRVAdapter.insertToTop(bean);
-            mRecyclerView.scrollToTop();
+            mRecyclerView.getRecyclerView().scrollToPosition(0);
         }
     }
 
@@ -311,7 +325,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     @Override
     public void hideLoading() {
         mLoadingView.setVisibility(View.GONE);
-        mRecyclerView.setPullLoadMoreCompleted();
+        mRecyclerView.hideRefreshOrLoadMore(true, true);
     }
 
     @Override

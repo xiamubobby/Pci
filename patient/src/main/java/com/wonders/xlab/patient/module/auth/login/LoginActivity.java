@@ -40,12 +40,12 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
 
     @OnClick(R.id.container)
     public void hideKeyboard() {
-        KeyboardUtil.hide(this, mContainer.getWindowToken());
+        KeyboardUtil.hide(this);
     }
 
     @OnClick(R.id.btn_login)
     public void login() {
-        KeyboardUtil.hide(this, mContainer.getWindowToken());
+        KeyboardUtil.hide(this);
         String tel = mEtPhoneNumber.getText().toString();
         if (TextUtils.isEmpty(tel)) {
             ViewHelper.shakeEdit(mEtPhoneNumber, this);

@@ -1,8 +1,6 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
 
-import android.text.TextUtils;
-
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.BPReportBean;
@@ -34,7 +32,7 @@ public class BPSingleSaveModel extends PatientBaseModel<BPSaveEntity> {
      * @param diastolicPressure
      */
     public void saveBPSingle(String patientId, long date, int heartRate, int systolicPressure, int diastolicPressure) {
-        fetchData(mBPAPI.saveBPSingle(patientId, date, heartRate, systolicPressure, diastolicPressure),true);
+        fetchData(mBPAPI.saveBPSingle(patientId, date, heartRate, systolicPressure, diastolicPressure), true);
     }
 
     @Override
@@ -64,11 +62,7 @@ public class BPSingleSaveModel extends PatientBaseModel<BPSaveEntity> {
 
     @Override
     protected void onFailed(String message) {
-        if (TextUtils.isEmpty(message)) {
-            mBPSaveModelListener.onReceiveFailed("保存血压失败，请重试！");
-        } else {
-            mBPSaveModelListener.onReceiveFailed(message);
-        }
+        mBPSaveModelListener.onReceiveFailed(message);
     }
 
     public interface BPSingleSaveModelListener extends BaseModelListener {

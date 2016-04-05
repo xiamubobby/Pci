@@ -127,13 +127,13 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
                             boolean canUpload = true;
                             for (File file : fileList) {
                                 if (file.length() / 1024 / 1024 > 10) {
-                                    Toast.makeText(MedicalRecordActivity.this, file.getName() + "大小超过10M，请选择小一点的图片!", Toast.LENGTH_LONG).show();
+                                    showShortToast(file.getName() + "大小超过10M，请选择小一点的图片!");
                                     canUpload = false;
                                 }
                             }
                             if (canUpload) {
                                 final EditText editText = (EditText) LayoutInflater.from(MedicalRecordActivity.this).inflate(R.layout.simple_single_line_edit_text,null,false);
-                                editText.setHint("请输入自传病历报告标题");
+                                editText.setHint("请输入自传病历报告标题(最多200个字符)");
                                 final AlertDialog alertDialog = new AlertDialog.Builder(MedicalRecordActivity.this)
                                         .setTitle("自传病历报告")
                                         .setPositiveButton("确定",null)
@@ -149,11 +149,11 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
                                             public void onClick(View v) {
                                                 String title = editText.getText().toString();
                                                 if (!TextUtils.isEmpty(title)) {
-                                                    KeyboardUtil.hide(MedicalRecordActivity.this,v.getWindowToken());
+                                                    KeyboardUtil.hide(MedicalRecordActivity.this);
                                                     mUploadPicPresenter.upload(AIManager.getInstance().getPatientId(), title, fileList);
                                                     alertDialog.dismiss();
                                                 } else {
-                                                    Toast.makeText(MedicalRecordActivity.this, "请输入标题", Toast.LENGTH_SHORT).show();
+                                                    showShortToast("请输入标题");
                                                 }
                                             }
                                         });

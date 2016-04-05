@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
@@ -203,23 +202,21 @@ public class BPGuideActivity extends NConnActivity{
 
     @Subscribe
     public void onDataReceived(BPEntityList bpEntityList) {
-        cancel();
-//        dismissDialog();
-//        mAddRecordModel.saveBP(AIManager.getInstance(this).getPatientId(), bpEntityList);
+        dismissDialog();
     }
 
     @Subscribe
     public void onDeviceHasNoData(EmptyDataOtto otto) {
         cancel();
         dismissDialog();
-        Toast.makeText(this, "没有读取到血压数据，请先测量血压，然后重新同步数据", Toast.LENGTH_SHORT).show();
+        showShortToast("没有读取到血压数据，请先测量血压，然后重新同步数据");
     }
 
     @Subscribe
     public void onRequestDataFailed(RequestDataFailed otto) {
         cancel();
         dismissDialog();
-        Toast.makeText(this, otto.getMessage(), Toast.LENGTH_SHORT).show();
+        showShortToast(otto.getMessage());
     }
 
     @Override

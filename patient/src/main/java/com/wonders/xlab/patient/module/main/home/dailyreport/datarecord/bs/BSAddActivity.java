@@ -83,7 +83,7 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
 
     public void save() {
 
-        KeyboardUtil.hide(this, mContentView.getWindowToken());
+        KeyboardUtil.hide(this);
 
         String dateStr = mTvAddBsDate.getText().toString();
         String timeStr = mTvAddBsTime.getText().toString();

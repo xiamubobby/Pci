@@ -80,7 +80,7 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
     }
 
     private void save() {
-        KeyboardUtil.hide(this, mContentView.getWindowToken());
+        KeyboardUtil.hide(this);
 
         String dateStr = mTvAddBpDate.getText().toString();
         String timeStr = mTvAddBpTime.getText().toString();

@@ -197,8 +197,7 @@ public class BSGuideActivity extends NConnActivity {
 
     @Subscribe
     public void onDataReceived(BSEntityList bsEntityList) {
-        cancel();
-//        dismissDialog();
+        dismissDialog();
     }
 
     @Subscribe

@@ -12,7 +12,7 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
  * Created by hua on 16/4/4.
  */
 public class UnreadMessageUtil {
-    public static void addNewUnread(@NonNull UnreadMessageRealm messageRealm) {
+    public synchronized static void addNewUnread(@NonNull UnreadMessageRealm messageRealm) {
         try {
             XApplication.realm.beginTransaction();
             UnreadMessageRealm realm = XApplication.realm.copyToRealm(messageRealm);
@@ -22,7 +22,7 @@ public class UnreadMessageUtil {
         }
     }
 
-    public static void readMessage(String imGroupId) {
+    public synchronized static void readMessage(String imGroupId) {
         try {
             XApplication.realm.beginTransaction();
             RealmResults<UnreadMessageRealm> realmResults = XApplication.realm.where(UnreadMessageRealm.class)
@@ -35,13 +35,13 @@ public class UnreadMessageUtil {
         }
     }
 
-    public static int getUnreadMessageCounts(String imGroupId) throws UnsupportedOperationException{
+    public static int getUnreadMessageCounts(String imGroupId) throws UnsupportedOperationException {
         return (int) XApplication.realm.where(UnreadMessageRealm.class)
                 .equalTo("imGroupId", imGroupId)
                 .count();
     }
 
-    public static int getAllUnreadMessageCounts() throws UnsupportedOperationException{
+    public static int getAllUnreadMessageCounts() throws UnsupportedOperationException {
         return (int) XApplication.realm.where(UnreadMessageRealm.class)
                 .count();
     }

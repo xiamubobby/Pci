@@ -126,7 +126,6 @@ public class BPConnectedThread extends DataRequestThread {
                                 pType = 5;
                                 mOutputStream.write(DeviceCommand.DELETE_BP());
                             }
-//                        }
                             break;
                         case 0x30://可以发送时间校正命令
                             if (BuildConfig.DEBUG) Log.d(TAG, "发送时间校正命令");
@@ -157,53 +156,35 @@ public class BPConnectedThread extends DataRequestThread {
                             if (bpEntities.isEmpty()) {
                                 if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据为空");
                                 cancel();
-                                /*mOp = requestData;
-                                pType = 0;
-                                mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());*/
                                 OttoManager.post(new EmptyDataOtto(true));
                             } else {
                                 if (BuildConfig.DEBUG) Log.d(TAG, "接收到的数据不为空，删除数据");
                                 mOp = deleteData;
                                 pType = 0;
-                                if (mSocket != null && mOutputStream != null && mSocket.isConnected()) {
+                                if (mSocket != null && mSocket.isConnected()) {
                                     mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
                                 }
                             }
-
                             break;
                         case 0x50://血压删除成功 80
                             //继续请求血压数据
                             if (BuildConfig.DEBUG) Log.d(TAG, "删除数据成功");
-//                            mOp = requestData;
-//                            pType = 0;
-//                            mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
                             cancel();
                             break;
                         case 0x51://血压删除失败 81
                             if (BuildConfig.DEBUG) Log.d(TAG, "删除数据失败");
-//                            mOp = requestData;
-//                            pType = 0;
-//                            mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
                             cancel();
                             break;
-                        default:
-                            if (BuildConfig.DEBUG) Log.d(TAG, "default");
-//                            if (BuildConfig.DEBUG) Log.d(TAG, "默认发送请求数据指令");
-//                            mOp = requestData;
-//                            pType = 0;
-//                            mOutputStream.write(DeviceCommand.REQUEST_HANDSHAKE());
                     }
 
                 } else {
                     if (BuildConfig.DEBUG) Log.d(TAG, "重开数据接受线程");
-//                    requestDataFailed();
                     cancel();
                     OttoManager.post(new EmptyDataOtto(true));
                 }
 
             } catch (IOException e) {
                 if (BuildConfig.DEBUG) Log.d(TAG, e.getLocalizedMessage() + " " + e.getMessage());
-//                requestDataFailed();
                 cancel();
                 OttoManager.post(new RequestDataFailed(""));//读取血压数据失败，请先测量血压，并确保血压仪开启，然后重新同步数据
             }
