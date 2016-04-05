@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
@@ -15,13 +14,16 @@ import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.DoctorMyItemBinding;
 import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
+import com.wonders.xlab.patient.module.main.doctors.otto.ChatNotifyCountOtto;
 import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;
+import com.wonders.xlab.patient.util.UnreadMessageUtil;
 
-import java.util.Calendar;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.badgeview.BGABadgeImageView;
+import cn.bingoogolapple.badgeview.BGABadgeViewHelper;
 import im.hua.utils.DateUtil;
 
 /**
@@ -31,29 +33,45 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
 
     @Subscribe
     public void receiveNotifyForUpdate(EMChatMessageOtto otto) {
-
         List<MyDoctorItemBean> beanList = getBeanList();
         if (beanList.size() == 1) {
             beanList.get(0).setLatestChatMessage(otto.getTxtContent());
-            beanList.get(0).setTimeStr(DateUtil.format(Calendar.getInstance().getTimeInMillis(), "HH:mm"));
+            beanList.get(0).setTimeStr(DateUtil.format(otto.getMessageTime(), "HH:mm"));
         } else {
-            MyDoctorItemBean bean = new MyDoctorItemBean();
+            MyDoctorItemBean bean;
 
             for (int i = 0; i < beanList.size(); i++) {
                 if (beanList.get(i).getGroupId().equals(otto.getGroupId())) {
-                    bean.setPortraitUrl(beanList.get(i).getPortraitUrl());
-                    bean.setType(beanList.get(i).getType());
-                    remove(i);
-                    break;
+                    if (i > 0) {
+                        bean = new MyDoctorItemBean();
+                        bean.setPortraitUrl(beanList.get(i).getPortraitUrl());
+                        bean.setType(beanList.get(i).getType());
+
+                        remove(i);
+                        bean.setGroupId(otto.getGroupId());
+                        bean.setImGroupId(otto.getImGroupId());
+                        bean.setDoctorGroupName(otto.getGroupName());
+                        bean.setLatestChatMessage(otto.getTxtContent());
+                        insertToFist(bean);
+                    } else {
+                        bean = beanList.get(i);
+                        bean.setLatestChatMessage(otto.getTxtContent());
+                        bean.setTimeStr(DateUtil.format(otto.getMessageTime(), "HH:mm"));
+                        notifyItemChanged(i);
+                    }
+                    return;
                 }
             }
-            bean.setGroupId(otto.getGroupId());
-            bean.setImGroupId(otto.getImGroupId());
-            bean.setDoctorGroupName(otto.getGroupName());
-            bean.setLatestChatMessage(otto.getTxtContent());
-            insertToFist(bean);
         }
+    }
 
+    @Subscribe
+    public void changeDoctorNotifyCounts(ChatNotifyCountOtto otto) {
+        for (int i = 0; i < getBeanList().size(); i++) {
+            if (otto.getImGroupId().equals(getBeanList().get(i).getImGroupId())) {
+                notifyItemChanged(i);
+            }
+        }
     }
 
     @Override
@@ -74,6 +92,18 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
         MyDoctorItemBean dataItem = getBean(position);
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         viewHolder.binding.setDoctorBean(dataItem);
+
+        int counts = UnreadMessageUtil.getUnreadMessageCounts(dataItem.getImGroupId());
+        BGABadgeViewHelper badgeViewHelper = viewHolder.mIvPortrait.getBadgeViewHelper();
+        badgeViewHelper.setBadgeGravity(BGABadgeViewHelper.BadgeGravity.RightTop);
+        if (counts > 0 && counts < 100) {
+            viewHolder.mIvPortrait.showTextBadge(String.valueOf(counts));
+        } else if (counts >= 100) {
+            viewHolder.mIvPortrait.showTextBadge("99+");
+        } else {
+            viewHolder.mIvPortrait.hiddenBadge();
+        }
+
         ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(), viewHolder.mIvPortrait, dataItem.getPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
     }
 
@@ -109,13 +139,13 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        ImageView mIvPortrait;
+        BGABadgeImageView mIvPortrait;
 
         DoctorMyItemBinding binding;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            mIvPortrait = (ImageView) itemView.findViewById(R.id.iv_doctor_my_item_portrait);
+            mIvPortrait = (BGABadgeImageView) itemView.findViewById(R.id.iv_doctor_my_item_portrait);
             binding = DoctorMyItemBinding.bind(itemView);
         }
     }

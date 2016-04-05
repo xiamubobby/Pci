@@ -15,7 +15,7 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.patient.module.main.MainActivity;
-import com.wonders.xlab.patient.module.main.doctors.otto.DoctorNotifyCountOtto;
+import com.wonders.xlab.patient.module.main.doctors.otto.ChatNotifyCountOtto;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.realm.UnreadMessageRealm;
 import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;
@@ -88,7 +88,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
              * 缓存未读通知数量
              */
             UnreadMessageUtil.addNewUnread(new UnreadMessageRealm(groupId,imGroupId));
-            OttoManager.post(new DoctorNotifyCountOtto());
+            OttoManager.post(new ChatNotifyCountOtto(imGroupId));
 
             Bundle data = new Bundle();
             data.putString(ChatRoomActivity.EXTRA_GROUP_ID,groupId);

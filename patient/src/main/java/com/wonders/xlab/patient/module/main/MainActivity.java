@@ -17,7 +17,7 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.auth.login.LoginActivity;
 import com.wonders.xlab.patient.module.main.doctors.DoctorFragment;
-import com.wonders.xlab.patient.module.main.doctors.otto.DoctorNotifyCountOtto;
+import com.wonders.xlab.patient.module.main.doctors.otto.ChatNotifyCountOtto;
 import com.wonders.xlab.patient.module.main.doctors.otto.MeNotifyCountOtto;
 import com.wonders.xlab.patient.module.main.home.HomeFragment;
 import com.wonders.xlab.patient.module.main.me.MeFragment;
@@ -115,12 +115,12 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        mTabMainBottom.setMsgMargin(1, 0, -5);
         int unreadMessageCounts = UnreadMessageUtil.getAllUnreadMessageCounts();
         if (unreadMessageCounts > 0) {
             mTabMainBottom.showMsg(1, unreadMessageCounts);
         }
-        mTabMainBottom.setMsgMargin(2, 0, 6);
+        mTabMainBottom.setMsgMargin(2, -5, 8);
+        mTabMainBottom.setMsgMargin(1, -5, 8);
 
         mViewPagerMain.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -141,10 +141,11 @@ public class MainActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void changeDoctorNotifyCounts(DoctorNotifyCountOtto otto) {
+    public void changeDoctorNotifyCounts(ChatNotifyCountOtto otto) {
         int counts = UnreadMessageUtil.getAllUnreadMessageCounts();
         if (counts > 0) {
             mTabMainBottom.showMsg(1, counts);
+            mTabMainBottom.setMsgMargin(1, -5, 8);
         } else {
             mTabMainBottom.hideMsg(1);
         }
