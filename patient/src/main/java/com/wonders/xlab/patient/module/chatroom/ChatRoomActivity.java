@@ -117,9 +117,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
         //如果有的话，移除通知栏对应的通知，以groupId为通知id
         new NotifyUtil().cancel(this, Integer.parseInt(groupId));
-        UnreadMessageUtil.readMessage(imGroupId);
-        //通知主界面更新未读通知数显示
-        OttoManager.post(new ChatNotifyCountOtto(imGroupId));
+        readMessage();
 
         initServiceStatus(canChat);
 
@@ -156,6 +154,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     protected void onResume() {
         super.onResume();
         mIsPaused = false;
+        readMessage();
     }
 
     @Override
@@ -250,6 +249,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
              */
             if (!mIsPaused) {
                 new NotifyUtil().cancel(this, Integer.parseInt(otto.getGroupId()));
+                readMessage();
             }
 
             OthersChatRoomBean bean = new OthersChatRoomBean();
@@ -262,6 +262,12 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             mChatRoomRVAdapter.insertToTop(bean);
             mRecyclerView.getRecyclerView().scrollToPosition(0);
         }
+    }
+
+    private void readMessage() {
+        UnreadMessageUtil.readMessage(imGroupId);
+        //通知主界面更新未读通知数显示
+        OttoManager.post(new ChatNotifyCountOtto(imGroupId));
     }
 
     private void initChatRoomAdapter() {
