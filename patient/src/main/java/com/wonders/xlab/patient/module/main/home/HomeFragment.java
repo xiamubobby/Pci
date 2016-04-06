@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.common.viewpager.LooperViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
@@ -25,6 +26,7 @@ import com.wonders.xlab.patient.module.main.home.dailyreport.DailyReportActivity
 import com.wonders.xlab.patient.module.main.home.medicalrecord.MedicalRecordActivity;
 import com.wonders.xlab.patient.mvp.presenter.IHomeTopPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.HomeTopPresenter;
+import com.wonders.xlab.patient.util.UmengEventId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,6 +107,7 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
                 public void onItemClick(int position) {
                     switch (position) {
                         case 0:
+                            MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_DAILY_RECORD);
                             startActivity(new Intent(getActivity(), DailyReportActivity.class));
                             break;
                         case 1:
@@ -116,6 +119,7 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
                             startActivity(new Intent(getActivity(), HealthReportActivity.class));
                             break;
                         default:
+                            MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_MEDICINE_REMIND);
                             showShortToast("即将开放，敬请期待...");
                     }
                 }
@@ -173,7 +177,7 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
     @Override
     public void showHomeTopBanner(List<HomeBannerBean> homeBannerBeanList) {
         for (HomeBannerBean bean : homeBannerBeanList) {
-            topVPAdapter.addFragment(HomeTopImageFragment.newInstance(bean.getImageUrl(), bean.getLinkUrl()),bean.getTitle());
+            topVPAdapter.addFragment(HomeTopImageFragment.newInstance(bean.getImageUrl(), bean.getLinkUrl(), bean.getTitle()),bean.getTitle());
         }
     }
 
@@ -185,5 +189,14 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
     @Override
     public void hideLoading() {
 
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_home));
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_home));
     }
 }

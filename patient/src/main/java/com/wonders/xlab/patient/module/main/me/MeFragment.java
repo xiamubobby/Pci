@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.main.me.setting.SettingActivity;
 
@@ -54,5 +55,14 @@ public class MeFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_me));
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_me));
     }
 }

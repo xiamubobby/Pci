@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
@@ -136,5 +137,14 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
             return;
         }
         mRecyclerView.hideRefreshOrLoadMore(true,true);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_doctors_all));
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_doctors_all));
     }
 }

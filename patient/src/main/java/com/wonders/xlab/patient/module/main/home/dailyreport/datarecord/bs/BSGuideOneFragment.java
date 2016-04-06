@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.main.home.dailyreport.datarecord.bp.otto.GuideOtto;
@@ -47,5 +48,14 @@ public class BSGuideOneFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_bs_guide_one));
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_bs_guide_one));
     }
 }

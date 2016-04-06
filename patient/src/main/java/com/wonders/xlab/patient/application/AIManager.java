@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.application;
 
 import android.text.TextUtils;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.realm.PatientInfoRealm;
 
@@ -35,6 +36,10 @@ public class AIManager {
     }
 
     public void logout() {
+        /**
+         * 关闭友盟统计
+         */
+        MobclickAgent.onProfileSignOff();
         synchronized (object) {
             XApplication.realm.beginTransaction();
             XApplication.realm.clear(PatientInfoRealm.class);

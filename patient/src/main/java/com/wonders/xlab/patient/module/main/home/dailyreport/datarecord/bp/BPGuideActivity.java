@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.squareup.otto.Subscribe;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
@@ -25,6 +26,7 @@ import com.wonders.xlab.patient.assist.deviceconnection.otto.RequestDataFailed;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.ScanEndOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.ScanStartOtto;
 import com.wonders.xlab.patient.module.main.home.dailyreport.datarecord.bp.otto.GuideOtto;
+import com.wonders.xlab.patient.util.UmengEventId;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -232,6 +234,7 @@ public class BPGuideActivity extends NConnActivity{
         super.onPause();
         cancel();
         dismissDialog();
+        MobclickAgent.onPause(this);
     }
 
     @Override
@@ -260,11 +263,21 @@ public class BPGuideActivity extends NConnActivity{
         switch (item.getItemId()) {
             case R.id.menu_measure_retry:
                 connectBondedDevice();
+                //TODO umeng
+                MobclickAgent.onEvent(this, UmengEventId.HOME_DAILY_RECORD_MEASURE_RETRY_BP);
                 break;
             case R.id.menu_measure_direct:
                 OttoManager.post(new GuideOtto(1));
+                //TODO umeng
+                MobclickAgent.onEvent(this, UmengEventId.HOME_DAILY_RECORD_MEASURE_DIRECT_BP);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);       //统计时长
+    }
+
 }

@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.main.MainActivity;
 import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
@@ -89,5 +90,14 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
     public void loginSuccess() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);       //统计时长
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

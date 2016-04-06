@@ -3,7 +3,7 @@ package com.wonders.xlab.patient.util;
 import android.support.annotation.NonNull;
 
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.realm.UnreadMessageRealm;
+import com.wonders.xlab.patient.realm.UnReadMessageRealm;
 
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
@@ -11,14 +11,14 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 /**
  * Created by hua on 16/4/4.
  */
-public class UnreadMessageUtil {
+public class UnReadMessageUtil {
     private final static Object object = new Object();
 
-    public static void addNewUnread(@NonNull UnreadMessageRealm messageRealm) {
+    public static void addNewUnread(@NonNull UnReadMessageRealm messageRealm) {
         try {
             synchronized (object) {
                 XApplication.realm.beginTransaction();
-                UnreadMessageRealm realm = XApplication.realm.copyToRealm(messageRealm);
+                UnReadMessageRealm realm = XApplication.realm.copyToRealm(messageRealm);
                 XApplication.realm.commitTransaction();
             }
         } catch (RealmPrimaryKeyConstraintException exception) {
@@ -30,7 +30,7 @@ public class UnreadMessageUtil {
         try {
             synchronized (object) {
                 XApplication.realm.beginTransaction();
-                RealmResults<UnreadMessageRealm> realmResults = XApplication.realm.where(UnreadMessageRealm.class)
+                RealmResults<UnReadMessageRealm> realmResults = XApplication.realm.where(UnReadMessageRealm.class)
                         .equalTo("imGroupId", imGroupId)
                         .findAll();
                 realmResults.clear();
@@ -43,13 +43,13 @@ public class UnreadMessageUtil {
     }
 
     public static int getUnreadMessageCounts(String imGroupId) throws UnsupportedOperationException {
-        return (int) XApplication.realm.where(UnreadMessageRealm.class)
+        return (int) XApplication.realm.where(UnReadMessageRealm.class)
                 .equalTo("imGroupId", imGroupId)
                 .count();
     }
 
     public static int getAllUnreadMessageCounts() throws UnsupportedOperationException {
-        return (int) XApplication.realm.where(UnreadMessageRealm.class)
+        return (int) XApplication.realm.where(UnReadMessageRealm.class)
                 .count();
     }
 }

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.squareup.otto.Subscribe;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.adapter.multi.MultiRVAdapter;
 import com.wonders.xlab.patient.R;
@@ -26,7 +27,7 @@ import com.wonders.xlab.patient.module.main.doctors.otto.ChatNotifyCountOtto;
 import com.wonders.xlab.patient.mvp.presenter.IChatRoomPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.ChatRoomPresenter;
 import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;
-import com.wonders.xlab.patient.util.UnreadMessageUtil;
+import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.util.Calendar;
 import java.util.List;
@@ -155,6 +156,8 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         super.onResume();
         mIsPaused = false;
         readMessage();
+        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_chat_room));
+        MobclickAgent.onResume(this);       //统计时长
     }
 
     @Override
@@ -265,7 +268,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     }
 
     private void readMessage() {
-        UnreadMessageUtil.readMessage(imGroupId);
+        UnReadMessageUtil.readMessage(imGroupId);
         //通知主界面更新未读通知数显示
         OttoManager.post(new ChatNotifyCountOtto(imGroupId));
     }
@@ -330,5 +333,10 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     protected void onPause() {
         super.onPause();
         mIsPaused = true;
+        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_chat_room));
+
+        MobclickAgent.onPause(this);
+
     }
+
 }

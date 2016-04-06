@@ -15,16 +15,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
+import com.wonders.xlab.patient.module.main.home.bean.HomeTopCircleBean;
 import com.wonders.xlab.patient.module.main.home.dailyreport.DailyReportActivity;
 import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.BPReportBean;
 import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.BSReportBean;
 import com.wonders.xlab.patient.module.main.home.dailyreport.otto.BPSaveSuccessOtto;
 import com.wonders.xlab.patient.module.main.home.dailyreport.otto.BSSaveSuccessOtto;
-import com.wonders.xlab.patient.module.main.home.bean.HomeTopCircleBean;
+import com.wonders.xlab.patient.util.UmengEventId;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -113,16 +115,22 @@ public class HomeTopCircleFragment extends BaseFragment {
 
     @OnClick(R.id.ll_home_top_circle_middle)
     public void onBPClick() {
+        MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_TOP_CIRCLE_BP);
+
         goToDailyRecordActivity(DailyReportActivity.SHOW_TAB_POSITION_BP);
     }
 
     @OnClick(R.id.tv_home_top_circle_right)
     public void onHeartRateClick() {
+        MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_TOP_CIRCLE_HEART_RATE);
+
         goToDailyRecordActivity(DailyReportActivity.SHOW_TAB_POSITION_BP);
     }
 
     @OnClick(R.id.tv_home_top_circle_left)
     public void onBSClick() {
+        MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_TOP_CIRCLE_BS);
+
         goToDailyRecordActivity(DailyReportActivity.SHOW_TAB_POSITION_BS);
     }
 

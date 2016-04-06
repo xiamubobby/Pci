@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
@@ -223,5 +224,16 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_bs_add));
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_bs_add));
+        MobclickAgent.onPause(this);
     }
 }

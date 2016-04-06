@@ -8,9 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.ImageViewManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.WebActivity;
+import com.wonders.xlab.patient.util.UmengEventId;
+
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,9 +23,11 @@ import im.hua.library.base.BaseFragment;
 public class HomeTopImageFragment extends BaseFragment {
     private final static String EXTRA_IMAGE_URL = "imageUrl";
     private final static String EXTRA_WEB_URL = "webUrl";
+    private final static String EXTRA_TITLE = "title";
 
     private String mImageUrl;
     private String mWebUrl;
+    private String mTitle;
 
     @Bind(R.id.iv_home_top_image)
     ImageView mIvHomeTopImage;
@@ -30,10 +36,11 @@ public class HomeTopImageFragment extends BaseFragment {
         // Required empty public constructor
     }
 
-    public static HomeTopImageFragment newInstance(String imageUrl, String webUrl) {
+    public static HomeTopImageFragment newInstance(String imageUrl, String webUrl, String title) {
         Bundle data = new Bundle();
         data.putString(EXTRA_IMAGE_URL, imageUrl);
         data.putString(EXTRA_WEB_URL, webUrl);
+        data.putString(EXTRA_TITLE, title);
 
         HomeTopImageFragment fragment = new HomeTopImageFragment();
         fragment.setArguments(data);
@@ -47,6 +54,7 @@ public class HomeTopImageFragment extends BaseFragment {
         if (null != data) {
             mImageUrl = data.getString(EXTRA_IMAGE_URL);
             mWebUrl = data.getString(EXTRA_WEB_URL);
+            mTitle = data.getString(EXTRA_TITLE);
         }
     }
 
@@ -66,6 +74,10 @@ public class HomeTopImageFragment extends BaseFragment {
         mIvHomeTopImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                HashMap<String,String> map = new HashMap<>();
+                map.put("title",mTitle);
+                MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_TOP_IMAGE, map);
+
                 Intent intent = new Intent(getActivity(), WebActivity.class);
                 intent.putExtra(WebActivity.EXTRA_WEB_URL, mWebUrl);
                 startActivity(intent);

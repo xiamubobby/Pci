@@ -5,15 +5,15 @@ import io.realm.RealmObject;
 /**
  * Created by hua on 16/4/4.
  */
-public class UnreadMessageRealm extends RealmObject {
+public class UnReadMessageRealm extends RealmObject {
     private String imGroupId;
     private String groupId;
     private int type;
 
-    public UnreadMessageRealm() {
+    public UnReadMessageRealm() {
     }
 
-    public UnreadMessageRealm(String groupId, String imGroupId) {
+    public UnReadMessageRealm(String groupId, String imGroupId) {
         this.groupId = groupId;
         this.imGroupId = imGroupId;
     }

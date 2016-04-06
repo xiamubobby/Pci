@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.module.main.me.setting;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 
 /**
@@ -29,6 +30,15 @@ public class SettingFragment extends PreferenceFragment {
 //            }
 //        });
 //        preference.setSummary(useEquipment?"默认使用全程健康设备测量":"默认手动录入健康数据");
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_setting));
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_setting));
     }
 
 }

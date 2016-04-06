@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.healthreport.bs.adapter.BSRVAdapter;
@@ -118,5 +119,14 @@ public class BSHRFragment extends BaseFragment implements BloodSugarPresenter.Bl
     public void onDestroyView() {
         super.onDestroyView();
         mBSRVAdapter = null;
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_bshr));
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_bshr));
     }
 }

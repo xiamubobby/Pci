@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.module.main.me.setting;
 
 import android.os.Bundle;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
@@ -45,5 +46,14 @@ public class SettingActivity extends AppbarActivity {
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);       //统计时长
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

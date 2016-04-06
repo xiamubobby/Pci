@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
@@ -20,6 +21,7 @@ import com.wonders.xlab.patient.module.main.home.dailyreport.otto.BSSaveSuccessO
 import com.wonders.xlab.patient.module.main.home.dailyreport.otto.ShowMeasureChooseDialogOtto;
 import com.wonders.xlab.patient.mvp.presenter.IBSReportPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.BSReportCachePresenter;
+import com.wonders.xlab.patient.util.UmengEventId;
 
 import java.util.List;
 
@@ -70,6 +72,9 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
         tvMeasure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO umeng
+                MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_DAILY_RECORD_BLANK_MEASURE_BS);
+
                 OttoManager.post(new ShowMeasureChooseDialogOtto(ShowMeasureChooseDialogOtto.TYPE_BS));
             }
         });
@@ -114,5 +119,14 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
     @Override
     public void hideLoading() {
         mRecyclerView.hideRefreshOrLoadMore(true,true);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_daily_report_bs));
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_daily_report_bs));
     }
 }

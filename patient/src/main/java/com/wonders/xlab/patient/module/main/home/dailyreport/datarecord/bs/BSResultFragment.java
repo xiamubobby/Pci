@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
@@ -28,8 +29,10 @@ import com.wonders.xlab.patient.mvp.presenter.IBSSavePresenter;
 import com.wonders.xlab.patient.mvp.presenter.IIdealRangePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.BSSavePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.IdealRangePresenter;
+import com.wonders.xlab.patient.util.UmengEventId;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -107,7 +110,7 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
             mIsSaveSingle = true;
             mRecordSavePresenter.saveBSSingle(AIManager.getInstance().getPatientId(), Long.parseLong(mTvBsResultSugar.getTag().toString()), mSpBsResultPeriod.getSelectedItemPosition(), bsValue);
         } else {
-            Toast.makeText(getActivity(), "请先测量您的血糖，然后点击保存!", Toast.LENGTH_SHORT).show();
+            showShortToast("请先测量您的血糖，然后点击保存!");
         }
     }
 
@@ -116,13 +119,23 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
         startConnectingAnim();
     }
 
+    /**
+     * TODO umeng
+     * 友盟统计使用，统计从连接到成功得到服务器返回的花费时间
+     */
+    private long mStartConnectTime;//从开始连接设备的时间,单位：毫秒
+
     @Subscribe
     public void onConnectionStatusChanged(ConnStatusOtto connStatusOtto) {
         if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.START) {
+            mStartConnectTime = Calendar.getInstance().getTimeInMillis();
             startConnectingAnim();
-
             mIvBsResultBluetooth.setImageResource(R.drawable.ic_bluetooth_failed);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.SUCCESS) {
+            //TODO umeng
+            long nowTime = Calendar.getInstance().getTimeInMillis();
+            MobclickAgent.onEventValue(getActivity(), UmengEventId.HOME_DAILY_RECORD_MEASURE_EQUIPMENT_CONNECT_COST_TIME_BS, null, (int) (nowTime - mStartConnectTime) / 1000);
+
             mIvBsResultBluetooth.setImageResource(R.drawable.ic_bluetooth);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.FAILED) {
             mIvBsResultBluetooth.setImageResource(R.drawable.ic_bluetooth_failed);
@@ -159,6 +172,10 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
 
     @Override
     public void onSaveBSSuccess(String message) {
+        //TODO umeng
+        long nowTime = Calendar.getInstance().getTimeInMillis();
+        MobclickAgent.onEventValue(getActivity(), UmengEventId.HOME_DAILY_RECORD_MEASURE_EQUIPMENT_COST_TIME_BS, null, (int) (nowTime - mStartConnectTime) / 1000);
+
         stopConnectingAnim();
         if (mIsSaveSingle) {
             mTvBsResultSugar.setText("0");
@@ -214,5 +231,15 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
     @Override
     public void hideLoading() {
 
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_bs_guide_result));
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_bs_guide_result));
     }
 }

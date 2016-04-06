@@ -9,6 +9,7 @@ import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.squareup.otto.Subscribe;
+import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.manager.OttoManager;
@@ -23,7 +24,7 @@ import com.wonders.xlab.patient.module.main.home.HomeFragment;
 import com.wonders.xlab.patient.module.main.me.MeFragment;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.service.XEMChatService;
-import com.wonders.xlab.patient.util.UnreadMessageUtil;
+import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.util.ArrayList;
 
@@ -57,6 +58,11 @@ public class MainActivity extends BaseActivity {
             finish();
             return;
         }
+
+        /**
+         * 友盟用户标识
+         */
+        MobclickAgent.onProfileSignIn(aiManager.getPatientId());
 
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
@@ -115,7 +121,7 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        int unreadMessageCounts = UnreadMessageUtil.getAllUnreadMessageCounts();
+        int unreadMessageCounts = UnReadMessageUtil.getAllUnreadMessageCounts();
         if (unreadMessageCounts > 0) {
             mTabMainBottom.showMsg(1, unreadMessageCounts);
         }
@@ -142,7 +148,7 @@ public class MainActivity extends BaseActivity {
 
     @Subscribe
     public void changeDoctorNotifyCounts(ChatNotifyCountOtto otto) {
-        int counts = UnreadMessageUtil.getAllUnreadMessageCounts();
+        int counts = UnReadMessageUtil.getAllUnreadMessageCounts();
         if (counts > 0) {
             mTabMainBottom.showMsg(1, counts);
             mTabMainBottom.setMsgMargin(1, -5, 8);
@@ -175,5 +181,14 @@ public class MainActivity extends BaseActivity {
         startActivity(new Intent(this, MainActivity.class));
         startActivity(new Intent(this, LoginActivity.class));
         finish();
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);       //统计时长
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

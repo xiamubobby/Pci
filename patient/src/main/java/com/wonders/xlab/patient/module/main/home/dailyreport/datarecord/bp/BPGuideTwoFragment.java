@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.main.home.dailyreport.datarecord.bp.otto.GuideOtto;
@@ -49,5 +50,14 @@ public class BPGuideTwoFragment extends BaseFragment {
         super.onDestroyView();
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_bp_guide_two));
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_bp_guide_two));
     }
 }

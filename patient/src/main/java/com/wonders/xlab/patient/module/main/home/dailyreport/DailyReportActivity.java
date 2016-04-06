@@ -17,6 +17,7 @@ import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.squareup.otto.Subscribe;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.manager.SPManager;
@@ -35,6 +36,7 @@ import com.wonders.xlab.patient.module.main.home.dailyreport.otto.BPSaveSuccessO
 import com.wonders.xlab.patient.module.main.home.dailyreport.otto.BSSaveSuccessOtto;
 import com.wonders.xlab.patient.module.main.home.dailyreport.otto.ShowMeasureChooseDialogOtto;
 import com.wonders.xlab.patient.module.main.home.dailyreport.otto.SymptomSaveSuccessOtto;
+import com.wonders.xlab.patient.util.UmengEventId;
 
 import java.util.ArrayList;
 
@@ -195,6 +197,14 @@ public class DailyReportActivity extends AppbarActivity {
                         boolean useEquipment = SPManager.get(DailyReportActivity.this).getBoolean(getString(R.string.setting_pref_key_use_equipment), true);
                         if (!hasSetDefault) {
                             SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
+                        } else {
+                            if (useEquipment) {
+                                //TODO umeng
+                                MobclickAgent.onEvent(DailyReportActivity.this, UmengEventId.HOME_DAILY_RECORD_DEFAULT_MEASURE_EQUIPMENT);
+                            } else {
+                                //TODO umeng
+                                MobclickAgent.onEvent(DailyReportActivity.this, UmengEventId.HOME_DAILY_RECORD_DEFAULT_MEASURE_MANUAL);
+                            }
                         }
                         switch (type) {
                             case 0:
@@ -287,6 +297,9 @@ public class DailyReportActivity extends AppbarActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_daily_record_bp:
+                //TODO umeng
+                MobclickAgent.onEvent(this, UmengEventId.HOME_DAILY_RECORD_MENU_MEASURE_BP);
+
                 if (hasSetDefault) {
                     if (useEquipment) {
                         recordNewData(BPGuideActivity.class);
@@ -298,7 +311,8 @@ public class DailyReportActivity extends AppbarActivity {
                 }
                 break;
             case R.id.menu_daily_record_bs:
-
+                //TODO umeng
+                MobclickAgent.onEvent(this, UmengEventId.HOME_DAILY_RECORD_MENU_MEASURE_BS);
                 if (hasSetDefault) {
                     if (useEquipment) {
                         recordNewData(BSGuideActivity.class);
@@ -310,6 +324,7 @@ public class DailyReportActivity extends AppbarActivity {
                 }
                 break;
             case R.id.menu_daily_record_symptom:
+                MobclickAgent.onEvent(this, UmengEventId.HOME_DAILY_RECORD_MENU_MEASURE_SYMPTOM);
                 recordNewData(SymptomActivity.class);
                 break;
         }
@@ -321,5 +336,15 @@ public class DailyReportActivity extends AppbarActivity {
         super.onDestroy();
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);       //统计时长
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.XViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
@@ -26,6 +27,7 @@ import com.wonders.xlab.patient.assist.deviceconnection.otto.RequestDataFailed;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.ScanEndOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.ScanStartOtto;
 import com.wonders.xlab.patient.module.main.home.dailyreport.datarecord.bp.otto.GuideOtto;
+import com.wonders.xlab.patient.util.UmengEventId;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -233,6 +235,7 @@ public class BSGuideActivity extends NConnActivity {
         super.onPause();
         cancel();
         dismissDialog();
+        MobclickAgent.onPause(this);
     }
 
     @Override
@@ -248,7 +251,7 @@ public class BSGuideActivity extends NConnActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_measure_direct,menu);
+        getMenuInflater().inflate(R.menu.menu_measure_direct, menu);
         return true;
     }
 
@@ -257,11 +260,19 @@ public class BSGuideActivity extends NConnActivity {
         switch (item.getItemId()) {
             case R.id.menu_measure_retry:
                 connectBondedDevice();
+                //TODO umeng
+                MobclickAgent.onEvent(this, UmengEventId.HOME_DAILY_RECORD_MEASURE_RETRY_BS);
                 break;
             case R.id.menu_measure_direct:
+                MobclickAgent.onEvent(this, UmengEventId.HOME_DAILY_RECORD_MEASURE_DIRECT_BS);
                 OttoManager.post(new GuideOtto(1));
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);       //统计时长
     }
 }

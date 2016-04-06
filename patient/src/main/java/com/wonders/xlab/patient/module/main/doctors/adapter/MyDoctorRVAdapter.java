@@ -16,7 +16,7 @@ import com.wonders.xlab.patient.databinding.DoctorMyItemBinding;
 import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
 import com.wonders.xlab.patient.module.main.doctors.otto.ChatNotifyCountOtto;
 import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;
-import com.wonders.xlab.patient.util.UnreadMessageUtil;
+import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.util.List;
 
@@ -93,7 +93,7 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         viewHolder.binding.setDoctorBean(dataItem);
 
-        int counts = UnreadMessageUtil.getUnreadMessageCounts(dataItem.getImGroupId());
+        int counts = UnReadMessageUtil.getUnreadMessageCounts(dataItem.getImGroupId());
         BGABadgeViewHelper badgeViewHelper = viewHolder.mIvPortrait.getBadgeViewHelper();
         badgeViewHelper.setBadgeGravity(BGABadgeViewHelper.BadgeGravity.RightTop);
         if (counts > 0 && counts < 100) {

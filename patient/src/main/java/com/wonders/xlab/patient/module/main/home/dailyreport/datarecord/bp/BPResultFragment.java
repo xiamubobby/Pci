@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
+import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.patient.Constant;
@@ -28,7 +29,9 @@ import com.wonders.xlab.patient.mvp.presenter.IBPSavePresenter;
 import com.wonders.xlab.patient.mvp.presenter.IIdealRangePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.BPSavePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.IdealRangePresenter;
+import com.wonders.xlab.patient.util.UmengEventId;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -101,13 +104,23 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
         startConnectingAnim();
     }
 
+    /**
+     * TODO umeng
+     * 友盟统计使用，统计从连接到成功得到服务器返回的花费时间
+     */
+    private long mStartConnectTime;//从开始连接设备的时间,单位：毫秒
     @Subscribe
     public void onConnectionStatusChanged(ConnStatusOtto connStatusOtto) {
         if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.START) {
-            startConnectingAnim();
+            mStartConnectTime = Calendar.getInstance().getTimeInMillis();
 
+            startConnectingAnim();
             mIvBpResultBluetooth.setImageResource(R.drawable.ic_bluetooth_failed);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.SUCCESS) {
+            //TODO umeng
+            long nowTime = Calendar.getInstance().getTimeInMillis();
+            MobclickAgent.onEventValue(getActivity(), UmengEventId.HOME_DAILY_RECORD_MEASURE_EQUIPMENT_CONNECT_COST_TIME_BP, null, (int) (nowTime - mStartConnectTime) / 1000);
+
             mIvBpResultBluetooth.setImageResource(R.drawable.ic_bluetooth);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.FAILED) {
             mIvBpResultBluetooth.setImageResource(R.drawable.ic_bluetooth_failed);
@@ -185,8 +198,21 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
 
     @Override
     public void onSaveBPSuccess(String message) {
+        //TODO umeng
+        long nowTime = Calendar.getInstance().getTimeInMillis();
+        MobclickAgent.onEventValue(getActivity(), UmengEventId.HOME_DAILY_RECORD_MEASURE_EQUIPMENT_COST_TIME_BP, null, (int) (nowTime - mStartConnectTime) / 1000);
+
         stopConnectingAnim();
         showShortToast(message);
         getActivity().finish();
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_bp_guide_result));
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_bp_guide_result));
     }
 }
