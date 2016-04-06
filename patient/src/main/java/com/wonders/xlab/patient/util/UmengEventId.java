@@ -32,5 +32,7 @@ public class UmengEventId {
     public final static String HOME_DAILY_RECORD_MEASURE_EQUIPMENT_COST_TIME_BP = "home_daily_record_measure_equipment_cost_time_bp";//从开始连接血压设备到保存成功数据所花费的时间
     public final static String HOME_DAILY_RECORD_MEASURE_EQUIPMENT_CONNECT_COST_TIME_BS = "home_daily_record_measure_equipment_connect_cost_time_bs";//从开始连接血糖设备到连接成功所花费的时间
     public final static String HOME_DAILY_RECORD_MEASURE_EQUIPMENT_CONNECT_COST_TIME_BP = "home_daily_record_measure_equipment_connect_cost_time_bp";//从开始连接血压设备到连接成功所花费的时间
+    public final static String HOME_DAILY_RECORD_MEASURE_EQUIPMENT_CONNECT_FAILED_TIME_BP = "home_daily_record_measure_equipment_connect_failed_time_bp";//同一次设备测量直至退出血压界面还失败的次数
+    public final static String HOME_DAILY_RECORD_MEASURE_EQUIPMENT_CONNECT_FAILED_TIME_BS = "home_daily_record_measure_equipment_connect_failed_time_bs";//同一次设备测量直至退出血糖界面还失败的次数
 
 }

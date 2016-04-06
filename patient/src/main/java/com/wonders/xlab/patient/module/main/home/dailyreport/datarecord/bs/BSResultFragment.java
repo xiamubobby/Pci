@@ -41,6 +41,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import im.hua.library.base.BaseFragment;
 import im.hua.uikit.LoadingDotView;
+import im.hua.utils.DateUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -124,7 +125,7 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
      * 友盟统计使用，统计从连接到成功得到服务器返回的花费时间
      */
     private long mStartConnectTime;//从开始连接设备的时间,单位：毫秒
-
+    private int mConnectFailedTime = 0;//连接设备失败次数
     @Subscribe
     public void onConnectionStatusChanged(ConnStatusOtto connStatusOtto) {
         if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.START) {
@@ -133,11 +134,15 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
             mIvBsResultBluetooth.setImageResource(R.drawable.ic_bluetooth_failed);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.SUCCESS) {
             //TODO umeng
+            mConnectFailedTime = 0;
             long nowTime = Calendar.getInstance().getTimeInMillis();
             MobclickAgent.onEventValue(getActivity(), UmengEventId.HOME_DAILY_RECORD_MEASURE_EQUIPMENT_CONNECT_COST_TIME_BS, null, (int) (nowTime - mStartConnectTime) / 1000);
 
             mIvBsResultBluetooth.setImageResource(R.drawable.ic_bluetooth);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.FAILED) {
+            //TODO umeng
+            mConnectFailedTime++;
+
             mIvBsResultBluetooth.setImageResource(R.drawable.ic_bluetooth_failed);
         }
     }
@@ -241,5 +246,16 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_bs_guide_result));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mConnectFailedTime > 0) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("patientId", AIManager.getInstance().getPatientId());
+            map.put("failedTime", DateUtil.format(Calendar.getInstance().getTimeInMillis(), "yyyy-MM-dd HH:mm:ss"));
+            MobclickAgent.onEventValue(getActivity(), UmengEventId.HOME_DAILY_RECORD_MEASURE_EQUIPMENT_CONNECT_FAILED_TIME_BS, map, mConnectFailedTime);
+        }
     }
 }

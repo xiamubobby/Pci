@@ -32,6 +32,7 @@ import com.wonders.xlab.patient.mvp.presenter.impl.IdealRangePresenter;
 import com.wonders.xlab.patient.util.UmengEventId;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,6 +40,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseFragment;
 import im.hua.uikit.LoadingDotView;
+import im.hua.utils.DateUtil;
 import me.drakeet.labelview.LabelView;
 
 public class BPResultFragment extends BaseFragment implements IdealRangePresenter.IdealRangePresenterListener, BPSavePresenter.RecordSavePresenterListener {
@@ -109,6 +111,7 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
      * 友盟统计使用，统计从连接到成功得到服务器返回的花费时间
      */
     private long mStartConnectTime;//从开始连接设备的时间,单位：毫秒
+    private int mConnectFailedTime = 0;//连接设备失败次数
     @Subscribe
     public void onConnectionStatusChanged(ConnStatusOtto connStatusOtto) {
         if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.START) {
@@ -118,11 +121,15 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
             mIvBpResultBluetooth.setImageResource(R.drawable.ic_bluetooth_failed);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.SUCCESS) {
             //TODO umeng
+            mConnectFailedTime = 0;
             long nowTime = Calendar.getInstance().getTimeInMillis();
             MobclickAgent.onEventValue(getActivity(), UmengEventId.HOME_DAILY_RECORD_MEASURE_EQUIPMENT_CONNECT_COST_TIME_BP, null, (int) (nowTime - mStartConnectTime) / 1000);
 
             mIvBpResultBluetooth.setImageResource(R.drawable.ic_bluetooth);
         } else if (connStatusOtto.getStatus() == ConnStatusOtto.STATUS.FAILED) {
+            //TODO umeng
+            mConnectFailedTime++;
+
             mIvBpResultBluetooth.setImageResource(R.drawable.ic_bluetooth_failed);
         }
     }
@@ -180,13 +187,6 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        OttoManager.unregister(this);
-        ButterKnife.unbind(this);
-    }
-
-    @Override
     public void showError(String message) {
         stopConnectingAnim();
     }
@@ -211,8 +211,27 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
         super.onResume();
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_bp_guide_result));
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_bp_guide_result));
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        OttoManager.unregister(this);
+        ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mConnectFailedTime > 0) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("patientId", AIManager.getInstance().getPatientId());
+            map.put("failedTime", DateUtil.format(Calendar.getInstance().getTimeInMillis(),"yyyy-MM-dd HH:mm:ss"));
+            MobclickAgent.onEventValue(getActivity(), UmengEventId.HOME_DAILY_RECORD_MEASURE_EQUIPMENT_CONNECT_FAILED_TIME_BP,map,mConnectFailedTime);
+        }
     }
 }

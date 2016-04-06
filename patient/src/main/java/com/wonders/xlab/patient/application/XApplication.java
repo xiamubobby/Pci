@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
+import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
@@ -24,7 +25,9 @@ public class XApplication extends Application {
 //            BlockCanary.install(this, new AppBlockCanaryContext()).start();
 //        }
 
+        MobclickAgent.setDebugMode(false);
         UmengUpdateAgent.setUpdateOnlyWifi(false);
+        AnalyticsConfig.enableEncrypt(true);
         MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式，这样将不会再自动统计Activity
 
         // The realm file will be located in Context.getFilesDir() with name "default.realm"
