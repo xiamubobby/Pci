@@ -3,7 +3,8 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.ChatRoomAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.ChatRoomEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.ChatRoomModelListener;
+
+import im.hua.library.base.mvp.listener.BasePageModelListener;
 
 /**
  * Created by hua on 16/2/19.
@@ -50,5 +51,9 @@ public class ChatRoomModel extends DoctorBaseModel<ChatRoomEntity> {
         if (mChatRoomModelListener != null) {
             mChatRoomModelListener.onReceiveFailed("获取聊天记录失败，请重试！");
         }
+    }
+
+    public interface ChatRoomModelListener extends BasePageModelListener {
+        void onReceiveChatRoomHistorySuccess(ChatRoomEntity chatRoomEntity, boolean shouldAppend);
     }
 }

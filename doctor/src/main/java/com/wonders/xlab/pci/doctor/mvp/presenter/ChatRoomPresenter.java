@@ -8,20 +8,18 @@ import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.ChatRoomEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.ChatRoomModel;
 import com.wonders.xlab.pci.doctor.mvp.model.SendMessageModel;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.ChatRoomModelListener;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.SendMessageModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.listener.ChatRoomPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/2/22.
  */
-public class ChatRoomPresenter extends BasePresenter implements ChatRoomModelListener, SendMessageModelListener {
+public class ChatRoomPresenter extends BasePresenter implements ChatRoomModel.ChatRoomModelListener, SendMessageModel.SendMessageModelListener {
 
     private String mDoctorId = "";
     private final String TYPE_USER = "User";
@@ -103,5 +101,13 @@ public class ChatRoomPresenter extends BasePresenter implements ChatRoomModelLis
     @Override
     public void noMoreData(String message) {
         mIChatRoomPresenter.hideLoading();
+    }
+
+    public interface ChatRoomPresenterListener extends BasePresenterListener {
+        void showChatMessageList(List<ChatRoomBean> chatRoomBeanList);
+
+        void appendChatMessageList(List<ChatRoomBean> chatRoomBeanList);
+
+        void sendMessageSuccess(long time);
     }
 }

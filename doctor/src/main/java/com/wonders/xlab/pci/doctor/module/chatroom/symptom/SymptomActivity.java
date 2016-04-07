@@ -21,7 +21,6 @@ import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.adapter.SymptomRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.bean.SymptomBean;
 import com.wonders.xlab.pci.doctor.mvp.presenter.SymptomPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.listener.SymptomPresenterListener;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.utils.KeyboardUtil;
 
-public class SymptomActivity extends AppbarActivity implements SymptomPresenterListener {
+public class SymptomActivity extends AppbarActivity implements SymptomPresenter.SymptomPresenterListener {
     public static final String EXTRA_PATIENT_ID = "patientId";
     @Bind(R.id.coordinate)
     CoordinatorLayout mCoordinate;

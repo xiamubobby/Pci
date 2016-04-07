@@ -19,7 +19,6 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.MainActivity;
 import com.wonders.xlab.pci.doctor.mvp.presenter.LoginPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.listener.LoginPresenterListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,7 +27,7 @@ import im.hua.library.base.BaseActivity;
 import im.hua.utils.KeyboardUtil;
 import im.hua.utils.ViewHelper;
 
-public class LoginActivity extends BaseActivity implements LoginPresenterListener {
+public class LoginActivity extends BaseActivity implements LoginPresenter.LoginPresenterListener {
 
     @Bind(R.id.login_phone_number)
     EditText mEtPhoneNumber;

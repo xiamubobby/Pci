@@ -1,108 +1,125 @@
 <layout>
-    <data>
-        <variable name="handler" type="com.wonders.xlab.pci.doctor.module.me.MeFragment" />
-    </data>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                                            xmlns:tools="http://schemas.android.com/tools"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            tools:context=".module.me.MeFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <data>
+
+        <variable
+            name="handler"
+            type="com.wonders.xlab.pci.doctor.module.me.MeFragment"/>
+    </data>
+
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                                                xmlns:tools="http://schemas.android.com/tools"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                tools:context=".module.me.MeFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="@dimen/item_interval_large">
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/iv_me_portrait"
-                android:layout_width="72dp"
-                android:layout_height="72dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/item_interval_large">
+
+                <ImageView
+                    android:id="@+id/iv_me_portrait"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"/>
+
+                <TextView
+                    android:id="@+id/tv_me_name"
+                    style="@style/Base.TextAppearance.AppCompat.Large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/item_interval_large"
+                    android:textColor="@color/colorAccent"
+                    />
+            </LinearLayout>
+
+            <include layout="@layout/divider_vertical_large"/>
 
             <TextView
-                android:id="@+id/tv_me_name"
-                style="@style/Base.TextAppearance.AppCompat.Large"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:gravity="center_vertical"
+                android:onClick="@{handler.groupManage}"
+                android:paddingLeft="@dimen/item_interval_middle"
+                android:singleLine="true"
+                android:text="小组管理"
+                android:textColor="@color/text_color_primary_gray"
+                android:textSize="@dimen/text_size_primary"/>
+
+            <include layout="@layout/divider_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/item_interval_middle"
+                android:singleLine="true"
+                android:text="消息通知"
+                android:textColor="@color/text_color_primary_gray"
+                android:textSize="@dimen/text_size_primary"/>
+
+            <include layout="@layout/divider_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/item_interval_middle"
+                android:singleLine="true"
+                android:text="多点执业"
+                android:textColor="@color/text_color_primary_gray"
+                android:textSize="@dimen/text_size_primary"/>
+
+            <include layout="@layout/divider_vertical"/>
+
+            <include layout="@layout/divider_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/item_interval_middle"
+                android:singleLine="true"
+                android:text="设置"
+                android:textColor="@color/text_color_primary_gray"
+                android:textSize="@dimen/text_size_primary"/>
+
+            <include layout="@layout/divider_vertical"/>
+
+            <include layout="@layout/divider_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/item_interval_middle"
+                android:singleLine="true"
+                android:text="关于心管家"
+                android:textColor="@color/text_color_primary_gray"
+                android:textSize="@dimen/text_size_primary"/>
+
+            <include layout="@layout/divider_vertical"/>
+
+            <include layout="@layout/divider_vertical"/>
+
+            <Button
+                android:id="@+id/btn_me_exit"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/item_interval_large"
-                android:textColor="@color/colorAccent"
-                />
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/item_interval_large"
+                android:background="@color/colorPrimary"
+                android:text="退出账号"
+                android:textColor="@android:color/white"/>
+
         </LinearLayout>
-
-        <include layout="@layout/divider_vertical_large"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeightSmall"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:paddingLeft="@dimen/item_interval_middle"
-            android:text="小组管理"
-            android:onClick="@{handler.groupManage()}"
-            android:textColor="@color/text_color_primary_gray"
-            android:textSize="@dimen/text_size_primary"/>
-
-        <include layout="@layout/divider_vertical"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeightSmall"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:paddingLeft="@dimen/item_interval_middle"
-            android:text="消息通知"
-            android:textColor="@color/text_color_primary_gray"
-            android:textSize="@dimen/text_size_primary"/>
-        <include layout="@layout/divider_vertical"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeightSmall"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:paddingLeft="@dimen/item_interval_middle"
-            android:text="多点执业"
-            android:textColor="@color/text_color_primary_gray"
-            android:textSize="@dimen/text_size_primary"/>
-        <include layout="@layout/divider_vertical"/>
-        <include layout="@layout/divider_vertical"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="?attr/listPreferredItemHeightSmall"
-            android:gravity="center_vertical"
-            android:singleLine="true"
-            android:paddingLeft="@dimen/item_interval_middle"
-            android:text="设置"
-            android:textColor="@color/text_color_primary_gray"
-            android:textSize="@dimen/text_size_primary"/>
-        <include layout="@layout/divider_vertical"/>
-        <include layout="@layout/divider_vertical"/><TextView
-        android:layout_width="match_parent"
-        android:layout_height="?attr/listPreferredItemHeightSmall"
-        android:gravity="center_vertical"
-        android:singleLine="true"
-        android:paddingLeft="@dimen/item_interval_middle"
-        android:text="关于心管家"
-        android:textColor="@color/text_color_primary_gray"
-        android:textSize="@dimen/text_size_primary"/>
-        <include layout="@layout/divider_vertical"/>
-        <include layout="@layout/divider_vertical"/>
-        <Button
-            android:id="@+id/btn_me_exit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/item_interval_large"
-            android:background="@color/colorPrimary"
-            android:text="退出账号"
-            android:textColor="@android:color/white"/>
-
-    </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
 </layout>

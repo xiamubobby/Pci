@@ -4,19 +4,18 @@ import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.bean.MedicalRec
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.bean.MedicalRecordPhotoBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.MedicalRecordEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.MedicalRecordModel;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.MedicalRecordModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.listener.MedicalRecordPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/2/25.
  */
-public class MedicalRecordPresenter extends BasePresenter implements MedicalRecordModelListener {
+public class MedicalRecordPresenter extends BasePresenter implements MedicalRecordModel.MedicalRecordModelListener {
     private MedicalRecordPresenterListener mIMedicalRecordPresenter;
     private MedicalRecordModel mMedicalRecordModel;
 
@@ -73,4 +72,9 @@ public class MedicalRecordPresenter extends BasePresenter implements MedicalReco
     public void noMoreData(String message) {
         mIMedicalRecordPresenter.hideLoading();
     }
+
+    public interface MedicalRecordPresenterListener extends BasePresenterListener {
+        void showMedicalRecordList(List<MedicalRecordBean> beanList);
+    }
+
 }

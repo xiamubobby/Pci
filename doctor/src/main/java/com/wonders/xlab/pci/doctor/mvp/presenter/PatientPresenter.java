@@ -3,17 +3,16 @@ package com.wonders.xlab.pci.doctor.mvp.presenter;
 import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.PatientEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.PatientModel;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.PatientModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.listener.PatientPresenterListener;
 
 import java.util.ArrayList;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 
 /**
  * Created by hua on 16/2/22.
  */
-public class PatientPresenter extends BasePresenter implements PatientModelListener {
+public class PatientPresenter extends BasePresenter implements PatientModel.PatientModelListener {
     private PatientPresenterListener mIPatientPresenter;
     private PatientModel mPatientModel;
 
@@ -63,5 +62,10 @@ public class PatientPresenter extends BasePresenter implements PatientModelListe
     @Override
     public void onReceiveFailed(String message) {
         mIPatientPresenter.showError(message);
+    }
+
+    public interface PatientPresenterListener extends BasePresenterListener {
+        void showPatientList(ArrayList<PatientBean> patientBeen);
+        void appendPatientList(ArrayList<PatientBean> patientBeen);
     }
 }

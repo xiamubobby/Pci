@@ -1,12 +1,12 @@
-package com.wonders.xlab.patient.module.main.doctors.otto;
+package com.wonders.xlab.patient.otto;
 
 /**
  * Created by hua on 16/3/29.
  */
-public class TabChangeOtto {
+public class DoctorTabChangeOtto {
     private int position;
 
-    public TabChangeOtto(int position) {
+    public DoctorTabChangeOtto(int position) {
         this.position = position;
     }
 

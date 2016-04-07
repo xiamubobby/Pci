@@ -5,21 +5,19 @@ import com.wonders.xlab.pci.doctor.mvp.entity.SymptomCommentEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.SymptomEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.SymptomCommentModel;
 import com.wonders.xlab.pci.doctor.mvp.model.SymptomModel;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.SymptomCommentModelListener;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.SymptomModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.listener.SymptomPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 import im.hua.utils.DateUtil;
 
 
 /**
  * Created by hua on 16/2/24.
  */
-public class SymptomPresenter extends BasePresenter implements SymptomModelListener, SymptomCommentModelListener {
+public class SymptomPresenter extends BasePresenter implements SymptomModel.SymptomModelListener, SymptomCommentModel.SymptomCommentModelListener {
     private SymptomPresenterListener mISymptomPresenter;
     private SymptomModel mSymptomModel;
     private SymptomCommentModel mSymptomCommentModel;
@@ -72,5 +70,11 @@ public class SymptomPresenter extends BasePresenter implements SymptomModelListe
     @Override
     public void onReceiveSymptomCommentSuccess(SymptomCommentEntity entity) {
         mISymptomPresenter.saveCommentSuccess();
+    }
+
+    public interface SymptomPresenterListener extends BasePresenterListener {
+        void showSymptomList(List<SymptomBean> symptomBeanList);
+
+        void saveCommentSuccess();
     }
 }

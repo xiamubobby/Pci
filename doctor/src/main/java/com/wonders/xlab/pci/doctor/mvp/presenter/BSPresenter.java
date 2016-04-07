@@ -6,19 +6,18 @@ import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.module.chatroom.bs.bean.BSBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.BSEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.BSModel;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.BSModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.listener.BSPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/2/22.
  */
-public class BSPresenter extends BasePresenter implements BSModelListener {
+public class BSPresenter extends BasePresenter implements BSModel.BSModelListener {
     private BSPresenterListener mBloodPressurePresenter;
     private BSModel mBSModel;
 
@@ -74,5 +73,9 @@ public class BSPresenter extends BasePresenter implements BSModelListener {
     @Override
     public void onReceiveFailed(String message) {
         mBloodPressurePresenter.showError(message);
+    }
+
+    public interface BSPresenterListener extends BasePresenterListener {
+        void showBloodPressureList(List<BSBean> bsBeanList);
     }
 }

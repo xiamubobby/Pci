@@ -4,12 +4,13 @@ import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.SendMessageAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.SendMessageEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.request.SendMessageBody;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.SendMessageModelListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
  * Created by hua on 16/3/2.
@@ -79,4 +80,9 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
     protected void onFailed(String message) {
         mISendMessageModel.onReceiveFailed("发送失败，请重试！");
     }
+
+    public interface SendMessageModelListener extends BaseModelListener {
+        void onSendMessageSuccess(long time);
+    }
+
 }

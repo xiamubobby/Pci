@@ -16,16 +16,15 @@ import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerVie
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
-import com.wonders.xlab.pci.doctor.module.chatroom.bp.BloodPressureActivity;
-import com.wonders.xlab.pci.doctor.module.chatroom.bs.BloodSugarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
+import com.wonders.xlab.pci.doctor.module.chatroom.bp.BloodPressureActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.bs.BloodSugarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.MedicalRecordActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoActivity;
 import com.wonders.xlab.pci.doctor.mvp.presenter.ChatRoomPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.listener.ChatRoomPresenterListener;
 
 import java.util.Calendar;
 import java.util.List;
@@ -37,7 +36,7 @@ import im.hua.uikit.BadgeView;
 import im.hua.utils.DateUtil;
 import im.hua.utils.NotifyUtil;
 
-public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresenterListener {
+public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresenter.ChatRoomPresenterListener {
     public final static String EXTRA_PATIENT_ID = "PATIENT_ID";
     public final static String EXTRA_PATIENT_NAME = "PATIENT_NAME";
     public final static String EXTRA_PATIENT_PHONE_NUMBER = "PATIENT_NUMBER";

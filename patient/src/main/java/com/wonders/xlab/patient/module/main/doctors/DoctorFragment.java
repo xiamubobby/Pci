@@ -16,7 +16,7 @@ import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.module.main.doctors.otto.TabChangeOtto;
+import com.wonders.xlab.patient.otto.DoctorTabChangeOtto;
 
 import java.util.ArrayList;
 
@@ -107,7 +107,7 @@ public class DoctorFragment extends BaseFragment {
     }
 
     @Subscribe
-    public void changeTabPostion(TabChangeOtto otto) {
+    public void changeTabPostion(DoctorTabChangeOtto otto) {
         mViewPager.setCurrentItem(otto.getPosition(),true);
     }
     

@@ -3,7 +3,8 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.LoginAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.LoginEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.LoginModelListener;
+
+import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
  * Created by hua on 16/2/25.
@@ -30,5 +31,9 @@ public class LoginModel extends DoctorBaseModel<LoginEntity> {
     @Override
     protected void onFailed(String message) {
         mILoginModel.onReceiveFailed(message);
+    }
+
+    public interface LoginModelListener extends BaseModelListener {
+        void loginSuccess(LoginEntity entity);
     }
 }

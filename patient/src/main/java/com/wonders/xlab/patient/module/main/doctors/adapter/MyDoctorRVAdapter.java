@@ -14,7 +14,7 @@ import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.DoctorMyItemBinding;
 import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
-import com.wonders.xlab.patient.module.main.doctors.otto.ChatNotifyCountOtto;
+import com.wonders.xlab.patient.otto.ChatNotifyCountOtto;
 import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 

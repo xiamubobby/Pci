@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.main.doctors.otto;
+package com.wonders.xlab.patient.otto;
 
 /**
  * Created by hua on 16/4/5.

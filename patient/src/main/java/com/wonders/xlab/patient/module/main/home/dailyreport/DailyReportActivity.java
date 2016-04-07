@@ -32,10 +32,10 @@ import com.wonders.xlab.patient.module.main.home.dailyreport.datarecord.symptom.
 import com.wonders.xlab.patient.module.main.home.dailyreport.fragment.BPReportFragment;
 import com.wonders.xlab.patient.module.main.home.dailyreport.fragment.BSReportFragment;
 import com.wonders.xlab.patient.module.main.home.dailyreport.fragment.SymptomReportFragment;
-import com.wonders.xlab.patient.module.main.home.dailyreport.otto.BPSaveSuccessOtto;
-import com.wonders.xlab.patient.module.main.home.dailyreport.otto.BSSaveSuccessOtto;
-import com.wonders.xlab.patient.module.main.home.dailyreport.otto.ShowMeasureChooseDialogOtto;
-import com.wonders.xlab.patient.module.main.home.dailyreport.otto.SymptomSaveSuccessOtto;
+import com.wonders.xlab.patient.otto.BPSaveSuccessOtto;
+import com.wonders.xlab.patient.otto.BSSaveSuccessOtto;
+import com.wonders.xlab.patient.otto.ShowMeasureChooseDialogOtto;
+import com.wonders.xlab.patient.otto.SymptomSaveSuccessOtto;
 import com.wonders.xlab.patient.util.UmengEventId;
 
 import java.util.ArrayList;

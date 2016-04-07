@@ -3,7 +3,8 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.PatientAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.PatientEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.PatientModelListener;
+
+import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
  * Created by hua on 16/2/19.
@@ -29,6 +30,10 @@ public class PatientModel extends DoctorBaseModel<PatientEntity> {
 
     @Override
     protected void onFailed(String message) {
-        mIPatientPresenter.onReceiveFailed("获取患者列表失败，请重试！");
+        mIPatientPresenter.onReceiveFailed(message);
+    }
+
+    public interface PatientModelListener extends BaseModelListener {
+        void onReceivePatientSuccess(PatientEntity entity);
     }
 }

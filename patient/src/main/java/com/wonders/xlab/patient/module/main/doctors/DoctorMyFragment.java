@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.otto.Subscribe;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
@@ -19,9 +20,10 @@ import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.patient.module.main.doctors.adapter.MyDoctorRVAdapter;
 import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
-import com.wonders.xlab.patient.module.main.doctors.otto.TabChangeOtto;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorMyPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.DoctorMyPresenter;
+import com.wonders.xlab.patient.otto.BuyPackageSuccessOtto;
+import com.wonders.xlab.patient.otto.DoctorTabChangeOtto;
 
 import java.util.ArrayList;
 
@@ -49,6 +51,12 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
 
     public static DoctorMyFragment newInstance() {
         return new DoctorMyFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        OttoManager.register(this);
     }
 
     @Override
@@ -139,12 +147,17 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
     public void showEmptyView() {
         mRecyclerView.setVisibility(View.GONE);
         mEmptyView.setVisibility(View.VISIBLE);
-        OttoManager.post(new TabChangeOtto(1));
+        OttoManager.post(new DoctorTabChangeOtto(1));
     }
 
     @Override
     public void showError(String message) {
         showShortToast(message);
+    }
+
+    @Subscribe
+    public void buyPackageSuccess(BuyPackageSuccessOtto otto) {
+        mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
     }
 
     @Override
@@ -159,8 +172,15 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
         super.onResume();
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_doctors_my));
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_doctors_my));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        OttoManager.unregister(this);
     }
 }

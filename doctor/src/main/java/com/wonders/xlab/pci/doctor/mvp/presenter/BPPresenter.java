@@ -15,20 +15,19 @@ import com.wonders.xlab.pci.doctor.module.chatroom.bp.bean.BPChartBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bp.bean.BPListBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.BPEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.BPModel;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.BPModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.listener.BPPresenterListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/2/22.
  */
-public class BPPresenter extends BasePresenter implements BPModelListener {
+public class BPPresenter extends BasePresenter implements BPModel.BPModelListener {
     private BPPresenterListener mBloodPressurePresenter;
     private BPModel mBPModel;
 
@@ -186,5 +185,9 @@ public class BPPresenter extends BasePresenter implements BPModelListener {
         d.addDataSet(set);
 
         return d;
+    }
+
+    public interface BPPresenterListener extends BasePresenterListener {
+        void showBloodPressureList(ArrayList<BPListBean> bpListBeanList, CombinedData combinedData);
     }
 }

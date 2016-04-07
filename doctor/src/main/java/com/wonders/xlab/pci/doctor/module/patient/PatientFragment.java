@@ -17,7 +17,6 @@ import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.pci.doctor.module.patient.adapter.PatientRVAdapter;
 import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.listener.PatientPresenterListener;
 import com.wonders.xlab.pci.doctor.mvp.presenter.PatientPresenter;
 
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ import im.hua.library.base.BaseFragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PatientFragment extends BaseFragment implements PatientPresenterListener {
+public class PatientFragment extends BaseFragment implements PatientPresenter.PatientPresenterListener {
 
     private PatientPresenter mPatientPresenter;
 

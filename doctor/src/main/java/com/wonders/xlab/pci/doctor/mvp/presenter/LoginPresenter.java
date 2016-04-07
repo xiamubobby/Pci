@@ -2,16 +2,15 @@ package com.wonders.xlab.pci.doctor.mvp.presenter;
 
 import com.wonders.xlab.pci.doctor.mvp.entity.LoginEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.LoginModel;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.LoginModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.listener.LoginPresenterListener;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 import im.hua.utils.MD5Util;
 
 /**
  * Created by hua on 16/2/25.
  */
-public class LoginPresenter extends BasePresenter implements LoginModelListener {
+public class LoginPresenter extends BasePresenter implements LoginModel.LoginModelListener {
     private LoginPresenterListener mILoginPresenter;
     private LoginModel mLoginModel;
 
@@ -33,5 +32,9 @@ public class LoginPresenter extends BasePresenter implements LoginModelListener 
     @Override
     public void onReceiveFailed(String message) {
         mILoginPresenter.showError(message);
+    }
+
+    public interface LoginPresenterListener extends BasePresenterListener {
+        void loginSuccess(String userId, String tel, String avatarUrl,String userName);
     }
 }

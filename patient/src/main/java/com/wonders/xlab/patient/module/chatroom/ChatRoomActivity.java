@@ -23,7 +23,7 @@ import com.wonders.xlab.patient.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.OthersChatRoomBean;
 import com.wonders.xlab.patient.module.main.doctors.detail.DoctorDetailActivity;
-import com.wonders.xlab.patient.module.main.doctors.otto.ChatNotifyCountOtto;
+import com.wonders.xlab.patient.otto.ChatNotifyCountOtto;
 import com.wonders.xlab.patient.mvp.presenter.IChatRoomPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.ChatRoomPresenter;
 import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;

@@ -3,7 +3,8 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.BPAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.BPEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.BPModelListener;
+
+import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
  * Created by hua on 16/2/22.
@@ -29,5 +30,9 @@ public class BPModel extends DoctorBaseModel<BPEntity> {
     @Override
     protected void onFailed(String message) {
         mBloodPressureModel.onReceiveFailed("获取血压数据失败，请重试！");
+    }
+
+    public interface BPModelListener extends BaseModelListener {
+        void onReceiveBPSuccess(BPEntity bpEntity);
     }
 }

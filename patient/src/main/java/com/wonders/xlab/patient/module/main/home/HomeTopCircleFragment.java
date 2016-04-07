@@ -24,8 +24,8 @@ import com.wonders.xlab.patient.module.main.home.bean.HomeTopCircleBean;
 import com.wonders.xlab.patient.module.main.home.dailyreport.DailyReportActivity;
 import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.BPReportBean;
 import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.BSReportBean;
-import com.wonders.xlab.patient.module.main.home.dailyreport.otto.BPSaveSuccessOtto;
-import com.wonders.xlab.patient.module.main.home.dailyreport.otto.BSSaveSuccessOtto;
+import com.wonders.xlab.patient.otto.BPSaveSuccessOtto;
+import com.wonders.xlab.patient.otto.BSSaveSuccessOtto;
 import com.wonders.xlab.patient.util.UmengEventId;
 
 import java.util.ArrayList;

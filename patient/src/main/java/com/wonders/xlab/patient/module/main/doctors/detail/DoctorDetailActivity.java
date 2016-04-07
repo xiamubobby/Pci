@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
@@ -35,6 +36,7 @@ import com.wonders.xlab.patient.mvp.presenter.IDoctorDetailPresenter;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorGroupDetailPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.DoctorDetailPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.DoctorGroupDetailPresenter;
+import com.wonders.xlab.patient.otto.BuyPackageSuccessOtto;
 
 import java.util.ArrayList;
 
@@ -310,6 +312,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
         showShortToast(message);
         requestData();
         dialog.dismiss();
+        OttoManager.post(new BuyPackageSuccessOtto());
     }
 
     @Override

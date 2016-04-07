@@ -3,18 +3,17 @@ package com.wonders.xlab.pci.doctor.mvp.presenter;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.bean.UserInfoBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.UserInfoEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.UserInfoModel;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.UserInfoModelListener;
-import com.wonders.xlab.pci.doctor.mvp.presenter.listener.UserInfoPresenterListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 
 /**
  * Created by hua on 16/2/23.
  */
-public class UserInfoPresenter extends BasePresenter implements UserInfoModelListener {
+public class UserInfoPresenter extends BasePresenter implements UserInfoModel.UserInfoModelListener {
     private UserInfoModel mUserInfoModel;
     private UserInfoPresenterListener mUserInfoPresenter;
 
@@ -54,5 +53,9 @@ public class UserInfoPresenter extends BasePresenter implements UserInfoModelLis
         if (mUserInfoPresenter != null) {
             mUserInfoPresenter.showError(message);
         }
+    }
+
+    public interface UserInfoPresenterListener extends BasePresenterListener {
+        void showUserInfo(List<UserInfoBean> userInfoBeanList);
     }
 }

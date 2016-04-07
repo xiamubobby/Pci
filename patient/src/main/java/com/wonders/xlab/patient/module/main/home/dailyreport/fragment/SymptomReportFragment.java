@@ -17,7 +17,7 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.SymptomReportAdapter;
 import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.SymptomReportBean;
-import com.wonders.xlab.patient.module.main.home.dailyreport.otto.SymptomSaveSuccessOtto;
+import com.wonders.xlab.patient.otto.SymptomSaveSuccessOtto;
 import com.wonders.xlab.patient.mvp.presenter.ISymptomReportPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.SymptomReportPresenter;
 

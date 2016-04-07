@@ -3,7 +3,8 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.MedicalRecordAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.MedicalRecordEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.MedicalRecordModelListener;
+
+import im.hua.library.base.mvp.listener.BasePageModelListener;
 
 /**
  * Created by hua on 16/2/25.
@@ -45,4 +46,9 @@ public class MedicalRecordModel extends DoctorBaseModel<MedicalRecordEntity> {
     protected void onFailed(String message) {
         mIMedicalRecordModel.onReceiveFailed("获取就诊记录失败，请重试！");
     }
+
+    public interface MedicalRecordModelListener extends BasePageModelListener {
+        void onReceiveMedicalRecordSuccess(MedicalRecordEntity entity);
+    }
+
 }

@@ -2,7 +2,7 @@ package com.wonders.xlab.patient.mvp.presenter.impl;
 
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.assist.deviceconnection.entity.BSEntityList;
-import com.wonders.xlab.patient.module.main.home.dailyreport.otto.BSSaveSuccessOtto;
+import com.wonders.xlab.patient.otto.BSSaveSuccessOtto;
 import com.wonders.xlab.patient.mvp.entity.BSPeriodEntity;
 import com.wonders.xlab.patient.mvp.model.IBSPeriodModel;
 import com.wonders.xlab.patient.mvp.model.impl.BSMultiSaveModel;

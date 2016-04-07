@@ -15,6 +15,7 @@ import com.wonders.xlab.common.manager.ImageViewManager;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
+import com.wonders.xlab.pci.doctor.databinding.MeFragmentBinding;
 import com.wonders.xlab.pci.doctor.otto.ForceExitOtto;
 
 import butterknife.Bind;
@@ -55,6 +56,9 @@ public class MeFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        MeFragmentBinding binding = MeFragmentBinding.bind(view);
+        binding.setHandler(this);
+
         mTvMeName.setText(AIManager.getInstance(getActivity()).getUserName());
         ImageViewManager.setImageViewWithUrl(getActivity(), mIvMePortrait, AIManager.getInstance(getActivity()).getAvatarUrl(), R.drawable.portrait_default);
     }
@@ -65,7 +69,7 @@ public class MeFragment extends BaseFragment {
         getActivity().finish();
     }
 
-    public void groupManage() {
+    public void groupManage(View view) {
         Toast.makeText(getActivity(), "小组管理", Toast.LENGTH_SHORT).show();
     }
 

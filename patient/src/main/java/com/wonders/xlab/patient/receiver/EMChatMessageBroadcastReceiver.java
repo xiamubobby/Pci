@@ -15,7 +15,7 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.patient.module.main.MainActivity;
-import com.wonders.xlab.patient.module.main.doctors.otto.ChatNotifyCountOtto;
+import com.wonders.xlab.patient.otto.ChatNotifyCountOtto;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.realm.UnReadMessageRealm;
 import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;

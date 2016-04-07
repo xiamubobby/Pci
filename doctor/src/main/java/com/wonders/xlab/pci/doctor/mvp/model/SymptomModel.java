@@ -3,7 +3,8 @@ package com.wonders.xlab.pci.doctor.mvp.model;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.SymptomAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.SymptomEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.listener.SymptomModelListener;
+
+import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
  * Created by hua on 16/2/24.
@@ -28,6 +29,10 @@ public class SymptomModel extends DoctorBaseModel<SymptomEntity> {
 
     @Override
     protected void onFailed(String message) {
-        mISymptomModel.onReceiveFailed("获取不适症状失败，请重试！");
+        mISymptomModel.onReceiveFailed(message);
+    }
+
+    public interface SymptomModelListener extends BaseModelListener {
+        void onReceiveSymptomSuccess(SymptomEntity entity);
     }
 }
