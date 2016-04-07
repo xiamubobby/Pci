@@ -35,7 +35,7 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
         groupModifyBean.setPublishedServiceIconList(serviceIconList);
 
         List<GroupModifyMemberBean> memberBeanList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 7; i++) {
             GroupModifyMemberBean bean = new GroupModifyMemberBean();
             bean.setAvatarUrl(Constant.DEFAULT_PORTRAIT);
             bean.setMemberId(String.valueOf(i));
