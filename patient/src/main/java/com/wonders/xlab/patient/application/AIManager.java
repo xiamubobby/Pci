@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.realm.PatientInfoRealm;
+import com.wonders.xlab.patient.realm.UnReadMessageRealm;
 
 /**
  * Created by hua on 15/12/17.
@@ -43,13 +44,18 @@ public class AIManager {
         synchronized (object) {
             XApplication.realm.beginTransaction();
             XApplication.realm.clear(PatientInfoRealm.class);
+            XApplication.realm.clear(UnReadMessageRealm.class);
             XApplication.realm.commitTransaction();
         }
 
     }
 
     private PatientInfoRealm getPatientInfo() {
-        return XApplication.realm.where(PatientInfoRealm.class).findFirst();
+        try {
+            return XApplication.realm.where(PatientInfoRealm.class).findFirst();
+        } catch (IllegalStateException e) {
+            return null;
+        }
     }
 
     public String getPatientId() {

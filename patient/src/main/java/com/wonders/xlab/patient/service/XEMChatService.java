@@ -31,6 +31,7 @@ import com.wonders.xlab.patient.receiver.TimeClickReceiver;
 
 import java.util.Locale;
 
+import im.hua.library.base.BuildConfig;
 import im.hua.utils.MD5Util;
 import im.hua.utils.NotifyUtil;
 import rx.Observable;
@@ -42,10 +43,6 @@ public class XEMChatService extends Service {
     private EMChatMessageBroadcastReceiver msgReceiver;
     private TimeClickReceiver mTimeClickReceiver;
     private ConnectionBroadcastReceiver mConnectionReceiver;
-    private boolean mIsNormalStop = false;
-
-    private final int RETRY_TIMES = 10;
-    private int mCurrentRetryTime = 0;
 
     public XEMChatService() {
     }
@@ -106,7 +103,6 @@ public class XEMChatService extends Service {
 
     @Subscribe
     public void forceExit(ForceExitOtto forceExitOtto) {
-        mIsNormalStop = true;
         new NotifyUtil().cancelAll(this);
         AIManager.getInstance().logout();
         stopSelf();
@@ -131,7 +127,7 @@ public class XEMChatService extends Service {
         EMChatManager.getInstance().login(tel, new MD5Util().encrypt("pci_user" + tel).toLowerCase(Locale.CHINA), new EMCallBack() {//回调
             @Override
             public void onSuccess() {
-                Log.e("XEMChatService", "患者登录成功");
+                if (BuildConfig.DEBUG) Log.d("XEMChatService", "患者登录成功");
                 EMChat.getInstance().setAppInited();
                 //注册一个监听连接状态的listener
                 EMChatManager.getInstance().addConnectionListener(new MyConnectionListener());
@@ -144,12 +140,7 @@ public class XEMChatService extends Service {
 
             @Override
             public void onError(int code, String message) {
-                Log.e("XEMChatService", "患者登录是失败");
-                if (mCurrentRetryTime++ < RETRY_TIMES) {
-                    login();
-                } else {
-                    mCurrentRetryTime = 0;
-                }
+                if (BuildConfig.DEBUG) Log.d("XEMChatService", "患者登录是失败");
             }
         });
     }
@@ -171,12 +162,6 @@ public class XEMChatService extends Service {
             mTimeClickReceiver = null;
         }
         EMChatManager.getInstance().logout();//此方法为同步方法
-
-        if (!mIsNormalStop) {
-            Intent localIntent = new Intent();
-            localIntent.setClass(this, XEMChatService.class);
-            startService(localIntent);
-        }
     }
 
     //实现ConnectionListener接口

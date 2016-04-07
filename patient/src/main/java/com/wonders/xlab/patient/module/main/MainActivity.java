@@ -62,7 +62,7 @@ public class MainActivity extends BaseActivity {
         /**
          * 友盟用户标识
          */
-        MobclickAgent.onProfileSignIn(aiManager.getPatientId());
+        MobclickAgent.onProfileSignIn(AIManager.getInstance().getPatientId());
 
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wonders.xlab.common.manager.ImageViewManager;
 import com.wonders.xlab.common.manager.OttoManager;
@@ -62,6 +63,10 @@ public class MeFragment extends BaseFragment {
     public void exit() {
         OttoManager.post(new ForceExitOtto());
         getActivity().finish();
+    }
+
+    public void groupManage() {
+        Toast.makeText(getActivity(), "小组管理", Toast.LENGTH_SHORT).show();
     }
 
     @Override
