@@ -44,6 +44,7 @@ public class RecyclerViewScrollListener extends RecyclerView.OnScrollListener {
         if (0 != firstVisibleItem
                 && (lastCompletelyVisibleItem == totalItemCount - 1)
                 && !mPullLoadMoreRecyclerView.isLoadingMore()
+                && !mPullLoadMoreRecyclerView.isRefreshing()
                 && ((!mPullLoadMoreRecyclerView.isReverse() && (dx >= 0 || dy >= 0)) || (mPullLoadMoreRecyclerView.isReverse() && (dx <= 0 || dy <= 0)))) {
             mPullLoadMoreRecyclerView.loadMore();
         }

@@ -158,7 +158,7 @@ public class BPHRFragment extends BaseFragment implements BloodPressurePresenter
         ll1.setTextColor(Color.parseColor("#69c88e"));
         ll1.enableDashedLine(5f, 5f, 0f);
         ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
-        ll1.setTextSize(10f);
+        ll1.setTextSize(8f);
 
         LimitLine ll2 = new LimitLine(91f, "高压(低)");
         ll2.setLineColor(Color.parseColor("#69c88e"));
@@ -166,7 +166,7 @@ public class BPHRFragment extends BaseFragment implements BloodPressurePresenter
         ll2.setLineWidth(1f);
         ll2.enableDashedLine(5f, 5f, 0f);
         ll2.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
-        ll2.setTextSize(10f);
+        ll2.setTextSize(8f);
 
         LimitLine ll3 = new LimitLine(90f, "低压(高)");
         ll3.setLineWidth(1f);
@@ -174,7 +174,7 @@ public class BPHRFragment extends BaseFragment implements BloodPressurePresenter
         ll3.setTextColor(Color.parseColor("#12b9f8"));
         ll3.enableDashedLine(5f, 5f, 0f);
         ll3.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_TOP);
-        ll3.setTextSize(10f);
+        ll3.setTextSize(8f);
 
         LimitLine ll4 = new LimitLine(60f, "低压(低)");
         ll4.setLineColor(Color.parseColor("#12b9f8"));
@@ -182,21 +182,30 @@ public class BPHRFragment extends BaseFragment implements BloodPressurePresenter
         ll4.setLineWidth(1f);
         ll4.enableDashedLine(5f, 5f, 0f);
         ll4.setLabelPosition(LimitLine.LimitLabelPosition.LEFT_BOTTOM);
-        ll4.setTextSize(10f);
+        ll4.setTextSize(8f);
 
-        LimitLine ll5 = new LimitLine(70f, "心率(低)");
+        LimitLine ll5 = new LimitLine(85f, "心率(高)");
         ll5.setLineColor(Color.parseColor("#de0404"));
         ll5.setTextColor(Color.parseColor("#de0404"));
         ll5.setLineWidth(1f);
         ll5.enableDashedLine(5f, 5f, 0f);
         ll5.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
-        ll5.setTextSize(10f);
+        ll5.setTextSize(8f);
+
+        LimitLine ll6 = new LimitLine(50, "心率(低)");
+        ll6.setLineColor(Color.parseColor("#de0404"));
+        ll6.setTextColor(Color.parseColor("#de0404"));
+        ll6.setLineWidth(1f);
+        ll6.enableDashedLine(5f, 5f, 0f);
+        ll6.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
+        ll6.setTextSize(8f);
 
         leftAxis.addLimitLine(ll1);
         leftAxis.addLimitLine(ll2);
         leftAxis.addLimitLine(ll3);
         leftAxis.addLimitLine(ll4);
         leftAxis.addLimitLine(ll5);
+        leftAxis.addLimitLine(ll6);
     }
 
     @Override

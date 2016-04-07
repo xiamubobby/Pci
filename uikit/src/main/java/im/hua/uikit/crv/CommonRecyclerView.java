@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,6 +47,7 @@ public class CommonRecyclerView extends FrameLayout {
     private SwipeRefreshLayout mRefreshView;
 
     private boolean mIsLoadMore;
+    private boolean mIsRefreshing;
 
     /**
      * 加载更多view动画
@@ -140,6 +142,10 @@ public class CommonRecyclerView extends FrameLayout {
             } else {
                 params.width = size;
                 params.height = size;
+            }
+            if (mLoadMoreView instanceof CardView) {
+                CardView cardView = (CardView) mLoadMoreView;
+                cardView.setRadius(dp2px(20));
             }
             if (reverseLayout) {
                 params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
@@ -324,6 +330,7 @@ public class CommonRecyclerView extends FrameLayout {
     }
 
     public void setRefreshing(final boolean refreshing) {
+        mIsRefreshing = refreshing;
         if (null != mRefreshView) {
             mRefreshView.post(new Runnable() {
                 @Override
@@ -340,8 +347,15 @@ public class CommonRecyclerView extends FrameLayout {
         mRefreshView.setEnabled(enable);
     }
 
-    public void setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener listener) {
-        mRefreshView.setOnRefreshListener(listener);
+    public void setOnRefreshListener(final SwipeRefreshLayout.OnRefreshListener listener) {
+        mRefreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mIsRefreshing = true;
+                listener.onRefresh();
+                hideLoadMore();
+            }
+        });
     }
 
     public void hideRefreshOrLoadMore(boolean hideRefreshing, boolean hideLodeMore) {
@@ -357,11 +371,18 @@ public class CommonRecyclerView extends FrameLayout {
         mOnLoadMoreListener = onLoadMoreListener;
     }
 
+    public boolean isRefreshing() {
+        return mIsRefreshing;
+    }
+
     public interface OnLoadMoreListener {
         void onLoadMore();
     }
 
     public synchronized void hideLoadMore() {
+        if (!isLoadingMore()) {
+            return;
+        }
         setIsLoadMore(false);
         new Handler().postDelayed(new Runnable() {
             @Override

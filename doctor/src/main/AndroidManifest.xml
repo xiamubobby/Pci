@@ -138,6 +138,10 @@
             android:name=".module.me.groupmanage.GroupManageActivity"
             android:label="@string/title_activity_group_manage"
             android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="com.wonders.xlab.pci.doctor.GroupManageActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
     </application>
 

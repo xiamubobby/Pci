@@ -92,16 +92,24 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
         if (TextUtils.isEmpty(systolicPressure)) {
             showShortToast("请输入高压");
             return;
+        }else if(TextUtils.isDigitsOnly(systolicPressure) && Integer.parseInt(systolicPressure) == 0){
+            showShortToast("请输入正确的高压值");
+            return;
         }
         String diastolicPressure = mEtAddBpSzy.getText().toString();
         if (TextUtils.isEmpty(diastolicPressure)) {
             showShortToast("请输入低压");
             return;
+        }else if(TextUtils.isDigitsOnly(diastolicPressure) && Integer.parseInt(diastolicPressure) == 0){
+            showShortToast("请输入正确的低压值");
+            return;
         }
         String heartRate = mEtAddBpRate.getText().toString();
-
         if (TextUtils.isEmpty(heartRate)) {
             showShortToast("请输入心率");
+            return;
+        }else if(TextUtils.isDigitsOnly(heartRate) && Integer.parseInt(heartRate) == 0){
+            showShortToast("请输入正确的心率值");
             return;
         }
 

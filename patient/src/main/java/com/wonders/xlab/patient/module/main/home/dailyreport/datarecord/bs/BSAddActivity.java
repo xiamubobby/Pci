@@ -95,6 +95,9 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
         if (TextUtils.isEmpty(bloodSugar)) {
             showShortToast("请输入血糖");
             return;
+        } else if(TextUtils.isDigitsOnly(bloodSugar) && Integer.parseInt(bloodSugar) == 0){
+            showShortToast("请输入正确的血糖值");
+            return;
         }
 
         int periodIndex = mSpAddBsPeriod.getSelectedItemPosition();

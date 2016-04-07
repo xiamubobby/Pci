@@ -1,6 +1,7 @@
 package com.wonders.xlab.pci.doctor.module.me;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wonders.xlab.common.manager.ImageViewManager;
 import com.wonders.xlab.common.manager.OttoManager;
@@ -70,7 +70,7 @@ public class MeFragment extends BaseFragment {
     }
 
     public void groupManage(View view) {
-        Toast.makeText(getActivity(), "小组管理", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent("com.wonders.xlab.pci.doctor.GroupManageActivity"));
     }
 
     @Override
