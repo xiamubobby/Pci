@@ -42,8 +42,8 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        builder.addInterceptor(logging);
 
+//        builder.addInterceptor(logging);
         OkHttpClient client = builder.build();
 //        client.setConnectTimeout(30, TimeUnit.SECONDS);
 //        client.setWriteTimeout(30, TimeUnit.SECONDS);

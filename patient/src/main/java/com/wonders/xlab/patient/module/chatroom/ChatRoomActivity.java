@@ -262,6 +262,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             bean.recordTimeInMill.set(otto.getMessageTime());
             bean.portraitUrl.set(otto.getFromWhoAvatarUrl());
 
+            initChatRoomAdapter();
             mChatRoomRVAdapter.insertToTop(bean);
             mRecyclerView.getRecyclerView().scrollToPosition(0);
         }
