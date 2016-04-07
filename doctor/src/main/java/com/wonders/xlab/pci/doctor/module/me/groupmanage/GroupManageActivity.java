@@ -1,19 +1,26 @@
 package com.wonders.xlab.pci.doctor.module.me.groupmanage;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 
-public class GroupManageActivity extends AppCompatActivity {
+import butterknife.Bind;
+import im.hua.uikit.crv.CommonRecyclerView;
+
+public class GroupManageActivity extends AppbarActivity {
+
+    @Bind(R.id.recycler_view_group_manage)
+    CommonRecyclerView mRecyclerView;
+
+    @Override
+    public int getContentLayout() {
+        return R.layout.group_manage_activity;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.group_manage_activity);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
     }
 
 }

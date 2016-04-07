@@ -7,9 +7,9 @@ import android.util.Log;
 import android.view.View;
 
 import com.umeng.update.UmengUpdateAgent;
+import com.wonders.xlab.pci.doctor.R;
 
 import im.hua.library.base.BaseActivity;
-import xlab.wonders.com.common.R;
 
 /**
  * Created by hua on 15/12/1.
@@ -24,11 +24,16 @@ public abstract class AppbarActivity extends BaseActivity {
 
     public abstract int getContentLayout();
 
-    public abstract String getToolbarTitle();
+    public String getToolbarTitle() {
+        return "";
+    }
 
     public void setToolbarTitle(String title) {
         if (mToolbar != null && !TextUtils.isEmpty(title)) {
             mToolbar.setTitle(title);
+        }
+        if (null != getSupportActionBar()) {
+            getSupportActionBar().setTitle(title);
         }
     }
 
@@ -54,7 +59,8 @@ public abstract class AppbarActivity extends BaseActivity {
         mContentView = findViewById(android.R.id.content);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         if (mToolbar != null) {
-            mToolbar.setTitle(getToolbarTitle());
+            setToolbarTitle(getToolbarTitle());
+            setSupportActionBar(mToolbar);
             mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_white);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,7 +72,7 @@ public abstract class AppbarActivity extends BaseActivity {
                 }
             });
         } else {
-            Log.w("ToolbarActivity", "if you want the ToolbarActivity to manager your toolbar, you should set your toolbar's id to toolbar");
+            Log.w("ToolbarActivity", "if you want the ToolbarActivity to manager your toolbar, you should set your toolbar's id as toolbar");
         }
 
     }

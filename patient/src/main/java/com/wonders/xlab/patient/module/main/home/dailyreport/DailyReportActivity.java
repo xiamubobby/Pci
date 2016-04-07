@@ -152,6 +152,9 @@ public class DailyReportActivity extends AppbarActivity {
         startActivity(new Intent(this, targetActivity));
     }
 
+    private boolean mUseEquipment = true;
+    private boolean mHasSetDefault = false;
+
     /**
      * @param type 0:血压   1：血糖
      */
@@ -165,10 +168,10 @@ public class DailyReportActivity extends AppbarActivity {
 
                 switch (checkedId) {
                     case R.id.rb_item_daily_record_dialog_single_check_auto:
-                        SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
+                        mUseEquipment = true;
                         break;
                     case R.id.rb_item_daily_record_dialog_single_check_manual:
-                        SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), false);
+                        mUseEquipment = false;
                         break;
                 }
             }
@@ -179,10 +182,8 @@ public class DailyReportActivity extends AppbarActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     showLongToast("如果需要切换输入方式，只需要在：主界面->我->设置中取消默认设置即可");
-                } else {
-                    SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
                 }
-                SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_measure_default), isChecked);
+                mHasSetDefault = isChecked;
 
             }
         });
@@ -193,12 +194,28 @@ public class DailyReportActivity extends AppbarActivity {
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        boolean hasSetDefault = SPManager.get(DailyReportActivity.this).getBoolean(getString(R.string.setting_pref_key_measure_default), false);
-                        boolean useEquipment = SPManager.get(DailyReportActivity.this).getBoolean(getString(R.string.setting_pref_key_use_equipment), true);
-                        if (!hasSetDefault) {
-                            SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
-                        } else {
-                            if (useEquipment) {
+                        SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_measure_default), mHasSetDefault);
+                        SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), mUseEquipment);
+
+                        switch (type) {
+                            case 0:
+                                if (mUseEquipment) {
+                                    recordNewData(BPGuideActivity.class);
+                                } else {
+                                    recordNewData(BPAddActivity.class);
+                                }
+                                break;
+                            case 1:
+                                if (mUseEquipment) {
+                                    recordNewData(BSGuideActivity.class);
+                                } else {
+                                    recordNewData(BSAddActivity.class);
+                                }
+                                break;
+                        }
+
+                        if (mHasSetDefault) {
+                            if (mUseEquipment) {
                                 //TODO umeng
                                 MobclickAgent.onEvent(DailyReportActivity.this, UmengEventId.HOME_DAILY_RECORD_DEFAULT_MEASURE_EQUIPMENT);
                             } else {
@@ -206,28 +223,20 @@ public class DailyReportActivity extends AppbarActivity {
                                 MobclickAgent.onEvent(DailyReportActivity.this, UmengEventId.HOME_DAILY_RECORD_DEFAULT_MEASURE_MANUAL);
                             }
                         }
-                        switch (type) {
-                            case 0:
-                                if (useEquipment) {
-                                    recordNewData(BPGuideActivity.class);
-                                } else {
-                                    recordNewData(BPAddActivity.class);
-                                }
-                                break;
-                            case 1:
-                                if (useEquipment) {
-                                    recordNewData(BSGuideActivity.class);
-                                } else {
-                                    recordNewData(BSAddActivity.class);
-                                }
-                                break;
-                        }
+
+                    }
+                })
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        mUseEquipment = true;
+                        mHasSetDefault = false;
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SPManager.get(DailyReportActivity.this).putBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true);
+
                     }
                 });
         builder.create().show();
