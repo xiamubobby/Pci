@@ -72,7 +72,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e.getMessage().contains("10000ms")) {
+                        if (e != null && e.getMessage() != null && e.getMessage().contains("10000ms")) {
                             onFailed("连接超时，请检查网络后重试！");
                         }
                     }

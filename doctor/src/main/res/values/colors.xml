@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#e830bdf2</color>
     <color name="colorAccent">#30bdf2</color>
 
+    <color name="text_color_primary_gray">#666666</color>
+    <color name="text_color_secondary_gray">#999999</color>
+    <color name="text_color_primary_black">#212121</color>
     <color name="text_error">@android:color/holo_red_light</color>
 
     <color name="text_color_primary">#141414</color>
