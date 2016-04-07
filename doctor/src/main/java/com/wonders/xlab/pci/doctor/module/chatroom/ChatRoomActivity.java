@@ -24,7 +24,7 @@ import com.wonders.xlab.pci.doctor.module.chatroom.bs.BloodSugarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.MedicalRecordActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoActivity;
-import com.wonders.xlab.pci.doctor.mvp.presenter.ChatRoomPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.ChatRoomPresenter;
 
 import java.util.Calendar;
 import java.util.List;

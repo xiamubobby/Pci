@@ -11,7 +11,7 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.adapter.UserInfoRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.bean.UserInfoBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.UserInfoPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.UserInfoPresenter;
 
 import java.util.List;
 

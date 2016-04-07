@@ -13,12 +13,14 @@
 
         <variable
             name="bean"
-            type="com.wonders.xlab.pci.doctor.module.me.groupmanage.bean.GroupManageBean"/>
+            type="com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupListBean"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
+                  android:background="?attr/selectableItemBackground"
+                  android:clickable="true"
                   android:orientation="vertical"
                   android:paddingTop="@dimen/item_interval_middle">
 
@@ -30,7 +32,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="@dimen/item_interval_small">
@@ -38,9 +39,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{bean.groupName}"
-                    android:singleLine="true"
                     android:maxLength="10"
+                    android:singleLine="true"
+                    android:text="@{bean.groupName}"
                     android:textColor="@color/text_color_primary_black"
                     android:textSize="@dimen/text_size_middle"/>
 
@@ -69,7 +70,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:padding="@dimen/item_interval_small">
 
             <ImageView
@@ -119,7 +119,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/white"
             android:gravity="center_vertical"
             android:minHeight="30dp"
             android:orientation="horizontal"

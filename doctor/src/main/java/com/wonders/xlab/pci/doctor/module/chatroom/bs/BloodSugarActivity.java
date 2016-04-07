@@ -12,7 +12,7 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.bs.adapter.BSRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.bs.bean.BSBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.BSPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.BSPresenter;
 
 import java.util.List;
 

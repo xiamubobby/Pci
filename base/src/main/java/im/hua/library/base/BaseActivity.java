@@ -3,6 +3,7 @@ package im.hua.library.base;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -27,7 +28,7 @@ public class BaseActivity extends AppCompatActivity {
 
     /**
      * 发起两次toast的时间间隔的最小值，否则不显示第二次
-     *
+     * <p>
      * ms
      */
     private long mShowToastInterval = 800;
@@ -121,6 +122,17 @@ public class BaseActivity extends AppCompatActivity {
             }
             mIBasePresenterList.clear();
             mIBasePresenterList = null;
+        }
+    }
+
+    public void setRefreshing(final SwipeRefreshLayout swipeRefreshLayout, final boolean refreshing) {
+        if (null != swipeRefreshLayout) {
+            swipeRefreshLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(refreshing);
+                }
+            });
         }
     }
 }

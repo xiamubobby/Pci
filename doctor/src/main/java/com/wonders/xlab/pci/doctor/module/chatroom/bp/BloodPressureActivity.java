@@ -22,7 +22,7 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.bp.adapter.BPRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.bp.bean.BPListBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.BPPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.BPPresenter;
 
 import java.util.ArrayList;
 import java.util.Calendar;

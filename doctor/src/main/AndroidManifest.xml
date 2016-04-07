@@ -140,6 +140,17 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="com.wonders.xlab.pci.doctor.GroupManageActivity"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".module.me.groupmanage.GroupModifyActivity"
+            android:label="@string/title_activity_group_modify"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="com.wonders.xlab.pci.doctor.GroupModifyActivity"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
