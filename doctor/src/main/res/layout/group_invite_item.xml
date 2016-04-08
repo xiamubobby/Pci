@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="bean"
+            type="com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupInviteDoctorBean"/>
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/item_interval_small">
+
+        <ImageView
+            android:id="@+id/iv_group_invite_item_avatar"
+            style="@style/AvatarImageView"/>
+
+        <TextView
+            android:id="@+id/tv_group_invite_item_name"
+            style="@style/MiddleBlackWrapTextView"
+            android:layout_marginLeft="@dimen/item_interval_small"
+            android:layout_toRightOf="@+id/iv_group_invite_item_avatar"
+            android:text="@{bean.doctorName}"/>
+
+        <TextView
+            android:id="@+id/tv_group_invite_item_department"
+            style="@style/SmallGrayWrapTextView"
+            android:layout_alignLeft="@+id/tv_group_invite_item_name"
+            android:layout_below="@+id/tv_group_invite_item_name"
+            android:layout_marginTop="@dimen/item_interval_small"
+            android:text="@{bean.doctorDepartment}"/>
+
+        <TextView
+            style="@style/SmallGrayWrapTextView"
+            android:layout_alignTop="@+id/tv_group_invite_item_department"
+            android:layout_marginLeft="@dimen/item_interval_small"
+            android:layout_toRightOf="@+id/tv_group_invite_item_department"
+            android:text="@{bean.doctorTitle}"/>
+
+        <TextView
+            style="@style/SmallGrayWrapTextView"
+            android:layout_alignLeft="@+id/tv_group_invite_item_department"
+            android:layout_below="@+id/tv_group_invite_item_department"
+            android:layout_marginTop="@dimen/item_interval_small"
+            android:text="@{bean.doctorHospital}"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@{bean.isSelected ? @drawable/ic_group_invite_selected : @drawable/ic_group_invite_unselected}"/>
+    </RelativeLayout>
+</layout>

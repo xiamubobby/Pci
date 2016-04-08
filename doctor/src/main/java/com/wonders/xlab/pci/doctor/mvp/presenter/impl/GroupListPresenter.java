@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePagePresenter;
-import im.hua.library.base.mvp.listener.BasePresenterListener;
+import im.hua.library.base.mvp.listener.BasePagePresenterListener;
 
 /**
  * Created by hua on 16/4/7.
@@ -60,7 +60,7 @@ public class GroupListPresenter extends BasePagePresenter implements IGroupListP
         mListener.showDoctorGroup(groupListBeanList);
     }
 
-    public interface GroupManagePresenterListener extends BasePresenterListener{
+    public interface GroupManagePresenterListener extends BasePagePresenterListener {
         void showDoctorGroup(List<GroupListBean> groupListBeanList);
     }
 }

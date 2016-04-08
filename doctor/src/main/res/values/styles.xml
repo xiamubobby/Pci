@@ -9,8 +9,7 @@
     </style>
 
     <style name="AppTheme.MaterialColdStart">
-        <item name="android:windowBackground">@drawable/window_background_statusbar_toolbar_tab
-        </item>
+        <item name="android:windowBackground">@drawable/window_background_statusbar_toolbar_tab</item>
     </style>
 
     <style name="AppTheme.Light">

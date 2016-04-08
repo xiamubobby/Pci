@@ -93,4 +93,14 @@ public class GroupManageActivity extends AppbarActivity implements GroupListPres
         super.onDestroy();
         mRVAdapter = null;
     }
+
+    @Override
+    public void showReachTheLastPageNotice(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView() {
+
+    }
 }

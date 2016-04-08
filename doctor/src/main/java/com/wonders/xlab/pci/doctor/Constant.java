@@ -19,6 +19,8 @@ public class Constant {
     public static String BASE_URL = DEFAULT_BASE_URL;
     public static final String ERROR_MESSAGE = "获取数据失败，请重试！";
 
+    public final static long VIEW_CLICK_SKIP_DURATION = 1000;//ms
+
     public static void setBaseUrl(Context context) {
         BASE_URL = SPManager.get(context).getString(PREF_KEY_BASE_URL,DEFAULT_BASE_URL);
     }

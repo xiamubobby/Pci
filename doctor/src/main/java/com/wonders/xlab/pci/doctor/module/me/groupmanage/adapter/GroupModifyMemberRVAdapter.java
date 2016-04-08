@@ -22,6 +22,9 @@ import butterknife.ButterKnife;
  */
 public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMemberBean> {
 
+    private GroupModifyMemberBean minusBean;
+    private GroupModifyMemberBean addBean;
+
     @Override
     public void appendDatas(List<GroupModifyMemberBean> mBeanList) {
         if (mBeanList == null || mBeanList.size() <= 0) {
@@ -37,20 +40,16 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
         }
 
         beanList.addAll(mBeanList);
+        notifyDataSetChanged();
 
         int size = beanList.size();
         if (size < 9) {
-            GroupModifyMemberBean addBean = new GroupModifyMemberBean();
-            addBean.setType(GroupModifyMemberBean.TYPE_ADD);
             appendToLast(addBean);
         }
         if (size > 1) {
-            GroupModifyMemberBean minusBean = new GroupModifyMemberBean();
-            minusBean.setType(GroupModifyMemberBean.TYPE_MINUS);
             appendToLast(minusBean);
         }
 
-        notifyDataSetChanged();
     }
 
     @Override
@@ -58,15 +57,19 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
         super.setDatas(mBeanList);
         int size = getBeanList().size();
         if (size < 9) {
-            GroupModifyMemberBean addBean = new GroupModifyMemberBean();
-            addBean.setType(GroupModifyMemberBean.TYPE_ADD);
             appendToLast(addBean);
         }
         if (size > 1) {
-            GroupModifyMemberBean minusBean = new GroupModifyMemberBean();
-            minusBean.setType(GroupModifyMemberBean.TYPE_MINUS);
             appendToLast(minusBean);
         }
+    }
+
+    public GroupModifyMemberRVAdapter() {
+        addBean = new GroupModifyMemberBean();
+        addBean.setType(GroupModifyMemberBean.TYPE_ADD);
+
+        minusBean = new GroupModifyMemberBean();
+        minusBean.setType(GroupModifyMemberBean.TYPE_MINUS);
     }
 
     @Override
@@ -82,6 +85,7 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
         GroupModifyMemberBean bean = getBean(position);
         switch (bean.getType()) {
             case GroupModifyMemberBean.TYPE_MEMBER:
+                viewHolder.mTvName.setVisibility(View.VISIBLE);
                 viewHolder.mTvName.setText(bean.getMemberName());
                 ImageViewManager.setImageViewWithUrl(viewHolder.itemView.getContext(), viewHolder.mIvAvatar, bean.getAvatarUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
                 break;
