@@ -9,10 +9,8 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
@@ -29,7 +27,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.uikit.crv.CommonRecyclerView;
-import im.hua.utils.DensityUtil;
 import im.hua.utils.KeyboardUtil;
 
 public class GroupInviteActivity extends AppbarActivity implements GroupInvitePresenter.GroupInvitePresenterListener {
@@ -59,7 +56,6 @@ public class GroupInviteActivity extends AppbarActivity implements GroupInvitePr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        mMinEtSearchWidth = DensityUtil.dp2px(this, 72);
 
         mEtSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -96,10 +92,6 @@ public class GroupInviteActivity extends AppbarActivity implements GroupInvitePr
         addPresenter(mGroupInvitePresenter);
     }
 
-    private int mMaxShowSelectedDoctorCounts = -1;
-    private int mMinEtSearchWidth;
-    private LinearLayout.LayoutParams defaultLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
     @Override
     public void showDoctorList(List<GroupInviteDoctorBean> doctorBeanList) {
         if (null == mGroupInviteRVAdapter) {
@@ -120,35 +112,12 @@ public class GroupInviteActivity extends AppbarActivity implements GroupInvitePr
                         mRecyclerViewSelectedDoctor.setAdapter(mSelectedDoctorRVAdapter);
                     }
 
-                    //4、控制输入区域的最小宽度
-                    ViewGroup.LayoutParams layoutParams;
-
                     if (bean.isSelected.get()) {
                         mSelectedDoctorRVAdapter.appendToLast(bean);
                         mRecyclerViewSelectedDoctor.smoothScrollToPosition(mSelectedDoctorRVAdapter.getItemCount() - 1);
 
-                        int rvOriginWidth = mRecyclerViewSelectedDoctor.getWidth();
-                        int width = mEtSearch.getMeasuredWidth();
-                        if (width < mMinEtSearchWidth) {
-                            if (-1 == mMaxShowSelectedDoctorCounts) {
-                                mMaxShowSelectedDoctorCounts = mSelectedDoctorRVAdapter.getItemCount();
-                            }
-
-                            layoutParams = mRecyclerViewSelectedDoctor.getLayoutParams();
-                            if (null == layoutParams) {
-                                layoutParams = new ViewGroup.LayoutParams(rvOriginWidth, ViewGroup.LayoutParams.MATCH_PARENT);
-                            } else {
-                                layoutParams.width = rvOriginWidth;
-                            }
-                            mRecyclerViewSelectedDoctor.setLayoutParams(layoutParams);
-
-                        }
                     } else {
                         mSelectedDoctorRVAdapter.unselectedDoctor(bean);
-
-                        if (mSelectedDoctorRVAdapter.getItemCount() > 0 && mSelectedDoctorRVAdapter.getItemCount() < mMaxShowSelectedDoctorCounts) {
-                            mRecyclerViewSelectedDoctor.setLayoutParams(defaultLayoutParams);
-                        }
                     }
 
                     //3、更新搜索图标，选择了医生了则隐藏，否则显示

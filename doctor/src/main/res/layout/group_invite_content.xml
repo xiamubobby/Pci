@@ -11,10 +11,9 @@
     tools:context="com.wonders.xlab.pci.doctor.module.me.groupmanage.GroupInviteActivity"
     tools:showIn="@layout/group_invite_activity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/listPreferredItemHeight"
-        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="@dimen/item_interval_small">
 
@@ -22,6 +21,7 @@
             android:id="@+id/iv_group_invite_search"
             android:layout_width="28dp"
             android:layout_height="28dp"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/item_interval_small"
             android:src="@drawable/ic_group_invite_search"/>
 
@@ -29,13 +29,18 @@
             android:id="@+id/recycler_view_group_invite_selected_doctor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"/>
+            android:layout_centerVertical="true"
+            android:layout_marginRight="56dp"
+            android:layout_toRightOf="@+id/iv_group_invite_search"/>
 
         <EditText
             android:id="@+id/et_group_invite_search"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/item_interval_small"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="-46dp"
+            android:layout_toRightOf="@+id/recycler_view_group_invite_selected_doctor"
             android:background="@android:color/transparent"
             android:hint="输入姓名或手机号搜索"
             android:maxLength="13"
@@ -44,7 +49,7 @@
             android:singleLine="true"
             android:textColor="@color/text_color_primary_black"
             android:textSize="@dimen/text_size_middle"/>
-    </LinearLayout>
+    </RelativeLayout>
 
     <include layout="@layout/divider_vertical"/>
 
