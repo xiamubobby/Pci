@@ -23,4 +23,9 @@
     <string name="title_activity_group_manage">小组管理</string>
     <string name="title_activity_group_modify">编辑小组</string>
     <string name="title_activity_group_invite">邀请医生</string>
+    <string name="text_confirm">确定</string>
+    <string name="text_save">保存</string>
+    <string name="title_activity_group_remove_doctor">移除成员</string>
+    <string name="text_remove">移除</string>
+    <string name="title_activity_group_auth">授权</string>
 </resources>

@@ -3,15 +3,14 @@ package com.wonders.xlab.pci.doctor.module.patient;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
-import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.chatroom.ChatRoomActivity;
@@ -24,6 +23,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseFragment;
+import im.hua.uikit.crv.CommonRecyclerView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +33,7 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
     private PatientPresenter mPatientPresenter;
 
     @Bind(R.id.recycler_view_patient)
-    PullLoadMoreRecyclerView mRecyclerViewPatient;
+    CommonRecyclerView mRecyclerViewPatient;
 
     private PatientRVAdapter mPatientRVAdapter;
 
@@ -60,18 +60,12 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerViewPatient.setLinearLayout(false);
         mRecyclerViewPatient.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
         mRecyclerViewPatient.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
-        mRecyclerViewPatient.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+        mRecyclerViewPatient.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mPatientPresenter.getPatientList(AIManager.getInstance(getActivity()).getUserId());
-            }
-
-            @Override
-            public void onLoadMore() {
-
             }
         });
 
@@ -110,7 +104,6 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
         /**
          * TODO 一定要通过这样设置加载完成
          */
-        mRecyclerViewPatient.setPullLoadMoreCompleted();
         initPatientAdapter();
         mPatientRVAdapter.setDatas(patientBeen);
     }
@@ -120,20 +113,17 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
         /**
          * TODO 一定要通过这样设置加载完成
          */
-        mRecyclerViewPatient.setPullLoadMoreCompleted();
         initPatientAdapter();
         mPatientRVAdapter.appendDatas(patientBeen);
     }
 
     @Override
     public void showError(String message) {
-        mRecyclerViewPatient.setPullLoadMoreCompleted();
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+        showShortToast(message);
     }
 
     @Override
     public void hideLoading() {
-
+        mRecyclerViewPatient.hideRefreshOrLoadMore(true,true);
     }
-
 }

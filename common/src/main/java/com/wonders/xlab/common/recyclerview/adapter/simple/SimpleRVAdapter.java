@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by hua on 15/11/30.
+ * 1、必须重写Bean的equal
  */
 public abstract class SimpleRVAdapter<Bean> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
@@ -60,7 +61,7 @@ public abstract class SimpleRVAdapter<Bean> extends RecyclerView.Adapter<Recycle
             mBeanList = new ArrayList<>();
         }
         mBeanList.add(bean);
-        notifyItemInserted(mBeanList.size() - 1);
+        notifyItemInserted(mBeanList.size());
     }
 
     public void remove(int position) {
@@ -71,14 +72,16 @@ public abstract class SimpleRVAdapter<Bean> extends RecyclerView.Adapter<Recycle
     }
 
     public void clear() {
-        if (mBeanList != null ) {
+        if (mBeanList != null) {
+            int size = mBeanList.size();
             mBeanList.clear();
-            notifyDataSetChanged();
+            notifyItemRangeRemoved(0, size);
         }
     }
 
     /**
      * 因为这里需要有移动的动画效果，所以采用了遍历的方式来交换位置
+     *
      * @param fromPosition
      * @param toPosition
      */
@@ -115,8 +118,9 @@ public abstract class SimpleRVAdapter<Bean> extends RecyclerView.Adapter<Recycle
         if (this.mBeanList == null) {
             this.mBeanList = new ArrayList<>();
         }
+        int size = this.mBeanList.size();
         this.mBeanList.addAll(mBeanList);
-        notifyDataSetChanged();
+        notifyItemRangeInserted(size, mBeanList.size());
     }
 
     public List<Bean> getBeanList() {

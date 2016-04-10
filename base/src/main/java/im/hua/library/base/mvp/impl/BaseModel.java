@@ -39,15 +39,10 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
          * 如果后面okhttp更新了，可去掉，而用square的
          */
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-//        builder.addInterceptor(logging);
+        builder.addInterceptor(logging);
         OkHttpClient client = builder.build();
-//        client.setConnectTimeout(30, TimeUnit.SECONDS);
-//        client.setWriteTimeout(30, TimeUnit.SECONDS);
-//        client.setReadTimeout(30, TimeUnit.SECONDS);
         mRetrofit = new Retrofit.Builder().baseUrl(getBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//必须加上
@@ -62,6 +57,13 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
         }
 
         subscribe = mObservable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
+                /*.debounce(1000, TimeUnit.MILLISECONDS)
+                .flatMap(new Func1<Response<T>, Observable<Response<T>>>() {
+                    @Override
+                    public Observable<Response<T>> call(Response<T> tResponse) {
+                        return Observable.empty();
+                    }
+                })*/
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Response<T>>() {
 

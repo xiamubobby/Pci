@@ -16,6 +16,11 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 /**
  * Created by hua on 16/4/7.
@@ -25,43 +30,92 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
     private GroupModifyMemberBean minusBean;
     private GroupModifyMemberBean addBean;
 
+    /**
+     * 每次添加数据都是先把加号和减号去掉，然后再根据数据的条数再把加号和减号添加回去
+     *
+     * @param mBeanList
+     */
     @Override
     public void appendDatas(List<GroupModifyMemberBean> mBeanList) {
-        if (mBeanList == null || mBeanList.size() <= 0) {
+        /**
+         * 判断空
+         * 先移除加减号
+         * 重新把加减号加在最后
+         * 加进来的数据去重，然后拼接在后面，如果已经在显示了则不要再添加
+         */
+        if (null == mBeanList || mBeanList.size() <= 0) {
             return;
         }
+        Observable.from(getBeanList())
+                .flatMap(new Func1<GroupModifyMemberBean, Observable<GroupModifyMemberBean>>() {
+                    @Override
+                    public Observable<GroupModifyMemberBean> call(GroupModifyMemberBean groupModifyMemberBean) {
+                        return Observable.just(groupModifyMemberBean);
+                    }
+                })
+                .filter(new Func1<GroupModifyMemberBean, Boolean>() {
+                    @Override
+                    public Boolean call(GroupModifyMemberBean groupModifyMemberBean) {
+                        return GroupModifyMemberBean.TYPE_MEMBER != groupModifyMemberBean.getType();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<GroupModifyMemberBean>() {
+                    @Override
+                    public void call(GroupModifyMemberBean bean) {
+                        remove(getBeanList().indexOf(bean));
+                    }
+                });
+        Observable.from(mBeanList)
+                .flatMap(new Func1<GroupModifyMemberBean, Observable<GroupModifyMemberBean>>() {
+                    @Override
+                    public Observable<GroupModifyMemberBean> call(GroupModifyMemberBean groupModifyMemberBean) {
+                        return Observable.just(groupModifyMemberBean);
+                    }
+                })
+                .filter(new Func1<GroupModifyMemberBean, Boolean>() {
+                    @Override
+                    public Boolean call(GroupModifyMemberBean groupModifyMemberBean) {
+                        return -1 == getBeanList().indexOf(groupModifyMemberBean);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<GroupModifyMemberBean>() {
+                    @Override
+                    public void onCompleted() {
+                        int size = getItemCount();
+                        if (size < 9) {
+                            appendToLast(addBean);
+                        }
+                        if (size > 2) {
+                            appendToLast(minusBean);
+                        }
+                    }
 
-        List<GroupModifyMemberBean> beanList = getBeanList();
+                    @Override
+                    public void onError(Throwable e) {
 
-        for (int i = 0; i < beanList.size(); i++) {
-            if (beanList.get(i).getType() != GroupModifyMemberBean.TYPE_MEMBER) {
-                beanList.remove(i);
-            }
-        }
+                    }
 
-        beanList.addAll(mBeanList);
-        notifyDataSetChanged();
-
-        int size = beanList.size();
-        if (size < 9) {
-            appendToLast(addBean);
-        }
-        if (size > 1) {
-            appendToLast(minusBean);
-        }
-
+                    @Override
+                    public void onNext(GroupModifyMemberBean bean) {
+                        getBeanList().add(bean);
+                        notifyItemInserted(getItemCount() - 1);
+                    }
+                });
     }
 
     @Override
     public void setDatas(List<GroupModifyMemberBean> mBeanList) {
         super.setDatas(mBeanList);
-        int size = getBeanList().size();
+        int size = getItemCount();
         if (size < 9) {
             appendToLast(addBean);
         }
-        if (size > 1) {
+        if (size > 2) {
             appendToLast(minusBean);
         }
+
     }
 
     public GroupModifyMemberRVAdapter() {
@@ -86,8 +140,8 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
         switch (bean.getType()) {
             case GroupModifyMemberBean.TYPE_MEMBER:
                 viewHolder.mTvName.setVisibility(View.VISIBLE);
-                viewHolder.mTvName.setText(bean.getMemberName());
-                ImageViewManager.setImageViewWithUrl(viewHolder.itemView.getContext(), viewHolder.mIvAvatar, bean.getAvatarUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
+                viewHolder.mTvName.setText(bean.doctorName.get());
+                ImageViewManager.setImageViewWithUrl(viewHolder.itemView.getContext(), viewHolder.mIvAvatar, bean.doctorAvatarUrl.get(), ImageViewManager.PLACE_HOLDER_EMPTY);
                 break;
             case GroupModifyMemberBean.TYPE_ADD:
                 viewHolder.mTvName.setVisibility(View.GONE);

@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".module.me.groupmanage.GroupInviteDoctorActivity">
+    tools:context="com.wonders.xlab.pci.doctor.module.me.groupmanage.GroupAuthActivity">
 
     <include layout="@layout/appbar"/>
 
-    <include layout="@layout/group_invite_content"/>
+    <include layout="@layout/group_auth_content"/>
 
 </android.support.design.widget.CoordinatorLayout>

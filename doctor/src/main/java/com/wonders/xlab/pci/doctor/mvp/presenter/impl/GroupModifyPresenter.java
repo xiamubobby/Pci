@@ -37,9 +37,9 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
         List<GroupModifyMemberBean> memberBeanList = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
             GroupModifyMemberBean bean = new GroupModifyMemberBean();
-            bean.setAvatarUrl(Constant.DEFAULT_PORTRAIT);
-            bean.setMemberId(String.valueOf(i));
-            bean.setMemberName("刘" + i);
+            bean.doctorAvatarUrl.set(Constant.DEFAULT_PORTRAIT);
+            bean.doctorId.set(String.valueOf(i));
+            bean.doctorName.set("刘" + i);
             memberBeanList.add(bean);
         }
         groupModifyBean.setMemberInfoList(memberBeanList);

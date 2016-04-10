@@ -39,7 +39,7 @@ public class GroupListRVAdapter extends SimpleRVAdapter<GroupListBean> {
 
         viewHolder.mRecyclerViewServices.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(),LinearLayoutManager.HORIZONTAL,false));
         viewHolder.mRecyclerViewServices.setItemAnimator(new DefaultItemAnimator());
-        GroupSimpleIconRVAdapter adapter = new GroupSimpleIconRVAdapter();
+        GroupServiceIconRVAdapter adapter = new GroupServiceIconRVAdapter();
         adapter.setDatas(bean.getServiceIconList());
         viewHolder.mRecyclerViewServices.setAdapter(adapter);
     }

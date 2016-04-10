@@ -1,10 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <im.hua.uikit.crv.CommonRecyclerView
-    android:id="@+id/recycler_view_patient"
+    android:id="@+id/recycler_view_group_auth"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:emptyView="@layout/common_empty"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     app:networkErrorView="@layout/common_network_error"
-    tools:context=".module.patient.PatientFragment"/>
+    tools:context="com.wonders.xlab.pci.doctor.module.me.groupmanage.GroupAuthActivity"
+    tools:showIn="@layout/group_auth_activity"/>

@@ -1,41 +1,20 @@
 package com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean;
 
+import android.os.Parcel;
+import android.text.TextUtils;
+
 /**
  * Created by hua on 16/4/7.
  */
-public class GroupModifyMemberBean {
-    public final static int TYPE_MEMBER = 0;
-    public final static int TYPE_ADD = 1;
-    public final static int TYPE_MINUS = 2;
+public class GroupModifyMemberBean extends GroupDoctorBean{
+    /**
+     * item type
+     */
+    public final static int TYPE_MEMBER = 0;//小组成员
+    public final static int TYPE_ADD = 1;//加号
+    public final static int TYPE_MINUS = 2;//减号
 
     private int type = TYPE_MEMBER;
-    private String memberId;
-    private String avatarUrl;
-    private String memberName;
-
-    public String getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(String memberId) {
-        this.memberId = memberId;
-    }
-
-    public String getAvatarUrl() {
-        return avatarUrl;
-    }
-
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
-
-    public String getMemberName() {
-        return memberName;
-    }
-
-    public void setMemberName(String memberName) {
-        this.memberName = memberName;
-    }
 
     public int getType() {
         return type;
@@ -44,4 +23,61 @@ public class GroupModifyMemberBean {
     public void setType(int type) {
         this.type = type;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (null == o) {
+            return false;
+        }
+
+        if (o instanceof GroupModifyMemberBean) {
+            GroupModifyMemberBean bean = (GroupModifyMemberBean) o;
+
+            if (bean.getType() == this.type && bean.getType() != TYPE_MEMBER) {
+                return true;
+            } else if (doctorId == null || TextUtils.isEmpty(doctorId.get())) {
+                return false;
+            }
+            return this.doctorId.get().equals(bean.doctorId.get());
+        }
+        return false;
+    }
+
+    public void setDoctorBean(GroupDoctorBean bean) {
+        doctorId.set(bean.doctorId.get());
+        doctorName.set(bean.doctorName.get());
+        doctorAvatarUrl.set(bean.doctorAvatarUrl.get());
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeInt(this.type);
+    }
+
+    public GroupModifyMemberBean() {
+    }
+
+    protected GroupModifyMemberBean(Parcel in) {
+        super(in);
+        this.type = in.readInt();
+    }
+
+    public static final Creator<GroupModifyMemberBean> CREATOR = new Creator<GroupModifyMemberBean>() {
+        @Override
+        public GroupModifyMemberBean createFromParcel(Parcel source) {
+            return new GroupModifyMemberBean(source);
+        }
+
+        @Override
+        public GroupModifyMemberBean[] newArray(int size) {
+            return new GroupModifyMemberBean[size];
+        }
+    };
 }

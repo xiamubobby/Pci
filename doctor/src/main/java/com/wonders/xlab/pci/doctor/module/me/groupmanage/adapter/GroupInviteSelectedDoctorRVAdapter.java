@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.wonders.xlab.common.manager.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
-import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupInviteDoctorBean;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -17,9 +17,9 @@ import butterknife.ButterKnife;
 /**
  * Created by hua on 16/4/7.
  */
-public class GroupInviteSelectedDoctorRVAdapter extends SimpleRVAdapter<GroupInviteDoctorBean> {
+public class GroupInviteSelectedDoctorRVAdapter extends SimpleRVAdapter<GroupDoctorBean> {
 
-    public void unselectedDoctor(GroupInviteDoctorBean bean) {
+    public void unselectedDoctor(GroupDoctorBean bean) {
         int i = getBeanList().indexOf(bean);
         getBeanList().remove(i);
         notifyItemRemoved(i);

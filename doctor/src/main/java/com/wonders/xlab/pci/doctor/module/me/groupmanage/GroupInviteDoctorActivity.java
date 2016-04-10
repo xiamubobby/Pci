@@ -1,12 +1,16 @@
 package com.wonders.xlab.pci.doctor.module.me.groupmanage;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -16,12 +20,13 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
-import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupInviteRVAdapter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupDoctorMultiChoiceRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupInviteSelectedDoctorRVAdapter;
-import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupInviteDoctorBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupInvitePresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupInvitePresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
+import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupInviteDoctorPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupInviteDoctorPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -29,7 +34,7 @@ import butterknife.ButterKnife;
 import im.hua.uikit.crv.CommonRecyclerView;
 import im.hua.utils.KeyboardUtil;
 
-public class GroupInviteActivity extends AppbarActivity implements GroupInvitePresenter.GroupInvitePresenterListener {
+public class GroupInviteDoctorActivity extends AppbarActivity implements GroupInviteDoctorPresenter.GroupInvitePresenterListener {
     public final static int RESULT_CODE_SUCCESS = 0;
     public final static String EXTRA_RESULT = "result";
 
@@ -42,10 +47,10 @@ public class GroupInviteActivity extends AppbarActivity implements GroupInvitePr
     @Bind(R.id.et_group_invite_search)
     EditText mEtSearch;
 
-    private GroupInviteRVAdapter mGroupInviteRVAdapter;
+    private GroupDoctorMultiChoiceRVAdapter mGroupDoctorMultiChoiceRVAdapter;
     private GroupInviteSelectedDoctorRVAdapter mSelectedDoctorRVAdapter;
 
-    private IGroupInvitePresenter mGroupInvitePresenter;
+    private IGroupInviteDoctorPresenter mGroupInvitePresenter;
 
     @Override
     public int getContentLayout() {
@@ -84,29 +89,27 @@ public class GroupInviteActivity extends AppbarActivity implements GroupInvitePr
         mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                KeyboardUtil.hide(GroupInviteActivity.this);
+                KeyboardUtil.hide(GroupInviteDoctorActivity.this);
                 return false;
             }
         });
-        mGroupInvitePresenter = new GroupInvitePresenter(this);
+        mGroupInvitePresenter = new GroupInviteDoctorPresenter(this);
         addPresenter(mGroupInvitePresenter);
+        mRecyclerView.showEmptyView();
     }
 
     @Override
-    public void showDoctorList(List<GroupInviteDoctorBean> doctorBeanList) {
-        if (null == mGroupInviteRVAdapter) {
-            mGroupInviteRVAdapter = new GroupInviteRVAdapter();
-            mGroupInviteRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+    public void showDoctorList(List<GroupDoctorBean> doctorBeanList) {
+        if (null == mGroupDoctorMultiChoiceRVAdapter) {
+            mGroupDoctorMultiChoiceRVAdapter = new GroupDoctorMultiChoiceRVAdapter();
+            mGroupDoctorMultiChoiceRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    KeyboardUtil.hide(GroupInviteActivity.this);
+                    KeyboardUtil.hide(GroupInviteDoctorActivity.this);
 
-                    //1、更改勾选状态
-                    GroupInviteDoctorBean bean = mGroupInviteRVAdapter.getBean(position);
-                    bean.isSelected.set(!bean.isSelected.get());
-                    mGroupInviteRVAdapter.notifyItemChanged(position);
+                    GroupDoctorBean bean = mGroupDoctorMultiChoiceRVAdapter.getBean(position);
 
-                    //2、更新顶部已选中的医生列表
+                    //1、更新顶部已选中的医生列表
                     if (null == mSelectedDoctorRVAdapter) {
                         mSelectedDoctorRVAdapter = new GroupInviteSelectedDoctorRVAdapter();
                         mRecyclerViewSelectedDoctor.setAdapter(mSelectedDoctorRVAdapter);
@@ -120,7 +123,7 @@ public class GroupInviteActivity extends AppbarActivity implements GroupInvitePr
                         mSelectedDoctorRVAdapter.unselectedDoctor(bean);
                     }
 
-                    //3、更新搜索图标，选择了医生了则隐藏，否则显示
+                    //2、更新搜索图标，选择了医生了则隐藏，否则显示
                     if (mSelectedDoctorRVAdapter.getItemCount() <= 0) {
                         mIvSearch.setVisibility(View.VISIBLE);
                     } else {
@@ -130,21 +133,21 @@ public class GroupInviteActivity extends AppbarActivity implements GroupInvitePr
 
                 }
             });
-            mRecyclerView.setAdapter(mGroupInviteRVAdapter);
+            mRecyclerView.setAdapter(mGroupDoctorMultiChoiceRVAdapter);
         }
         if (null != mSelectedDoctorRVAdapter) {
-            for (GroupInviteDoctorBean bean : mSelectedDoctorRVAdapter.getBeanList()) {
+            for (GroupDoctorBean bean : mSelectedDoctorRVAdapter.getBeanList()) {
                 int indexOf = doctorBeanList.indexOf(bean);
                 if (-1 != indexOf) {
                     doctorBeanList.get(indexOf).isSelected.set(true);
                 }
             }
         }
-        mGroupInviteRVAdapter.setDatas(doctorBeanList);
+        mGroupDoctorMultiChoiceRVAdapter.setDatas(doctorBeanList);
     }
 
     @Override
-    public void appendDoctorList(List<GroupInviteDoctorBean> doctorBeanList) {
+    public void appendDoctorList(List<GroupDoctorBean> doctorBeanList) {
 
     }
 
@@ -165,13 +168,36 @@ public class GroupInviteActivity extends AppbarActivity implements GroupInvitePr
 
     @Override
     public void showEmptyView() {
+        mRecyclerView.showEmptyView();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_confirm,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_confirm:
+                if (null == mSelectedDoctorRVAdapter) {
+                    finish();
+                    return super.onOptionsItemSelected(item);
+                }
+                Intent intent = new Intent();
+                intent.putParcelableArrayListExtra(EXTRA_RESULT, (ArrayList<? extends Parcelable>) mSelectedDoctorRVAdapter.getBeanList());
+                setResult(RESULT_CODE_SUCCESS,intent);
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         mSelectedDoctorRVAdapter = null;
-        mGroupInviteRVAdapter = null;
+        mGroupDoctorMultiChoiceRVAdapter = null;
     }
 }

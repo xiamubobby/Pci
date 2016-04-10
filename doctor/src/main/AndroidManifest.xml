@@ -174,11 +174,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.me.groupmanage.GroupInviteActivity"
+            android:name=".module.me.groupmanage.GroupInviteDoctorActivity"
             android:label="@string/title_activity_group_invite"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="com.wonders.xlab.pci.doctor.GroupInviteActivity"/>
+                <action android:name="com.wonders.xlab.pci.doctor.GroupInviteDoctorActivity"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".module.me.groupmanage.GroupRemoveDoctorActivity"
+            android:label="@string/title_activity_group_remove_doctor"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="com.wonders.xlab.pci.doctor.GroupRemoveDoctorActivity"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".module.me.groupmanage.GroupAuthActivity"
+            android:label="@string/title_activity_group_auth"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="com.wonders.xlab.pci.doctor.GroupAuthActivity"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>

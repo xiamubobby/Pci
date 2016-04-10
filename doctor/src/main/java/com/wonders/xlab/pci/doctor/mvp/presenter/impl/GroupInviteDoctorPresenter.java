@@ -1,8 +1,8 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.Constant;
-import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupInviteDoctorBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupInvitePresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
+import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupInviteDoctorPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,18 +13,18 @@ import im.hua.library.base.mvp.listener.BasePagePresenterListener;
 /**
  * Created by hua on 16/4/8.
  */
-public class GroupInvitePresenter extends BasePagePresenter implements IGroupInvitePresenter {
+public class GroupInviteDoctorPresenter extends BasePagePresenter implements IGroupInviteDoctorPresenter {
     private GroupInvitePresenterListener mListener;
 
-    public GroupInvitePresenter(GroupInvitePresenterListener listener) {
+    public GroupInviteDoctorPresenter(GroupInvitePresenterListener listener) {
         mListener = listener;
     }
 
     @Override
     public void searchByNameOrTel(String searchKey) {
-        List<GroupInviteDoctorBean> doctorBeanList = new ArrayList<>();
+        List<GroupDoctorBean> doctorBeanList = new ArrayList<>();
         for (int i = 0; i < 17; i++) {
-            GroupInviteDoctorBean bean = new GroupInviteDoctorBean();
+            GroupDoctorBean bean = new GroupDoctorBean();
             bean.doctorId.set(String.valueOf(i));
             bean.doctorName.set("刘" + i);
             bean.doctorAvatarUrl.set(Constant.DEFAULT_PORTRAIT);
@@ -40,8 +40,8 @@ public class GroupInvitePresenter extends BasePagePresenter implements IGroupInv
     }
 
     public interface GroupInvitePresenterListener extends BasePagePresenterListener {
-        void showDoctorList(List<GroupInviteDoctorBean> doctorBeanList);
+        void showDoctorList(List<GroupDoctorBean> doctorBeanList);
 
-        void appendDoctorList(List<GroupInviteDoctorBean> doctorBeanList);
+        void appendDoctorList(List<GroupDoctorBean> doctorBeanList);
     }
 }

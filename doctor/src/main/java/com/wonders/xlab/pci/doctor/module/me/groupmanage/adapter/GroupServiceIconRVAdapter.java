@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
 /**
  * Created by hua on 16/4/7.
  */
-public class GroupSimpleIconRVAdapter extends SimpleRVAdapter<String> {
+public class GroupServiceIconRVAdapter extends SimpleRVAdapter<String> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

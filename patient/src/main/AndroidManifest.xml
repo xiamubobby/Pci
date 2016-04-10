@@ -68,6 +68,14 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
             </intent-filter>
         </activity>
+        <activity-alias
+            android:name=".CreateShortcuts"
+            android:targetActivity=".module.main.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.CREATE_SHORTCUT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity-alias>
         <activity
             android:name=".module.auth.login.LoginActivity"
             android:label="@string/title_activity_login"

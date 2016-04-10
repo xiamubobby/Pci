@@ -260,12 +260,36 @@ public class CommonRecyclerView extends FrameLayout {
             @Override
             public void onChanged() {
                 super.onChanged();
+                observeDataChange();
+            }
+
+            @Override
+            public void onItemRangeChanged(int positionStart, int itemCount) {
+                super.onItemRangeChanged(positionStart, itemCount);
+                observeDataChange();
+            }
+
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                super.onItemRangeInserted(positionStart, itemCount);
+                observeDataChange();
+            }
+
+            @Override
+            public void onItemRangeRemoved(int positionStart, int itemCount) {
+                super.onItemRangeRemoved(positionStart, itemCount);
+                observeDataChange();
+            }
+
+            private void observeDataChange() {
                 if (adapter.getItemCount() > 0) {
                     showContentView();
                 } else {
                     showEmptyView();
                 }
             }
+
+
         });
     }
 
