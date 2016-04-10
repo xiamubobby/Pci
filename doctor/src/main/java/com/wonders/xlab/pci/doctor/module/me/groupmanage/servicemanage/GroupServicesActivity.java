@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
+import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.adapter.GroupServiceRVAdapter;
@@ -18,6 +19,8 @@ import butterknife.ButterKnife;
 import im.hua.uikit.crv.CommonRecyclerView;
 
 public class GroupServicesActivity extends AppbarActivity implements GroupServicesPresenter.GroupServicesPresenterListener {
+    private final int REQUEST_CODE_MODIFY = 0;
+
     public final static String EXTRA_GROUP_ID = "groupId";
     private String mGroupId;
 
@@ -53,6 +56,14 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
     public void showPackages(List<GroupServiceBean> groupServiceBeanList) {
         if (null == mRVAdapter) {
             mRVAdapter = new GroupServiceRVAdapter();
+            mRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    Intent intent = new Intent("com.wonders.xlab.pci.doctor.GroupServiceModifyActivity");
+                    intent.putExtra(GroupServiceModifyActivity.EXTRA_PACKAGE_ID, mRVAdapter.getBean(position).packageId.get());
+                    startActivityForResult(intent,REQUEST_CODE_MODIFY);
+                }
+            });
             mRecyclerView.setAdapter(mRVAdapter);
         }
         mRVAdapter.setDatas(groupServiceBeanList);
@@ -66,6 +77,18 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
     @Override
     public void hideLoading() {
         mRecyclerView.hideRefreshOrLoadMore(true, true);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_CODE_MODIFY:
+                if (resultCode == GroupServiceModifyActivity.RESULT_CODE_SUCCESS) {
+                    mGroupServicesPresenter.getPackages(mGroupId);
+                }
+                break;
+        }
     }
 
     @Override

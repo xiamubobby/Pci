@@ -15,14 +15,15 @@
                   android:layout_height="wrap_content"
                   android:gravity="center_vertical"
                   android:orientation="horizontal"
+                  android:clickable="true"
+                  android:background="?attr/selectableItemBackground"
                   android:padding="@dimen/item_interval_small">
 
         <ImageView
             android:id="@+id/iv_group_service_item_icon"
             android:layout_width="56dp"
             android:layout_height="56dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher"/>
+            android:scaleType="centerCrop"/>
 
         <TextView
             style="@style/LargeBlackWrapTextView"

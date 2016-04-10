@@ -14,4 +14,12 @@
     <color name="text_color_secondary">@android:color/darker_gray</color>
     <color name="bs_cell_bg">@android:color/white</color>
     <color name="bs_cell_bg_dark">#e8eaef</color>
+
+    <!--编辑套餐-->
+    <!--暂存按钮-->
+    <color name="group_service_modify_btn_save_normal">#bbbbbb</color>
+    <color name="group_service_modify_btn_save_pressed">#a9a9a9</color>
+    <!--发布按钮-->
+    <color name="group_service_modify_btn_publish_normal">#ff8a00</color>
+    <color name="group_service_modify_btn_publish_pressed">#9f5600</color>
 </resources>

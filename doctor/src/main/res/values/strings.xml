@@ -29,4 +29,5 @@
     <string name="text_remove">移除</string>
     <string name="title_activity_group_auth">授权</string>
     <string name="title_activity_group_service_list">开通服务</string>
+    <string name="title_activity_group_service_modify">编辑套餐</string>
 </resources>
