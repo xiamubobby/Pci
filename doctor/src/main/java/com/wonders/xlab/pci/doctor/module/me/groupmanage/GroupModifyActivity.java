@@ -24,6 +24,7 @@ import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupServiceIco
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyMemberBean;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.GroupServicesActivity;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupModifyPresenter;
 import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupModifyPresenter;
 
@@ -43,7 +44,8 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
     private final int REQUEST_CODE_DESC = 1;
     private final int REQUEST_CODE_INVITE_DOCTOR = 2;
     private final int REQUEST_CODE_REMOVE_DOCTOR = 3;
-    private final int REQUEST_CODE_AUTH = 4;
+    private final int REQUEST_CODE_AUTH = 4;//授权
+    private final int REQUEST_CODE_SERVICE = 5;//套餐
 
     public final static String EXTRA_GROUP_ID = "groupId";
     private String mGroupId;
@@ -128,6 +130,16 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                         Intent nameIntent = new Intent("com.wonders.xlab.pci.doctor.GroupAuthActivity");
                         nameIntent.putExtra(GroupAuthActivity.EXTRA_GROUP_ID, mGroupId);
                         startActivityForResult(nameIntent, REQUEST_CODE_AUTH);
+                    }
+                });
+        RxView.clicks(mLlService)
+                .throttleFirst(Constant.VIEW_CLICK_SKIP_DURATION,TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        Intent serviceIntent = new Intent("com.wonders.xlab.pci.doctor.GroupServicesActivity");
+                        serviceIntent.putExtra(GroupServicesActivity.EXTRA_GROUP_ID, mGroupId);
+                        startActivityForResult(serviceIntent, REQUEST_CODE_SERVICE);
                     }
                 });
 

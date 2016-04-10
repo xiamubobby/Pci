@@ -203,6 +203,16 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <activity
+            android:name=".module.me.groupmanage.servicemanage.GroupServicesActivity"
+            android:label="@string/title_activity_group_service_list"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="com.wonders.xlab.pci.doctor.GroupServicesActivity"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

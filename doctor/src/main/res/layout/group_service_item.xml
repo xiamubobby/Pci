@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="bean"
+            type="com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.adapter.bean.GroupServiceBean"/>
+
+        <import type="android.graphics.Color"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center_vertical"
+                  android:orientation="horizontal"
+                  android:padding="@dimen/item_interval_small">
+
+        <ImageView
+            android:id="@+id/iv_group_service_item_icon"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            style="@style/LargeBlackWrapTextView"
+            android:layout_marginLeft="@dimen/item_interval_small"
+            android:text="@{bean.packageName}"/>
+
+        <TextView
+            style="@style/MiddleGrayMatchTextView"
+            android:layout_marginLeft="@dimen/item_interval_small"
+            android:gravity="right|center_vertical"
+            android:text="@{bean.packageDesc}"
+            android:textColor="@{Color.parseColor(bean.packageDescColor)}"/>
+    </LinearLayout>
+</layout>
