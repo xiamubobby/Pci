@@ -59,8 +59,8 @@ public class MeFragment extends BaseFragment {
         MeFragmentBinding binding = MeFragmentBinding.bind(view);
         binding.setHandler(this);
 
-        mTvMeName.setText(AIManager.getInstance(getActivity()).getUserName());
-        ImageViewManager.setImageViewWithUrl(getActivity(), mIvMePortrait, AIManager.getInstance(getActivity()).getAvatarUrl(), R.drawable.portrait_default);
+        mTvMeName.setText(AIManager.getInstance().getDoctorName());
+        ImageViewManager.setImageViewWithUrl(getActivity(), mIvMePortrait, AIManager.getInstance().getDoctorPortraitUrl(), R.drawable.portrait_default);
     }
 
     @OnClick(R.id.btn_me_exit)
@@ -70,7 +70,7 @@ public class MeFragment extends BaseFragment {
     }
 
     public void groupManage(View view) {
-        startActivity(new Intent("com.wonders.xlab.pci.doctor.GroupManageActivity"));
+        startActivity(new Intent("com.wonders.xlab.pci.doctor.GroupListActivity"));
     }
 
     @Override

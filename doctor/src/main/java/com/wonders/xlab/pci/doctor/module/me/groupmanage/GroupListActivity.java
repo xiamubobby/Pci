@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
@@ -21,7 +23,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.uikit.crv.CommonRecyclerView;
 
-public class GroupManageActivity extends AppbarActivity implements GroupListPresenter.GroupManagePresenterListener {
+public class GroupListActivity extends AppbarActivity implements GroupListPresenter.GroupManagePresenterListener {
 
     @Bind(R.id.recycler_view_group_manage)
     CommonRecyclerView mRecyclerView;
@@ -45,7 +47,7 @@ public class GroupManageActivity extends AppbarActivity implements GroupListPres
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mGroupManagePresenter.getGroupList(true, AIManager.getInstance(GroupManageActivity.this).getUserId());
+                mGroupManagePresenter.getGroupList(true, AIManager.getInstance().getDoctorId());
             }
         });
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
@@ -58,7 +60,7 @@ public class GroupManageActivity extends AppbarActivity implements GroupListPres
         mGroupManagePresenter = new GroupListPresenter(this);
         addPresenter(mGroupManagePresenter);
 
-        mGroupManagePresenter.getGroupList(true, AIManager.getInstance(this).getUserId());
+        mGroupManagePresenter.getGroupList(true, AIManager.getInstance().getDoctorId());
     }
 
     @Override
@@ -101,6 +103,22 @@ public class GroupManageActivity extends AppbarActivity implements GroupListPres
 
     @Override
     public void showEmptyView() {
+        mRecyclerView.showEmptyView();
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_add,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_add:
+                startActivity(new Intent("com.wonders.xlab.pci.doctor.GroupModifyActivity"));
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

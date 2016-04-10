@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -90,6 +91,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
 
         if (TextUtils.isEmpty(mGroupId)) {
             setToolbarTitle("新建小组");
+            mBtnDismiss.setVisibility(View.GONE);
         }
         mGroupModifyPresenter = new GroupModifyPresenter(this);
         addPresenter(mGroupModifyPresenter);

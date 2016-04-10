@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity {
         setTheme(R.style.AppTheme_NoActionBar);
         Constant.setBaseUrl(this);
 
-        if (!AIManager.getInstance(this).hasLogin()) {
+        if (!AIManager.getInstance().hasLogin()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
@@ -128,7 +128,7 @@ public class MainActivity extends BaseActivity {
     public void forceExit(ForceExitOtto bean) {
         new NotifyUtil().cancelAll(this);
 
-        AIManager.getInstance(this).logout();
+        AIManager.getInstance().logout();
         startActivity(new Intent(this, MainActivity.class));
         startActivity(new Intent(this, LoginActivity.class));
         finish();

@@ -1,5 +1,6 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 
+import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.mvp.entity.LoginEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.LoginModel;
 
@@ -26,7 +27,9 @@ public class LoginPresenter extends BasePresenter implements LoginModel.LoginMod
 
     @Override
     public void loginSuccess(LoginEntity entity) {
-        mILoginPresenter.loginSuccess(entity.getRet_values().getId(), entity.getRet_values().getTel(), entity.getRet_values().getAvatarUrl(),entity.getRet_values().getName());
+        AIManager.getInstance().saveDoctorInfo(entity.getRet_values().getId(), entity.getRet_values().getTel(), entity.getRet_values().getAvatarUrl(),entity.getRet_values().getName());
+
+        mILoginPresenter.loginSuccess("登录成功");
     }
 
     @Override
@@ -35,6 +38,6 @@ public class LoginPresenter extends BasePresenter implements LoginModel.LoginMod
     }
 
     public interface LoginPresenterListener extends BasePresenterListener {
-        void loginSuccess(String userId, String tel, String avatarUrl,String userName);
+        void loginSuccess(String message);
     }
 }

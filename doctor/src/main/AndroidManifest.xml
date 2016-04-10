@@ -135,11 +135,11 @@
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/PhotoPickerTheme"/>
         <activity
-            android:name=".module.me.groupmanage.GroupManageActivity"
+            android:name=".module.me.groupmanage.GroupListActivity"
             android:label="@string/title_activity_group_manage"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="com.wonders.xlab.pci.doctor.GroupManageActivity"/>
+                <action android:name="com.wonders.xlab.pci.doctor.GroupListActivity"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>

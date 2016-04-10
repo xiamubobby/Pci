@@ -132,7 +132,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             }
         });
 
-        mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance(this).getUserId());
+        mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance().getDoctorId());
         addPresenter(mChatRoomPresenter);
 
         mChatRoomPresenter.getChatList(imGroupId);
@@ -152,7 +152,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             MeChatRoomBean bean = new MeChatRoomBean();
             bean.text.set(message);
-            bean.portraitUrl.set(AIManager.getInstance(this).getAvatarUrl());
+            bean.portraitUrl.set(AIManager.getInstance().getDoctorPortraitUrl());
             bean.recordTime.set(DateUtil.format(sendTime, "yyyy-MM-dd HH:mm"));
             bean.recordTimeInMill.set(sendTime);
             bean.isSending.set(true);
@@ -162,7 +162,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             mEtChatRoomInput.setText("");
 
-            mChatRoomPresenter.sendMessage(message, AIManager.getInstance(this).getUserTel(), groupId, groupName, imGroupId, patientId, patientName, patientPhoneNumber, sendTime, AIManager.getInstance(this).getAvatarUrl(),AIManager.getInstance(this).getUserName());
+            mChatRoomPresenter.sendMessage(message, AIManager.getInstance().getDoctorTel(), groupId, groupName, imGroupId, patientId, patientName, patientPhoneNumber, sendTime, AIManager.getInstance().getDoctorPortraitUrl(),AIManager.getInstance().getDoctorName());
         }
     }
 

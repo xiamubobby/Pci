@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.wonders.xlab.pci.doctor.module.me.groupmanage.GroupManageActivity"
+    tools:context=".module.me.groupmanage.GroupListActivity"
     tools:showIn="@layout/group_manage_activity"
     app:emptyView="@layout/common_empty"
     app:networkErrorView="@layout/common_network_error"/>

@@ -41,7 +41,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             return;
         }
         //忽略自己发送的消息
-        if (!TextUtils.isEmpty(username) && username.equals("doctor" + AIManager.getInstance(context).getUserTel())) {
+        if (!TextUtils.isEmpty(username) && username.equals("doctor" + AIManager.getInstance().getDoctorTel())) {
             return;
         }
         // 如果是群聊消息，获取到group id

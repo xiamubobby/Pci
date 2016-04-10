@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.R;
-import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.MainActivity;
 import com.wonders.xlab.pci.doctor.mvp.presenter.impl.LoginPresenter;
 
@@ -105,12 +104,10 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
     }
 
     @Override
-    public void loginSuccess(String userId, String tel, String avatarUrl, String userName) {
+    public void loginSuccess(String message) {
         if (null != mDialog) {
             mDialog.dismiss();
         }
-        AIManager.getInstance(this).saveUserInfo(userId, tel, avatarUrl, userName);
-
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }

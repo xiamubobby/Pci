@@ -104,7 +104,7 @@ public class XEMChatService extends Service {
     public void forceExit(ForceExitOtto bean) {
         mIsNormalStop = true;
         new NotifyUtil().cancelAll(this);
-        AIManager.getInstance(this).logout();
+        AIManager.getInstance().logout();
         SPManager.get(this).clear();
         stopSelf();
     }
@@ -113,7 +113,7 @@ public class XEMChatService extends Service {
      * 登录环信
      */
     private void login() {
-        String tel = AIManager.getInstance(this).getUserTel();
+        String tel = AIManager.getInstance().getDoctorTel();
         if (TextUtils.isEmpty(tel)) {
             OttoManager.post(new ForceExitOtto());
             stopSelf();

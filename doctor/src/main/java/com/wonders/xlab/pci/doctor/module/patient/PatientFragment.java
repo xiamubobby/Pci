@@ -65,12 +65,12 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
         mRecyclerViewPatient.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPatientPresenter.getPatientList(AIManager.getInstance(getActivity()).getUserId());
+                mPatientPresenter.getPatientList(AIManager.getInstance().getDoctorId());
             }
         });
 
         mRecyclerViewPatient.setRefreshing(true);
-        mPatientPresenter.getPatientList(AIManager.getInstance(getActivity()).getUserId());
+        mPatientPresenter.getPatientList(AIManager.getInstance().getDoctorId());
     }
 
     @Override
