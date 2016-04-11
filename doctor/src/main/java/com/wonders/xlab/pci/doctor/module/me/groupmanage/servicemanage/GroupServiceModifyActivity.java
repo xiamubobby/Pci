@@ -33,7 +33,12 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
     public final static int RESULT_CODE_SUCCESS = 0;
 
     public final static String EXTRA_PACKAGE_ID = "packageId";
+    public final static String EXTRA_GROUP_ID = "groupId";
+    public final static String EXTRA_PUBLISHED = "published";
+
     private String mPackageId;
+    private String mGroupId;
+    private boolean mPublished;
 
     @Bind(R.id.tv_group_service_modify_unit_title)
     TextView mTvUnitTitle;
@@ -69,7 +74,10 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
             return;
         }
         mPackageId = intent.getStringExtra(EXTRA_PACKAGE_ID);
-        if (TextUtils.isEmpty(mPackageId)) {
+        mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
+        mPublished = intent.getBooleanExtra(EXTRA_PUBLISHED,false);
+
+        if (TextUtils.isEmpty(mPackageId) || TextUtils.isEmpty(mGroupId)) {
             Log.e("GroupServiceModifyActiv", "请传入packageId");
             showShortToast("获取套餐信息失败，请重试！");
             finish();
@@ -80,7 +88,7 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
 
         mPresenter = new GroupServiceModifyPresenter(this);
         addPresenter(mPresenter);
-        mPresenter.getServicePackageInfo(mPackageId);
+        mPresenter.getServicePackageInfo(mGroupId,mPackageId,mPublished);
     }
 
     private void initCustomValueAlertDialog() {

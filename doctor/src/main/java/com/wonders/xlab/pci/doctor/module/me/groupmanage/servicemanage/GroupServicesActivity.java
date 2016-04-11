@@ -68,6 +68,8 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
                 public void onItemClick(int position) {
                     Intent intent = new Intent("com.wonders.xlab.pci.doctor.GroupServiceModifyActivity");
                     intent.putExtra(GroupServiceModifyActivity.EXTRA_PACKAGE_ID, mRVAdapter.getBean(position).packageId.get());
+                    intent.putExtra(GroupServiceModifyActivity.EXTRA_GROUP_ID, mGroupId);
+                    intent.putExtra(GroupServiceModifyActivity.EXTRA_PUBLISHED, mRVAdapter.getBean(position).published.get());
                     startActivityForResult(intent,REQUEST_CODE_MODIFY);
                 }
             });

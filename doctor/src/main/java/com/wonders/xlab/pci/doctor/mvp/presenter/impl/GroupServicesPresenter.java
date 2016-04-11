@@ -53,6 +53,7 @@ public class GroupServicesPresenter extends BasePresenter implements IGroupServi
                         bean.packageName.set(valuesEntity.getServicePackageName());
                         bean.packageDesc.set(valuesEntity.getValue());
                         bean.packageDescColor.set(valuesEntity.getColorString());
+                        bean.published.set(valuesEntity.isPublished());
                         return bean;
                     }
                 })

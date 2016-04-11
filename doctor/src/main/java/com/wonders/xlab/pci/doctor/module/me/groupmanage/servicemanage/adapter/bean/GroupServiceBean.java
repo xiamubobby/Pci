@@ -9,7 +9,7 @@ public class GroupServiceBean {
     public ObservableField<String> packageId = new ObservableField<>();
     public ObservableField<String> packageIconUrl = new ObservableField<>();
     public ObservableField<String> packageName = new ObservableField<>();
-    public ObservableField<Integer> packageStatus = new ObservableField<>();
+    public ObservableField<Boolean> published = new ObservableField<>();
     public ObservableField<String> packageDesc = new ObservableField<>();
     public ObservableField<String> packageDescColor = new ObservableField<>();
 }
