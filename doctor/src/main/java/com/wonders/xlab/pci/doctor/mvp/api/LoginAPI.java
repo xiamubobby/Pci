@@ -14,6 +14,6 @@ import rx.Observable;
 public interface LoginAPI {
 
     @FormUrlEncoded
-    @POST("doctors/login")
+    @POST("v1/doctors/login")
     Observable<Response<LoginEntity>> login(@Field("tel") String tel, @Field("password") String password);
 }

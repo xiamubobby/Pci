@@ -11,6 +11,6 @@ import rx.Observable;
  * Created by hua on 16/2/19.
  */
 public interface PatientAPI {
-    @GET("userInfos/listUserInfos/{doctorId}")
+    @GET("v1/userInfos/listUserInfos/{doctorId}")
     Observable<Response<PatientEntity>> getPatientList(@Path("doctorId") String doctorId);
 }

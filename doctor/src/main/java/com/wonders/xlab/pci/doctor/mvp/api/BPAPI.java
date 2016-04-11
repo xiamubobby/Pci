@@ -13,6 +13,6 @@ import rx.Observable;
  */
 public interface BPAPI {
 
-    @GET("bloodPressures/listUserPressures/{userId}")
+    @GET("v1/bloodPressures/listUserPressures/{userId}")
     Observable<Response<BPEntity>> getBPList(@Path("userId") String patientId, @Query("start") long startTime, @Query("end") long endTime);
 }

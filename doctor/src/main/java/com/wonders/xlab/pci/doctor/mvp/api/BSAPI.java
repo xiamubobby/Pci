@@ -12,6 +12,6 @@ import rx.Observable;
  */
 public interface BSAPI {
 
-    @GET("bloodSugars/listBloodSugarRecord/{userId}")
+    @GET("v1/bloodSugars/listBloodSugarRecord/{userId}")
     Observable<Response<BSEntity>> getBSList(@Path("userId") String userId);
 }

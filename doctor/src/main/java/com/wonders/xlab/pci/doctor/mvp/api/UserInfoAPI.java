@@ -11,6 +11,6 @@ import rx.Observable;
  * Created by hua on 16/2/23.
  */
 public interface UserInfoAPI {
-    @GET("userInfos/retrieveUserInfo/{userId}")
+    @GET("v1/userInfos/retrieveUserInfo/{userId}")
     Observable<Response<UserInfoEntity>> getUserInfo(@Path("userId") String userId);
 }

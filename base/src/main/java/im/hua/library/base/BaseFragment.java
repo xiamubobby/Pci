@@ -99,6 +99,7 @@ public class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
         if (mBasePresenterList != null) {
             for (BasePresenter presenter : mBasePresenterList) {
                 presenter.onDestroy();

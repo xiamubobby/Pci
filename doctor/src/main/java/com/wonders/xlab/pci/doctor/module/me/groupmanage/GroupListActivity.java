@@ -53,18 +53,18 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-
+                mGroupManagePresenter.getGroupList(false, AIManager.getInstance().getDoctorId());
             }
         });
 
         mGroupManagePresenter = new GroupListPresenter(this);
         addPresenter(mGroupManagePresenter);
 
+        mRecyclerView.setRefreshing(true);
         mGroupManagePresenter.getGroupList(true, AIManager.getInstance().getDoctorId());
     }
 
-    @Override
-    public void showDoctorGroup(List<GroupListBean> groupListBeanList) {
+    private void initAdapter() {
         if (null == mRVAdapter) {
             mRVAdapter = new GroupListRVAdapter();
             mRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
@@ -77,7 +77,18 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
             });
             mRecyclerView.setAdapter(mRVAdapter);
         }
+    }
+
+    @Override
+    public void showDoctorGroup(List<GroupListBean> groupListBeanList) {
+        initAdapter();
         mRVAdapter.setDatas(groupListBeanList);
+    }
+
+    @Override
+    public void appendDoctorGroup(List<GroupListBean> groupListBeanList) {
+        initAdapter();
+        mRVAdapter.appendDatas(groupListBeanList);
     }
 
     @Override

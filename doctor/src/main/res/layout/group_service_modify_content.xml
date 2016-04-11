@@ -9,41 +9,51 @@
     tools:context="com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.GroupServiceModifyActivity"
     tools:showIn="@layout/group_service_modify_activity">
 
+    <RelativeLayout
+        android:id="@+id/rl_group_service_modify_top"
+        android:layout_width="match_parent"
+        android:paddingLeft="@dimen/item_interval_small"
+        android:paddingRight="@dimen/item_interval_small"
+        android:layout_height="?attr/listPreferredItemHeightSmall">
+
+        <TextView
+            android:id="@+id/tv_group_service_modify_unit_title"
+            style="@style/LargeBlackWrapTextView"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/sp_group_service_modify"
+            android:singleLine="true"/>
+
+        <Spinner
+            android:id="@+id/sp_group_service_modify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+        <include
+            layout="@layout/divider_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"/>
+
+    </RelativeLayout>
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/ll_group_service_modify_bottom"
+        android:layout_below="@+id/rl_group_service_modify_top"
         android:background="@color/background_gray"
         >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/item_interval_small"
+            android:paddingRight="@dimen/item_interval_small"
             android:background="@android:color/white"
-            android:orientation="vertical"
-            android:padding="@dimen/item_interval_small">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="?attr/listPreferredItemHeightSmall">
-
-                <TextView
-                    android:id="@+id/tv_group_service_modify_unit_title"
-                    style="@style/LargeBlackWrapTextView"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/sp_group_service_modify"
-                    android:singleLine="true"/>
-
-                <Spinner
-                    android:id="@+id/sp_group_service_modify"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"/>
-            </RelativeLayout>
-
-            <include layout="@layout/divider_vertical"/>
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_group_service_modify_desc_title"

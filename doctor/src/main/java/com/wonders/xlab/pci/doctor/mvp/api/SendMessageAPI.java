@@ -22,6 +22,6 @@ public interface SendMessageAPI {
     },
         "from" : "13621673988"
     }*/
-    @POST("im/sendChatContent/{time}")
+    @POST("v1/im/sendChatContent/{time}")
     Observable<Response<SendMessageEntity>> sendMessage(@Body SendMessageBody body, @Path("time") long time);
 }

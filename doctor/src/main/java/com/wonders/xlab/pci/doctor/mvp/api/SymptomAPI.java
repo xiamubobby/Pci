@@ -16,10 +16,10 @@ import rx.Observable;
  */
 public interface SymptomAPI {
 
-    @GET("userSymptomRecords/listUserSymptomRecord/{userId}")
+    @GET("v1/userSymptomRecords/listUserSymptomRecord/{userId}")
     Observable<Response<SymptomEntity>> getSymptomList(@Path("userId") String userId);
 
     @FormUrlEncoded
-    @POST("userSymptomRecords/commentUserSymptom")
+    @POST("v1/userSymptomRecords/commentUserSymptom")
     Observable<Response<SymptomCommentEntity>> saveComment(@Field("recordId") String symptomId,@Field("doctorId") String doctorId,@Field("comment") String comment,@Field("check") boolean check);
 }
