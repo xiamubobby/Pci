@@ -25,7 +25,7 @@ public class BloodSugarModel extends PatientBaseModel<BloodSugarEntity> implemen
     }
 
     @Override
-    protected void onFailed(String message) {
+    protected void onFailed(int retCode, String message) {
         mBloodSugarModelListener.onReceiveFailed(message);
     }
 

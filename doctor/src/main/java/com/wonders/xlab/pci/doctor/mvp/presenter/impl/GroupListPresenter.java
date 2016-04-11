@@ -48,23 +48,24 @@ public class GroupListPresenter extends BasePagePresenter implements IGroupListP
         List<GroupListBean> groupListBeanList = new ArrayList<>();
         for (GroupListEntity.RetValuesEntity.ContentEntity entity : valuesEntity.getContent()) {
             GroupListBean bean = new GroupListBean();
+            bean.setCreateTimeInMill(entity.getCreateTime());
             bean.setAvatarList(entity.getAvatarUrls());
             bean.setGroupId(entity.getId());
             bean.setGroupName(entity.getName());
-            bean.setOwnerName(entity.getOwner().getName());
-            bean.setOwnerDepartment(entity.getOwner().getDepartment().getName());
-            bean.setOwnerTitle(entity.getOwner().getJobTitle());
-            bean.setOwnerHospital(entity.getOwner().getHospital().getName());
+            bean.setGroupMemberCounts(entity.getSize());
+            bean.setOwnerName(entity.getOwnerName());
+            bean.setOwnerDepartment(entity.getOwnerDepartment());
+            bean.setOwnerTitle(entity.getOwnerJobTitle());
+            bean.setOwnerHospital(entity.getOwnerHospital());
             bean.setServingPeopleCounts(entity.getServingPeople());
             bean.setServedPeopleCounts(entity.getServedPeopleCount());
 
-            boolean isEqual = entity.getOwner().getId().equals(AIManager.getInstance().getDoctorId());
+            boolean isEqual = entity.getOwnerId().equals(AIManager.getInstance().getDoctorId());
             bean.setBelongToCurrentDoctor(isEqual);
             if (isEqual) {
                 bean.setGroupName("我的个人诊所");
             }
-            //TODO 后台接口正在完善
-//            bean.setServiceIconList(entity.get);
+            bean.setServiceIconList(entity.getServiceUrls());
 
             groupListBeanList.add(bean);
         }

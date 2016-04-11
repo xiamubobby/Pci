@@ -1,5 +1,7 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter;
 
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageCreateBody;
+
 import im.hua.library.base.mvp.IBasePresenter;
 
 /**
@@ -7,4 +9,6 @@ import im.hua.library.base.mvp.IBasePresenter;
  */
 public interface IGroupServiceModifyPresenter extends IBasePresenter {
     void getServicePackageInfo(String doctorGroupId, String servicePackageId, boolean published);
+
+    void updatePackage(GroupPackageCreateBody body);
 }

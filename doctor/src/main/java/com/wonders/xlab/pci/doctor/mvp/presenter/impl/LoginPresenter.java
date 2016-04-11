@@ -2,7 +2,7 @@ package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.mvp.entity.LoginEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.LoginModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.LoginModel;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;

@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.mvp.model;
+package com.wonders.xlab.pci.doctor.mvp.model.impl;
 
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.ChatRoomAPI;
@@ -47,7 +47,7 @@ public class ChatRoomModel extends DoctorBaseModel<ChatRoomEntity> {
     }
 
     @Override
-    protected void onFailed(String message) {
+    protected void onFailed(int retCode, String message) {
         if (mChatRoomModelListener != null) {
             mChatRoomModelListener.onReceiveFailed("获取聊天记录失败，请重试！");
         }

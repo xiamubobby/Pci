@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.pci.doctor.util.ImageViewManager;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
@@ -60,7 +60,7 @@ public class MeFragment extends BaseFragment {
         binding.setHandler(this);
 
         mTvMeName.setText(AIManager.getInstance().getDoctorName());
-        ImageViewManager.setImageViewWithUrl(getActivity(), mIvMePortrait, AIManager.getInstance().getDoctorPortraitUrl(), R.drawable.portrait_default);
+        ImageViewManager.setImageViewWithUrl(getActivity(), mIvMePortrait, AIManager.getInstance().getDoctorPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
     }
 
     @OnClick(R.id.btn_me_exit)

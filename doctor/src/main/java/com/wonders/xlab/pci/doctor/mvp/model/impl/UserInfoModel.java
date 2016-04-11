@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.mvp.model;
+package com.wonders.xlab.pci.doctor.mvp.model.impl;
 
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.UserInfoAPI;
@@ -29,7 +29,7 @@ public class UserInfoModel extends DoctorBaseModel<UserInfoEntity> {
     }
 
     @Override
-    protected void onFailed(String message) {
+    protected void onFailed(int retCode, String message) {
         mUserInfoModel.onReceiveFailed("获取患者基本信息失败，请重试！");
     }
 

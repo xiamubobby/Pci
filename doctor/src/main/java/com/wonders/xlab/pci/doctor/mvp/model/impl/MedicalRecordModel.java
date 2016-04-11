@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.mvp.model;
+package com.wonders.xlab.pci.doctor.mvp.model.impl;
 
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.MedicalRecordAPI;
@@ -43,7 +43,7 @@ public class MedicalRecordModel extends DoctorBaseModel<MedicalRecordEntity> {
     }
 
     @Override
-    protected void onFailed(String message) {
+    protected void onFailed(int retCode, String message) {
         mIMedicalRecordModel.onReceiveFailed("获取就诊记录失败，请重试！");
     }
 

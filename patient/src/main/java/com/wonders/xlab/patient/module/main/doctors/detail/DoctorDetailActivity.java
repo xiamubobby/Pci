@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.umeng.analytics.MobclickAgent;
-import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;

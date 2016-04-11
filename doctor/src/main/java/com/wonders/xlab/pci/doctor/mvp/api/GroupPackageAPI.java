@@ -1,10 +1,14 @@
 package com.wonders.xlab.pci.doctor.mvp.api;
 
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageCreateBody;
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageCreateEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageDetailEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageListEntity;
 
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -18,4 +22,7 @@ public interface GroupPackageAPI {
 
     @GET("v1/servicePackages/retrieveServicePackage/{doctorGroupId}/{servicePackageId}/{published}")
     Observable<Response<GroupPackageDetailEntity>> getPackageDetail(@Path("doctorGroupId") String doctorGroupId, @Path("servicePackageId") String servicePackageId, @Path("published") boolean published);
+
+    @POST("v1/packages/createDoctorPackage")
+    Observable<Response<GroupPackageCreateEntity>> createPackage(@Body GroupPackageCreateBody body);
 }

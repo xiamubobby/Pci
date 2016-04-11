@@ -37,7 +37,7 @@ public class SymptomSaveModel extends PatientBaseModel<SimpleEntity> implements 
     }
 
     @Override
-    protected void onFailed(String message) {
+    protected void onFailed(int retCode, String message) {
         mSymptomSaveModelListener.onReceiveFailed("保存数据失败，请重试！");
     }
 

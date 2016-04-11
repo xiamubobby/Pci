@@ -2,7 +2,7 @@ package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.PatientEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.PatientModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.PatientModel;
 
 import java.util.ArrayList;
 

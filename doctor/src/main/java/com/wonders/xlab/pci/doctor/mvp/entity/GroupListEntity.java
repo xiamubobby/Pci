@@ -10,11 +10,11 @@ import im.hua.library.base.mvp.entity.BaseEntity;
 public class GroupListEntity extends BaseEntity {
 
     /**
-     * content : [{"id":1,"name":"XXX心血管小组","owner":{"id":5,"tel":"13621673988","name":"刘二","jobTitle":"副主任医师","type":"Attending","avatarUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","description":"医生简介","hospital":{"id":2,"name":"瑞金医院"},"department":{"id":1,"name":"儿科"},"imId":"doctor13621673988"},"multi":true,"servingPeople":0,"servedPeopleCount":0,"description":"小组简介","doctors":null,"createTime":1459997647000,"avatarUrls":["http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg"],"size":1,"canGrant":false,"publish":false},{"id":10,"name":"id为6的诊所","owner":{"id":11,"tel":"17721013012","name":"小丸子","jobTitle":"助理医师","type":"AssistantNurse","avatarUrl":null,"description":null,"hospital":{"id":1,"name":"第一人民医院"},"department":{"id":1,"name":"儿科"},"imId":"doctor17721013012"},"multi":false,"servingPeople":0,"servedPeopleCount":0,"description":"id为6的诊所阿萨德发生的发生的","doctors":null,"createTime":1459997647000,"avatarUrls":["http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg"],"size":3,"canGrant":false,"publish":false}]
-     * last : true
-     * totalPages : 1
+     * content : [{"servingPeople":0,"avatarUrls":["http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg"],"servedPeopleCount":0,"multi":true,"ownerHospital":"瑞金医院","ownerDepartment":"儿科","size":1,"ownerName":"刘二","createTime":1459997647000,"serviceUrls":["http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg"],"name":"XXX心血管小组","id":1,"ownerJobTitle":"副主任医师"},{"servingPeople":0,"avatarUrls":["http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg"],"servedPeopleCount":0,"multi":false,"ownerHospital":"第一人民医院","ownerDepartment":"儿科","size":3,"ownerName":"小丸子","createTime":1459997647000,"serviceUrls":[],"name":"id为6的诊所","id":10,"ownerJobTitle":"助理医师"}]
+     * last : false
+     * totalPages : 2
      * totalElements : 2
-     * size : 10
+     * size : 1
      * number : 0
      * sort : null
      * first : true
@@ -41,19 +41,19 @@ public class GroupListEntity extends BaseEntity {
         private boolean first;
         private int numberOfElements;
         /**
-         * id : 1
-         * name : XXX心血管小组
-         * owner : {"id":5,"tel":"13621673988","name":"刘二","jobTitle":"副主任医师","type":"Attending","avatarUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","description":"医生简介","hospital":{"id":2,"name":"瑞金医院"},"department":{"id":1,"name":"儿科"},"imId":"doctor13621673988"}
-         * multi : true
          * servingPeople : 0
-         * servedPeopleCount : 0
-         * description : 小组简介
-         * doctors : null
-         * createTime : 1459997647000
          * avatarUrls : ["http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg"]
+         * servedPeopleCount : 0
+         * multi : true
+         * ownerHospital : 瑞金医院
+         * ownerDepartment : 儿科
          * size : 1
-         * canGrant : false
-         * publish : false
+         * ownerName : 刘二
+         * createTime : 1459997647000
+         * serviceUrls : ["http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg"]
+         * name : XXX心血管小组
+         * id : 1
+         * ownerJobTitle : 副主任医师
          */
 
         private List<ContentEntity> content;
@@ -131,64 +131,20 @@ public class GroupListEntity extends BaseEntity {
         }
 
         public static class ContentEntity {
-            private String id;
-            private String name;
-            /**
-             * id : 5
-             * tel : 13621673988
-             * name : 刘二
-             * jobTitle : 副主任医师
-             * type : Attending
-             * avatarUrl : http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg
-             * description : 医生简介
-             * hospital : {"id":2,"name":"瑞金医院"}
-             * department : {"id":1,"name":"儿科"}
-             * imId : doctor13621673988
-             */
-
-            private OwnerEntity owner;
-            private boolean multi;
             private int servingPeople;
             private int servedPeopleCount;
-            private String description;
-            private Object doctors;
+            private boolean multi;
+            private String ownerHospital;
+            private String ownerDepartment;
+            private int size;
+            private String ownerName;
+            private String ownerId;
             private long createTime;
-            private String size;
-            private boolean canGrant;
-            private boolean publish;
+            private String name;
+            private String id;
+            private String ownerJobTitle;
             private List<String> avatarUrls;
-
-            public String getId() {
-                return id;
-            }
-
-            public void setId(String id) {
-                this.id = id;
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-
-            public OwnerEntity getOwner() {
-                return owner;
-            }
-
-            public void setOwner(OwnerEntity owner) {
-                this.owner = owner;
-            }
-
-            public boolean isMulti() {
-                return multi;
-            }
-
-            public void setMulti(boolean multi) {
-                this.multi = multi;
-            }
+            private List<String> serviceUrls;
 
             public int getServingPeople() {
                 return servingPeople;
@@ -206,20 +162,44 @@ public class GroupListEntity extends BaseEntity {
                 this.servedPeopleCount = servedPeopleCount;
             }
 
-            public String getDescription() {
-                return description;
+            public boolean isMulti() {
+                return multi;
             }
 
-            public void setDescription(String description) {
-                this.description = description;
+            public void setMulti(boolean multi) {
+                this.multi = multi;
             }
 
-            public Object getDoctors() {
-                return doctors;
+            public String getOwnerHospital() {
+                return ownerHospital;
             }
 
-            public void setDoctors(Object doctors) {
-                this.doctors = doctors;
+            public void setOwnerHospital(String ownerHospital) {
+                this.ownerHospital = ownerHospital;
+            }
+
+            public String getOwnerDepartment() {
+                return ownerDepartment;
+            }
+
+            public void setOwnerDepartment(String ownerDepartment) {
+                this.ownerDepartment = ownerDepartment;
+            }
+
+            public int getSize() {
+                return size;
+            }
+
+            public void setSize(int size) {
+                this.size = size;
+            }
+
+            public String getOwnerName() {
+                return ownerName;
+            }
+
+            public void setOwnerName(String ownerName) {
+                this.ownerName = ownerName;
             }
 
             public long getCreateTime() {
@@ -230,28 +210,28 @@ public class GroupListEntity extends BaseEntity {
                 this.createTime = createTime;
             }
 
-            public String getSize() {
-                return size;
+            public String getName() {
+                return name;
             }
 
-            public void setSize(String size) {
-                this.size = size;
+            public void setName(String name) {
+                this.name = name;
             }
 
-            public boolean isCanGrant() {
-                return canGrant;
+            public String getId() {
+                return id;
             }
 
-            public void setCanGrant(boolean canGrant) {
-                this.canGrant = canGrant;
+            public void setId(String id) {
+                this.id = id;
             }
 
-            public boolean isPublish() {
-                return publish;
+            public String getOwnerJobTitle() {
+                return ownerJobTitle;
             }
 
-            public void setPublish(boolean publish) {
-                this.publish = publish;
+            public void setOwnerJobTitle(String ownerJobTitle) {
+                this.ownerJobTitle = ownerJobTitle;
             }
 
             public List<String> getAvatarUrls() {
@@ -262,149 +242,20 @@ public class GroupListEntity extends BaseEntity {
                 this.avatarUrls = avatarUrls;
             }
 
-            public static class OwnerEntity {
-                private String id;
-                private String tel;
-                private String name;
-                private String jobTitle;
-                private String type;
-                private String avatarUrl;
-                private String description;
-                /**
-                 * id : 2
-                 * name : 瑞金医院
-                 */
+            public List<String> getServiceUrls() {
+                return serviceUrls;
+            }
 
-                private HospitalEntity hospital;
-                /**
-                 * id : 1
-                 * name : 儿科
-                 */
+            public void setServiceUrls(List<String> serviceUrls) {
+                this.serviceUrls = serviceUrls;
+            }
 
-                private DepartmentEntity department;
-                private String imId;
+            public String getOwnerId() {
+                return ownerId;
+            }
 
-                public String getId() {
-                    return id;
-                }
-
-                public void setId(String id) {
-                    this.id = id;
-                }
-
-                public String getTel() {
-                    return tel;
-                }
-
-                public void setTel(String tel) {
-                    this.tel = tel;
-                }
-
-                public String getName() {
-                    return name;
-                }
-
-                public void setName(String name) {
-                    this.name = name;
-                }
-
-                public String getJobTitle() {
-                    return jobTitle;
-                }
-
-                public void setJobTitle(String jobTitle) {
-                    this.jobTitle = jobTitle;
-                }
-
-                public String getType() {
-                    return type;
-                }
-
-                public void setType(String type) {
-                    this.type = type;
-                }
-
-                public String getAvatarUrl() {
-                    return avatarUrl;
-                }
-
-                public void setAvatarUrl(String avatarUrl) {
-                    this.avatarUrl = avatarUrl;
-                }
-
-                public String getDescription() {
-                    return description;
-                }
-
-                public void setDescription(String description) {
-                    this.description = description;
-                }
-
-                public HospitalEntity getHospital() {
-                    return hospital;
-                }
-
-                public void setHospital(HospitalEntity hospital) {
-                    this.hospital = hospital;
-                }
-
-                public DepartmentEntity getDepartment() {
-                    return department;
-                }
-
-                public void setDepartment(DepartmentEntity department) {
-                    this.department = department;
-                }
-
-                public String getImId() {
-                    return imId;
-                }
-
-                public void setImId(String imId) {
-                    this.imId = imId;
-                }
-
-                public static class HospitalEntity {
-                    private String id;
-                    private String name;
-
-                    public String getId() {
-                        return id;
-                    }
-
-                    public void setId(String id) {
-                        this.id = id;
-                    }
-
-                    public String getName() {
-                        return name;
-                    }
-
-                    public void setName(String name) {
-                        this.name = name;
-                    }
-                }
-
-                public static class DepartmentEntity {
-                    private String id;
-                    private String name;
-
-                    public String getId() {
-                        return id;
-                    }
-
-                    public void setId(String id) {
-                        this.id = id;
-                    }
-
-                    public String getName() {
-                        return name;
-                    }
-
-                    public void setName(String name) {
-                        this.name = name;
-                    }
-                }
+            public void setOwnerId(String ownerId) {
+                this.ownerId = ownerId;
             }
         }
     }

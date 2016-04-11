@@ -6,8 +6,8 @@ import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.ChatRoomEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.ChatRoomModel;
-import com.wonders.xlab.pci.doctor.mvp.model.SendMessageModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.ChatRoomModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.SendMessageModel;
 
 import java.util.ArrayList;
 import java.util.List;

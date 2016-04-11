@@ -18,6 +18,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupModifyMemberRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupServiceIconRVAdapter;
@@ -107,7 +108,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mGroupModifyPresenter.getGroupInfo(mGroupId);
+                mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
             }
         });
 
@@ -123,7 +124,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                     }
                 });
         RxView.clicks(mTvAuth)
-                .throttleFirst(Constant.VIEW_CLICK_SKIP_DURATION,TimeUnit.MILLISECONDS)
+                .throttleFirst(Constant.VIEW_CLICK_SKIP_DURATION, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
@@ -133,7 +134,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                     }
                 });
         RxView.clicks(mLlService)
-                .throttleFirst(Constant.VIEW_CLICK_SKIP_DURATION,TimeUnit.MILLISECONDS)
+                .throttleFirst(Constant.VIEW_CLICK_SKIP_DURATION, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Void>() {
                     @Override
                     public void call(Void aVoid) {
@@ -144,14 +145,15 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                 });
 
         setRefreshing(mRefresh, true);
-        mGroupModifyPresenter.getGroupInfo(mGroupId);
-
+        mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
     }
 
     @Override
     public void showGroupInfo(GroupModifyBean groupModifyBean) {
         mTvGroupName.setText(groupModifyBean.getGroupName());
         mTvGroupDesc.setText(groupModifyBean.getGroupDesc());
+        mTvAuth.setVisibility(groupModifyBean.isCanGrant() ? View.VISIBLE : View.GONE);
+        mBtnDismiss.setVisibility(groupModifyBean.isCanGrant() ? View.VISIBLE : View.GONE);
 
         if (null == mMemberRVAdapter) {
             mMemberRVAdapter = new GroupModifyMemberRVAdapter();
@@ -188,6 +190,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
     @Override
     public void showError(String message) {
         showShortToast(message);
+        finish();
     }
 
     @Override
@@ -263,12 +266,12 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                 break;
             case REQUEST_CODE_REMOVE_DOCTOR:
                 if (resultCode == GroupRemoveDoctorActivity.RESULT_CODE_SUCCESS) {
-                    mGroupModifyPresenter.getGroupInfo(mGroupId);
+                    mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
                 }
                 break;
             case REQUEST_CODE_AUTH:
                 if (resultCode == GroupAuthActivity.RESULT_CODE_SUCCESS) {
-                    mGroupModifyPresenter.getGroupInfo(mGroupId);
+                    mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
                 }
                 break;
         }

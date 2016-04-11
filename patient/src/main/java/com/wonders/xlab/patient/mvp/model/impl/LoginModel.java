@@ -49,7 +49,7 @@ public class LoginModel extends PatientBaseModel<LoginEntity> {
     }
 
     @Override
-    protected void onFailed(String message) {
+    protected void onFailed(int retCode, String message) {
         mLoginModelListener.onReceiveFailed(message);
     }
 

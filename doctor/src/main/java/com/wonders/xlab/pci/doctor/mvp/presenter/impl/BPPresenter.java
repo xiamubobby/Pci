@@ -14,7 +14,7 @@ import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.module.chatroom.bp.bean.BPChartBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bp.bean.BPListBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.BPEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.BPModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.BPModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;

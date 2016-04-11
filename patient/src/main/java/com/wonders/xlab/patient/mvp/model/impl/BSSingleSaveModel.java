@@ -54,7 +54,7 @@ public class BSSingleSaveModel extends PatientBaseModel<BSSaveEntity> {
     }
 
     @Override
-    protected void onFailed(String message) {
+    protected void onFailed(int retCode, String message) {
         if (TextUtils.isEmpty(message)) {
             mBSSaveModelListener.onReceiveFailed("保存血糖失败，请重试！");
         } else {

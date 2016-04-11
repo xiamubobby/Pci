@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.pci.doctor.util.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.databinding.GroupInviteItemBinding;
@@ -55,7 +55,7 @@ public class GroupDoctorMultiChoiceRVAdapter extends SimpleRVAdapter<GroupDoctor
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         GroupDoctorBean bean = getBean(position);
         viewHolder.binding.setBean(bean);
-        ImageViewManager.setImageViewWithUrl(viewHolder.itemView.getContext(),viewHolder.mIvAvatar,bean.doctorAvatarUrl.get(),ImageViewManager.PLACE_HOLDER_EMPTY);
+        ImageViewManager.setImageViewWithUrl(viewHolder.itemView.getContext(),viewHolder.mIvAvatar,bean.doctorAvatarUrl.get(), ImageViewManager.PLACE_HOLDER_EMPTY);
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {

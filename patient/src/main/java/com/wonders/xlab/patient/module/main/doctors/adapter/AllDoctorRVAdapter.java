@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.DoctorAllItemBinding;

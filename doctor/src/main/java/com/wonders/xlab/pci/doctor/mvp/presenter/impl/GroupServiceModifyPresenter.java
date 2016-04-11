@@ -1,8 +1,11 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.bean.PackageInfoBean;
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageCreateBody;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageDetailEntity;
+import com.wonders.xlab.pci.doctor.mvp.model.IGroupPackageCreateModel;
 import com.wonders.xlab.pci.doctor.mvp.model.IGroupPackageDetailModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupPackageCreateModel;
 import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupPackageDetailModel;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupServiceModifyPresenter;
 
@@ -16,19 +19,27 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
 /**
  * Created by hua on 16/4/10.
  */
-public class GroupServiceModifyPresenter extends BasePresenter implements IGroupServiceModifyPresenter, GroupPackageDetailModel.GroupPackageDetailModelListener {
+public class GroupServiceModifyPresenter extends BasePresenter implements IGroupServiceModifyPresenter, GroupPackageDetailModel.GroupPackageDetailModelListener, GroupPackageCreateModel.GroupPackageCreateModelListener {
     private GroupServiceModifyPresenterListener mListener;
     private IGroupPackageDetailModel mPackageDetailModel;
+    private IGroupPackageCreateModel mPackageCreateModel;
 
     public GroupServiceModifyPresenter(GroupServiceModifyPresenterListener listener) {
         mListener = listener;
         mPackageDetailModel = new GroupPackageDetailModel(this);
+        mPackageCreateModel = new GroupPackageCreateModel(this);
         addModel(mPackageDetailModel);
+        addModel(mPackageCreateModel);
     }
 
     @Override
     public void getServicePackageInfo(String doctorGroupId, String servicePackageId, boolean published) {
         mPackageDetailModel.getPackageDetail(doctorGroupId,servicePackageId,published);
+    }
+
+    @Override
+    public void updatePackage(GroupPackageCreateBody body) {
+
     }
 
     @Override
@@ -60,6 +71,11 @@ public class GroupServiceModifyPresenter extends BasePresenter implements IGroup
     public void onReceiveFailed(String message) {
         mListener.hideLoading();
         mListener.showError(message);
+    }
+
+    @Override
+    public void onCreatePackageSuccess(String message) {
+
     }
 
     public interface GroupServiceModifyPresenterListener extends BasePresenterListener{

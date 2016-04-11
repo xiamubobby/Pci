@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.module.chatroom.bs.bean.BSBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.BSEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.BSModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.BSModel;
 
 import java.util.ArrayList;
 import java.util.List;

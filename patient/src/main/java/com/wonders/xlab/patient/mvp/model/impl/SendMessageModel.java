@@ -75,7 +75,7 @@ public class SendMessageModel extends PatientBaseModel<SendMessageEntity> implem
     }
 
     @Override
-    protected void onFailed(String message) {
+    protected void onFailed(int retCode, String message) {
         mISendMessageModel.onReceiveFailed("发送失败，请重试！");
     }
 

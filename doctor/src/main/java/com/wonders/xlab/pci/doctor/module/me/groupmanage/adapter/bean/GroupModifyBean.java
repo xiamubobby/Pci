@@ -6,19 +6,12 @@ import java.util.List;
  * Created by hua on 16/4/7.
  */
 public class GroupModifyBean {
-    private String groupId;
     private List<GroupModifyMemberBean> mMemberInfoList;
     private String groupName;
     private String groupDesc;
     private List<String> publishedServiceIconList;
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
+    private String managerType;
+    private boolean canGrant;
 
     public List<GroupModifyMemberBean> getMemberInfoList() {
         return mMemberInfoList;
@@ -50,5 +43,21 @@ public class GroupModifyBean {
 
     public void setPublishedServiceIconList(List<String> publishedServiceIconList) {
         this.publishedServiceIconList = publishedServiceIconList;
+    }
+
+    public String getManagerType() {
+        return managerType;
+    }
+
+    public void setManagerType(String managerType) {
+        this.managerType = managerType;
+    }
+
+    public boolean isCanGrant() {
+        return canGrant;
+    }
+
+    public void setCanGrant(boolean canGrant) {
+        this.canGrant = canGrant;
     }
 }

@@ -25,7 +25,7 @@ public class GroupPackageDetailModel extends DoctorBaseModel<GroupPackageDetailE
     }
 
     @Override
-    protected void onFailed(String message) {
+    protected void onFailed(int retCode, String message) {
         mListener.onReceiveFailed(message);
     }
 

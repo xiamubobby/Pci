@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.DoctorDetailGroupOfDoctorItemBinding;
@@ -33,7 +33,7 @@ public class DoctorDetailGroupOfDoctorRVAdapter extends SimpleRVAdapter<DoctorDe
         DoctorDetailGroupOfDoctorBean bean = getBean(position);
 
         viewHolder.binding.setBean(bean);
-        ImageViewManager.setImageViewWithUrl(viewHolder.itemView.getContext(),viewHolder.mIvGroupPortrait,bean.groupPortraitUrl.get(),ImageViewManager.PLACE_HOLDER_EMPTY);
+        ImageViewManager.setImageViewWithUrl(viewHolder.itemView.getContext(),viewHolder.mIvGroupPortrait,bean.groupPortraitUrl.get(), ImageViewManager.PLACE_HOLDER_EMPTY);
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {

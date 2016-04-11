@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wonders.xlab.common.manager.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyMemberBean;
+import com.wonders.xlab.pci.doctor.util.ImageViewManager;
 
 import java.util.List;
 
@@ -141,7 +141,7 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
             case GroupModifyMemberBean.TYPE_MEMBER:
                 viewHolder.mTvName.setVisibility(View.VISIBLE);
                 viewHolder.mTvName.setText(bean.doctorName.get());
-                ImageViewManager.setImageViewWithUrl(viewHolder.itemView.getContext(), viewHolder.mIvAvatar, bean.doctorAvatarUrl.get(), ImageViewManager.PLACE_HOLDER_EMPTY);
+                ImageViewManager.setImageViewWithUrl(viewHolder.itemView.getContext(), viewHolder.mIvAvatar, bean.doctorAvatarUrl.get(), R.drawable.ic_default_avatar_doctor);
                 break;
             case GroupModifyMemberBean.TYPE_ADD:
                 viewHolder.mTvName.setVisibility(View.GONE);

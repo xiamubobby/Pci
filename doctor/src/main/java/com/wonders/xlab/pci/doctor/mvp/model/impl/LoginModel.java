@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.mvp.model;
+package com.wonders.xlab.pci.doctor.mvp.model.impl;
 
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.LoginAPI;
@@ -29,7 +29,7 @@ public class LoginModel extends DoctorBaseModel<LoginEntity> {
     }
 
     @Override
-    protected void onFailed(String message) {
+    protected void onFailed(int retCode, String message) {
         mILoginModel.onReceiveFailed(message);
     }
 

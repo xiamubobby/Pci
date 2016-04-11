@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.umeng.analytics.MobclickAgent;
-import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.WebActivity;
 import com.wonders.xlab.patient.util.UmengEventId;
@@ -70,7 +70,7 @@ public class HomeTopImageFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ImageViewManager.setImageViewWithUrl(getActivity(), mIvHomeTopImage, mImageUrl, -1);
+        ImageViewManager.setImageViewWithUrl(getActivity(), mIvHomeTopImage, mImageUrl, ImageViewManager.PLACE_HOLDER_EMPTY);
         mIvHomeTopImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -3,7 +3,7 @@ package com.wonders.xlab.pci.doctor.module.chatroom.adapter.viewholder;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.pci.doctor.util.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.multi.MultiViewHolder;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.databinding.ChatRoomItemMeBinding;
@@ -36,7 +36,7 @@ public class MeChatRoomVH extends MultiViewHolder<MeChatRoomBean> {
 
     @Override
     public void onBindViewHolder(MeChatRoomBean data) {
-        ImageViewManager.setImageViewWithUrl(itemView.getContext(), mIvChatRoomItemMePortrait, data.portraitUrl.get(), xlab.wonders.com.common.R.drawable.portrait_default);
+        ImageViewManager.setImageViewWithUrl(itemView.getContext(), mIvChatRoomItemMePortrait, data.portraitUrl.get(), ImageViewManager.PLACE_HOLDER_EMPTY);
         binding.setChat(data);
     }
 }

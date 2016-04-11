@@ -31,7 +31,7 @@ public class HomeBannerModel extends PatientBaseModel<HomeBannerEntity> implemen
     }
 
     @Override
-    protected void onFailed(String message) {
+    protected void onFailed(int retCode, String message) {
         mListener.onReceiveFailed(message);
     }
 

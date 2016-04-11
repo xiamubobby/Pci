@@ -61,7 +61,7 @@ public class BPSingleSaveModel extends PatientBaseModel<BPSaveEntity> {
     }
 
     @Override
-    protected void onFailed(String message) {
+    protected void onFailed(int retCode, String message) {
         mBPSaveModelListener.onReceiveFailed(message);
     }
 

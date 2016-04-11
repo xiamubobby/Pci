@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.mvp.model;
+package com.wonders.xlab.pci.doctor.mvp.model.impl;
 
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.BSAPI;
@@ -28,7 +28,7 @@ public class BSModel extends DoctorBaseModel<BSEntity> {
     }
 
     @Override
-    protected void onFailed(String message) {
+    protected void onFailed(int retCode, String message) {
         mBloodPressureModel.onReceiveFailed("获取血糖数据失败，请重试！");
     }
 

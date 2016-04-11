@@ -1,5 +1,6 @@
 package com.wonders.xlab.pci.doctor.mvp.api;
 
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupDetailEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupListEntity;
 
 import retrofit2.Response;
@@ -15,4 +16,7 @@ public interface GroupManagerAPI {
 
     @GET("v1/doctorGroup/queryAllGroupByDoctorId/{doctorId}")
     Observable<Response<GroupListEntity>> getGroupList(@Path("doctorId") String doctorId, @Query("page") int page,@Query("size") int size);
+
+    @GET("v1/doctorGroup/toDoctorGroup/{doctorId}")
+    Observable<Response<GroupDetailEntity>> getGroupDetail(@Path("doctorId") String doctorId,@Query("doctorGroupId") String doctorGroupId);
 }

@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.pci.doctor.util.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.databinding.PatientItemBinding;
@@ -29,7 +29,7 @@ public class PatientRVAdapter extends SimpleRVAdapter<PatientBean> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         PatientViewHolder viewHolder = (PatientViewHolder) holder;
-        ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(), viewHolder.mIvPatientItemPortrait, getBean(position).getPortrait(), xlab.wonders.com.common.R.drawable.portrait_default);
+        ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(), viewHolder.mIvPatientItemPortrait, getBean(position).getPortrait(), ImageViewManager.PLACE_HOLDER_EMPTY);
 
         viewHolder.mBinding.setPatient(getBean(position));
     }

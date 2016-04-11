@@ -3,7 +3,7 @@ package com.wonders.xlab.patient.module.chatroom.adapter.viewholder;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.multi.MultiViewHolder;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.ChatRoomItemMeBinding;
@@ -39,7 +39,7 @@ public class MeChatRoomVH extends MultiViewHolder<MeChatRoomBean> {
 
     @Override
     public void onBindViewHolder(MeChatRoomBean data) {
-        ImageViewManager.setImageViewWithUrl(itemView.getContext(), mIvChatRoomItemMePortrait, data.portraitUrl.get(), xlab.wonders.com.common.R.drawable.portrait_default);
+        ImageViewManager.setImageViewWithUrl(itemView.getContext(), mIvChatRoomItemMePortrait, data.portraitUrl.get(), ImageViewManager.PLACE_HOLDER_EMPTY);
 
         long todayTimeInMill = Calendar.getInstance().getTimeInMillis();
         long sendTimeInMill = data.recordTimeInMill.get();

@@ -28,7 +28,7 @@ public class BSPeriodModel extends PatientBaseModel<BSPeriodEntity> implements I
     }
 
     @Override
-    protected void onFailed(String message) {
+    protected void onFailed(int retCode, String message) {
         mBSPeriodModelListener.onReceiveFailed(message);
     }
 

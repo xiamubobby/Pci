@@ -1,7 +1,6 @@
-package com.wonders.xlab.common.manager;
+package com.wonders.xlab.patient.util;
 
 import android.content.Context;
-import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
@@ -15,13 +14,12 @@ public class ImageViewManager {
     public final static int PLACE_HOLDER_EMPTY = -1;
 
     /**
-     *
      * @param context
      * @param imageView
      * @param imageUrl
      * @param placeHolder
      */
-    public static void setImageViewWithUrl(Context context, ImageView imageView, String imageUrl, @DrawableRes int placeHolder) {
+    public static void setImageViewWithUrl(Context context, ImageView imageView, String imageUrl,int placeHolder) {
         if (TextUtils.isEmpty(imageUrl) || imageView == null || context == null) {
             return;
         }

@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.pci.doctor.util.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 
@@ -28,7 +28,7 @@ public class GroupServiceIconRVAdapter extends SimpleRVAdapter<String> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         ServiceIconViewHolder viewHolder = (ServiceIconViewHolder) holder;
-        ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(),viewHolder.mIvServiceIcon,getBean(position),ImageViewManager.PLACE_HOLDER_EMPTY);
+        ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(),viewHolder.mIvServiceIcon,getBean(position), ImageViewManager.PLACE_HOLDER_EMPTY);
     }
 
     class ServiceIconViewHolder extends RecyclerView.ViewHolder {

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wonders.xlab.common.manager.ImageViewManager;
+import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.multi.MultiViewHolder;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
@@ -71,7 +71,7 @@ public class MedicalRecordPhotoVH extends MultiViewHolder<MedicalRecordPhotoBean
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             super.onBindViewHolder(holder, position);
             ImageViewHolder viewHolder = (ImageViewHolder) holder;
-            ImageViewManager.setImageViewWithUrl(itemView.getContext(),viewHolder.mIvSimple,getBean(position), xlab.wonders.com.common.R.drawable.portrait_default);
+            ImageViewManager.setImageViewWithUrl(itemView.getContext(),viewHolder.mIvSimple,getBean(position), ImageViewManager.PLACE_HOLDER_EMPTY);
         }
 
         class ImageViewHolder extends RecyclerView.ViewHolder {
