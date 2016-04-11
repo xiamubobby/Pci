@@ -20,7 +20,10 @@ public class ImageViewManager {
      * @param placeHolder
      */
     public static void setImageViewWithUrl(Context context, ImageView imageView, String imageUrl,int placeHolder) {
-        if (TextUtils.isEmpty(imageUrl) || imageView == null || context == null) {
+        if (TextUtils.isEmpty(imageUrl)) {
+            imageUrl = "";
+        }
+        if (imageView == null || context == null) {
             return;
         }
         DrawableRequestBuilder<String> builder = Glide.with(context)

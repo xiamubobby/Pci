@@ -15,12 +15,16 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
-                    android:padding="@dimen/item_interval_middle">
+                    android:paddingBottom="@dimen/item_interval_very_small"
+                    android:paddingLeft="@dimen/item_interval_middle"
+                    android:paddingRight="@dimen/item_interval_middle"
+                    android:paddingTop="@dimen/item_interval_very_small">
 
         <cn.bingoogolapple.badgeview.BGABadgeImageView
             android:id="@+id/iv_doctor_my_item_portrait"
             android:layout_width="@dimen/doctor_list_icon_size"
             android:layout_height="@dimen/doctor_list_icon_size"
+            android:layout_marginBottom="@dimen/item_interval_small"
             android:paddingRight="@dimen/item_interval_small"
             android:paddingTop="@dimen/item_interval_small"
             android:scaleType="centerCrop"/>
@@ -29,8 +33,10 @@
             android:id="@+id/tv_doctor_my_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_doctor_my_item_portrait"
             android:layout_marginLeft="@dimen/item_interval_middle"
             android:layout_marginRight="@dimen/item_interval_small"
+            android:layout_marginTop="@dimen/item_interval_small"
             android:layout_toLeftOf="@+id/tv_doctor_my_item_time"
             android:layout_toRightOf="@+id/iv_doctor_my_item_portrait"
             android:singleLine="true"
@@ -43,11 +49,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/tv_doctor_my_item_name"
             android:gravity="right|center_vertical"
             android:singleLine="true"
             android:text="@{doctorBean.timeStr}"
             android:textColor='@{doctorBean.type == MyDoctorItemBean.TYPE_IN_SERVICE ? @color/text_color_primary_gray : @color/text_color_secondary_gray}'
-            android:textSize="@dimen/text_size_middle"/>
+            android:textSize="@dimen/text_size_small"/>
 
         <TextView
             android:id="@+id/tv_doctor_my_item_message"
@@ -56,7 +63,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tv_doctor_my_item_name"
             android:layout_marginLeft="@dimen/item_interval_middle"
-            android:layout_marginTop="@dimen/item_interval_middle"
+            android:layout_marginTop="@dimen/item_interval_very_small"
             android:layout_toRightOf="@+id/iv_doctor_my_item_portrait"
             android:maxLines="3"
             android:singleLine="true"

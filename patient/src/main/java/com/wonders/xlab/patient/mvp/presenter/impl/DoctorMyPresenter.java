@@ -1,6 +1,5 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
-import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
 import com.wonders.xlab.patient.mvp.entity.DoctorMyEntity;
 import com.wonders.xlab.patient.mvp.model.IDoctorMyModel;
@@ -52,7 +51,7 @@ public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPre
             itemBean.setDoctorGroupName(entity.getName());
             itemBean.setLatestChatMessage(entity.getContent());
             itemBean.setTimeStr(entity.getTimeExp());
-            itemBean.setPortraitUrl(entity.getAvatars() != null && entity.getAvatars().size() > 0 ? entity.getAvatars().get(0) : Constant.DEFAULT_PORTRAIT);
+            itemBean.setPortraitUrl(entity.getAvatars() != null && entity.getAvatars().size() > 0 ? entity.getAvatars().get(0) : "");
 
             doctorItemBeanArrayList.add(itemBean);
         }
@@ -67,7 +66,7 @@ public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPre
             itemBean.setDoctorGroupName(entity.getName());
             itemBean.setLatestChatMessage(entity.getContent());
             itemBean.setTimeStr(entity.getTimeExp());
-            itemBean.setPortraitUrl(entity.getAvatars() != null && entity.getAvatars().size() > 0 ? entity.getAvatars().get(0) : Constant.DEFAULT_PORTRAIT);
+            itemBean.setPortraitUrl(entity.getAvatars() != null && entity.getAvatars().size() > 0 ? entity.getAvatars().get(0) : "");
 
             doctorItemBeanArrayList.add(itemBean);
         }

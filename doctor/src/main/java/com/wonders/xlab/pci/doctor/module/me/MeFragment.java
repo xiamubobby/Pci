@@ -11,12 +11,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wonders.xlab.pci.doctor.util.ImageViewManager;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.databinding.MeFragmentBinding;
 import com.wonders.xlab.pci.doctor.otto.ForceExitOtto;
+import com.wonders.xlab.pci.doctor.util.ImageViewManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,6 +35,8 @@ public class MeFragment extends BaseFragment {
     ImageView mIvMePortrait;
     @Bind(R.id.tv_me_name)
     TextView mTvMeName;
+    @Bind(R.id.tv_me_tel)
+    TextView mTvMeTel;
 
     public MeFragment() {
         // Required empty public constructor
@@ -60,7 +62,8 @@ public class MeFragment extends BaseFragment {
         binding.setHandler(this);
 
         mTvMeName.setText(AIManager.getInstance().getDoctorName());
-        ImageViewManager.setImageViewWithUrl(getActivity(), mIvMePortrait, AIManager.getInstance().getDoctorPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
+        mTvMeTel.setText(String.format("账号：%s", AIManager.getInstance().getDoctorTel()));
+        ImageViewManager.setImageViewWithUrl(getActivity(), mIvMePortrait, AIManager.getInstance().getDoctorPortraitUrl(), R.drawable.ic_default_avatar_doctor);
     }
 
     @OnClick(R.id.btn_me_exit)

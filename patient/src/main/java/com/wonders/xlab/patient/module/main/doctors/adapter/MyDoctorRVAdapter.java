@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
-import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
@@ -16,6 +15,7 @@ import com.wonders.xlab.patient.databinding.DoctorMyItemBinding;
 import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
 import com.wonders.xlab.patient.otto.ChatNotifyCountOtto;
 import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;
+import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.util.List;
@@ -104,7 +104,7 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
             viewHolder.mIvPortrait.hiddenBadge();
         }
 
-        ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(), viewHolder.mIvPortrait, dataItem.getPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
+        ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(), viewHolder.mIvPortrait, dataItem.getPortraitUrl(), R.drawable.ic_default_avatar_doctor);
     }
 
     @Override

@@ -3,8 +3,8 @@ package com.wonders.xlab.pci.doctor.module.chatroom;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -106,7 +106,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         //cancel notification
         new NotifyUtil().cancel(this, Integer.parseInt(groupId));
 
-        setupToolbar();
+        setToolbarTitle(patientName);
 
         BadgeView badgeView = new BadgeView(this, mIvChatRoomRecord);
         badgeView.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
@@ -201,28 +201,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         goToActivity(intent, MedicalRecordActivity.EXTRA_PATIENT_ID);
     }
 
-    private void setupToolbar() {
-        setToolbarTitle(patientName);
-
-        getToolbar().inflateMenu(R.menu.menu_chat_room);
-        getToolbar().setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.menu_chat_room_phone:
-                        Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + patientPhoneNumber));
-                        startActivity(dialIntent);
-
-                        break;
-                    case R.id.menu_chat_room_export:
-                        Toast.makeText(ChatRoomActivity.this, "即将开放，敬请期待...", Toast.LENGTH_SHORT).show();
-                        break;
-                }
-                return false;
-            }
-        });
-    }
-
     private void initChatRoomAdapter() {
         if (mChatRoomRVAdapter == null) {
             mChatRoomRVAdapter = new ChatRoomRVAdapter();
@@ -268,5 +246,22 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     public void hideLoading() {
         mLoadingView.setVisibility(View.GONE);
         mRecyclerView.setPullLoadMoreCompleted();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_chat_room,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_chat_room_phone:
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + patientPhoneNumber));
+                startActivity(dialIntent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

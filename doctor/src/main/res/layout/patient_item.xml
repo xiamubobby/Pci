@@ -12,84 +12,71 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
-                    android:padding="@dimen/item_interval_large">
+                    android:padding="@dimen/item_interval_small">
 
-        <ImageView
+        <cn.bingoogolapple.badgeview.BGABadgeImageView
             android:id="@+id/iv_patient_item_portrait"
-            android:layout_width="@dimen/portrait_list_item_size"
-            android:layout_height="@dimen/portrait_list_item_size"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_width="@dimen/patient_list_icon_size"
+            android:layout_height="@dimen/patient_list_icon_size"
+            android:layout_marginBottom="@dimen/item_interval_small"
+            android:paddingRight="@dimen/item_interval_small"
+            android:paddingTop="@dimen/item_interval_small"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/tv_patient_item_name"
+            style="@style/LargeBlackWrapTextView"
+            android:layout_marginLeft="@dimen/item_interval_middle"
+            android:layout_marginTop="@dimen/item_interval_small"
+            android:layout_toRightOf="@id/iv_patient_item_portrait"
+            android:singleLine="true"
+            android:text="@{patient.patientName}"/>
 
         <LinearLayout
             android:id="@+id/ll_patient_item"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/item_interval_small"
-            android:layout_toRightOf="@id/iv_patient_item_portrait"
+            android:layout_alignLeft="@id/tv_patient_item_name"
+            android:layout_below="@+id/tv_patient_item_name"
+            android:layout_marginTop="@dimen/item_interval_small"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/MiddleGrayWrapTextView"
                 android:singleLine="true"
-                android:text="@{patient.patientName}"
-                android:textColor="@color/text_color_primary"
-                android:textSize="@dimen/text_size_primary"/>
+                android:text="@{patient.gender}"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/MiddleGrayWrapTextView"
                 android:layout_marginLeft="@dimen/item_interval_small"
                 android:singleLine="true"
-                android:text="@{patient.gender}"
-                android:textColor="@color/text_color_primary"
-                android:textSize="@dimen/text_size_primary"/>
+                android:text='@{patient.age + "岁"}'/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/item_interval_small"
-                android:singleLine="true"
-                android:text="@{patient.age + '岁'}"
-                android:textColor="@color/text_color_primary"
-                android:textSize="@dimen/text_size_primary"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/MiddleGrayWrapTextView"
                 android:layout_marginLeft="@dimen/item_interval_small"
                 android:gravity="right"
                 android:singleLine="true"
-                android:text="@{patient.timeAfterSurgery}"
-                android:textColor="@color/text_color_primary"
-                android:textSize="@dimen/text_size_primary"/>
+                android:text="@{patient.timeAfterSurgery}"/>
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_patient_item_history"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MiddleGrayWrapTextView"
             android:layout_alignLeft="@+id/ll_patient_item"
             android:layout_below="@+id/ll_patient_item"
             android:layout_marginTop="@dimen/item_interval_small"
             android:singleLine="true"
-            android:text="@{patient.history}"
-            android:textColor="@color/text_color_secondary"
-            android:textSize="@dimen/text_size_secondary"/>
+            android:text="@{patient.history}"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MiddleGrayWrapTextView"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/ll_patient_item"
-            android:layout_marginTop="@dimen/item_interval_small"
-            android:layout_toRightOf="@+id/tv_patient_item_history"
-            android:singleLine="true"
+            android:layout_alignTop="@+id/iv_patient_item_portrait"
             android:gravity="right"
-            android:text="@{patient.groupName}"
-            android:textColor="@color/text_color_secondary"
-            android:textSize="@dimen/text_size_secondary"/>
+            android:maxLength="10"
+            android:singleLine="true"
+            android:text="@{patient.groupName}"/>
 
     </RelativeLayout>
 </layout>

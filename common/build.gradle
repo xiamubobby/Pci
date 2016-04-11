@@ -1,6 +1,8 @@
 //noinspection GradleCompatible
 apply plugin: 'com.android.library'
 
+def support_version = '23.3.0';
+
 android {
 
     compileSdkVersion 23
@@ -28,11 +30,11 @@ android {
             testCompile 'org.robolectric:robolectric:3.0'
             testCompile 'org.mockito:mockito-core:1.10.19'
             compile 'com.android.support:support-v4:23.3.0'
-            compile 'com.android.support:support-v13:23.3.0'
-            compile 'com.android.support:appcompat-v7:23.3.0'
-            compile 'com.android.support:design:23.3.0'
-            compile 'com.android.support:recyclerview-v7:23.3.0'
-            compile 'com.android.support:cardview-v7:23.3.0'
+            compile 'com.android.support:support-v13:'+support_version
+            compile 'com.android.support:appcompat-v7:'+support_version
+            compile 'com.android.support:design:'+support_version
+            compile 'com.android.support:recyclerview-v7:'+support_version
+            compile 'com.android.support:cardview-v7:'+support_version
             compile 'com.nineoldandroids:library:2.4.0'
             compile 'com.github.bumptech.glide:glide:3.6.1'
             compile 'com.jakewharton:butterknife:7.0.1'

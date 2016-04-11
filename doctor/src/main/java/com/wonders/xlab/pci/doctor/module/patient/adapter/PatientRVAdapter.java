@@ -4,16 +4,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.wonders.xlab.pci.doctor.util.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.databinding.PatientItemBinding;
 import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
+import com.wonders.xlab.pci.doctor.util.ImageViewManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.badgeview.BGABadgeImageView;
 
 /**
  * Created by hua on 16/2/19.
@@ -29,14 +29,14 @@ public class PatientRVAdapter extends SimpleRVAdapter<PatientBean> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         PatientViewHolder viewHolder = (PatientViewHolder) holder;
-        ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(), viewHolder.mIvPatientItemPortrait, getBean(position).getPortrait(), ImageViewManager.PLACE_HOLDER_EMPTY);
+        ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(), viewHolder.mIvPatientItemPortrait, getBean(position).getPortrait(), R.drawable.ic_default_avatar_patient);
 
         viewHolder.mBinding.setPatient(getBean(position));
     }
 
     class PatientViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.iv_patient_item_portrait)
-        ImageView mIvPatientItemPortrait;
+        BGABadgeImageView mIvPatientItemPortrait;
 
         PatientItemBinding mBinding;
 

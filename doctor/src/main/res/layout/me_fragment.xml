@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -32,13 +32,17 @@
 
                 <TextView
                     android:id="@+id/tv_me_name"
-                    style="@style/Base.TextAppearance.AppCompat.Large"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/LargeAccentWrapTextView"
                     android:layout_marginLeft="@dimen/item_interval_large"
-                    android:textColor="@color/colorAccent"
-                    />
-            </LinearLayout>
+                    android:layout_toRightOf="@+id/iv_me_portrait"/>
+
+                <TextView
+                    android:id="@+id/tv_me_tel"
+                    style="@style/MiddleGrayWrapTextView"
+                    android:layout_alignLeft="@+id/tv_me_name"
+                    android:layout_below="@+id/tv_me_name"
+                    android:layout_marginTop="@dimen/item_interval_middle"/>
+            </RelativeLayout>
 
             <include layout="@layout/divider_vertical_large"/>
 
@@ -62,8 +66,8 @@
                 android:layout_height="?attr/listPreferredItemHeightSmall"
                 android:background="?attr/selectableItemBackground"
                 android:gravity="center_vertical"
-                android:paddingLeft="@dimen/item_interval_middle"
                 android:onClick="@{handler.notificationManage}"
+                android:paddingLeft="@dimen/item_interval_middle"
                 android:singleLine="true"
                 android:text="消息通知"
                 android:textColor="@color/text_color_primary_gray"
