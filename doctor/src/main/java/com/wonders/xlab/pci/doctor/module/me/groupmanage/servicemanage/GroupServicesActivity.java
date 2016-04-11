@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
@@ -46,6 +47,12 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
         }
 
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(this,getResources().getColor(R.color.divider),1));
+        mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mGroupServicesPresenter.getPackages(mGroupId);
+            }
+        });
         mGroupServicesPresenter = new GroupServicesPresenter(this);
         addPresenter(mGroupServicesPresenter);
 

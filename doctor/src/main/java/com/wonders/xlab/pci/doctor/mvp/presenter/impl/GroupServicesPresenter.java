@@ -1,7 +1,9 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 
-import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.adapter.bean.GroupServiceBean;
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageListEntity;
+import com.wonders.xlab.pci.doctor.mvp.model.IGroupPackageListModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupPackageListModel;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupServicesPresenter;
 
 import java.util.ArrayList;
@@ -9,40 +11,75 @@ import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
 
 /**
  * Created by hua on 16/4/10.
  */
-public class GroupServicesPresenter extends BasePresenter implements IGroupServicesPresenter {
+public class GroupServicesPresenter extends BasePresenter implements IGroupServicesPresenter, GroupPackageListModel.GroupPackageListModelListener {
     private GroupServicesPresenterListener mListener;
+    private IGroupPackageListModel mGroupPackageListModel;
 
     public GroupServicesPresenter(GroupServicesPresenterListener listener) {
         mListener = listener;
+        mGroupPackageListModel = new GroupPackageListModel(this);
+        addModel(mGroupPackageListModel);
     }
 
     @Override
     public void getPackages(String groupId) {
-        List<GroupServiceBean> groupServiceBeanList = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
-            GroupServiceBean bean = new GroupServiceBean();
-            bean.packageId.set(String.valueOf(i));
-            bean.packageIconUrl.set(Constant.DEFAULT_PORTRAIT);
-            switch (i) {
-                case 0:
-                    bean.packageName.set("包月套餐");
-                    bean.packageDesc.set("未开通");
-                    bean.packageDescColor.set("#fc6467");
-                    break;
-                case 1:
-                    bean.packageName.set("免费随访");
-                    bean.packageDesc.set("7天");
-                    bean.packageDescColor.set("#bcbcbc");
-                    break;
-            }
-            groupServiceBeanList.add(bean);
-        }
+        mGroupPackageListModel.getPackageList(groupId);
+    }
+
+    @Override
+    public void onReceivePackageListSuccess(List<GroupPackageListEntity.RetValuesEntity> valuesEntityList) {
         mListener.hideLoading();
-        mListener.showPackages(groupServiceBeanList);
+
+        Observable.from(valuesEntityList)
+                .flatMap(new Func1<GroupPackageListEntity.RetValuesEntity, Observable<GroupPackageListEntity.RetValuesEntity>>() {
+                    @Override
+                    public Observable<GroupPackageListEntity.RetValuesEntity> call(GroupPackageListEntity.RetValuesEntity valuesEntity) {
+                        return Observable.just(valuesEntity);
+                    }
+                })
+                .map(new Func1<GroupPackageListEntity.RetValuesEntity, GroupServiceBean>() {
+                    @Override
+                    public GroupServiceBean call(GroupPackageListEntity.RetValuesEntity valuesEntity) {
+                        GroupServiceBean bean = new GroupServiceBean();
+                        bean.packageId.set(valuesEntity.getServicePackageId());
+                        bean.packageIconUrl.set(valuesEntity.getServicePackageIconUrl());
+                        bean.packageName.set(valuesEntity.getServicePackageName());
+                        bean.packageDesc.set(valuesEntity.getValue());
+                        bean.packageDescColor.set(valuesEntity.getColorString());
+                        return bean;
+                    }
+                })
+                .subscribe(new Subscriber<GroupServiceBean>() {
+                    List<GroupServiceBean> groupServiceBeanList = new ArrayList<>();
+
+                    @Override
+                    public void onCompleted() {
+                        mListener.showPackages(groupServiceBeanList);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mListener.showError(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(GroupServiceBean groupServiceBean) {
+                        groupServiceBeanList.add(groupServiceBean);
+                    }
+                });
+
+    }
+
+    @Override
+    public void onReceiveFailed(String message) {
+
     }
 
     public interface GroupServicesPresenterListener extends BasePresenterListener {

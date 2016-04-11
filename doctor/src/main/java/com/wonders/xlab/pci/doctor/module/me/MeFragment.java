@@ -73,6 +73,10 @@ public class MeFragment extends BaseFragment {
         startActivity(new Intent("com.wonders.xlab.pci.doctor.GroupListActivity"));
     }
 
+    public void notificationManage(View view) {
+        startActivity(new Intent("com.wonders.xlab.pci.doctor.NotificationActivity"));
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

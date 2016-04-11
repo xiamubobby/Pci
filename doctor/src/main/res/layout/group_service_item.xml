@@ -8,15 +8,17 @@
             type="com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.adapter.bean.GroupServiceBean"/>
 
         <import type="android.graphics.Color"/>
+
+        <import type="android.text.TextUtils"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
+                  android:background="?attr/selectableItemBackground"
+                  android:clickable="true"
                   android:gravity="center_vertical"
                   android:orientation="horizontal"
-                  android:clickable="true"
-                  android:background="?attr/selectableItemBackground"
                   android:padding="@dimen/item_interval_small">
 
         <ImageView
@@ -35,6 +37,6 @@
             android:layout_marginLeft="@dimen/item_interval_small"
             android:gravity="right|center_vertical"
             android:text="@{bean.packageDesc}"
-            android:textColor="@{Color.parseColor(bean.packageDescColor)}"/>
+            android:textColor="@{TextUtils.isEmpty(bean.packageDescColor) ? @color/text_color_primary_gray : Color.parseColor(bean.packageDescColor)}"/>
     </LinearLayout>
 </layout>
