@@ -1,9 +1,10 @@
-package com.wonders.xlab.patient.receiver.otto;
+package com.wonders.xlab.pci.doctor.module.chatroom.otto;
 
 /**
  * Created by hua on 16/4/4.
+ * 更新聊天界面，将一条消息插入聊天列表
  */
-public class EMChatMessageOtto {
+public class ChatRoomRecordInsertOtto {
     private String groupId;
     private String groupName;
     private String imGroupId ;
@@ -12,7 +13,7 @@ public class EMChatMessageOtto {
     private String fromWhoName;
     private long messageTime;
 
-    public EMChatMessageOtto(String groupId, String groupName, String imGroupId, String txtContent, String fromWhoAvatarUrl, String fromWhoName, long messageTime) {
+    public ChatRoomRecordInsertOtto(String groupId, String groupName, String imGroupId, String txtContent, String fromWhoAvatarUrl, String fromWhoName, long messageTime) {
         this.groupId = groupId;
         this.groupName = groupName;
         this.imGroupId = imGroupId;

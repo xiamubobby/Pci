@@ -13,8 +13,8 @@ import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.DoctorMyItemBinding;
 import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
-import com.wonders.xlab.patient.otto.ChatNotifyCountOtto;
-import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;
+import com.wonders.xlab.patient.module.main.otto.MainBottomUnreadNotifyCountOtto;
+import com.wonders.xlab.patient.module.chatroom.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
@@ -31,8 +31,12 @@ import im.hua.utils.DateUtil;
  */
 public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
 
+    /**
+     * 重新排序，并且将最新的数据更新
+     * @param otto
+     */
     @Subscribe
-    public void receiveNotifyForUpdate(EMChatMessageOtto otto) {
+    public void receiveNotifyForUpdate(ChatRoomRecordInsertOtto otto) {
         List<MyDoctorItemBean> beanList = getBeanList();
         if (beanList.size() == 1) {
             beanList.get(0).setLatestChatMessage(otto.getTxtContent());
@@ -41,7 +45,8 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
             MyDoctorItemBean bean;
 
             for (int i = 0; i < beanList.size(); i++) {
-                if (beanList.get(i).getGroupId().equals(otto.getGroupId())) {
+                //TODO 到底能不能用groupId来区分一个组？？？？？
+                if (beanList.get(i).getImGroupId().equals(otto.getImGroupId())) {
                     if (i > 0) {
                         bean = new MyDoctorItemBean();
                         bean.setPortraitUrl(beanList.get(i).getPortraitUrl());
@@ -65,8 +70,12 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
         }
     }
 
+    /**
+     * 更新数字图标
+     * @param otto
+     */
     @Subscribe
-    public void changeDoctorNotifyCounts(ChatNotifyCountOtto otto) {
+    public void changeDoctorNotifyCounts(MainBottomUnreadNotifyCountOtto otto) {
         for (int i = 0; i < getBeanList().size(); i++) {
             if (otto.getImGroupId().equals(getBeanList().get(i).getImGroupId())) {
                 notifyItemChanged(i);

@@ -12,6 +12,7 @@ import com.wonders.xlab.patient.mvp.presenter.IChatRoomPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
@@ -54,8 +55,8 @@ public class ChatRoomPresenter extends BasePagePresenter implements IChatRoomPre
     }
 
     @Override
-    public void sendMessage(String message, String patientTel, String imGroupId, String groupId, String groupName, long time) {
-        mSendMessageModel.sendMessage(message, patientTel, imGroupId, groupId, groupName, time);
+    public void sendMessage(Map<String,Object> ext, long time) {
+        mSendMessageModel.sendMessage(ext, time);
     }
 
     @Override

@@ -1,12 +1,13 @@
-package com.wonders.xlab.patient.otto;
+package com.wonders.xlab.patient.module.main.otto;
 
 /**
  * Created by hua on 16/4/5.
+ * 改变主界面底部的未读消息数标记
  */
-public class ChatNotifyCountOtto {
+public class MainBottomUnreadNotifyCountOtto {
     private String imGroupId;
 
-    public ChatNotifyCountOtto(String imGroupId) {
+    public MainBottomUnreadNotifyCountOtto(String imGroupId) {
         this.imGroupId = imGroupId;
     }
 

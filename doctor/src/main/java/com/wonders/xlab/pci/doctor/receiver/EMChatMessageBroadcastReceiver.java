@@ -15,7 +15,10 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.MainActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.ChatRoomActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.pci.doctor.otto.ForceExitOtto;
+import com.wonders.xlab.pci.doctor.realm.UnReadMessageRealm;
+import com.wonders.xlab.pci.doctor.util.UnReadMessageUtil;
 
 import java.io.UnsupportedEncodingException;
 
@@ -78,6 +81,17 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             String patientName = message.getStringAttribute("patientName", "");
             String patientTel = message.getStringAttribute("patientTel", "");
             String txtContent = message.getStringAttribute("txtContent", "");
+            String fromWhoAvatarUrl = message.getStringAttribute("fromWhoAvatarUrl", "");
+            String fromWhoName = message.getStringAttribute("fromWhoName", "");
+
+            /**
+             * 缓存未读通知数量
+             */
+            UnReadMessageUtil.addNewUnread(new UnReadMessageRealm(groupId, imGroupId));
+            /**
+             * post event, if the current chat is showing, then append this message to chat list, or update the mydoctor page
+             */
+            OttoManager.post(new ChatRoomRecordInsertOtto(groupId, groupName, imGroupId, txtContent, fromWhoAvatarUrl, fromWhoName, message.getMsgTime()));
 
             Bundle data = new Bundle();
             data.putString(ChatRoomActivity.EXTRA_GROUP_ID,groupId);
@@ -87,11 +101,11 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             data.putString(ChatRoomActivity.EXTRA_PATIENT_NAME,patientName);
             data.putString(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER,patientTel);
 
-            if (TextUtils.isDigitsOnly(imGroupId)) {
-                notifyId = Integer.parseInt(groupId);
+            if (TextUtils.isDigitsOnly(groupId)) {
+                notifyId = (int) Long.parseLong(imGroupId);
             }
 
-            new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, notifyId, groupName, txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
+            new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, notifyId, groupName, fromWhoName + "：" + txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
 
         } else if (type == -1) {
             try {

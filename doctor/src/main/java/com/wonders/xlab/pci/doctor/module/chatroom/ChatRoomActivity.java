@@ -6,25 +6,27 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
+import com.squareup.otto.Subscribe;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
+import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bp.BloodPressureActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.bs.BloodSugarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.MedicalRecordActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoActivity;
 import com.wonders.xlab.pci.doctor.mvp.presenter.impl.ChatRoomPresenter;
+import com.wonders.xlab.pci.doctor.util.UnReadMessageUtil;
 
 import java.util.Calendar;
 import java.util.List;
@@ -32,7 +34,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import im.hua.uikit.BadgeView;
+import im.hua.uikit.crv.CommonRecyclerView;
 import im.hua.utils.DateUtil;
 import im.hua.utils.NotifyUtil;
 
@@ -46,9 +48,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     public final static String EXTRA_GROUP_ID = "GROUP_ID";
     public final static String EXTRA_IM_GROUP_ID = "IM_GROUP_ID";
     public final static String EXTRA_GROUP_NAME = "GROUP_NAME";
-
-    @Bind(R.id.ll_chat_room_loading)
-    LinearLayout mLoadingView;
 
     private String patientId;
     private String imGroupId;
@@ -65,9 +64,10 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     private ChatRoomPresenter mChatRoomPresenter;
 
     @Bind(R.id.recycler_view_chat_room)
-    PullLoadMoreRecyclerView mRecyclerView;
+    CommonRecyclerView mRecyclerView;
 
     private ChatRoomRVAdapter mChatRoomRVAdapter;
+    private boolean mIsPaused;
 
     @Override
     public int getContentLayout() {
@@ -82,6 +82,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OttoManager.register(this);
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
@@ -108,26 +109,9 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
         setToolbarTitle(patientName);
 
-        BadgeView badgeView = new BadgeView(this, mIvChatRoomRecord);
-        badgeView.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
-        badgeView.setText("2");
-        badgeView.show();
-
-        mLoadingView.setVisibility(View.GONE);
-
-        mRecyclerView.setLinearLayout(true);
-        mRecyclerView.setPullRefreshEnable(false);
-        mRecyclerView.setPushRefreshEnable(true);
-        mRecyclerView.showHeaderOrFooterView(false);
-        mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
-            @Override
-            public void onRefresh() {
-
-            }
-
+        mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mLoadingView.setVisibility(View.VISIBLE);
                 mChatRoomPresenter.getChatList(imGroupId);
             }
         });
@@ -139,8 +123,25 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mIsPaused = false;
+        if (TextUtils.isDigitsOnly(imGroupId)) {
+            new NotifyUtil().cancel(this, (int) Long.parseLong(imGroupId));
+        }
+        UnReadMessageUtil.readMessage(imGroupId);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mIsPaused = true;
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
+        OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
 
@@ -153,7 +154,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             MeChatRoomBean bean = new MeChatRoomBean();
             bean.text.set(message);
             bean.portraitUrl.set(AIManager.getInstance().getDoctorPortraitUrl());
-            bean.recordTime.set(DateUtil.format(sendTime, "yyyy-MM-dd HH:mm"));
+            bean.recordTime.set(DateUtil.format(sendTime, "HH:mm"));
             bean.recordTimeInMill.set(sendTime);
             bean.isSending.set(true);
             mChatRoomRVAdapter.insertToTop(bean);
@@ -244,8 +245,35 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
     @Override
     public void hideLoading() {
-        mLoadingView.setVisibility(View.GONE);
-        mRecyclerView.setPullLoadMoreCompleted();
+        mRecyclerView.hideRefreshOrLoadMore(true,true);
+    }
+
+    /**
+     * 接收其他人发给我的通知，加入显示列表，并且移除通知栏的该条通知
+     *
+     * @param otto
+     */
+    @Subscribe
+    public void receiveNotifyForUpdate(ChatRoomRecordInsertOtto otto) {
+        if (groupId.equals(otto.getGroupId())) {
+            /**
+             * remove the notify with groupid as it's notify id
+             */
+            if (!mIsPaused) {
+                new NotifyUtil().cancel(this, Integer.parseInt(otto.getGroupId()));
+                UnReadMessageUtil.readMessage(imGroupId);
+            }
+
+            OthersChatRoomBean bean = new OthersChatRoomBean();
+            bean.name.set(otto.getFromWhoName());
+            bean.text.set(otto.getTxtContent());
+            bean.recordTime.set(DateUtil.format(otto.getMessageTime(),"HH:mm"));
+            bean.portraitUrl.set(otto.getFromWhoAvatarUrl());
+
+            initChatRoomAdapter();
+            mChatRoomRVAdapter.insertToTop(bean);
+            mRecyclerView.getRecyclerView().scrollToPosition(0);
+        }
     }
 
     @Override

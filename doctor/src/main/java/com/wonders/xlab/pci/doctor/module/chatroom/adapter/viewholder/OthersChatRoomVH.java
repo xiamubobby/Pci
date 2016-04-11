@@ -3,11 +3,11 @@ package com.wonders.xlab.pci.doctor.module.chatroom.adapter.viewholder;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.wonders.xlab.pci.doctor.util.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.multi.MultiViewHolder;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.databinding.ChatRoomItemOthersBinding;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
+import com.wonders.xlab.pci.doctor.util.ImageViewManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,7 +29,7 @@ public class OthersChatRoomVH extends MultiViewHolder<OthersChatRoomBean> {
 
     @Override
     public void onBindViewHolder(OthersChatRoomBean data) {
-        ImageViewManager.setImageViewWithUrl(itemView.getContext(), mIvChatRoomItemOthersPortrait, data.portraitUrl.get(), ImageViewManager.PLACE_HOLDER_EMPTY);
+        ImageViewManager.setImageViewWithUrl(itemView.getContext(), mIvChatRoomItemOthersPortrait, data.portraitUrl.get(), R.drawable.ic_default_avatar_patient);
         binding.setChat(data);
     }
 }

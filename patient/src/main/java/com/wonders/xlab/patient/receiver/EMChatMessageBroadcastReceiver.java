@@ -14,11 +14,10 @@ import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
+import com.wonders.xlab.patient.module.chatroom.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.patient.module.main.MainActivity;
-import com.wonders.xlab.patient.otto.ChatNotifyCountOtto;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.realm.UnReadMessageRealm;
-import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -87,28 +86,27 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             /**
              * 缓存未读通知数量
              */
-            UnReadMessageUtil.addNewUnread(new UnReadMessageRealm(groupId,imGroupId));
-            OttoManager.post(new ChatNotifyCountOtto(imGroupId));
+            UnReadMessageUtil.addNewUnread(new UnReadMessageRealm(groupId, imGroupId));
+
+            /**
+             * post event, if the current chat is showing, then append this message to chat list, or update the mydoctor page
+             */
+            OttoManager.post(new ChatRoomRecordInsertOtto(groupId, groupName, imGroupId, txtContent, fromWhoAvatarUrl, fromWhoName, message.getMsgTime()));
 
             Bundle data = new Bundle();
-            data.putString(ChatRoomActivity.EXTRA_GROUP_ID,groupId);
-            data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID,imGroupId);
-            data.putString(ChatRoomActivity.EXTRA_GROUP_NAME,groupName);
-            data.putBoolean(ChatRoomActivity.EXTRA_CAN_CHAT,true);
+            data.putString(ChatRoomActivity.EXTRA_GROUP_ID, groupId);
+            data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID, imGroupId);
+            data.putString(ChatRoomActivity.EXTRA_GROUP_NAME, groupName);
+            data.putBoolean(ChatRoomActivity.EXTRA_CAN_CHAT, true);
 
             /**
              * set the groupid as the notify id
              */
             if (TextUtils.isDigitsOnly(imGroupId)) {
-                notifyId = Integer.parseInt(groupId);
+                notifyId = (int) Long.parseLong(imGroupId);
             }
 
-            new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, notifyId, groupName, txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
-
-            /**
-             * post event, if the current chat is showing, then append this message to chat list, or update the mydoctor page
-             */
-            OttoManager.post(new EMChatMessageOtto(groupId,groupName,imGroupId,txtContent, fromWhoAvatarUrl, fromWhoName, message.getMsgTime()));
+            new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, notifyId, groupName, fromWhoName + "：" + txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
 
         } else if (type == -1) {
             try {

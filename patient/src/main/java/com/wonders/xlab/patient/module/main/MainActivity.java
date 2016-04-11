@@ -18,7 +18,7 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.auth.login.LoginActivity;
 import com.wonders.xlab.patient.module.main.doctors.DoctorFragment;
-import com.wonders.xlab.patient.otto.ChatNotifyCountOtto;
+import com.wonders.xlab.patient.module.main.otto.MainBottomUnreadNotifyCountOtto;
 import com.wonders.xlab.patient.otto.MeNotifyCountOtto;
 import com.wonders.xlab.patient.module.main.home.HomeFragment;
 import com.wonders.xlab.patient.module.main.me.MeFragment;
@@ -147,7 +147,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Subscribe
-    public void changeDoctorNotifyCounts(ChatNotifyCountOtto otto) {
+    public void changeDoctorNotifyCounts(MainBottomUnreadNotifyCountOtto otto) {
         int counts = UnReadMessageUtil.getAllUnreadMessageCounts();
         if (counts > 0) {
             mTabMainBottom.showMsg(1, counts);

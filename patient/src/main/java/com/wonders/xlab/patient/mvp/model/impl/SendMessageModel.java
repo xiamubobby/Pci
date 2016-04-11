@@ -1,7 +1,6 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
 
-import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.ChatRoomAPI;
 import com.wonders.xlab.patient.mvp.entity.SendMessageEntity;
@@ -9,7 +8,6 @@ import com.wonders.xlab.patient.mvp.entity.request.SendMessageBody;
 import com.wonders.xlab.patient.mvp.model.ISendMessageModel;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,38 +26,23 @@ public class SendMessageModel extends PatientBaseModel<SendMessageEntity> implem
     }
 
     /**
-     * @param message
-     * @param patientTel
-     * @param imGroupId  环信id
-     * @param groupId
-     * @param groupName
      * @param time
      */
     @Override
-    public void sendMessage(String message, String patientTel, String imGroupId, String groupId, String groupName, long time) {
+    public void sendMessage(Map<String, Object> ext, long time) {
         SendMessageBody body = new SendMessageBody();
 
         SendMessageBody.MsgEntity msgEntity = new SendMessageBody.MsgEntity();
         msgEntity.setType("txt");
-        msgEntity.setMsg(message);
+        msgEntity.setMsg(String.valueOf(ext.get("txtContent")));
 
         List<String> targets = new ArrayList<>();
-        targets.add(imGroupId);
+        targets.add(String.valueOf(ext.get("imGroupId")));
 
         body.setMsg(msgEntity);
-        body.setFrom(patientTel);
+        body.setFrom(String.valueOf(ext.get("patientTel")));
         body.setTarget_type("chatgroups");
         body.setTarget(targets);
-
-        Map<String, Object> ext = new HashMap<>();
-        ext.put("type", 3);//3:表示聊天信息
-        ext.put("imGroupId", imGroupId);
-        ext.put("groupId", groupId);
-        ext.put("groupName", groupName);
-        ext.put("txtContent", message);
-        ext.put("patientId", AIManager.getInstance().getPatientId());
-        ext.put("patientName", AIManager.getInstance().getPatientName());
-        ext.put("patientTel", AIManager.getInstance().getPatientTel());
         body.setExt(ext);
 
         fetchData(mSendMessageAPI.sendMessage(body,time), false);

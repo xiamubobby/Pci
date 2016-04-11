@@ -72,7 +72,7 @@
         <TextView
             style="@style/MiddleGrayWrapTextView"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@+id/iv_patient_item_portrait"
+            android:layout_alignTop="@+id/tv_patient_item_name"
             android:gravity="right"
             android:maxLength="10"
             android:singleLine="true"

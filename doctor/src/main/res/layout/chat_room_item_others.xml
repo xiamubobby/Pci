@@ -18,10 +18,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/shape_chat_room_time_bg"
             android:paddingBottom="2dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
             android:paddingTop="2dp"
             android:text="@{chat.recordTime}"
-            android:textColor="@color/text_color_secondary"
+            android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_secondary"/>
 
         <TextView
@@ -32,11 +35,11 @@
             android:layout_marginRight="@dimen/item_interval_large"
             android:layout_marginTop="@dimen/item_interval_small"
             android:layout_toRightOf="@+id/iv_chat_room_item_others_portrait"
-            android:background="@drawable/chat_room_item_bg_others"
+            android:background="@drawable/pic_chat_bg_ohters"
             android:text="@{chat.text}"
-            android:textColor="@color/text_color_primary"
+            android:textColor="@color/text_color_primary_gray"
             android:textIsSelectable="true"
-            android:textSize="@dimen/text_size_primary"/>
+            android:textSize="@dimen/text_size_large"/>
 
         <ImageView
             android:id="@+id/iv_chat_room_item_others_portrait"
@@ -57,7 +60,7 @@
             android:gravity="left"
             android:singleLine="true"
             android:text='@{chat.name + ":"}'
-            android:textColor="@color/text_color_secondary"
-            android:textSize="@dimen/text_size_secondary"/>
+            android:textColor="@color/text_color_primary_gray"
+            android:textSize="@dimen/text_size_middle"/>
     </RelativeLayout>
 </layout>

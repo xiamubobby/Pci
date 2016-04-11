@@ -22,6 +22,20 @@ public class PatientBean extends BaseObservable {
     private String groupId;
     private String imGroupId;
 
+    public void copyFromAnother(PatientBean bean) {
+        this.patientId = bean.getPatientId();
+        this.portrait = bean.getPortrait();
+        this.patientName = bean.getPatientName();
+        this.gender = bean.getGender();
+        this.age = bean.getAge();
+        this.timeAfterSurgery = bean.getTimeAfterSurgery();
+        this.history = bean.getHistory();
+        this.phoneNumber = bean.getPhoneNumber();
+        this.groupName = bean.getGroupName();
+        this.groupId = bean.getGroupId();
+        this.imGroupId = bean.getImGroupId();
+    }
+
     @Bindable
     public String getPortrait() {
         return portrait;

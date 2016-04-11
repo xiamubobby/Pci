@@ -22,15 +22,16 @@ import com.wonders.xlab.patient.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.patient.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.OthersChatRoomBean;
+import com.wonders.xlab.patient.module.chatroom.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.patient.module.main.doctors.detail.DoctorDetailActivity;
-import com.wonders.xlab.patient.otto.ChatNotifyCountOtto;
 import com.wonders.xlab.patient.mvp.presenter.IChatRoomPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.ChatRoomPresenter;
-import com.wonders.xlab.patient.receiver.otto.EMChatMessageOtto;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -118,7 +119,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
         //如果有的话，移除通知栏对应的通知，以groupId为通知id
         new NotifyUtil().cancel(this, Integer.parseInt(groupId));
-        readMessage();
+        UnReadMessageUtil.readMessage(imGroupId);
 
         initServiceStatus(canChat);
 
@@ -149,15 +150,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
         mRecyclerView.showLoadMore();
         mChatRoomPresenter.getChatList(imGroupId, true);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mIsPaused = false;
-        readMessage();
-        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_chat_room));
-        MobclickAgent.onResume(this);       //统计时长
     }
 
     @Override
@@ -202,14 +194,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        mChatRoomRVAdapter = null;
-        OttoManager.unregister(this);
-        ButterKnife.unbind(this);
-    }
-
     @OnClick(R.id.btn_chat_room_buy_again)
     public void buyAgain() {
         goToDoctorDetailActivity();
@@ -235,7 +219,19 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             mEtChatRoomInput.setText("");
 
-            mChatRoomPresenter.sendMessage(message, AIManager.getInstance().getPatientTel(), imGroupId, groupId, groupName, sendTime);
+            Map<String, Object> ext = new HashMap<>();
+            ext.put("type", 3);//3:表示聊天信息
+            ext.put("imGroupId", imGroupId);
+            ext.put("groupId", groupId);
+            ext.put("groupName", groupName);
+            ext.put("txtContent", message);
+            ext.put("patientId", AIManager.getInstance().getPatientId());
+            ext.put("patientName", AIManager.getInstance().getPatientName());
+            ext.put("patientTel", AIManager.getInstance().getPatientTel());
+            ext.put("fromWhoAvatarUrl", AIManager.getInstance().getPatientPortraitUrl());
+            ext.put("fromWhoName", AIManager.getInstance().getPatientName());
+
+            mChatRoomPresenter.sendMessage(ext, sendTime);
         }
     }
 
@@ -245,14 +241,14 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
      * @param otto
      */
     @Subscribe
-    public void receiveNotifyForUpdate(EMChatMessageOtto otto) {
+    public void receiveNotifyForUpdate(ChatRoomRecordInsertOtto otto) {
         if (groupId.equals(otto.getGroupId())) {
             /**
              * remove the notify with groupid as it's notify id
              */
             if (!mIsPaused) {
                 new NotifyUtil().cancel(this, Integer.parseInt(otto.getGroupId()));
-                readMessage();
+                UnReadMessageUtil.readMessage(imGroupId);
             }
 
             OthersChatRoomBean bean = new OthersChatRoomBean();
@@ -266,12 +262,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             mChatRoomRVAdapter.insertToTop(bean);
             mRecyclerView.getRecyclerView().scrollToPosition(0);
         }
-    }
-
-    private void readMessage() {
-        UnReadMessageUtil.readMessage(imGroupId);
-        //通知主界面更新未读通知数显示
-        OttoManager.post(new ChatNotifyCountOtto(imGroupId));
     }
 
     private void initChatRoomAdapter() {
@@ -331,6 +321,16 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mIsPaused = false;
+        new NotifyUtil().cancel(this, (int) Long.parseLong(imGroupId));
+        UnReadMessageUtil.readMessage(imGroupId);
+        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_chat_room));
+        MobclickAgent.onResume(this);       //统计时长
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         mIsPaused = true;
@@ -340,4 +340,11 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mChatRoomRVAdapter = null;
+        OttoManager.unregister(this);
+        ButterKnife.unbind(this);
+    }
 }

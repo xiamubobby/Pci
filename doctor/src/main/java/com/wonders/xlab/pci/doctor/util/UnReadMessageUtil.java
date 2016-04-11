@@ -1,11 +1,11 @@
-package com.wonders.xlab.patient.util;
+package com.wonders.xlab.pci.doctor.util;
 
 import android.support.annotation.NonNull;
 
 import com.wonders.xlab.common.manager.OttoManager;
-import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.module.main.otto.MainBottomUnreadNotifyCountOtto;
-import com.wonders.xlab.patient.realm.UnReadMessageRealm;
+import com.wonders.xlab.pci.doctor.application.XApplication;
+import com.wonders.xlab.pci.doctor.module.otto.MainBottomUnreadNotifyCountOtto;
+import com.wonders.xlab.pci.doctor.realm.UnReadMessageRealm;
 
 import io.realm.RealmResults;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
@@ -39,6 +39,7 @@ public class UnReadMessageUtil {
                         .findAll();
                 realmResults.clear();
                 XApplication.realm.commitTransaction();
+                //发送Event事件
                 OttoManager.post(new MainBottomUnreadNotifyCountOtto(imGroupId));
             }
 

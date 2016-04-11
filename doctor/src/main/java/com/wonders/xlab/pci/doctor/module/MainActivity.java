@@ -18,9 +18,11 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.login.LoginActivity;
 import com.wonders.xlab.pci.doctor.module.me.MeFragment;
+import com.wonders.xlab.pci.doctor.module.otto.MainBottomUnreadNotifyCountOtto;
 import com.wonders.xlab.pci.doctor.module.patient.PatientFragment;
 import com.wonders.xlab.pci.doctor.otto.ForceExitOtto;
 import com.wonders.xlab.pci.doctor.service.XEMChatService;
+import com.wonders.xlab.pci.doctor.util.UnReadMessageUtil;
 
 import java.util.ArrayList;
 
@@ -118,6 +120,23 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+        int unreadMessageCounts = UnReadMessageUtil.getAllUnreadMessageCounts();
+        if (unreadMessageCounts > 0) {
+            mTabMain.showMsg(0, unreadMessageCounts);
+        }
+        mTabMain.setMsgMargin(0, -5, 8);
+        mTabMain.setMsgMargin(1, -5, 8);
+    }
+
+    @Subscribe
+    public void changeDoctorNotifyCounts(MainBottomUnreadNotifyCountOtto otto) {
+        int counts = UnReadMessageUtil.getAllUnreadMessageCounts();
+        if (counts > 0) {
+            mTabMain.showMsg(0, counts);
+            mTabMain.setMsgMargin(0, -5, 8);
+        } else {
+            mTabMain.hideMsg(0);
+        }
     }
 
     /**

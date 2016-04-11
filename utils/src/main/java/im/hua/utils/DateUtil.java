@@ -11,9 +11,9 @@ import java.util.Locale;
 
 public class DateUtil {
 
-    public static final String DEFAULT_FORMAT = "yyyy-MM-dd";
+    public static final String DEFAULT_FORMAT = "yyyy/MM/dd";
 
-    public static final String DEFAULT_FORMAT_FULL = "yyyy-MM-dd HH:mm";
+    public static final String DEFAULT_FORMAT_FULL = "yyyy/MM/dd HH:mm";
     private static Calendar mCalendar = Calendar.getInstance();
 
     public static String format(Date date) {
@@ -25,6 +25,16 @@ public class DateUtil {
             return "";
         }
         return format(date, format, "");
+    }
+
+    public static String formatShowDateTime(long date) {
+        if (isTheSameDay(date, Calendar.getInstance().getTimeInMillis())) {
+            return DateUtil.format(date, "HH:mm");
+        } else if (isTheSameYear(date, Calendar.getInstance().getTimeInMillis())) {
+            return DateUtil.format(date, "MM月dd日 HH:mm");
+        } else {
+            return DateUtil.format(date, "yyyy年MM月dd日 HH:mm");
+        }
     }
 
     public static String format(int year, int month, int day, String format) {
