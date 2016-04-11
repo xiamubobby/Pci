@@ -3,13 +3,11 @@ package com.wonders.xlab.patient.module.chatroom.adapter.viewholder;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.multi.MultiViewHolder;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.ChatRoomItemOthersBinding;
 import com.wonders.xlab.patient.module.chatroom.bean.OthersChatRoomBean;
-
-import java.util.Calendar;
+import com.wonders.xlab.patient.util.ImageViewManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -20,7 +18,7 @@ import im.hua.utils.DateUtil;
  */
 public class OthersChatRoomVH extends MultiViewHolder<OthersChatRoomBean> {
     @Bind(R.id.iv_chat_room_item_others_portrait)
-    ImageView mIvChatRoomItemOthersPortrait;
+    ImageView mIvPortrait;
 
     private ChatRoomItemOthersBinding binding;
 
@@ -32,17 +30,8 @@ public class OthersChatRoomVH extends MultiViewHolder<OthersChatRoomBean> {
 
     @Override
     public void onBindViewHolder(OthersChatRoomBean data) {
-        ImageViewManager.setImageViewWithUrl(itemView.getContext(), mIvChatRoomItemOthersPortrait, data.portraitUrl.get(), ImageViewManager.PLACE_HOLDER_EMPTY);
-
-        long todayTimeInMill = Calendar.getInstance().getTimeInMillis();
-        long sendTimeInMill = data.recordTimeInMill.get();
-        if (DateUtil.isTheSameDay(todayTimeInMill, sendTimeInMill)) {
-            data.recordTimeInStr.set(DateUtil.format(sendTimeInMill, "HH:mm"));
-        } else if (DateUtil.isTheSameYear(sendTimeInMill, todayTimeInMill)) {
-            data.recordTimeInStr.set(DateUtil.format(sendTimeInMill, "MM-dd HH:mm"));
-        } else {
-            data.recordTimeInStr.set(DateUtil.format(sendTimeInMill, "yyyy-MM-dd HH:mm"));
-        }
+        ImageViewManager.setImageViewWithUrl(itemView.getContext(), mIvPortrait, data.portraitUrl.get(), ImageViewManager.PLACE_HOLDER_EMPTY);
+        data.recordTimeInStr.set(DateUtil.formatShowDateTime(data.recordTimeInMill.get()));
         binding.setChat(data);
     }
 }

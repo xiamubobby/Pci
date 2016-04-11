@@ -3,6 +3,8 @@ package com.wonders.xlab.patient.module.chatroom.otto;
 /**
  * Created by hua on 16/4/4.
  * 更新聊天界面，将一条消息插入聊天列表
+ * TODO
+ * imGroupId唯一确定一个患者和一组医生的聊天组
  */
 public class ChatRoomRecordInsertOtto {
     private String groupId;

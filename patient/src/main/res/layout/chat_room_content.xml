@@ -47,7 +47,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/item_interval_small"
                 android:contentDescription="@string/text_send"
-                android:src="@drawable/ic_send_black_36dp"/>
+                android:src="@drawable/ic_send"/>
         </RelativeLayout>
 
         <Button

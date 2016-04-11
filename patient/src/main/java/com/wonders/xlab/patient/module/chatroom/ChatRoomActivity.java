@@ -242,12 +242,14 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
      */
     @Subscribe
     public void receiveNotifyForUpdate(ChatRoomRecordInsertOtto otto) {
-        if (groupId.equals(otto.getGroupId())) {
+        if (imGroupId.equals(otto.getImGroupId())) {
             /**
              * remove the notify with groupid as it's notify id
              */
             if (!mIsPaused) {
-                new NotifyUtil().cancel(this, Integer.parseInt(otto.getGroupId()));
+                if (TextUtils.isDigitsOnly(otto.getImGroupId())) {
+                    new NotifyUtil().cancel(this, (int) Long.parseLong(otto.getImGroupId()));
+                }
                 UnReadMessageUtil.readMessage(imGroupId);
             }
 
