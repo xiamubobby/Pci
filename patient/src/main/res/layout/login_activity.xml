@@ -19,8 +19,6 @@
         app:title="@string/title_activity_login"
         app:titleTextColor="@android:color/white"/>
 
-
     <include layout="@layout/login_content"/>
-
 
 </LinearLayout>

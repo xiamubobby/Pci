@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -34,8 +33,6 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
     EditText mEtPassword;
     @Bind(R.id.btn_login)
     Button mBtnLogin;
-    @Bind(R.id.coordinate)
-    CoordinatorLayout mCoordinate;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
@@ -76,6 +73,11 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
         mLoginPresenter = new LoginPresenter(this);
         addPresenter(mLoginPresenter);
 
+    }
+
+    @OnClick(R.id.container)
+    public void hideKeyboard() {
+        KeyboardUtil.hide(this);
     }
 
     @OnClick(R.id.btn_login)
