@@ -21,6 +21,10 @@ public class GroupListModel extends DoctorBaseModel<GroupListEntity> implements 
 
     @Override
     protected void onSuccess(GroupListEntity response) {
+        /**
+         * ret_code=1 不能再创建诊所
+         */
+        mListener.canCreateMore(!(response.getRet_code() == 1));
         mListener.onReceiveGroupListSuccess(response.getRet_values());
     }
 
@@ -31,10 +35,12 @@ public class GroupListModel extends DoctorBaseModel<GroupListEntity> implements 
 
     @Override
     public void getGroupList(String doctorId, int page, int size) {
-        fetchData(mAPI.getGroupList(doctorId, page, size),true);
+        fetchData(mAPI.getGroupList(doctorId, page, size), true);
     }
 
     public interface GroupListModelListener extends BaseModelListener {
         void onReceiveGroupListSuccess(GroupListEntity.RetValuesEntity valuesEntity);
+
+        void canCreateMore(boolean canCreate);
     }
 }

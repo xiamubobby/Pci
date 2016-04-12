@@ -78,6 +78,11 @@ public class GroupListPresenter extends BasePagePresenter implements IGroupListP
     }
 
     @Override
+    public void canCreateMore(boolean canCreate) {
+        mListener.cannotCreateMore(canCreate);
+    }
+
+    @Override
     public void onReceiveFailed(String message) {
         mListener.hideLoading();
         mListener.showError(message);
@@ -87,5 +92,7 @@ public class GroupListPresenter extends BasePagePresenter implements IGroupListP
         void showDoctorGroup(List<GroupListBean> groupListBeanList);
 
         void appendDoctorGroup(List<GroupListBean> groupListBeanList);
+
+        void cannotCreateMore(boolean canCreate);
     }
 }

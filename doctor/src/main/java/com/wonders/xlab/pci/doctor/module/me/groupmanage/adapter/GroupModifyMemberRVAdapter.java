@@ -29,6 +29,7 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
 
     private GroupModifyMemberBean minusBean;
     private GroupModifyMemberBean addBean;
+    private boolean mIsAdmin;
 
     /**
      * 每次添加数据都是先把加号和减号去掉，然后再根据数据的条数再把加号和减号添加回去
@@ -83,12 +84,14 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
                 .subscribe(new Subscriber<GroupModifyMemberBean>() {
                     @Override
                     public void onCompleted() {
-                        int size = getItemCount();
-                        if (size < 9) {
-                            appendToLast(addBean);
-                        }
-                        if (size > 2) {
-                            appendToLast(minusBean);
+                        if (mIsAdmin) {
+                            int size = getItemCount();
+                            if (size < 9) {
+                                appendToLast(addBean);
+                            }
+                            if (size > 2) {
+                                appendToLast(minusBean);
+                            }
                         }
                     }
 
@@ -109,13 +112,20 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
     public void setDatas(List<GroupModifyMemberBean> mBeanList) {
         super.setDatas(mBeanList);
         int size = getItemCount();
-        if (size < 9) {
-            appendToLast(addBean);
-        }
-        if (size > 2) {
-            appendToLast(minusBean);
+        if (mIsAdmin) {
+            if (size < 9) {
+                appendToLast(addBean);
+            }
+            if (size > 2) {
+                appendToLast(minusBean);
+            }
         }
 
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+
+        mIsAdmin = isAdmin;
     }
 
     public GroupModifyMemberRVAdapter() {

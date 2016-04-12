@@ -93,6 +93,7 @@ public class GroupDetailEntity extends BaseEntity {
         public static class MembersEntity {
             private String doctorName;
             private String doctorId;
+            private String doctorImId;
             private String doctorAvatarUrl;
 
             public String getDoctorName() {
@@ -117,6 +118,14 @@ public class GroupDetailEntity extends BaseEntity {
 
             public void setDoctorAvatarUrl(String doctorAvatarUrl) {
                 this.doctorAvatarUrl = doctorAvatarUrl;
+            }
+
+            public String getDoctorImId() {
+                return doctorImId;
+            }
+
+            public void setDoctorImId(String doctorImId) {
+                this.doctorImId = doctorImId;
             }
         }
     }

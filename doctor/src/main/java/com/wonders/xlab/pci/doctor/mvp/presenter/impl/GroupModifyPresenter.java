@@ -3,7 +3,10 @@ package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyMemberBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupDetailEntity;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupCreateBody;
+import com.wonders.xlab.pci.doctor.mvp.model.IGroupCreateModel;
 import com.wonders.xlab.pci.doctor.mvp.model.IGroupDetailModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupCreateModel;
 import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupDetailModel;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupModifyPresenter;
 
@@ -20,20 +23,27 @@ import rx.functions.Func1;
 /**
  * Created by hua on 16/4/7.
  */
-public class GroupModifyPresenter extends BasePresenter implements IGroupModifyPresenter, GroupDetailModel.GroupDetailModelListener {
+public class GroupModifyPresenter extends BasePresenter implements IGroupModifyPresenter, GroupDetailModel.GroupDetailModelListener, GroupCreateModel.GroupCreateModelListener {
     private GroupModifyPresenterListener mListener;
-    private IGroupDetailModel mGroupDetailModel;
+    private IGroupDetailModel mDetailModel;
+    private IGroupCreateModel mCreateModel;
 
     public GroupModifyPresenter(GroupModifyPresenterListener listener) {
         mListener = listener;
-        mGroupDetailModel = new GroupDetailModel(this);
-        addModel(mGroupDetailModel);
+        mDetailModel = new GroupDetailModel(this);
+        mCreateModel = new GroupCreateModel(this);
+        addModel(mDetailModel);
     }
 
     @Override
     public void getGroupInfo(String doctorId, String groupId) {
-        mGroupDetailModel.getGroupDetail(doctorId, groupId);
+        mDetailModel.getGroupDetail(doctorId, groupId);
         mListener.showGroupInfo(new GroupModifyBean());
+    }
+
+    @Override
+    public void createGroup(String doctorId, GroupCreateBody body) {
+        mCreateModel.createGroup(doctorId,body);
     }
 
     @Override
@@ -43,6 +53,7 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
         final GroupModifyBean groupModifyBean = new GroupModifyBean();
         groupModifyBean.setGroupDesc(valuesEntity.getGroupDescription());
         groupModifyBean.setGroupName(valuesEntity.getGroupName());
+        groupModifyBean.setManagerType(valuesEntity.getManagerType());
         groupModifyBean.setPublishedServiceIconList(valuesEntity.getServiceUrls());
 
         Observable.from(valuesEntity.getMembers())
@@ -58,6 +69,7 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
                         GroupModifyMemberBean bean = new GroupModifyMemberBean();
                         bean.doctorAvatarUrl.set(membersEntity.getDoctorAvatarUrl());
                         bean.doctorId.set(membersEntity.getDoctorId());
+                        bean.doctorImId.set(membersEntity.getDoctorImId());
                         bean.doctorName.set(membersEntity.getDoctorName());
                         return bean;
                     }
@@ -87,12 +99,27 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
     }
 
     @Override
+    public void cannotCreateGroup(String message) {
+        mListener.cannotCreateGroup(message);
+    }
+
+    @Override
     public void onReceiveFailed(String message) {
         mListener.hideLoading();
         mListener.showError(message);
     }
 
+    @Override
+    public void onGroupCreateSuccess(String message) {
+        mListener.hideLoading();
+        mListener.onGroupCreateSuccess(message);
+    }
+
     public interface GroupModifyPresenterListener extends BasePresenterListener {
         void showGroupInfo(GroupModifyBean groupModifyBean);
+
+        void onGroupCreateSuccess(String message);
+
+        void cannotCreateGroup(String message);
     }
 }

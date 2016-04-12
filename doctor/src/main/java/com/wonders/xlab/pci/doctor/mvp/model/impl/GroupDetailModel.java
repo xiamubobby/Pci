@@ -21,7 +21,11 @@ public class GroupDetailModel extends DoctorBaseModel<GroupDetailEntity> impleme
 
     @Override
     protected void onSuccess(GroupDetailEntity response) {
-        mListener.onReceiveGroupDetailSuccess(response.getRet_values());
+        if (response.getRet_code() == 1) {
+            mListener.cannotCreateGroup(response.getMessage());
+        } else {
+            mListener.onReceiveGroupDetailSuccess(response.getRet_values());
+        }
     }
 
     @Override
@@ -36,5 +40,7 @@ public class GroupDetailModel extends DoctorBaseModel<GroupDetailEntity> impleme
 
     public interface GroupDetailModelListener extends BaseModelListener {
         void onReceiveGroupDetailSuccess(GroupDetailEntity.RetValuesEntity valuesEntity);
+
+        void cannotCreateGroup(String message);
     }
 }

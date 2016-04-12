@@ -25,6 +25,9 @@ import im.hua.utils.DateUtil;
  */
 public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
 
+    /**
+     * 排序并且设置headerId，用于分组
+     */
     private void reunionList() {
         List<BPListBean> beanList = getBeanList();
         Collections.sort(beanList, new Comparator<BPListBean>() {
@@ -94,7 +97,7 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
                 break;
             }
         }
-        viewHolder.bpTitle.setText(DateUtil.format(time,"yyyy/MM/dd"));
+        viewHolder.bpTitle.setText(DateUtil.format(time,DateUtil.DEFAULT_FORMAT_DAY));
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {

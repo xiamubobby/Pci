@@ -81,14 +81,23 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
 
     @Override
     public void showDoctorGroup(List<GroupListBean> groupListBeanList) {
+        mIsCheckingFinish = true;
         initAdapter();
         mRVAdapter.setDatas(groupListBeanList);
     }
 
     @Override
     public void appendDoctorGroup(List<GroupListBean> groupListBeanList) {
+        mIsCheckingFinish = true;
         initAdapter();
         mRVAdapter.appendDatas(groupListBeanList);
+    }
+
+    private boolean mIsCheckingFinish = false;
+    private boolean mCanCreate = false;
+    @Override
+    public void cannotCreateMore(boolean canCreate) {
+        mCanCreate = canCreate;
     }
 
     @Override
@@ -127,7 +136,15 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add:
-                startActivity(new Intent("com.wonders.xlab.pci.doctor.GroupModifyActivity"));
+                if (!mIsCheckingFinish) {
+                    showShortToast("正在校验权限，请稍候！");
+                    break;
+                }
+                if (mCanCreate) {
+                    startActivity(new Intent("com.wonders.xlab.pci.doctor.GroupModifyActivity"));
+                } else {
+                    showShortToast("您已经创建过小组了！");
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);

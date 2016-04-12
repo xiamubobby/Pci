@@ -10,6 +10,7 @@ import android.text.TextUtils;
  */
 public class GroupDoctorBean implements Parcelable {
     public ObservableField<String> doctorId = new ObservableField<>();
+    public ObservableField<String> doctorImId = new ObservableField<>();
     public ObservableField<String> doctorAvatarUrl = new ObservableField<>();
     public ObservableField<String> doctorName = new ObservableField<>();
     public ObservableField<String> doctorHospital = new ObservableField<>();
@@ -41,6 +42,7 @@ public class GroupDoctorBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeSerializable(this.doctorId);
+        dest.writeSerializable(this.doctorImId);
         dest.writeSerializable(this.doctorAvatarUrl);
         dest.writeSerializable(this.doctorName);
         dest.writeSerializable(this.doctorHospital);
@@ -51,6 +53,7 @@ public class GroupDoctorBean implements Parcelable {
 
     protected GroupDoctorBean(Parcel in) {
         this.doctorId = (ObservableField<String>) in.readSerializable();
+        this.doctorImId = (ObservableField<String>) in.readSerializable();
         this.doctorAvatarUrl = (ObservableField<String>) in.readSerializable();
         this.doctorName = (ObservableField<String>) in.readSerializable();
         this.doctorHospital = (ObservableField<String>) in.readSerializable();

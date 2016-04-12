@@ -11,13 +11,13 @@ import java.util.Locale;
 
 public class DateUtil {
 
-    public static final String DEFAULT_FORMAT = "yyyy/MM/dd";
+    public static final String DEFAULT_FORMAT_DAY = "yyyy/MM/dd";
 
     public static final String DEFAULT_FORMAT_FULL = "yyyy/MM/dd HH:mm";
     private static Calendar mCalendar = Calendar.getInstance();
 
     public static String format(Date date) {
-        return format(date, DEFAULT_FORMAT);
+        return format(date, DEFAULT_FORMAT_DAY);
     }
 
     public static String format(Date date, String format) {
@@ -38,7 +38,7 @@ public class DateUtil {
     }
 
     public static String format(int year, int month, int day, String format) {
-        return DateUtil.format(DateUtil.parse(year + "/" + month + "/" + day, DateUtil.DEFAULT_FORMAT), format);
+        return DateUtil.format(DateUtil.parse(year + "/" + month + "/" + day, DateUtil.DEFAULT_FORMAT_DAY), format);
     }
 
     public static String format(long date, String format) {

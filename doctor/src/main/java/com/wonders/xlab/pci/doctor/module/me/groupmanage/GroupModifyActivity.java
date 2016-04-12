@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -26,6 +27,7 @@ import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDocto
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyMemberBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.GroupServicesActivity;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupCreateBody;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupModifyPresenter;
 import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupModifyPresenter;
 
@@ -37,6 +39,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
@@ -76,6 +79,11 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
     private GroupServiceIconRVAdapter mServiceIconRVAdapter;
 
     private IGroupModifyPresenter mGroupModifyPresenter;
+
+    /**
+     * 当前医生是否为管理员
+     */
+    private boolean mIsAdmin = false;
 
     @Override
     public int getContentLayout() {
@@ -150,10 +158,15 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
 
     @Override
     public void showGroupInfo(GroupModifyBean groupModifyBean) {
+        mIsAdmin = groupModifyBean.isAdmin();
+        if (mIsAdmin) {
+            invalidateOptionsMenu();
+        }
+
         mTvGroupName.setText(groupModifyBean.getGroupName());
         mTvGroupDesc.setText(groupModifyBean.getGroupDesc());
         mTvAuth.setVisibility(groupModifyBean.isCanGrant() ? View.VISIBLE : View.GONE);
-        mBtnDismiss.setVisibility(groupModifyBean.isCanGrant() ? View.VISIBLE : View.GONE);
+        mBtnDismiss.setVisibility(mIsAdmin ? View.VISIBLE : View.GONE);
 
         if (null == mMemberRVAdapter) {
             mMemberRVAdapter = new GroupModifyMemberRVAdapter();
@@ -178,6 +191,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
             });
             mRecyclerViewMembers.setAdapter(mMemberRVAdapter);
         }
+        mMemberRVAdapter.setIsAdmin(mIsAdmin);
         mMemberRVAdapter.setDatas(groupModifyBean.getMemberInfoList());
 
         if (null == mServiceIconRVAdapter) {
@@ -188,9 +202,20 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
     }
 
     @Override
-    public void showError(String message) {
+    public void onGroupCreateSuccess(String message) {
         showShortToast(message);
         finish();
+    }
+
+    @Override
+    public void cannotCreateGroup(String message) {
+        showShortToast(message);
+        finish();
+    }
+
+    @Override
+    public void showError(String message) {
+        showShortToast(message);
     }
 
     @Override
@@ -279,8 +304,58 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_save, menu);
+        if (mIsAdmin) {
+            getMenuInflater().inflate(R.menu.menu_save, menu);
+        }
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_save:
+                final GroupCreateBody body = new GroupCreateBody();
+                body.setName(mTvGroupName.getText().toString());
+                body.setDescription(mTvGroupDesc.getText().toString());
+
+                Observable.from(mMemberRVAdapter.getBeanList())
+                        .flatMap(new Func1<GroupModifyMemberBean, Observable<GroupCreateBody.DoctorsEntity>>() {
+                            @Override
+                            public Observable<GroupCreateBody.DoctorsEntity> call(GroupModifyMemberBean bean) {
+                                GroupCreateBody.DoctorsEntity entity = new GroupCreateBody.DoctorsEntity();
+                                entity.setId(bean.doctorId.get());
+                                entity.setImId(bean.doctorImId.get());
+                                return Observable.just(entity);
+                            }
+                        })
+                        .filter(new Func1<GroupCreateBody.DoctorsEntity, Boolean>() {
+                            @Override
+                            public Boolean call(GroupCreateBody.DoctorsEntity doctorsEntity) {
+                                return doctorsEntity != null && !TextUtils.isEmpty(doctorsEntity.getId()) && !TextUtils.isEmpty(doctorsEntity.getImId());
+                            }
+                        })
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<GroupCreateBody.DoctorsEntity>() {
+                            List<GroupCreateBody.DoctorsEntity> mDoctorsEntityList = new ArrayList<>();
+                            @Override
+                            public void onCompleted() {
+                                body.setDoctors(mDoctorsEntityList);
+                                mGroupModifyPresenter.createGroup(AIManager.getInstance().getDoctorId(),body);
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(GroupCreateBody.DoctorsEntity doctorsEntity) {
+                                mDoctorsEntityList.add(doctorsEntity);
+                            }
+                        });
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

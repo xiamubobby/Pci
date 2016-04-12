@@ -109,6 +109,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
         setToolbarTitle(patientName);
 
+        mRecyclerView.setRefreshEnable(false);
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {

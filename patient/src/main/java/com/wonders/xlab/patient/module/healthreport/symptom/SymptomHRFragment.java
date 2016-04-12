@@ -2,7 +2,6 @@ package com.wonders.xlab.patient.module.healthreport.symptom;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,9 +13,9 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.SymptomReportBean;
-import com.wonders.xlab.patient.otto.SymptomSaveSuccessOtto;
 import com.wonders.xlab.patient.mvp.presenter.ISymptomReportPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.SymptomReportPresenter;
+import com.wonders.xlab.patient.otto.SymptomSaveSuccessOtto;
 
 import java.util.Calendar;
 import java.util.List;
@@ -62,7 +61,6 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
         /**
          * TODO addItemDecoration必须要在setItemAnimator后调用才有效果，不知道为什么，回头看下源码
          */
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 8));
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

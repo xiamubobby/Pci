@@ -417,7 +417,7 @@ public class CommonRecyclerView extends FrameLayout {
                     mLoadMoreView.startAnimation(hideNoReverseAnimation);
                 }
             }
-        }, 1000);
+        }, 600);
 
     }
 

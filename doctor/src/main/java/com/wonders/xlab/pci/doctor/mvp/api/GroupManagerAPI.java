@@ -1,10 +1,14 @@
 package com.wonders.xlab.pci.doctor.mvp.api;
 
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupCreateEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupDetailEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupListEntity;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupCreateBody;
 
 import retrofit2.Response;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
@@ -15,8 +19,11 @@ import rx.Observable;
 public interface GroupManagerAPI {
 
     @GET("v1/doctorGroup/queryAllGroupByDoctorId/{doctorId}")
-    Observable<Response<GroupListEntity>> getGroupList(@Path("doctorId") String doctorId, @Query("page") int page,@Query("size") int size);
+    Observable<Response<GroupListEntity>> getGroupList(@Path("doctorId") String doctorId, @Query("page") int page, @Query("size") int size);
 
     @GET("v1/doctorGroup/toDoctorGroup/{doctorId}")
-    Observable<Response<GroupDetailEntity>> getGroupDetail(@Path("doctorId") String doctorId,@Query("doctorGroupId") String doctorGroupId);
+    Observable<Response<GroupDetailEntity>> getGroupDetail(@Path("doctorId") String doctorId, @Query("doctorGroupId") String doctorGroupId);
+
+    @POST("v1/doctorGroup/createDoctorGroup/{doctorId}")
+    Observable<Response<GroupCreateEntity>> createGroup(@Path("doctorId") String doctorId, @Body GroupCreateBody body);
 }
