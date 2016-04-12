@@ -2,6 +2,7 @@ package com.wonders.xlab.pci.doctor.mvp.api;
 
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupCreateEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupDetailEntity;
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupDoctorInviteEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupListEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupCreateBody;
 
@@ -26,4 +27,7 @@ public interface GroupManagerAPI {
 
     @POST("v1/doctorGroup/createDoctorGroup/{doctorId}")
     Observable<Response<GroupCreateEntity>> createGroup(@Path("doctorId") String doctorId, @Body GroupCreateBody body);
+
+    @GET("v1/doctorGroup/queryDoctorByTelOrName")
+    Observable<Response<GroupDoctorInviteEntity>> searchDoctorByTelOrName(@Query("doctorGroupId") String doctorGroupId, @Query("tel") String tel, @Query("name") String name);
 }

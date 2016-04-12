@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -16,6 +15,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
@@ -28,15 +29,22 @@ import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupInviteDoctorPresenter
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.uikit.crv.CommonRecyclerView;
 import im.hua.utils.KeyboardUtil;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
 
 public class GroupInviteDoctorActivity extends AppbarActivity implements GroupInviteDoctorPresenter.GroupInvitePresenterListener {
     public final static int RESULT_CODE_SUCCESS = 0;
     public final static String EXTRA_RESULT = "result";
+
+    public final static String EXTRA_GROUP_ID = "groupId";
+    private String mGroupId;
 
     @Bind(R.id.recycler_view_group_invite)
     CommonRecyclerView mRecyclerView;
@@ -61,29 +69,34 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupIn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        Intent intent = getIntent();
+        if (intent != null) {
+            mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
+        }
 
-        mEtSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (TextUtils.isEmpty(s.toString()) || s.length() < 2 || (TextUtils.isDigitsOnly(s.toString()) && s.length() != 11)) {
-                    return;
-                }
-                mGroupInvitePresenter.searchByNameOrTel(s.toString());
-            }
-        });
+        RxTextView.afterTextChangeEvents(mEtSearch)
+                .throttleFirst(1000,TimeUnit.MILLISECONDS)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .filter(new Func1<TextViewAfterTextChangeEvent, Boolean>() {
+                    @Override
+                    public Boolean call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
+                        Editable s = textViewAfterTextChangeEvent.editable();
+                        return !(TextUtils.isEmpty(s.toString()) || s.length() < 2 || (TextUtils.isDigitsOnly(s.toString()) && s.length() != 11));
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<TextViewAfterTextChangeEvent>() {
+                    @Override
+                    public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
+                        String s = textViewAfterTextChangeEvent.editable().toString();
+                        mRecyclerView.setRefreshing(true);
+                        mGroupInvitePresenter.searchByNameOrTel(mGroupId, s);
+                    }
+                });
 
         mRecyclerViewSelectedDoctor.setItemAnimator(new DefaultItemAnimator());
         mRecyclerViewSelectedDoctor.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerView.setRefreshEnable(false);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
         mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
@@ -129,8 +142,6 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupIn
                     } else {
                         mIvSearch.setVisibility(View.GONE);
                     }
-
-
                 }
             });
             mRecyclerView.setAdapter(mGroupDoctorMultiChoiceRVAdapter);
@@ -153,12 +164,12 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupIn
 
     @Override
     public void showError(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void hideLoading() {
-
+        mRecyclerView.hideRefreshOrLoadMore(true,true);
     }
 
     @Override

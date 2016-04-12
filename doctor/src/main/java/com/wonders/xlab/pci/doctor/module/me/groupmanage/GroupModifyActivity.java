@@ -103,6 +103,10 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
         if (TextUtils.isEmpty(mGroupId)) {
             setToolbarTitle("新建小组");
             mBtnDismiss.setVisibility(View.GONE);
+            /**
+             * 小组名称模板
+             */
+            mTvGroupName.setText(String.format("%s医师诊所", AIManager.getInstance().getDoctorName()));
         }
         mGroupModifyPresenter = new GroupModifyPresenter(this);
         addPresenter(mGroupModifyPresenter);
@@ -163,7 +167,9 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
             invalidateOptionsMenu();
         }
 
-        mTvGroupName.setText(groupModifyBean.getGroupName());
+        if (!TextUtils.isEmpty(groupModifyBean.getGroupName())) {
+            mTvGroupName.setText(groupModifyBean.getGroupName());
+        }
         mTvGroupDesc.setText(groupModifyBean.getGroupDesc());
         mTvAuth.setVisibility(groupModifyBean.isCanGrant() ? View.VISIBLE : View.GONE);
         mBtnDismiss.setVisibility(mIsAdmin ? View.VISIBLE : View.GONE);
@@ -179,7 +185,9 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                     GroupModifyMemberBean bean = mMemberRVAdapter.getBean(position);
                     switch (bean.getType()) {
                         case GroupModifyMemberBean.TYPE_ADD:
-                            startActivityForResult(new Intent("com.wonders.xlab.pci.doctor.GroupInviteDoctorActivity"), REQUEST_CODE_INVITE_DOCTOR);
+                            Intent a = new Intent("com.wonders.xlab.pci.doctor.GroupInviteDoctorActivity");
+                            a.putExtra(GroupInviteDoctorActivity.EXTRA_GROUP_ID, mGroupId);
+                            startActivityForResult(a, REQUEST_CODE_INVITE_DOCTOR);
                             break;
                         case GroupModifyMemberBean.TYPE_MINUS:
                             Intent intent = new Intent("com.wonders.xlab.pci.doctor.GroupRemoveDoctorActivity");

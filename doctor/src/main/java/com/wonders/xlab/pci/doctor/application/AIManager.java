@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.realm.DoctorInfoRealm;
+import com.wonders.xlab.pci.doctor.realm.UnReadMessageRealm;
 
 /**
  * Created by hua on 15/12/17.
@@ -42,6 +43,7 @@ public class AIManager {
         synchronized (object) {
             XApplication.realm.beginTransaction();
             XApplication.realm.clear(DoctorInfoRealm.class);
+            XApplication.realm.clear(UnReadMessageRealm.class);
             XApplication.realm.commitTransaction();
         }
 

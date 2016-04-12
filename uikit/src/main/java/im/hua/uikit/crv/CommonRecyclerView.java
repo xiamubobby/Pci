@@ -26,6 +26,11 @@ import im.hua.uikit.R;
  * Created by hua on 16/3/24.
  */
 public class CommonRecyclerView extends FrameLayout {
+    private static final int CIRCLE_BG_LIGHT = 0xFFFAFAFA;
+    private static final int CIRCLE_DIAMETER = 40;
+    private static final int CIRCLE_DIAMETER_LARGE = 56;
+    private static final int MAX_ALPHA = 255;
+
     private OnLoadMoreListener mOnLoadMoreListener;
 
     private final int LAYOUT_MANGER_LINEAR = 0;
@@ -49,6 +54,8 @@ public class CommonRecyclerView extends FrameLayout {
     private boolean mIsLoadMore;
     private boolean mIsRefreshing;
 
+    private CircleImageView mCircleView;
+    private MaterialProgressDrawable mProgress;
     /**
      * 加载更多view动画
      * 正序
@@ -83,7 +90,10 @@ public class CommonRecyclerView extends FrameLayout {
         mLoadingView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_loadingView, R.layout.crv_loading), null, false);
         mNetworkErrorView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_networkErrorView, R.layout.crv_network_error), null, false);
         mServerErrorView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_serverErrorView, R.layout.crv_server_error), null, false);
-        mLoadMoreView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_loadMoreView, R.layout.crv_load_more), null, false);
+        int loadMoreResId = array.getResourceId(R.styleable.CommonRecyclerView_loadMoreView, -1);
+        if (-1 != loadMoreResId) {
+            mLoadMoreView = LayoutInflater.from(context).inflate(loadMoreResId, null, false);
+        }
         layoutManager = array.getInteger(R.styleable.CommonRecyclerView_crvLayoutManager, LAYOUT_MANGER_LINEAR);
         spanCount = array.getInteger(R.styleable.CommonRecyclerView_crvSpanCount, 1);
         orientation = array.getInteger(R.styleable.CommonRecyclerView_orientation, RecyclerView.VERTICAL);
@@ -132,35 +142,54 @@ public class CommonRecyclerView extends FrameLayout {
         if (null != mRefreshView) {
             this.addView(mRefreshView);
         }
-        if (null != mLoadMoreView) {
-            this.addView(mLoadMoreView);
 
-            FrameLayout.LayoutParams params = (LayoutParams) mLoadMoreView.getLayoutParams();
-            int size = dp2px(40);
-            if (params == null) {
-                params = new FrameLayout.LayoutParams(size, size);
-            } else {
-                params.width = size;
-                params.height = size;
-            }
-            if (mLoadMoreView instanceof CardView) {
-                CardView cardView = (CardView) mLoadMoreView;
-                cardView.setRadius(dp2px(20));
-            }
-            if (reverseLayout) {
-                params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
-                mLoadMoreView.setTop(-size);
-//                params.topMargin = dp2px(10);
-            } else {
-                params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
-                mLoadMoreView.setTop(getMeasuredHeight());
-//                params.bottomMargin = dp2px(10);
-            }
-            mLoadMoreView.setLayoutParams(params);
-            mLoadMoreView.setVisibility(GONE);
-        }
+        setupLoadMoreView();
 
         initLoadMoreAnimation();
+    }
+
+    private void setupLoadMoreView() {
+        createProgressView();
+
+        if (null == mLoadMoreView) {
+            return;
+        }
+        this.addView(mLoadMoreView);
+
+        LayoutParams params = (LayoutParams) mLoadMoreView.getLayoutParams();
+        int size = dp2px(40);
+        if (params == null) {
+            params = new LayoutParams(size, size);
+        } else {
+            params.width = size;
+            params.height = size;
+        }
+        if (mLoadMoreView instanceof CardView) {
+            CardView cardView = (CardView) mLoadMoreView;
+            cardView.setRadius(dp2px(20));
+        }
+        if (reverseLayout) {
+            params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+            mLoadMoreView.setTop(-size);
+        } else {
+            params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+            mLoadMoreView.setTop(getMeasuredHeight());
+        }
+        mLoadMoreView.setLayoutParams(params);
+        mLoadMoreView.setVisibility(GONE);
+    }
+
+    private void createProgressView() {
+        mCircleView = new CircleImageView(getContext(), CIRCLE_BG_LIGHT, CIRCLE_DIAMETER / 2);
+        mProgress = new MaterialProgressDrawable(getContext(), this);
+        mProgress.updateSizes(MaterialProgressDrawable.DEFAULT);
+        mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
+        mCircleView.setImageDrawable(mProgress);
+        mCircleView.setVisibility(View.VISIBLE);
+
+        if (mLoadMoreView == null) {
+            mLoadMoreView = mCircleView;
+        }
     }
 
     private void initLoadMoreAnimation() {
@@ -175,6 +204,8 @@ public class CommonRecyclerView extends FrameLayout {
             @Override
             public void onAnimationEnd(Animation animation) {
                 mLoadMoreView.setVisibility(View.INVISIBLE);
+                mProgress.stop();
+                setIsLoadMore(false);
             }
 
             @Override
@@ -194,6 +225,8 @@ public class CommonRecyclerView extends FrameLayout {
             @Override
             public void onAnimationEnd(Animation animation) {
                 mLoadMoreView.setVisibility(View.INVISIBLE);
+                mProgress.stop();
+                setIsLoadMore(false);
             }
 
             @Override
@@ -211,6 +244,8 @@ public class CommonRecyclerView extends FrameLayout {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                mProgress.setAlpha(MAX_ALPHA);
+                mProgress.start();
                 mLoadMoreView.setVisibility(View.VISIBLE);
             }
 
@@ -229,6 +264,8 @@ public class CommonRecyclerView extends FrameLayout {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                mProgress.setAlpha(MAX_ALPHA);
+                mProgress.start();
                 mLoadMoreView.setVisibility(View.VISIBLE);
             }
 
@@ -407,7 +444,6 @@ public class CommonRecyclerView extends FrameLayout {
         if (!isLoadingMore()) {
             return;
         }
-        setIsLoadMore(false);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -417,11 +453,12 @@ public class CommonRecyclerView extends FrameLayout {
                     mLoadMoreView.startAnimation(hideNoReverseAnimation);
                 }
             }
-        }, 600);
+        }, 1000);
 
     }
 
     public synchronized void showLoadMore() {
+        mLoadMoreView.clearAnimation();
         setIsLoadMore(true);
         if (reverseLayout) {
             mLoadMoreView.startAnimation(showReverseAnimation);
