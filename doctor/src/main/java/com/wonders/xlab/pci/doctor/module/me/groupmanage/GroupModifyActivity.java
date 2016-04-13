@@ -51,8 +51,15 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
     private final int REQUEST_CODE_AUTH = 4;//授权
     private final int REQUEST_CODE_SERVICE = 5;//套餐
 
+    public final static int RESULT_CODE_SUCCESS = 0;
+
     public final static String EXTRA_GROUP_ID = "groupId";
     private String mGroupId;
+
+    /**
+     * 未做修改点保存则直接返回
+     */
+    private boolean mHasChanged = false;
 
     @Bind(R.id.refresh)
     SwipeRefreshLayout mRefresh;
@@ -210,8 +217,9 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
     }
 
     @Override
-    public void onGroupCreateSuccess(String message) {
+    public void onGroupCreateSuccess(String newGroupId, String message) {
         showShortToast(message);
+        setResult(RESULT_CODE_SUCCESS);
         finish();
     }
 
@@ -247,6 +255,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                 if (resultCode == GroupNameModifyActivity.RESULT_CODE_SUCCESS) {
                     String name = data.getStringExtra(GroupNameModifyActivity.EXTRA_RESULT);
                     if (!TextUtils.isEmpty(name)) {
+                        mHasChanged = true;
                         mTvGroupName.setText(name);
                     }
                 }
@@ -255,6 +264,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                 if (resultCode == GroupDescModifyActivity.RESULT_CODE_SUCCESS) {
                     String name = data.getStringExtra(GroupNameModifyActivity.EXTRA_RESULT);
                     if (!TextUtils.isEmpty(name)) {
+                        mHasChanged = true;
                         mTvGroupDesc.setText(name);
                     }
                 }
@@ -287,6 +297,9 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                                         mMemberRVAdapter = new GroupModifyMemberRVAdapter();
                                         mRecyclerViewMembers.setAdapter(mMemberRVAdapter);
                                     }
+                                    if (memberBeanList.size() > 0) {
+                                        mHasChanged = true;
+                                    }
                                     mMemberRVAdapter.appendDatas(memberBeanList);
                                 }
 
@@ -304,6 +317,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                 break;
             case REQUEST_CODE_REMOVE_DOCTOR:
                 if (resultCode == GroupRemoveDoctorActivity.RESULT_CODE_SUCCESS) {
+                    mHasChanged = true;
                     mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
                 }
                 break;
@@ -327,6 +341,10 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_save:
+                if (!mHasChanged) {
+                    finish();
+                    return true;
+                }
                 final GroupCreateBody body = new GroupCreateBody();
                 body.setName(mTvGroupName.getText().toString());
                 body.setId(mGroupId);

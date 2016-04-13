@@ -5,9 +5,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.wonders.xlab.pci.doctor.module.me.notification.NotificationActivity"
+    tools:showIn="@layout/notification_activity">
     <com.flyco.tablayout.CommonTabLayout
-        android:id="@+id/tab_health_report"
+        android:id="@+id/tab_notification"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="#eaebeb"
@@ -17,8 +20,6 @@
         app:tl_indicator_bounce_enable="true"
         app:tl_indicator_color="@color/colorPrimary"
         app:tl_indicator_corner_radius="4dp"
-        app:tl_indicator_margin_left="25dp"
-        app:tl_indicator_margin_right="25dp"
         app:tl_indicator_style="BLOCK"
         app:tl_textSelectColor="@android:color/white"
         app:tl_textUnselectColor="@color/text_color_primary_gray"
@@ -27,8 +28,5 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/view_pager_notification"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.wonders.xlab.pci.doctor.module.me.notification.NotificationActivity"
-        tools:showIn="@layout/notification_activity"/>
+        android:layout_height="match_parent"/>
 </LinearLayout>

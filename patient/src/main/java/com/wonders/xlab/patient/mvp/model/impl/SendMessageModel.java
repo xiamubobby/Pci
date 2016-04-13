@@ -32,17 +32,13 @@ public class SendMessageModel extends PatientBaseModel<SendMessageEntity> implem
     public void sendMessage(Map<String, Object> ext, long time) {
         SendMessageBody body = new SendMessageBody();
 
-        SendMessageBody.MsgEntity msgEntity = new SendMessageBody.MsgEntity();
-        msgEntity.setType("txt");
-        msgEntity.setMsg(String.valueOf(ext.get("txtContent")));
-
         List<String> targets = new ArrayList<>();
         targets.add(String.valueOf(ext.get("imGroupId")));
 
-        body.setMsg(msgEntity);
+        body.setMsg(String.valueOf(ext.get("txtContent")));
         body.setFrom(String.valueOf(ext.get("patientTel")));
-        body.setTarget_type("chatgroups");
-        body.setTarget(targets);
+        body.setTargetType("chatgroups");
+        body.setTargets(targets);
         body.setExt(ext);
 
         fetchData(mSendMessageAPI.sendMessage(body,time), false);

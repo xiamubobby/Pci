@@ -9,53 +9,45 @@ import java.util.Map;
 public class SendMessageBody {
 
     /**
-     * target_type : chatgroups
-     * target : ["166710012339552740"]
+     * targetType : chatgroups
+     * targets : ["166710012339552740"]
      * msg : {"type":"txt","msg":"测试看看"}
      * from : 13621673988
      */
 
-    private String target_type;
+    private String targetType;
     /**
      * type : txt
      * msg : 测试看看
      */
 
-    private MsgEntity msg;
+    private String msg;
     private String from;
-    private List<String> target;
+    private List<String> targets;
     private Map<String,Object> ext;
 
-    public void setTarget_type(String target_type) {
-        this.target_type = target_type;
-    }
-
-    public void setMsg(MsgEntity msg) {
-        this.msg = msg;
+    public void setTargetType(String targetType) {
+        this.targetType = targetType;
     }
 
     public void setFrom(String from) {
         this.from = from;
     }
 
-    public void setTarget(List<String> target) {
-        this.target = target;
+    public void setTargets(List<String> targets) {
+        this.targets = targets;
     }
 
-    public String getTarget_type() {
-        return target_type;
-    }
-
-    public MsgEntity getMsg() {
-        return msg;
+    public String getTargetType() {
+        return targetType;
     }
 
     public String getFrom() {
         return from;
     }
 
-    public List<String> getTarget() {
-        return target;
+    public List<String> getTargets() {
+        return targets;
     }
 
     public Map<String, Object> getExt() {
@@ -66,24 +58,11 @@ public class SendMessageBody {
         this.ext = ext;
     }
 
-    public static class MsgEntity {
-        private String type;
-        private String msg;
+    public String getMsg() {
+        return msg;
+    }
 
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public void setMsg(String msg) {
-            this.msg = msg;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public String getMsg() {
-            return msg;
-        }
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

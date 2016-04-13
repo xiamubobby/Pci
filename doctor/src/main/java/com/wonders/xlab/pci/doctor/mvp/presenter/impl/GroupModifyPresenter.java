@@ -111,15 +111,15 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
     }
 
     @Override
-    public void onGroupCreateSuccess(String message) {
+    public void onGroupCreateSuccess(String newGroupId, String message) {
         mListener.hideLoading();
-        mListener.onGroupCreateSuccess(message);
+        mListener.onGroupCreateSuccess(newGroupId, message);
     }
 
     public interface GroupModifyPresenterListener extends BasePresenterListener {
         void showGroupInfo(GroupModifyBean groupModifyBean);
 
-        void onGroupCreateSuccess(String message);
+        void onGroupCreateSuccess(String newGroupId, String message);
 
         void cannotCreateGroup(String message);
     }

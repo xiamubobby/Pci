@@ -23,7 +23,7 @@ public class GroupCreateModel extends DoctorBaseModel<GroupCreateEntity> impleme
 
     @Override
     protected void onSuccess(GroupCreateEntity response) {
-        mListener.onGroupCreateSuccess(response.getMessage());
+        mListener.onGroupCreateSuccess(response.getRet_values().getId(), response.getMessage());
     }
 
     @Override
@@ -37,6 +37,6 @@ public class GroupCreateModel extends DoctorBaseModel<GroupCreateEntity> impleme
     }
 
     public interface GroupCreateModelListener extends BaseModelListener {
-        void onGroupCreateSuccess(String message);
+        void onGroupCreateSuccess(String newGroupId, String message);
     }
 }

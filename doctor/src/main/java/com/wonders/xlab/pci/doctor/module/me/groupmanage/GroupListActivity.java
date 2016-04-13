@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 import im.hua.uikit.crv.CommonRecyclerView;
 
 public class GroupListActivity extends AppbarActivity implements GroupListPresenter.GroupManagePresenterListener {
+    private final int REQUEST_CODE_MODIFY = 0;
 
     @Bind(R.id.recycler_view_group_manage)
     CommonRecyclerView mRecyclerView;
@@ -72,7 +73,7 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
                 public void onItemClick(int position) {
                     Intent intent = new Intent("com.wonders.xlab.pci.doctor.GroupModifyActivity");
                     intent.putExtra(GroupModifyActivity.EXTRA_GROUP_ID, mRVAdapter.getBean(position).getGroupId());
-                    startActivity(intent);
+                    startActivityForResult(intent,REQUEST_CODE_MODIFY);
                 }
             });
             mRecyclerView.setAdapter(mRVAdapter);
@@ -133,6 +134,17 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_CODE_MODIFY:
+                if(resultCode == GroupModifyActivity.RESULT_CODE_SUCCESS)
+                    mGroupManagePresenter.getGroupList(true,AIManager.getInstance().getDoctorId());
+                break;
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_add,menu);
         return true;
@@ -147,7 +159,8 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
                     break;
                 }
                 if (mCanCreate) {
-                    startActivity(new Intent("com.wonders.xlab.pci.doctor.GroupModifyActivity"));
+                    Intent intent = new Intent("com.wonders.xlab.pci.doctor.GroupModifyActivity");
+                    startActivityForResult(intent,REQUEST_CODE_MODIFY);
                 } else {
                     showShortToast("您已经创建过小组了！");
                 }

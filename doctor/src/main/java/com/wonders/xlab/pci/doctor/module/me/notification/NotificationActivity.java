@@ -20,7 +20,7 @@ public class NotificationActivity extends AppbarActivity {
 
     @Bind(R.id.view_pager_notification)
     ViewPager mViewPager;
-    @Bind(R.id.tab_health_report)
+    @Bind(R.id.tab_notification)
     CommonTabLayout mTab;
 
     private FragmentVPAdapter mFragmentVPAdapter;
