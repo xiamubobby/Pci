@@ -2,14 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_margin="@dimen/item_interval_small"
               android:gravity="center_horizontal"
               android:orientation="vertical">
 
-    <ImageView
+    <im.hua.uikit.ForegroundImageView
         android:id="@+id/iv_group_modify_member_avatar"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        app:foregroundText="邀请ing"
+        app:foregroundTextColor="@color/text_color_primary_black"
+        app:foregroundTextSize="10sp"
+        app:showForeground="true"
+        app:foregroundColor="#e26c2222"
         android:scaleType="centerInside"/>
 
     <TextView

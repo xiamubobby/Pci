@@ -67,7 +67,7 @@ public class GroupServicesPresenter extends BasePresenter implements IGroupServi
 
                     @Override
                     public void onError(Throwable e) {
-                        mListener.showError(e.getMessage());
+                        mListener.showNetworkError(e.getMessage());
                     }
 
                     @Override
@@ -79,7 +79,7 @@ public class GroupServicesPresenter extends BasePresenter implements IGroupServi
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
 
     }
 

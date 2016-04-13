@@ -17,6 +17,7 @@ public class GroupDoctorBean implements Parcelable {
     public ObservableField<String> doctorTitle = new ObservableField<>();
     public ObservableField<String> doctorDepartment = new ObservableField<>();
     public ObservableField<Boolean> isSelected = new ObservableField<>(false);
+    public ObservableField<Boolean> hasAgreed = new ObservableField<>(false);
 
     @Override
     public boolean equals(Object o) {
@@ -49,6 +50,7 @@ public class GroupDoctorBean implements Parcelable {
         dest.writeSerializable(this.doctorTitle);
         dest.writeSerializable(this.doctorDepartment);
         dest.writeSerializable(this.isSelected);
+        dest.writeSerializable(this.hasAgreed);
     }
 
     protected GroupDoctorBean(Parcel in) {
@@ -60,6 +62,7 @@ public class GroupDoctorBean implements Parcelable {
         this.doctorTitle = (ObservableField<String>) in.readSerializable();
         this.doctorDepartment = (ObservableField<String>) in.readSerializable();
         this.isSelected = (ObservableField<Boolean>) in.readSerializable();
+        this.hasAgreed = (ObservableField<Boolean>) in.readSerializable();
     }
 
     public static final Creator<GroupDoctorBean> CREATOR = new Creator<GroupDoctorBean>() {

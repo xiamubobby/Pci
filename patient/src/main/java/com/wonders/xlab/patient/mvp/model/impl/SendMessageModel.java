@@ -53,13 +53,13 @@ public class SendMessageModel extends PatientBaseModel<SendMessageEntity> implem
         if (null != mISendMessageModel) {
             mISendMessageModel.onSendMessageSuccess(response.getRet_values());
         } else {
-            mISendMessageModel.onReceiveFailed(response.getMessage());
+            mISendMessageModel.onReceiveFailed(-1, response.getMessage());
         }
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mISendMessageModel.onReceiveFailed("发送失败，请重试！");
+    protected void onFailed(int code, String message) {
+        mISendMessageModel.onReceiveFailed(code, "发送失败，请重试！");
     }
 
     public interface SendMessageModelListener extends BaseModelListener {

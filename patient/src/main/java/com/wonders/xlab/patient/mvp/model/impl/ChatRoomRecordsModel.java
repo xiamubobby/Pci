@@ -32,8 +32,8 @@ public class ChatRoomRecordsModel extends PatientBaseModel<ChatRoomEntity> imple
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mChatRoomModelListener.onReceiveFailed(message);
+    protected void onFailed(int code, String message) {
+        mChatRoomModelListener.onReceiveFailed(code, message);
     }
 
     public interface ChatRoomModelListener extends BaseModelListener {

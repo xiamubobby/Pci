@@ -26,8 +26,8 @@ public class OrderPackageServiceModel extends PatientBaseModel<SimpleEntity> imp
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mServiceModelListener.onReceiveFailed(message);
+    protected void onFailed(int code, String message) {
+        mServiceModelListener.onReceiveFailed(code, message);
     }
 
     @Override

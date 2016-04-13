@@ -33,8 +33,8 @@ public class LoginPresenter extends BasePresenter implements LoginModel.LoginMod
     }
 
     @Override
-    public void onReceiveFailed(String message) {
-        mILoginPresenter.showError(message);
+    public void onReceiveFailed(int code, String message) {
+        mILoginPresenter.showNetworkError(message);
     }
 
     public interface LoginPresenterListener extends BasePresenterListener {

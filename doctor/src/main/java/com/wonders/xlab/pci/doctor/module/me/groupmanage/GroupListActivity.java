@@ -101,8 +101,14 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
     }
 
     @Override
-    public void showError(String message) {
+    public void showNetworkError(String message) {
+        mRecyclerView.showServerErrorView();
         showShortToast(message);
+    }
+
+    @Override
+    public void showServerError(String message) {
+
     }
 
     @Override

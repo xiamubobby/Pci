@@ -48,8 +48,8 @@ public class BPMultiSaveModel extends PatientBaseModel<SimpleEntity> {
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mBPSaveModelListener.onReceiveFailed(message);
+    protected void onFailed(int code, String message) {
+        mBPSaveModelListener.onReceiveFailed(code, message);
     }
 
     public interface BPMultiSaveModelListener extends BaseModelListener {

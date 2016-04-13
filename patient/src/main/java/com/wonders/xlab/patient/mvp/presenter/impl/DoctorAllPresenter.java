@@ -81,9 +81,9 @@ public class DoctorAllPresenter extends BasePagePresenter implements IDoctorAllP
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mDoctorAllListener.hideLoading();
-        mDoctorAllListener.showError(message);
+        mDoctorAllListener.showNetworkError(message);
     }
 
     public interface DoctorAllPresenterListener extends BasePagePresenterListener {

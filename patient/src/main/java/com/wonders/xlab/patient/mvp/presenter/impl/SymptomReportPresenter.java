@@ -82,9 +82,9 @@ public class SymptomReportPresenter extends BasePagePresenter implements ISympto
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mListener.hideLoading();
-        mListener.showError(message);
+        mListener.showNetworkError(message);
     }
 
     public interface SymptomReportPresenterListener extends BasePresenterListener {

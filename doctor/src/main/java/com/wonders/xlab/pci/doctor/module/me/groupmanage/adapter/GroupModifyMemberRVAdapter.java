@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
@@ -16,6 +15,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.hua.uikit.ForegroundImageView;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -89,7 +89,7 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
                             if (size < 9) {
                                 appendToLast(addBean);
                             }
-                            if (size > 2) {
+                            if (size >= 2) {
                                 appendToLast(minusBean);
                             }
                         }
@@ -116,7 +116,7 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
             if (size < 9) {
                 appendToLast(addBean);
             }
-            if (size > 2) {
+            if (size >= 2) {
                 appendToLast(minusBean);
             }
         }
@@ -151,14 +151,21 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
             case GroupModifyMemberBean.TYPE_MEMBER:
                 viewHolder.mTvName.setVisibility(View.VISIBLE);
                 viewHolder.mTvName.setText(bean.doctorName.get());
+                if (bean.hasAgreed.get()) {
+                    viewHolder.mIvAvatar.setShowForeground(false);
+                } else {
+                    viewHolder.mIvAvatar.setShowForeground(true);
+                }
                 ImageViewManager.setImageViewWithUrl(viewHolder.itemView.getContext(), viewHolder.mIvAvatar, bean.doctorAvatarUrl.get(), R.drawable.ic_default_avatar_doctor);
                 break;
             case GroupModifyMemberBean.TYPE_ADD:
                 viewHolder.mTvName.setVisibility(View.GONE);
+                viewHolder.mIvAvatar.setShowForeground(false);
                 viewHolder.mIvAvatar.setImageResource(R.drawable.ic_group_member_add);
                 break;
             case GroupModifyMemberBean.TYPE_MINUS:
                 viewHolder.mTvName.setVisibility(View.GONE);
+                viewHolder.mIvAvatar.setShowForeground(false);
                 viewHolder.mIvAvatar.setImageResource(R.drawable.ic_group_member_minus);
                 break;
         }
@@ -166,7 +173,7 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.iv_group_modify_member_avatar)
-        ImageView mIvAvatar;
+        ForegroundImageView mIvAvatar;
         @Bind(R.id.tv_group_modify_member_name)
         TextView mTvName;
 

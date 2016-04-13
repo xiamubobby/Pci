@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ForegroundImageView">
+        <attr name="foregroundColor" format="color"/>
+        <attr name="showForeground" format="boolean"/>
+        <attr name="foregroundText" format="string"/>
+        <attr name="foregroundTextSize" format="dimension"/>
+        <attr name="foregroundTextColor" format="color"/>
+    </declare-styleable>
+</resources>

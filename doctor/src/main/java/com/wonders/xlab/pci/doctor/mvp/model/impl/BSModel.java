@@ -28,8 +28,8 @@ public class BSModel extends DoctorBaseModel<BSEntity> {
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mBloodPressureModel.onReceiveFailed("获取血糖数据失败，请重试！");
+    protected void onFailed(int code, String message) {
+        mBloodPressureModel.onReceiveFailed(code, "获取血糖数据失败，请重试！");
     }
 
     public interface BSModelListener extends BaseModelListener {

@@ -88,9 +88,9 @@ public class ChatRoomPresenter extends BasePresenter implements ChatRoomModel.Ch
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mIChatRoomPresenter.hideLoading();
-        mIChatRoomPresenter.showError(message);
+        mIChatRoomPresenter.showNetworkError(message);
     }
 
     @Override

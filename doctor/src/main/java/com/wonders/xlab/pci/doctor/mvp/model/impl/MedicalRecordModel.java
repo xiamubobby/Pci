@@ -31,7 +31,7 @@ public class MedicalRecordModel extends DoctorBaseModel<MedicalRecordEntity> {
         MedicalRecordEntity.RetValuesEntity ret_values = response.getRet_values();
 
         if (null == ret_values) {
-            mIMedicalRecordModel.onReceiveFailed("获取就诊记录失败，请重试！");
+            mIMedicalRecordModel.onReceiveFailed(-1, "获取就诊记录失败，请重试！");
             return;
         }
 
@@ -43,8 +43,8 @@ public class MedicalRecordModel extends DoctorBaseModel<MedicalRecordEntity> {
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mIMedicalRecordModel.onReceiveFailed("获取就诊记录失败，请重试！");
+    protected void onFailed(int code, String message) {
+        mIMedicalRecordModel.onReceiveFailed(code, "获取就诊记录失败，请重试！");
     }
 
     public interface MedicalRecordModelListener extends BasePageModelListener {

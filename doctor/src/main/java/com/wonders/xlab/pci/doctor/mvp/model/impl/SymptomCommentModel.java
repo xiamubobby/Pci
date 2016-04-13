@@ -28,8 +28,8 @@ public class SymptomCommentModel extends DoctorBaseModel<SymptomCommentEntity> {
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mISymptomCommentModel.onReceiveFailed("保存备注失败，请重试！");
+    protected void onFailed(int code, String message) {
+        mISymptomCommentModel.onReceiveFailed(code, "保存备注失败，请重试！");
     }
 
     public interface SymptomCommentModelListener extends BaseModelListener {

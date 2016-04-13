@@ -62,9 +62,9 @@ public class BSSavePresenter extends BasePresenter implements IBSSavePresenter, 
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mBSSavePresenterListener.hideLoading();
-        mBSSavePresenterListener.showError(message);
+        mBSSavePresenterListener.showNetworkError(message);
     }
 
     @Override

@@ -182,7 +182,12 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
     }
 
     @Override
-    public void showError(String message) {
+    public void showNetworkError(String message) {
+
+    }
+
+    @Override
+    public void showServerError(String message) {
 
     }
 

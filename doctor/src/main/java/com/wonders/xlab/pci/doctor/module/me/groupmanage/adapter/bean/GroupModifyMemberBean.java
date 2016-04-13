@@ -45,6 +45,7 @@ public class GroupModifyMemberBean extends GroupDoctorBean{
 
     public void setDoctorBean(GroupDoctorBean bean) {
         doctorId.set(bean.doctorId.get());
+        doctorImId.set(bean.doctorImId.get());
         doctorName.set(bean.doctorName.get());
         doctorAvatarUrl.set(bean.doctorAvatarUrl.get());
     }

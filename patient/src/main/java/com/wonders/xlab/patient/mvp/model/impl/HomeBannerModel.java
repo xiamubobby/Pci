@@ -24,15 +24,15 @@ public class HomeBannerModel extends PatientBaseModel<HomeBannerEntity> implemen
     @Override
     protected void onSuccess(HomeBannerEntity response) {
         if (response.getRet_values() == null) {
-            mListener.onReceiveFailed("");
+            mListener.onReceiveFailed(-1, "");
         } else {
             mListener.onReceiveHomeBannerSuccess(response.getRet_values());
         }
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mListener.onReceiveFailed(message);
+    protected void onFailed(int code, String message) {
+        mListener.onReceiveFailed(code, message);
     }
 
     @Override

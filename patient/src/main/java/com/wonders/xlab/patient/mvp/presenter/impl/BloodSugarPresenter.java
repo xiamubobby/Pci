@@ -53,7 +53,7 @@ public class BloodSugarPresenter extends BasePagePresenter implements IBloodSuga
         List<BloodSugarEntity.RetValuesEntity.ContentEntity> contentEntityList = retValues.getContent();
 
         if (null == contentEntityList) {
-            mListener.showError("获取血糖数据失败，请重试！");
+            mListener.showNetworkError("获取血糖数据失败，请重试！");
             return;
         }
 
@@ -91,9 +91,9 @@ public class BloodSugarPresenter extends BasePagePresenter implements IBloodSuga
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mListener.hideLoading();
-        mListener.showError(message);
+        mListener.showNetworkError(message);
     }
 
     public interface BloodSugarPresenterListener extends BasePresenterListener {

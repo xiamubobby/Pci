@@ -25,7 +25,7 @@ public interface GroupManagerAPI {
     @GET("v1/doctorGroup/toDoctorGroup/{doctorId}")
     Observable<Response<GroupDetailEntity>> getGroupDetail(@Path("doctorId") String doctorId, @Query("doctorGroupId") String doctorGroupId);
 
-    @POST("v1/doctorGroup/createDoctorGroup/{doctorId}")
+    @POST("v1/doctorGroup/saveDoctorGroup/{doctorId}")
     Observable<Response<GroupCreateEntity>> createGroup(@Path("doctorId") String doctorId, @Body GroupCreateBody body);
 
     @GET("v1/doctorGroup/queryDoctorByTelOrName")

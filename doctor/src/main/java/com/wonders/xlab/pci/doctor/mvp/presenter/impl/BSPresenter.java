@@ -37,7 +37,7 @@ public class BSPresenter extends BasePresenter implements BSModel.BSModelListene
         List<BSEntity.RetValuesEntity.ContentEntity> contentEntityList = bsEntity.getRet_values().getContent();
 
         if (null == contentEntityList) {
-            mBloodPressurePresenter.showError(Constant.ERROR_MESSAGE);
+            mBloodPressurePresenter.showNetworkError(Constant.ERROR_MESSAGE);
             return;
         }
 
@@ -71,8 +71,8 @@ public class BSPresenter extends BasePresenter implements BSModel.BSModelListene
     }
 
     @Override
-    public void onReceiveFailed(String message) {
-        mBloodPressurePresenter.showError(message);
+    public void onReceiveFailed(int code, String message) {
+        mBloodPressurePresenter.showNetworkError(message);
     }
 
     public interface BSPresenterListener extends BasePresenterListener {

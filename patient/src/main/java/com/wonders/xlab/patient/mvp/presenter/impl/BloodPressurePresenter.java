@@ -54,7 +54,7 @@ public class BloodPressurePresenter extends BasePagePresenter implements IBloodP
         mListener.hideLoading();
 
         if (null == bpEntity.getRet_values() || null == bpEntity.getRet_values().getLine() || null == bpEntity.getRet_values().getTable()) {
-            mListener.showError("获取血压数据失败，请重试！");
+            mListener.showNetworkError("获取血压数据失败，请重试！");
             return;
         }
 
@@ -128,9 +128,9 @@ public class BloodPressurePresenter extends BasePagePresenter implements IBloodP
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mListener.hideLoading();
-        mListener.showError(message);
+        mListener.showNetworkError(message);
     }
 
     /**

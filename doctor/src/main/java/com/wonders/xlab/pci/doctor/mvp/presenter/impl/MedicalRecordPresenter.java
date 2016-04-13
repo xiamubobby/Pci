@@ -33,7 +33,7 @@ public class MedicalRecordPresenter extends BasePresenter implements MedicalReco
     public void onReceiveMedicalRecordSuccess(MedicalRecordEntity entity) {
         MedicalRecordEntity.RetValuesEntity valuesEntity = entity.getRet_values();
         if (null == valuesEntity) {
-            mIMedicalRecordPresenter.showError("获取数据失败，请重试！");
+            mIMedicalRecordPresenter.showNetworkError("获取数据失败，请重试！");
             return;
         }
 
@@ -64,8 +64,8 @@ public class MedicalRecordPresenter extends BasePresenter implements MedicalReco
     }
 
     @Override
-    public void onReceiveFailed(String message) {
-        mIMedicalRecordPresenter.showError(message);
+    public void onReceiveFailed(int code, String message) {
+        mIMedicalRecordPresenter.showNetworkError(message);
     }
 
     @Override

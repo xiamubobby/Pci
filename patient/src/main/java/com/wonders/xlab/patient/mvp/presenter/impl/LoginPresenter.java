@@ -34,9 +34,9 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter, Lo
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mLoginPresenterListener.hideLoading();
-        mLoginPresenterListener.showError(message);
+        mLoginPresenterListener.showNetworkError(message);
     }
 
     public interface LoginPresenterListener extends BasePresenterListener {

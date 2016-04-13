@@ -77,9 +77,9 @@ public class MedicalRecordPresenter extends BasePagePresenter implements Medical
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mPresenterListener.hideLoading();
-        mPresenterListener.showError(message);
+        mPresenterListener.showNetworkError(message);
     }
 
     @Override

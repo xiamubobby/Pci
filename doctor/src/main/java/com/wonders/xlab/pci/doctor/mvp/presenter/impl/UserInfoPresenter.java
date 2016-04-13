@@ -32,7 +32,7 @@ public class UserInfoPresenter extends BasePresenter implements UserInfoModel.Us
     public void onReceiveUserInfoSuccess(UserInfoEntity entity) {
         List<UserInfoEntity.RetValuesEntity> valuesEntity = entity.getRet_values();
         if (null == valuesEntity) {
-            mUserInfoPresenter.showError("获取数据失败，请重试1");
+            mUserInfoPresenter.showNetworkError("获取数据失败，请重试1");
             return;
         }
         if (mUserInfoPresenter != null) {
@@ -49,9 +49,9 @@ public class UserInfoPresenter extends BasePresenter implements UserInfoModel.Us
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         if (mUserInfoPresenter != null) {
-            mUserInfoPresenter.showError(message);
+            mUserInfoPresenter.showNetworkError(message);
         }
     }
 

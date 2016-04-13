@@ -28,8 +28,8 @@ public class SymptomModel extends DoctorBaseModel<SymptomEntity> {
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mISymptomModel.onReceiveFailed(message);
+    protected void onFailed(int code, String message) {
+        mISymptomModel.onReceiveFailed(code, message);
     }
 
     public interface SymptomModelListener extends BaseModelListener {

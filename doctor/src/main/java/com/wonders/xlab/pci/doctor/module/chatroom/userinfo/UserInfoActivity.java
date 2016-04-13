@@ -99,9 +99,14 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
     }
 
     @Override
-    public void showError(String message) {
+    public void showNetworkError(String message) {
         mRecyclerView.setPullLoadMoreCompleted();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showServerError(String message) {
+
     }
 
     @Override

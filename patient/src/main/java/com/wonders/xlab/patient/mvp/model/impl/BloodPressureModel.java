@@ -28,8 +28,8 @@ public class BloodPressureModel extends PatientBaseModel<BloodPressureEntity> im
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mListener.onReceiveFailed(message);
+    protected void onFailed(int code, String message) {
+        mListener.onReceiveFailed(code, message);
     }
 
     public interface BPModelListener extends BaseModelListener {

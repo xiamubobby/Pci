@@ -71,6 +71,7 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
                         bean.doctorId.set(membersEntity.getDoctorId());
                         bean.doctorImId.set(membersEntity.getDoctorImId());
                         bean.doctorName.set(membersEntity.getDoctorName());
+                        bean.hasAgreed.set(membersEntity.isAgree());
                         return bean;
                     }
                 })
@@ -104,9 +105,9 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mListener.hideLoading();
-        mListener.showError(message);
+        mListener.showNetworkError(message);
     }
 
     @Override

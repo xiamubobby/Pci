@@ -230,11 +230,16 @@ public class BloodPressureActivity extends AppbarActivity implements BPPresenter
     }
 
     @Override
-    public void showError(String message) {
+    public void showNetworkError(String message) {
         if (mRecyclerView != null) {
             mRecyclerView.setPullLoadMoreCompleted();
         }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showServerError(String message) {
+
     }
 
     @Override

@@ -34,7 +34,7 @@ public class ChatRoomModel extends DoctorBaseModel<ChatRoomEntity> {
             ChatRoomEntity.RetValuesEntity ret_values = response.getRet_values();
 
             if (null == ret_values) {
-                mChatRoomModelListener.onReceiveFailed("获取数据出错，请重试！");
+                mChatRoomModelListener.onReceiveFailed(-1, "获取数据出错，请重试！");
                 return;
             }
 
@@ -47,9 +47,9 @@ public class ChatRoomModel extends DoctorBaseModel<ChatRoomEntity> {
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
+    protected void onFailed(int code, String message) {
         if (mChatRoomModelListener != null) {
-            mChatRoomModelListener.onReceiveFailed("获取聊天记录失败，请重试！");
+            mChatRoomModelListener.onReceiveFailed(code, "获取聊天记录失败，请重试！");
         }
     }
 

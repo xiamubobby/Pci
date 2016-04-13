@@ -41,7 +41,7 @@ public class SymptomPresenter extends BasePresenter implements SymptomModel.Symp
     @Override
     public void onReceiveSymptomSuccess(SymptomEntity entity) {
         if (null == entity.getRet_values()) {
-            mISymptomPresenter.showError("获取数据出错，请重试！");
+            mISymptomPresenter.showNetworkError("获取数据出错，请重试！");
             return;
         }
         List<SymptomEntity.RetValuesEntity.ContentEntity> contentEntityList = entity.getRet_values().getContent();
@@ -63,8 +63,8 @@ public class SymptomPresenter extends BasePresenter implements SymptomModel.Symp
     }
 
     @Override
-    public void onReceiveFailed(String message) {
-        mISymptomPresenter.showError(message);
+    public void onReceiveFailed(int code, String message) {
+        mISymptomPresenter.showNetworkError(message);
     }
 
     @Override

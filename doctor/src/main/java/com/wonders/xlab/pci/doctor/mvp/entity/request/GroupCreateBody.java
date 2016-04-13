@@ -12,7 +12,7 @@ public class GroupCreateBody {
      * description : id为6的诊所阿萨德发生的发生的
      * doctors : [{"id":6,"imId":"doctor122131231"},{"id":7,"imId":"doctor122131231"}]
      */
-
+    private String id;
     private String name;
     private String description;
     /**
@@ -44,6 +44,14 @@ public class GroupCreateBody {
 
     public void setDoctors(List<DoctorsEntity> doctors) {
         this.doctors = doctors;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public static class DoctorsEntity {

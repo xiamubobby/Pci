@@ -115,11 +115,16 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
     }
 
     @Override
-    public void showError(String message) {
+    public void showNetworkError(String message) {
         if (null != mDialog) {
             mDialog.dismiss();
         }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showServerError(String message) {
+
     }
 
     @Override

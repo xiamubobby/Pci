@@ -27,8 +27,8 @@ public class GroupCreateModel extends DoctorBaseModel<GroupCreateEntity> impleme
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mListener.onReceiveFailed(message);
+    protected void onFailed(int code, String message) {
+        mListener.onReceiveFailed(code, message);
     }
 
     @Override

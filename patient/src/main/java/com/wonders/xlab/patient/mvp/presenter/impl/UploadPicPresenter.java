@@ -38,9 +38,9 @@ public class UploadPicPresenter extends BasePresenter implements IUploadPicPrese
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mUploadPicModelListener.hideLoading();
-        mUploadPicModelListener.showError(message);
+        mUploadPicModelListener.showNetworkError(message);
 
     }
 

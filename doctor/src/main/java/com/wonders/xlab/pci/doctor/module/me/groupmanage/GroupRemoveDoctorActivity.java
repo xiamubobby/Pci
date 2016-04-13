@@ -91,8 +91,13 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupRe
     }
 
     @Override
-    public void showError(String message) {
+    public void showNetworkError(String message) {
         showShortToast(message);
+    }
+
+    @Override
+    public void showServerError(String message) {
+
     }
 
     @Override

@@ -53,9 +53,9 @@ public class BPSavePresenter extends BasePresenter implements IBPSavePresenter,B
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mRecordSavePresenterListener.hideLoading();
-        mRecordSavePresenterListener.showError(message);
+        mRecordSavePresenterListener.showNetworkError(message);
     }
 
     @Override

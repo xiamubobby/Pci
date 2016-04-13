@@ -106,8 +106,13 @@ public class BSHRFragment extends BaseFragment implements BloodSugarPresenter.Bl
     }
 
     @Override
-    public void showError(String message) {
+    public void showNetworkError(String message) {
         showShortToast(message);
+    }
+
+    @Override
+    public void showServerError(String message) {
+
     }
 
     @Override

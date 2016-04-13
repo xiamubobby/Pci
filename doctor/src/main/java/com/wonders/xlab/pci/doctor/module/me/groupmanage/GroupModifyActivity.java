@@ -222,8 +222,13 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
     }
 
     @Override
-    public void showError(String message) {
+    public void showNetworkError(String message) {
         showShortToast(message);
+    }
+
+    @Override
+    public void showServerError(String message) {
+
     }
 
     @Override
@@ -324,6 +329,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
             case R.id.menu_save:
                 final GroupCreateBody body = new GroupCreateBody();
                 body.setName(mTvGroupName.getText().toString());
+                body.setId(mGroupId);
                 body.setDescription(mTvGroupDesc.getText().toString());
 
                 Observable.from(mMemberRVAdapter.getBeanList())

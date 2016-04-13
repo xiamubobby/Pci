@@ -34,7 +34,7 @@ public class PatientPresenter extends BasePresenter implements PatientModel.Pati
         mIPatientPresenter.hideLoading();
         ArrayList<PatientBean> patientBeen = new ArrayList<>();
         if (null == entity.getRet_values()) {
-            mIPatientPresenter.showError("数据为空，请重试！");
+            mIPatientPresenter.showNetworkError("数据为空，请重试！");
             return;
         }
         for (int i = 0; i < entity.getRet_values().size(); i++) {
@@ -61,9 +61,9 @@ public class PatientPresenter extends BasePresenter implements PatientModel.Pati
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mIPatientPresenter.hideLoading();
-        mIPatientPresenter.showError(message);
+        mIPatientPresenter.showNetworkError(message);
     }
 
     public interface PatientPresenterListener extends BasePresenterListener {

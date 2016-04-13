@@ -44,15 +44,15 @@ public class IdealRangeModel extends PatientBaseModel<SimpleEntity> {
     protected void onSuccess(SimpleEntity response) {
         String ret_values = response.getRet_values();
         if (null == ret_values) {
-            mIdealRangeModelListener.onReceiveFailed("获取正常值范围失败！");
+            mIdealRangeModelListener.onReceiveFailed(-1, "获取正常值范围失败！");
         } else {
             mIdealRangeModelListener.onReceiveIdealRangeSuccess(ret_values);
         }
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mIdealRangeModelListener.onReceiveFailed("获取正常值范围失败！");
+    protected void onFailed(int code, String message) {
+        mIdealRangeModelListener.onReceiveFailed(code, "获取正常值范围失败！");
     }
 
     public interface IdealRangeModelListener extends BaseModelListener {

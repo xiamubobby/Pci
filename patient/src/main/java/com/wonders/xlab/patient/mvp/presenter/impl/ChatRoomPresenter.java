@@ -98,9 +98,9 @@ public class ChatRoomPresenter extends BasePagePresenter implements IChatRoomPre
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mChatRoomPresenterListener.hideLoading();
-        mChatRoomPresenterListener.showError(message);
+        mChatRoomPresenterListener.showNetworkError(message);
     }
 
     @Override

@@ -30,7 +30,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
 
     protected abstract void onSuccess(T response);
 
-    protected abstract void onFailed(int retCode, String message);
+    protected abstract void onFailed(int code, String message);
 
     public BaseModel() {
         /**
@@ -75,33 +75,34 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                     @Override
                     public void onError(Throwable e) {
                         if (e != null && e.getMessage() != null && e.getMessage().contains("10000ms")) {
-                            onFailed(-1, "连接超时，请检查网络后重试！");
+                            onFailed(-999, "连接超时，请检查网络后重试！");
                         }
                     }
 
                     @Override
                     public void onNext(Response<T> result) {
-                        switch (result.code()) {
+                        int code = result.code();
+                        switch (code) {
                             case 401:
-                                onFailed(-1, "请确保在正确授权的情况下，再重试哦！");
+                                onFailed(code, "请确保在正确授权的情况下，再重试哦！");
                                 return;
                             case 403:
-                                onFailed(-1, "服务器拒绝了你的请求，请稍候重试吧！");
+                                onFailed(code, "服务器拒绝了你的请求，请稍候重试吧！");
                                 return;
                             case 404:
-                                onFailed(-1, "好像没有找到服务器哦，请稍候重试吧！");
+                                onFailed(code, "好像没有找到服务器哦，请稍候重试吧！");
                                 return;
                             case 405:
-                                onFailed(-1, "一定是你请求的方式有问题，换个方法吧！");
+                                onFailed(code, "一定是你请求的方式有问题，换个方法吧！");
                                 return;
                             case 415:
-                                onFailed(-1, "你上传了不支持的媒体类型哦，请先确认上传的类型是对的吧！");
+                                onFailed(code, "你上传了不支持的媒体类型哦，请先确认上传的类型是对的吧！");
                                 return;
                             case 500:
-                                onFailed(-1, "服务器内部出错啦，请稍候重试！");
+                                onFailed(code, "服务器内部出错啦，请稍候重试！");
                                 return;
                             case 503:
-                                onFailed(-1, "服务不可用咯，请稍候重试！");
+                                onFailed(code, "服务不可用咯，请稍候重试！");
                                 return;
                         }
 

@@ -49,9 +49,9 @@ public class SymptomRecordPresenter extends BasePresenter implements ISymptomPre
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mSymptomPresenterListener.hideLoading();
-        mSymptomPresenterListener.showError(message);
+        mSymptomPresenterListener.showNetworkError(message);
     }
 
     @Override

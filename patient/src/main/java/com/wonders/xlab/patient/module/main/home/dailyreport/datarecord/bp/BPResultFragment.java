@@ -187,8 +187,13 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
     }
 
     @Override
-    public void showError(String message) {
+    public void showNetworkError(String message) {
         stopConnectingAnim();
+    }
+
+    @Override
+    public void showServerError(String message) {
+
     }
 
     @Override

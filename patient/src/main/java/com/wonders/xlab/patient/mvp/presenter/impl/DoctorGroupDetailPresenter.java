@@ -136,9 +136,9 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mDoctorDetailListener.hideLoading();
-        mDoctorDetailListener.showError(message);
+        mDoctorDetailListener.showNetworkError(message);
     }
 
     @Override

@@ -45,7 +45,7 @@ public class BPPresenter extends BasePresenter implements BPModel.BPModelListene
     @Override
     public void onReceiveBPSuccess(BPEntity bpEntity) {
         if (null == bpEntity.getRet_values() || null == bpEntity.getRet_values().getLine() || null == bpEntity.getRet_values().getTable()) {
-            mBloodPressurePresenter.showError(Constant.ERROR_MESSAGE);
+            mBloodPressurePresenter.showNetworkError(Constant.ERROR_MESSAGE);
             return;
         }
 
@@ -116,8 +116,8 @@ public class BPPresenter extends BasePresenter implements BPModel.BPModelListene
     }
 
     @Override
-    public void onReceiveFailed(String message) {
-        mBloodPressurePresenter.showError(message);
+    public void onReceiveFailed(int code, String message) {
+        mBloodPressurePresenter.showNetworkError(message);
     }
 
     private float getRandom(float range, float startsfrom) {

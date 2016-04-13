@@ -38,9 +38,9 @@ public class IdealRangePresenter extends BasePresenter implements IIdealRangePre
     }
 
     @Override
-    public void onReceiveFailed(String message) {
+    public void onReceiveFailed(int code, String message) {
         mIdealRangePresenterListener.hideLoading();
-        mIdealRangePresenterListener.showError(message);
+        mIdealRangePresenterListener.showNetworkError(message);
     }
 
     public interface IdealRangePresenterListener extends BasePresenterListener {

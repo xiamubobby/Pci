@@ -26,8 +26,8 @@ public class DoctorMyModel extends PatientBaseModel<DoctorMyEntity> implements I
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mDoctorMyModelListener.onReceiveFailed(message);
+    protected void onFailed(int code, String message) {
+        mDoctorMyModelListener.onReceiveFailed(code, message);
     }
 
     @Override

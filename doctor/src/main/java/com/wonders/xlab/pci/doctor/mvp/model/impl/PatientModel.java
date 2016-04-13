@@ -29,8 +29,8 @@ public class PatientModel extends DoctorBaseModel<PatientEntity> {
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mIPatientPresenter.onReceiveFailed(message);
+    protected void onFailed(int code, String message) {
+        mIPatientPresenter.onReceiveFailed(code, message);
     }
 
     public interface PatientModelListener extends BaseModelListener {

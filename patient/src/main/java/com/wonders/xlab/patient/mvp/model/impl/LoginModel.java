@@ -36,7 +36,7 @@ public class LoginModel extends PatientBaseModel<LoginEntity> {
     protected void onSuccess(@NonNull LoginEntity response) {
         LoginEntity.RetValuesEntity retValues = response.getRet_values();
         if (null == retValues) {
-            mLoginModelListener.onReceiveFailed("登录失败，请重试！");
+            mLoginModelListener.onReceiveFailed(-1, "登录失败，请重试！");
             return;
         }
 
@@ -49,8 +49,8 @@ public class LoginModel extends PatientBaseModel<LoginEntity> {
     }
 
     @Override
-    protected void onFailed(int retCode, String message) {
-        mLoginModelListener.onReceiveFailed(message);
+    protected void onFailed(int code, String message) {
+        mLoginModelListener.onReceiveFailed(code, message);
     }
 
     public interface LoginModelListener extends BaseModelListener {

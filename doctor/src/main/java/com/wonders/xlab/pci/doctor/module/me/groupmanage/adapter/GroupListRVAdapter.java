@@ -35,7 +35,11 @@ public class GroupListRVAdapter extends SimpleRVAdapter<GroupListBean> {
         GroupListBean bean = getBean(position);
         viewHolder.binding.setBean(bean);
         //TODO 头像组件还有待开发
-        ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(), viewHolder.mIvPortrait, bean.getAvatarList().get(0), ImageViewManager.PLACE_HOLDER_EMPTY);
+        String avatarUrl = "";
+        if (bean.getAvatarList() != null && bean.getAvatarList().size() > 0) {
+            avatarUrl = bean.getAvatarList().get(0);
+        }
+        ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(), viewHolder.mIvPortrait, avatarUrl, ImageViewManager.PLACE_HOLDER_EMPTY);
 
         viewHolder.mRecyclerViewServices.setLayoutManager(new LinearLayoutManager(holder.itemView.getContext(),LinearLayoutManager.HORIZONTAL,false));
         viewHolder.mRecyclerViewServices.setItemAnimator(new DefaultItemAnimator());

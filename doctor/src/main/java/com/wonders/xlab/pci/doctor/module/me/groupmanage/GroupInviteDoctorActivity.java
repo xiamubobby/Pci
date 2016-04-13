@@ -81,7 +81,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupIn
                     @Override
                     public Boolean call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
                         Editable s = textViewAfterTextChangeEvent.editable();
-                        return !(TextUtils.isEmpty(s.toString()) || s.length() < 2 || (TextUtils.isDigitsOnly(s.toString()) && s.length() != 11));
+                        return ((TextUtils.isDigitsOnly(s.toString()) && TextUtils.isEmpty(s.toString()) || s.length() >= 2) || (TextUtils.isDigitsOnly(s.toString()) && s.length() == 11));
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -163,8 +163,13 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupIn
     }
 
     @Override
-    public void showError(String message) {
+    public void showNetworkError(String message) {
         showShortToast(message);
+    }
+
+    @Override
+    public void showServerError(String message) {
+
     }
 
     @Override

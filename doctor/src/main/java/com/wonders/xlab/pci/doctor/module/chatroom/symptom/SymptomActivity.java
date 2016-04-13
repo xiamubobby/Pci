@@ -194,7 +194,7 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
     }
 
     @Override
-    public void showError(String message) {
+    public void showNetworkError(String message) {
         mRecyclerView.setPullLoadMoreCompleted();
         if (null != mDialog) {
             mDialog.dismiss();
@@ -203,6 +203,11 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
         dismissProgressDialog();
 
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showServerError(String message) {
+
     }
 
     @Override
