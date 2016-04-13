@@ -10,7 +10,7 @@ import im.hua.library.base.mvp.IBasePresenter;
  * Created by hua on 16/4/10.
  */
 public interface IGroupRemoveDoctorPresenter extends IBasePresenter {
-    void getCurrentMemberList(String groupId);
+    void getCurrentMemberList(String doctorId, String groupId);
 
     void removeMembers(List<GroupDoctorBean> doctorBeanList);
 }

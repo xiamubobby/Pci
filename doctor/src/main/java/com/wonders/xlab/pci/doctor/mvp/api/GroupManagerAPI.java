@@ -1,9 +1,11 @@
 package com.wonders.xlab.pci.doctor.mvp.api;
 
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupAuthMembersEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupCreateEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupDetailEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupDoctorInviteEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupListEntity;
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupMembersEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupCreateBody;
 
 import retrofit2.Response;
@@ -30,4 +32,11 @@ public interface GroupManagerAPI {
 
     @GET("v1/doctorGroup/queryDoctorByTelOrName")
     Observable<Response<GroupDoctorInviteEntity>> searchDoctorByTelOrName(@Query("doctorGroupId") String doctorGroupId, @Query("tel") String tel, @Query("name") String name);
+
+    @GET("v1/doctorGroup/queryGrantDoctor/{doctorGroupId}")
+    Observable<Response<GroupAuthMembersEntity>> getAuthMemberList(@Path("doctorGroupId") String doctorGroupId);
+
+    @GET("v1/doctorGroup/getGroupMember/{doctorId}")
+    Observable<Response<GroupMembersEntity>> getMemberList(@Path("doctorId") String doctorId,@Query("doctorGroupId") String doctorGroupId);
+
 }

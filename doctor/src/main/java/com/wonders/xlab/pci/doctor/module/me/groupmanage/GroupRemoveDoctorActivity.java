@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupDoctorMultiChoiceRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
@@ -61,7 +62,7 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupRe
         mRemoveDoctorPresenter = new GroupRemoveDoctorPresenter(this);
         addPresenter(mRemoveDoctorPresenter);
 
-        mRemoveDoctorPresenter.getCurrentMemberList(mGroupId);
+        mRemoveDoctorPresenter.getCurrentMemberList(AIManager.getInstance().getDoctorId(), mGroupId);
     }
 
     @Override
