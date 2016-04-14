@@ -252,7 +252,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (null == data && requestCode != REQUEST_CODE_REMOVE_DOCTOR && requestCode != REQUEST_CODE_AUTH) {
+        if (null == data && requestCode != REQUEST_CODE_AUTH) {
             return;
         }
         switch (requestCode) {
@@ -275,11 +275,13 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                 }
                 break;
             case REQUEST_CODE_INVITE_DOCTOR:
-                String tmp = data.getStringExtra(GroupInviteDoctorActivity.EXTRA_RESULT);
-                if (!TextUtils.isEmpty(tmp)) {
-                    mGroupId = tmp;
+                if (resultCode == GroupInviteDoctorActivity.RESULT_CODE_SUCCESS) {
+                    String tmp = data.getStringExtra(GroupInviteDoctorActivity.EXTRA_RESULT);
+                    if (!TextUtils.isEmpty(tmp)) {
+                        mGroupId = tmp;
+                    }
+                    mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
                 }
-                mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
                 /*if (resultCode == GroupInviteDoctorActivity.RESULT_CODE_SUCCESS) {
                     ArrayList<GroupDoctorBean> doctorBeanArrayList = data.getParcelableArrayListExtra(GroupInviteDoctorActivity.EXTRA_RESULT);
                     Observable.from(doctorBeanArrayList)
@@ -327,8 +329,12 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                 break;
             case REQUEST_CODE_REMOVE_DOCTOR:
                 if (resultCode == GroupRemoveDoctorActivity.RESULT_CODE_SUCCESS) {
-                    mHasChanged = true;
+                    String tmp = data.getStringExtra(GroupRemoveDoctorActivity.EXTRA_RESULT);
+                    if (!TextUtils.isEmpty(tmp)) {
+                        mGroupId = tmp;
+                    }
                     mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
+
                 }
                 break;
             case REQUEST_CODE_AUTH:
@@ -337,6 +343,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                 }
                 break;
         }
+
     }
 
     @Override
@@ -360,7 +367,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                 body.setId(mGroupId);
                 body.setDescription(mTvGroupDesc.getText().toString());
 
-                mGroupModifyPresenter.createGroup(AIManager.getInstance().getDoctorId(),body);
+                mGroupModifyPresenter.createGroup(AIManager.getInstance().getDoctorId(), body);
                 break;
         }
         return super.onOptionsItemSelected(item);
