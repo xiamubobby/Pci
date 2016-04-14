@@ -19,7 +19,7 @@ public class BSModel extends DoctorBaseModel<BSEntity> {
     }
 
     public void getBSList(String userId) {
-        fetchData(mBSAPI.getBSList(userId), true);
+        request(mBSAPI.getBSList(userId), true);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class ChatRoomModel extends DoctorBaseModel<ChatRoomEntity> {
 
     public void getChatList(String groupId) {
         if (!isLast()) {
-            fetchData(mChatRoomAPI.getChatHistory(groupId, getPageIndex() + 1, getSize()), true);
+            request(mChatRoomAPI.getChatHistory(groupId, getPageIndex() + 1, getSize()), true);
         } else {
             mChatRoomModelListener.noMoreData("");
         }

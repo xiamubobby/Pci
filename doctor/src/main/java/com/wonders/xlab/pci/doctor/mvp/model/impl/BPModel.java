@@ -19,7 +19,7 @@ public class BPModel extends DoctorBaseModel<BPEntity> {
     }
 
     public void getBPList(String patientId, long startTime, long endTime) {
-        fetchData(mBPAPI.getBPList(patientId, startTime, endTime), true);
+        request(mBPAPI.getBPList(patientId, startTime, endTime), true);
     }
 
     @Override

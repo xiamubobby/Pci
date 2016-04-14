@@ -33,7 +33,7 @@ public class GroupCreateModel extends DoctorBaseModel<GroupCreateEntity> impleme
 
     @Override
     public void createGroup(String doctorId, GroupUpdateBasicInfoBody body) {
-        fetchData(mAPI.updateDoctorGroup(doctorId, body),true);
+        request(mAPI.updateDoctorGroup(doctorId, body),true);
     }
 
     public interface GroupCreateModelListener extends BaseModelListener {

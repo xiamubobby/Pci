@@ -32,7 +32,7 @@ public class GroupAuthorizeModel extends DoctorBaseModel<GroupAuthorizeEntity> i
 
     @Override
     public void authorize(String doctorId, String doctorGroupId, GroupAuthorizeBody body) {
-        fetchData(mAPI.doGroupMemberAuthorize(doctorGroupId, doctorId, body), true);
+        request(mAPI.doGroupMemberAuthorize(doctorGroupId, doctorId, body), true);
     }
 
     public interface GroupAuthorizeModelListener extends BaseModelListener {

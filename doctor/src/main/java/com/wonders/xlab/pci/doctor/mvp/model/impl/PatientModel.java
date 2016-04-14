@@ -20,7 +20,7 @@ public class PatientModel extends DoctorBaseModel<PatientEntity> {
     }
 
     public void getPatientList(String doctorId) {
-        fetchData(mPatientAPI.getPatientList(doctorId), true);
+        request(mPatientAPI.getPatientList(doctorId), true);
     }
 
     @Override

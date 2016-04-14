@@ -32,7 +32,7 @@ public class BPSingleSaveModel extends PatientBaseModel<BPSaveEntity> {
      * @param diastolicPressure
      */
     public void saveBPSingle(String patientId, long date, int heartRate, int systolicPressure, int diastolicPressure) {
-        fetchData(mBPAPI.saveBPSingle(patientId, date, heartRate, systolicPressure, diastolicPressure), true);
+        request(mBPAPI.saveBPSingle(patientId, date, heartRate, systolicPressure, diastolicPressure), true);
     }
 
     @Override

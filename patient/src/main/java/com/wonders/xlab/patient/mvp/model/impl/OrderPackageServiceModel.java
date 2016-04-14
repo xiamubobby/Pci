@@ -32,7 +32,7 @@ public class OrderPackageServiceModel extends PatientBaseModel<SimpleEntity> imp
 
     @Override
     public void orderPackage(String patientId, String packageId) {
-        fetchData(mPackageServiceAPI.orderPackage(patientId, packageId), true);
+        request(mPackageServiceAPI.orderPackage(patientId, packageId), true);
     }
 
     public interface OrderPackageServiceModelListener extends BaseModelListener {

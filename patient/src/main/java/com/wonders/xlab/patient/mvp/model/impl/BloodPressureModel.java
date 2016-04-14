@@ -20,7 +20,7 @@ public class BloodPressureModel extends PatientBaseModel<BloodPressureEntity> im
     }
 
     public void getBPList(String patientId, long startTime, long endTime, int page, int size) {
-        fetchData(mBPAPI.getBPList(patientId, startTime, endTime, page, size), true);}
+        request(mBPAPI.getBPList(patientId, startTime, endTime, page, size), true);}
 
     @Override
     protected void onSuccess(BloodPressureEntity response) {

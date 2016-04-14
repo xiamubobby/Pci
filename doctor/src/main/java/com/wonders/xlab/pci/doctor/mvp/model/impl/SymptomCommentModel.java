@@ -19,7 +19,7 @@ public class SymptomCommentModel extends DoctorBaseModel<SymptomCommentEntity> {
     }
 
     public void saveComment(String symptomId,String doctorId,String comment,boolean check) {
-        fetchData(mSymptomAPI.saveComment(symptomId,doctorId,comment,check), true);
+        request(mSymptomAPI.saveComment(symptomId,doctorId,comment,check), true);
     }
 
     @Override

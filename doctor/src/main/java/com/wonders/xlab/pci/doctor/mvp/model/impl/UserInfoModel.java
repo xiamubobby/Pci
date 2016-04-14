@@ -20,7 +20,7 @@ public class UserInfoModel extends DoctorBaseModel<UserInfoEntity> {
     }
 
     public void getUserInfo(String userId) {
-        fetchData(mUserInfoAPI.getUserInfo(userId), true);
+        request(mUserInfoAPI.getUserInfo(userId), true);
     }
 
     @Override

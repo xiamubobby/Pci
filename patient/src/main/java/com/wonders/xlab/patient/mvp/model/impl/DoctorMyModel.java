@@ -32,7 +32,7 @@ public class DoctorMyModel extends PatientBaseModel<DoctorMyEntity> implements I
 
     @Override
     public void getMyDoctors(String patientId, int page, int pageSize) {
-        fetchData(mDoctorAPI.getMyDoctors(patientId, page, pageSize), true);
+        request(mDoctorAPI.getMyDoctors(patientId, page, pageSize), true);
     }
 
     public interface DoctorMyModelListener extends BaseModelListener {

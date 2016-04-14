@@ -20,7 +20,7 @@ public class MedicalRecordModel extends PatientBaseModel<MedicalRecordEntity> {
     }
 
     public void getMedicalRecordList(String userId, int page, int pageSize) {
-        fetchData(mMedicalRecordAPI.getMedicalRecordList(userId, page, pageSize), true);
+        request(mMedicalRecordAPI.getMedicalRecordList(userId, page, pageSize), true);
     }
 
     @Override

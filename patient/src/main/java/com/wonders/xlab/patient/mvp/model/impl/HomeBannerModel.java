@@ -37,7 +37,7 @@ public class HomeBannerModel extends PatientBaseModel<HomeBannerEntity> implemen
 
     @Override
     public void getHomeBanner() {
-        fetchData(mBannerAPI.getHomeBannerList(),true);
+        request(mBannerAPI.getHomeBannerList(),true);
     }
 
     public interface HomeBannerModelListener extends BaseModelListener {

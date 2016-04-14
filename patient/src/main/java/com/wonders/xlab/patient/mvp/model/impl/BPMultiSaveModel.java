@@ -32,7 +32,7 @@ public class BPMultiSaveModel extends PatientBaseModel<SimpleEntity> {
      * @param bpEntityList
      */
     public void saveBP(String userId, BPEntityList bpEntityList) {
-        fetchData(mBPAPI.saveBP(userId, bpEntityList),true);
+        request(mBPAPI.saveBP(userId, bpEntityList),true);
     }
 
     @Override

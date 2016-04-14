@@ -20,7 +20,7 @@ public class LoginModel extends DoctorBaseModel<LoginEntity> {
 
     public void login(String tel, String password) {
 
-        fetchData(mLoginAPI.login(tel, password), true);
+        request(mLoginAPI.login(tel, password), true);
     }
 
     @Override

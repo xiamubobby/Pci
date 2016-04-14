@@ -35,7 +35,7 @@ public class GroupListModel extends DoctorBaseModel<GroupListEntity> implements 
 
     @Override
     public void getGroupList(String doctorId, int page, int size) {
-        fetchData(mAPI.getGroupList(doctorId, page, size), true);
+        request(mAPI.getGroupList(doctorId, page, size), true);
     }
 
     public interface GroupListModelListener extends BaseModelListener {

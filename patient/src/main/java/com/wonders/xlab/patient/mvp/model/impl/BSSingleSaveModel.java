@@ -32,7 +32,7 @@ public class BSSingleSaveModel extends PatientBaseModel<BSSaveEntity> {
      * @param bloodSugarValue
      */
     public void saveBSSingle(String patientId, long date, int timeIndex, float bloodSugarValue) {
-        fetchData(mBSAPI.saveBSSingle(patientId, date, timeIndex, bloodSugarValue), true);
+        request(mBSAPI.saveBSSingle(patientId, date, timeIndex, bloodSugarValue), true);
     }
 
     @Override

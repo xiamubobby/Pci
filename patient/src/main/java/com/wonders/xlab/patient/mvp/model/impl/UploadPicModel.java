@@ -47,8 +47,8 @@ public class UploadPicModel extends PatientBaseModel<SimpleEntity> implements IU
                 }
             }
 
-            fetchData(mUploadPicAPI.upload(iUserId, iTitle, builder.build()), true);
-//            fetchData(mUploadPicAPI.upload(iUserId, identityHashMap), true);
+            request(mUploadPicAPI.upload(iUserId, iTitle, builder.build()), true);
+//            request(mUploadPicAPI.upload(iUserId, identityHashMap), true);
         } else {
             onFailed(-1, "请选择要上传的图片");
         }

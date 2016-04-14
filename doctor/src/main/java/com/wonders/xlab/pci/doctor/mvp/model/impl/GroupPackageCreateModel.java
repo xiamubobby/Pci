@@ -32,7 +32,7 @@ public class GroupPackageCreateModel extends DoctorBaseModel<GroupPackageCreateE
 
     @Override
     public void createPackage(GroupPackageCreateBody body) {
-        fetchData(mAPI.createPackage(body), true);
+        request(mAPI.createPackage(body), true);
     }
 
     public interface GroupPackageCreateModelListener extends BaseModelListener {

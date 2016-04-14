@@ -32,7 +32,7 @@ public class GroupDoctorInviteModel extends DoctorBaseModel<GroupDoctorUpdateMem
 
     @Override
     public void inviteDoctors(String doctorId, GroupUpdateMemberBody body) {
-        fetchData(mAPI.inviteDoctorToGroup(doctorId, body), true);
+        request(mAPI.inviteDoctorToGroup(doctorId, body), true);
     }
 
     public interface GroupInviteDoctorModelListener extends BaseModelListener {

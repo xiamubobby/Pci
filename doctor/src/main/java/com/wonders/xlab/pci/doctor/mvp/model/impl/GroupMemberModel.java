@@ -33,7 +33,7 @@ public class GroupMemberModel extends DoctorBaseModel<GroupMembersEntity> implem
 
     @Override
     public void getMemberList(String doctorId, String doctorGroupId) {
-        fetchData(mAPI.getMemberList(doctorId, doctorGroupId),true);
+        request(mAPI.getMemberList(doctorId, doctorGroupId),true);
     }
 
     public interface GroupMemberModelListener extends BaseModelListener {

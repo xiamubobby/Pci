@@ -23,7 +23,7 @@ public class SymptomDictModel extends PatientBaseModel<SymptomEntity> implements
     }
 
     public void getSymptoms() {
-        fetchData(mSymptomAPI.getSymptomDicList(), true);
+        request(mSymptomAPI.getSymptomDicList(), true);
     }
 
 

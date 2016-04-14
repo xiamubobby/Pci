@@ -34,7 +34,7 @@ public class BSPeriodModel extends PatientBaseModel<BSPeriodEntity> implements I
 
     @Override
     public void getPeriodDic() {
-        fetchData(mPeriodAPI.getPeriodDic(Calendar.getInstance().getTimeInMillis()), true);
+        request(mPeriodAPI.getPeriodDic(Calendar.getInstance().getTimeInMillis()), true);
     }
 
     public interface BSPeriodModelListener extends BaseModelListener {

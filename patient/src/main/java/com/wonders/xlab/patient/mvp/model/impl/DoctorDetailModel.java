@@ -31,7 +31,7 @@ public class DoctorDetailModel extends PatientBaseModel<DoctorDetailEntity> impl
 
     @Override
     public void getDoctorDetailInfo(String patientId,String doctorId) {
-        fetchData(mDoctorAPI.getDoctorDetailInfo(patientId,doctorId), true);
+        request(mDoctorAPI.getDoctorDetailInfo(patientId,doctorId), true);
     }
 
     public interface DoctorDetailModelListener extends BaseModelListener {

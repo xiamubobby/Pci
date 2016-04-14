@@ -33,7 +33,7 @@ public class GroupDoctorRemoveModel extends DoctorBaseModel<GroupDoctorUpdateMem
 
     @Override
     public void removeDoctors(String doctorId, GroupUpdateMemberBody body) {
-        fetchData(mAPI.removeDoctorFromGroup(doctorId, body), true);
+        request(mAPI.removeDoctorFromGroup(doctorId, body), true);
     }
 
     public interface GroupDoctorRemoveModelListener extends BaseModelListener {

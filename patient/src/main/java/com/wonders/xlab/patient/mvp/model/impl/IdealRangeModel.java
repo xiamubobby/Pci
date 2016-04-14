@@ -28,7 +28,7 @@ public class IdealRangeModel extends PatientBaseModel<SimpleEntity> {
      * @param userId
      */
     public void fetchIdealBPRange(String userId) {
-        fetchData(mIdealRangeAPI.fetchIdealBPRange(userId), true);
+        request(mIdealRangeAPI.fetchIdealBPRange(userId), true);
     }
 
     /**
@@ -37,7 +37,7 @@ public class IdealRangeModel extends PatientBaseModel<SimpleEntity> {
      * @param userId
      */
     public void fetchIdealBSRange(String userId) {
-        fetchData(mIdealRangeAPI.fetchIdealBSRange(userId), true);
+        request(mIdealRangeAPI.fetchIdealBSRange(userId), true);
     }
 
     @Override

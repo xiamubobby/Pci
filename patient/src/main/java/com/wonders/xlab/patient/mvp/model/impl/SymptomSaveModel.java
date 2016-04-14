@@ -28,7 +28,7 @@ public class SymptomSaveModel extends PatientBaseModel<SimpleEntity> implements 
      * @param symptomIdsStr
      */
     public void saveSymptom(String userId, String[] symptomIdsStr) {
-        fetchData(mSymptomAPI.saveSymptom(userId, symptomIdsStr), true);
+        request(mSymptomAPI.saveSymptom(userId, symptomIdsStr), true);
     }
 
     @Override

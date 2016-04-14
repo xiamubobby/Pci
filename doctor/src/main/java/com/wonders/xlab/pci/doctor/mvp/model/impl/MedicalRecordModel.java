@@ -20,7 +20,7 @@ public class MedicalRecordModel extends DoctorBaseModel<MedicalRecordEntity> {
 
     public void getMedicalRecordList(String userId) {
         if (!isLast()) {
-            fetchData(mMedicalRecordAPI.getMedicalRecordList(userId, getPageIndex() + 1, getSize()), true);
+            request(mMedicalRecordAPI.getMedicalRecordList(userId, getPageIndex() + 1, getSize()), true);
         } else {
             mIMedicalRecordModel.noMoreData("");
         }

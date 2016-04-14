@@ -64,7 +64,7 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
         ext.put("fromWhoName", fromWhoName);
         body.setExt(ext);
 
-        fetchData(mSendMessageAPI.sendMessage(body,time), false);
+        request(mSendMessageAPI.sendMessage(body,time), false);
     }
 
     @Override

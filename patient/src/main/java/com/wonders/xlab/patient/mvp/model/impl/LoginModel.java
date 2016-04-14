@@ -29,7 +29,7 @@ public class LoginModel extends PatientBaseModel<LoginEntity> {
         HashMap<String, String> body = new HashMap<>();
         body.put("tel", tel);
         body.put("password", new MD5Util().encrypt(password));
-        fetchData(mLoginAPI.login(body), true);
+        request(mLoginAPI.login(body), true);
     }
 
     @Override

@@ -31,7 +31,7 @@ public class BloodSugarModel extends PatientBaseModel<BloodSugarEntity> implemen
 
     @Override
     public void getBSList(String userId, int page, int pageSize) {
-        fetchData(mBSAPI.getBSList(userId, page, pageSize),true);
+        request(mBSAPI.getBSList(userId, page, pageSize),true);
     }
 
     public interface BloodSugarModelListener extends BaseModelListener {

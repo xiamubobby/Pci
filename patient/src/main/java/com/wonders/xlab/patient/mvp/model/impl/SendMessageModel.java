@@ -41,7 +41,7 @@ public class SendMessageModel extends PatientBaseModel<SendMessageEntity> implem
         body.setTargets(targets);
         body.setExt(ext);
 
-        fetchData(mSendMessageAPI.sendMessage(body,time), false);
+        request(mSendMessageAPI.sendMessage(body,time), false);
     }
 
     @Override

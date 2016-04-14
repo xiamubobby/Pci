@@ -3,6 +3,9 @@ package im.hua.library.base.mvp.impl;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.gson.JsonParseException;
+
+import java.net.SocketTimeoutException;
 import java.util.concurrent.TimeUnit;
 
 import im.hua.library.base.mvp.IBaseModel;
@@ -40,7 +43,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
          * 如果后面okhttp更新了，可去掉，而用square的
          */
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(2, TimeUnit.SECONDS);
+        builder.connectTimeout(6, TimeUnit.SECONDS);
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(logging);
@@ -52,20 +55,14 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                 .build();
     }
 
-    private void fetchData() {
+    private void request() {
         if (mObservable == null) {
-            Log.e("BaseModel", "mObservable cannot be null, must call fetchData first!");
+            Log.e("BaseModel", "mObservable cannot be null, must call request first!");
+            onFailed(-1, "请求失败，请重新打开后再试！");
             return;
         }
 
         subscribe = mObservable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
-                /*.debounce(1000, TimeUnit.MILLISECONDS)
-                .flatMap(new Func1<Response<T>, Observable<Response<T>>>() {
-                    @Override
-                    public Observable<Response<T>> call(Response<T> tResponse) {
-                        return Observable.empty();
-                    }
-                })*/
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Response<T>>() {
 
@@ -76,12 +73,16 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (e != null && e.getMessage() != null) {
-                            if (e.getMessage().contains("10000ms")) {
+                        if (e != null) {
+                            if (e instanceof SocketTimeoutException) {
                                 onFailed(-999, "连接超时，请检查网络后重试！");
+                            } else if (e instanceof JsonParseException) {
+                                onFailed(-1, "数据解析出错，请稍候重试！");
                             } else {
                                 onFailed(-1, "请求失败，请检查网络后重试！");
                             }
+                        } else {
+                            onFailed(-1, "请求失败，请检查网络后重试！");
                         }
                     }
 
@@ -133,12 +134,12 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
         mObservable = null;
     }
 
-    protected void fetchData(@NonNull Observable<Response<T>> observable, boolean autoCancelPreFetch) {
+    protected void request(@NonNull Observable<Response<T>> observable, boolean autoCancelPreFetch) {
         if (autoCancelPreFetch && subscribe != null) {
             subscribe.unsubscribe();
             subscribe = null;
         }
         mObservable = observable;
-        fetchData();
+        request();
     }
 }
