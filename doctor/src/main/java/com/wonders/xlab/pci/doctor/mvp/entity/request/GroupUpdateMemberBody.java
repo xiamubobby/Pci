@@ -40,6 +40,7 @@ public class GroupUpdateMemberBody {
     public static class DoctorsEntity {
         private String id;
         private String imId;
+        private String name;
 
         public String getId() {
             return id;
@@ -55,6 +56,14 @@ public class GroupUpdateMemberBody {
 
         public void setImId(String imId) {
             this.imId = imId;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
         }
     }
 }

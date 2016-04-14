@@ -2,8 +2,8 @@ package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupAuthMembersEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.IGroupAuthMemberModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupAuthMemberModel;
+import com.wonders.xlab.pci.doctor.mvp.model.IGroupAuthMemberListModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupAuthMemberListListModel;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupAuthPresenter;
 
 import java.util.ArrayList;
@@ -19,13 +19,13 @@ import rx.functions.Func1;
 /**
  * Created by hua on 16/4/10.
  */
-public class GroupAuthPresenter extends BasePresenter implements IGroupAuthPresenter, GroupAuthMemberModel.GroupAuthMemberModelListener {
+public class GroupAuthPresenter extends BasePresenter implements IGroupAuthPresenter, GroupAuthMemberListListModel.GroupAuthMemberModelListener {
     private GroupAuthPresenterListener mListener;
-    private IGroupAuthMemberModel mAuthMemberModel;
+    private IGroupAuthMemberListModel mAuthMemberModel;
 
     public GroupAuthPresenter(GroupAuthPresenterListener listener) {
         mListener = listener;
-        mAuthMemberModel = new GroupAuthMemberModel(this);
+        mAuthMemberModel = new GroupAuthMemberListListModel(this);
         addModel(mAuthMemberModel);
     }
 

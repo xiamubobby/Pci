@@ -1,12 +1,14 @@
 package com.wonders.xlab.pci.doctor.mvp.api;
 
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupAuthMembersEntity;
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupAuthorizeEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupCreateEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupDetailEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupDoctorSaveEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupDoctorUpdateMemberEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupListEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupMembersEntity;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupAuthorizeBody;
 import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupUpdateBasicInfoBody;
 import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupUpdateMemberBody;
 
@@ -49,6 +51,9 @@ public interface GroupManagerAPI {
      */
     @GET("v1/doctorGroup/queryGrantDoctor/{doctorId}/{doctorGroupId}")
     Observable<Response<GroupAuthMembersEntity>> getAuthMemberList(@Path("doctorId") String doctorId, @Path("doctorGroupId") String doctorGroupId);
+
+    @POST("v1/doctorGroup/grantToDoctor/{doctorGroupId}/{grantDoctorId}")
+    Observable<Response<GroupAuthorizeEntity>> doGroupMemberAuthorize(@Path("doctorGroupId") String doctorGroupId, @Path("grantDoctorId") String doctorId, @Body GroupAuthorizeBody body);
 
     /**
      * 小组成员列表，除了自己和创建者

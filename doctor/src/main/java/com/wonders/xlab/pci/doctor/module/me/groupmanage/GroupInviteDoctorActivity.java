@@ -221,6 +221,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
                                 GroupUpdateMemberBody.DoctorsEntity entity = new GroupUpdateMemberBody.DoctorsEntity();
                                 entity.setId(groupDoctorBean.doctorId.get());
                                 entity.setImId(groupDoctorBean.doctorImId.get());
+                                entity.setName(groupDoctorBean.doctorName.get());
                                 return Observable.just(entity);
                             }
                         })

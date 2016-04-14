@@ -3,7 +3,7 @@ package com.wonders.xlab.pci.doctor.mvp.model.impl;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.GroupManagerAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupAuthMembersEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.IGroupAuthMemberModel;
+import com.wonders.xlab.pci.doctor.mvp.model.IGroupAuthMemberListModel;
 
 import java.util.List;
 
@@ -12,11 +12,11 @@ import im.hua.library.base.mvp.listener.BaseModelListener;
 /**
  * Created by hua on 16/4/13.
  */
-public class GroupAuthMemberModel extends DoctorBaseModel<GroupAuthMembersEntity> implements IGroupAuthMemberModel {
+public class GroupAuthMemberListListModel extends DoctorBaseModel<GroupAuthMembersEntity> implements IGroupAuthMemberListModel {
     private GroupAuthMemberModelListener mListener;
     private GroupManagerAPI mAPI;
 
-    public GroupAuthMemberModel(GroupAuthMemberModelListener listener) {
+    public GroupAuthMemberListListModel(GroupAuthMemberModelListener listener) {
         mListener = listener;
         mAPI = mRetrofit.create(GroupManagerAPI.class);
     }
