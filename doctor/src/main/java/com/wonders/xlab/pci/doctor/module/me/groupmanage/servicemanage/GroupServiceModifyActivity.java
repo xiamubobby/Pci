@@ -77,7 +77,7 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
         mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
         mPublished = intent.getBooleanExtra(EXTRA_PUBLISHED,false);
 
-        if (TextUtils.isEmpty(mPackageId) || TextUtils.isEmpty(mGroupId)) {
+        if (TextUtils.isEmpty(mPackageId)) {
             Log.e("GroupServiceModifyActiv", "请传入packageId");
             showShortToast("获取套餐信息失败，请重试！");
             finish();
@@ -157,12 +157,22 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
     }
 
     @Override
+    public void showLoading(String message) {
+
+    }
+
+    @Override
     public void showNetworkError(String message) {
         showShortToast(message);
     }
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 

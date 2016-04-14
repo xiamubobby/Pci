@@ -79,12 +79,22 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
     }
 
     @Override
+    public void showLoading(String message) {
+
+    }
+
+    @Override
     public void showNetworkError(String message) {
         showShortToast(message);
     }
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 

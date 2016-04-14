@@ -19,6 +19,6 @@ public interface ChatRoomAPI {
     @GET("v1/imContents/listImChatHistory/{imGroupId}")
     Observable<Response<ChatRoomEntity>> getChatRecords(@Path("imGroupId") String imGroupId, @Query("page") int page, @Query("size") int size);
 
-    @POST("v1/ims/sendContentToDoctor/{time}")
+    @POST("v1/ims/sendMessage/{time}")
     Observable<Response<SendMessageEntity>> sendMessage(@Body SendMessageBody body, @Path("time") long time);
 }

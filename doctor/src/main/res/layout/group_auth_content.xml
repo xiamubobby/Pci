@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:emptyView="@layout/common_empty"
+    app:serverErrorView="@layout/common_server_error"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     app:networkErrorView="@layout/common_network_error"
     tools:context="com.wonders.xlab.pci.doctor.module.me.groupmanage.GroupAuthActivity"

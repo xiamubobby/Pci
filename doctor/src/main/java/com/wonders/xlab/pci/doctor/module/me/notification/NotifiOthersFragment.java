@@ -14,14 +14,14 @@ import im.hua.library.base.BaseFragment;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OthersFragment extends BaseFragment {
+public class NotifiOthersFragment extends BaseFragment {
 
-    public OthersFragment() {
+    public NotifiOthersFragment() {
         // Required empty public constructor
     }
 
-    public static OthersFragment getInstance() {
-        return new OthersFragment();
+    public static NotifiOthersFragment getInstance() {
+        return new NotifiOthersFragment();
     }
 
     @Override

@@ -11,7 +11,7 @@ buildscript {
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
 //        classpath 'com.android.tools.build:gradle:1.0.0'
-//        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
     }
 }
 
@@ -20,7 +20,7 @@ allprojects {
         jcenter()
         mavenCentral()
         maven { url "https://jitpack.io" }
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }//for activeandroid
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }//for dagger
     }
 }
 

@@ -102,13 +102,23 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
     }
 
     @Override
+    public void showLoading(String message) {
+
+    }
+
+    @Override
     public void showNetworkError(String message) {
-        mRecyclerView.showServerErrorView();
+        mRecyclerView.showServerErrorView(null);
         showShortToast(message);
     }
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 
@@ -130,7 +140,7 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
 
     @Override
     public void showEmptyView() {
-        mRecyclerView.showEmptyView();
+        mRecyclerView.showEmptyView(null);
     }
 
     @Override

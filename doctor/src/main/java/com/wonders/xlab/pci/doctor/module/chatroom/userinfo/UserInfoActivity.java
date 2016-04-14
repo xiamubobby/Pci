@@ -99,6 +99,11 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
     }
 
     @Override
+    public void showLoading(String message) {
+
+    }
+
+    @Override
     public void showNetworkError(String message) {
         mRecyclerView.setPullLoadMoreCompleted();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -106,6 +111,11 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 

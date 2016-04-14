@@ -115,7 +115,12 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
         if (null == mRecyclerView) {
             return;
         }
-        mRecyclerView.showEmptyView();
+        mRecyclerView.showEmptyView(null);
+    }
+
+    @Override
+    public void showLoading(String message) {
+
     }
 
     @Override
@@ -125,6 +130,11 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 

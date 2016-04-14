@@ -230,6 +230,11 @@ public class BloodPressureActivity extends AppbarActivity implements BPPresenter
     }
 
     @Override
+    public void showLoading(String message) {
+
+    }
+
+    @Override
     public void showNetworkError(String message) {
         if (mRecyclerView != null) {
             mRecyclerView.setPullLoadMoreCompleted();
@@ -239,6 +244,11 @@ public class BloodPressureActivity extends AppbarActivity implements BPPresenter
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 

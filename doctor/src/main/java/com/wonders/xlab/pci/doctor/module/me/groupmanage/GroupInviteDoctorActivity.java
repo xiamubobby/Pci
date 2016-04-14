@@ -108,7 +108,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupIn
         });
         mGroupInvitePresenter = new GroupInviteDoctorPresenter(this);
         addPresenter(mGroupInvitePresenter);
-        mRecyclerView.showEmptyView();
+        mRecyclerView.showEmptyView(null);
     }
 
     @Override
@@ -163,12 +163,22 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupIn
     }
 
     @Override
+    public void showLoading(String message) {
+
+    }
+
+    @Override
     public void showNetworkError(String message) {
         showShortToast(message);
     }
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 
@@ -184,7 +194,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupIn
 
     @Override
     public void showEmptyView() {
-        mRecyclerView.showEmptyView();
+        mRecyclerView.showEmptyView(null);
     }
 
     @Override

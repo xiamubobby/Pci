@@ -8,5 +8,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="服务器出错啦，请稍候回来重试！"/>
+        android:text="服务器出错啦，请点击重试！"/>
 </LinearLayout>

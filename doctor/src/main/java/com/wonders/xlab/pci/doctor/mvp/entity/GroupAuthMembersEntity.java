@@ -33,13 +33,19 @@ public class GroupAuthMembersEntity extends BaseEntity {
     }
 
     public static class RetValuesEntity {
-        private int id;
+        private String id;
         private String tel;
         private String name;
         private String jobTitle;
         private String type;
         private String avatarUrl;
         private String description;
+        /**
+         * Owner  创建者
+         * Manager 管理员
+         * Member 普通成员
+         */
+        private String managerType;
         /**
          * id : 1
          * name : 第一人民医院
@@ -54,11 +60,11 @@ public class GroupAuthMembersEntity extends BaseEntity {
         private DepartmentEntity department;
         private String imId;
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 
@@ -132,6 +138,14 @@ public class GroupAuthMembersEntity extends BaseEntity {
 
         public void setImId(String imId) {
             this.imId = imId;
+        }
+
+        public String getManagerType() {
+            return managerType;
+        }
+
+        public void setManagerType(String managerType) {
+            this.managerType = managerType;
         }
 
         public static class HospitalEntity {

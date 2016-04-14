@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/item_interval_middle"
-        android:background="@drawable/shape_rectangle_primary_solid_corner"
+        android:background="@drawable/shape_rectangle_solid_primary"
         android:text="点击重试"
         android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_middle"/>

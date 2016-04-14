@@ -1,12 +1,11 @@
 package im.hua.library.base.mvp.impl;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import im.hua.library.base.mvp.IBaseModel;
 import im.hua.library.base.mvp.IBasePresenter;
+import im.hua.library.base.mvp.listener.BasePresenterListener;
 
 /**
  * Created by hua on 16/2/22.
@@ -58,5 +57,17 @@ public class BasePresenter implements IBasePresenter {
 
     public boolean isCanceled() {
         return mIsCanceled;
+    }
+
+    protected void showError(BasePresenterListener listener, int code, String message) {
+        if (null == listener) {
+            return;
+        }
+        listener.hideLoading();
+        if (code == -999) {
+            listener.showNetworkError(message);
+        } else {
+            listener.showServerError(message);
+        }
     }
 }

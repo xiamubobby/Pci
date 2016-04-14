@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'realm-android'
 
 def AppVersion = "0.1"
@@ -67,8 +67,8 @@ dependencies {
     compile project(':common')
     compile project(':uikit')
     testCompile 'junit:junit:4.12'
-    //    compile 'com.google.dagger:dagger:2.1'
-//    apt 'com.google.dagger:dagger-compiler:2.1'
     compile 'com.android.support:multidex:1.0.1'
     compile 'me.drakeet.labelview:labelview:0.8'
+    compile 'com.google.dagger:dagger:2.2'
+    apt 'com.google.dagger:dagger-compiler:2.2'
 }

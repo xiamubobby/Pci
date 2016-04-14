@@ -240,12 +240,22 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     }
 
     @Override
+    public void showLoading(String message) {
+
+    }
+
+    @Override
     public void showNetworkError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 

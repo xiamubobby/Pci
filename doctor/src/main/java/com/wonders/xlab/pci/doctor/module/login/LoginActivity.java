@@ -115,6 +115,11 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
     }
 
     @Override
+    public void showLoading(String message) {
+
+    }
+
+    @Override
     public void showNetworkError(String message) {
         if (null != mDialog) {
             mDialog.dismiss();
@@ -124,6 +129,11 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 

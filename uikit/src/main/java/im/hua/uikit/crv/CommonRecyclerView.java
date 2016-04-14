@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -322,7 +323,7 @@ public class CommonRecyclerView extends FrameLayout {
                 if (adapter.getItemCount() > 0) {
                     showContentView();
                 } else {
-                    showEmptyView();
+                    showEmptyView(null);
                 }
             }
 
@@ -330,16 +331,52 @@ public class CommonRecyclerView extends FrameLayout {
         });
     }
 
-    public void showNetworkErrorView() {
+    public interface OnEmptyViewClickListener{
+        void onClick();
+    }
+
+    public interface OnNetworkErrorViewClickListener{
+        void onClick();
+    }
+
+    public interface OnServerErrorViewClickListener{
+        void onClick();
+    }
+
+    public void showNetworkErrorView(@Nullable final OnNetworkErrorViewClickListener listener) {
         showView(mNetworkErrorView);
+        if (null != listener && null != mNetworkErrorView) {
+            mNetworkErrorView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onClick();
+                }
+            });
+        }
     }
 
-    public void showServerErrorView() {
+    public void showServerErrorView(@Nullable final OnServerErrorViewClickListener listener) {
         showView(mServerErrorView);
+        if (null != listener && mServerErrorView != null) {
+            mServerErrorView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onClick();
+                }
+            });
+        }
     }
 
-    public void showEmptyView() {
+    public void showEmptyView(@Nullable final OnEmptyViewClickListener listener) {
         showView(mEmptyView);
+        if (null != listener && null != mEmptyView) {
+            mEmptyView.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onClick();
+                }
+            });
+        }
     }
 
     public void showContentView() {

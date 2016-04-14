@@ -88,7 +88,12 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupRe
 
     @Override
     public void showEmptyView() {
-        mRecyclerView.showEmptyView();
+        mRecyclerView.showEmptyView(null);
+    }
+
+    @Override
+    public void showLoading(String message) {
+
     }
 
     @Override
@@ -98,6 +103,11 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupRe
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 

@@ -32,8 +32,8 @@ public class GroupAuthMemberModel extends DoctorBaseModel<GroupAuthMembersEntity
     }
 
     @Override
-    public void getAuthMemberList(String doctorGroupId) {
-        fetchData(mAPI.getAuthMemberList(doctorGroupId), true);
+    public void getAuthMemberList(String doctorId,String doctorGroupId) {
+        fetchData(mAPI.getAuthMemberList(doctorId,doctorGroupId), true);
     }
 
     public interface GroupAuthMemberModelListener extends BaseModelListener {

@@ -194,6 +194,11 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
     }
 
     @Override
+    public void showLoading(String message) {
+
+    }
+
+    @Override
     public void showNetworkError(String message) {
         mRecyclerView.setPullLoadMoreCompleted();
         if (null != mDialog) {
@@ -207,6 +212,11 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 

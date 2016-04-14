@@ -111,6 +111,11 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
     }
 
     @Override
+    public void showLoading(String message) {
+
+    }
+
+    @Override
     public void showNetworkError(String message) {
         mRecyclerView.setPullLoadMoreCompleted();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -118,6 +123,11 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 

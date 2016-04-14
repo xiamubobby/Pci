@@ -2,11 +2,13 @@ package com.wonders.xlab.pci.doctor.module.me.groupmanage;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupDoctorMultiChoiceRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
@@ -23,6 +25,7 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
     public final static int RESULT_CODE_SUCCESS = 0;
     public final static String EXTRA_GROUP_ID = "groupId";
     private String mGroupId;
+    private String mDoctorId;
 
     @Bind(R.id.recycler_view_group_auth)
     CommonRecyclerView mRecyclerView;
@@ -52,11 +55,18 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
             finish();
             return;
         }
+        mDoctorId = AIManager.getInstance().getDoctorId();
 
+        mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mGroupAuthPresenter.getGroupMemberList(mDoctorId,mGroupId);
+            }
+        });
         mGroupAuthPresenter = new GroupAuthPresenter(this);
         addPresenter(mGroupAuthPresenter);
 
-        mGroupAuthPresenter.getGroupMemberList(mGroupId);
+        mGroupAuthPresenter.getGroupMemberList(mDoctorId,mGroupId);
     }
 
     @Override
@@ -76,12 +86,33 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
     }
 
     @Override
+    public void showLoading(String message) {
+
+    }
+
+    @Override
     public void showNetworkError(String message) {
         showShortToast(message);
+        mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mGroupAuthPresenter.getGroupMemberList(mDoctorId,mGroupId);
+            }
+        });
     }
 
     @Override
     public void showServerError(String message) {
+        mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mGroupAuthPresenter.getGroupMemberList(mDoctorId,mGroupId);
+            }
+        });
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 

@@ -123,7 +123,12 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
 
     @Override
     public void showEmptyView() {
-        mRecyclerView.showEmptyView();
+        mRecyclerView.showEmptyView(null);
+    }
+
+    @Override
+    public void showLoading(String message) {
+
     }
 
     @Override
@@ -133,6 +138,11 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 

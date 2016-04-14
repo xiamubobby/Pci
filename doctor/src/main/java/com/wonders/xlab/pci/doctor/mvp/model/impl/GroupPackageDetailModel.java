@@ -1,5 +1,7 @@
 package com.wonders.xlab.pci.doctor.mvp.model.impl;
 
+import android.text.TextUtils;
+
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.GroupPackageAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageDetailEntity;
@@ -31,6 +33,7 @@ public class GroupPackageDetailModel extends DoctorBaseModel<GroupPackageDetailE
 
     @Override
     public void getPackageDetail(String doctorGroupId, String servicePackageId, boolean published) {
+        doctorGroupId = TextUtils.isEmpty(doctorGroupId) ? "0" : doctorGroupId;
         fetchData(mPackageAPI.getPackageDetail(doctorGroupId, servicePackageId, published), true);
     }
 

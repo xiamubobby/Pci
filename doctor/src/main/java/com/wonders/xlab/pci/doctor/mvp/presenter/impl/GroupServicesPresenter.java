@@ -80,7 +80,7 @@ public class GroupServicesPresenter extends BasePresenter implements IGroupServi
 
     @Override
     public void onReceiveFailed(int code, String message) {
-
+        showError(mListener, code, message);
     }
 
     public interface GroupServicesPresenterListener extends BasePresenterListener {

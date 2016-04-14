@@ -178,7 +178,8 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
             mTvGroupName.setText(groupModifyBean.getGroupName());
         }
         mTvGroupDesc.setText(groupModifyBean.getGroupDesc());
-        mTvAuth.setVisibility(groupModifyBean.isCanGrant() ? View.VISIBLE : View.GONE);
+//        mTvAuth.setVisibility(groupModifyBean.isCanGrant() ? View.VISIBLE : View.GONE);
+        mTvAuth.setVisibility(View.VISIBLE);
         mBtnDismiss.setVisibility(mIsAdmin ? View.VISIBLE : View.GONE);
 
         if (null == mMemberRVAdapter) {
@@ -225,8 +226,15 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
 
     @Override
     public void cannotCreateGroup(String message) {
-        showShortToast(message);
-        finish();
+        if (TextUtils.isEmpty(mGroupId)) {
+            showShortToast(message);
+            finish();
+        }
+    }
+
+    @Override
+    public void showLoading(String message) {
+
     }
 
     @Override
@@ -236,6 +244,11 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 

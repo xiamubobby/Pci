@@ -316,12 +316,22 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     }
 
     @Override
+    public void showLoading(String message) {
+
+    }
+
+    @Override
     public void showNetworkError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
 
     }
 

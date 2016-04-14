@@ -33,10 +33,23 @@ public interface GroupManagerAPI {
     @GET("v1/doctorGroup/queryDoctorByTelOrName")
     Observable<Response<GroupDoctorInviteEntity>> searchDoctorByTelOrName(@Query("doctorGroupId") String doctorGroupId, @Query("tel") String tel, @Query("name") String name);
 
-    @GET("v1/doctorGroup/queryGrantDoctor/{doctorGroupId}")
-    Observable<Response<GroupAuthMembersEntity>> getAuthMemberList(@Path("doctorGroupId") String doctorGroupId);
+    /**
+     * 可授权医生列表
+     *
+     * @param doctorGroupId
+     * @return
+     */
+    @GET("v1/doctorGroup/queryGrantDoctor/{doctorId}/{doctorGroupId}")
+    Observable<Response<GroupAuthMembersEntity>> getAuthMemberList(@Path("doctorId") String doctorId, @Path("doctorGroupId") String doctorGroupId);
 
+    /**
+     * 小组成员列表，除了自己和创建者
+     *
+     * @param doctorId
+     * @param doctorGroupId
+     * @return
+     */
     @GET("v1/doctorGroup/getGroupMember/{doctorId}")
-    Observable<Response<GroupMembersEntity>> getMemberList(@Path("doctorId") String doctorId,@Query("doctorGroupId") String doctorGroupId);
+    Observable<Response<GroupMembersEntity>> getMemberList(@Path("doctorId") String doctorId, @Query("doctorGroupId") String doctorGroupId);
 
 }
