@@ -3,6 +3,8 @@ package im.hua.library.base.mvp.impl;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.util.concurrent.TimeUnit;
+
 import im.hua.library.base.mvp.IBaseModel;
 import im.hua.library.base.mvp.entity.BaseEntity;
 import im.hua.library.base.retrofit.HttpLoggingInterceptor;
@@ -21,7 +23,6 @@ import rx.schedulers.Schedulers;
  * Created by hua on 15/12/13.
  */
 public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
-    public final static int ERROR_CODE_UNEXPECTED = -9999999;
     protected Retrofit mRetrofit;
     private Observable<Response<T>> mObservable;
     private Subscription subscribe;
@@ -39,6 +40,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
          * 如果后面okhttp更新了，可去掉，而用square的
          */
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(2, TimeUnit.SECONDS);
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(logging);
@@ -78,7 +80,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                             if (e.getMessage().contains("10000ms")) {
                                 onFailed(-999, "连接超时，请检查网络后重试！");
                             } else {
-                                onFailed(-1, e.getMessage());
+                                onFailed(-1, "请求失败，请检查网络后重试！");
                             }
                         }
                     }

@@ -13,28 +13,29 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
  * Created by hua on 16/2/22.
  */
 public class PatientPresenter extends BasePresenter implements PatientModel.PatientModelListener {
-    private PatientPresenterListener mIPatientPresenter;
+    private PatientPresenterListener mListener;
     private PatientModel mPatientModel;
 
     private int mPageIndex = 0;
     private boolean mIsLast = false;
 
-    public PatientPresenter(PatientPresenterListener IPatientPresenter) {
-        mIPatientPresenter = IPatientPresenter;
+    public PatientPresenter(PatientPresenterListener Listener) {
+        mListener = Listener;
         mPatientModel = new PatientModel(this);
         addModel(mPatientModel);
     }
 
     public void getPatientList(String doctorId) {
+        mListener.showLoading("");
         mPatientModel.getPatientList(doctorId);
     }
 
     @Override
     public void onReceivePatientSuccess(PatientEntity entity) {
-        mIPatientPresenter.hideLoading();
+        mListener.hideLoading();
         ArrayList<PatientBean> patientBeen = new ArrayList<>();
         if (null == entity.getRet_values()) {
-            mIPatientPresenter.showNetworkError("数据为空，请重试！");
+            mListener.showEmptyView("数据为空，请重试！");
             return;
         }
         for (int i = 0; i < entity.getRet_values().size(); i++) {
@@ -56,18 +57,18 @@ public class PatientPresenter extends BasePresenter implements PatientModel.Pati
             patientBeen.add(bean);
         }
 
-        mIPatientPresenter.showPatientList(patientBeen);
+        mListener.showPatientList(patientBeen);
 
     }
 
     @Override
     public void onReceiveFailed(int code, String message) {
-        mIPatientPresenter.hideLoading();
-        mIPatientPresenter.showNetworkError(message);
+        showError(mListener, code, message);
     }
 
     public interface PatientPresenterListener extends BasePresenterListener {
         void showPatientList(ArrayList<PatientBean> patientBeen);
+
         void appendPatientList(ArrayList<PatientBean> patientBeen);
     }
 }

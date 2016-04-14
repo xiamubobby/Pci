@@ -108,7 +108,7 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
 
     @Override
     public void showNetworkError(String message) {
-        mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+        mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
             @Override
             public void onClick() {
                 mGroupManagePresenter.getGroupList(true, AIManager.getInstance().getDoctorId());

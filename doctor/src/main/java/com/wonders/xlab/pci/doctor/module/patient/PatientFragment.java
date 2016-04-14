@@ -33,7 +33,7 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
     private PatientPresenter mPatientPresenter;
 
     @Bind(R.id.recycler_view_patient)
-    CommonRecyclerView mRecyclerViewPatient;
+    CommonRecyclerView mRecyclerView;
 
     private PatientRVAdapter mPatientRVAdapter;
 
@@ -60,16 +60,15 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerViewPatient.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
-        mRecyclerViewPatient.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
-        mRecyclerViewPatient.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        mRecyclerView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
+        mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mPatientPresenter.getPatientList(AIManager.getInstance().getDoctorId());
             }
         });
 
-        mRecyclerViewPatient.setRefreshing(true);
         mPatientPresenter.getPatientList(AIManager.getInstance().getDoctorId());
     }
 
@@ -96,7 +95,7 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
                 }
             });
         }
-        mRecyclerViewPatient.setAdapter(mPatientRVAdapter);
+        mRecyclerView.setAdapter(mPatientRVAdapter);
     }
 
     @Override
@@ -119,26 +118,41 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
 
     @Override
     public void showLoading(String message) {
-
+        mRecyclerView.setRefreshing(true);
     }
 
     @Override
     public void showNetworkError(String message) {
-        showShortToast(message);
+        mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mPatientPresenter.getPatientList(AIManager.getInstance().getDoctorId());
+            }
+        });
     }
 
     @Override
     public void showServerError(String message) {
-
+        mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mPatientPresenter.getPatientList(AIManager.getInstance().getDoctorId());
+            }
+        });
     }
 
     @Override
     public void showEmptyView(String message) {
-
+        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+                mPatientPresenter.getPatientList(AIManager.getInstance().getDoctorId());
+            }
+        });
     }
 
     @Override
     public void hideLoading() {
-        mRecyclerViewPatient.hideRefreshOrLoadMore(true,true);
+        mRecyclerView.hideRefreshOrLoadMore(true,true);
     }
 }

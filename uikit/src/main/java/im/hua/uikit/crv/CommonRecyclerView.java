@@ -18,6 +18,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
 
@@ -77,6 +78,10 @@ public class CommonRecyclerView extends FrameLayout {
     private TranslateAnimation hideReverseAnimation = new TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
             Animation.RELATIVE_TO_SELF, 0.2f, Animation.RELATIVE_TO_SELF, -1.0f);
+
+    private Animation fadeIn = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
+
+    private Animation fadeOut = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out);
 
     public CommonRecyclerView(Context context) {
         this(context, null);
@@ -331,15 +336,15 @@ public class CommonRecyclerView extends FrameLayout {
         });
     }
 
-    public interface OnEmptyViewClickListener{
+    public interface OnEmptyViewClickListener {
         void onClick();
     }
 
-    public interface OnNetworkErrorViewClickListener{
+    public interface OnNetworkErrorViewClickListener {
         void onClick();
     }
 
-    public interface OnServerErrorViewClickListener{
+    public interface OnServerErrorViewClickListener {
         void onClick();
     }
 
@@ -349,6 +354,7 @@ public class CommonRecyclerView extends FrameLayout {
             mNetworkErrorView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    showLoadingView();
                     listener.onClick();
                 }
             });
@@ -361,6 +367,7 @@ public class CommonRecyclerView extends FrameLayout {
             mServerErrorView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    showLoadingView();
                     listener.onClick();
                 }
             });
@@ -373,6 +380,7 @@ public class CommonRecyclerView extends FrameLayout {
             mEmptyView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    showLoadingView();
                     listener.onClick();
                 }
             });
@@ -383,12 +391,38 @@ public class CommonRecyclerView extends FrameLayout {
         showView(mRefreshView);
     }
 
-    private void showView(View view) {
+    public void showLoadingView() {
+        showView(mLoadingView);
+    }
+
+    private void showView(final View view) {
         if (null != view) {
             for (int i = 0; i < this.getChildCount(); i++) {
-                this.getChildAt(i).setVisibility(GONE);
+                final View childAt = this.getChildAt(i);
+                if (childAt.getVisibility() == VISIBLE) {
+                    fadeOut.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            childAt.setVisibility(INVISIBLE);
+                            view.setVisibility(VISIBLE);
+                            view.startAnimation(fadeIn);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+
+                        }
+                    });
+                    childAt.startAnimation(fadeOut);
+                    break;
+                }
+
             }
-            view.setVisibility(VISIBLE);
         }
     }
 

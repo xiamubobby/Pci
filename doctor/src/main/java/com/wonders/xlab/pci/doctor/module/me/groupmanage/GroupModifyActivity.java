@@ -170,8 +170,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
             mTvGroupName.setText(groupModifyBean.getGroupName());
         }
         mTvGroupDesc.setText(groupModifyBean.getGroupDesc());
-//        mTvAuth.setVisibility(groupModifyBean.isCanGrant() ? View.VISIBLE : View.GONE);
-        mTvAuth.setVisibility(View.VISIBLE);
+        mTvAuth.setVisibility(groupModifyBean.isCanGrant() ? View.VISIBLE : View.GONE);
         mBtnDismiss.setVisibility(mIsAdmin ? View.VISIBLE : View.GONE);
 
         if (null == mMemberRVAdapter) {
