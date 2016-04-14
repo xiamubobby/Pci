@@ -134,7 +134,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
     }
 
     @Override
-    public void showEmptyView() {
+    public void showEmptyView(String message) {
         mRecyclerView.showEmptyView(null);
         OttoManager.post(new DoctorTabChangeOtto(1));
     }
@@ -151,11 +151,6 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
 
     @Override
     public void showServerError(String message) {
-
-    }
-
-    @Override
-    public void showEmptyView(String message) {
 
     }
 

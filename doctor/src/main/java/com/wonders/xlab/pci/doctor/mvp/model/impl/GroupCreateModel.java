@@ -3,7 +3,7 @@ package com.wonders.xlab.pci.doctor.mvp.model.impl;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.GroupManagerAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupCreateEntity;
-import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupCreateBody;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupUpdateBasicInfoBody;
 import com.wonders.xlab.pci.doctor.mvp.model.IGroupCreateModel;
 
 import im.hua.library.base.mvp.listener.BaseModelListener;
@@ -32,8 +32,8 @@ public class GroupCreateModel extends DoctorBaseModel<GroupCreateEntity> impleme
     }
 
     @Override
-    public void createGroup(String doctorId, GroupCreateBody body) {
-        fetchData(mAPI.createGroup(doctorId, body),true);
+    public void createGroup(String doctorId, GroupUpdateBasicInfoBody body) {
+        fetchData(mAPI.updateDoctorGroup(doctorId, body),true);
     }
 
     public interface GroupCreateModelListener extends BaseModelListener {

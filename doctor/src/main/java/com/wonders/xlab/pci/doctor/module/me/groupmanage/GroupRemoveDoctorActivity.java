@@ -12,17 +12,23 @@ import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupDoctorMultiChoiceRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupUpdateMemberBody;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupRemoveDoctorPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupRemoveDoctorPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupDoctorRemovePresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.uikit.crv.CommonRecyclerView;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
 
-public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupRemoveDoctorPresenter.GroupRemoveDoctorPresenterListener {
+public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupDoctorRemovePresenter.GroupRemoveDoctorPresenterListener {
     public final static int RESULT_CODE_SUCCESS = 0;
+    public final static String EXTRA_RESULT = "result";
 
     public final static String EXTRA_GROUP_ID = "groupId";
 
@@ -58,8 +64,8 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupRe
             return;
         }
 
-        mRecyclerView.addItemDecoration(new VerticalItemDecoration(this,getResources().getColor(R.color.divider),1));
-        mRemoveDoctorPresenter = new GroupRemoveDoctorPresenter(this);
+        mRecyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
+        mRemoveDoctorPresenter = new GroupDoctorRemovePresenter(this);
         addPresenter(mRemoveDoctorPresenter);
 
         mRemoveDoctorPresenter.getCurrentMemberList(AIManager.getInstance().getDoctorId(), mGroupId);
@@ -75,9 +81,11 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupRe
     }
 
     @Override
-    public void removeSuccess() {
+    public void removeSuccess(String newGroupId) {
         dismissProgressDialog();
-        setResult(RESULT_CODE_SUCCESS);
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_RESULT, newGroupId);
+        setResult(RESULT_CODE_SUCCESS, intent);
         finish();
     }
 
@@ -87,38 +95,49 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupRe
     }
 
     @Override
-    public void showEmptyView() {
-        mRecyclerView.showEmptyView(null);
+    public void showEmptyView(String message) {
+        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+                mRemoveDoctorPresenter.getCurrentMemberList(AIManager.getInstance().getDoctorId(), mGroupId);
+            }
+        });
     }
 
     @Override
     public void showLoading(String message) {
-
+        mRecyclerView.setRefreshing(true);
     }
 
     @Override
     public void showNetworkError(String message) {
-        showShortToast(message);
+        mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mRemoveDoctorPresenter.getCurrentMemberList(AIManager.getInstance().getDoctorId(), mGroupId);
+            }
+        });
     }
 
     @Override
     public void showServerError(String message) {
-
-    }
-
-    @Override
-    public void showEmptyView(String message) {
-
+        mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mRemoveDoctorPresenter.getCurrentMemberList(AIManager.getInstance().getDoctorId(), mGroupId);
+            }
+        });
     }
 
     @Override
     public void hideLoading() {
         mRecyclerView.hideRefreshOrLoadMore(true, true);
+        dismissProgressDialog();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_remove,menu);
+        getMenuInflater().inflate(R.menu.menu_remove, menu);
         return true;
     }
 
@@ -126,8 +145,44 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupRe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_remove:
-                showProgressDialog("","正在移除，请稍候...");
-                mRemoveDoctorPresenter.removeMembers(mMultiChoiceRVAdapter.getBeanList());
+                if (null == mMultiChoiceRVAdapter || mMultiChoiceRVAdapter.getItemCount() <= 0) {
+                    finish();
+                    break;
+                }
+                Observable.from(mMultiChoiceRVAdapter.getBeanList())
+                        .flatMap(new Func1<GroupDoctorBean, Observable<GroupUpdateMemberBody.DoctorsEntity>>() {
+                            @Override
+                            public Observable<GroupUpdateMemberBody.DoctorsEntity> call(GroupDoctorBean groupDoctorBean) {
+                                GroupUpdateMemberBody.DoctorsEntity entity = new GroupUpdateMemberBody.DoctorsEntity();
+                                entity.setId(groupDoctorBean.doctorId.get());
+                                entity.setImId(groupDoctorBean.doctorImId.get());
+                                return Observable.just(entity);
+                            }
+                        })
+                        .subscribe(new Subscriber<GroupUpdateMemberBody.DoctorsEntity>() {
+                            List<GroupUpdateMemberBody.DoctorsEntity> mDoctorsEntityList = new ArrayList<>();
+
+                            @Override
+                            public void onCompleted() {
+                                GroupUpdateMemberBody body = new GroupUpdateMemberBody();
+                                body.setDoctors(mDoctorsEntityList);
+                                body.setId(mGroupId);
+                                showProgressDialog("", "正在移除组员，请稍候...", null);
+                                mRemoveDoctorPresenter.removeMembers(AIManager.getInstance().getDoctorId(), body);
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                showShortToast(e.getMessage());
+                            }
+
+                            @Override
+                            public void onNext(GroupUpdateMemberBody.DoctorsEntity doctorsEntity) {
+                                mDoctorsEntityList.add(doctorsEntity);
+                            }
+                        });
+
                 break;
         }
         return super.onOptionsItemSelected(item);

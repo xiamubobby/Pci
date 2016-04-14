@@ -2,7 +2,6 @@ package com.wonders.xlab.pci.doctor.module.me.groupmanage;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,12 +19,14 @@ import com.jakewharton.rxbinding.widget.TextViewAfterTextChangeEvent;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupDoctorMultiChoiceRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupInviteSelectedDoctorRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupUpdateMemberBody;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupInviteDoctorPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupInviteDoctorPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupDoctorInvitePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +36,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.uikit.crv.CommonRecyclerView;
 import im.hua.utils.KeyboardUtil;
+import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 
-public class GroupInviteDoctorActivity extends AppbarActivity implements GroupInviteDoctorPresenter.GroupInvitePresenterListener {
+public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDoctorInvitePresenter.GroupInvitePresenterListener {
     public final static int RESULT_CODE_SUCCESS = 0;
     public final static String EXTRA_RESULT = "result";
 
@@ -75,7 +78,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupIn
         }
 
         RxTextView.afterTextChangeEvents(mEtSearch)
-                .throttleFirst(1000,TimeUnit.MILLISECONDS)
+                .throttleFirst(1000, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .filter(new Func1<TextViewAfterTextChangeEvent, Boolean>() {
                     @Override
@@ -90,7 +93,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupIn
                     public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
                         String s = textViewAfterTextChangeEvent.editable().toString();
                         mRecyclerView.setRefreshing(true);
-                        mGroupInvitePresenter.searchByNameOrTel(mGroupId, s);
+                        mGroupInvitePresenter.searchByNameOrTel(AIManager.getInstance().getDoctorId(), mGroupId, s);
                     }
                 });
 
@@ -106,7 +109,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupIn
                 return false;
             }
         });
-        mGroupInvitePresenter = new GroupInviteDoctorPresenter(this);
+        mGroupInvitePresenter = new GroupDoctorInvitePresenter(this);
         addPresenter(mGroupInvitePresenter);
         mRecyclerView.showEmptyView(null);
     }
@@ -158,33 +161,37 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupIn
     }
 
     @Override
-    public void appendDoctorList(List<GroupDoctorBean> doctorBeanList) {
-
+    public void inviteDoctorSuccess(String newDoctorGroupId) {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_RESULT, newDoctorGroupId);
+        setResult(RESULT_CODE_SUCCESS, intent);
+        finish();
     }
 
     @Override
     public void showLoading(String message) {
-
+        mRecyclerView.setRefreshing(true);
     }
 
     @Override
     public void showNetworkError(String message) {
-        showShortToast(message);
+        mRecyclerView.showNetworkErrorView(null);
     }
 
     @Override
     public void showServerError(String message) {
-
+        mRecyclerView.showServerErrorView(null);
     }
 
     @Override
     public void showEmptyView(String message) {
-
+        mRecyclerView.showEmptyView(null);
     }
 
     @Override
     public void hideLoading() {
-        mRecyclerView.hideRefreshOrLoadMore(true,true);
+        mRecyclerView.hideRefreshOrLoadMore(true, true);
+        dismissProgressDialog();
     }
 
     @Override
@@ -193,13 +200,8 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupIn
     }
 
     @Override
-    public void showEmptyView() {
-        mRecyclerView.showEmptyView(null);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_confirm,menu);
+        getMenuInflater().inflate(R.menu.menu_confirm, menu);
         return true;
     }
 
@@ -207,14 +209,44 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupIn
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_confirm:
-                if (null == mSelectedDoctorRVAdapter) {
+                if (null == mSelectedDoctorRVAdapter || mSelectedDoctorRVAdapter.getItemCount() <= 0) {
                     finish();
-                    return super.onOptionsItemSelected(item);
+                    break;
                 }
-                Intent intent = new Intent();
-                intent.putParcelableArrayListExtra(EXTRA_RESULT, (ArrayList<? extends Parcelable>) mSelectedDoctorRVAdapter.getBeanList());
-                setResult(RESULT_CODE_SUCCESS,intent);
-                finish();
+
+                Observable.from(mSelectedDoctorRVAdapter.getBeanList())
+                        .flatMap(new Func1<GroupDoctorBean, Observable<GroupUpdateMemberBody.DoctorsEntity>>() {
+                            @Override
+                            public Observable<GroupUpdateMemberBody.DoctorsEntity> call(GroupDoctorBean groupDoctorBean) {
+                                GroupUpdateMemberBody.DoctorsEntity entity = new GroupUpdateMemberBody.DoctorsEntity();
+                                entity.setId(groupDoctorBean.doctorId.get());
+                                entity.setImId(groupDoctorBean.doctorImId.get());
+                                return Observable.just(entity);
+                            }
+                        })
+                        .subscribe(new Subscriber<GroupUpdateMemberBody.DoctorsEntity>() {
+                            List<GroupUpdateMemberBody.DoctorsEntity> mDoctorsEntityList = new ArrayList<>();
+
+                            @Override
+                            public void onCompleted() {
+                                GroupUpdateMemberBody body = new GroupUpdateMemberBody();
+                                body.setDoctors(mDoctorsEntityList);
+                                body.setId(mGroupId);
+                                showProgressDialog("","正在发送邀请，请稍候...", null);
+                                mGroupInvitePresenter.inviteDoctors(AIManager.getInstance().getDoctorId(), body);
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(GroupUpdateMemberBody.DoctorsEntity doctorsEntity) {
+                                mDoctorsEntityList.add(doctorsEntity);
+                            }
+                        });
+
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -1,8 +1,12 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
-import com.wonders.xlab.pci.doctor.mvp.entity.GroupDoctorInviteEntity;
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupDoctorSaveEntity;
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupDoctorUpdateMemberEntity;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupUpdateMemberBody;
+import com.wonders.xlab.pci.doctor.mvp.model.IGroupDoctorInviteModel;
 import com.wonders.xlab.pci.doctor.mvp.model.IGroupDoctorSearchModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupDoctorInviteModel;
 import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupDoctorSearchModel;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupInviteDoctorPresenter;
 
@@ -15,32 +19,41 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
 
+
 /**
  * Created by hua on 16/4/8.
  */
-public class GroupInviteDoctorPresenter extends BasePagePresenter implements IGroupInviteDoctorPresenter, GroupDoctorSearchModel.GroupDoctorSearchModelListener {
+public class GroupDoctorInvitePresenter extends BasePagePresenter implements IGroupInviteDoctorPresenter, GroupDoctorSearchModel.GroupDoctorSearchModelListener, GroupDoctorInviteModel.GroupInviteDoctorModelListener {
     private GroupInvitePresenterListener mListener;
     private IGroupDoctorSearchModel mSearchModel;
+    private IGroupDoctorInviteModel mDoctorInviteModel;
 
-    public GroupInviteDoctorPresenter(GroupInvitePresenterListener listener) {
+    public GroupDoctorInvitePresenter(GroupInvitePresenterListener listener) {
         mListener = listener;
         mSearchModel = new GroupDoctorSearchModel(this);
+        mDoctorInviteModel = new GroupDoctorInviteModel(this);
+        addModel(mSearchModel);
+        addModel(mDoctorInviteModel);
     }
 
     @Override
-    public void searchByNameOrTel(String doctorGroupId, String searchKey) {
-        mSearchModel.searchDoctorByTelOrName(doctorGroupId, searchKey, searchKey);
-
+    public void searchByNameOrTel(String doctorId, String doctorGroupId, String searchKey) {
+        mSearchModel.searchDoctorByTelOrName(doctorId, doctorGroupId, searchKey, searchKey);
     }
 
     @Override
-    public void onSearchDoctorSuccess(List<GroupDoctorInviteEntity.RetValuesEntity> valuesEntityList) {
+    public void inviteDoctors(String doctorId, GroupUpdateMemberBody body) {
+        mDoctorInviteModel.inviteDoctors(doctorId, body);
+    }
+
+    @Override
+    public void onSearchDoctorSuccess(List<GroupDoctorSaveEntity.RetValuesEntity> valuesEntityList) {
         mListener.hideLoading();
 
         Observable.from(valuesEntityList)
-                .flatMap(new Func1<GroupDoctorInviteEntity.RetValuesEntity, Observable<GroupDoctorBean>>() {
+                .flatMap(new Func1<GroupDoctorSaveEntity.RetValuesEntity, Observable<GroupDoctorBean>>() {
                     @Override
-                    public Observable<GroupDoctorBean> call(GroupDoctorInviteEntity.RetValuesEntity valuesEntity) {
+                    public Observable<GroupDoctorBean> call(GroupDoctorSaveEntity.RetValuesEntity valuesEntity) {
                         GroupDoctorBean bean = new GroupDoctorBean();
                         bean.doctorId.set(valuesEntity.getId());
                         bean.doctorImId.set(valuesEntity.getImId());
@@ -79,9 +92,15 @@ public class GroupInviteDoctorPresenter extends BasePagePresenter implements IGr
         mListener.showNetworkError(message);
     }
 
+    @Override
+    public void onInviteDoctorSuccess(GroupDoctorUpdateMemberEntity.RetValuesEntity valuesEntity) {
+        mListener.hideLoading();
+        mListener.inviteDoctorSuccess(valuesEntity.getDoctorGroupId());
+    }
+
     public interface GroupInvitePresenterListener extends BasePagePresenterListener {
         void showDoctorList(List<GroupDoctorBean> doctorBeanList);
 
-        void appendDoctorList(List<GroupDoctorBean> doctorBeanList);
+        void inviteDoctorSuccess(String newDoctorGroupId);
     }
 }

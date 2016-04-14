@@ -267,7 +267,7 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
 
     @Override
     public void uploading() {
-        showProgressDialog("", "正在上传图片，请稍候...");
+        showProgressDialog("", "正在上传图片，请稍候...", null);
     }
 
     @Override

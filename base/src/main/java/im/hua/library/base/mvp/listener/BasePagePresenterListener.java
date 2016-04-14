@@ -5,6 +5,4 @@ package im.hua.library.base.mvp.listener;
  */
 public interface BasePagePresenterListener extends BasePresenterListener{
     void showReachTheLastPageNotice(String message);
-
-    void showEmptyView();
 }

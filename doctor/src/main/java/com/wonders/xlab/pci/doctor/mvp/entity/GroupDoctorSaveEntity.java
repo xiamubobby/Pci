@@ -6,8 +6,9 @@ import im.hua.library.base.mvp.entity.BaseEntity;
 
 /**
  * Created by hua on 16/4/12.
+ *
  */
-public class GroupDoctorInviteEntity extends BaseEntity {
+public class GroupDoctorSaveEntity extends BaseEntity {
 
     /**
      * id : 6

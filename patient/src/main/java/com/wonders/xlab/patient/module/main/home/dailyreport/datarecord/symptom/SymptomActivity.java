@@ -233,7 +233,7 @@ public class SymptomActivity extends AppbarActivity implements SymptomRecordPres
                         symptomStr[i] = mSelectedSymptomMap.values().toArray()[i].toString();
                     }
 
-                    showProgressDialog("","正在保存，请稍候...");
+                    showProgressDialog("","正在保存，请稍候...", null);
 
                     mSymptomPresenter.saveSymptom(AIManager.getInstance().getPatientId(), symptomStr);
                 } else {

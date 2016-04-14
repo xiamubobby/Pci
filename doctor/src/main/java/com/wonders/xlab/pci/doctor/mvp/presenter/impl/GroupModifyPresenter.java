@@ -3,7 +3,7 @@ package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyMemberBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupDetailEntity;
-import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupCreateBody;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupUpdateBasicInfoBody;
 import com.wonders.xlab.pci.doctor.mvp.model.IGroupCreateModel;
 import com.wonders.xlab.pci.doctor.mvp.model.IGroupDetailModel;
 import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupCreateModel;
@@ -42,7 +42,7 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
     }
 
     @Override
-    public void createGroup(String doctorId, GroupCreateBody body) {
+    public void createGroup(String doctorId, GroupUpdateBasicInfoBody body) {
         mCreateModel.createGroup(doctorId,body);
     }
 

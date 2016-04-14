@@ -138,7 +138,7 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        showProgressDialog("", "正在保存，请稍候...");
+                        showProgressDialog("", "正在保存，请稍候...", null);
 
                         mSymptomPresenter.saveComment(mEditingSymptomBean.getSymptomId(), AIManager.getInstance().getDoctorId(), text.getText().toString(), checkBox.isChecked());
 

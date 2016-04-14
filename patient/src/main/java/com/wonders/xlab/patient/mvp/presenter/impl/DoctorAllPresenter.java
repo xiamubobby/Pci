@@ -73,7 +73,7 @@ public class DoctorAllPresenter extends BasePagePresenter implements IDoctorAllP
             mDoctorAllListener.appendAllDoctorList(doctorItemBeanArrayList);
         } else {
             if (doctorItemBeanArrayList.size() <= 0) {
-                mDoctorAllListener.showEmptyView();
+                mDoctorAllListener.showEmptyView("");
                 return;
             }
             mDoctorAllListener.showAllDoctorList(doctorItemBeanArrayList);

@@ -79,7 +79,7 @@ public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPre
             mDoctorMyListener.appendMyDoctorList(doctorItemBeanArrayList);
         } else {
             if (doctorItemBeanArrayList.size() <= 0) {
-                mDoctorMyListener.showEmptyView();
+                mDoctorMyListener.showEmptyView("");
                 return;
             }
             mDoctorMyListener.showMyDoctorList(doctorItemBeanArrayList);

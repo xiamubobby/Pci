@@ -65,7 +65,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
             return;
         }
 
-        showProgressDialog("", "正在登录，请稍候...");
+        showProgressDialog("", "正在登录，请稍候...", null);
         mLoginPresenter.login(tel, password);
     }
 

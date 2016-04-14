@@ -44,7 +44,7 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
         ButterKnife.bind(this);
 
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addItemDecoration(new VerticalItemDecoration(this,getResources().getColor(R.color.divider),8));
+        mRecyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 8));
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -61,7 +61,6 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
         mGroupManagePresenter = new GroupListPresenter(this);
         addPresenter(mGroupManagePresenter);
 
-        mRecyclerView.setRefreshing(true);
         mGroupManagePresenter.getGroupList(true, AIManager.getInstance().getDoctorId());
     }
 
@@ -73,7 +72,7 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
                 public void onItemClick(int position) {
                     Intent intent = new Intent("com.wonders.xlab.pci.doctor.GroupModifyActivity");
                     intent.putExtra(GroupModifyActivity.EXTRA_GROUP_ID, mRVAdapter.getBean(position).getGroupId());
-                    startActivityForResult(intent,REQUEST_CODE_MODIFY);
+                    startActivityForResult(intent, REQUEST_CODE_MODIFY);
                 }
             });
             mRecyclerView.setAdapter(mRVAdapter);
@@ -96,6 +95,7 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
 
     private boolean mIsCheckingFinish = false;
     private boolean mCanCreate = false;
+
     @Override
     public void cannotCreateMore(boolean canCreate) {
         mCanCreate = canCreate;
@@ -103,28 +103,32 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
 
     @Override
     public void showLoading(String message) {
-
+        mRecyclerView.setRefreshing(true);
     }
 
     @Override
     public void showNetworkError(String message) {
-        mRecyclerView.showServerErrorView(null);
-        showShortToast(message);
+        mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mGroupManagePresenter.getGroupList(true, AIManager.getInstance().getDoctorId());
+            }
+        });
     }
 
     @Override
     public void showServerError(String message) {
-
-    }
-
-    @Override
-    public void showEmptyView(String message) {
-
+        mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mGroupManagePresenter.getGroupList(true, AIManager.getInstance().getDoctorId());
+            }
+        });
     }
 
     @Override
     public void hideLoading() {
-        mRecyclerView.hideRefreshOrLoadMore(true,true);
+        mRecyclerView.hideRefreshOrLoadMore(true, true);
     }
 
     @Override
@@ -139,8 +143,13 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
     }
 
     @Override
-    public void showEmptyView() {
-        mRecyclerView.showEmptyView(null);
+    public void showEmptyView(String message) {
+        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+                mGroupManagePresenter.getGroupList(true, AIManager.getInstance().getDoctorId());
+            }
+        });
     }
 
     @Override
@@ -148,15 +157,15 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_CODE_MODIFY:
-                if(resultCode == GroupModifyActivity.RESULT_CODE_SUCCESS)
-                    mGroupManagePresenter.getGroupList(true,AIManager.getInstance().getDoctorId());
+                if (resultCode == GroupModifyActivity.RESULT_CODE_SUCCESS)
+                    mGroupManagePresenter.getGroupList(true, AIManager.getInstance().getDoctorId());
                 break;
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add,menu);
+        getMenuInflater().inflate(R.menu.menu_add, menu);
         return true;
     }
 
@@ -170,7 +179,7 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
                 }
                 if (mCanCreate) {
                     Intent intent = new Intent("com.wonders.xlab.pci.doctor.GroupModifyActivity");
-                    startActivityForResult(intent,REQUEST_CODE_MODIFY);
+                    startActivityForResult(intent, REQUEST_CODE_MODIFY);
                 } else {
                     showShortToast("您已经创建过小组了！");
                 }

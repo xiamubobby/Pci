@@ -1,6 +1,7 @@
 package im.hua.library.base;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -59,10 +60,23 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void showProgressDialog(String title, String message) {
+    public interface OnDialogDismissListener{
+        void onDismiss();
+    }
+
+    public void showProgressDialog(String title, String message, final OnDialogDismissListener listener) {
         if (null == mDialog) {
             mDialog = new ProgressDialog(this);
         }
+        if (null != listener) {
+            mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    listener.onDismiss();
+                }
+            });
+        }
+
         if (!TextUtils.isEmpty(title)) {
             mDialog.setTitle(title);
         }

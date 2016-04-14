@@ -23,25 +23,18 @@ import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupModifyMemberRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupServiceIconRVAdapter;
-import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyMemberBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.GroupServicesActivity;
-import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupCreateBody;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupUpdateBasicInfoBody;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupModifyPresenter;
 import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupModifyPresenter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func1;
 
 public class GroupModifyActivity extends AppbarActivity implements GroupModifyPresenter.GroupModifyPresenterListener {
     private final int REQUEST_CODE_NAME = 0;
@@ -163,7 +156,6 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                     }
                 });
 
-        setRefreshing(mRefresh, true);
         mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
     }
 
@@ -234,7 +226,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
 
     @Override
     public void showLoading(String message) {
-
+        setRefreshing(mRefresh, true);
     }
 
     @Override
@@ -283,7 +275,12 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                 }
                 break;
             case REQUEST_CODE_INVITE_DOCTOR:
-                if (resultCode == GroupInviteDoctorActivity.RESULT_CODE_SUCCESS) {
+                String tmp = data.getStringExtra(GroupInviteDoctorActivity.EXTRA_RESULT);
+                if (!TextUtils.isEmpty(tmp)) {
+                    mGroupId = tmp;
+                }
+                mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
+                /*if (resultCode == GroupInviteDoctorActivity.RESULT_CODE_SUCCESS) {
                     ArrayList<GroupDoctorBean> doctorBeanArrayList = data.getParcelableArrayListExtra(GroupInviteDoctorActivity.EXTRA_RESULT);
                     Observable.from(doctorBeanArrayList)
                             .flatMap(new Func1<GroupDoctorBean, Observable<GroupDoctorBean>>() {
@@ -326,7 +323,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                                     memberBeanList.add(bean);
                                 }
                             });
-                }
+                }*/
                 break;
             case REQUEST_CODE_REMOVE_DOCTOR:
                 if (resultCode == GroupRemoveDoctorActivity.RESULT_CODE_SUCCESS) {
@@ -358,46 +355,12 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                     finish();
                     return true;
                 }
-                final GroupCreateBody body = new GroupCreateBody();
+                final GroupUpdateBasicInfoBody body = new GroupUpdateBasicInfoBody();
                 body.setName(mTvGroupName.getText().toString());
                 body.setId(mGroupId);
                 body.setDescription(mTvGroupDesc.getText().toString());
 
-                Observable.from(mMemberRVAdapter.getBeanList())
-                        .flatMap(new Func1<GroupModifyMemberBean, Observable<GroupCreateBody.DoctorsEntity>>() {
-                            @Override
-                            public Observable<GroupCreateBody.DoctorsEntity> call(GroupModifyMemberBean bean) {
-                                GroupCreateBody.DoctorsEntity entity = new GroupCreateBody.DoctorsEntity();
-                                entity.setId(bean.doctorId.get());
-                                entity.setImId(bean.doctorImId.get());
-                                return Observable.just(entity);
-                            }
-                        })
-                        .filter(new Func1<GroupCreateBody.DoctorsEntity, Boolean>() {
-                            @Override
-                            public Boolean call(GroupCreateBody.DoctorsEntity doctorsEntity) {
-                                return doctorsEntity != null && !TextUtils.isEmpty(doctorsEntity.getId()) && !TextUtils.isEmpty(doctorsEntity.getImId());
-                            }
-                        })
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Subscriber<GroupCreateBody.DoctorsEntity>() {
-                            List<GroupCreateBody.DoctorsEntity> mDoctorsEntityList = new ArrayList<>();
-                            @Override
-                            public void onCompleted() {
-                                body.setDoctors(mDoctorsEntityList);
-                                mGroupModifyPresenter.createGroup(AIManager.getInstance().getDoctorId(),body);
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-
-                            }
-
-                            @Override
-                            public void onNext(GroupCreateBody.DoctorsEntity doctorsEntity) {
-                                mDoctorsEntityList.add(doctorsEntity);
-                            }
-                        });
+                mGroupModifyPresenter.createGroup(AIManager.getInstance().getDoctorId(),body);
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -3,10 +3,12 @@ package com.wonders.xlab.pci.doctor.mvp.api;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupAuthMembersEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupCreateEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupDetailEntity;
-import com.wonders.xlab.pci.doctor.mvp.entity.GroupDoctorInviteEntity;
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupDoctorSaveEntity;
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupDoctorUpdateMemberEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupListEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupMembersEntity;
-import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupCreateBody;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupUpdateBasicInfoBody;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupUpdateMemberBody;
 
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -28,10 +30,16 @@ public interface GroupManagerAPI {
     Observable<Response<GroupDetailEntity>> getGroupDetail(@Path("doctorId") String doctorId, @Query("doctorGroupId") String doctorGroupId);
 
     @POST("v1/doctorGroup/saveDoctorGroup/{doctorId}")
-    Observable<Response<GroupCreateEntity>> createGroup(@Path("doctorId") String doctorId, @Body GroupCreateBody body);
+    Observable<Response<GroupCreateEntity>> updateDoctorGroup(@Path("doctorId") String doctorId, @Body GroupUpdateBasicInfoBody body);
 
-    @GET("v1/doctorGroup/queryDoctorByTelOrName")
-    Observable<Response<GroupDoctorInviteEntity>> searchDoctorByTelOrName(@Query("doctorGroupId") String doctorGroupId, @Query("tel") String tel, @Query("name") String name);
+    @POST("v1/doctorGroup/inviteDoctorJoinGroup/{doctorId}")
+    Observable<Response<GroupDoctorUpdateMemberEntity>> inviteDoctorToGroup(@Path("doctorId") String doctorId, @Body GroupUpdateMemberBody body);
+
+    @POST("v1/doctorGroup/removeDoctorFromGroup/{doctorId}")
+    Observable<Response<GroupDoctorUpdateMemberEntity>> removeDoctorFromGroup(@Path("doctorId") String doctorId, @Body GroupUpdateMemberBody body);
+
+    @GET("v1/doctorGroup/queryDoctorByTelOrName/{doctorId}")
+    Observable<Response<GroupDoctorSaveEntity>> searchDoctorByTelOrName(@Path("doctorId") String doctorId, @Query("doctorGroupId") String doctorGroupId, @Query("tel") String tel, @Query("name") String name);
 
     /**
      * 可授权医生列表

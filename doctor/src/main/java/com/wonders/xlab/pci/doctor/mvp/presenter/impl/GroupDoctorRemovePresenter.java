@@ -1,7 +1,12 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
+import com.wonders.xlab.pci.doctor.mvp.entity.GroupDoctorUpdateMemberEntity;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupMembersEntity;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupUpdateMemberBody;
+import com.wonders.xlab.pci.doctor.mvp.model.IGroupDoctorRemoveModel;
+import com.wonders.xlab.pci.doctor.mvp.model.IGroupMemberModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupDoctorRemoveModel;
 import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupMemberModel;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupRemoveDoctorPresenter;
 
@@ -17,24 +22,27 @@ import rx.functions.Func1;
 /**
  * Created by hua on 16/4/10.
  */
-public class GroupRemoveDoctorPresenter extends BasePagePresenter implements IGroupRemoveDoctorPresenter, GroupMemberModel.GroupMemberModelListener {
+public class GroupDoctorRemovePresenter extends BasePagePresenter implements IGroupRemoveDoctorPresenter, GroupMemberModel.GroupMemberModelListener, GroupDoctorRemoveModel.GroupDoctorRemoveModelListener {
     private GroupRemoveDoctorPresenterListener mListener;
-    private GroupMemberModel mMemberModel;
+    private IGroupMemberModel mMemberModel;
+    private IGroupDoctorRemoveModel mDoctorRemoveModel;
 
-    public GroupRemoveDoctorPresenter(GroupRemoveDoctorPresenterListener listener) {
+    public GroupDoctorRemovePresenter(GroupRemoveDoctorPresenterListener listener) {
         mListener = listener;
         mMemberModel = new GroupMemberModel(this);
+        mDoctorRemoveModel = new GroupDoctorRemoveModel(this);
         addModel(mMemberModel);
     }
 
     @Override
     public void getCurrentMemberList(String doctorId, String groupId) {
+        mListener.showLoading("");
         mMemberModel.getMemberList(doctorId, groupId);
     }
 
     @Override
-    public void removeMembers(List<GroupDoctorBean> doctorBeanList) {
-        mListener.removeSuccess();
+    public void removeMembers(String doctorId, GroupUpdateMemberBody body) {
+        mDoctorRemoveModel.removeDoctors(doctorId, body);
     }
 
     @Override
@@ -79,12 +87,18 @@ public class GroupRemoveDoctorPresenter extends BasePagePresenter implements IGr
 
     @Override
     public void onReceiveFailed(int code, String message) {
+        showError(mListener, code, message);
+    }
 
+    @Override
+    public void onRemoveDoctorsSuccess(GroupDoctorUpdateMemberEntity.RetValuesEntity valuesEntity) {
+        mListener.hideLoading();
+        mListener.removeSuccess(valuesEntity.getDoctorGroupId());
     }
 
     public interface GroupRemoveDoctorPresenterListener extends BasePagePresenterListener {
         void showMemberList(List<GroupDoctorBean> doctorBeanList);
 
-        void removeSuccess();
+        void removeSuccess(String newGroupId);
     }
 }

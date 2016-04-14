@@ -36,6 +36,7 @@ public class GroupListPresenter extends BasePagePresenter implements IGroupListP
             mListener.showReachTheLastPageNotice("没有更多数据了");
             return;
         }
+        mListener.showLoading("");
         mGroupListModel.getGroupList(doctorId, getNextPageIndex(), DEFAULT_PAGE_SIZE);
     }
 
