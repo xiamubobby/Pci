@@ -400,6 +400,9 @@ public class CommonRecyclerView extends FrameLayout {
             for (int i = 0; i < this.getChildCount(); i++) {
                 final View childAt = this.getChildAt(i);
                 if (childAt.getVisibility() == VISIBLE) {
+                    if (childAt == view) {
+                        return;
+                    }
                     fadeOut.setAnimationListener(new Animation.AnimationListener() {
                         @Override
                         public void onAnimationStart(Animation animation) {
@@ -419,10 +422,11 @@ public class CommonRecyclerView extends FrameLayout {
                         }
                     });
                     childAt.startAnimation(fadeOut);
-                    break;
+                    return;
                 }
 
             }
+            view.setVisibility(VISIBLE);
         }
     }
 

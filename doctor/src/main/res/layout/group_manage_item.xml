@@ -24,48 +24,43 @@
                   android:orientation="vertical"
                   android:paddingTop="@dimen/item_interval_middle">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/item_interval_small">
 
-            <LinearLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="10"
+                android:singleLine="true"
+                android:text="@{bean.groupName}"
+                android:textColor="@color/text_color_primary_black"
+                android:textSize="@dimen/text_size_middle"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/item_interval_small"
+                android:text='@{"(" + bean.groupMemberCounts + "人)"}'
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/text_size_small"
+                android:visibility="@{null != bean &amp;&amp; bean.belongToCurrentDoctor ? View.GONE : View.VISIBLE}"/>
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="@dimen/item_interval_small">
+                android:gravity="right|center_vertical"
+                android:singleLine="true"
+                android:text='@{"创建于：" + DateUtil.format(bean.createTimeInMill,"yyyy/MM/dd")}'
+                android:textColor="@color/text_color_primary_gray"
+                android:textSize="@dimen/text_size_small"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:maxLength="10"
-                    android:singleLine="true"
-                    android:text="@{bean.groupName}"
-                    android:textColor="@color/text_color_primary_black"
-                    android:textSize="@dimen/text_size_middle"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/item_interval_small"
-                    android:text='@{"(" + bean.groupMemberCounts + "人)"}'
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/text_size_small"
-                    android:visibility="@{null != bean &amp;&amp; bean.belongToCurrentDoctor ? View.GONE : View.VISIBLE}"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="right|center_vertical"
-                    android:singleLine="true"
-                    android:text='@{"创建于：" + DateUtil.format(bean.createTimeInMill,"yyyy/MM/dd")}'
-                    android:textColor="@color/text_color_primary_gray"
-                    android:textSize="@dimen/text_size_small"/>
-            </LinearLayout>
-
-            <include layout="@layout/divider_vertical"/>
         </LinearLayout>
+        <include layout="@layout/divider_vertical"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

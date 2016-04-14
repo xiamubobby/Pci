@@ -3,12 +3,13 @@ package com.wonders.xlab.pci.doctor.module.me.notification.adapter.bean;
 /**
  * Created by hua on 16/4/14.
  */
-public class GroupInviteBean {
+public class NotifiGroupInviteBean {
     private String id;
     private long recordTime;
     private String groupName;
     private String groupMemberCounts;
     private String ownerName;
+    private String ownerAvatarUrl;
     private String ownerJobTitle;
     private String ownerDepartment;
     private String ownerHospital;
@@ -84,5 +85,13 @@ public class GroupInviteBean {
 
     public void setGroupDesc(String groupDesc) {
         this.groupDesc = groupDesc;
+    }
+
+    public String getOwnerAvatarUrl() {
+        return ownerAvatarUrl;
+    }
+
+    public void setOwnerAvatarUrl(String ownerAvatarUrl) {
+        this.ownerAvatarUrl = ownerAvatarUrl;
     }
 }
