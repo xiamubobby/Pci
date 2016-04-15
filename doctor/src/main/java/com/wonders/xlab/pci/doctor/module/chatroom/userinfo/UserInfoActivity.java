@@ -120,6 +120,11 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
 
     }

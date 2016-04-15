@@ -37,6 +37,7 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
 
     @Override
     public void getGroupInfo(String doctorId, String groupId) {
+        mListener.showLoading("");
         mDetailModel.getGroupDetail(doctorId, groupId);
         mListener.showGroupInfo(new GroupModifyBean());
     }
@@ -54,6 +55,7 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
         groupModifyBean.setGroupDesc(valuesEntity.getGroupDescription());
         groupModifyBean.setGroupName(valuesEntity.getGroupName());
         groupModifyBean.setManagerType(valuesEntity.getManagerType());
+        groupModifyBean.setCanGrant(valuesEntity.isCanGrant());
         groupModifyBean.setPublishedServiceIconList(valuesEntity.getServiceUrls());
 
         Observable.from(valuesEntity.getMembers())

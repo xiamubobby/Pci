@@ -253,6 +253,11 @@ public class BloodPressureActivity extends AppbarActivity implements BPPresenter
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
 
     }

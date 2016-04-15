@@ -5,7 +5,7 @@
 
         <variable
             name="bean"
-            type="com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.adapter.bean.GroupServiceBean"/>
+            type="com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.adapter.bean.GroupServiceBean"/>
 
         <import type="android.graphics.Color"/>
 

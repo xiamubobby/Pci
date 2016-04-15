@@ -153,6 +153,11 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
     }
 
     @Override
+    public void showErrorToast(String message) {
+        showShortToast(message);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {

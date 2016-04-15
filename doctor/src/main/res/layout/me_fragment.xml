@@ -78,6 +78,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:background="?attr/selectableItemBackground"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/item_interval_middle"
                 android:singleLine="true"
@@ -85,13 +86,13 @@
                 android:textColor="@color/text_color_primary_gray"
                 android:textSize="@dimen/text_size_primary"/>
 
-            <include layout="@layout/divider_vertical"/>
 
             <include layout="@layout/divider_vertical"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:background="?attr/selectableItemBackground"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/item_interval_middle"
                 android:singleLine="true"
@@ -101,19 +102,16 @@
 
             <include layout="@layout/divider_vertical"/>
 
-            <include layout="@layout/divider_vertical"/>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="?attr/listPreferredItemHeightSmall"
+                android:background="?attr/selectableItemBackground"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/item_interval_middle"
                 android:singleLine="true"
                 android:text="关于心管家"
                 android:textColor="@color/text_color_primary_gray"
                 android:textSize="@dimen/text_size_primary"/>
-
-            <include layout="@layout/divider_vertical"/>
 
             <include layout="@layout/divider_vertical"/>
 

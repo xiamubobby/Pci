@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.adapter;
+package com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import com.wonders.xlab.pci.doctor.util.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.databinding.GroupServiceItemBinding;
-import com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.adapter.bean.GroupServiceBean;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.adapter.bean.GroupServiceBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

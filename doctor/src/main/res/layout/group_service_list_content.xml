@@ -9,5 +9,5 @@
     app:emptyView="@layout/common_empty"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     app:networkErrorView="@layout/common_network_error"
-    tools:context=".module.me.groupmanage.servicemanage.GroupServicesActivity"
+    tools:context=".module.me.groupmanage.packagemanage.GroupServicesActivity"
     tools:showIn="@layout/group_service_list_activity"/>

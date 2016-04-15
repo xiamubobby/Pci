@@ -27,7 +27,7 @@ import rx.Subscriber;
 import rx.functions.Func1;
 
 public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupDoctorRemovePresenter.GroupRemoveDoctorPresenterListener {
-    public final static int RESULT_CODE_SUCCESS = 0;
+    public final static int RESULT_CODE_SUCCESS = 12345;
     public final static String EXTRA_RESULT = "result";
 
     public final static String EXTRA_GROUP_ID = "groupId";
@@ -105,6 +105,11 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupDo
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void showLoading(String message) {
         mRecyclerView.setRefreshing(true);
     }
@@ -150,6 +155,12 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupDo
                     break;
                 }
                 Observable.from(mMultiChoiceRVAdapter.getBeanList())
+                        .filter(new Func1<GroupDoctorBean, Boolean>() {
+                            @Override
+                            public Boolean call(GroupDoctorBean groupDoctorBean) {
+                                return groupDoctorBean.isSelected.get();
+                            }
+                        })
                         .flatMap(new Func1<GroupDoctorBean, Observable<GroupUpdateMemberBody.DoctorsEntity>>() {
                             @Override
                             public Observable<GroupUpdateMemberBody.DoctorsEntity> call(GroupDoctorBean groupDoctorBean) {

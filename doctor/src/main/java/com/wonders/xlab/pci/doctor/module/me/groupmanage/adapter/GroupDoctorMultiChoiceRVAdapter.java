@@ -29,7 +29,6 @@ public class GroupDoctorMultiChoiceRVAdapter extends SimpleRVAdapter<GroupDoctor
             public void onItemClick(int position) {
                 GroupDoctorBean tmp = getBean(position);
                 tmp.isSelected.set(!tmp.isSelected.get());
-//                notifyItemChanged(position);
 
                 if (null != mOnItemClickListener) {
                     mOnItemClickListener.onItemClick(position);

@@ -205,6 +205,11 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();

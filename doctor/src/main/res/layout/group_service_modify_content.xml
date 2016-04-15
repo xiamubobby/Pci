@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.GroupServiceModifyActivity"
+    tools:context="com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.GroupServiceModifyActivity"
     tools:showIn="@layout/group_service_modify_activity">
 
     <RelativeLayout

@@ -205,6 +205,11 @@ public class SymptomActivity extends AppbarActivity implements SymptomRecordPres
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
         mRefresh.post(new Runnable() {
             @Override

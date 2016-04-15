@@ -65,19 +65,19 @@ public class CommonRecyclerView extends FrameLayout {
     private long mLoadMoreAnimationDuration = 400;
     private TranslateAnimation showNoReverseAnimation = new TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, -0.2f);
+            Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, -0.5f);
 
     private TranslateAnimation hideNoReverseAnimation = new TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, -0.2f, Animation.RELATIVE_TO_SELF, 1.0f);
+            Animation.RELATIVE_TO_SELF, -0.5f, Animation.RELATIVE_TO_SELF, 1.0f);
 
     private TranslateAnimation showReverseAnimation = new TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.2f);
+            Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
 
     private TranslateAnimation hideReverseAnimation = new TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, 0.2f, Animation.RELATIVE_TO_SELF, -1.0f);
+            Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, -1.0f);
 
     private Animation fadeIn = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
 
@@ -147,6 +147,7 @@ public class CommonRecyclerView extends FrameLayout {
         }
         if (null != mRefreshView) {
             this.addView(mRefreshView);
+            mShowingView = mRefreshView;
         }
 
         setupLoadMoreView();
@@ -161,6 +162,7 @@ public class CommonRecyclerView extends FrameLayout {
             return;
         }
         this.addView(mLoadMoreView);
+        mLoadMoreView.setVisibility(INVISIBLE);
 
         LayoutParams params = (LayoutParams) mLoadMoreView.getLayoutParams();
         int size = dp2px(40);
@@ -182,7 +184,6 @@ public class CommonRecyclerView extends FrameLayout {
             mLoadMoreView.setTop(getMeasuredHeight());
         }
         mLoadMoreView.setLayoutParams(params);
-        mLoadMoreView.setVisibility(GONE);
     }
 
     private void createProgressView() {
@@ -395,38 +396,39 @@ public class CommonRecyclerView extends FrameLayout {
         showView(mLoadingView);
     }
 
-    private void showView(final View view) {
-        if (null != view) {
-            for (int i = 0; i < this.getChildCount(); i++) {
-                final View childAt = this.getChildAt(i);
-                if (childAt.getVisibility() == VISIBLE) {
-                    if (childAt == view) {
-                        return;
-                    }
-                    fadeOut.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
+    private View mShowingView;
 
-                        }
+    private synchronized void showView(final View view) {
+        if (mShowingView == view) {
+            return;
+        }
+        if (null != view && null != mShowingView) {
+//            for (int i = 0; i < this.getChildCount(); i++) {
+//                final View childAt = this.getChildAt(i);
+//                if (childAt.getVisibility() == VISIBLE) {
+            mShowingView.setVisibility(INVISIBLE);
+            fadeOut.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
 
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            childAt.setVisibility(INVISIBLE);
-                            view.setVisibility(VISIBLE);
-                            view.startAnimation(fadeIn);
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-                    childAt.startAnimation(fadeOut);
-                    return;
                 }
 
-            }
-            view.setVisibility(VISIBLE);
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    view.setVisibility(VISIBLE);
+                    view.startAnimation(fadeIn);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            mShowingView.startAnimation(fadeOut);
+            mShowingView = view;
+//                    childAt.startAnimation(fadeOut);
+//                    return;
+//                }
         }
     }
 
@@ -513,6 +515,7 @@ public class CommonRecyclerView extends FrameLayout {
 
     public interface OnLoadMoreListener {
         void onLoadMore();
+
     }
 
     public synchronized void hideLoadMore() {

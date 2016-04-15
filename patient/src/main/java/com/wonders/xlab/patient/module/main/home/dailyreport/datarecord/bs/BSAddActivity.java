@@ -222,6 +222,11 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
         if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();

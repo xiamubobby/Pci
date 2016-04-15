@@ -227,6 +227,11 @@ public class BPHRFragment extends BaseFragment implements BloodPressurePresenter
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
         mRecyclerView.hideRefreshOrLoadMore(true,true);
     }

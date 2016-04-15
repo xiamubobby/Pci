@@ -64,8 +64,10 @@ public class BasePresenter implements IBasePresenter {
             return;
         }
         listener.hideLoading();
-        if (code == -999) {
+        if (code == BaseModel.ERROR_CODE_CONNECT_EXCEPTION || code == BaseModel.ERROR_CODE_CLIENT_EXCEPTION) {
             listener.showNetworkError(message);
+        } else if (code == -1) {
+            listener.showErrorToast(message);
         } else {
             listener.showServerError(message);
         }

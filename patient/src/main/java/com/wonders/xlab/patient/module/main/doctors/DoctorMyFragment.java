@@ -140,6 +140,11 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void showLoading(String message) {
 
     }

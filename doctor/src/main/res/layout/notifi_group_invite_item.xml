@@ -19,11 +19,8 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:background="?attr/selectableItemBackground"
-                  android:clickable="true"
                   android:orientation="vertical"
-                  android:paddingTop="@dimen/item_interval_middle">
-
+                  android:paddingTop="@dimen/item_interval_small">
 
         <TextView
             android:layout_width="wrap_content"
@@ -54,9 +51,7 @@
                 android:layout_marginLeft="@dimen/item_interval_middle"
                 android:layout_toRightOf="@+id/iv_group_manage_item_portrait"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingTop="@dimen/item_interval_small"
-                android:paddingBottom="@dimen/item_interval_small">
+                android:orientation="horizontal">
 
                 <TextView
                     style="@style/MiddleBlackWrapTextView"
@@ -90,7 +85,7 @@
                 style="@style/SmallGrayWrapTextView"
                 android:layout_below="@+id/tv_group_manage_item_owner_name"
                 android:layout_marginLeft="@dimen/item_interval_middle"
-                android:layout_marginTop="@dimen/item_interval_middle"
+                android:layout_marginTop="@dimen/item_interval_small"
                 android:layout_toRightOf="@+id/iv_group_manage_item_portrait"
                 android:singleLine="true"
                 android:text='@{bean.ownerDepartment + " " + bean.ownerJobTitle}'/>
@@ -133,7 +128,7 @@
                 android:layout_height="36dp"
                 android:background="@drawable/selector_rectangle_default_outline_primary_solid_white_pressed_primary"
                 android:text="不加入"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@drawable/selector_text_default_accent_pressed_white"/>
 
             <Button
                 android:layout_width="wrap_content"

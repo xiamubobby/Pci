@@ -132,6 +132,11 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
         mRecyclerView.hideRefreshOrLoadMore(true,true);
     }

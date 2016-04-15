@@ -204,7 +204,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.me.groupmanage.servicemanage.GroupServicesActivity"
+            android:name=".module.me.groupmanage.packagemanage.GroupServicesActivity"
             android:label="@string/title_activity_group_service_list"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -214,7 +214,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.me.groupmanage.servicemanage.GroupServiceModifyActivity"
+            android:name=".module.me.groupmanage.packagemanage.GroupServiceModifyActivity"
             android:label="@string/title_activity_group_service_modify"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

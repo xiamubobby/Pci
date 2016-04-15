@@ -88,8 +88,7 @@ public class GroupDoctorInvitePresenter extends BasePagePresenter implements IGr
 
     @Override
     public void onReceiveFailed(int code, String message) {
-        mListener.hideLoading();
-        mListener.showNetworkError(message);
+        showError(mListener, code, message);
     }
 
     @Override

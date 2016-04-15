@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.google.gson.JsonParseException;
 
-import java.net.SocketTimeoutException;
+import java.net.SocketException;
 import java.util.concurrent.TimeUnit;
 
 import im.hua.library.base.mvp.IBaseModel;
@@ -26,6 +26,8 @@ import rx.schedulers.Schedulers;
  * Created by hua on 15/12/13.
  */
 public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
+    public final static int ERROR_CODE_CLIENT_EXCEPTION = -12344;
+    public final static int ERROR_CODE_CONNECT_EXCEPTION = -12345;
     protected Retrofit mRetrofit;
     private Observable<Response<T>> mObservable;
     private Subscription subscribe;
@@ -74,15 +76,15 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                     @Override
                     public void onError(Throwable e) {
                         if (e != null) {
-                            if (e instanceof SocketTimeoutException) {
-                                onFailed(-999, "连接超时，请检查网络后重试！");
+                            if (e instanceof SocketException) {
+                                onFailed(ERROR_CODE_CONNECT_EXCEPTION, "连接出错，请检查网络后重试！");
                             } else if (e instanceof JsonParseException) {
-                                onFailed(-1, "数据解析出错，请稍候重试！");
+                                onFailed(ERROR_CODE_CLIENT_EXCEPTION, "数据解析出错，请稍候重试！");
                             } else {
-                                onFailed(-1, "请求失败，请检查网络后重试！");
+                                onFailed(ERROR_CODE_CLIENT_EXCEPTION, "请求失败，请检查网络后重试！");
                             }
                         } else {
-                            onFailed(-1, "请求失败，请检查网络后重试！");
+                            onFailed(ERROR_CODE_CLIENT_EXCEPTION, "请求失败，请检查网络后重试！");
                         }
                     }
 

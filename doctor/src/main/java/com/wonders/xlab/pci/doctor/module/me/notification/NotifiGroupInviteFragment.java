@@ -106,6 +106,11 @@ public class NotifiGroupInviteFragment extends BaseFragment implements NotifiGro
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
 
     }

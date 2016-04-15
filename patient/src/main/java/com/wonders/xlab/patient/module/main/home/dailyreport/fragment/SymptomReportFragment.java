@@ -145,6 +145,11 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
         if (null == mRecyclerView) {
             return;

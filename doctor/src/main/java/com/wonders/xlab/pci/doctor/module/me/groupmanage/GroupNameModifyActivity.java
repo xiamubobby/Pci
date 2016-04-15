@@ -17,7 +17,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class GroupNameModifyActivity extends AppbarActivity {
-    public final static int RESULT_CODE_SUCCESS = 0;
+    public final static int RESULT_CODE_SUCCESS = 12345;
     public final static String EXTRA_RESULT = "result";
 
     public final static String EXTRA_HINT = "hint";

@@ -202,6 +202,11 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
 
     }

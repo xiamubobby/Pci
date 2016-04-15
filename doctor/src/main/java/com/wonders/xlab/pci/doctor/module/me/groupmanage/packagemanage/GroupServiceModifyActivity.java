@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage;
+package com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
-import com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.bean.PackageInfoBean;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.bean.PackageInfoBean;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupServiceModifyPresenter;
 import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupServiceModifyPresenter;
 
@@ -173,6 +173,11 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
 
     @Override
     public void showEmptyView(String message) {
+
+    }
+
+    @Override
+    public void showErrorToast(String message) {
 
     }
 

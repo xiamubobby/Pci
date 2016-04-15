@@ -1,13 +1,11 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".module.me.notification.NotifiPackageApplyFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
-
-</FrameLayout>
+<im.hua.uikit.crv.CommonRecyclerView
+    android:id="@+id/recycler_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:emptyView="@layout/common_empty"
+    app:networkErrorView="@layout/common_network_error"
+    app:serverErrorView="@layout/common_server_error"
+    tools:context=".module.me.notification.NotifiPackageApplyFragment"/>

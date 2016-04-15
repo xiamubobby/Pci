@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage;
+package com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
-import com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.adapter.GroupServiceRVAdapter;
-import com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.adapter.bean.GroupServiceBean;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.adapter.GroupServiceRVAdapter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.adapter.bean.GroupServiceBean;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupServicesPresenter;
 import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupServicesPresenter;
 
@@ -95,6 +95,11 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
 
     @Override
     public void showEmptyView(String message) {
+
+    }
+
+    @Override
+    public void showErrorToast(String message) {
 
     }
 

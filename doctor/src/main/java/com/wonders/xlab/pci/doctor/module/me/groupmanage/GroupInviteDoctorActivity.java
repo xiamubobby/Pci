@@ -43,7 +43,7 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 
 public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDoctorInvitePresenter.GroupInvitePresenterListener {
-    public final static int RESULT_CODE_SUCCESS = 0;
+    public final static int RESULT_CODE_SUCCESS = 12345;
     public final static String EXTRA_RESULT = "result";
 
     public final static String EXTRA_GROUP_ID = "groupId";
@@ -78,7 +78,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
         }
 
         RxTextView.afterTextChangeEvents(mEtSearch)
-                .throttleFirst(1000, TimeUnit.MILLISECONDS)
+                .throttleFirst(500, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .filter(new Func1<TextViewAfterTextChangeEvent, Boolean>() {
                     @Override
@@ -100,7 +100,6 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
         mRecyclerViewSelectedDoctor.setItemAnimator(new DefaultItemAnimator());
         mRecyclerViewSelectedDoctor.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mRecyclerView.setRefreshEnable(false);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
         mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -186,6 +185,11 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
     @Override
     public void showEmptyView(String message) {
         mRecyclerView.showEmptyView(null);
+    }
+
+    @Override
+    public void showErrorToast(String message) {
+
     }
 
     @Override

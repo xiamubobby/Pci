@@ -2,8 +2,11 @@ package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupAuthMembersEntity;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupAuthorizeBody;
 import com.wonders.xlab.pci.doctor.mvp.model.IGroupAuthMemberListModel;
+import com.wonders.xlab.pci.doctor.mvp.model.IGroupAuthorizeModel;
 import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupAuthMemberListListModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupAuthorizeModel;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupAuthPresenter;
 
 import java.util.ArrayList;
@@ -16,27 +19,32 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 
+
 /**
  * Created by hua on 16/4/10.
  */
-public class GroupAuthPresenter extends BasePresenter implements IGroupAuthPresenter, GroupAuthMemberListListModel.GroupAuthMemberModelListener {
+public class GroupAuthPresenter extends BasePresenter implements IGroupAuthPresenter, GroupAuthMemberListListModel.GroupAuthMemberModelListener, GroupAuthorizeModel.GroupAuthorizeModelListener {
     private GroupAuthPresenterListener mListener;
     private IGroupAuthMemberListModel mAuthMemberModel;
+    private IGroupAuthorizeModel mAuthorizeModel;
 
     public GroupAuthPresenter(GroupAuthPresenterListener listener) {
         mListener = listener;
         mAuthMemberModel = new GroupAuthMemberListListModel(this);
+        mAuthorizeModel = new GroupAuthorizeModel(this);
         addModel(mAuthMemberModel);
     }
 
     @Override
     public void getGroupMemberList(String doctorId,String groupId) {
+        mListener.showLoading("");
         mAuthMemberModel.getAuthMemberList(doctorId,groupId);
     }
 
     @Override
-    public void authorize(List<GroupDoctorBean> doctorBeanList) {
-        mListener.authorizeSuccess("授权成功");
+    public void authorize(String doctorId, String doctorGroupId, GroupAuthorizeBody body) {
+        mListener.startAuthorizing("正在授权，请稍候...");
+        mAuthorizeModel.authorize(doctorId,doctorGroupId,body);
     }
 
     @Override
@@ -85,7 +93,14 @@ public class GroupAuthPresenter extends BasePresenter implements IGroupAuthPrese
         showError(mListener, code, message);
     }
 
+    @Override
+    public void authorizeSuccess(String message) {
+        mListener.authorizeSuccess(message);
+    }
+
     public interface GroupAuthPresenterListener extends BasePresenterListener {
+        void startAuthorizing(String message);
+
         void authorizeSuccess(String message);
 
         void showMemberList(List<GroupDoctorBean> doctorBeanList);

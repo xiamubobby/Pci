@@ -127,6 +127,11 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void showLoading(String message) {
 
     }

@@ -249,6 +249,11 @@ public class BSResultFragment extends BaseFragment implements BSSavePresenter.BS
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
 
     }

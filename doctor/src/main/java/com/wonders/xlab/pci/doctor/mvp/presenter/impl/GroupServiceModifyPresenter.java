@@ -1,6 +1,6 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 
-import com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.bean.PackageInfoBean;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.bean.PackageInfoBean;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageCreateBody;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageDetailEntity;
 import com.wonders.xlab.pci.doctor.mvp.model.IGroupPackageCreateModel;

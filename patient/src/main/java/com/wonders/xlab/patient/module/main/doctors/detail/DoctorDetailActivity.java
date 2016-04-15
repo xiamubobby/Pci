@@ -336,6 +336,11 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
         mRefresh.post(new Runnable() {
             @Override

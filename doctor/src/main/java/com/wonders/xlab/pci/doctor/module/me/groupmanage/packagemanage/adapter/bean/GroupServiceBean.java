@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.adapter.bean;
+package com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.adapter.bean;
 
 import android.databinding.ObservableField;
 

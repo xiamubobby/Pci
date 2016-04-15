@@ -221,6 +221,11 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
 
     }

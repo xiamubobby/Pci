@@ -91,6 +91,11 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
         dismissProgressDialog();
     }

@@ -23,15 +23,15 @@ public class GroupAuthorizeBody {
     }
 
     public static class DtosEntity {
-        private int id;
+        private String doctorId;
         private String type;
 
-        public int getId() {
-            return id;
+        public String getDoctorId() {
+            return doctorId;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public void setDoctorId(String doctorId) {
+            this.doctorId = doctorId;
         }
 
         public String getType() {

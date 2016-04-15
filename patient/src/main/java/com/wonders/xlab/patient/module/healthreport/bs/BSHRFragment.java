@@ -126,6 +126,11 @@ public class BSHRFragment extends BaseFragment implements BloodSugarPresenter.Bl
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
         mRecyclerView.hideRefreshOrLoadMore(true,true);
     }

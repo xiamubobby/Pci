@@ -12,17 +12,22 @@ import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupDoctorMultiChoiceRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupAuthorizeBody;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupAuthPresenter;
 import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupAuthPresenter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.uikit.crv.CommonRecyclerView;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
 
 public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresenter.GroupAuthPresenterListener {
-    public final static int RESULT_CODE_SUCCESS = 0;
+    public final static int RESULT_CODE_SUCCESS = 12345;
     public final static String EXTRA_GROUP_ID = "groupId";
     private String mGroupId;
     private String mDoctorId;
@@ -60,18 +65,24 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mGroupAuthPresenter.getGroupMemberList(mDoctorId,mGroupId);
+                mGroupAuthPresenter.getGroupMemberList(mDoctorId, mGroupId);
             }
         });
         mGroupAuthPresenter = new GroupAuthPresenter(this);
         addPresenter(mGroupAuthPresenter);
 
-        mGroupAuthPresenter.getGroupMemberList(mDoctorId,mGroupId);
+        mGroupAuthPresenter.getGroupMemberList(mDoctorId, mGroupId);
+    }
+
+    @Override
+    public void startAuthorizing(String message) {
+        showProgressDialog("",message,null);
     }
 
     @Override
     public void authorizeSuccess(String message) {
         showShortToast(message);
+        dismissProgressDialog();
         setResult(RESULT_CODE_SUCCESS);
         finish();
     }
@@ -87,7 +98,7 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
 
     @Override
     public void showLoading(String message) {
-
+        mRecyclerView.setRefreshing(true);
     }
 
     @Override
@@ -96,7 +107,7 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
         mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
             @Override
             public void onClick() {
-                mGroupAuthPresenter.getGroupMemberList(mDoctorId,mGroupId);
+                mGroupAuthPresenter.getGroupMemberList(mDoctorId, mGroupId);
             }
         });
     }
@@ -106,24 +117,35 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
         mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
             @Override
             public void onClick() {
-                mGroupAuthPresenter.getGroupMemberList(mDoctorId,mGroupId);
+                mGroupAuthPresenter.getGroupMemberList(mDoctorId, mGroupId);
             }
         });
     }
 
     @Override
     public void showEmptyView(String message) {
+        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+                mGroupAuthPresenter.getGroupMemberList(mDoctorId, mGroupId);
+            }
+        });
+    }
+
+    @Override
+    public void showErrorToast(String message) {
 
     }
 
     @Override
     public void hideLoading() {
-        mRecyclerView.hideRefreshOrLoadMore(true,true);
+        dismissProgressDialog();
+        mRecyclerView.hideRefreshOrLoadMore(true, true);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_confirm,menu);
+        getMenuInflater().inflate(R.menu.menu_confirm, menu);
         return true;
     }
 
@@ -131,7 +153,41 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_confirm:
-                mGroupAuthPresenter.authorize(mRVAdapter.getBeanList());
+                if (null == mRVAdapter || mRVAdapter.getItemCount() <= 0) {
+                    showShortToast("未选择授权医师");
+                    break;
+                }
+
+                Observable.from(mRVAdapter.getBeanList())
+                        .flatMap(new Func1<GroupDoctorBean, Observable<GroupAuthorizeBody.DtosEntity>>() {
+                            @Override
+                            public Observable<GroupAuthorizeBody.DtosEntity> call(GroupDoctorBean groupDoctorBean) {
+                                GroupAuthorizeBody.DtosEntity entity = new GroupAuthorizeBody.DtosEntity();
+                                entity.setDoctorId(groupDoctorBean.doctorId.get());
+                                entity.setType(groupDoctorBean.isSelected.get() ? "Manager" : "Member");
+                                return Observable.just(entity);
+                            }
+                        })
+                        .subscribe(new Subscriber<GroupAuthorizeBody.DtosEntity>() {
+                            GroupAuthorizeBody body = new GroupAuthorizeBody();
+                            List<GroupAuthorizeBody.DtosEntity> doctors = new ArrayList<>();
+
+                            @Override
+                            public void onCompleted() {
+                                body.setDtos(doctors);
+                                mGroupAuthPresenter.authorize(AIManager.getInstance().getDoctorId(), mGroupId, body);
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(GroupAuthorizeBody.DtosEntity dtosEntity) {
+                                doctors.add(dtosEntity);
+                            }
+                        });
                 break;
         }
         return super.onOptionsItemSelected(item);

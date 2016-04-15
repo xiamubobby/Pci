@@ -118,6 +118,11 @@ public class BloodSugarActivity extends AppbarActivity implements BSPresenter.BS
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
 
     }

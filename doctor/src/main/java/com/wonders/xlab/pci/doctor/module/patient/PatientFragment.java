@@ -152,6 +152,11 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
         mRecyclerView.hideRefreshOrLoadMore(true,true);
     }

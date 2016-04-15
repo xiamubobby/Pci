@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.module.me.groupmanage.servicemanage.bean;
+package com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.bean;
 
 import java.util.HashMap;
 import java.util.List;

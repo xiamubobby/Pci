@@ -207,6 +207,11 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
     }
 
     @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
     public void hideLoading() {
         rotateAnimation.cancel();
     }
