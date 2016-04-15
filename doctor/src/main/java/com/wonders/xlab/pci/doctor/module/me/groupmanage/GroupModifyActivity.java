@@ -114,7 +114,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
         mRecyclerViewMembers.setLayoutManager(new GridLayoutManager(this, 4, LinearLayoutManager.VERTICAL, false));
         mRecyclerViewMembers.setItemAnimator(new DefaultItemAnimator());
 
-        mRecyclerViewService.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mRecyclerViewService.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
         mRecyclerViewService.setItemAnimator(new DefaultItemAnimator());
 
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
