@@ -152,6 +152,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                     public void call(Void aVoid) {
                         Intent serviceIntent = new Intent("com.wonders.xlab.pci.doctor.GroupServicesActivity");
                         serviceIntent.putExtra(GroupServicesActivity.EXTRA_GROUP_ID, mGroupId);
+                        serviceIntent.putExtra(GroupServicesActivity.EXTRA_IS_ADMIN, mIsAdmin);
                         startActivityForResult(serviceIntent, REQUEST_CODE_SERVICE);
                     }
                 });

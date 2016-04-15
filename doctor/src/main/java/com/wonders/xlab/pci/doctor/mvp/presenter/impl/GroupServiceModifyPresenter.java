@@ -1,11 +1,11 @@
 package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.bean.PackageInfoBean;
-import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageCreateBody;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageDetailEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.IGroupPackageCreateModel;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupPackagePublishBody;
+import com.wonders.xlab.pci.doctor.mvp.model.IGroupPackagePublishModel;
 import com.wonders.xlab.pci.doctor.mvp.model.IGroupPackageDetailModel;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupPackageCreateModel;
+import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupPackagePublishModel;
 import com.wonders.xlab.pci.doctor.mvp.model.impl.GroupPackageDetailModel;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupServiceModifyPresenter;
 
@@ -19,27 +19,27 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
 /**
  * Created by hua on 16/4/10.
  */
-public class GroupServiceModifyPresenter extends BasePresenter implements IGroupServiceModifyPresenter, GroupPackageDetailModel.GroupPackageDetailModelListener, GroupPackageCreateModel.GroupPackageCreateModelListener {
+public class GroupServiceModifyPresenter extends BasePresenter implements IGroupServiceModifyPresenter, GroupPackageDetailModel.GroupPackageDetailModelListener, GroupPackagePublishModel.GroupPackageCreateModelListener {
     private GroupServiceModifyPresenterListener mListener;
     private IGroupPackageDetailModel mPackageDetailModel;
-    private IGroupPackageCreateModel mPackageCreateModel;
+    private IGroupPackagePublishModel mPackageCreateModel;
 
     public GroupServiceModifyPresenter(GroupServiceModifyPresenterListener listener) {
         mListener = listener;
         mPackageDetailModel = new GroupPackageDetailModel(this);
-        mPackageCreateModel = new GroupPackageCreateModel(this);
+        mPackageCreateModel = new GroupPackagePublishModel(this);
         addModel(mPackageDetailModel);
         addModel(mPackageCreateModel);
     }
 
     @Override
-    public void getServicePackageInfo(String doctorGroupId, String servicePackageId, boolean published) {
-        mPackageDetailModel.getPackageDetail(doctorGroupId,servicePackageId,published);
+    public void getServicePackageInfo(String doctorGroupId, String servicePackageId) {
+        mPackageDetailModel.getPackageDetail(doctorGroupId,servicePackageId);
     }
 
     @Override
-    public void updatePackage(GroupPackageCreateBody body) {
-
+    public void publishPackage(GroupPackagePublishBody body) {
+        mPackageCreateModel.publishPackage(body);
     }
 
     @Override
@@ -53,32 +53,52 @@ public class GroupServiceModifyPresenter extends BasePresenter implements IGroup
 
         for (GroupPackageDetailEntity.RetValuesEntity.PriceEntity priceEntity : priceEntities) {
             HashMap<String, String> map = new HashMap<>();
-            map.put("value", priceEntity.getNumber() + nodeEntity.getUnitName());
-            map.put("tag", String.valueOf(priceEntity.getNumber()));
+            map.put("valueStr", priceEntity.getNumber() + nodeEntity.getUnitName());
+            map.put("value", String.valueOf(priceEntity.getNumber()));
+            defaultValues.add(map);
+        }
+        int flag = -1;
+        int defaultPosition = 0;
+        int defaultValue = valuesEntity.getNode().getValue();
+        for (int i=0 ;i<defaultValues.size(); i++) {
+            HashMap<String, String> map = defaultValues.get(i);
+            int value = Integer.parseInt(map.get("value"));
+            if (value == defaultValue) {
+                defaultPosition = i;
+                flag = i;
+                break;
+            }
+        }
+        if (-1 == flag) {
+            HashMap<String, String> map = new HashMap<>();
+            map.put("valueStr", defaultValue + nodeEntity.getUnitName());
+            map.put("value", String.valueOf(defaultValue));
             defaultValues.add(map);
         }
 
         HashMap<String, String> map = new HashMap<>();
-        map.put("value", "自定义");
-        map.put("tag", "-1");
+        map.put("valueStr", "自定义");
+        map.put("value", "-1");
         defaultValues.add(map);
 
-        PackageInfoBean packageInfoBean = new PackageInfoBean(nodeEntity.getUnitTitle(),nodeEntity.getUnitName(),defaultValues,"套餐说明",nodeEntity.getContent());
+        PackageInfoBean packageInfoBean = new PackageInfoBean(nodeEntity.getDoctorPackageId(),nodeEntity.getUnitTitle(),nodeEntity.getUnitName(),defaultValues,"套餐说明",nodeEntity.getContent(), defaultPosition);
         mListener.showServicePackageInfo(packageInfoBean);
     }
 
     @Override
     public void onReceiveFailed(int code, String message) {
-        mListener.hideLoading();
-        mListener.showNetworkError(message);
+        showError(mListener,code,message);
     }
 
     @Override
     public void onCreatePackageSuccess(String message) {
+        mListener.publishSuccess(message);
 
     }
 
     public interface GroupServiceModifyPresenterListener extends BasePresenterListener{
         void showServicePackageInfo(PackageInfoBean packageInfoBean);
+
+        void publishSuccess(String message);
     }
 }

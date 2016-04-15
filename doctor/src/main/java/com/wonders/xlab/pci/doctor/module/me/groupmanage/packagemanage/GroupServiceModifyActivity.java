@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.text.Html;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -18,27 +19,43 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.bean.PackageInfoBean;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupPackagePublishBody;
 import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupServiceModifyPresenter;
 import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupServiceModifyPresenter;
 
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import im.hua.utils.DensityUtil;
 
 public class GroupServiceModifyActivity extends AppbarActivity implements GroupServiceModifyPresenter.GroupServiceModifyPresenterListener {
 
-    public final static int RESULT_CODE_SUCCESS = 0;
+    public final static int RESULT_CODE_SUCCESS = 12345;
 
-    public final static String EXTRA_PACKAGE_ID = "packageId";
+    public final static String EXTRA_SERVICE_PACKAGE_ID = "servicePackageId";
     public final static String EXTRA_GROUP_ID = "groupId";
     public final static String EXTRA_PUBLISHED = "published";
+    public final static String EXTRA_IS_ADMIN = "isAdmin";
 
-    private String mPackageId;
+    @Bind(R.id.tv_group_service_modify_unpublish)
+    TextView mTvUnpublish;
+    @Bind(R.id.tv_group_service_modify_publish)
+    TextView mTvPublish;
+    @Bind(R.id.ll_group_service_modify_bottom)
+    CardView mCardViewBottom;
+
+    private String mServicePackageId;//模板id
     private String mGroupId;
     private boolean mPublished;
+    private boolean mIsAdmin;
+
+    private String mDoctorPackageId;
 
     @Bind(R.id.tv_group_service_modify_unit_title)
     TextView mTvUnitTitle;
@@ -73,62 +90,92 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
             finish();
             return;
         }
-        mPackageId = intent.getStringExtra(EXTRA_PACKAGE_ID);
+        mServicePackageId = intent.getStringExtra(EXTRA_SERVICE_PACKAGE_ID);
         mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
-        mPublished = intent.getBooleanExtra(EXTRA_PUBLISHED,false);
+        mPublished = intent.getBooleanExtra(EXTRA_PUBLISHED, false);
+        mIsAdmin = intent.getBooleanExtra(EXTRA_IS_ADMIN, false);
 
-        if (TextUtils.isEmpty(mPackageId)) {
+        if (TextUtils.isEmpty(mServicePackageId)) {
             Log.e("GroupServiceModifyActiv", "请传入packageId");
             showShortToast("获取套餐信息失败，请重试！");
             finish();
             return;
         }
 
-        initCustomValueAlertDialog();
+        /**
+         * 只有管理员才可以进行发布和保存操作
+         */
+        if (mIsAdmin) {
+            if (mPublished) {
+                mTvUnpublish.setVisibility(View.VISIBLE);
+            } else {
+                mTvUnpublish.setVisibility(View.GONE);
+            }
+            mCardViewBottom.setVisibility(View.VISIBLE);
+            mSp.setClickable(true);
+        } else {
+            mSp.setClickable(false);
+        }
+
 
         mPresenter = new GroupServiceModifyPresenter(this);
         addPresenter(mPresenter);
-        mPresenter.getServicePackageInfo(mGroupId,mPackageId,mPublished);
+        mPresenter.getServicePackageInfo(mGroupId, mServicePackageId);
     }
 
     private void initCustomValueAlertDialog() {
-        mDialogEditText = new EditText(this);
-        mDialogEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
-        mDialogEditText.setSingleLine(true);
-        mDialogEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
-        mDialogEditText.setMaxLines(1);
-        mDialogEditText.setHint("请输入自定义值");
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        mDialogEditText.setLayoutParams(layoutParams);
+        String title = mTvUnitTitle.getText().toString();
+        if (TextUtils.isEmpty(title)) {
+            title = "自定义值";
+        }
 
-        mBuilder = new AlertDialog.Builder(this)
-                .setView(mDialogEditText)
-                .setTitle("自定义")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+        if (null == alertDialog) {
+            mDialogEditText = new EditText(this);
+            mDialogEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
+            mDialogEditText.setSingleLine(true);
+            mDialogEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            mDialogEditText.setMaxLines(1);
+            mDialogEditText.setHint("请输入" + title);
+            ViewGroup.MarginLayoutParams layoutParams = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.leftMargin = DensityUtil.dp2px(this, 10);
+            layoutParams.rightMargin = DensityUtil.dp2px(this, 10);
+            mDialogEditText.setLayoutParams(layoutParams);
 
-                        HashMap<String, String> tmp = new HashMap<>();
-                        tmp.put("value", mDialogEditText.getText().toString() + mPackageInfoBean.getUnit());
-                        tmp.put("tag", mDialogEditText.getText().toString());
-                        mPackageInfoBean.getDefaultValues().add(0,tmp);
+            mBuilder = new AlertDialog.Builder(this)
+                    .setView(mDialogEditText)
+                    .setTitle(title)
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
 
-                        SimpleAdapter adapter = (SimpleAdapter) mSp.getAdapter();
-                        adapter.notifyDataSetChanged();
+                            HashMap<String, String> tmp = new HashMap<>();
+                            tmp.put("value", mDialogEditText.getText().toString() + mPackageInfoBean.getUnit());
+                            tmp.put("tag", mDialogEditText.getText().toString());
+                            mPackageInfoBean.getDefaultValues().add(0, tmp);
 
-                        mDialogEditText.setText("");
-                        mSp.setSelection(0);
-                    }
-                }).setNegativeButton("取消", null);
-        alertDialog = mBuilder.create();
-        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                mDialogEditText.setText("");
-                mSp.setSelection(0);
-            }
-        });
+                            SimpleAdapter adapter = (SimpleAdapter) mSp.getAdapter();
+                            adapter.notifyDataSetChanged();
+
+                            mDialogEditText.setText("");
+                            mSp.setSelection(0);
+                        }
+                    }).setNegativeButton("取消", null);
+            alertDialog = mBuilder.create();
+            alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    mDialogEditText.setText("");
+                    mSp.setSelection(0);
+                }
+            });
+        }
+
+        mDialogEditText.setHint("请输入" + title);
+        alertDialog.setTitle(title);
+
     }
+
+    private List<HashMap<String, String>> defaultSpValues;
 
     @Override
     public void showServicePackageInfo(PackageInfoBean packageInfoBean) {
@@ -137,14 +184,16 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
         mTvUnitTitle.setText(packageInfoBean.getUnitTitle());
         mTvDescTitle.setText(packageInfoBean.getDescTitle());
         mTvDesc.setText(Html.fromHtml(packageInfoBean.getDesc()));
+        mDoctorPackageId = packageInfoBean.getDoctorPackageId();
 
-        mSp.setAdapter(new SimpleAdapter(this, packageInfoBean.getDefaultValues(), R.layout.support_simple_spinner_dropdown_item, new String[]{"value"}, new int[]{android.R.id.text1}));
+        defaultSpValues = packageInfoBean.getDefaultValues();
+        mSp.setAdapter(new SimpleAdapter(this, defaultSpValues, R.layout.support_simple_spinner_dropdown_item, new String[]{"valueStr"}, new int[]{android.R.id.text1}));
         mSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                HashMap<String, String> map = (HashMap<String, String>) parent.getSelectedItem();
-                showShortToast(map.get("tag"));
-                if ("-1".equals(map.get("tag"))) {
+                HashMap<String, String> map = defaultSpValues.get(position);
+                if ("-1".equals(map.get("value"))) {
+                    //自定义
                     alertDialog.show();
                 }
             }
@@ -154,6 +203,50 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
 
             }
         });
+        mSp.setSelection(packageInfoBean.getDefaultSpPosition());
+
+        initCustomValueAlertDialog();
+    }
+
+    @OnClick(R.id.tv_group_service_modify_publish)
+    public void publish() {
+        String value = defaultSpValues.get(mSp.getSelectedItemPosition()).get("value");
+        if (!TextUtils.isDigitsOnly(value)) {
+            showShortToast("数据格式错误，操作失败");
+            return;
+        }
+        GroupPackagePublishBody body = new GroupPackagePublishBody();
+        body.setDoctorId(AIManager.getInstance().getDoctorId());
+        body.setDoctorGroupId(mGroupId);
+        body.setDoctorPackageId(mDoctorPackageId);
+        body.setPublishType("Publish");
+        body.setServicePackageId(mServicePackageId);
+        body.setNumberValue(Integer.parseInt(value));
+        mPresenter.publishPackage(body);
+    }
+
+    @OnClick(R.id.tv_group_service_modify_unpublish)
+    public void unPublish() {
+        String value = defaultSpValues.get(mSp.getSelectedItemPosition()).get("value");
+        if (!TextUtils.isDigitsOnly(value)) {
+            showShortToast("数据格式错误，操作失败");
+            return;
+        }
+        GroupPackagePublishBody body = new GroupPackagePublishBody();
+        body.setDoctorId(AIManager.getInstance().getDoctorId());
+        body.setDoctorGroupId(mGroupId);
+        body.setDoctorPackageId(mDoctorPackageId);
+        body.setPublishType("Unpublish");
+        body.setServicePackageId(mServicePackageId);
+        body.setNumberValue(Integer.parseInt(value));
+        mPresenter.publishPackage(body);
+    }
+
+    @Override
+    public void publishSuccess(String message) {
+        showShortToast(message);
+        setResult(RESULT_CODE_SUCCESS);
+        finish();
     }
 
     @Override
@@ -168,17 +261,17 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
 
     @Override
     public void showServerError(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void showEmptyView(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void showErrorToast(String message) {
-
+        showShortToast(message);
     }
 
     @Override

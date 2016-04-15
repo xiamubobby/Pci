@@ -23,7 +23,10 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
     private final int REQUEST_CODE_MODIFY = 0;
 
     public final static String EXTRA_GROUP_ID = "groupId";
+    public final static String EXTRA_IS_ADMIN = "isAdmin";
+
     private String mGroupId;
+    private boolean mIsAdmin;
 
     @Bind(R.id.recycler_view_group_service)
     CommonRecyclerView mRecyclerView;
@@ -44,6 +47,7 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
         Intent intent = getIntent();
         if (null != intent) {
             mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
+            mIsAdmin = intent.getBooleanExtra(EXTRA_IS_ADMIN,false);
         }
 
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(this,getResources().getColor(R.color.divider),1));
@@ -67,9 +71,10 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
                 @Override
                 public void onItemClick(int position) {
                     Intent intent = new Intent("com.wonders.xlab.pci.doctor.GroupServiceModifyActivity");
-                    intent.putExtra(GroupServiceModifyActivity.EXTRA_PACKAGE_ID, mRVAdapter.getBean(position).packageId.get());
+                    intent.putExtra(GroupServiceModifyActivity.EXTRA_SERVICE_PACKAGE_ID, mRVAdapter.getBean(position).packageId.get());
                     intent.putExtra(GroupServiceModifyActivity.EXTRA_GROUP_ID, mGroupId);
                     intent.putExtra(GroupServiceModifyActivity.EXTRA_PUBLISHED, mRVAdapter.getBean(position).published.get());
+                    intent.putExtra(GroupServiceModifyActivity.EXTRA_IS_ADMIN, mIsAdmin);
                     startActivityForResult(intent,REQUEST_CODE_MODIFY);
                 }
             });
@@ -80,27 +85,42 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
 
     @Override
     public void showLoading(String message) {
-
+        mRecyclerView.setRefreshing(true);
     }
 
     @Override
     public void showNetworkError(String message) {
-        showShortToast(message);
+        mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mGroupServicesPresenter.getPackages(mGroupId);
+            }
+        });
     }
 
     @Override
     public void showServerError(String message) {
-
+        mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mGroupServicesPresenter.getPackages(mGroupId);
+            }
+        });
     }
 
     @Override
     public void showEmptyView(String message) {
-
+        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+                mGroupServicesPresenter.getPackages(mGroupId);
+            }
+        });
     }
 
     @Override
     public void showErrorToast(String message) {
-
+        showShortToast(message);
     }
 
     @Override

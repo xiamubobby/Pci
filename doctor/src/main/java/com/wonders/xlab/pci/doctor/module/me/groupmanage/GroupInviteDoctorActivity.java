@@ -84,7 +84,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
                     @Override
                     public Boolean call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
                         Editable s = textViewAfterTextChangeEvent.editable();
-                        return ((TextUtils.isDigitsOnly(s.toString()) && TextUtils.isEmpty(s.toString()) || s.length() >= 2) || (TextUtils.isDigitsOnly(s.toString()) && s.length() == 11));
+                        return ((!TextUtils.isDigitsOnly(s.toString()) && !TextUtils.isEmpty(s.toString()) && s.length() >= 2) || (TextUtils.isDigitsOnly(s.toString()) && s.length() == 11));
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -120,7 +120,6 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
             mGroupDoctorMultiChoiceRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    KeyboardUtil.hide(GroupInviteDoctorActivity.this);
 
                     GroupDoctorBean bean = mGroupDoctorMultiChoiceRVAdapter.getBean(position);
 

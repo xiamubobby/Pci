@@ -82,6 +82,7 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<GroupModifyMemberBean>() {
+
                     @Override
                     public void onCompleted() {
                         if (mIsAdmin) {
@@ -89,7 +90,13 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
                             if (size < 9) {
                                 appendToLast(addBean);
                             }
-                            if (size >= 2) {
+                            int agreedMemberSize = 0;
+                            for (GroupModifyMemberBean bean : getBeanList()) {
+                                if (bean.hasAgreed.get()) {
+                                    agreedMemberSize++;
+                                }
+                            }
+                            if (size >= agreedMemberSize) {
                                 appendToLast(minusBean);
                             }
                         }
@@ -111,15 +118,46 @@ public class GroupModifyMemberRVAdapter extends SimpleRVAdapter<GroupModifyMembe
     @Override
     public void setDatas(List<GroupModifyMemberBean> mBeanList) {
         super.setDatas(mBeanList);
-        int size = getItemCount();
-        if (mIsAdmin) {
-            if (size < 9) {
-                appendToLast(addBean);
-            }
-            if (size >= 2) {
-                appendToLast(minusBean);
-            }
+        if (null == mBeanList || mBeanList.size() <= 0) {
+            appendToLast(addBean);
+            return;
         }
+        Observable.from(mBeanList)
+                .flatMap(new Func1<GroupModifyMemberBean, Observable<GroupModifyMemberBean>>() {
+                    @Override
+                    public Observable<GroupModifyMemberBean> call(GroupModifyMemberBean groupModifyMemberBean) {
+                        return Observable.just(groupModifyMemberBean);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<GroupModifyMemberBean>() {
+                    int agreedMemberSize = 0;
+
+                    @Override
+                    public void onCompleted() {
+                        if (mIsAdmin) {
+                            int size = getItemCount();
+                            if (size < 9) {
+                                appendToLast(addBean);
+                            }
+                            if (agreedMemberSize >= 2) {
+                                appendToLast(minusBean);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(GroupModifyMemberBean bean) {
+                        if (bean.hasAgreed.get()) {
+                            agreedMemberSize++;
+                        }
+                    }
+                });
 
     }
 

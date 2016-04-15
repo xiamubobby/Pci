@@ -10,8 +10,8 @@ import im.hua.library.base.mvp.entity.BaseEntity;
 public class GroupPackageDetailEntity extends BaseEntity {
 
     /**
-     * node : {"doctorPackageId":1,"price":200,"unitName":"元/月","content":"包月套餐包月套餐包月套餐包月套餐","unitTitle":"价格","publishType":1}
-     * price : [{"id":1,"number":1},{"id":2,"number":10},{"id":3,"number":50},{"id":4,"number":100},{"id":5,"number":200}]
+     * node : {"doctorPackageId":1,"value":200,"unitName":"元/月","content":"包月套餐包月套餐包月套餐包月套餐","unitTitle":"价格","publishType":1}
+     * value : [{"id":1,"number":1},{"id":2,"number":10},{"id":3,"number":50},{"id":4,"number":100},{"id":5,"number":200}]
      */
 
     private RetValuesEntity ret_values;
@@ -27,7 +27,7 @@ public class GroupPackageDetailEntity extends BaseEntity {
     public static class RetValuesEntity {
         /**
          * doctorPackageId : 1
-         * price : 200
+         * value : 200
          * unitName : 元/月
          * content : 包月套餐包月套餐包月套餐包月套餐
          * unitTitle : 价格
@@ -59,27 +59,27 @@ public class GroupPackageDetailEntity extends BaseEntity {
         }
 
         public static class NodeEntity {
-            private int doctorPackageId;
-            private int price;
+            private String doctorPackageId;
+            private int value;
             private String unitName;
             private String content;
             private String unitTitle;
             private int publishType;
 
-            public int getDoctorPackageId() {
+            public String getDoctorPackageId() {
                 return doctorPackageId;
             }
 
-            public void setDoctorPackageId(int doctorPackageId) {
+            public void setDoctorPackageId(String doctorPackageId) {
                 this.doctorPackageId = doctorPackageId;
             }
 
-            public int getPrice() {
-                return price;
+            public int getValue() {
+                return value;
             }
 
-            public void setPrice(int price) {
-                this.price = price;
+            public void setValue(int value) {
+                this.value = value;
             }
 
             public String getUnitName() {

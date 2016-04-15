@@ -2,20 +2,20 @@ package com.wonders.xlab.pci.doctor.mvp.model.impl;
 
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.GroupPackageAPI;
-import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageCreateBody;
 import com.wonders.xlab.pci.doctor.mvp.entity.GroupPackageCreateEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.IGroupPackageCreateModel;
+import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupPackagePublishBody;
+import com.wonders.xlab.pci.doctor.mvp.model.IGroupPackagePublishModel;
 
 import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
  * Created by hua on 16/4/11.
  */
-public class GroupPackageCreateModel extends DoctorBaseModel<GroupPackageCreateEntity> implements IGroupPackageCreateModel {
+public class GroupPackagePublishModel extends DoctorBaseModel<GroupPackageCreateEntity> implements IGroupPackagePublishModel {
     private GroupPackageCreateModelListener mListener;
     private GroupPackageAPI mAPI;
 
-    public GroupPackageCreateModel(GroupPackageCreateModelListener listener) {
+    public GroupPackagePublishModel(GroupPackageCreateModelListener listener) {
         mListener = listener;
         mAPI = mRetrofit.create(GroupPackageAPI.class);
     }
@@ -31,8 +31,8 @@ public class GroupPackageCreateModel extends DoctorBaseModel<GroupPackageCreateE
     }
 
     @Override
-    public void createPackage(GroupPackageCreateBody body) {
-        request(mAPI.createPackage(body), true);
+    public void publishPackage(GroupPackagePublishBody body) {
+        request(mAPI.publishDoctorPackage(body), true);
     }
 
     public interface GroupPackageCreateModelListener extends BaseModelListener {

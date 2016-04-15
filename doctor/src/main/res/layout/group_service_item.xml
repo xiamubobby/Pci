@@ -19,7 +19,7 @@
                   android:clickable="true"
                   android:gravity="center_vertical"
                   android:orientation="horizontal"
-                  android:padding="@dimen/item_interval_small">
+                  android:padding="@dimen/item_interval_middle">
 
         <ImageView
             android:id="@+id/iv_group_service_item_icon"

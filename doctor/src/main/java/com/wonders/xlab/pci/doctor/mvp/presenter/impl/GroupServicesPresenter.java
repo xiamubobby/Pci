@@ -30,12 +30,18 @@ public class GroupServicesPresenter extends BasePresenter implements IGroupServi
 
     @Override
     public void getPackages(String groupId) {
+        mListener.showLoading("");
         mGroupPackageListModel.getPackageList(groupId);
     }
 
     @Override
     public void onReceivePackageListSuccess(List<GroupPackageListEntity.RetValuesEntity> valuesEntityList) {
         mListener.hideLoading();
+
+        if (null == valuesEntityList || valuesEntityList.size() <= 0) {
+            mListener.showEmptyView("");
+            return;
+        }
 
         Observable.from(valuesEntityList)
                 .flatMap(new Func1<GroupPackageListEntity.RetValuesEntity, Observable<GroupPackageListEntity.RetValuesEntity>>() {

@@ -12,9 +12,9 @@
     <RelativeLayout
         android:id="@+id/rl_group_service_modify_top"
         android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeightSmall"
         android:paddingLeft="@dimen/item_interval_small"
-        android:paddingRight="@dimen/item_interval_small"
-        android:layout_height="?attr/listPreferredItemHeightSmall">
+        android:paddingRight="@dimen/item_interval_small">
 
         <TextView
             android:id="@+id/tv_group_service_modify_unit_title"
@@ -29,7 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:clickable="false"/>
 
         <include
             layout="@layout/divider_vertical"
@@ -50,10 +51,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/item_interval_small"
-            android:paddingRight="@dimen/item_interval_small"
             android:background="@android:color/white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/item_interval_small"
+            android:paddingRight="@dimen/item_interval_small">
 
             <TextView
                 android:id="@+id/tv_group_service_modify_desc_title"
@@ -72,7 +73,8 @@
         android:id="@+id/ll_group_service_modify_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,21 +82,24 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/tv_group_service_modify_unpublish"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/selector_group_service_modify_btn_bg_save"
+                android:background="@drawable/selector_group_service_modify_btn_bg_unpublish"
                 android:clickable="true"
                 android:gravity="center"
-                android:text="暂存"
+                android:text="下架"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/text_size_large"/>
+                android:textSize="@dimen/text_size_large"
+                android:visibility="gone"/>
 
             <TextView
+                android:id="@+id/tv_group_service_modify_publish"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/selector_group_service_modify_btn_bg_publish_or_unpublish"
+                android:background="@drawable/selector_group_service_modify_btn_bg_publish"
                 android:clickable="true"
                 android:gravity="center"
                 android:text="发布"
