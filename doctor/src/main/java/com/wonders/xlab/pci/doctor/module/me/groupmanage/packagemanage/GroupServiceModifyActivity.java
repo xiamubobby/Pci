@@ -210,23 +210,15 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
 
     @OnClick(R.id.tv_group_service_modify_publish)
     public void publish() {
-        String value = defaultSpValues.get(mSp.getSelectedItemPosition()).get("value");
-        if (!TextUtils.isDigitsOnly(value)) {
-            showShortToast("数据格式错误，操作失败");
-            return;
-        }
-        GroupPackagePublishBody body = new GroupPackagePublishBody();
-        body.setDoctorId(AIManager.getInstance().getDoctorId());
-        body.setDoctorGroupId(mGroupId);
-        body.setDoctorPackageId(mDoctorPackageId);
-        body.setPublishType("Publish");
-        body.setServicePackageId(mServicePackageId);
-        body.setNumberValue(Integer.parseInt(value));
-        mPresenter.publishPackage(body);
+        update(true);
     }
 
     @OnClick(R.id.tv_group_service_modify_unpublish)
     public void unPublish() {
+        update(false);
+    }
+
+    private void update(boolean isPublish) {
         String value = defaultSpValues.get(mSp.getSelectedItemPosition()).get("value");
         if (!TextUtils.isDigitsOnly(value)) {
             showShortToast("数据格式错误，操作失败");
@@ -236,9 +228,11 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
         body.setDoctorId(AIManager.getInstance().getDoctorId());
         body.setDoctorGroupId(mGroupId);
         body.setDoctorPackageId(mDoctorPackageId);
-        body.setPublishType("Unpublish");
+        body.setPublishType(isPublish ? "Publish" : "Unpublish");
         body.setServicePackageId(mServicePackageId);
-        body.setNumberValue(Integer.parseInt(value));
+        if (isPublish) {
+            body.setNumberValue(Integer.parseInt(value));
+        }
         mPresenter.publishPackage(body);
     }
 

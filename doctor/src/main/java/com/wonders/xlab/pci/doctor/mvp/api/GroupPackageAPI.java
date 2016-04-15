@@ -20,7 +20,7 @@ public interface GroupPackageAPI {
     @GET("v1/servicePackages/listServicePackages/{doctorGroupId}")
     Observable<Response<GroupPackageListEntity>> getPackageList(@Path("doctorGroupId") String doctorGroupId);
 
-    @GET("v1/servicePackages/retrieveServicePackage/{doctorGroupId}/{servicePackageId}/{published}")
+    @GET("v1/servicePackages/retrieveServicePackage/{doctorGroupId}/{servicePackageId}")
     Observable<Response<GroupPackageDetailEntity>> getPackageDetail(@Path("doctorGroupId") String doctorGroupId, @Path("servicePackageId") String servicePackageId);
 
     @POST("v1/packages/publishDoctorPackage")
