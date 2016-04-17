@@ -12,8 +12,8 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.me.notification.adapter.NotifiGroupInviteRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.notification.adapter.bean.NotifiGroupInviteBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.INotifiGroupInvitePresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.NotifiGroupInvitePresenter;
+import com.wonders.xlab.pci.doctor.module.me.notification.presenter.INotifiGroupInvitePresenter;
+import com.wonders.xlab.pci.doctor.module.me.notification.presenter.impl.NotifiGroupInvitePresenter;
 
 import java.util.List;
 

@@ -20,7 +20,7 @@ import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.adapter.SymptomRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.bean.SymptomBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.SymptomPresenter;
+import com.wonders.xlab.pci.doctor.data.presenter.impl.SymptomPresenter;
 
 import java.util.List;
 

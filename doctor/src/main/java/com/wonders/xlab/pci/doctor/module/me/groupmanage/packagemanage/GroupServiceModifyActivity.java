@@ -22,9 +22,9 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.bean.PackageInfoBean;
-import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupPackagePublishBody;
-import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupServiceModifyPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupServiceModifyPresenter;
+import com.wonders.xlab.pci.doctor.data.entity.request.GroupPackagePublishBody;
+import com.wonders.xlab.pci.doctor.data.presenter.IGroupServiceModifyPresenter;
+import com.wonders.xlab.pci.doctor.data.presenter.impl.GroupServiceModifyPresenter;
 
 import java.util.HashMap;
 import java.util.List;

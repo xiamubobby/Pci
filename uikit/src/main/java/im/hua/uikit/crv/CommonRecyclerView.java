@@ -65,19 +65,19 @@ public class CommonRecyclerView extends FrameLayout {
     private long mLoadMoreAnimationDuration = 400;
     private TranslateAnimation showNoReverseAnimation = new TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, -0.5f);
+            Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, -0.4f);
 
     private TranslateAnimation hideNoReverseAnimation = new TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, -0.5f, Animation.RELATIVE_TO_SELF, 1.0f);
+            Animation.RELATIVE_TO_SELF, -0.4f, Animation.RELATIVE_TO_SELF, 1.0f);
 
     private TranslateAnimation showReverseAnimation = new TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+            Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.4f);
 
     private TranslateAnimation hideReverseAnimation = new TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, -1.0f);
+            Animation.RELATIVE_TO_SELF, 0.4f, Animation.RELATIVE_TO_SELF, -1.0f);
 
     private Animation fadeIn = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
 

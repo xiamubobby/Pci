@@ -25,7 +25,7 @@ import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.MedicalRecordAc
 import com.wonders.xlab.pci.doctor.module.chatroom.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoActivity;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.ChatRoomPresenter;
+import com.wonders.xlab.pci.doctor.data.presenter.impl.ChatRoomPresenter;
 import com.wonders.xlab.pci.doctor.util.UnReadMessageUtil;
 
 import java.util.Calendar;

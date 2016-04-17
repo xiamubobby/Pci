@@ -11,7 +11,7 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.adapter.MedicalRecordRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.bean.MedicalRecordBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.MedicalRecordPresenter;
+import com.wonders.xlab.pci.doctor.data.presenter.impl.MedicalRecordPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -10,8 +10,8 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.adapter.GroupServiceRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.adapter.bean.GroupServiceBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupServicesPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupServicesPresenter;
+import com.wonders.xlab.pci.doctor.data.presenter.IGroupServicesPresenter;
+import com.wonders.xlab.pci.doctor.data.presenter.impl.GroupServicesPresenter;
 
 import java.util.List;
 

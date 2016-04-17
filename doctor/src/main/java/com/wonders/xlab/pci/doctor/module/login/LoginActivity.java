@@ -16,7 +16,7 @@ import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.module.MainActivity;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.LoginPresenter;
+import com.wonders.xlab.pci.doctor.data.presenter.impl.LoginPresenter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

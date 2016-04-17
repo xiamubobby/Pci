@@ -14,8 +14,8 @@ import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupListRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupListBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupListPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupListPresenter;
+import com.wonders.xlab.pci.doctor.data.presenter.IGroupListPresenter;
+import com.wonders.xlab.pci.doctor.data.presenter.impl.GroupListPresenter;
 
 import java.util.List;
 

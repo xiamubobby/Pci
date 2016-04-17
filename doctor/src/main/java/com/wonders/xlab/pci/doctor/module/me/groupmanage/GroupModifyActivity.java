@@ -26,9 +26,9 @@ import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupServiceIco
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyMemberBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.GroupServicesActivity;
-import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupUpdateBasicInfoBody;
-import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupModifyPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupModifyPresenter;
+import com.wonders.xlab.pci.doctor.data.entity.request.GroupUpdateBasicInfoBody;
+import com.wonders.xlab.pci.doctor.data.presenter.IGroupModifyPresenter;
+import com.wonders.xlab.pci.doctor.data.presenter.impl.GroupModifyPresenter;
 
 import java.util.concurrent.TimeUnit;
 

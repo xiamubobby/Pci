@@ -24,9 +24,9 @@ import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupDoctorMultiChoiceRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupInviteSelectedDoctorRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
-import com.wonders.xlab.pci.doctor.mvp.entity.request.GroupUpdateMemberBody;
-import com.wonders.xlab.pci.doctor.mvp.presenter.IGroupInviteDoctorPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.GroupDoctorInvitePresenter;
+import com.wonders.xlab.pci.doctor.data.entity.request.GroupUpdateMemberBody;
+import com.wonders.xlab.pci.doctor.data.presenter.IGroupInviteDoctorPresenter;
+import com.wonders.xlab.pci.doctor.data.presenter.impl.GroupDoctorInvitePresenter;
 
 import java.util.ArrayList;
 import java.util.List;

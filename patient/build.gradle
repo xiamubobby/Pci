@@ -71,4 +71,6 @@ dependencies {
     compile 'me.drakeet.labelview:labelview:0.8'
     compile 'com.google.dagger:dagger:2.2'
     apt 'com.google.dagger:dagger-compiler:2.2'
+    compile 'com.github.mzhua:AvatarAssemble:-SNAPSHOT'
+//    compile 'im.hua.avatarassemble.library:library:1.0'
 }
