@@ -8,4 +8,6 @@ import android.databinding.ObservableField;
 public class NotifiOthersBean {
     public ObservableField<Long> recordTimeInMill = new ObservableField<>();
     public ObservableField<String> txtContent = new ObservableField<>("");
+    public ObservableField<Boolean> selected = new ObservableField<>(false);
+    public ObservableField<Boolean> radioVisible = new ObservableField<>(false);
 }

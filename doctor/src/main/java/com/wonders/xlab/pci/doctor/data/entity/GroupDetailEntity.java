@@ -95,7 +95,7 @@ public class GroupDetailEntity extends BaseEntity {
             private String doctorId;
             private String doctorImId;
             private String doctorAvatarUrl;
-            private boolean isAgree;
+            private String inviteStatus;
 
             public String getDoctorName() {
                 return doctorName;
@@ -129,12 +129,12 @@ public class GroupDetailEntity extends BaseEntity {
                 this.doctorImId = doctorImId;
             }
 
-            public boolean isAgree() {
-                return isAgree;
+            public String getInviteStatus() {
+                return inviteStatus;
             }
 
-            public void setAgree(boolean agree) {
-                isAgree = agree;
+            public void setInviteStatus(String inviteStatus) {
+                this.inviteStatus = inviteStatus;
             }
         }
     }

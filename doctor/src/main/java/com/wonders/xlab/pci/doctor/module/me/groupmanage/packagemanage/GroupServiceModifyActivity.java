@@ -149,8 +149,8 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
                         public void onClick(DialogInterface dialog, int which) {
 
                             HashMap<String, String> tmp = new HashMap<>();
-                            tmp.put("value", mDialogEditText.getText().toString() + mPackageInfoBean.getUnit());
-                            tmp.put("tag", mDialogEditText.getText().toString());
+                            tmp.put("valueStr", mDialogEditText.getText().toString() + mPackageInfoBean.getUnit());
+                            tmp.put("value", mDialogEditText.getText().toString());
                             mPackageInfoBean.getDefaultValues().add(0, tmp);
 
                             SimpleAdapter adapter = (SimpleAdapter) mSp.getAdapter();
@@ -221,7 +221,7 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
     private void update(boolean isPublish) {
         String value = defaultSpValues.get(mSp.getSelectedItemPosition()).get("value");
         if (!TextUtils.isDigitsOnly(value)) {
-            showShortToast("数据格式错误，操作失败");
+            showShortToast("请选择一个值");
             return;
         }
         GroupPackagePublishBody body = new GroupPackagePublishBody();

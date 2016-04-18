@@ -38,18 +38,18 @@ public class BSSingleSaveModel extends PatientBaseModel<BSSaveEntity> {
     @Override
     protected void onSuccess(BSSaveEntity response) {
         BSSaveEntity.RetValuesEntity retValues = response.getRet_values();
-        XApplication.realm.beginTransaction();
-        BSReportBean bean = XApplication.realm.createObject(BSReportBean.class);
-        bean.setId(retValues.getId());
-        bean.setMeasurePeriod(retValues.getBloodSugarTime());
-        bean.setBloodSugar(retValues.getBloodSugar());
-        bean.setContent(retValues.getContent());
-        bean.setRecordTimeInMill(retValues.getRecordTime());
-        bean.setBloodSugarStatus(retValues.getStatus());
-        bean.setPatientId(retValues.getUserId());
-
-        XApplication.realm.commitTransaction();
-
+        if (null != retValues) {
+            XApplication.realm.beginTransaction();
+            BSReportBean bean = XApplication.realm.createObject(BSReportBean.class);
+            bean.setId(retValues.getId());
+            bean.setMeasurePeriod(retValues.getBloodSugarTime());
+            bean.setBloodSugar(retValues.getBloodSugar());
+            bean.setContent(retValues.getContent());
+            bean.setRecordTimeInMill(retValues.getRecordTime());
+            bean.setBloodSugarStatus(retValues.getStatus());
+            bean.setPatientId(retValues.getUserId());
+            XApplication.realm.commitTransaction();
+        }
         mBSSaveModelListener.onSaveSingleBSSuccess("保存血糖成功！");
     }
 

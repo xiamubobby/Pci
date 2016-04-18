@@ -18,6 +18,7 @@ import com.wonders.xlab.pci.doctor.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.pci.doctor.otto.ForceExitOtto;
 import com.wonders.xlab.pci.doctor.realm.NotifiGroupInviteRealm;
+import com.wonders.xlab.pci.doctor.realm.NotifiOthersRealm;
 import com.wonders.xlab.pci.doctor.realm.SimpleStringRealm;
 import com.wonders.xlab.pci.doctor.realm.UnReadMessageRealm;
 import com.wonders.xlab.pci.doctor.util.RealmUtil;
@@ -53,14 +54,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         if (!TextUtils.isEmpty(username) && username.equals("doctor" + AIManager.getInstance().getDoctorTel())) {
             return;
         }
-        // 如果是群聊消息，获取到group id
-//        if (message.getChatType() == EMMessage.ChatType.GroupChat) {
-//            if (!message.getTo().equals(username)) {
-//                // 消息不是发给当前会话，return
-////                return;
-//            }
-//        }
-        String title = message.getStringAttribute("title", "");
+
         int type = message.getIntAttribute("type", -1);//-1:默认处理，即通过环信后台发送 0:提醒 1:内容 2：强制退出(由于用户锁定账户等等原因的安全考虑)
 
         int notifyId = Constant.NOTIFY_ID;
@@ -73,6 +67,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         int notifyColor = 0xff30bdf2;
         switch (type) {
             case -1:
+                String title = "";
                 try {
                     title = new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8");
                 } catch (UnsupportedEncodingException e) {
@@ -119,6 +114,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
 
                 break;
             case 4:
+                //邀请通知
                 String gId = message.getStringAttribute("groupId", "");
                 String gName = message.getStringAttribute("groupName", "");
                 String gDesc = message.getStringAttribute("groupDescription", "");
@@ -151,6 +147,18 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 realm.setAvatarUrls(avatarUrls);
 
                 RealmUtil.saveGroupInviteNotifi(realm);
+                break;
+            case 99:
+                //其他通知，只有string
+                try {
+                    String txtMessage = new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8");
+                    NotifiOthersRealm othersRealm = new NotifiOthersRealm();
+                    othersRealm.setMessage(txtMessage);
+                    othersRealm.setReceiveTimeInMill(message.getMsgTime());
+                    RealmUtil.saveOthersNotifi(othersRealm);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }

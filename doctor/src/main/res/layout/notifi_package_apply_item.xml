@@ -107,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:background="@drawable/selector_rectangle_default_outline_primary_solid_white_pressed_primary"
-                android:text="拒绝"
+                android:text="忽略"
                 android:textColor="@drawable/selector_text_default_accent_pressed_white"/>
 
             <Button
@@ -115,7 +115,7 @@
                 android:layout_height="36dp"
                 android:layout_marginLeft="@dimen/item_interval_small"
                 android:background="@drawable/selector_rectangle_default_primary_pressed_outline_primary_solid_white"
-                android:text="同意"
+                android:text="接受"
                 android:textColor="@drawable/selector_text_default_white_pressed_accent"/>
         </LinearLayout>
     </LinearLayout>

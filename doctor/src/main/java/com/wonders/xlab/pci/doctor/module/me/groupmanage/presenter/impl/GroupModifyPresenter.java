@@ -1,13 +1,13 @@
 package com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.impl;
 
-import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyBean;
-import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyMemberBean;
 import com.wonders.xlab.pci.doctor.data.entity.GroupDetailEntity;
 import com.wonders.xlab.pci.doctor.data.entity.request.GroupUpdateBasicInfoBody;
 import com.wonders.xlab.pci.doctor.data.model.IGroupCreateModel;
 import com.wonders.xlab.pci.doctor.data.model.IGroupDetailModel;
 import com.wonders.xlab.pci.doctor.data.model.impl.GroupCreateModel;
 import com.wonders.xlab.pci.doctor.data.model.impl.GroupDetailModel;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyBean;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyMemberBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.IGroupModifyPresenter;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
 
     @Override
     public void createGroup(String doctorId, GroupUpdateBasicInfoBody body) {
-        mCreateModel.createGroup(doctorId,body);
+        mCreateModel.createGroup(doctorId, body);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
                         bean.doctorId.set(membersEntity.getDoctorId());
                         bean.doctorImId.set(membersEntity.getDoctorImId());
                         bean.doctorName.set(membersEntity.getDoctorName());
-                        bean.hasAgreed.set(membersEntity.isAgree());
+                        bean.hasAgreed.set("join".equals(membersEntity.getInviteStatus()));
                         return bean;
                     }
                 })
@@ -103,13 +103,13 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
 
     @Override
     public void cannotCreateGroup(String message) {
+        mListener.hideLoading();
         mListener.cannotCreateGroup(message);
     }
 
     @Override
     public void onReceiveFailed(int code, String message) {
-        mListener.hideLoading();
-        mListener.showNetworkError(message);
+        showError(mListener, code, message);
     }
 
     @Override

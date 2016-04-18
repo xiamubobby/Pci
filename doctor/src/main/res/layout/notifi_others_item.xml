@@ -5,28 +5,46 @@
 
         <import type="im.hua.utils.DateUtil"/>
 
+        <import type="android.view.View"/>
+
         <variable
             name="bean"
             type="com.wonders.xlab.pci.doctor.module.me.notification.adapter.bean.NotifiOthersBean"/>
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:background="?attr/selectableItemBackground"
-                  android:clickable="true"
-                  android:orientation="vertical"
-                  android:padding="@dimen/item_interval_small">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:orientation="vertical"
+                    android:padding="@dimen/item_interval_small">
 
         <TextView
+            android:id="@+id/tv_notifi_others_time"
             style="@style/SmallSecondGrayWrapTextView"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/rb_notifi_others"
             android:singleLine="true"
             android:text='@{DateUtil.format(bean.recordTimeInMill,"yyyy/MM/dd HH:mm")}'/>
 
         <TextView
+            android:id="@+id/tv_notifi_others_content"
             style="@style/MiddleGrayWrapTextView"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/tv_notifi_others_time"
             android:layout_marginTop="@dimen/item_interval_small"
+            android:layout_toLeftOf="@+id/rb_notifi_others"
             android:maxLines="5"
             android:text="@{bean.txtContent}"/>
-    </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/rb_notifi_others"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:checked="@{bean.selected}"
+            android:visibility="@{bean.radioVisible ? View.VISIBLE : View.GONE}"/>
+    </RelativeLayout>
 </layout>

@@ -41,21 +41,23 @@ public class BPSingleSaveModel extends PatientBaseModel<BPSaveEntity> {
         /**
          * cache to realm
          */
-        XApplication.realm.beginTransaction();
-        BPReportBean bean = XApplication.realm.createObject(BPReportBean.class);
-        bean.setLowPressure(retValues.getDiastolicPressure());
-        bean.setLowPressureStatus(retValues.getDiastolicStatus());
-        bean.setLowPressureRange(retValues.getDiastolicContent());
-        bean.setHighPressure(retValues.getSystolicPressure());
-        bean.setHighPressureStatus(retValues.getSystolicStatus());
-        bean.setHighPressureRange(retValues.getSystolicContent());
-        bean.setHeartRate(retValues.getHeartRate());
-        bean.setHeartRateStatus(retValues.getHeartStatus());
-        bean.setHeartRateRange(retValues.getHeartContent());
-        bean.setId(retValues.getId());
-        bean.setPatientId(retValues.getUserId());
-        bean.setRecordTimeInMill(retValues.getRecordTime());
-        XApplication.realm.commitTransaction();
+        if (null != retValues) {
+            XApplication.realm.beginTransaction();
+            BPReportBean bean = XApplication.realm.createObject(BPReportBean.class);
+            bean.setLowPressure(retValues.getDiastolicPressure());
+            bean.setLowPressureStatus(retValues.getDiastolicStatus());
+            bean.setLowPressureRange(retValues.getDiastolicContent());
+            bean.setHighPressure(retValues.getSystolicPressure());
+            bean.setHighPressureStatus(retValues.getSystolicStatus());
+            bean.setHighPressureRange(retValues.getSystolicContent());
+            bean.setHeartRate(retValues.getHeartRate());
+            bean.setHeartRateStatus(retValues.getHeartStatus());
+            bean.setHeartRateRange(retValues.getHeartContent());
+            bean.setId(retValues.getId());
+            bean.setPatientId(retValues.getUserId());
+            bean.setRecordTimeInMill(retValues.getRecordTime());
+            XApplication.realm.commitTransaction();
+        }
 
         mBPSaveModelListener.onSaveSingleBPSuccess("保存血压成功！");
     }

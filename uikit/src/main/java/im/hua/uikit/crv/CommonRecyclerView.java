@@ -403,11 +403,10 @@ public class CommonRecyclerView extends FrameLayout {
             return;
         }
         if (null != view && null != mShowingView) {
-//            for (int i = 0; i < this.getChildCount(); i++) {
-//                final View childAt = this.getChildAt(i);
-//                if (childAt.getVisibility() == VISIBLE) {
             mShowingView.setVisibility(INVISIBLE);
-            fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            view.setVisibility(VISIBLE);
+            view.startAnimation(fadeIn);
+            /*fadeOut.setAnimationListener(new Animation.AnimationListener() {
                 @Override
                 public void onAnimationStart(Animation animation) {
 
@@ -424,11 +423,8 @@ public class CommonRecyclerView extends FrameLayout {
 
                 }
             });
-            mShowingView.startAnimation(fadeOut);
+            mShowingView.startAnimation(fadeOut);*/
             mShowingView = view;
-//                    childAt.startAnimation(fadeOut);
-//                    return;
-//                }
         }
     }
 
@@ -497,7 +493,7 @@ public class CommonRecyclerView extends FrameLayout {
     }
 
     public void hideRefreshOrLoadMore(boolean hideRefreshing, boolean hideLodeMore) {
-        if (hideRefreshing) {
+        if (hideRefreshing && null != mRefreshView) {
             setRefreshing(false);
         }
         if (hideLodeMore && isLoadingMore()) {

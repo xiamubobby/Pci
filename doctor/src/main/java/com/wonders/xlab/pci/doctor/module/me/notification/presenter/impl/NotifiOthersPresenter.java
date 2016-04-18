@@ -2,13 +2,17 @@ package com.wonders.xlab.pci.doctor.module.me.notification.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.module.me.notification.adapter.bean.NotifiOthersBean;
 import com.wonders.xlab.pci.doctor.module.me.notification.presenter.INotifiOthersPresenter;
+import com.wonders.xlab.pci.doctor.realm.NotifiOthersRealm;
+import com.wonders.xlab.pci.doctor.util.RealmUtil;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.library.base.mvp.listener.BasePagePresenterListener;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
 
 /**
  * Created by hua on 16/4/18.
@@ -21,22 +25,73 @@ public class NotifiOthersPresenter extends BasePagePresenter implements INotifiO
     }
 
     @Override
-    public void getOthersNotifi(String doctorId) {
-        mListener.showLoading("");
+    public void getOthersNotifi(final boolean isRefresh, String doctorId) {
 
-        List<NotifiOthersBean> notifications = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            NotifiOthersBean bean = new NotifiOthersBean();
-            bean.recordTimeInMill.set(Calendar.getInstance().getTimeInMillis());
-            bean.txtContent.set("desclkjsadlkfjlasdjfklklkasdlfklk卡死的弗兰克就爱上了贷款放假啦开始叫\n对方拉卡拉是快递费");
-            notifications.add(bean);
+        if (isRefresh) {
+            mListener.showLoading("");
+            resetPageInfo();
         }
 
-        mListener.hideLoading();
-        mListener.showOthersNotifications(notifications);
+        Observable.just(getNextPageIndex())
+                .flatMap(new Func1<Integer, Observable<NotifiOthersRealm>>() {
+                    @Override
+                    public Observable<NotifiOthersRealm> call(Integer integer) {
+                        return Observable.from(RealmUtil.getOthersNotifis(integer, 10));
+                    }
+                })
+                .filter(new Func1<NotifiOthersRealm, Boolean>() {
+                    @Override
+                    public Boolean call(NotifiOthersRealm realm) {
+                        return null != realm;
+                    }
+                })
+                .map(new Func1<NotifiOthersRealm, NotifiOthersBean>() {
+                    @Override
+                    public NotifiOthersBean call(NotifiOthersRealm realm) {
+                        NotifiOthersBean bean = new NotifiOthersBean();
+                        bean.recordTimeInMill.set(realm.getReceiveTimeInMill());
+                        bean.txtContent.set(realm.getMessage());
+                        return bean;
+                    }
+                })
+                .subscribe(new Subscriber<NotifiOthersBean>() {
+                    List<NotifiOthersBean> notifications = new ArrayList<>();
+
+                    @Override
+                    public void onCompleted() {
+                        updatePageInfo(getNextPageIndex());
+
+                        mListener.hideLoading();
+                        if (notifications.size() > 0) {
+                            if (shouldAppend()) {
+                                mListener.appendOthersNotifications(notifications);
+                            } else {
+                                mListener.showOthersNotifications(notifications);
+                            }
+                        } else {
+                            if (isRefresh) {
+                                mListener.showEmptyView("");
+                            } else {
+                                mListener.showReachTheLastPageNotice("通知都看完了");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mListener.hideLoading();
+                        mListener.showErrorToast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(NotifiOthersBean notifiOthersBean) {
+                        notifications.add(notifiOthersBean);
+                    }
+                });
     }
 
     public interface NotifiOthersPresenterListener extends BasePagePresenterListener {
         void showOthersNotifications(List<NotifiOthersBean> notifications);
+        void appendOthersNotifications(List<NotifiOthersBean> notifications);
     }
 }
