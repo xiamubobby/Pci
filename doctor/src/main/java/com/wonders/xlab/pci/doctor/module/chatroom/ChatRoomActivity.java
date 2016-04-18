@@ -26,7 +26,7 @@ import com.wonders.xlab.pci.doctor.module.chatroom.otto.ChatRoomRecordInsertOtto
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoActivity;
 import com.wonders.xlab.pci.doctor.data.presenter.impl.ChatRoomPresenter;
-import com.wonders.xlab.pci.doctor.util.UnReadMessageUtil;
+import com.wonders.xlab.pci.doctor.util.RealmUtil;
 
 import java.util.Calendar;
 import java.util.List;
@@ -130,7 +130,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         if (TextUtils.isDigitsOnly(imGroupId)) {
             new NotifyUtil().cancel(this, (int) Long.parseLong(imGroupId));
         }
-        UnReadMessageUtil.readMessage(imGroupId);
+        RealmUtil.readMessage(imGroupId);
     }
 
     @Override
@@ -284,7 +284,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
                 if (TextUtils.isDigitsOnly(otto.getImGroupId())) {
                     new NotifyUtil().cancel(this, (int) Long.parseLong(otto.getImGroupId()));
                 }
-                UnReadMessageUtil.readMessage(imGroupId);
+                RealmUtil.readMessage(imGroupId);
             }
 
             OthersChatRoomBean bean = new OthersChatRoomBean();

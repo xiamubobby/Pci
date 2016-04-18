@@ -51,7 +51,7 @@ public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPre
             itemBean.setDoctorGroupName(entity.getName());
             itemBean.setLatestChatMessage(entity.getContent());
             itemBean.setTimeStr(entity.getTimeExp());
-            itemBean.setPortraitUrl(entity.getAvatars() != null && entity.getAvatars().size() > 0 ? entity.getAvatars().get(0) : "");
+            itemBean.setPortraitUrl(entity.getAvatars());
 
             doctorItemBeanArrayList.add(itemBean);
         }
@@ -66,7 +66,7 @@ public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPre
             itemBean.setDoctorGroupName(entity.getName());
             itemBean.setLatestChatMessage(entity.getContent());
             itemBean.setTimeStr(entity.getTimeExp());
-            itemBean.setPortraitUrl(entity.getAvatars() != null && entity.getAvatars().size() > 0 ? entity.getAvatars().get(0) : "");
+            itemBean.setPortraitUrl(entity.getAvatars());
 
             doctorItemBeanArrayList.add(itemBean);
         }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="im.hua.utils.DateUtil"/>
+
+        <variable
+            name="bean"
+            type="com.wonders.xlab.pci.doctor.module.me.notification.adapter.bean.NotifiOthersBean"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="?attr/selectableItemBackground"
+                  android:clickable="true"
+                  android:orientation="vertical"
+                  android:padding="@dimen/item_interval_small">
+
+        <TextView
+            style="@style/SmallSecondGrayWrapTextView"
+            android:singleLine="true"
+            android:text='@{DateUtil.format(bean.recordTimeInMill,"yyyy/MM/dd HH:mm")}'/>
+
+        <TextView
+            style="@style/MiddleGrayWrapTextView"
+            android:layout_marginTop="@dimen/item_interval_small"
+            android:maxLines="5"
+            android:text="@{bean.txtContent}"/>
+    </LinearLayout>
+</layout>

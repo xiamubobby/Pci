@@ -44,7 +44,7 @@ public class MedicalRecordPhotoVH extends MultiViewHolder<MedicalRecordPhotoBean
 
         PhotoRVAdapter photoRVAdapter = new PhotoRVAdapter();
         photoRVAdapter.setDatas(data.getPhotoThumbnails());
-        photoRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+        photoRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
             @Override
             public void onItemClick(int position) {
                 if (null != mOnPhotoClickListener) {

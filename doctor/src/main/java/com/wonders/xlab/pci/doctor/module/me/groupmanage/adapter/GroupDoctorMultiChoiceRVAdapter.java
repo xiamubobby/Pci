@@ -21,17 +21,17 @@ import butterknife.ButterKnife;
  */
 public class GroupDoctorMultiChoiceRVAdapter extends SimpleRVAdapter<GroupDoctorBean> {
 
-    private OnItemClickListener mOnItemClickListener;
+    private OnClickListener mOnClickListener;
 
     public GroupDoctorMultiChoiceRVAdapter() {
-        super.setOnItemClickListener(new OnItemClickListener() {
+        super.setOnClickListener(new OnClickListener() {
             @Override
             public void onItemClick(int position) {
                 GroupDoctorBean tmp = getBean(position);
                 tmp.isSelected.set(!tmp.isSelected.get());
 
-                if (null != mOnItemClickListener) {
-                    mOnItemClickListener.onItemClick(position);
+                if (null != mOnClickListener) {
+                    mOnClickListener.onItemClick(position);
                 }
             }
         });
@@ -44,8 +44,8 @@ public class GroupDoctorMultiChoiceRVAdapter extends SimpleRVAdapter<GroupDoctor
     }
 
     @Override
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        mOnItemClickListener = onItemClickListener;
+    public void setOnClickListener(OnClickListener onClickListener) {
+        mOnClickListener = onClickListener;
     }
 
     @Override

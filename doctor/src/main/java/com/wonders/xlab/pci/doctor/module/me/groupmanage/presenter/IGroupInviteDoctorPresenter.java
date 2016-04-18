@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.data.presenter;
+package com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter;
 
 import com.wonders.xlab.pci.doctor.data.entity.request.GroupUpdateMemberBody;
 

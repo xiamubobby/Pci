@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.data.presenter.impl;
+package com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
 import com.wonders.xlab.pci.doctor.data.entity.GroupDoctorUpdateMemberEntity;
@@ -8,7 +8,7 @@ import com.wonders.xlab.pci.doctor.data.model.IGroupDoctorRemoveModel;
 import com.wonders.xlab.pci.doctor.data.model.IGroupMemberModel;
 import com.wonders.xlab.pci.doctor.data.model.impl.GroupDoctorRemoveModel;
 import com.wonders.xlab.pci.doctor.data.model.impl.GroupMemberModel;
-import com.wonders.xlab.pci.doctor.data.presenter.IGroupRemoveDoctorPresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.IGroupRemoveDoctorPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

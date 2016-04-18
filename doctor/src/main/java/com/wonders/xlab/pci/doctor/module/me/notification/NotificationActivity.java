@@ -36,9 +36,9 @@ public class NotificationActivity extends AppbarActivity {
         ButterKnife.bind(this);
 
         mFragmentVPAdapter = new FragmentVPAdapter(getFragmentManager());
-        mFragmentVPAdapter.addFragment(NotifiGroupInviteFragment.getInstance(), "邀请通知");
-        mFragmentVPAdapter.addFragment(NotifiPackageApplyFragment.getInstance(), "套餐申请通知");
-        mFragmentVPAdapter.addFragment(NotifiOthersFragment.getInstance(), "其他通知");
+        mFragmentVPAdapter.addFragment(NotifiGroupInviteFragment.getInstance(), "医生邀请");
+        mFragmentVPAdapter.addFragment(NotifiPackageApplyFragment.getInstance(), "套餐申请");
+        mFragmentVPAdapter.addFragment(NotifiOthersFragment.getInstance(), "其他");
         mViewPager.setAdapter(mFragmentVPAdapter);
 
         //2

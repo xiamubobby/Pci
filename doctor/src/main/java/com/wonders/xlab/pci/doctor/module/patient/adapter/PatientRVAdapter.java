@@ -13,7 +13,7 @@ import com.wonders.xlab.pci.doctor.databinding.PatientItemBinding;
 import com.wonders.xlab.pci.doctor.module.otto.MainBottomUnreadNotifyCountOtto;
 import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
 import com.wonders.xlab.pci.doctor.util.ImageViewManager;
-import com.wonders.xlab.pci.doctor.util.UnReadMessageUtil;
+import com.wonders.xlab.pci.doctor.util.RealmUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -62,7 +62,7 @@ public class PatientRVAdapter extends SimpleRVAdapter<PatientBean> {
         PatientViewHolder viewHolder = (PatientViewHolder) holder;
         PatientBean bean = getBean(position);
 
-        int counts = UnReadMessageUtil.getUnreadMessageCounts(bean.getImGroupId());
+        int counts = RealmUtil.getUnreadMessageCounts(bean.getImGroupId());
         BGABadgeViewHelper badgeViewHelper = viewHolder.mIvPatientItemPortrait.getBadgeViewHelper();
         badgeViewHelper.setBadgeGravity(BGABadgeViewHelper.BadgeGravity.RightTop);
         if (counts > 0 && counts < 100) {

@@ -12,18 +12,18 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.DoctorMyItemBinding;
+import com.wonders.xlab.patient.module.chatroom.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
 import com.wonders.xlab.patient.module.main.otto.MainBottomUnreadNotifyCountOtto;
-import com.wonders.xlab.patient.module.chatroom.otto.ChatRoomRecordInsertOtto;
-import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.bingoogolapple.badgeview.BGABadgeImageView;
+import cn.bingoogolapple.badgeview.BGABadgeFrameLayout;
 import cn.bingoogolapple.badgeview.BGABadgeViewHelper;
+import im.hua.avatarassemble.library.MultiAvatarView;
 import im.hua.utils.DateUtil;
 
 /**
@@ -33,6 +33,7 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
 
     /**
      * 重新排序，并且将最新的数据更新
+     *
      * @param otto
      */
     @Subscribe
@@ -72,6 +73,7 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
 
     /**
      * 更新数字图标
+     *
      * @param otto
      */
     @Subscribe
@@ -103,17 +105,17 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
         viewHolder.binding.setDoctorBean(dataItem);
 
         int counts = UnReadMessageUtil.getUnreadMessageCounts(dataItem.getImGroupId());
-        BGABadgeViewHelper badgeViewHelper = viewHolder.mIvPortrait.getBadgeViewHelper();
+        BGABadgeViewHelper badgeViewHelper = viewHolder.mIvPortraitContainer.getBadgeViewHelper();
         badgeViewHelper.setBadgeGravity(BGABadgeViewHelper.BadgeGravity.RightTop);
         if (counts > 0 && counts < 100) {
-            viewHolder.mIvPortrait.showTextBadge(String.valueOf(counts));
+            viewHolder.mIvPortraitContainer.showTextBadge(String.valueOf(counts));
         } else if (counts >= 100) {
-            viewHolder.mIvPortrait.showTextBadge("99+");
+            viewHolder.mIvPortraitContainer.showTextBadge("99+");
         } else {
-            viewHolder.mIvPortrait.hiddenBadge();
+            viewHolder.mIvPortraitContainer.hiddenBadge();
         }
+        viewHolder.mIvPortrait.setAvatarUrls(dataItem.getPortraitUrl());
 
-        ImageViewManager.setImageViewWithUrl(holder.itemView.getContext(), viewHolder.mIvPortrait, dataItem.getPortraitUrl(), R.drawable.ic_default_avatar_doctor);
     }
 
     @Override
@@ -148,13 +150,16 @@ public class MyDoctorRVAdapter extends SimpleRVAdapter<MyDoctorItemBean> impleme
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        BGABadgeImageView mIvPortrait;
+        @Bind(R.id.iv_doctor_my_item_portrait)
+        MultiAvatarView mIvPortrait;
+        @Bind(R.id.iv_doctor_my_item_portrait_container)
+        BGABadgeFrameLayout mIvPortraitContainer;
 
         DoctorMyItemBinding binding;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            mIvPortrait = (BGABadgeImageView) itemView.findViewById(R.id.iv_doctor_my_item_portrait);
+            ButterKnife.bind(this,itemView);
             binding = DoctorMyItemBinding.bind(itemView);
         }
     }

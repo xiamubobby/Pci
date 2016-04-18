@@ -81,7 +81,7 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
     private void initPatientAdapter() {
         if (mPatientRVAdapter == null) {
             mPatientRVAdapter = new PatientRVAdapter();
-            mPatientRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+            mPatientRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     Intent intent = new Intent(getActivity(), ChatRoomActivity.class);

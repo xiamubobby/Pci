@@ -1,6 +1,6 @@
-package com.wonders.xlab.pci.doctor.data.presenter.impl;
+package com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.impl;
 
-import com.wonders.xlab.pci.doctor.data.presenter.IGroupInvitePresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.IGroupInvitePresenter;
 
 import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.library.base.mvp.listener.BasePagePresenterListener;

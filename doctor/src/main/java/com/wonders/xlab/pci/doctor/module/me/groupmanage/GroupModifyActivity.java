@@ -27,8 +27,8 @@ import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModif
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyMemberBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.GroupServicesActivity;
 import com.wonders.xlab.pci.doctor.data.entity.request.GroupUpdateBasicInfoBody;
-import com.wonders.xlab.pci.doctor.data.presenter.IGroupModifyPresenter;
-import com.wonders.xlab.pci.doctor.data.presenter.impl.GroupModifyPresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.IGroupModifyPresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.impl.GroupModifyPresenter;
 
 import java.util.concurrent.TimeUnit;
 
@@ -176,7 +176,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
 
         if (null == mMemberRVAdapter) {
             mMemberRVAdapter = new GroupModifyMemberRVAdapter();
-            mMemberRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+            mMemberRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     if (null == mMemberRVAdapter) {

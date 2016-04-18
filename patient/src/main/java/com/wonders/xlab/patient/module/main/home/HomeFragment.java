@@ -102,7 +102,7 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
     private void setupBottomFunctionView() {
         if (null == homeRVAdapter) {
             homeRVAdapter = new HomeRVAdapter();
-            homeRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+            homeRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     switch (position) {

@@ -1,11 +1,11 @@
-package com.wonders.xlab.pci.doctor.data.presenter.impl;
+package com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupListBean;
 import com.wonders.xlab.pci.doctor.data.entity.GroupListEntity;
 import com.wonders.xlab.pci.doctor.data.model.IGroupListModel;
 import com.wonders.xlab.pci.doctor.data.model.impl.GroupListModel;
-import com.wonders.xlab.pci.doctor.data.presenter.IGroupListPresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.IGroupListPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,8 +14,8 @@ import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupListRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupListBean;
-import com.wonders.xlab.pci.doctor.data.presenter.IGroupListPresenter;
-import com.wonders.xlab.pci.doctor.data.presenter.impl.GroupListPresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.IGroupListPresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.impl.GroupListPresenter;
 
 import java.util.List;
 
@@ -67,7 +67,7 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
     private void initAdapter() {
         if (null == mRVAdapter) {
             mRVAdapter = new GroupListRVAdapter();
-            mRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+            mRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     Intent intent = new Intent("com.wonders.xlab.pci.doctor.GroupModifyActivity");

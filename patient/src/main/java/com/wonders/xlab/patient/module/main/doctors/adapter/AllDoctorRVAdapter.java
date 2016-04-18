@@ -8,14 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.DoctorAllItemBinding;
 import com.wonders.xlab.patient.module.main.doctors.adapter.bean.AllDoctorItemBean;
+import com.wonders.xlab.patient.util.ImageViewManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.hua.avatarassemble.library.MultiAvatarView;
 
 /**
  * Created by hua on 16/3/15.
@@ -34,7 +35,7 @@ public class AllDoctorRVAdapter extends SimpleRVAdapter<AllDoctorItemBean> {
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         AllDoctorItemBean itemBean = getBean(position);
         viewHolder.binding.setBean(itemBean);
-        ImageViewManager.setImageViewWithUrl(viewHolder.itemView.getContext(), viewHolder.mIvDoctorAllItemPortrait, itemBean.getPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
+        viewHolder.mIvPortrait.setAvatarUrls(itemBean.getPortraitUrl());
 
         viewHolder.mRecyclerView.setLayoutManager(new LinearLayoutManager(viewHolder.itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
         viewHolder.mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -45,7 +46,7 @@ public class AllDoctorRVAdapter extends SimpleRVAdapter<AllDoctorItemBean> {
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.iv_doctor_detail_portrait)
-        ImageView mIvDoctorAllItemPortrait;
+        MultiAvatarView mIvPortrait;
         @Bind(R.id.recycler_view_doctor_all_item_services)
         RecyclerView mRecyclerView;
 

@@ -25,8 +25,8 @@ import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupDoctorMult
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupInviteSelectedDoctorRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
 import com.wonders.xlab.pci.doctor.data.entity.request.GroupUpdateMemberBody;
-import com.wonders.xlab.pci.doctor.data.presenter.IGroupInviteDoctorPresenter;
-import com.wonders.xlab.pci.doctor.data.presenter.impl.GroupDoctorInvitePresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.IGroupInviteDoctorPresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.impl.GroupDoctorInvitePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,7 +117,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
     public void showDoctorList(List<GroupDoctorBean> doctorBeanList) {
         if (null == mGroupDoctorMultiChoiceRVAdapter) {
             mGroupDoctorMultiChoiceRVAdapter = new GroupDoctorMultiChoiceRVAdapter();
-            mGroupDoctorMultiChoiceRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+            mGroupDoctorMultiChoiceRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
 

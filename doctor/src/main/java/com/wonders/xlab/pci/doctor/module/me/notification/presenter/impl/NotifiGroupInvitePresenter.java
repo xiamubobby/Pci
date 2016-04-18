@@ -1,44 +1,84 @@
 package com.wonders.xlab.pci.doctor.module.me.notification.presenter.impl;
 
+import com.wonders.xlab.pci.doctor.data.entity.NotifiGroupInviteEntity;
+import com.wonders.xlab.pci.doctor.data.model.INotifiGroupInviteModel;
+import com.wonders.xlab.pci.doctor.data.model.impl.NotifiGroupInviteModel;
 import com.wonders.xlab.pci.doctor.module.me.notification.adapter.bean.NotifiGroupInviteBean;
 import com.wonders.xlab.pci.doctor.module.me.notification.presenter.INotifiGroupInvitePresenter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.library.base.mvp.listener.BasePagePresenterListener;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
 
 /**
  * Created by hua on 16/4/14.
  */
-public class NotifiGroupInvitePresenter extends BasePagePresenter implements INotifiGroupInvitePresenter {
+public class NotifiGroupInvitePresenter extends BasePagePresenter implements INotifiGroupInvitePresenter, NotifiGroupInviteModel.NotifiGroupInviteModelListener {
     private NotifiGroupInvitePresenterListener mListener;
+    private INotifiGroupInviteModel mGroupInviteModel;
 
     public NotifiGroupInvitePresenter(NotifiGroupInvitePresenterListener listener) {
         mListener = listener;
+        mGroupInviteModel = new NotifiGroupInviteModel(this);
     }
 
     @Override
     public void getInviteNotifications(String doctorId) {
+        mListener.showLoading("");
+        mGroupInviteModel.getGroupInviteNotifications(doctorId, 0, DEFAULT_PAGE_SIZE);
+    }
+
+    @Override
+    public void onReceiveGroupInviteNotifiSuccess(List<NotifiGroupInviteEntity.RetValuesEntity> valuesEntityList) {
         mListener.hideLoading();
+        Observable.from(valuesEntityList)
+                .flatMap(new Func1<NotifiGroupInviteEntity.RetValuesEntity, Observable<NotifiGroupInviteBean>>() {
+                    @Override
+                    public Observable<NotifiGroupInviteBean> call(NotifiGroupInviteEntity.RetValuesEntity retValuesEntity) {
+                        NotifiGroupInviteBean bean = new NotifiGroupInviteBean();
+                        bean.setId(retValuesEntity.getGroupId());
+                        bean.setOwnerName(retValuesEntity.getOwnerName());
+                        bean.setOwnerJobTitle(retValuesEntity.getOwnerJobTitle());
+                        bean.setOwnerDepartment(retValuesEntity.getOwnerDepartment());
+                        bean.setGroupName(retValuesEntity.getGroupName());
+                        bean.setOwnerHospital(retValuesEntity.getOwnerHos());
+                        bean.setGroupDesc(retValuesEntity.getGroupDescription());
+                        bean.setRecordTime(retValuesEntity.getGroupCreateTime());
+                        return Observable.just(bean);
+                    }
+                })
+                .subscribe(new Subscriber<NotifiGroupInviteBean>() {
+                    List<NotifiGroupInviteBean> inviteBeanList = new ArrayList<>();
 
-        List<NotifiGroupInviteBean> inviteBeanList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            NotifiGroupInviteBean bean = new NotifiGroupInviteBean();
-            bean.setId(String.valueOf(i));
-            bean.setOwnerName("刘" + i);
-            bean.setOwnerJobTitle("副主任医师");
-            bean.setOwnerDepartment("心内科");
-            bean.setGroupName("刘" + i + "医师小组");
-            bean.setOwnerHospital("万达全程");
-            bean.setGroupDesc("简介");
-            bean.setRecordTime(Calendar.getInstance().getTimeInMillis());
-            inviteBeanList.add(bean);
-        }
+                    @Override
+                    public void onCompleted() {
+                        if (inviteBeanList.size() <= 0) {
+                            mListener.showEmptyView("");
+                        } else {
+                            mListener.showInviteNotifications(inviteBeanList);
+                        }
+                    }
 
-        mListener.showInviteNotifications(inviteBeanList);
+                    @Override
+                    public void onError(Throwable e) {
+                        mListener.showErrorToast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(NotifiGroupInviteBean notifiGroupInviteBean) {
+                        inviteBeanList.add(notifiGroupInviteBean);
+                    }
+                });
+    }
+
+    @Override
+    public void onReceiveFailed(int code, String message) {
+        showError(mListener, code, message);
     }
 
     public interface NotifiGroupInvitePresenterListener extends BasePagePresenterListener {

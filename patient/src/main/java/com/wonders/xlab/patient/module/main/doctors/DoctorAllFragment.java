@@ -91,7 +91,7 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
     private void initRecyclerViewAdapter() {
         if (null == mAllDoctorRVAdapter) {
             mAllDoctorRVAdapter = new AllDoctorRVAdapter();
-            mAllDoctorRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+            mAllDoctorRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     Intent intent = new Intent(getActivity(), DoctorDetailActivity.class);

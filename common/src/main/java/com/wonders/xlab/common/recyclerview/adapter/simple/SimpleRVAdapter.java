@@ -15,14 +15,24 @@ public abstract class SimpleRVAdapter<Bean> extends RecyclerView.Adapter<Recycle
 
     private List<Bean> mBeanList;
 
-    private OnItemClickListener mOnItemClickListener;
+    private OnClickListener mOnClickListener;
 
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        mOnItemClickListener = onItemClickListener;
+    private OnLongClickListener mItemLongClickListener;
+
+    public void setOnClickListener(OnClickListener onClickListener) {
+        mOnClickListener = onClickListener;
     }
 
-    public interface OnItemClickListener {
+    public void setOnLongClickListener(OnLongClickListener itemLongClickListener) {
+        mItemLongClickListener = itemLongClickListener;
+    }
+
+    public interface OnClickListener {
         void onItemClick(int position);
+    }
+
+    public interface OnLongClickListener {
+        void onItemLongClick(int position);
     }
 
     @Override
@@ -30,9 +40,18 @@ public abstract class SimpleRVAdapter<Bean> extends RecyclerView.Adapter<Recycle
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onItemClick(holder.getAdapterPosition());
+                if (mOnClickListener != null) {
+                    mOnClickListener.onItemClick(holder.getAdapterPosition());
                 }
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if (null != mItemLongClickListener) {
+                    mItemLongClickListener.onItemLongClick(holder.getAdapterPosition());
+                }
+                return false;
             }
         });
     }

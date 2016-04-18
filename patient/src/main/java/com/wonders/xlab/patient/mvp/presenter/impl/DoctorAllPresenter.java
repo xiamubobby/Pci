@@ -1,6 +1,5 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
-import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.module.main.doctors.adapter.bean.AllDoctorItemBean;
 import com.wonders.xlab.patient.mvp.entity.DoctorAllEntity;
 import com.wonders.xlab.patient.mvp.model.IDoctorAllModel;
@@ -53,7 +52,7 @@ public class DoctorAllPresenter extends BasePagePresenter implements IDoctorAllP
             itemBean.setTitle(entity.getJobTitle());
             itemBean.setDepartment(entity.getDepartment());
             itemBean.setHospital(entity.getHospitalName());
-            itemBean.setPortraitUrl(null != entity.getAvatars() && entity.getAvatars().size() > 0 ? entity.getAvatars().get(0) : Constant.DEFAULT_PORTRAIT);
+            itemBean.setPortraitUrl(entity.getAvatars());
 
             ArrayList<String> serviceIconUrlList = new ArrayList<>();
             for (String packageUrl : entity.getPackageUrls()) {

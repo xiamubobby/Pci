@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.data.presenter.impl;
+package com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
 import com.wonders.xlab.pci.doctor.data.entity.GroupAuthMembersEntity;
@@ -7,7 +7,7 @@ import com.wonders.xlab.pci.doctor.data.model.IGroupAuthMemberListModel;
 import com.wonders.xlab.pci.doctor.data.model.IGroupAuthorizeModel;
 import com.wonders.xlab.pci.doctor.data.model.impl.GroupAuthMemberListListModel;
 import com.wonders.xlab.pci.doctor.data.model.impl.GroupAuthorizeModel;
-import com.wonders.xlab.pci.doctor.data.presenter.IGroupAuthPresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.IGroupAuthPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

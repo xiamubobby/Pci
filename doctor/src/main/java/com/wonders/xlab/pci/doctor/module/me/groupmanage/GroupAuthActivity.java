@@ -13,8 +13,8 @@ import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupDoctorMultiChoiceRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
 import com.wonders.xlab.pci.doctor.data.entity.request.GroupAuthorizeBody;
-import com.wonders.xlab.pci.doctor.data.presenter.IGroupAuthPresenter;
-import com.wonders.xlab.pci.doctor.data.presenter.impl.GroupAuthPresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.IGroupAuthPresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.impl.GroupAuthPresenter;
 
 import java.util.ArrayList;
 import java.util.List;

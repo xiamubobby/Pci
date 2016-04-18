@@ -79,36 +79,51 @@ public class NotifiPackageApplyFragment extends BaseFragment implements NotifiPa
 
     @Override
     public void showReachTheLastPageNotice(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void showLoading(String message) {
-
+        mRecyclerView.setRefreshing(true);
     }
 
     @Override
     public void showNetworkError(String message) {
-
+        mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mPresenter.getPackageApplyNotifications(AIManager.getInstance().getDoctorId());
+            }
+        });
     }
 
     @Override
     public void showServerError(String message) {
-
+        mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mPresenter.getPackageApplyNotifications(AIManager.getInstance().getDoctorId());
+            }
+        });
     }
 
     @Override
     public void showEmptyView(String message) {
-
+        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+                mPresenter.getPackageApplyNotifications(AIManager.getInstance().getDoctorId());
+            }
+        });
     }
 
     @Override
     public void showErrorToast(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void hideLoading() {
-
+        mRecyclerView.hideRefreshOrLoadMore(true,true);
     }
 }

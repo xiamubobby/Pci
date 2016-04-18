@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -67,10 +67,12 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/item_interval_small">
 
-            <ImageView
+            <im.hua.avatarassemble.library.MultiAvatarView
                 android:id="@+id/iv_group_manage_item_portrait"
                 android:layout_width="64dp"
-                android:layout_height="64dp"/>
+                android:layout_height="64dp"
+                android:background="@color/background_gray"
+                app:mav_size="64dp"/>
 
             <TextView
                 android:id="@+id/tv_group_manage_item_owner_name"

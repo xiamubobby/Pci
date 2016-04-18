@@ -46,7 +46,7 @@ public class GroupDescModifyActivity extends AppbarActivity {
             mHint = intent.getStringExtra(EXTRA_HINT);
             mText = intent.getStringExtra(EXTRA_TEXT);
             if (!TextUtils.isEmpty(mHint)) {
-                mEtGroupDesc.setHint("请编辑" + mHint);
+//                mEtGroupDesc.setHint("请编辑" + mHint);
                 mTilGroupDesc.setHint("请编辑" + mHint);
                 mTilGroupDesc.setCounterEnabled(true);
                 mTilGroupDesc.setCounterMaxLength(200);

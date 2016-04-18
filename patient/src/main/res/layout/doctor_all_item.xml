@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -62,10 +62,12 @@
             android:background="@android:color/white"
             android:padding="@dimen/item_interval_small">
 
-            <ImageView
+            <im.hua.avatarassemble.library.MultiAvatarView
                 android:id="@+id/iv_doctor_detail_portrait"
                 android:layout_width="@dimen/doctor_list_icon_size"
-                android:layout_height="@dimen/doctor_list_icon_size"/>
+                android:layout_height="@dimen/doctor_list_icon_size"
+                android:background="@color/background_gray"
+                app:mav_size="@dimen/doctor_list_icon_size"/>
 
             <TextView
                 android:id="@+id/tv_doctor_detail_admin_name"

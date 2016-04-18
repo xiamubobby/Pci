@@ -184,7 +184,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     public void showPackageList(final ArrayList<DoctorDetailPackageBean> packageList) {
         if (null == mPackageRVAdapter) {
             mPackageRVAdapter = new DoctorDetailPackageRVAdapter();
-            mPackageRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+            mPackageRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(final int position) {
                     if (null == dialog) {
@@ -252,7 +252,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
         }
         if (null == mMemberRVAdapter) {
             mMemberRVAdapter = new DoctorDetailMemberRVAdapter();
-            mMemberRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+            mMemberRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     Intent intent = new Intent(DoctorDetailActivity.this, DoctorDetailActivity.class);
@@ -272,7 +272,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
 
         if (null == mGroupOfDoctorRVAdapter) {
             mGroupOfDoctorRVAdapter = new DoctorDetailGroupOfDoctorRVAdapter();
-            mGroupOfDoctorRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+            mGroupOfDoctorRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     Intent intent = new Intent(DoctorDetailActivity.this, DoctorDetailActivity.class);

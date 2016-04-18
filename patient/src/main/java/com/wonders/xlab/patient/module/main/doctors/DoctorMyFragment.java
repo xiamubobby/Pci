@@ -105,7 +105,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
     private void initMyDoctorAdapter() {
         if (null == mMyDoctorRVAdapter) {
             mMyDoctorRVAdapter = new MyDoctorRVAdapter();
-            mMyDoctorRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+            mMyDoctorRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     Intent intent = new Intent(getActivity(), ChatRoomActivity.class);

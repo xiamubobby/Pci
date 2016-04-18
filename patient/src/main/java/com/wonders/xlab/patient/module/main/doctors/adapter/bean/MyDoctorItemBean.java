@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 
 import com.wonders.xlab.patient.BR;
 
+import java.util.List;
+
 /**
  * Created by hua on 16/3/14.
  */
@@ -28,7 +30,7 @@ public class MyDoctorItemBean extends BaseObservable{
      * {@link #TYPE_OUT_OF_SERVICE}：历史记录
      */
     private long type;
-    private String portraitUrl;
+    private List<String> portraitUrl;
     private String doctorGroupName;
     /**
      * 最新一条聊天记录时间
@@ -39,11 +41,11 @@ public class MyDoctorItemBean extends BaseObservable{
      */
     private String latestChatMessage;
 
-    public String getPortraitUrl() {
+    public List<String> getPortraitUrl() {
         return portraitUrl;
     }
 
-    public void setPortraitUrl(String portraitUrl) {
+    public void setPortraitUrl(List<String> portraitUrl) {
         this.portraitUrl = portraitUrl;
     }
 

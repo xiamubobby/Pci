@@ -20,7 +20,7 @@ public class AllDoctorItemBean extends BaseObservable {
      */
     private boolean isPersonal;
 
-    private String portraitUrl;
+    private List<String> portraitUrl;
     /**
      * 医生小组名称
      */
@@ -65,11 +65,11 @@ public class AllDoctorItemBean extends BaseObservable {
     }
 
     @Bindable
-    public String getPortraitUrl() {
+    public List<String> getPortraitUrl() {
         return portraitUrl;
     }
 
-    public void setPortraitUrl(String portraitUrl) {
+    public void setPortraitUrl(List<String> portraitUrl) {
         this.portraitUrl = portraitUrl;
         notifyPropertyChanged(BR.portraitUrl);
     }

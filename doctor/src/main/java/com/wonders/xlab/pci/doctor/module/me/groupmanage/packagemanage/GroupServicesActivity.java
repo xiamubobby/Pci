@@ -10,8 +10,8 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.adapter.GroupServiceRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.adapter.bean.GroupServiceBean;
-import com.wonders.xlab.pci.doctor.data.presenter.IGroupServicesPresenter;
-import com.wonders.xlab.pci.doctor.data.presenter.impl.GroupServicesPresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.presenter.IGroupServicesPresenter;
+import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.presenter.impl.GroupServicesPresenter;
 
 import java.util.List;
 
@@ -67,7 +67,7 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
     public void showPackages(List<GroupServiceBean> groupServiceBeanList) {
         if (null == mRVAdapter) {
             mRVAdapter = new GroupServiceRVAdapter();
-            mRVAdapter.setOnItemClickListener(new SimpleRVAdapter.OnItemClickListener() {
+            mRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
                     Intent intent = new Intent("com.wonders.xlab.pci.doctor.GroupServiceModifyActivity");
