@@ -7,7 +7,6 @@ import android.databinding.BaseObservable;
  */
 public class BSBean extends BaseObservable{
     private long headerId;
-    private float earlyMorningBS;
     private float breakfastBeforeBS;
     private float breakfastAfterBS;
     private float lunchBeforeBS;
@@ -23,14 +22,6 @@ public class BSBean extends BaseObservable{
 
     public void setHeaderId(long headerId) {
         this.headerId = headerId;
-    }
-
-    public float getEarlyMorningBS() {
-        return earlyMorningBS;
-    }
-
-    public void setEarlyMorningBS(float earlyMorningBS) {
-        this.earlyMorningBS = earlyMorningBS;
     }
 
     public float getBreakfastBeforeBS() {

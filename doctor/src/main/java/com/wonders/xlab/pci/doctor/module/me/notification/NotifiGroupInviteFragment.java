@@ -97,8 +97,13 @@ public class NotifiGroupInviteFragment extends BaseFragment implements NotifiGro
     }
 
     @Override
-    public void showReachTheLastPageNotice(String message) {
+    public void onAgreeSuccess(String message) {
+        showShortToast(message);
+    }
 
+    @Override
+    public void showReachTheLastPageNotice(String message) {
+        showShortToast(message);
     }
 
     @Override

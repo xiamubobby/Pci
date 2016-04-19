@@ -71,7 +71,6 @@ public class BloodSugarPresenter extends BasePagePresenter implements IBloodSuga
             BloodSugarEntity.RetValuesEntity.ContentEntity contentEntity = contentEntityList.get(i);
 
             BSBean bean = new BSBean();
-            bean.setEarlyMorningBS(contentEntity.getBeforeDawn());
             bean.setBreakfastBeforeBS(contentEntity.getBeforeBreakfast());
             bean.setBreakfastAfterBS(contentEntity.getAfterBreakfast());
             bean.setLunchBeforeBS(contentEntity.getBeforeLunch());

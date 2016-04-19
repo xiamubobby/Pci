@@ -73,7 +73,7 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
                         bean.doctorId.set(membersEntity.getDoctorId());
                         bean.doctorImId.set(membersEntity.getDoctorImId());
                         bean.doctorName.set(membersEntity.getDoctorName());
-                        bean.hasAgreed.set("join".equals(membersEntity.getInviteStatus()));
+                        bean.hasAgreed.set("join".equals(membersEntity.getInviteStatus().toLowerCase()));
                         return bean;
                     }
                 })

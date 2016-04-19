@@ -1,7 +1,9 @@
 package com.wonders.xlab.pci.doctor.module.me.notification.presenter.impl;
 
 import com.wonders.xlab.pci.doctor.data.entity.NotifiGroupInviteEntity;
+import com.wonders.xlab.pci.doctor.data.model.IAgreeJoinDoctorGroupModel;
 import com.wonders.xlab.pci.doctor.data.model.INotifiGroupInviteModel;
+import com.wonders.xlab.pci.doctor.data.model.impl.AgreeJoinDoctorGroupModel;
 import com.wonders.xlab.pci.doctor.data.model.impl.NotifiGroupInviteModel;
 import com.wonders.xlab.pci.doctor.module.me.notification.adapter.bean.NotifiGroupInviteBean;
 import com.wonders.xlab.pci.doctor.module.me.notification.presenter.INotifiGroupInvitePresenter;
@@ -18,19 +20,28 @@ import rx.functions.Func1;
 /**
  * Created by hua on 16/4/14.
  */
-public class NotifiGroupInvitePresenter extends BasePagePresenter implements INotifiGroupInvitePresenter, NotifiGroupInviteModel.NotifiGroupInviteModelListener {
+public class NotifiGroupInvitePresenter extends BasePagePresenter implements INotifiGroupInvitePresenter, NotifiGroupInviteModel.NotifiGroupInviteModelListener, AgreeJoinDoctorGroupModel.AgreeJoinDoctorGroupModelListener {
     private NotifiGroupInvitePresenterListener mListener;
     private INotifiGroupInviteModel mGroupInviteModel;
+    private IAgreeJoinDoctorGroupModel mJoinDoctorGroupModel;
 
     public NotifiGroupInvitePresenter(NotifiGroupInvitePresenterListener listener) {
         mListener = listener;
         mGroupInviteModel = new NotifiGroupInviteModel(this);
+        mJoinDoctorGroupModel = new AgreeJoinDoctorGroupModel(this);
+        addModel(mGroupInviteModel);
+        addModel(mJoinDoctorGroupModel);
     }
 
     @Override
     public void getInviteNotifications(String doctorId) {
         mListener.showLoading("");
         mGroupInviteModel.getGroupInviteNotifications(doctorId, 0, DEFAULT_PAGE_SIZE);
+    }
+
+    @Override
+    public void agreeJoinDoctorGroup(String doctorId, String doctorGroupId) {
+        mJoinDoctorGroupModel.agreeJoinDoctorGroup(doctorId, doctorGroupId);
     }
 
     @Override
@@ -81,7 +92,14 @@ public class NotifiGroupInvitePresenter extends BasePagePresenter implements INo
         showError(mListener, code, message);
     }
 
+    @Override
+    public void onAgreeSuccess(String message) {
+        mListener.onAgreeSuccess(message);
+    }
+
     public interface NotifiGroupInvitePresenterListener extends BasePagePresenterListener {
         void showInviteNotifications(List<NotifiGroupInviteBean> inviteBeanList);
+
+        void onAgreeSuccess(String message);
     }
 }

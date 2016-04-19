@@ -78,7 +78,7 @@ public class NotifiOthersFragment extends BaseFragment implements NotifiOthersPr
         super.onViewCreated(view, savedInstanceState);
 
         bottomMenuAnimatorIn = ObjectAnimator.ofFloat(mCardViewBottom, "translationY", mCardViewBottom.getBottom(), mCardViewBottom.getTop());
-        bottomMenuAnimatorIn.setDuration(800);
+        bottomMenuAnimatorIn.setDuration(1000);
         bottomMenuAnimatorIn.setInterpolator(new DecelerateInterpolator());
         bottomMenuAnimatorIn.addListener(new Animator.AnimatorListener() {
             @Override

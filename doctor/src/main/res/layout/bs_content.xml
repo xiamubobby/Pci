@@ -13,50 +13,40 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
+        android:background="#d0d0d0"
         android:minHeight="?attr/listPreferredItemHeight"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/bs_cell_divider_width"
+            android:layout_marginLeft="@dimen/bs_cell_divider_width"
             android:layout_weight="1"
-            android:background="@color/bs_cell_bg_dark"
+            android:background="#eaebeb"
             android:gravity="center"
             android:text="日\n期"
-            android:textColor="@color/text_color_primary"
-            android:textSize="@dimen/text_size_primary"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/bs_cell_divider_width"
-            android:layout_weight="1"
-            android:background="@color/bs_cell_bg_dark"
-            android:gravity="center"
-            android:text="凌\n晨"
-            android:textColor="@color/text_color_primary"
-            android:textSize="@dimen/text_size_primary"/>
+            android:textColor="@color/text_color_primary_black"
+            android:textSize="@dimen/text_size_middle"/>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/bs_cell_divider_width"
+            android:layout_marginLeft="@dimen/bs_cell_divider_width"
             android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/bs_cell_divider_width"
-                android:background="@color/bs_cell_bg_dark"
+                android:layout_marginBottom="@dimen/bs_cell_divider_width"
+                android:layout_marginLeft="@dimen/bs_cell_divider_width"
+                android:background="#eaebeb"
                 android:gravity="center"
                 android:paddingBottom="@dimen/item_interval_small"
                 android:paddingTop="@dimen/item_interval_small"
                 android:text="早餐"
-                android:textColor="@color/text_color_primary"
-                android:textSize="@dimen/text_size_primary"/>
+                android:textColor="@color/text_color_primary_black"
+                android:textSize="@dimen/text_size_middle"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,45 +56,46 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/bs_cell_divider_width"
+                    android:layout_marginLeft="@dimen/bs_cell_divider_width"
                     android:layout_weight="1"
-                    android:background="@color/bs_cell_bg_dark"
+                    android:background="#eaebeb"
                     android:gravity="center"
                     android:text="前"
-                    android:textColor="@color/text_color_primary"
-                    android:textSize="@dimen/text_size_primary"/>
+                    android:textColor="@color/text_color_primary_black"
+                    android:textSize="@dimen/text_size_middle"/>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/bs_cell_divider_width"
+                    android:layout_marginLeft="@dimen/bs_cell_divider_width"
                     android:layout_weight="1"
-                    android:background="@color/bs_cell_bg_dark"
+                    android:background="#eaebeb"
                     android:gravity="center"
                     android:text="后"
-                    android:textColor="@color/text_color_primary"
-                    android:textSize="@dimen/text_size_primary"/>
+                    android:textColor="@color/text_color_primary_black"
+                    android:textSize="@dimen/text_size_middle"/>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/bs_cell_divider_width"
+            android:layout_marginLeft="@dimen/bs_cell_divider_width"
             android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/bs_cell_divider_width"
-                android:background="@color/bs_cell_bg_dark"
+                android:layout_marginBottom="@dimen/bs_cell_divider_width"
+                android:layout_marginLeft="@dimen/bs_cell_divider_width"
+                android:background="#eaebeb"
                 android:gravity="center"
                 android:paddingBottom="@dimen/item_interval_small"
                 android:paddingTop="@dimen/item_interval_small"
                 android:text="午餐"
-                android:textColor="@color/text_color_primary"
-                android:textSize="@dimen/text_size_primary"/>
+                android:textColor="@color/text_color_primary_black"
+                android:textSize="@dimen/text_size_middle"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -114,46 +105,47 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/bs_cell_divider_width"
+                    android:layout_marginLeft="@dimen/bs_cell_divider_width"
                     android:layout_weight="1"
-                    android:background="@color/bs_cell_bg_dark"
+                    android:background="#eaebeb"
                     android:gravity="center"
                     android:text="前"
-                    android:textColor="@color/text_color_primary"
-                    android:textSize="@dimen/text_size_primary"/>
+                    android:textColor="@color/text_color_primary_black"
+                    android:textSize="@dimen/text_size_middle"/>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/bs_cell_divider_width"
+                    android:layout_marginLeft="@dimen/bs_cell_divider_width"
                     android:layout_weight="1"
-                    android:background="@color/bs_cell_bg_dark"
+                    android:background="#eaebeb"
                     android:gravity="center"
                     android:text="后"
-                    android:textColor="@color/text_color_primary"
-                    android:textSize="@dimen/text_size_primary"/>
+                    android:textColor="@color/text_color_primary_black"
+                    android:textSize="@dimen/text_size_middle"/>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/bs_cell_divider_width"
+            android:layout_marginLeft="@dimen/bs_cell_divider_width"
             android:layout_weight="2"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/bs_cell_divider_width"
-                android:background="@color/bs_cell_bg_dark"
+                android:layout_marginBottom="@dimen/bs_cell_divider_width"
+                android:layout_marginLeft="@dimen/bs_cell_divider_width"
+                android:background="#eaebeb"
                 android:gravity="center"
                 android:paddingBottom="@dimen/item_interval_small"
 
                 android:paddingTop="@dimen/item_interval_small"
                 android:text="晚餐"
-                android:textColor="@color/text_color_primary"
-                android:textSize="@dimen/text_size_primary"/>
+                android:textColor="@color/text_color_primary_black"
+                android:textSize="@dimen/text_size_middle"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -163,37 +155,37 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/bs_cell_divider_width"
+                    android:layout_marginLeft="@dimen/bs_cell_divider_width"
                     android:layout_weight="1"
-                    android:background="@color/bs_cell_bg_dark"
+                    android:background="#eaebeb"
                     android:gravity="center"
                     android:text="前"
-                    android:textColor="@color/text_color_primary"
-                    android:textSize="@dimen/text_size_primary"/>
+                    android:textColor="@color/text_color_primary_black"
+                    android:textSize="@dimen/text_size_middle"/>
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/bs_cell_divider_width"
+                    android:layout_marginLeft="@dimen/bs_cell_divider_width"
                     android:layout_weight="1"
-                    android:background="@color/bs_cell_bg_dark"
+                    android:background="#eaebeb"
                     android:gravity="center"
                     android:text="后"
-                    android:textColor="@color/text_color_primary"
-                    android:textSize="@dimen/text_size_primary"/>
+                    android:textColor="@color/text_color_primary_black"
+                    android:textSize="@dimen/text_size_middle"/>
             </LinearLayout>
         </LinearLayout>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/bs_cell_divider_width"
+            android:layout_marginLeft="@dimen/bs_cell_divider_width"
             android:layout_weight="1"
-            android:background="@color/bs_cell_bg_dark"
+            android:background="#eaebeb"
             android:gravity="center"
-            android:text="随\n机"
-            android:textColor="@color/text_color_primary"
-            android:textSize="@dimen/text_size_primary"/>
+            android:text="睡\n前"
+            android:textColor="@color/text_color_primary_black"
+            android:textSize="@dimen/text_size_middle"/>
     </LinearLayout>
 
     <com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView
