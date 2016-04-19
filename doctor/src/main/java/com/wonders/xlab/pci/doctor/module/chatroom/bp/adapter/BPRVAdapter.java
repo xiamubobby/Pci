@@ -12,13 +12,57 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.databinding.BloodPressureItemBinding;
 import com.wonders.xlab.pci.doctor.module.chatroom.bp.bean.BPListBean;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.hua.utils.DateUtil;
 
 /**
  * Created by hua on 16/2/22.
  */
 public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
+
+    /**
+     * 排序并且设置headerId，用于分组
+     */
+    private void reunionList() {
+        List<BPListBean> beanList = getBeanList();
+        Collections.sort(beanList, new Comparator<BPListBean>() {
+            @Override
+            public int compare(BPListBean lhs, BPListBean rhs) {
+                long l = lhs.getRecordTimeInMill();
+                long r = rhs.getRecordTimeInMill();
+                return l < r ? 1 : (l == r ? 0 : -1);
+            }
+        });
+        long headerId = 0;
+        for (int i = 0; i < beanList.size(); i++) {
+            if (0 != i) {
+                if (!DateUtil.isTheSameDay(beanList.get(i - 1).getRecordTimeInMill(), beanList.get(i).getRecordTimeInMill())) {
+                    headerId++;
+                }
+            }
+            beanList.get(i).setHeaderId(headerId);
+        }
+        notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void setDatas(List<BPListBean> mBeanList) {
+        super.setDatas(mBeanList);
+        reunionList();
+    }
+
+    @Override
+    public void appendDatas(List<BPListBean> mBeanList) {
+        super.appendDatas(mBeanList);
+        reunionList();
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.blood_pressure_item, parent, false);
@@ -39,21 +83,21 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
 
     @Override
     public RecyclerView.ViewHolder onCreateHeaderViewHolder(ViewGroup parent) {
-        View titleView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_header_time, parent, false);
+        View titleView = LayoutInflater.from(parent.getContext()).inflate(R.layout.blood_pressure_item_header_time, parent, false);
         return new TitleViewHolder(titleView);
     }
 
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
         final TitleViewHolder viewHolder = (TitleViewHolder) holder;
-        String time = "";
+        long time = 0;
         for (int i = 0; i < getItemCount(); i++) {
             if (getBean(i).getHeaderId() == getHeaderId(position)) {
-                time = getBean(i).getHeaderTime();
+                time = getBean(i).getRecordTimeInMill();
                 break;
             }
         }
-        viewHolder.bpTitle.setText(time);
+        viewHolder.bpTitle.setText(DateUtil.format(time,DateUtil.DEFAULT_FORMAT_DAY));
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {

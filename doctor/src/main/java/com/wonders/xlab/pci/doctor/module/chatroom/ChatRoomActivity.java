@@ -13,6 +13,7 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.bp.BPFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.bp.BloodPressureActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.bs.BloodSugarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.chat.ChatFragment;
@@ -92,6 +93,7 @@ public class ChatRoomActivity extends AppbarActivity {
         mVPAdapter.addFragment(UserInfoFragment.newInstance(patientId), "基本信息");
         mVPAdapter.addFragment(SymptomFragment.newInstance(patientId), "不适症状");
         mVPAdapter.addFragment(MedicalRecordFragment.newInstance(patientId), "就诊记录");
+        mVPAdapter.addFragment(BPFragment.newInstance(patientId), "血压");
         mViewPager.setAdapter(mVPAdapter);
 
         mStlChatRoomTop.setViewPager(mViewPager);

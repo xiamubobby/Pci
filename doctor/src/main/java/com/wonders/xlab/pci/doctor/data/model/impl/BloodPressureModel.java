@@ -3,33 +3,33 @@ package com.wonders.xlab.pci.doctor.data.model.impl;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.data.api.BPAPI;
 import com.wonders.xlab.pci.doctor.data.entity.BPEntity;
+import com.wonders.xlab.pci.doctor.data.model.IBloodPressureModel;
 
 import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
- * Created by hua on 16/2/22.
+ * Created by hua on 16/4/1.
  */
-public class BPModel extends DoctorBaseModel<BPEntity> {
+public class BloodPressureModel extends DoctorBaseModel<BPEntity> implements IBloodPressureModel {
     private BPAPI mBPAPI;
-    private BPModelListener mBloodPressureModel;
+    private BPModelListener mListener;
 
-    public BPModel(BPModelListener bloodPressureModel) {
-        mBloodPressureModel = bloodPressureModel;
+    public BloodPressureModel(BPModelListener listener) {
+        mListener = listener;
         mBPAPI = mRetrofit.create(BPAPI.class);
     }
 
-    public void getBPList(String patientId, long startTime, long endTime) {
-        request(mBPAPI.getBPList(patientId, startTime, endTime,0,20), true);
-    }
+    public void getBPList(String patientId, long startTime, long endTime, int page, int size) {
+        request(mBPAPI.getBPList(patientId, startTime, endTime, page, size), true);}
 
     @Override
     protected void onSuccess(BPEntity response) {
-        mBloodPressureModel.onReceiveBPSuccess(response);
+        mListener.onReceiveBPSuccess(response);
     }
 
     @Override
     protected void onFailed(int code, String message) {
-        mBloodPressureModel.onReceiveFailed(code, "获取血压数据失败，请重试！");
+        mListener.onReceiveFailed(code, message);
     }
 
     public interface BPModelListener extends BaseModelListener {

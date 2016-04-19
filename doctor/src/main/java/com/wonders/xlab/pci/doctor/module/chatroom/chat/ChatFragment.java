@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.squareup.otto.Subscribe;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.data.presenter.impl.ChatRoomPresenter;
@@ -105,6 +106,7 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        OttoManager.register(this);
         //cancel notification
         new NotifyUtil().cancel(getActivity(), Integer.parseInt(groupId));
 
@@ -141,6 +143,7 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        OttoManager.unregister(this);
         mChatRoomRVAdapter = null;
         ButterKnife.unbind(this);
     }

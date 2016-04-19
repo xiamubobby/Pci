@@ -16,6 +16,7 @@ public class BPListBean {
     private String diastolic;
     private String heartRate;
     private long headerId;
+    private long recordTimeInMill;
 
     public String getHeaderTime() {
         return headerTime;
@@ -63,5 +64,13 @@ public class BPListBean {
 
     public void setDetailTime(String detailTime) {
         this.detailTime = detailTime;
+    }
+
+    public long getRecordTimeInMill() {
+        return recordTimeInMill;
+    }
+
+    public void setRecordTimeInMill(long recordTimeInMill) {
+        this.recordTimeInMill = recordTimeInMill;
     }
 }
