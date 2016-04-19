@@ -1,27 +1,27 @@
 package com.wonders.xlab.pci.doctor.module.me.notification.adapter.bean;
 
+import java.util.List;
+
 /**
  * Created by hua on 16/4/14.
  */
 public class NotifiGroupInviteBean {
-    private String id;
+    private String ownerId;
     private long recordTime;
     private String groupName;
     private String groupMemberCounts;
     private String ownerName;
-    private String ownerAvatarUrl;
     private String ownerJobTitle;
     private String ownerDepartment;
     private String ownerHospital;
     private String groupDesc;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    private List<String> avatarUrls;
+    /**
+     * 0：未操作
+     * 1：已同意
+     * 2：已拒绝
+     */
+    private int status = 0;
 
     public long getRecordTime() {
         return recordTime;
@@ -87,11 +87,27 @@ public class NotifiGroupInviteBean {
         this.groupDesc = groupDesc;
     }
 
-    public String getOwnerAvatarUrl() {
-        return ownerAvatarUrl;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwnerAvatarUrl(String ownerAvatarUrl) {
-        this.ownerAvatarUrl = ownerAvatarUrl;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public List<String> getAvatarUrls() {
+        return avatarUrls;
+    }
+
+    public void setAvatarUrls(List<String> avatarUrls) {
+        this.avatarUrls = avatarUrls;
     }
 }

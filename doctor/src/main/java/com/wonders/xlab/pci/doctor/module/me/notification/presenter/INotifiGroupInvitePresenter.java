@@ -8,5 +8,5 @@ import im.hua.library.base.mvp.IBasePresenter;
 public interface INotifiGroupInvitePresenter extends IBasePresenter {
     void getInviteNotifications(String doctorId);
 
-    void agreeJoinDoctorGroup(String doctorId, String doctorGroupId);
+    void agreeOrRejectJoinDoctorGroup(String doctorId, String ownerId, boolean isToAgree);
 }

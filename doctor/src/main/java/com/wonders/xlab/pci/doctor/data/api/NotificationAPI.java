@@ -17,6 +17,6 @@ public interface NotificationAPI {
     @GET("v1/doctorGroup/queryInvitedDoctorRecord/{doctorInvitedId}")
     Observable<Response<NotifiGroupInviteEntity>> getGroupInviteNotifications(@Path("doctorInvitedId") String doctorInvitedId, @Query("page") int page, @Query("size") int size);
 
-    @POST("v1/doctorGroup/agreeJoinDoctorGroup/{doctorId}/{doctorGroupId}")
-    Observable<Response<AgreeJoinDoctorGroupEntity>> agreeJoinDoctorGroup(@Path("doctorId") String doctorId, @Path("doctorGroupId") String doctorGroupId);
+    @POST("v1/doctorGroup/agreeOrRejectJoinDoctorGroup/{doctorId}/{ownerId}/{inviteStatus}")
+    Observable<Response<AgreeJoinDoctorGroupEntity>> agreeOrRejectJoinDoctorGroup(@Path("doctorId") String doctorId, @Path("ownerId") String ownerId, @Path("inviteStatus") String inviteStatus);
 }

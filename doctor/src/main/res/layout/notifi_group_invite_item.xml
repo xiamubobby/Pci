@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/item_interval_middle"
-                android:layout_toRightOf="@+id/iv_group_manage_item_portrait"
+                android:layout_toRightOf="@+id/iv_notifi_group_invite_item_portrait"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -78,26 +78,24 @@
                 android:layout_below="@+id/ll_notifi_group_invite_item"
                 android:layout_marginLeft="@dimen/item_interval_middle"
                 android:layout_marginTop="@dimen/item_interval_small"
-                android:layout_toRightOf="@+id/iv_group_manage_item_portrait"
+                android:layout_toRightOf="@+id/iv_notifi_group_invite_item_portrait"
                 android:maxLength="15"
                 android:text='@{"负责人：" + bean.ownerName}'/>
 
             <TextView
                 android:id="@+id/tv_notifi_group_invite_item_owner_title_department"
                 style="@style/SmallGrayWrapTextView"
-                android:layout_below="@+id/tv_group_manage_item_owner_name"
-                android:layout_marginLeft="@dimen/item_interval_middle"
+                android:layout_below="@+id/tv_notifi_group_invite_item_owner_name"
                 android:layout_marginTop="@dimen/item_interval_small"
-                android:layout_toRightOf="@+id/iv_group_manage_item_portrait"
+                android:layout_alignLeft="@+id/tv_notifi_group_invite_item_owner_name"
                 android:singleLine="true"
                 android:text='@{bean.ownerDepartment + " " + bean.ownerJobTitle}'/>
 
             <TextView
                 style="@style/SmallGrayWrapTextView"
                 android:layout_below="@+id/tv_notifi_group_invite_item_owner_title_department"
-                android:layout_marginLeft="@dimen/item_interval_middle"
                 android:layout_marginTop="@dimen/item_interval_very_small"
-                android:layout_toRightOf="@+id/iv_group_manage_item_portrait"
+                android:layout_alignLeft="@+id/tv_notifi_group_invite_item_owner_name"
                 android:singleLine="true"
                 android:text="@{bean.ownerHospital}"/>
         </RelativeLayout>
@@ -115,6 +113,7 @@
             style="@style/SmallGrayWrapTextView"
             android:maxLines="2"
             android:padding="@dimen/item_interval_small"
+            android:visibility="@{TextUtils.isEmpty(bean.groupDesc) ? View.GONE:View.VISIBLE}"
             android:text="@{bean.groupDesc}"/>
 
         <include layout="@layout/divider_vertical"/>

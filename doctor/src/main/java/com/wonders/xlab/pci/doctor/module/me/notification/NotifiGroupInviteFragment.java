@@ -94,12 +94,12 @@ public class NotifiGroupInviteFragment extends BaseFragment implements NotifiGro
             mRVAdapter.setOnOperationClickListener(new NotifiGroupInviteRVAdapter.OnOperationClickListener() {
                 @Override
                 public void onAgreeClick(int position) {
-                    mInvitePresenter.agreeJoinDoctorGroup(AIManager.getInstance().getDoctorId(),mRVAdapter.getBean(position).getId());
+                    mInvitePresenter.agreeOrRejectJoinDoctorGroup(AIManager.getInstance().getDoctorId(),mRVAdapter.getBean(position).getOwnerId(), true);
                 }
 
                 @Override
                 public void onRefuseClick(int position) {
-
+                    mInvitePresenter.agreeOrRejectJoinDoctorGroup(AIManager.getInstance().getDoctorId(), mRVAdapter.getBean(position).getOwnerId(), false);
                 }
             });
             mRecyclerView.setAdapter(mRVAdapter);
@@ -108,8 +108,9 @@ public class NotifiGroupInviteFragment extends BaseFragment implements NotifiGro
     }
 
     @Override
-    public void onAgreeSuccess(String groupId, String message) {
+    public void onAgreeSuccess(String ownerId, String message) {
         showShortToast(message);
+        mInvitePresenter.getInviteNotifications(AIManager.getInstance().getDoctorId());
     }
 
     @Override

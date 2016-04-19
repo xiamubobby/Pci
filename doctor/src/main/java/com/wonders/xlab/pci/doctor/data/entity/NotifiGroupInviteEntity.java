@@ -37,6 +37,7 @@ public class NotifiGroupInviteEntity extends BaseEntity {
         private String groupId;
         private String groupName;
         private String groupDescription;
+        private String ownerId;
         private String ownerName;
         private String ownerHos;
         private String ownerDepartment;
@@ -131,6 +132,14 @@ public class NotifiGroupInviteEntity extends BaseEntity {
 
         public void setGroupCreateTime(long groupCreateTime) {
             this.groupCreateTime = groupCreateTime;
+        }
+
+        public String getOwnerId() {
+            return ownerId;
+        }
+
+        public void setOwnerId(String ownerId) {
+            this.ownerId = ownerId;
         }
     }
 }

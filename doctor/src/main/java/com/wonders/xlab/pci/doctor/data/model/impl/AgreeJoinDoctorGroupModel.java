@@ -30,11 +30,11 @@ public class AgreeJoinDoctorGroupModel extends DoctorBaseModel<AgreeJoinDoctorGr
     }
 
     @Override
-    public void agreeJoinDoctorGroup(String doctorId, String doctorGroupId) {
-        request(mAPI.agreeJoinDoctorGroup(doctorId, doctorGroupId), true);
+    public void agreeOrRejectJoinDoctorGroup(String doctorId, String ownerId, String inviteStatus) {
+        request(mAPI.agreeOrRejectJoinDoctorGroup(doctorId, ownerId, inviteStatus), true);
     }
 
     public interface AgreeJoinDoctorGroupModelListener extends BaseModelListener {
-        void onAgreeSuccess(String groupId, String message);
+        void onAgreeSuccess(String ownerId, String message);
     }
 }

@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             tools:context="com.wonders.xlab.pci.doctor.module.chatroom.chat.ChatFragment">
+
+    <im.hua.uikit.crv.CommonRecyclerView
+        android:id="@+id/recycler_view_chat_room"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:crvReverseLayout="true"
+        app:emptyView="@layout/common_empty"
+        app:networkErrorView="@layout/common_network_error"/>
+
+</FrameLayout>

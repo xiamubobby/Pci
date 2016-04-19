@@ -40,8 +40,8 @@ public class NotifiGroupInvitePresenter extends BasePagePresenter implements INo
     }
 
     @Override
-    public void agreeJoinDoctorGroup(String doctorId, String doctorGroupId) {
-        mJoinDoctorGroupModel.agreeJoinDoctorGroup(doctorId, doctorGroupId);
+    public void agreeOrRejectJoinDoctorGroup(String doctorId, String ownerId, boolean isToAgree) {
+        mJoinDoctorGroupModel.agreeOrRejectJoinDoctorGroup(doctorId, ownerId, isToAgree ? "Join" : "ManualReject");
     }
 
     @Override
@@ -52,7 +52,7 @@ public class NotifiGroupInvitePresenter extends BasePagePresenter implements INo
                     @Override
                     public Observable<NotifiGroupInviteBean> call(NotifiGroupInviteEntity.RetValuesEntity retValuesEntity) {
                         NotifiGroupInviteBean bean = new NotifiGroupInviteBean();
-                        bean.setId(retValuesEntity.getGroupId());
+                        bean.setOwnerId(retValuesEntity.getOwnerId());
                         bean.setOwnerName(retValuesEntity.getOwnerName());
                         bean.setOwnerJobTitle(retValuesEntity.getOwnerJobTitle());
                         bean.setOwnerDepartment(retValuesEntity.getOwnerDepartment());
@@ -60,6 +60,7 @@ public class NotifiGroupInvitePresenter extends BasePagePresenter implements INo
                         bean.setOwnerHospital(retValuesEntity.getOwnerHos());
                         bean.setGroupDesc(retValuesEntity.getGroupDescription());
                         bean.setRecordTime(retValuesEntity.getGroupCreateTime());
+                        bean.setAvatarUrls(retValuesEntity.getAvatarUrls());
                         return Observable.just(bean);
                     }
                 })
@@ -93,13 +94,13 @@ public class NotifiGroupInvitePresenter extends BasePagePresenter implements INo
     }
 
     @Override
-    public void onAgreeSuccess(String groupId, String message) {
-        mListener.onAgreeSuccess(groupId, message);
+    public void onAgreeSuccess(String ownerId, String message) {
+        mListener.onAgreeSuccess(ownerId, message);
     }
 
     public interface NotifiGroupInvitePresenterListener extends BasePagePresenterListener {
         void showInviteNotifications(List<NotifiGroupInviteBean> inviteBeanList);
 
-        void onAgreeSuccess(String groupId, String message);
+        void onAgreeSuccess(String ownerId, String message);
     }
 }

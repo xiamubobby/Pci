@@ -10,11 +10,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.flyco.tablayout.SlidingTabLayout;
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
+import com.wonders.xlab.pci.doctor.data.presenter.impl.ChatRoomPresenter;
 import com.wonders.xlab.pci.doctor.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
@@ -25,7 +27,6 @@ import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.MedicalRecordAc
 import com.wonders.xlab.pci.doctor.module.chatroom.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoActivity;
-import com.wonders.xlab.pci.doctor.data.presenter.impl.ChatRoomPresenter;
 import com.wonders.xlab.pci.doctor.util.RealmUtil;
 
 import java.util.Calendar;
@@ -56,6 +57,8 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     private String patientName;
     private String patientPhoneNumber;
 
+    @Bind(R.id.stl_chat_room)
+    SlidingTabLayout mStlChatRoomTop;
     @Bind(R.id.iv_chat_room_record)
     ImageView mIvChatRoomRecord;
     @Bind(R.id.et_chat_room_input)
@@ -164,7 +167,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
             mEtChatRoomInput.setText("");
 
-            mChatRoomPresenter.sendMessage(message, AIManager.getInstance().getDoctorTel(), groupId, groupName, imGroupId, patientId, patientName, patientPhoneNumber, sendTime, AIManager.getInstance().getDoctorPortraitUrl(),AIManager.getInstance().getDoctorName());
+            mChatRoomPresenter.sendMessage(message, AIManager.getInstance().getDoctorTel(), groupId, groupName, imGroupId, patientId, patientName, patientPhoneNumber, sendTime, AIManager.getInstance().getDoctorPortraitUrl(), AIManager.getInstance().getDoctorName());
         }
     }
 
@@ -266,7 +269,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
     @Override
     public void hideLoading() {
-        mRecyclerView.hideRefreshOrLoadMore(true,true);
+        mRecyclerView.hideRefreshOrLoadMore(true, true);
     }
 
     /**
@@ -290,7 +293,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             OthersChatRoomBean bean = new OthersChatRoomBean();
             bean.name.set(otto.getFromWhoName());
             bean.text.set(otto.getTxtContent());
-            bean.recordTime.set(DateUtil.format(otto.getMessageTime(),"HH:mm"));
+            bean.recordTime.set(DateUtil.format(otto.getMessageTime(), "HH:mm"));
             bean.portraitUrl.set(otto.getFromWhoAvatarUrl());
 
             initChatRoomAdapter();
@@ -301,7 +304,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_chat_room,menu);
+        getMenuInflater().inflate(R.menu.menu_chat_room, menu);
         return true;
     }
 

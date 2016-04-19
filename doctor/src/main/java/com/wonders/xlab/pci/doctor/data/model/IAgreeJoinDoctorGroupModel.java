@@ -6,5 +6,5 @@ import im.hua.library.base.mvp.IBaseModel;
  * Created by hua on 16/4/19.
  */
 public interface IAgreeJoinDoctorGroupModel extends IBaseModel {
-    void agreeJoinDoctorGroup(String doctorId,String doctorGroupId);
+    void agreeOrRejectJoinDoctorGroup(String doctorId, String ownerId, String inviteStatus);
 }

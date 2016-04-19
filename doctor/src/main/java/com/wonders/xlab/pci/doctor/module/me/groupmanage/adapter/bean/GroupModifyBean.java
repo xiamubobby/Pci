@@ -1,7 +1,5 @@
 package com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean;
 
-import android.text.TextUtils;
-
 import java.util.List;
 
 /**
@@ -12,17 +10,7 @@ public class GroupModifyBean {
     private String groupName;
     private String groupDesc;
     private List<String> publishedServiceIconList;
-    /**
-     * Owner
-     * Manager
-     * Member
-     */
-    private String managerType;
     private boolean canGrant;
-
-    public boolean isAdmin() {
-        return !TextUtils.isEmpty(managerType) && !managerType.toLowerCase().equals("member");
-    }
 
     public List<GroupModifyMemberBean> getMemberInfoList() {
         return mMemberInfoList;
@@ -54,14 +42,6 @@ public class GroupModifyBean {
 
     public void setPublishedServiceIconList(List<String> publishedServiceIconList) {
         this.publishedServiceIconList = publishedServiceIconList;
-    }
-
-    public String getManagerType() {
-        return managerType;
-    }
-
-    public void setManagerType(String managerType) {
-        this.managerType = managerType;
     }
 
     public boolean isCanGrant() {

@@ -1,6 +1,7 @@
 package com.wonders.xlab.pci.doctor.module.me.groupmanage;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -21,12 +22,12 @@ import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
+import com.wonders.xlab.pci.doctor.data.entity.request.GroupUpdateBasicInfoBody;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupModifyMemberRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupServiceIconRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupModifyMemberBean;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.packagemanage.GroupServicesActivity;
-import com.wonders.xlab.pci.doctor.data.entity.request.GroupUpdateBasicInfoBody;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.IGroupModifyPresenter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.impl.GroupModifyPresenter;
 
@@ -135,6 +136,17 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                         startActivityForResult(nameIntent, REQUEST_CODE_DESC);
                     }
                 });
+        RxView.clicks(mTvGroupDesc)
+                .throttleFirst(Constant.VIEW_CLICK_SKIP_DURATION, TimeUnit.MILLISECONDS)
+                .subscribe(new Action1<Void>() {
+                    @Override
+                    public void call(Void aVoid) {
+                        Intent nameIntent = new Intent("com.wonders.xlab.pci.doctor.GroupDescModifyActivity");
+                        nameIntent.putExtra(GroupNameModifyActivity.EXTRA_HINT, "小组简介");
+                        nameIntent.putExtra(GroupNameModifyActivity.EXTRA_TEXT, mTvGroupDesc.getText().toString());
+                        startActivityForResult(nameIntent, REQUEST_CODE_DESC);
+                    }
+                });
         RxView.clicks(mTvAuth)
                 .throttleFirst(Constant.VIEW_CLICK_SKIP_DURATION, TimeUnit.MILLISECONDS)
                 .subscribe(new Action1<Void>() {
@@ -161,18 +173,46 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
     }
 
     @Override
-    public void showGroupInfo(GroupModifyBean groupModifyBean) {
-        mIsAdmin = groupModifyBean.isAdmin();
-        if (mIsAdmin) {
-            invalidateOptionsMenu();
+    public void showAdminOperationView() {
+        mIsAdmin = true;
+        invalidateOptionsMenu();
+
+        Drawable drawable = getResources().getDrawable(R.drawable.ic_edit_pencil);
+        if (drawable != null) {
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         }
+        mTvGroupDescTrigger.setCompoundDrawables(null, null, drawable, null);
+
+        mTvGroupDescTrigger.setClickable(mIsAdmin);
+        mTvGroupDesc.setClickable(mIsAdmin);
+
+        //TODO
+//        mBtnDismiss.setVisibility(mIsAdmin ? View.VISIBLE : View.GONE);
+        mBtnDismiss.setVisibility(View.GONE);
+
+        mMemberRVAdapter.setIsAdmin(mIsAdmin);
+    }
+
+    @Override
+    public void hideAdminOperationView() {
+        mIsAdmin = false;
+        mTvGroupDescTrigger.setCompoundDrawables(null, null, null, null);
+
+        mTvGroupDescTrigger.setClickable(mIsAdmin);
+        mTvGroupDesc.setClickable(mIsAdmin);
+
+        mMemberRVAdapter.setIsAdmin(mIsAdmin);
+    }
+
+    @Override
+    public void showGroupInfo(GroupModifyBean groupModifyBean) {
 
         if (!TextUtils.isEmpty(groupModifyBean.getGroupName())) {
             mTvGroupName.setText(groupModifyBean.getGroupName());
         }
+
         mTvGroupDesc.setText(groupModifyBean.getGroupDesc());
         mTvAuth.setVisibility(groupModifyBean.isCanGrant() ? View.VISIBLE : View.GONE);
-        mBtnDismiss.setVisibility(mIsAdmin ? View.VISIBLE : View.GONE);
 
         if (null == mMemberRVAdapter) {
             mMemberRVAdapter = new GroupModifyMemberRVAdapter();
@@ -199,7 +239,6 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
             });
             mRecyclerViewMembers.setAdapter(mMemberRVAdapter);
         }
-        mMemberRVAdapter.setIsAdmin(mIsAdmin);
         mMemberRVAdapter.setDatas(groupModifyBean.getMemberInfoList());
 
         if (null == mServiceIconRVAdapter) {

@@ -112,8 +112,10 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
                 mTvUnpublish.setVisibility(View.GONE);
             }
             mCardViewBottom.setVisibility(View.VISIBLE);
+            mSp.setEnabled(true);
             mSp.setClickable(true);
         } else {
+            mSp.setEnabled(false);
             mSp.setClickable(false);
         }
 

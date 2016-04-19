@@ -5,16 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.databinding.NotifiGroupInviteItemBinding;
 import com.wonders.xlab.pci.doctor.module.me.notification.adapter.bean.NotifiGroupInviteBean;
-import com.wonders.xlab.pci.doctor.util.ImageViewManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.hua.avatarassemble.library.MultiAvatarView;
 
 /**
  * Created by hua on 16/4/14.
@@ -50,7 +49,7 @@ public class NotifiGroupInviteRVAdapter extends SimpleRVAdapter<NotifiGroupInvit
                 }
             }
         });
-        ImageViewManager.setImageViewWithUrl(viewHolder.itemView.getContext(), viewHolder.mIvPortrait, bean.getOwnerAvatarUrl(), R.drawable.ic_default_avatar_doctor);
+        viewHolder.mIvPortrait.setAvatarUrls(bean.getAvatarUrls());
     }
 
     public void setOnOperationClickListener(OnOperationClickListener onOperationClickListener) {
@@ -60,7 +59,7 @@ public class NotifiGroupInviteRVAdapter extends SimpleRVAdapter<NotifiGroupInvit
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.iv_notifi_group_invite_item_portrait)
-        ImageView mIvPortrait;
+        MultiAvatarView mIvPortrait;
         @Bind(R.id.btn_notifi_group_invite_item_refuse)
         Button mBtnRefuse;
         @Bind(R.id.btn_notifi_group_invite_item_agree)

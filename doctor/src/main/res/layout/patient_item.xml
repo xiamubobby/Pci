@@ -75,7 +75,6 @@
             android:layout_alignTop="@+id/tv_patient_item_name"
             android:gravity="right"
             android:maxLength="10"
-            android:visibility="gone"
             android:singleLine="true"
             android:text="@{patient.groupName}"/>
 

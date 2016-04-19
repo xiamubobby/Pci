@@ -21,16 +21,15 @@ import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
+import com.wonders.xlab.pci.doctor.data.entity.request.GroupUpdateMemberBody;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupDoctorMultiChoiceRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.GroupInviteSelectedDoctorRVAdapter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.adapter.bean.GroupDoctorBean;
-import com.wonders.xlab.pci.doctor.data.entity.request.GroupUpdateMemberBody;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.IGroupInviteDoctorPresenter;
 import com.wonders.xlab.pci.doctor.module.me.groupmanage.presenter.impl.GroupDoctorInvitePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -78,13 +77,12 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
         }
 
         RxTextView.afterTextChangeEvents(mEtSearch)
-                .throttleFirst(500, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .filter(new Func1<TextViewAfterTextChangeEvent, Boolean>() {
                     @Override
                     public Boolean call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
                         Editable s = textViewAfterTextChangeEvent.editable();
-                        return ((!TextUtils.isDigitsOnly(s.toString()) && !TextUtils.isEmpty(s.toString()) && s.length() >= 2) || (TextUtils.isDigitsOnly(s.toString()) && s.length() == 11));
+                        return ((!TextUtils.isDigitsOnly(s.toString()) && !TextUtils.isEmpty(s.toString()) && s.length() >= 2) || (TextUtils.isDigitsOnly(s.toString()) && s.length() >= 11));
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())

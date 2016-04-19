@@ -54,9 +54,14 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
         final GroupModifyBean groupModifyBean = new GroupModifyBean();
         groupModifyBean.setGroupDesc(valuesEntity.getGroupDescription());
         groupModifyBean.setGroupName(valuesEntity.getGroupName());
-        groupModifyBean.setManagerType(valuesEntity.getManagerType());
         groupModifyBean.setCanGrant(valuesEntity.isCanGrant());
         groupModifyBean.setPublishedServiceIconList(valuesEntity.getServiceUrls());
+
+        if ("member".equals(valuesEntity.getManagerType().toLowerCase())) {
+            mListener.hideAdminOperationView();
+        } else {
+            mListener.showAdminOperationView();
+        }
 
         Observable.from(valuesEntity.getMembers())
                 .flatMap(new Func1<GroupDetailEntity.RetValuesEntity.MembersEntity, Observable<GroupDetailEntity.RetValuesEntity.MembersEntity>>() {
@@ -119,6 +124,10 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
     }
 
     public interface GroupModifyPresenterListener extends BasePresenterListener {
+        void showAdminOperationView();
+
+        void hideAdminOperationView();
+
         void showGroupInfo(GroupModifyBean groupModifyBean);
 
         void onGroupCreateSuccess(String newGroupId, String message);
