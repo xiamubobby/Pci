@@ -21,17 +21,13 @@ public class SendMessageBody {
      * msg : 测试看看
      */
 
-    private MsgEntity msg;
+    private String msg;
     private String from;
     private List<String> target;
     private Map<String,Object> ext;
 
     public void setTarget_type(String target_type) {
         this.target_type = target_type;
-    }
-
-    public void setMsg(MsgEntity msg) {
-        this.msg = msg;
     }
 
     public void setFrom(String from) {
@@ -44,10 +40,6 @@ public class SendMessageBody {
 
     public String getTarget_type() {
         return target_type;
-    }
-
-    public MsgEntity getMsg() {
-        return msg;
     }
 
     public String getFrom() {
@@ -64,6 +56,14 @@ public class SendMessageBody {
 
     public void setExt(Map<String, Object> ext) {
         this.ext = ext;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public static class MsgEntity {

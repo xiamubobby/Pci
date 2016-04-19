@@ -3,43 +3,27 @@ package com.wonders.xlab.pci.doctor.module.chatroom;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.flyco.tablayout.SlidingTabLayout;
-import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
+import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.doctor.R;
-import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
-import com.wonders.xlab.pci.doctor.data.presenter.impl.ChatRoomPresenter;
-import com.wonders.xlab.pci.doctor.module.chatroom.adapter.ChatRoomRVAdapter;
-import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
-import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
-import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bp.BloodPressureActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.bs.BloodSugarActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.chat.ChatFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.MedicalRecordActivity;
-import com.wonders.xlab.pci.doctor.module.chatroom.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoActivity;
-import com.wonders.xlab.pci.doctor.util.RealmUtil;
-
-import java.util.Calendar;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import im.hua.uikit.crv.CommonRecyclerView;
-import im.hua.utils.DateUtil;
-import im.hua.utils.NotifyUtil;
 
-public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresenter.ChatRoomPresenterListener {
+public class ChatRoomActivity extends AppbarActivity {
     public final static String EXTRA_PATIENT_ID = "PATIENT_ID";
     public final static String EXTRA_PATIENT_NAME = "PATIENT_NAME";
     public final static String EXTRA_PATIENT_PHONE_NUMBER = "PATIENT_NUMBER";
@@ -49,28 +33,20 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     public final static String EXTRA_GROUP_ID = "GROUP_ID";
     public final static String EXTRA_IM_GROUP_ID = "IM_GROUP_ID";
     public final static String EXTRA_GROUP_NAME = "GROUP_NAME";
-
     private String patientId;
+
     private String imGroupId;
     private String groupId;
     private String groupName;
     private String patientName;
     private String patientPhoneNumber;
 
+    @Bind(R.id.view_pager_chat_room)
+    ViewPager mViewPager;
     @Bind(R.id.stl_chat_room)
     SlidingTabLayout mStlChatRoomTop;
-    @Bind(R.id.iv_chat_room_record)
-    ImageView mIvChatRoomRecord;
-    @Bind(R.id.et_chat_room_input)
-    EditText mEtChatRoomInput;
 
-    private ChatRoomPresenter mChatRoomPresenter;
-
-    @Bind(R.id.recycler_view_chat_room)
-    CommonRecyclerView mRecyclerView;
-
-    private ChatRoomRVAdapter mChatRoomRVAdapter;
-    private boolean mIsPaused;
+    private FragmentVPAdapter mVPAdapter;
 
     @Override
     public int getContentLayout() {
@@ -90,8 +66,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
         Intent intent = getIntent();
         if (intent == null) {
-//            throw new NullPointerException("getIntent() is null");
-            Toast.makeText(this, "获取患者信息失败，请重试！", Toast.LENGTH_SHORT).show();
+            showShortToast("获取患者信息失败，请重试！");
             finish();
             return;
         }
@@ -100,46 +75,20 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         imGroupId = intent.getStringExtra(EXTRA_IM_GROUP_ID);
         groupName = intent.getStringExtra(EXTRA_GROUP_NAME);
         if (TextUtils.isEmpty(patientId) || TextUtils.isEmpty(groupName) || TextUtils.isEmpty(imGroupId)) {
-            Toast.makeText(this, "获取患者信息失败，请重试！", Toast.LENGTH_SHORT).show();
+            showShortToast("获取患者信息失败，请重试！");
             finish();
             return;
         }
         patientName = intent.getStringExtra(EXTRA_PATIENT_NAME);
         patientPhoneNumber = intent.getStringExtra(EXTRA_PATIENT_PHONE_NUMBER);
 
-        //cancel notification
-        new NotifyUtil().cancel(this, Integer.parseInt(groupId));
-
         setToolbarTitle(patientName);
 
-        mRecyclerView.setRefreshEnable(false);
-        mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                mChatRoomPresenter.getChatList(imGroupId);
-            }
-        });
+        mVPAdapter = new FragmentVPAdapter(getFragmentManager());
+        mVPAdapter.addFragment(ChatFragment.newInstance(patientId, patientName, patientPhoneNumber, groupId, imGroupId, groupName), "聊天");
+        mViewPager.setAdapter(mVPAdapter);
 
-        mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance().getDoctorId());
-        addPresenter(mChatRoomPresenter);
-
-        mChatRoomPresenter.getChatList(imGroupId);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        mIsPaused = false;
-        if (TextUtils.isDigitsOnly(imGroupId)) {
-            new NotifyUtil().cancel(this, (int) Long.parseLong(imGroupId));
-        }
-        RealmUtil.readMessage(imGroupId);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mIsPaused = true;
+        mStlChatRoomTop.setViewPager(mViewPager);
     }
 
     @Override
@@ -149,29 +98,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         ButterKnife.unbind(this);
     }
 
-    @OnClick(R.id.btn_chat_room_send)
-    public void sendMessage() {
-        String message = mEtChatRoomInput.getText().toString();
-        if (!TextUtils.isEmpty(message)) {
-            long sendTime = Calendar.getInstance().getTimeInMillis();
-
-            MeChatRoomBean bean = new MeChatRoomBean();
-            bean.text.set(message);
-            bean.portraitUrl.set(AIManager.getInstance().getDoctorPortraitUrl());
-            bean.recordTime.set(DateUtil.format(sendTime, "HH:mm"));
-            bean.recordTimeInMill.set(sendTime);
-            bean.isSending.set(true);
-            mChatRoomRVAdapter.insertToTop(bean);
-
-            mRecyclerView.getRecyclerView().smoothScrollToPosition(0);
-
-            mEtChatRoomInput.setText("");
-
-            mChatRoomPresenter.sendMessage(message, AIManager.getInstance().getDoctorTel(), groupId, groupName, imGroupId, patientId, patientName, patientPhoneNumber, sendTime, AIManager.getInstance().getDoctorPortraitUrl(), AIManager.getInstance().getDoctorName());
-        }
-    }
-
-    @OnClick(R.id.iv_chat_room_bp)
     public void onBPClick() {
         Intent intent = new Intent(this, BloodPressureActivity.class);
         goToActivity(intent, BloodPressureActivity.EXTRA_PATIENT_ID);
@@ -182,124 +108,24 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         startActivity(intent);
     }
 
-    @OnClick(R.id.iv_chat_room_bs)
     public void onBSClick() {
         Intent intent = new Intent(this, BloodSugarActivity.class);
         goToActivity(intent, SymptomActivity.EXTRA_PATIENT_ID);
     }
 
-    @OnClick(R.id.iv_chat_room_user_info)
     public void onUserInfoClick() {
         Intent intent = new Intent(this, UserInfoActivity.class);
         goToActivity(intent, UserInfoActivity.EXTRA_PATIENT_ID);
     }
 
-    @OnClick(R.id.iv_chat_room_symptom)
     public void onSymptomClick() {
         Intent intent = new Intent(this, SymptomActivity.class);
         goToActivity(intent, SymptomActivity.EXTRA_PATIENT_ID);
     }
 
-    @OnClick(R.id.iv_chat_room_record)
     public void onMedicalRecordClick() {
         Intent intent = new Intent(this, MedicalRecordActivity.class);
         goToActivity(intent, MedicalRecordActivity.EXTRA_PATIENT_ID);
-    }
-
-    private void initChatRoomAdapter() {
-        if (mChatRoomRVAdapter == null) {
-            mChatRoomRVAdapter = new ChatRoomRVAdapter();
-            mRecyclerView.setAdapter(mChatRoomRVAdapter);
-        }
-    }
-
-    @Override
-    public void showChatMessageList(List<ChatRoomBean> chatRoomBeanList) {
-        initChatRoomAdapter();
-        mChatRoomRVAdapter.setDatas(chatRoomBeanList);
-    }
-
-    @Override
-    public void appendChatMessageList(List<ChatRoomBean> chatRoomBeanList) {
-        initChatRoomAdapter();
-        mChatRoomRVAdapter.appendDatas(chatRoomBeanList);
-        mRecyclerView.getRecyclerView().smoothScrollToPosition(mChatRoomRVAdapter.getItemCount() - chatRoomBeanList.size());
-    }
-
-    @Override
-    public void sendMessageSuccess(long time) {
-        for (int i = 0; i < mChatRoomRVAdapter.getItemCount(); i++) {
-            ChatRoomBean bean = mChatRoomRVAdapter.getItemData(i);
-            switch (mChatRoomRVAdapter.getItemViewType(i)) {
-                case ChatRoomBean.ITEM_LAYOUT_ME:
-                    MeChatRoomBean meChatRoomBean = (MeChatRoomBean) bean;
-                    if (meChatRoomBean.isSending.get() && null != meChatRoomBean.recordTimeInMill && meChatRoomBean.recordTimeInMill.get() == time) {
-                        meChatRoomBean.isSending.set(false);
-                        return;
-                    }
-                    break;
-            }
-        }
-    }
-
-    @Override
-    public void showLoading(String message) {
-
-    }
-
-    @Override
-    public void showNetworkError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void showServerError(String message) {
-
-    }
-
-    @Override
-    public void showEmptyView(String message) {
-
-    }
-
-    @Override
-    public void showErrorToast(String message) {
-
-    }
-
-    @Override
-    public void hideLoading() {
-        mRecyclerView.hideRefreshOrLoadMore(true, true);
-    }
-
-    /**
-     * 接收其他人发给我的通知，加入显示列表，并且移除通知栏的该条通知
-     *
-     * @param otto
-     */
-    @Subscribe
-    public void receiveNotifyForUpdate(ChatRoomRecordInsertOtto otto) {
-        if (imGroupId.equals(otto.getImGroupId())) {
-            /**
-             * remove the notify with groupid as it's notify id
-             */
-            if (!mIsPaused) {
-                if (TextUtils.isDigitsOnly(otto.getImGroupId())) {
-                    new NotifyUtil().cancel(this, (int) Long.parseLong(otto.getImGroupId()));
-                }
-                RealmUtil.readMessage(imGroupId);
-            }
-
-            OthersChatRoomBean bean = new OthersChatRoomBean();
-            bean.name.set(otto.getFromWhoName());
-            bean.text.set(otto.getTxtContent());
-            bean.recordTime.set(DateUtil.format(otto.getMessageTime(), "HH:mm"));
-            bean.portraitUrl.set(otto.getFromWhoAvatarUrl());
-
-            initChatRoomAdapter();
-            mChatRoomRVAdapter.insertToTop(bean);
-            mRecyclerView.getRecyclerView().scrollToPosition(0);
-        }
     }
 
     @Override

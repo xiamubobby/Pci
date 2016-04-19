@@ -39,14 +39,10 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
     public void sendMessage(String message, String doctorTel, String groupId, String groupName, String imGroupId, long time, String patientId, String patientName, String patientTel, String fromWhoAvatarUrl,String fromWhoName) {
         SendMessageBody body = new SendMessageBody();
 
-        SendMessageBody.MsgEntity msgEntity = new SendMessageBody.MsgEntity();
-        msgEntity.setType("txt");
-        msgEntity.setMsg(message);
-
         List<String> targets = new ArrayList<>();
         targets.add(imGroupId);
 
-        body.setMsg(msgEntity);
+        body.setMsg(message);
         body.setFrom(doctorTel);
         body.setTarget_type("chatgroups");
         body.setTarget(targets);

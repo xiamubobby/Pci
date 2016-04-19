@@ -1,16 +1,46 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             tools:context="com.wonders.xlab.pci.doctor.module.chatroom.chat.ChatFragment">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.wonders.xlab.pci.doctor.module.chatroom.chat.ChatFragment">
 
     <im.hua.uikit.crv.CommonRecyclerView
         android:id="@+id/recycler_view_chat_room"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/rl_chat_room_bottom"
         app:crvReverseLayout="true"
         app:emptyView="@layout/common_empty"
         app:networkErrorView="@layout/common_network_error"/>
 
-</FrameLayout>
+    <android.support.v7.widget.CardView
+        android:id="@+id/rl_chat_room_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/item_interval_small">
+
+            <EditText
+                android:id="@+id/et_chat_room_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/btn_chat_room_send"/>
+
+            <ImageView
+                android:id="@+id/btn_chat_room_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/item_interval_small"
+                android:contentDescription="@string/text_send"
+                android:src="@drawable/ic_send"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
