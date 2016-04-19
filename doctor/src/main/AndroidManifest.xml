@@ -100,11 +100,6 @@
                 android:value=".module.MainActivity"/>
         </activity>
         <activity
-            android:name=".module.chatroom.bp.BloodPressureActivity"
-            android:label="@string/title_activity_blood_pressure"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity
             android:name=".module.chatroom.userinfo.UserInfoActivity"
             android:label="@string/title_activity_user_info"
             android:screenOrientation="portrait"

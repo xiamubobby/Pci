@@ -14,14 +14,9 @@ import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.bp.BPFragment;
-import com.wonders.xlab.pci.doctor.module.chatroom.bp.BloodPressureActivity;
-import com.wonders.xlab.pci.doctor.module.chatroom.bs.BloodSugarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.chat.ChatFragment;
-import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.MedicalRecordActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.MedicalRecordFragment;
-import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomFragment;
-import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoFragment;
 
 import butterknife.Bind;
@@ -104,36 +99,6 @@ public class ChatRoomActivity extends AppbarActivity {
         super.onDestroy();
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
-    }
-
-    public void onBPClick() {
-        Intent intent = new Intent(this, BloodPressureActivity.class);
-        goToActivity(intent, BloodPressureActivity.EXTRA_PATIENT_ID);
-    }
-
-    private void goToActivity(Intent intent, String extraPatientId) {
-        intent.putExtra(extraPatientId, patientId);
-        startActivity(intent);
-    }
-
-    public void onBSClick() {
-        Intent intent = new Intent(this, BloodSugarActivity.class);
-        goToActivity(intent, SymptomActivity.EXTRA_PATIENT_ID);
-    }
-
-    public void onUserInfoClick() {
-        Intent intent = new Intent(this, UserInfoActivity.class);
-        goToActivity(intent, UserInfoActivity.EXTRA_PATIENT_ID);
-    }
-
-    public void onSymptomClick() {
-        Intent intent = new Intent(this, SymptomActivity.class);
-        goToActivity(intent, SymptomActivity.EXTRA_PATIENT_ID);
-    }
-
-    public void onMedicalRecordClick() {
-        Intent intent = new Intent(this, MedicalRecordActivity.class);
-        goToActivity(intent, MedicalRecordActivity.EXTRA_PATIENT_ID);
     }
 
     @Override
