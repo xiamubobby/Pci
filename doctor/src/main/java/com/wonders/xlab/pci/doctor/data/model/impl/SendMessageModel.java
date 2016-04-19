@@ -44,8 +44,8 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
 
         body.setMsg(message);
         body.setFrom(doctorTel);
-        body.setTarget_type("chatgroups");
-        body.setTarget(targets);
+        body.setTargetType("chatgroups");
+        body.setTargets(targets);
 
         Map<String, Object> ext = new HashMap<>();
         ext.put("type", 3);//3:表示聊天信息

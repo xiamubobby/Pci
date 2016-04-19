@@ -16,7 +16,7 @@ public class DoctorGroupDetailEntity extends BaseEntity {
      * groupAvatar : ["http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg"]
      * members : [{"doctorId":6,"avatarUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","name":"张医生edit11","jobTitle":"医生edit11"},{"doctorId":5,"avatarUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","name":"张医生edit11","jobTitle":"医生edit11"}]
      * jobTitle : 医生edit11
-     * sPackage : [{"dPackageId":1,"name":"健康报1","iconUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","price":10,"unit":"月","description":"速度快减肥服减肥"}]
+     * sPackage : [{"dPackageId":1,"name":"健康报1","iconUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","value":10,"unit":"月","description":"速度快减肥服减肥"}]
      * description : 阿里肯德基放辣椒的
      * servedPeopleCount : 0
      * department : 儿科
@@ -110,7 +110,7 @@ public class DoctorGroupDetailEntity extends BaseEntity {
          * dPackageId : 1
          * name : 健康报1
          * iconUrl : http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg
-         * price : 10.0
+         * value : 10.0
          * unit : 月
          * description : 速度快减肥服减肥
          */
@@ -240,7 +240,7 @@ public class DoctorGroupDetailEntity extends BaseEntity {
             private String dPackageId;
             private String name;
             private String iconUrl;
-            private String price;
+            private String value;
             private String unit;
             /**
              * 0 未购买 1 购买 2过期
@@ -272,12 +272,12 @@ public class DoctorGroupDetailEntity extends BaseEntity {
                 this.iconUrl = iconUrl;
             }
 
-            public String getPrice() {
-                return price;
+            public String getValue() {
+                return value;
             }
 
-            public void setPrice(String price) {
-                this.price = price;
+            public void setValue(String value) {
+                this.value = value;
             }
 
             public String getUnit() {

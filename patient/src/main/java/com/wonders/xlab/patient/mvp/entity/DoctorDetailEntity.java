@@ -15,7 +15,7 @@ public class DoctorDetailEntity extends BaseEntity {
      * servingPeople : 0
      * belongGroup : [{"doctorGroupId":1,"name":"心血管","avatars":["http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg"]}]
      * jobTitle : 医生edit11
-     * sPackage : [{"dPackageId":2,"name":"健康报1","iconUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","price":10,"unit":"月","description":"速度快减肥服减肥"}]
+     * sPackage : [{"dPackageId":2,"name":"健康报1","iconUrl":"http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg","value":10,"unit":"月","description":"速度快减肥服减肥"}]
      * description : 介绍介绍介t
      * servedPeopleCount : 0
      * department : 儿科
@@ -53,7 +53,7 @@ public class DoctorDetailEntity extends BaseEntity {
          * dPackageId : 2
          * name : 健康报1
          * iconUrl : http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg
-         * price : 10.0
+         * value : 10.0
          * unit : 月
          * description : 速度快减肥服减肥
          */
@@ -174,7 +174,7 @@ public class DoctorDetailEntity extends BaseEntity {
             private String dPackageId;
             private String name;
             private String iconUrl;
-            private double price;
+            private String value;
             private String unit;
             /**
              * 0 未购买 1 购买 2过期
@@ -206,12 +206,12 @@ public class DoctorDetailEntity extends BaseEntity {
                 this.iconUrl = iconUrl;
             }
 
-            public double getPrice() {
-                return price;
+            public String getValue() {
+                return value;
             }
 
-            public void setPrice(double price) {
-                this.price = price;
+            public void setValue(String value) {
+                this.value = value;
             }
 
             public String getUnit() {

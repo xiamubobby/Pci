@@ -92,6 +92,9 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                     public void onNext(Response<T> result) {
                         int code = result.code();
                         switch (code) {
+                            case 400:
+                                onFailed(code, "服务器开小差了，请稍候重试哦！");
+                                break;
                             case 401:
                                 onFailed(code, "请确保在正确授权的情况下，再重试哦！");
                                 return;

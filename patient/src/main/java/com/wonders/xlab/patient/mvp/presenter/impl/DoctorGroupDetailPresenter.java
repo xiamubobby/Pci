@@ -83,7 +83,7 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
                 bean.name.set(entity.getName());
                 bean.orderStatus.set(entity.getOrderStatus());
                 bean.description.set(entity.getDescription());
-                bean.priceStr.set(entity.getPrice() + entity.getUnit());
+                bean.priceStr.set(entity.getValue() + entity.getUnit());
                 bean.iconUrl.set(entity.getIconUrl());
 
                 packageList.add(bean);
