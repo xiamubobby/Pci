@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -39,10 +39,12 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/item_interval_small">
 
-            <ImageView
-                android:id="@+id/iv_group_manage_item_portrait"
+            <im.hua.avatarassemble.library.MultiAvatarView
+                android:id="@+id/iv_notifi_group_invite_item_portrait"
                 android:layout_width="64dp"
-                android:layout_height="64dp"/>
+                android:layout_height="64dp"
+                android:background="@color/background_gray"
+                app:mav_size="64dp"/>
 
             <LinearLayout
                 android:id="@+id/ll_notifi_group_invite_item"
@@ -71,7 +73,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_group_manage_item_owner_name"
+                android:id="@+id/tv_notifi_group_invite_item_owner_name"
                 style="@style/MiddleGrayWrapTextView"
                 android:layout_below="@+id/ll_notifi_group_invite_item"
                 android:layout_marginLeft="@dimen/item_interval_middle"
@@ -81,7 +83,7 @@
                 android:text='@{"负责人：" + bean.ownerName}'/>
 
             <TextView
-                android:id="@+id/tv_group_manage_item_owner_title_department"
+                android:id="@+id/tv_notifi_group_invite_item_owner_title_department"
                 style="@style/SmallGrayWrapTextView"
                 android:layout_below="@+id/tv_group_manage_item_owner_name"
                 android:layout_marginLeft="@dimen/item_interval_middle"
@@ -92,7 +94,7 @@
 
             <TextView
                 style="@style/SmallGrayWrapTextView"
-                android:layout_below="@+id/tv_group_manage_item_owner_title_department"
+                android:layout_below="@+id/tv_notifi_group_invite_item_owner_title_department"
                 android:layout_marginLeft="@dimen/item_interval_middle"
                 android:layout_marginTop="@dimen/item_interval_very_small"
                 android:layout_toRightOf="@+id/iv_group_manage_item_portrait"
@@ -106,7 +108,8 @@
             style="@style/MiddleBlackWrapTextView"
             android:padding="@dimen/item_interval_small"
             android:singleLine="true"
-            android:text="小组简介"/>
+            android:text="小组简介"
+            android:visibility="@{TextUtils.isEmpty(bean.groupDesc) ? View.GONE:View.VISIBLE}"/>
 
         <TextView
             style="@style/SmallGrayWrapTextView"
@@ -124,6 +127,7 @@
             android:padding="@dimen/item_interval_small">
 
             <Button
+                android:id="@+id/btn_notifi_group_invite_item_refuse"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:background="@drawable/selector_rectangle_default_outline_primary_solid_white_pressed_primary"
@@ -131,6 +135,7 @@
                 android:textColor="@drawable/selector_text_default_accent_pressed_white"/>
 
             <Button
+                android:id="@+id/btn_notifi_group_invite_item_agree"
                 android:layout_width="wrap_content"
                 android:layout_height="36dp"
                 android:layout_marginLeft="@dimen/item_interval_small"

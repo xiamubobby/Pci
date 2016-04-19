@@ -7,17 +7,30 @@ import im.hua.library.base.mvp.entity.BaseEntity;
  */
 public class AgreeJoinDoctorGroupEntity extends BaseEntity{
 
+
     /**
-     * ret_values : 同意加入诊所
+     * doctorGroupId : 1
      */
 
-    private String ret_values;
+    private RetValuesEntity ret_values;
 
-    public String getRet_values() {
+    public RetValuesEntity getRet_values() {
         return ret_values;
     }
 
-    public void setRet_values(String ret_values) {
+    public void setRet_values(RetValuesEntity ret_values) {
         this.ret_values = ret_values;
+    }
+
+    public static class RetValuesEntity {
+        private String doctorGroupId;
+
+        public String getDoctorGroupId() {
+            return doctorGroupId;
+        }
+
+        public void setDoctorGroupId(String doctorGroupId) {
+            this.doctorGroupId = doctorGroupId;
+        }
     }
 }

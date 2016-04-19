@@ -21,7 +21,7 @@ public class AgreeJoinDoctorGroupModel extends DoctorBaseModel<AgreeJoinDoctorGr
 
     @Override
     protected void onSuccess(AgreeJoinDoctorGroupEntity response) {
-        mListener.onAgreeSuccess(response.getMessage());
+        mListener.onAgreeSuccess(response.getRet_values().getDoctorGroupId(), response.getMessage());
     }
 
     @Override
@@ -35,6 +35,6 @@ public class AgreeJoinDoctorGroupModel extends DoctorBaseModel<AgreeJoinDoctorGr
     }
 
     public interface AgreeJoinDoctorGroupModelListener extends BaseModelListener {
-        void onAgreeSuccess(String message);
+        void onAgreeSuccess(String groupId, String message);
     }
 }

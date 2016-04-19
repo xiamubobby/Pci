@@ -93,13 +93,13 @@ public class NotifiGroupInvitePresenter extends BasePagePresenter implements INo
     }
 
     @Override
-    public void onAgreeSuccess(String message) {
-        mListener.onAgreeSuccess(message);
+    public void onAgreeSuccess(String groupId, String message) {
+        mListener.onAgreeSuccess(groupId, message);
     }
 
     public interface NotifiGroupInvitePresenterListener extends BasePagePresenterListener {
         void showInviteNotifications(List<NotifiGroupInviteBean> inviteBeanList);
 
-        void onAgreeSuccess(String message);
+        void onAgreeSuccess(String groupId, String message);
     }
 }
