@@ -2,6 +2,7 @@ package im.hua.library.base;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.widget.Toast;
 
@@ -58,9 +59,21 @@ public class BaseFragment extends Fragment {
         }
     }
 
-    public void showProgressDialog(String title, String message) {
+    public interface OnDialogDismissListener{
+        void onDismiss();
+    }
+
+    public void showProgressDialog(String title, String message, final OnDialogDismissListener mListener) {
         if (null == mDialog) {
             mDialog = new ProgressDialog(getActivity());
+        }
+        if (null != mListener) {
+            mDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    mListener.onDismiss();
+                }
+            });
         }
         if (!TextUtils.isEmpty(title)) {
             mDialog.setTitle(title);

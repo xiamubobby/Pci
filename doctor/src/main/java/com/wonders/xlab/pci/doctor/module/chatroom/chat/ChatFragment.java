@@ -141,6 +141,7 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        mChatRoomRVAdapter = null;
         ButterKnife.unbind(this);
     }
 

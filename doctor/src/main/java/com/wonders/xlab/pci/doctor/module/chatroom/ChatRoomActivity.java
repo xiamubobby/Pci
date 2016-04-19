@@ -17,8 +17,11 @@ import com.wonders.xlab.pci.doctor.module.chatroom.bp.BloodPressureActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.bs.BloodSugarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.chat.ChatFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.MedicalRecordActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.MedicalRecordFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -82,10 +85,13 @@ public class ChatRoomActivity extends AppbarActivity {
         patientName = intent.getStringExtra(EXTRA_PATIENT_NAME);
         patientPhoneNumber = intent.getStringExtra(EXTRA_PATIENT_PHONE_NUMBER);
 
-        setToolbarTitle(patientName);
+        setToolbarTitle("患者:" + patientName);
 
         mVPAdapter = new FragmentVPAdapter(getFragmentManager());
         mVPAdapter.addFragment(ChatFragment.newInstance(patientId, patientName, patientPhoneNumber, groupId, imGroupId, groupName), "聊天");
+        mVPAdapter.addFragment(UserInfoFragment.newInstance(patientId), "基本信息");
+        mVPAdapter.addFragment(SymptomFragment.newInstance(patientId), "不适症状");
+        mVPAdapter.addFragment(MedicalRecordFragment.newInstance(patientId), "就诊记录");
         mViewPager.setAdapter(mVPAdapter);
 
         mStlChatRoomTop.setViewPager(mViewPager);
