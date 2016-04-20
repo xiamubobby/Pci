@@ -9,11 +9,11 @@
 
         <variable
             name="symptom"
-            type="com.wonders.xlab.pci.doctor.module.chatroom.symptom.bean.SymptomBean"/>
+            type="com.wonders.xlab.pci.doctor.module.chatroom.symptomold.bean.SymptomBean"/>
 
         <variable
             name="handler"
-            type="com.wonders.xlab.pci.doctor.module.chatroom.symptom.adapter.SymptomRVAdapter.ItemViewHolder"/>
+            type="com.wonders.xlab.pci.doctor.module.chatroom.symptomold.adapter.SymptomRVAdapter.ItemViewHolder"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

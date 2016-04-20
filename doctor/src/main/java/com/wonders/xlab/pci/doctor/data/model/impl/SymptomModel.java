@@ -19,7 +19,7 @@ public class SymptomModel extends DoctorBaseModel<SymptomEntity> {
     }
 
     public void getSymptomList(String userId) {
-        request(mSymptomAPI.getSymptomList(userId), true);
+        request(mSymptomAPI.getSymptomList(userId,0,20), true);
     }
 
     @Override

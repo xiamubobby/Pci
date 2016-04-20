@@ -1,41 +1,42 @@
-package com.wonders.xlab.pci.doctor.module.chatroom.symptom;
+package com.wonders.xlab.pci.doctor.module.chatroom.symptomold;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
-import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.data.presenter.impl.SymptomPresenter;
-import com.wonders.xlab.pci.doctor.module.chatroom.symptom.adapter.SymptomRVAdapter;
-import com.wonders.xlab.pci.doctor.module.chatroom.symptom.bean.SymptomBean;
+import com.wonders.xlab.pci.doctor.module.chatroom.symptomold.adapter.SymptomRVAdapter;
+import com.wonders.xlab.pci.doctor.module.chatroom.symptomold.bean.SymptomBean;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.hua.library.base.BaseFragment;
+import im.hua.uikit.crv.CommonRecyclerView;
 import im.hua.utils.KeyboardUtil;
 
-public class SymptomActivity extends AppbarActivity implements SymptomPresenter.SymptomPresenterListener {
-    public static final String EXTRA_PATIENT_ID = "patientId";
-    @Bind(R.id.coordinate)
-    CoordinatorLayout mCoordinate;
-
+/**
+ * 不适症状
+ */
+public class SymptomFragment extends BaseFragment implements SymptomPresenter.SymptomPresenterListener {
+    public static final String ARG_PATIENT_ID = "patientId";
     private String mPatientId;
 
     @Bind(R.id.recycler_view_symptom)
-    PullLoadMoreRecyclerView mRecyclerView;
+    CommonRecyclerView mRecyclerView;
 
     private SymptomRVAdapter mSymptomRVAdapter;
 
@@ -52,47 +53,61 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
 
     private AlertDialog mDialog;
 
-    @Override
-    public int getContentLayout() {
-        return R.layout.symptom_activity;
+    public SymptomFragment() {
+        // Required empty public constructor
+    }
+
+    public static SymptomFragment newInstance(String patientId) {
+        Bundle data = new Bundle();
+        data.putString(ARG_PATIENT_ID, patientId);
+        SymptomFragment fragment = new SymptomFragment();
+        fragment.setArguments(data);
+        return fragment;
     }
 
     @Override
-    public String getToolbarTitle() {
-        return "不适症状";
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
+        Bundle data = getArguments();
+        mPatientId = data.getString(ARG_PATIENT_ID);
+    }
 
-        mPatientId = getIntent().getExtras().getString(EXTRA_PATIENT_ID);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.symptom_fragment, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
 
-        mRecyclerView.setLinearLayout(false);
-        mRecyclerView.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 mSymptomPresenter.getSymptomList(mPatientId);
             }
-
-            @Override
-            public void onLoadMore() {
-
-            }
         });
-
         mSymptomPresenter = new SymptomPresenter(this);
         addPresenter(mSymptomPresenter);
 
-        mRecyclerView.setRefreshing(true);
         mSymptomPresenter.getSymptomList(mPatientId);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mSymptomRVAdapter = null;
+        ButterKnife.unbind(this);
     }
 
     private void showCommentEditDialog(SymptomBean bean) {
         mEditingSymptomBean = bean;
-        View view = LayoutInflater.from(SymptomActivity.this).inflate(R.layout.symptom_edit_dialog, null, false);
-        mDialog = new AlertDialog.Builder(SymptomActivity.this)
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.symptom_edit_dialog, null, false);
+        mDialog = new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .setNegativeButton(getResources().getString(R.string.btn_abandon), null)
                 .setPositiveButton(getResources().getString(R.string.btn_save), null)
@@ -151,14 +166,7 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
-        ButterKnife.unbind(this);
-    }
-
-    @Override
     public void showSymptomList(List<SymptomBean> symptomBeanList) {
-        mRecyclerView.setPullLoadMoreCompleted();
         if (null == mSymptomRVAdapter) {
             mSymptomRVAdapter = new SymptomRVAdapter();
             mSymptomRVAdapter.setOnCommentClickListener(new SymptomRVAdapter.OnCommentClickListener() {
@@ -183,7 +191,7 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
         if (null != mDialog) {
             mDialog.dismiss();
         }
-        KeyboardUtil.hide(this);
+        KeyboardUtil.hide(getActivity());
         dismissProgressDialog();
 
         mEditingSymptomBean.setIsChecked(mTmpSymptomBean.getIsChecked());
@@ -197,33 +205,42 @@ public class SymptomActivity extends AppbarActivity implements SymptomPresenter.
 
     @Override
     public void showNetworkError(String message) {
-        mRecyclerView.setPullLoadMoreCompleted();
         if (null != mDialog) {
             mDialog.dismiss();
         }
-        KeyboardUtil.hide(this);
+        KeyboardUtil.hide(getActivity());
         dismissProgressDialog();
 
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        showShortToast(message);
     }
 
     @Override
     public void showServerError(String message) {
+        mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+            @Override
+            public void onClick() {
 
+            }
+        });
     }
 
     @Override
     public void showEmptyView(String message) {
+        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
 
+            }
+        });
     }
 
     @Override
     public void showErrorToast(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void hideLoading() {
-
+        mRecyclerView.hideRefreshOrLoadMore(true,true);
     }
 }

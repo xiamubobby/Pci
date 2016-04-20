@@ -9,6 +9,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -17,9 +18,9 @@ import rx.Observable;
 public interface SymptomAPI {
 
     @GET("v1/userSymptomRecords/listUserSymptomRecord/{userId}")
-    Observable<Response<SymptomEntity>> getSymptomList(@Path("userId") String userId);
+    Observable<Response<SymptomEntity>> getSymptomList(@Path("userId") String userId, @Query("page") int page, @Query("size") int size);
 
     @FormUrlEncoded
     @POST("v1/userSymptomRecords/commentUserSymptom")
-    Observable<Response<SymptomCommentEntity>> saveComment(@Field("recordId") String symptomId,@Field("doctorId") String doctorId,@Field("comment") String comment,@Field("check") boolean check);
+    Observable<Response<SymptomCommentEntity>> saveComment(@Field("recordId") String symptomId, @Field("doctorId") String doctorId, @Field("comment") String comment, @Field("check") boolean check);
 }

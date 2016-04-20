@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_vertical_margin"
     app:emptyView="@layout/common_empty"
     app:networkErrorView="@layout/common_network_error"
     app:serverErrorView="@layout/common_server_error"

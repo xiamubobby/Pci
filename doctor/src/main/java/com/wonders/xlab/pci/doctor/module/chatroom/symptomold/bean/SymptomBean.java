@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.module.chatroom.symptom.bean;
+package com.wonders.xlab.pci.doctor.module.chatroom.symptomold.bean;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;

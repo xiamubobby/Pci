@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.module.chatroom.symptom.adapter;
+package com.wonders.xlab.pci.doctor.module.chatroom.symptomold.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.databinding.SymptomItemBinding;
-import com.wonders.xlab.pci.doctor.module.chatroom.symptom.bean.SymptomBean;
+import com.wonders.xlab.pci.doctor.module.chatroom.symptomold.bean.SymptomBean;
 
 /**
  * Created by hua on 16/2/23.

@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.presenter;
+package com.wonders.xlab.pci.doctor.module.chatroom.symptom.presenter;
 
 import im.hua.library.base.mvp.IBasePresenter;
 

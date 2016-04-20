@@ -4,7 +4,7 @@ import com.wonders.xlab.pci.doctor.data.entity.SymptomCommentEntity;
 import com.wonders.xlab.pci.doctor.data.entity.SymptomEntity;
 import com.wonders.xlab.pci.doctor.data.model.impl.SymptomCommentModel;
 import com.wonders.xlab.pci.doctor.data.model.impl.SymptomModel;
-import com.wonders.xlab.pci.doctor.module.chatroom.symptom.bean.SymptomBean;
+import com.wonders.xlab.pci.doctor.module.chatroom.symptomold.bean.SymptomBean;
 
 import java.util.ArrayList;
 import java.util.List;
