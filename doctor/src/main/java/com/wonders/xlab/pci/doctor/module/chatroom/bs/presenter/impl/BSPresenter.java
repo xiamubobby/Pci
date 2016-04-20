@@ -1,10 +1,11 @@
-package com.wonders.xlab.patient.mvp.presenter.impl;
+package com.wonders.xlab.pci.doctor.module.chatroom.bs.presenter.impl;
 
-import com.wonders.xlab.patient.module.healthreport.bs.bean.BSBean;
-import com.wonders.xlab.patient.mvp.entity.BloodSugarEntity;
-import com.wonders.xlab.patient.mvp.model.IBloodSugarModel;
-import com.wonders.xlab.patient.mvp.model.impl.BloodSugarModel;
-import com.wonders.xlab.patient.mvp.presenter.IBloodSugarPresenter;
+import android.support.annotation.NonNull;
+
+import com.wonders.xlab.pci.doctor.data.entity.BSEntity;
+import com.wonders.xlab.pci.doctor.data.model.impl.BSModel;
+import com.wonders.xlab.pci.doctor.module.chatroom.bs.bean.BSBean;
+import com.wonders.xlab.pci.doctor.module.chatroom.bs.presenter.IBSPresenter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,23 +13,21 @@ import java.util.Comparator;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePagePresenter;
-import im.hua.library.base.mvp.listener.BasePresenterListener;
-
+import im.hua.library.base.mvp.listener.BasePagePresenterListener;
 
 /**
- * Created by hua on 16/4/1.
+ * Created by hua on 16/2/22.
  */
-public class BloodSugarPresenter extends BasePagePresenter implements IBloodSugarPresenter, BloodSugarModel.BloodSugarModelListener {
-    private BloodSugarPresenterListener mListener;
-    private IBloodSugarModel mIBloodSugarModel;
+public class BSPresenter extends BasePagePresenter implements IBSPresenter, BSModel.BSModelListener {
+    private BSPresenterListener mListener;
+    private BSModel mBSModel;
 
-    public BloodSugarPresenter(BloodSugarPresenterListener listener) {
+    public BSPresenter(@NonNull BSPresenterListener listener) {
         mListener = listener;
 
-        mIBloodSugarModel = new BloodSugarModel(this);
-        addModel(mIBloodSugarModel);
+        mBSModel = new BSModel(this);
+        addModel(mBSModel);
     }
-
 
     @Override
     public void getBSList(String patientId, boolean isRefresh) {
@@ -39,27 +38,27 @@ public class BloodSugarPresenter extends BasePagePresenter implements IBloodSuga
             mListener.hideLoading();
             return;
         }
-        mIBloodSugarModel.getBSList(patientId, getNextPageIndex(), DEFAULT_PAGE_SIZE);
+        mBSModel.getBSList(patientId, getNextPageIndex(), DEFAULT_PAGE_SIZE);
     }
 
     @Override
-    public void onReceiveBSSuccess(BloodSugarEntity bsEntity) {
+    public void onReceiveBSSuccess(BSEntity bsEntity) {
         mListener.hideLoading();
 
-        BloodSugarEntity.RetValuesEntity retValues = bsEntity.getRet_values();
+        BSEntity.RetValuesEntity retValues = bsEntity.getRet_values();
 
         updatePageInfo(retValues.getNumber(), retValues.isFirst(), retValues.isLast());
 
-        List<BloodSugarEntity.RetValuesEntity.ContentEntity> contentEntityList = retValues.getContent();
+        List<BSEntity.RetValuesEntity.ContentEntity> contentEntityList = retValues.getContent();
 
         if (null == contentEntityList) {
             mListener.showNetworkError("获取血糖数据失败，请重试！");
             return;
         }
 
-        Collections.sort(contentEntityList, new Comparator<BloodSugarEntity.RetValuesEntity.ContentEntity>() {
+        Collections.sort(contentEntityList, new Comparator<BSEntity.RetValuesEntity.ContentEntity>() {
             @Override
-            public int compare(BloodSugarEntity.RetValuesEntity.ContentEntity lhs, BloodSugarEntity.RetValuesEntity.ContentEntity rhs) {
+            public int compare(BSEntity.RetValuesEntity.ContentEntity lhs, BSEntity.RetValuesEntity.ContentEntity rhs) {
                 long l = lhs.getRecordTime2Long();
                 long r = rhs.getRecordTime2Long();
                 return l < r ? 1 : (l == r ? 0 : -1);
@@ -68,7 +67,7 @@ public class BloodSugarPresenter extends BasePagePresenter implements IBloodSuga
 
         List<BSBean> bsBeanList = new ArrayList<>();
         for (int i = 0; i < contentEntityList.size(); i++) {
-            BloodSugarEntity.RetValuesEntity.ContentEntity contentEntity = contentEntityList.get(i);
+            BSEntity.RetValuesEntity.ContentEntity contentEntity = contentEntityList.get(i);
 
             BSBean bean = new BSBean();
             bean.setBreakfastBeforeBS(contentEntity.getBeforeBreakfast());
@@ -91,11 +90,10 @@ public class BloodSugarPresenter extends BasePagePresenter implements IBloodSuga
 
     @Override
     public void onReceiveFailed(int code, String message) {
-        mListener.hideLoading();
         mListener.showNetworkError(message);
     }
 
-    public interface BloodSugarPresenterListener extends BasePresenterListener {
+    public interface BSPresenterListener extends BasePagePresenterListener {
         void showBloodPressureList(List<BSBean> bsBeanList);
 
         void appendBloodPressureList(List<BSBean> bsBeanList);

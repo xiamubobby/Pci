@@ -18,8 +18,8 @@ public class BSModel extends DoctorBaseModel<BSEntity> {
         mBSAPI = mRetrofit.create(BSAPI.class);
     }
 
-    public void getBSList(String userId) {
-        request(mBSAPI.getBSList(userId), true);
+    public void getBSList(String userId, int page, int size) {
+        request(mBSAPI.getBSList(userId, page, size), true);
     }
 
     @Override

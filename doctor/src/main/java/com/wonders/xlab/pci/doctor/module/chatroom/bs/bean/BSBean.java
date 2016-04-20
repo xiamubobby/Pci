@@ -5,15 +5,14 @@ package com.wonders.xlab.pci.doctor.module.chatroom.bs.bean;
  */
 public class BSBean {
     private long headerId;
-    private String headerTime;
-    private String earlyMorningBS;
-    private String breakfastBeforeBS;
-    private String breakfastAfterBS;
-    private String lunchBeforeBS;
-    private String lunchAfterBS;
-    private String dinnerBeforeBS;
-    private String dinnerAfterBS;
-    private String randomBS;
+    private float breakfastBeforeBS;
+    private float breakfastAfterBS;
+    private float lunchBeforeBS;
+    private float lunchAfterBS;
+    private float dinnerBeforeBS;
+    private float dinnerAfterBS;
+    private float beforeSleepBS;
+    private long recordTimeInMill;
 
     public long getHeaderId() {
         return headerId;
@@ -23,75 +22,67 @@ public class BSBean {
         this.headerId = headerId;
     }
 
-    public String getHeaderTime() {
-        return headerTime;
-    }
-
-    public void setHeaderTime(String headerTime) {
-        this.headerTime = headerTime;
-    }
-
-    public String getEarlyMorningBS() {
-        return earlyMorningBS;
-    }
-
-    public void setEarlyMorningBS(String earlyMorningBS) {
-        this.earlyMorningBS = earlyMorningBS;
-    }
-
-    public String getBreakfastBeforeBS() {
+    public float getBreakfastBeforeBS() {
         return breakfastBeforeBS;
     }
 
-    public void setBreakfastBeforeBS(String breakfastBeforeBS) {
+    public void setBreakfastBeforeBS(float breakfastBeforeBS) {
         this.breakfastBeforeBS = breakfastBeforeBS;
     }
 
-    public String getBreakfastAfterBS() {
+    public float getBreakfastAfterBS() {
         return breakfastAfterBS;
     }
 
-    public void setBreakfastAfterBS(String breakfastAfterBS) {
+    public void setBreakfastAfterBS(float breakfastAfterBS) {
         this.breakfastAfterBS = breakfastAfterBS;
     }
 
-    public String getLunchBeforeBS() {
+    public float getLunchBeforeBS() {
         return lunchBeforeBS;
     }
 
-    public void setLunchBeforeBS(String lunchBeforeBS) {
+    public void setLunchBeforeBS(float lunchBeforeBS) {
         this.lunchBeforeBS = lunchBeforeBS;
     }
 
-    public String getLunchAfterBS() {
+    public float getLunchAfterBS() {
         return lunchAfterBS;
     }
 
-    public void setLunchAfterBS(String lunchAfterBS) {
+    public void setLunchAfterBS(float lunchAfterBS) {
         this.lunchAfterBS = lunchAfterBS;
     }
 
-    public String getDinnerBeforeBS() {
+    public float getDinnerBeforeBS() {
         return dinnerBeforeBS;
     }
 
-    public void setDinnerBeforeBS(String dinnerBeforeBS) {
+    public void setDinnerBeforeBS(float dinnerBeforeBS) {
         this.dinnerBeforeBS = dinnerBeforeBS;
     }
 
-    public String getDinnerAfterBS() {
+    public float getDinnerAfterBS() {
         return dinnerAfterBS;
     }
 
-    public void setDinnerAfterBS(String dinnerAfterBS) {
+    public void setDinnerAfterBS(float dinnerAfterBS) {
         this.dinnerAfterBS = dinnerAfterBS;
     }
 
-    public String getRandomBS() {
-        return randomBS;
+    public float getBeforeSleepBS() {
+        return beforeSleepBS;
     }
 
-    public void setRandomBS(String randomBS) {
-        this.randomBS = randomBS;
+    public void setBeforeSleepBS(float beforeSleepBS) {
+        this.beforeSleepBS = beforeSleepBS;
+    }
+
+    public long getRecordTimeInMill() {
+        return recordTimeInMill;
+    }
+
+    public void setRecordTimeInMill(long recordTimeInMill) {
+        this.recordTimeInMill = recordTimeInMill;
     }
 }

@@ -144,7 +144,6 @@ public class BloodSugarEntity extends BaseEntity {
             private float beforeDinner;
             private float afterDinner;
             private float beforeDawn;
-            private float randomValue;
             private long recordTime2Long;
 
             public void setId(String id) {
@@ -177,10 +176,6 @@ public class BloodSugarEntity extends BaseEntity {
 
             public void setBeforeDawn(float beforeDawn) {
                 this.beforeDawn = beforeDawn;
-            }
-
-            public void setRandomValue(float randomValue) {
-                this.randomValue = randomValue;
             }
 
             public void setRecordTime2Long(long recordTime2Long) {
@@ -217,10 +212,6 @@ public class BloodSugarEntity extends BaseEntity {
 
             public float getBeforeDawn() {
                 return beforeDawn;
-            }
-
-            public float getRandomValue() {
-                return randomValue;
             }
 
             public long getRecordTime2Long() {

@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".module.chatroom.bs.BloodSugarActivity"
-    tools:showIn="@layout/bs_activity">
+    tools:context="com.wonders.xlab.pci.doctor.module.chatroom.bs.BSFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -188,9 +187,13 @@
             android:textSize="@dimen/text_size_middle"/>
     </LinearLayout>
 
-    <com.wonders.xlab.common.recyclerview.pullloadmore.PullLoadMoreRecyclerView
+    <im.hua.uikit.crv.CommonRecyclerView
         android:id="@+id/recycler_view_bs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        app:emptyView="@layout/common_empty"
+        app:networkErrorView="@layout/common_network_error"
+        app:serverErrorView="@layout/common_server_error"/>
 
 </LinearLayout>
+

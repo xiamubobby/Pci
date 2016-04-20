@@ -13,7 +13,7 @@ public class BSBean extends BaseObservable{
     private float lunchAfterBS;
     private float dinnerBeforeBS;
     private float dinnerAfterBS;
-    private float randomBS;
+    private float beforeSleepBS;
     private long recordTimeInMill;
 
     public long getHeaderId() {
@@ -72,12 +72,12 @@ public class BSBean extends BaseObservable{
         this.dinnerAfterBS = dinnerAfterBS;
     }
 
-    public float getRandomBS() {
-        return randomBS;
+    public float getBeforeSleepBS() {
+        return beforeSleepBS;
     }
 
-    public void setRandomBS(float randomBS) {
-        this.randomBS = randomBS;
+    public void setBeforeSleepBS(float beforeSleepBS) {
+        this.beforeSleepBS = beforeSleepBS;
     }
 
     public long getRecordTimeInMill() {

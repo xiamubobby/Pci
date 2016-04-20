@@ -7,57 +7,53 @@
             name="bs"
             type="com.wonders.xlab.pci.doctor.module.chatroom.bs.bean.BSBean"/>
 
+        <import type="im.hua.utils.DateUtil"/>
+
+        <import type="java.lang.Float"/>
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:background="@android:color/darker_gray"
+                  android:background="@color/background_gray"
                   android:minHeight="?attr/listPreferredItemHeightSmall"
                   android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_margin="@dimen/bs_cell_divider_width"
-            android:background="@color/bs_cell_bg_dark"
-            android:gravity="center"
-            android:text="@{bs.headerTime.substring(8)}"
-            android:textColor="@color/text_color_primary"
-            android:textSize="@dimen/text_size_primary"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_margin="@dimen/bs_cell_divider_width"
-            android:background="@color/bs_cell_bg"
+            android:background="@android:color/white"
             android:gravity="center"
-            android:text="@{bs.earlyMorningBS}"
-            android:textColor="@color/text_color_primary"
-            android:textSize="@dimen/text_size_primary"/>
+            android:text='@{DateUtil.format(bs.recordTimeInMill,"dd")}'
+            android:textColor="@color/text_color_primary_black"
+            android:textSize="@dimen/text_size_middle"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/bs_cell_divider_width"
             android:layout_weight="1"
-            android:background="@color/bs_cell_bg_dark"
+            android:background="@android:color/white"
             android:gravity="center"
-            android:text="@{bs.breakfastBeforeBS}"
-            android:textColor="@color/text_color_primary"
-            android:textSize="@dimen/text_size_primary"/>
+            android:maxLength="4"
+            android:singleLine="true"
+            android:text='@{Float.compare(bs.breakfastBeforeBS,0.0f) != 0 ? bs.breakfastBeforeBS + "" : "---"}'
+            android:textColor="@color/text_color_primary_black"
+            android:textSize="@dimen/text_size_middle"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_margin="@dimen/bs_cell_divider_width"
-            android:background="@color/bs_cell_bg_dark"
+            android:layout_weight="1"
+            android:background="@android:color/white"
             android:gravity="center"
-            android:text="@{bs.breakfastAfterBS}"
-            android:textColor="@color/text_color_primary"
-            android:textSize="@dimen/text_size_primary"/>
+            android:maxLength="4"
+            android:singleLine="true"
+            android:text='@{Float.compare(bs.breakfastAfterBS,0.0f) != 0 ? bs.breakfastAfterBS + "" : "---"}'
+            android:textColor="@color/text_color_primary_black"
+            android:textSize="@dimen/text_size_middle"/>
 
         <TextView
             android:layout_width="0dp"
@@ -66,9 +62,11 @@
             android:layout_weight="1"
             android:background="@color/bs_cell_bg"
             android:gravity="center"
-            android:text="@{bs.lunchBeforeBS}"
-            android:textColor="@color/text_color_primary"
-            android:textSize="@dimen/text_size_primary"/>
+            android:maxLength="4"
+            android:singleLine="true"
+            android:text='@{Float.compare(bs.lunchBeforeBS,0.0f) != 0 ? bs.lunchBeforeBS + "" : "---"}'
+            android:textColor="@color/text_color_primary_black"
+            android:textSize="@dimen/text_size_middle"/>
 
         <TextView
             android:layout_width="0dp"
@@ -77,42 +75,50 @@
             android:layout_weight="1"
             android:background="@color/bs_cell_bg"
             android:gravity="center"
-            android:text="@{bs.lunchAfterBS}"
-            android:textColor="@color/text_color_primary"
-            android:textSize="@dimen/text_size_primary"/>
+            android:maxLength="4"
+            android:singleLine="true"
+            android:text='@{Float.compare(bs.lunchAfterBS,0.0f) != 0 ? bs.lunchAfterBS + "" : "---"}'
+            android:textColor="@color/text_color_primary_black"
+            android:textSize="@dimen/text_size_middle"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/bs_cell_divider_width"
             android:layout_weight="1"
-            android:background="@color/bs_cell_bg_dark"
+            android:background="@android:color/white"
             android:gravity="center"
-            android:text="@{bs.dinnerBeforeBS}"
-            android:textColor="@color/text_color_primary"
-            android:textSize="@dimen/text_size_primary"/>
+            android:maxLength="4"
+            android:singleLine="true"
+            android:text='@{Float.compare(bs.dinnerBeforeBS,0.0f) != 0 ? bs.dinnerBeforeBS + "" : "---"}'
+            android:textColor="@color/text_color_primary_black"
+            android:textSize="@dimen/text_size_middle"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/bs_cell_divider_width"
             android:layout_weight="1"
-            android:background="@color/bs_cell_bg_dark"
+            android:background="@android:color/white"
             android:gravity="center"
-            android:text="@{bs.dinnerAfterBS}"
-            android:textColor="@color/text_color_primary"
-            android:textSize="@dimen/text_size_primary"/>
+            android:maxLength="4"
+            android:singleLine="true"
+            android:text='@{Float.compare(bs.dinnerAfterBS,0.0f) != 0 ? bs.dinnerAfterBS + "" : "---"}'
+            android:textColor="@color/text_color_primary_black"
+            android:textSize="@dimen/text_size_middle"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_margin="@dimen/bs_cell_divider_width"
             android:layout_weight="1"
             android:background="@color/bs_cell_bg"
             android:gravity="center"
-            android:layout_margin="@dimen/bs_cell_divider_width"
-            android:text="@{bs.randomBS}"
-            android:textColor="@color/text_color_primary"
-            android:textSize="@dimen/text_size_primary"/>
+            android:maxLength="4"
+            android:singleLine="true"
+            android:text='@{Float.compare(bs.beforeSleepBS,0.0f) != 0 ? bs.beforeSleepBS + "" : "---"}'
+            android:textColor="@color/text_color_primary_black"
+            android:textSize="@dimen/text_size_middle"/>
 
     </LinearLayout>
 </layout>
