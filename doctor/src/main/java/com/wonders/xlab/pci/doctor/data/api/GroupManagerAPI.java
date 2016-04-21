@@ -29,7 +29,7 @@ public interface GroupManagerAPI {
     Observable<Response<GroupListEntity>> getGroupList(@Path("doctorId") String doctorId, @Query("page") int page, @Query("size") int size);
 
     @GET("v1/doctorGroup/toDoctorGroup/{doctorId}")
-    Observable<Response<GroupDetailEntity>> getGroupDetail(@Path("doctorId") String doctorId, @Query("doctorGroupId") String doctorGroupId);
+    Observable<Response<GroupDetailEntity>> getGroupDetail(@Path("doctorId") String doctorId, @Query("ownerId") String ownerId);
 
     @POST("v1/doctorGroup/saveDoctorGroup/{doctorId}")
     Observable<Response<GroupCreateEntity>> updateDoctorGroup(@Path("doctorId") String doctorId, @Body GroupUpdateBasicInfoBody body);

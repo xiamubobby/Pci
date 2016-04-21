@@ -11,6 +11,7 @@ import java.util.List;
 public class GroupListBean extends BaseObservable{
     private String groupId;
     private String groupName;
+    private String ownerId;
     private String ownerName;
     private String ownerHospital;
     private String ownerDepartment;
@@ -135,5 +136,14 @@ public class GroupListBean extends BaseObservable{
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    @Bindable
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 }

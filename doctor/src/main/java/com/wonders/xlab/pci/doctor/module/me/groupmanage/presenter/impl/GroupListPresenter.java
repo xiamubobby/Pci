@@ -54,6 +54,7 @@ public class GroupListPresenter extends BasePagePresenter implements IGroupListP
             bean.setGroupId(entity.getId());
             bean.setGroupName(entity.getName());
             bean.setGroupMemberCounts(entity.getSize());
+            bean.setOwnerId(entity.getOwnerId());
             bean.setOwnerName(entity.getOwnerName());
             bean.setOwnerDepartment(entity.getOwnerDepartment());
             bean.setOwnerTitle(entity.getOwnerJobTitle());

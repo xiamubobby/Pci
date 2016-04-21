@@ -48,7 +48,9 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
     public final static int RESULT_CODE_SUCCESS = 0;
 
     public final static String EXTRA_GROUP_ID = "groupId";
+    public final static String EXTRA_OWNER_ID = "ownerId";
     private String mGroupId;
+    private String mOwnerId;
 
     /**
      * 未做修改点保存则直接返回
@@ -99,6 +101,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
         Intent intent = getIntent();
         if (null != intent) {
             mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
+            mOwnerId = intent.getStringExtra(EXTRA_OWNER_ID);
         }
 
         if (TextUtils.isEmpty(mGroupId)) {
@@ -121,7 +124,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
+                mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mOwnerId);
             }
         });
 
@@ -169,7 +172,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                     }
                 });
 
-        mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
+        mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mOwnerId);
     }
 
     @Override
@@ -324,7 +327,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                     if (!TextUtils.isEmpty(tmp)) {
                         mGroupId = tmp;
                     }
-                    mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
+                    mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mOwnerId);
                 }
                 /*if (resultCode == GroupInviteDoctorActivity.RESULT_CODE_SUCCESS) {
                     ArrayList<GroupDoctorBean> doctorBeanArrayList = data.getParcelableArrayListExtra(GroupInviteDoctorActivity.EXTRA_RESULT);
@@ -377,13 +380,13 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                     if (!TextUtils.isEmpty(tmp)) {
                         mGroupId = tmp;
                     }
-                    mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
+                    mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mOwnerId);
 
                 }
                 break;
             case REQUEST_CODE_AUTH:
                 if (resultCode == GroupAuthActivity.RESULT_CODE_SUCCESS) {
-                    mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mGroupId);
+                    mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mOwnerId);
                 }
                 break;
         }

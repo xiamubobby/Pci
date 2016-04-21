@@ -36,9 +36,9 @@ public class GroupModifyPresenter extends BasePresenter implements IGroupModifyP
     }
 
     @Override
-    public void getGroupInfo(String doctorId, String groupId) {
+    public void getGroupInfo(String doctorId, String ownerId) {
         mListener.showLoading("");
-        mDetailModel.getGroupDetail(doctorId, groupId);
+        mDetailModel.getGroupDetail(doctorId, ownerId);
         mListener.showGroupInfo(new GroupModifyBean());
     }
 

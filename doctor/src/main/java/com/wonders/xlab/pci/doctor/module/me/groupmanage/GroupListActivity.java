@@ -72,6 +72,7 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
                 public void onItemClick(int position) {
                     Intent intent = new Intent("com.wonders.xlab.pci.doctor.GroupModifyActivity");
                     intent.putExtra(GroupModifyActivity.EXTRA_GROUP_ID, mRVAdapter.getBean(position).getGroupId());
+                    intent.putExtra(GroupModifyActivity.EXTRA_OWNER_ID, mRVAdapter.getBean(position).getOwnerId());
                     startActivityForResult(intent, REQUEST_CODE_MODIFY);
                 }
             });

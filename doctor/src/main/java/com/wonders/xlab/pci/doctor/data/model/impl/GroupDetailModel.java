@@ -34,8 +34,8 @@ public class GroupDetailModel extends DoctorBaseModel<GroupDetailEntity> impleme
     }
 
     @Override
-    public void getGroupDetail(String doctorId, String doctorGroupId) {
-        request(mAPI.getGroupDetail(doctorId, doctorGroupId), true);
+    public void getGroupDetail(String doctorId, String ownerId) {
+        request(mAPI.getGroupDetail(doctorId, ownerId), true);
     }
 
     public interface GroupDetailModelListener extends BaseModelListener {
