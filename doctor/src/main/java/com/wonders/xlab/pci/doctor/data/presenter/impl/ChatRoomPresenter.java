@@ -63,7 +63,7 @@ public class ChatRoomPresenter extends BasePresenter implements ChatRoomModel.Ch
                 //current login doctor's message
                 MeChatRoomBean bean = new MeChatRoomBean();
                 bean.portraitUrl.set(contentEntity.getAvatarUrl());
-                bean.recordTime.set(DateUtil.formatShowDateTime(contentEntity.getSendTime()));
+                bean.recordTime.set(DateUtil.formatShowDateTime(contentEntity.getSendTime(), "yyyy年MM月dd日 HH:mm", "MM月dd日 HH:mm", "HH:mm"));
                 bean.text.set(contentEntity.getContent());
                 bean.isSending.set(false);
 
@@ -72,7 +72,7 @@ public class ChatRoomPresenter extends BasePresenter implements ChatRoomModel.Ch
                 OthersChatRoomBean bean = new OthersChatRoomBean();
                 bean.name.set(contentEntity.getName());
                 bean.portraitUrl.set(contentEntity.getAvatarUrl());
-                bean.recordTime.set(DateUtil.formatShowDateTime(contentEntity.getSendTime()));
+                bean.recordTime.set(DateUtil.formatShowDateTime(contentEntity.getSendTime(), "yyyy年MM月dd日 HH:mm", "MM月dd日 HH:mm", "HH:mm"));
                 bean.text.set(contentEntity.getContent());
 
                 chatRoomBeanList.add(bean);

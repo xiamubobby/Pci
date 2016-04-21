@@ -1,14 +1,22 @@
 package com.wonders.xlab.pci.doctor.module.chatroom.symptom;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.bean.SymptomReportBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.presenter.ISymptomReportPresenter;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.presenter.impl.SymptomReportPresenter;
@@ -21,6 +29,7 @@ import butterknife.ButterKnife;
 import im.hua.library.base.BaseFragment;
 import im.hua.uikit.crv.CommonRecyclerView;
 import im.hua.utils.DateUtil;
+import im.hua.utils.KeyboardUtil;
 
 public class SymptomHRFragment extends BaseFragment implements SymptomReportPresenter.SymptomReportPresenterListener {
     public static final String ARG_PATIENT_ID = "patientId";
@@ -32,6 +41,17 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
     private SymptomAdapter adapter;
 
     private ISymptomReportPresenter mSymptomReportPresenter;
+
+    /**
+     * 正在修改的主诉症状
+     */
+    private SymptomReportBean mEditingSymptomBean;
+    /**
+     * 缓存正在修改的主诉症状(包括备注)
+     */
+    private SymptomReportBean mTmpSymptomBean = new SymptomReportBean();
+
+    private AlertDialog mDialog;
 
     public SymptomHRFragment() {
         // Required empty public constructor
@@ -92,9 +112,76 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
     public void onDestroyView() {
         super.onDestroyView();
         adapter = null;
-        adapter = null;
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
+    }
+
+    private void showCommentEditDialog(SymptomReportBean bean) {
+        mEditingSymptomBean = bean;
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.symptom_edit_dialog, null, false);
+        mDialog = new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .setNegativeButton(getResources().getString(R.string.btn_abandon), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        KeyboardUtil.hide(getActivity());
+                    }
+                })
+                .setPositiveButton(getResources().getString(R.string.btn_save), null)
+                .create();
+
+        final EditText text = (EditText) view.findViewById(R.id.et_symptom_edit_dialog);
+        final CheckBox checkBox = (CheckBox) view.findViewById(R.id.cb_symptom_edit_dialog);
+
+        text.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!mEditingSymptomBean.isHasConfirmed()) {
+                    if (null != s && s.length() > 0) {
+                        checkBox.setChecked(true);
+                    } else {
+                        checkBox.setChecked(false);
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+        text.setText(mEditingSymptomBean.getAdvice());
+        checkBox.setChecked(mEditingSymptomBean.isHasConfirmed());
+        if (mEditingSymptomBean.isHasConfirmed()) {
+            checkBox.setClickable(false);
+        }
+
+        mDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Button button = mDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        KeyboardUtil.hide(getActivity());
+
+                        showProgressDialog("", "正在保存，请稍候...", null);
+
+                        mSymptomReportPresenter.saveComment(mEditingSymptomBean.getId(), AIManager.getInstance().getDoctorId(), text.getText().toString(), checkBox.isChecked());
+
+                        mTmpSymptomBean.setAdvice(text.getText().toString());
+                        mTmpSymptomBean.setHasConfirmed(checkBox.isChecked());
+
+                    }
+                });
+            }
+        });
+
+        mDialog.show();
     }
 
     @Override
@@ -109,44 +196,72 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
         adapter.appendDatas(reportBeanList);
     }
 
+    @Override
+    public void saveCommentSuccess() {
+        KeyboardUtil.hide(getActivity());
+        if (null != mDialog) {
+            mDialog.dismiss();
+        }
+        dismissProgressDialog();
+
+        mEditingSymptomBean.setHasConfirmed(mTmpSymptomBean.isHasConfirmed());
+        mEditingSymptomBean.setAdvice(mTmpSymptomBean.getAdvice());
+    }
+
     private void initAdapter() {
         if (null == adapter) {
             adapter = new SymptomAdapter();
+            adapter.setOnCommentClickListener(new SymptomAdapter.OnCommentClickListener() {
+                @Override
+                public void onBtnClick(SymptomReportBean bean) {
+                    showCommentEditDialog(bean);
+                }
+            });
             mRecyclerView.setAdapter(adapter);
         }
     }
 
     @Override
-    public void showEmptyView() {
+    public void showEmptyView(String message) {
         if (null == mRecyclerView) {
             return;
         }
-        mRecyclerView.showEmptyView(null);
+        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+
+            }
+        });
     }
 
     @Override
     public void showLoading(String message) {
-
+        mRecyclerView.setRefreshing(true);
     }
 
     @Override
     public void showNetworkError(String message) {
-        showShortToast(message);
+        mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
+            @Override
+            public void onClick() {
+
+            }
+        });
     }
 
     @Override
     public void showServerError(String message) {
+        mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+            @Override
+            public void onClick() {
 
-    }
-
-    @Override
-    public void showEmptyView(String message) {
-
+            }
+        });
     }
 
     @Override
     public void showErrorToast(String message) {
-
+        showShortToast(message);
     }
 
     @Override
@@ -154,6 +269,6 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
         if (null == mRecyclerView) {
             return;
         }
-        mRecyclerView.hideRefreshOrLoadMore(true,true);
+        mRecyclerView.hideRefreshOrLoadMore(true, true);
     }
 }

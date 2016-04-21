@@ -27,13 +27,13 @@ public class DateUtil {
         return format(date, format, "");
     }
 
-    public static String formatShowDateTime(long date) {
+    public static String formatShowDateTime(long date, String fullFormat, String sameMonthFormat, String sameDayFormat) {
         if (isTheSameDay(date, Calendar.getInstance().getTimeInMillis())) {
-            return DateUtil.format(date, "HH:mm");
+            return DateUtil.format(date, sameDayFormat);
         } else if (isTheSameYear(date, Calendar.getInstance().getTimeInMillis())) {
-            return DateUtil.format(date, "MM月dd日 HH:mm");
+            return DateUtil.format(date, sameMonthFormat);
         } else {
-            return DateUtil.format(date, "yyyy年MM月dd日 HH:mm");
+            return DateUtil.format(date, fullFormat);
         }
     }
 

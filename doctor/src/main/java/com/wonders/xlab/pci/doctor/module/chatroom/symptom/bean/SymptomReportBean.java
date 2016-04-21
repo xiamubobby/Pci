@@ -1,11 +1,16 @@
 package com.wonders.xlab.pci.doctor.module.chatroom.symptom.bean;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.wonders.xlab.pci.doctor.BR;
+
 import java.util.List;
 
 /**
  * Created by hua on 16/3/21.
  */
-public class SymptomReportBean {
+public class SymptomReportBean extends BaseObservable {
     private String id;
     private List<SymptomReportLabelBean> symptomList;
     private String advice;
@@ -28,12 +33,14 @@ public class SymptomReportBean {
         this.symptomList = symptomList;
     }
 
+    @Bindable
     public String getAdvice() {
         return advice;
     }
 
     public void setAdvice(String advice) {
         this.advice = advice;
+        notifyPropertyChanged(BR.advice);
     }
 
     public long getRecordTimeInMill() {
@@ -44,11 +51,13 @@ public class SymptomReportBean {
         this.recordTimeInMill = recordTimeInMill;
     }
 
+    @Bindable
     public boolean isHasConfirmed() {
         return hasConfirmed;
     }
 
     public void setHasConfirmed(boolean hasConfirmed) {
         this.hasConfirmed = hasConfirmed;
+        notifyPropertyChanged(BR.hasConfirmed);
     }
 }

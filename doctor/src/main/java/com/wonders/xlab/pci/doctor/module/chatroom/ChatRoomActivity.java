@@ -18,11 +18,11 @@ import com.wonders.xlab.pci.doctor.module.chatroom.bs.BSFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.chat.ChatFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.MedicalRecordFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomHRFragment;
-import com.wonders.xlab.pci.doctor.module.chatroom.symptomold.SymptomFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.hua.utils.KeyboardUtil;
 
 public class ChatRoomActivity extends AppbarActivity {
     public final static String EXTRA_PATIENT_ID = "PATIENT_ID";
@@ -88,12 +88,28 @@ public class ChatRoomActivity extends AppbarActivity {
         mVPAdapter = new FragmentVPAdapter(getFragmentManager());
         mVPAdapter.addFragment(ChatFragment.newInstance(patientId, patientName, patientPhoneNumber, groupId, imGroupId, groupName), "聊天");
         mVPAdapter.addFragment(UserInfoFragment.newInstance(patientId), "基本信息");
-        mVPAdapter.addFragment(SymptomFragment.newInstance(patientId), "不适症状");
+//        mVPAdapter.addFragment(SymptomFragment.newInstance(patientId), "不适症状");
         mVPAdapter.addFragment(SymptomHRFragment.newInstance(patientId), "不适症状");
         mVPAdapter.addFragment(MedicalRecordFragment.newInstance(patientId), "就诊记录");
         mVPAdapter.addFragment(BPFragment.newInstance(patientId), "血压");
         mVPAdapter.addFragment(BSFragment.newInstance(patientId), "血糖");
         mViewPager.setAdapter(mVPAdapter);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                KeyboardUtil.hide(ChatRoomActivity.this);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         mStlChatRoomTop.setViewPager(mViewPager);
     }

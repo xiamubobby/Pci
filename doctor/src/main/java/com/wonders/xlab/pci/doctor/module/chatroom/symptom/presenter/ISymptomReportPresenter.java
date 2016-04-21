@@ -8,4 +8,6 @@ import im.hua.library.base.mvp.IBasePresenter;
  */
 public interface ISymptomReportPresenter extends IBasePresenter {
     void getSymptomList(String patientId, long startTime, long endTime, boolean refresh);
+
+    void saveComment(String symptomId, String doctorId, String comment, boolean check);
 }

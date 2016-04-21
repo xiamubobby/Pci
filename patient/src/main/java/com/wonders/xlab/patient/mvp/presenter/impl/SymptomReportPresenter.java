@@ -26,6 +26,7 @@ public class SymptomReportPresenter extends BasePagePresenter implements ISympto
     public SymptomReportPresenter(SymptomReportPresenterListener listener) {
         mListener = listener;
         mSymptomRetrieveModel = new SymptomRetrieveModel(this);
+        addModel(mSymptomRetrieveModel);
     }
 
     @Override

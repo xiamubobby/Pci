@@ -31,7 +31,7 @@ public class OthersChatRoomVH extends MultiViewHolder<OthersChatRoomBean> {
     @Override
     public void onBindViewHolder(OthersChatRoomBean data) {
         ImageViewManager.setImageViewWithUrl(itemView.getContext(), mIvPortrait, data.portraitUrl.get(), ImageViewManager.PLACE_HOLDER_EMPTY);
-        data.recordTimeInStr.set(DateUtil.formatShowDateTime(data.recordTimeInMill.get()));
+        data.recordTimeInStr.set(DateUtil.formatShowDateTime(data.recordTimeInMill.get(), "yyyy年MM月dd日 HH:mm", "MM月dd日 HH:mm", "HH:mm"));
         binding.setChat(data);
     }
 }
