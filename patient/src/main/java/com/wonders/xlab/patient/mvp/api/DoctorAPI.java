@@ -37,11 +37,11 @@ public interface DoctorAPI {
 
     /**
      * 获取医生小组信息（包括个人和多人的）
-     * @param doctorGroupId
+     * @param ownerId
      * @return
      */
-    @GET("v1/doctors/retrieveDoctorGroupInfo/{patientId}/{groupId}")
-    Observable<Response<DoctorGroupDetailEntity>> getDoctorGroupDetailInfo(@Path("patientId") String patientId,@Path("groupId") String doctorGroupId);
+    @GET("v1/doctors/retrieveDoctorGroupInfo/{patientId}/{ownerId}")
+    Observable<Response<DoctorGroupDetailEntity>> getDoctorGroupDetailInfo(@Path("patientId") String patientId,@Path("ownerId") String ownerId);
 
     /**
      * 获取医生个人信息

@@ -22,10 +22,10 @@ import im.hua.uikit.crv.CommonRecyclerView;
 public class GroupServicesActivity extends AppbarActivity implements GroupServicesPresenter.GroupServicesPresenterListener {
     private final int REQUEST_CODE_MODIFY = 0;
 
-    public final static String EXTRA_GROUP_ID = "groupId";
+    public final static String EXTRA_OWNER_ID = "ownerId";
     public final static String EXTRA_IS_ADMIN = "isAdmin";
 
-    private String mGroupId;
+    private String mOwnerId;
     private boolean mIsAdmin;
 
     @Bind(R.id.recycler_view_group_service)
@@ -46,7 +46,7 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
 
         Intent intent = getIntent();
         if (null != intent) {
-            mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
+            mOwnerId = intent.getStringExtra(EXTRA_OWNER_ID);
             mIsAdmin = intent.getBooleanExtra(EXTRA_IS_ADMIN,false);
         }
 
@@ -54,13 +54,13 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mGroupServicesPresenter.getPackages(mGroupId);
+                mGroupServicesPresenter.getPackages(mOwnerId);
             }
         });
         mGroupServicesPresenter = new GroupServicesPresenter(this);
         addPresenter(mGroupServicesPresenter);
 
-        mGroupServicesPresenter.getPackages(mGroupId);
+        mGroupServicesPresenter.getPackages(mOwnerId);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
                 public void onItemClick(int position) {
                     Intent intent = new Intent("com.wonders.xlab.pci.doctor.GroupServiceModifyActivity");
                     intent.putExtra(GroupServiceModifyActivity.EXTRA_SERVICE_PACKAGE_ID, mRVAdapter.getBean(position).packageId.get());
-                    intent.putExtra(GroupServiceModifyActivity.EXTRA_GROUP_ID, mGroupId);
+                    intent.putExtra(GroupServiceModifyActivity.EXTRA_OWNER_ID, mOwnerId);
                     intent.putExtra(GroupServiceModifyActivity.EXTRA_PUBLISHED, mRVAdapter.getBean(position).published.get());
                     intent.putExtra(GroupServiceModifyActivity.EXTRA_IS_ADMIN, mIsAdmin);
                     startActivityForResult(intent,REQUEST_CODE_MODIFY);
@@ -93,7 +93,7 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
         mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
             @Override
             public void onClick() {
-                mGroupServicesPresenter.getPackages(mGroupId);
+                mGroupServicesPresenter.getPackages(mOwnerId);
             }
         });
     }
@@ -103,7 +103,7 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
         mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
             @Override
             public void onClick() {
-                mGroupServicesPresenter.getPackages(mGroupId);
+                mGroupServicesPresenter.getPackages(mOwnerId);
             }
         });
     }
@@ -113,7 +113,7 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
         mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
             @Override
             public void onClick() {
-                mGroupServicesPresenter.getPackages(mGroupId);
+                mGroupServicesPresenter.getPackages(mOwnerId);
             }
         });
     }
@@ -134,7 +134,7 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
         switch (requestCode) {
             case REQUEST_CODE_MODIFY:
                 if (resultCode == GroupServiceModifyActivity.RESULT_CODE_SUCCESS) {
-                    mGroupServicesPresenter.getPackages(mGroupId);
+                    mGroupServicesPresenter.getPackages(mOwnerId);
                 }
                 break;
         }

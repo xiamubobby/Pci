@@ -49,7 +49,6 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
 
     public final static String EXTRA_GROUP_ID = "groupId";
     public final static String EXTRA_OWNER_ID = "ownerId";
-    private String mGroupId;
     private String mOwnerId;
 
     /**
@@ -100,11 +99,10 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
 
         Intent intent = getIntent();
         if (null != intent) {
-            mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
             mOwnerId = intent.getStringExtra(EXTRA_OWNER_ID);
         }
 
-        if (TextUtils.isEmpty(mGroupId)) {
+        if (TextUtils.isEmpty(mOwnerId)) {
             setToolbarTitle("新建小组");
             mBtnDismiss.setVisibility(View.GONE);
             /**
@@ -156,7 +154,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                     @Override
                     public void call(Void aVoid) {
                         Intent nameIntent = new Intent("com.wonders.xlab.pci.doctor.GroupAuthActivity");
-                        nameIntent.putExtra(GroupAuthActivity.EXTRA_GROUP_ID, mGroupId);
+                        nameIntent.putExtra(GroupAuthActivity.EXTRA_OWNER_ID, mOwnerId);
                         startActivityForResult(nameIntent, REQUEST_CODE_AUTH);
                     }
                 });
@@ -166,7 +164,7 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                     @Override
                     public void call(Void aVoid) {
                         Intent serviceIntent = new Intent("com.wonders.xlab.pci.doctor.GroupServicesActivity");
-                        serviceIntent.putExtra(GroupServicesActivity.EXTRA_GROUP_ID, mGroupId);
+                        serviceIntent.putExtra(GroupServicesActivity.EXTRA_OWNER_ID, mOwnerId);
                         serviceIntent.putExtra(GroupServicesActivity.EXTRA_IS_ADMIN, mIsAdmin);
                         startActivityForResult(serviceIntent, REQUEST_CODE_SERVICE);
                     }
@@ -229,12 +227,12 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                     switch (bean.getType()) {
                         case GroupModifyMemberBean.TYPE_ADD:
                             Intent a = new Intent("com.wonders.xlab.pci.doctor.GroupInviteDoctorActivity");
-                            a.putExtra(GroupInviteDoctorActivity.EXTRA_GROUP_ID, mGroupId);
+                            a.putExtra(GroupInviteDoctorActivity.EXTRA_OWNER_ID, mOwnerId);
                             startActivityForResult(a, REQUEST_CODE_INVITE_DOCTOR);
                             break;
                         case GroupModifyMemberBean.TYPE_MINUS:
                             Intent intent = new Intent("com.wonders.xlab.pci.doctor.GroupRemoveDoctorActivity");
-                            intent.putExtra(GroupRemoveDoctorActivity.EXTRA_GROUP_ID, mGroupId);
+                            intent.putExtra(GroupRemoveDoctorActivity.EXTRA_OWNER_ID, mOwnerId);
                             startActivityForResult(intent, REQUEST_CODE_REMOVE_DOCTOR);
                             break;
                     }
@@ -255,12 +253,11 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
     public void onGroupCreateSuccess(String newGroupId, String message) {
         showShortToast(message);
         setResult(RESULT_CODE_SUCCESS);
-        finish();
     }
 
     @Override
     public void cannotCreateGroup(String message) {
-        if (TextUtils.isEmpty(mGroupId)) {
+        if (TextUtils.isEmpty(mOwnerId)) {
             showShortToast(message);
             finish();
         }
@@ -323,63 +320,15 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                 break;
             case REQUEST_CODE_INVITE_DOCTOR:
                 if (resultCode == GroupInviteDoctorActivity.RESULT_CODE_SUCCESS) {
-                    String tmp = data.getStringExtra(GroupInviteDoctorActivity.EXTRA_RESULT);
-                    if (!TextUtils.isEmpty(tmp)) {
-                        mGroupId = tmp;
+                    String tmpOwnerId = data.getStringExtra(GroupInviteDoctorActivity.EXTRA_RESULT_OWNER_ID);
+                    if (!TextUtils.isEmpty(tmpOwnerId)) {
+                        mOwnerId = tmpOwnerId;
                     }
                     mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mOwnerId);
                 }
-                /*if (resultCode == GroupInviteDoctorActivity.RESULT_CODE_SUCCESS) {
-                    ArrayList<GroupDoctorBean> doctorBeanArrayList = data.getParcelableArrayListExtra(GroupInviteDoctorActivity.EXTRA_RESULT);
-                    Observable.from(doctorBeanArrayList)
-                            .flatMap(new Func1<GroupDoctorBean, Observable<GroupDoctorBean>>() {
-                                @Override
-                                public Observable<GroupDoctorBean> call(GroupDoctorBean bean) {
-                                    return Observable.just(bean);
-                                }
-                            })
-                            .map(new Func1<GroupDoctorBean, GroupModifyMemberBean>() {
-                                @Override
-                                public GroupModifyMemberBean call(GroupDoctorBean bean) {
-                                    GroupModifyMemberBean memberBean = new GroupModifyMemberBean();
-                                    memberBean.setType(GroupModifyMemberBean.TYPE_MEMBER);
-                                    memberBean.setDoctorBean(bean);
-                                    return memberBean;
-                                }
-                            })
-                            .subscribe(new Subscriber<GroupModifyMemberBean>() {
-                                List<GroupModifyMemberBean> memberBeanList = new ArrayList<>();
-
-                                @Override
-                                public void onCompleted() {
-                                    if (null == mMemberRVAdapter) {
-                                        mMemberRVAdapter = new GroupModifyMemberRVAdapter();
-                                        mRecyclerViewMembers.setAdapter(mMemberRVAdapter);
-                                    }
-                                    if (memberBeanList.size() > 0) {
-                                        mHasChanged = true;
-                                    }
-                                    mMemberRVAdapter.appendDatas(memberBeanList);
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-                                    showShortToast("出错啦，请重试！");
-                                }
-
-                                @Override
-                                public void onNext(GroupModifyMemberBean bean) {
-                                    memberBeanList.add(bean);
-                                }
-                            });
-                }*/
                 break;
             case REQUEST_CODE_REMOVE_DOCTOR:
                 if (resultCode == GroupRemoveDoctorActivity.RESULT_CODE_SUCCESS) {
-                    String tmp = data.getStringExtra(GroupRemoveDoctorActivity.EXTRA_RESULT);
-                    if (!TextUtils.isEmpty(tmp)) {
-                        mGroupId = tmp;
-                    }
                     mGroupModifyPresenter.getGroupInfo(AIManager.getInstance().getDoctorId(), mOwnerId);
 
                 }
@@ -411,7 +360,9 @@ public class GroupModifyActivity extends AppbarActivity implements GroupModifyPr
                 }
                 final GroupUpdateBasicInfoBody body = new GroupUpdateBasicInfoBody();
                 body.setName(mTvGroupName.getText().toString());
-                body.setId(mGroupId);
+                GroupUpdateBasicInfoBody.Owner owner = new GroupUpdateBasicInfoBody.Owner();
+                owner.setId(mOwnerId);
+                body.setOwner(owner);
                 body.setDescription(mTvGroupDesc.getText().toString());
 
                 mGroupModifyPresenter.createGroup(AIManager.getInstance().getDoctorId(), body);

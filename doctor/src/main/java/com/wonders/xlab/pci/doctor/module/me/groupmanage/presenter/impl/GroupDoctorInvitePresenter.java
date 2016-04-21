@@ -37,8 +37,8 @@ public class GroupDoctorInvitePresenter extends BasePagePresenter implements IGr
     }
 
     @Override
-    public void searchByNameOrTel(String doctorId, String doctorGroupId, String searchKey) {
-        mSearchModel.searchDoctorByTelOrName(doctorId, doctorGroupId, searchKey, searchKey);
+    public void searchByNameOrTel(String doctorId, String ownerId, String searchKey) {
+        mSearchModel.searchDoctorByTelOrName(doctorId, ownerId, searchKey, searchKey);
     }
 
     @Override
@@ -94,12 +94,12 @@ public class GroupDoctorInvitePresenter extends BasePagePresenter implements IGr
     @Override
     public void onInviteDoctorSuccess(GroupDoctorUpdateMemberEntity.RetValuesEntity valuesEntity) {
         mListener.hideLoading();
-        mListener.inviteDoctorSuccess(valuesEntity.getDoctorGroupId());
+        mListener.inviteDoctorSuccess(valuesEntity.getOwnerId());
     }
 
     public interface GroupInvitePresenterListener extends BasePagePresenterListener {
         void showDoctorList(List<GroupDoctorBean> doctorBeanList);
 
-        void inviteDoctorSuccess(String newDoctorGroupId);
+        void inviteDoctorSuccess(String ownerId);
     }
 }

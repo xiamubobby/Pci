@@ -9,16 +9,11 @@ import java.util.List;
 public class GroupUpdateMemberBody {
 
     /**
-     * name : id为6的诊所
-     * description : id为6的诊所阿萨德发生的发生的
-     * doctors : [{"id":6,"imId":"doctor122131231"},{"id":7,"imId":"doctor122131231"}]
-     */
-    private String id;
-    /**
      * id : 6
      * imId : doctor122131231
      */
 
+    private Owner owner;
     private List<DoctorsEntity> doctors;
 
     public List<DoctorsEntity> getDoctors() {
@@ -29,13 +24,14 @@ public class GroupUpdateMemberBody {
         this.doctors = doctors;
     }
 
-    public String getId() {
-        return id;
+    public Owner getOwner() {
+        return owner;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
+
 
     public static class DoctorsEntity {
         private String id;
@@ -64,6 +60,18 @@ public class GroupUpdateMemberBody {
 
         public void setName(String name) {
             this.name = name;
+        }
+    }
+
+    public static class Owner{
+        private String id;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
         }
     }
 }

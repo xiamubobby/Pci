@@ -14,7 +14,7 @@ public class AllDoctorItemBean extends BaseObservable {
     public final static long HEADER_ID_IN_SERVICE = 0;
     public final static long HEADER_ID_OUT_OF_SERVICE = 1;
 
-    private String groupId;
+    private String ownerId;
     /**
      * 是否为个人医生
      */
@@ -154,14 +154,6 @@ public class AllDoctorItemBean extends BaseObservable {
         notifyPropertyChanged(BR.personal);
     }
 
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
-
     @Bindable
     public String getTagColor() {
         return tagColor;
@@ -170,5 +162,13 @@ public class AllDoctorItemBean extends BaseObservable {
     public void setTagColor(String tagColor) {
         this.tagColor = tagColor;
         notifyPropertyChanged(BR.tagColor);
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 }

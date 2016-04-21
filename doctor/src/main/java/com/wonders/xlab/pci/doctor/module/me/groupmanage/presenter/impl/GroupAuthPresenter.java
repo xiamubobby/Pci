@@ -36,15 +36,15 @@ public class GroupAuthPresenter extends BasePresenter implements IGroupAuthPrese
     }
 
     @Override
-    public void getGroupMemberList(String doctorId,String groupId) {
+    public void getGroupMemberList(String doctorId,String ownerId) {
         mListener.showLoading("");
-        mAuthMemberModel.getAuthMemberList(doctorId,groupId);
+        mAuthMemberModel.getAuthMemberList(doctorId, ownerId);
     }
 
     @Override
-    public void authorize(String doctorId, String doctorGroupId, GroupAuthorizeBody body) {
+    public void authorize(String doctorId, String ownerId, GroupAuthorizeBody body) {
         mListener.startAuthorizing("正在授权，请稍候...");
-        mAuthorizeModel.authorize(doctorId,doctorGroupId,body);
+        mAuthorizeModel.authorize(doctorId, ownerId,body);
     }
 
     @Override

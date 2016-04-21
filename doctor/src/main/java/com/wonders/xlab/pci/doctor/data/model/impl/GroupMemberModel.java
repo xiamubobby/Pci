@@ -32,8 +32,8 @@ public class GroupMemberModel extends DoctorBaseModel<GroupMembersEntity> implem
     }
 
     @Override
-    public void getMemberList(String doctorId, String doctorGroupId) {
-        request(mAPI.getMemberList(doctorId, doctorGroupId),true);
+    public void getMemberList(String doctorId, String ownerId) {
+        request(mAPI.getMemberList(doctorId, ownerId),true);
     }
 
     public interface GroupMemberModelListener extends BaseModelListener {

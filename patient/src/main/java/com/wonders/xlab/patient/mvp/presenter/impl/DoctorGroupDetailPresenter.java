@@ -39,8 +39,8 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
     }
 
     @Override
-    public void fetchDoctorGroupDetailInfo(String patientId,String doctorGroupId) {
-        mDoctorDetailModel.getDoctorGroupDetailInfo(patientId,doctorGroupId);
+    public void fetchDoctorGroupDetailInfo(String patientId,String ownerId) {
+        mDoctorDetailModel.getDoctorGroupDetailInfo(patientId, ownerId);
     }
 
     @Override

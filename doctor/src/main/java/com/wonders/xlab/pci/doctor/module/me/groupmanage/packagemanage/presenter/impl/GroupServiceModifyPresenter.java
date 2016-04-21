@@ -33,8 +33,8 @@ public class GroupServiceModifyPresenter extends BasePresenter implements IGroup
     }
 
     @Override
-    public void getServicePackageInfo(String doctorGroupId, String servicePackageId) {
-        mPackageDetailModel.getPackageDetail(doctorGroupId,servicePackageId);
+    public void getServicePackageInfo(String ownerId, String servicePackageId) {
+        mPackageDetailModel.getPackageDetail(ownerId,servicePackageId);
     }
 
     @Override

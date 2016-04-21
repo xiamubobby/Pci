@@ -43,10 +43,10 @@ import rx.functions.Func1;
 
 public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDoctorInvitePresenter.GroupInvitePresenterListener {
     public final static int RESULT_CODE_SUCCESS = 12345;
-    public final static String EXTRA_RESULT = "result";
+    public final static String EXTRA_RESULT_OWNER_ID = "ownerId";
 
-    public final static String EXTRA_GROUP_ID = "groupId";
-    private String mGroupId;
+    public final static String EXTRA_OWNER_ID = "ownerId";
+    private String mOwnerId;
 
     @Bind(R.id.recycler_view_group_invite)
     CommonRecyclerView mRecyclerView;
@@ -73,7 +73,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
         ButterKnife.bind(this);
         Intent intent = getIntent();
         if (intent != null) {
-            mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
+            mOwnerId = intent.getStringExtra(EXTRA_OWNER_ID);
         }
 
         RxTextView.afterTextChangeEvents(mEtSearch)
@@ -91,7 +91,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
                     public void call(TextViewAfterTextChangeEvent textViewAfterTextChangeEvent) {
                         String s = textViewAfterTextChangeEvent.editable().toString();
                         mRecyclerView.setRefreshing(true);
-                        mGroupInvitePresenter.searchByNameOrTel(AIManager.getInstance().getDoctorId(), mGroupId, s);
+                        mGroupInvitePresenter.searchByNameOrTel(AIManager.getInstance().getDoctorId(), mOwnerId, s);
                     }
                 });
 
@@ -157,9 +157,9 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
     }
 
     @Override
-    public void inviteDoctorSuccess(String newDoctorGroupId) {
+    public void inviteDoctorSuccess(String ownerId) {
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_RESULT, newDoctorGroupId);
+        intent.putExtra(EXTRA_RESULT_OWNER_ID, ownerId);
         setResult(RESULT_CODE_SUCCESS, intent);
         finish();
     }
@@ -233,7 +233,9 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
                             public void onCompleted() {
                                 GroupUpdateMemberBody body = new GroupUpdateMemberBody();
                                 body.setDoctors(mDoctorsEntityList);
-                                body.setId(mGroupId);
+                                GroupUpdateMemberBody.Owner owner = new GroupUpdateMemberBody.Owner();
+                                owner.setId(mOwnerId);
+                                body.setOwner(owner);
                                 showProgressDialog("","正在发送邀请，请稍候...", null);
                                 mGroupInvitePresenter.inviteDoctors(AIManager.getInstance().getDoctorId(), body);
                             }

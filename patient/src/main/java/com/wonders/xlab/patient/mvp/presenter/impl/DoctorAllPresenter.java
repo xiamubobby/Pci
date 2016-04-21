@@ -46,7 +46,7 @@ public class DoctorAllPresenter extends BasePagePresenter implements IDoctorAllP
             itemBean.setDoctorGroupName(entity.getGroupName());
             itemBean.setTagStr(entity.getOrderStatus());
             itemBean.setTagColor(entity.getStatusColor());
-            itemBean.setGroupId(entity.getDoctorGroupId());
+            itemBean.setOwnerId(entity.getOwnerId());
 
             itemBean.setAdminName(entity.getOwnerName());
             itemBean.setTitle(entity.getJobTitle());

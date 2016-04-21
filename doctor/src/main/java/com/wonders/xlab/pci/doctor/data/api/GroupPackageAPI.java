@@ -17,11 +17,11 @@ import rx.Observable;
  */
 public interface GroupPackageAPI {
 
-    @GET("v1/servicePackages/listServicePackages/{doctorGroupId}")
-    Observable<Response<GroupPackageListEntity>> getPackageList(@Path("doctorGroupId") String doctorGroupId);
+    @GET("v1/servicePackages/listServicePackages/{ownerId}")
+    Observable<Response<GroupPackageListEntity>> getPackageList(@Path("ownerId") String ownerId);
 
-    @GET("v1/servicePackages/retrieveServicePackage/{doctorGroupId}/{servicePackageId}")
-    Observable<Response<GroupPackageDetailEntity>> getPackageDetail(@Path("doctorGroupId") String doctorGroupId, @Path("servicePackageId") String servicePackageId);
+    @GET("v1/servicePackages/retrieveServicePackage/{ownerId}/{servicePackageId}")
+    Observable<Response<GroupPackageDetailEntity>> getPackageDetail(@Path("ownerId") String ownerId, @Path("servicePackageId") String servicePackageId);
 
     @POST("v1/packages/publishDoctorPackage")
     Observable<Response<GroupPackageCreateEntity>> publishDoctorPackage(@Body GroupPackagePublishBody body);

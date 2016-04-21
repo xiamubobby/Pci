@@ -29,9 +29,9 @@ public class GroupServicesPresenter extends BasePresenter implements IGroupServi
     }
 
     @Override
-    public void getPackages(String groupId) {
+    public void getPackages(String ownerId) {
         mListener.showLoading("");
-        mGroupPackageListModel.getPackageList(groupId);
+        mGroupPackageListModel.getPackageList(ownerId);
     }
 
     @Override

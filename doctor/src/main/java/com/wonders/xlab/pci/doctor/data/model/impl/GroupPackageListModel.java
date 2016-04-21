@@ -34,8 +34,8 @@ public class GroupPackageListModel extends DoctorBaseModel<GroupPackageListEntit
     }
 
     @Override
-    public void getPackageList(String doctorGroupId) {
-        request(mPackageAPI.getPackageList(TextUtils.isEmpty(doctorGroupId) ? "0" : doctorGroupId), true);
+    public void getPackageList(String ownerId) {
+        request(mPackageAPI.getPackageList(TextUtils.isEmpty(ownerId) ? "0" : ownerId), true);
     }
 
     public interface GroupPackageListModelListener extends BaseModelListener {

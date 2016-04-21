@@ -32,8 +32,8 @@ public class GroupDoctorSearchModel extends DoctorBaseModel<GroupDoctorSaveEntit
     }
 
     @Override
-    public void searchDoctorByTelOrName(String doctorId, String doctorGroupId, String tel, String name) {
-        request(mAPI.searchDoctorByTelOrName(doctorId,doctorGroupId, tel, name), true);
+    public void searchDoctorByTelOrName(String doctorId, String ownerId, String tel, String name) {
+        request(mAPI.searchDoctorByTelOrName(doctorId, ownerId, tel, name), true);
     }
 
     public interface GroupDoctorSearchModelListener extends BaseModelListener {

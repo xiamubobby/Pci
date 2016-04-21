@@ -180,7 +180,7 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
         switch (item.getItemId()) {
             case R.id.menu_add:
                 if (!mIsCheckingFinish) {
-                    showShortToast("正在校验权限，请稍候！");
+                    showShortToast("等待校验权限...");
                     break;
                 }
                 if (mCanCreate) {

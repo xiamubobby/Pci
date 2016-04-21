@@ -65,7 +65,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     public final static String EXTRA_ID = "extraId";
 
     private String title;
-    private String doctorOrGroupId;
+    private String doctorOrOwnerId;
     private int type;
 
     @Bind(R.id.toolbar)
@@ -103,9 +103,9 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
 
         title = data.getString(EXTRA_TITLE);
         type = data.getInt(EXTRA_TYPE, TYPE_DOCTOR_GROUP);
-        doctorOrGroupId = data.getString(EXTRA_ID);
+        doctorOrOwnerId = data.getString(EXTRA_ID);
 
-        if (TextUtils.isEmpty(doctorOrGroupId)) {
+        if (TextUtils.isEmpty(doctorOrOwnerId)) {
             Toast.makeText(this, "获取医生详情失败，请重试！", Toast.LENGTH_SHORT).show();
             finish();
             return;
@@ -161,10 +161,10 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     private void requestData() {
         switch (type) {
             case TYPE_DOCTOR:
-                mDoctorDetailPresenter.fetchDoctorDetailInfo(AIManager.getInstance().getPatientId(), doctorOrGroupId);
+                mDoctorDetailPresenter.fetchDoctorDetailInfo(AIManager.getInstance().getPatientId(), doctorOrOwnerId);
                 break;
             case TYPE_DOCTOR_GROUP:
-                mDoctorGroupDetailPresenter.fetchDoctorGroupDetailInfo(AIManager.getInstance().getPatientId(), doctorOrGroupId);
+                mDoctorGroupDetailPresenter.fetchDoctorGroupDetailInfo(AIManager.getInstance().getPatientId(), doctorOrOwnerId);
                 break;
         }
     }
@@ -215,6 +215,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
                             if (status == DoctorDetailPackageBean.STATUS_IN_SERVICE) {
                                 showShortToast("您已购买本套餐");
                             } else {
+                                showProgressDialog("","正在购买，请稍候...",null);
                                 switch (type) {
                                     case TYPE_DOCTOR:
                                         mDoctorDetailPresenter.orderPackage(AIManager.getInstance().getPatientId(), packageList.get(position).packageId.get());
@@ -310,6 +311,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     @Override
     public void orderPackageSuccess(String message) {
         showShortToast(message);
+        dismissProgressDialog();
         requestData();
         dialog.dismiss();
         OttoManager.post(new BuyPackageSuccessOtto());

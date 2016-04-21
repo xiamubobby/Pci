@@ -30,8 +30,8 @@ public class DoctorGroupDetailModel extends PatientBaseModel<DoctorGroupDetailEn
     }
 
     @Override
-    public void getDoctorGroupDetailInfo(String patientId,String doctorGroupId) {
-        request(mDoctorAPI.getDoctorGroupDetailInfo(patientId,doctorGroupId), true);
+    public void getDoctorGroupDetailInfo(String patientId,String ownerId) {
+        request(mDoctorAPI.getDoctorGroupDetailInfo(patientId, ownerId), true);
     }
 
     public interface DoctorGroupDetailModelListener extends BaseModelListener {

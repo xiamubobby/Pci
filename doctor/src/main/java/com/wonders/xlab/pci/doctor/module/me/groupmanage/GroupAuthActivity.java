@@ -28,8 +28,8 @@ import rx.functions.Func1;
 
 public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresenter.GroupAuthPresenterListener {
     public final static int RESULT_CODE_SUCCESS = 12345;
-    public final static String EXTRA_GROUP_ID = "groupId";
-    private String mGroupId;
+    public final static String EXTRA_OWNER_ID = "ownerId";
+    private String mOwnerId;
     private String mDoctorId;
 
     @Bind(R.id.recycler_view_group_auth)
@@ -54,8 +54,8 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
             finish();
             return;
         }
-        mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
-        if (TextUtils.isEmpty(mGroupId)) {
+        mOwnerId = intent.getStringExtra(EXTRA_OWNER_ID);
+        if (TextUtils.isEmpty(mOwnerId)) {
             showShortToast("获取成员失败，请重试！");
             finish();
             return;
@@ -65,13 +65,13 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mGroupAuthPresenter.getGroupMemberList(mDoctorId, mGroupId);
+                mGroupAuthPresenter.getGroupMemberList(mDoctorId, mOwnerId);
             }
         });
         mGroupAuthPresenter = new GroupAuthPresenter(this);
         addPresenter(mGroupAuthPresenter);
 
-        mGroupAuthPresenter.getGroupMemberList(mDoctorId, mGroupId);
+        mGroupAuthPresenter.getGroupMemberList(mDoctorId, mOwnerId);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
         mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
             @Override
             public void onClick() {
-                mGroupAuthPresenter.getGroupMemberList(mDoctorId, mGroupId);
+                mGroupAuthPresenter.getGroupMemberList(mDoctorId, mOwnerId);
             }
         });
     }
@@ -117,7 +117,7 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
         mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
             @Override
             public void onClick() {
-                mGroupAuthPresenter.getGroupMemberList(mDoctorId, mGroupId);
+                mGroupAuthPresenter.getGroupMemberList(mDoctorId, mOwnerId);
             }
         });
     }
@@ -127,7 +127,7 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
         mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
             @Override
             public void onClick() {
-                mGroupAuthPresenter.getGroupMemberList(mDoctorId, mGroupId);
+                mGroupAuthPresenter.getGroupMemberList(mDoctorId, mOwnerId);
             }
         });
     }
@@ -175,7 +175,7 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
                             @Override
                             public void onCompleted() {
                                 body.setDtos(doctors);
-                                mGroupAuthPresenter.authorize(AIManager.getInstance().getDoctorId(), mGroupId, body);
+                                mGroupAuthPresenter.authorize(AIManager.getInstance().getDoctorId(), mOwnerId, body);
                             }
 
                             @Override

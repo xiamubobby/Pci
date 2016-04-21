@@ -41,16 +41,16 @@ public interface GroupManagerAPI {
     Observable<Response<GroupDoctorUpdateMemberEntity>> removeDoctorFromGroup(@Path("doctorId") String doctorId, @Body GroupUpdateMemberBody body);
 
     @GET("v1/doctorGroup/queryDoctorByTelOrName/{doctorId}")
-    Observable<Response<GroupDoctorSaveEntity>> searchDoctorByTelOrName(@Path("doctorId") String doctorId, @Query("doctorGroupId") String doctorGroupId, @Query("tel") String tel, @Query("name") String name);
+    Observable<Response<GroupDoctorSaveEntity>> searchDoctorByTelOrName(@Path("doctorId") String doctorId, @Query("ownerId") String ownerId, @Query("tel") String tel, @Query("name") String name);
 
     /**
      * 可授权医生列表
      *
-     * @param doctorGroupId
+     * @param ownerId
      * @return
      */
-    @GET("v1/doctorGroup/queryGrantDoctor/{doctorId}/{doctorGroupId}")
-    Observable<Response<GroupAuthMembersEntity>> getAuthMemberList(@Path("doctorId") String doctorId, @Path("doctorGroupId") String doctorGroupId);
+    @GET("v1/doctorGroup/queryGrantDoctor/{doctorId}/{ownerId}")
+    Observable<Response<GroupAuthMembersEntity>> getAuthMemberList(@Path("doctorId") String doctorId, @Path("ownerId") String ownerId);
 
     @POST("v1/doctorGroup/grantToDoctor/{doctorGroupId}/{grantDoctorId}")
     Observable<Response<GroupAuthorizeEntity>> doGroupMemberAuthorize(@Path("doctorGroupId") String doctorGroupId, @Path("grantDoctorId") String doctorId, @Body GroupAuthorizeBody body);
@@ -59,10 +59,10 @@ public interface GroupManagerAPI {
      * 小组成员列表，除了自己和创建者
      *
      * @param doctorId
-     * @param doctorGroupId
+     * @param ownerId
      * @return
      */
     @GET("v1/doctorGroup/getGroupMember/{doctorId}")
-    Observable<Response<GroupMembersEntity>> getMemberList(@Path("doctorId") String doctorId, @Query("doctorGroupId") String doctorGroupId);
+    Observable<Response<GroupMembersEntity>> getMemberList(@Path("doctorId") String doctorId, @Query("ownerId") String ownerId);
 
 }

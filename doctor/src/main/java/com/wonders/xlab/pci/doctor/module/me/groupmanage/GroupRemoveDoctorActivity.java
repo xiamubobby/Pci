@@ -28,11 +28,10 @@ import rx.functions.Func1;
 
 public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupDoctorRemovePresenter.GroupRemoveDoctorPresenterListener {
     public final static int RESULT_CODE_SUCCESS = 12345;
-    public final static String EXTRA_RESULT = "result";
 
-    public final static String EXTRA_GROUP_ID = "groupId";
+    public final static String EXTRA_OWNER_ID = "ownerId";
 
-    private String mGroupId;
+    private String mOwnerId;
 
     @Bind(R.id.recycler_view_group_remove_doctor)
     CommonRecyclerView mRecyclerView;
@@ -57,8 +56,8 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupDo
             finish();
             return;
         }
-        mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
-        if (TextUtils.isEmpty(mGroupId)) {
+        mOwnerId = intent.getStringExtra(EXTRA_OWNER_ID);
+        if (TextUtils.isEmpty(mOwnerId)) {
             showShortToast("获取小组成员失败，请重试！");
             finish();
             return;
@@ -68,7 +67,7 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupDo
         mRemoveDoctorPresenter = new GroupDoctorRemovePresenter(this);
         addPresenter(mRemoveDoctorPresenter);
 
-        mRemoveDoctorPresenter.getCurrentMemberList(AIManager.getInstance().getDoctorId(), mGroupId);
+        mRemoveDoctorPresenter.getCurrentMemberList(AIManager.getInstance().getDoctorId(), mOwnerId);
     }
 
     @Override
@@ -81,10 +80,9 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupDo
     }
 
     @Override
-    public void removeSuccess(String newGroupId) {
+    public void removeSuccess() {
         dismissProgressDialog();
         Intent intent = new Intent();
-        intent.putExtra(EXTRA_RESULT, newGroupId);
         setResult(RESULT_CODE_SUCCESS, intent);
         finish();
     }
@@ -99,7 +97,7 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupDo
         mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
             @Override
             public void onClick() {
-                mRemoveDoctorPresenter.getCurrentMemberList(AIManager.getInstance().getDoctorId(), mGroupId);
+                mRemoveDoctorPresenter.getCurrentMemberList(AIManager.getInstance().getDoctorId(), mOwnerId);
             }
         });
     }
@@ -119,7 +117,7 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupDo
         mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
             @Override
             public void onClick() {
-                mRemoveDoctorPresenter.getCurrentMemberList(AIManager.getInstance().getDoctorId(), mGroupId);
+                mRemoveDoctorPresenter.getCurrentMemberList(AIManager.getInstance().getDoctorId(), mOwnerId);
             }
         });
     }
@@ -129,7 +127,7 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupDo
         mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
             @Override
             public void onClick() {
-                mRemoveDoctorPresenter.getCurrentMemberList(AIManager.getInstance().getDoctorId(), mGroupId);
+                mRemoveDoctorPresenter.getCurrentMemberList(AIManager.getInstance().getDoctorId(), mOwnerId);
             }
         });
     }
@@ -178,7 +176,9 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupDo
                             public void onCompleted() {
                                 GroupUpdateMemberBody body = new GroupUpdateMemberBody();
                                 body.setDoctors(mDoctorsEntityList);
-                                body.setId(mGroupId);
+                                GroupUpdateMemberBody.Owner owner = new GroupUpdateMemberBody.Owner();
+                                owner.setId(mOwnerId);
+                                body.setOwner(owner);
                                 showProgressDialog("", "正在移除组员，请稍候...", null);
                                 mRemoveDoctorPresenter.removeMembers(AIManager.getInstance().getDoctorId(), body);
 

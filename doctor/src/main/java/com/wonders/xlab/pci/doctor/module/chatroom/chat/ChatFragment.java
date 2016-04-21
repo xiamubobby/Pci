@@ -18,7 +18,7 @@ import com.wonders.xlab.pci.doctor.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.bean.OthersChatRoomBean;
-import com.wonders.xlab.pci.doctor.module.chatroom.otto.ChatRoomRecordInsertOtto;
+import com.wonders.xlab.pci.doctor.module.chatroom.chat.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.pci.doctor.util.RealmUtil;
 
 import java.util.Calendar;

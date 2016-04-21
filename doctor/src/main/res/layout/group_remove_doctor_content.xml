@@ -6,6 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:emptyView="@layout/common_empty"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    app:networkErrorView="@layout/common_network_error"
+    app:serverErrorView="@layout/common_server_error"
     tools:context="com.wonders.xlab.pci.doctor.module.me.groupmanage.GroupRemoveDoctorActivity"
     tools:showIn="@layout/group_remove_doctor_activity"/>

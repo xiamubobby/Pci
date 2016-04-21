@@ -32,9 +32,9 @@ public class GroupPackageDetailModel extends DoctorBaseModel<GroupPackageDetailE
     }
 
     @Override
-    public void getPackageDetail(String doctorGroupId, String servicePackageId) {
-        doctorGroupId = TextUtils.isEmpty(doctorGroupId) ? "0" : doctorGroupId;
-        request(mPackageAPI.getPackageDetail(doctorGroupId, servicePackageId), true);
+    public void getPackageDetail(String ownerId, String servicePackageId) {
+        ownerId = TextUtils.isEmpty(ownerId) ? "0" : ownerId;
+        request(mPackageAPI.getPackageDetail(ownerId, servicePackageId), true);
     }
 
     public interface GroupPackageDetailModelListener extends BaseModelListener {

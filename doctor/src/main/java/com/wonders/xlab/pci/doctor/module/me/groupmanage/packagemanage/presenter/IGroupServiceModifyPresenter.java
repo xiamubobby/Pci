@@ -8,7 +8,7 @@ import im.hua.library.base.mvp.IBasePresenter;
  * Created by hua on 16/4/10.
  */
 public interface IGroupServiceModifyPresenter extends IBasePresenter {
-    void getServicePackageInfo(String doctorGroupId, String servicePackageId);
+    void getServicePackageInfo(String ownerId, String servicePackageId);
 
     void publishPackage(GroupPackagePublishBody body);
 }

@@ -1,4 +1,4 @@
-package com.wonders.xlab.pci.doctor.module.chatroom.otto;
+package com.wonders.xlab.pci.doctor.module.chatroom.chat.otto;
 
 /**
  * Created by hua on 16/4/4.

@@ -24,6 +24,7 @@ public class GroupDoctorUpdateMemberEntity extends BaseEntity {
 
     public static class RetValuesEntity {
         private String doctorGroupId;
+        private String ownerId;
 
         public String getDoctorGroupId() {
             return doctorGroupId;
@@ -31,6 +32,14 @@ public class GroupDoctorUpdateMemberEntity extends BaseEntity {
 
         public void setDoctorGroupId(String doctorGroupId) {
             this.doctorGroupId = doctorGroupId;
+        }
+
+        public String getOwnerId() {
+            return ownerId;
+        }
+
+        public void setOwnerId(String ownerId) {
+            this.ownerId = ownerId;
         }
     }
 }

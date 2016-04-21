@@ -35,9 +35,9 @@ public class GroupDoctorRemovePresenter extends BasePagePresenter implements IGr
     }
 
     @Override
-    public void getCurrentMemberList(String doctorId, String groupId) {
+    public void getCurrentMemberList(String doctorId, String ownerId) {
         mListener.showLoading("");
-        mMemberModel.getMemberList(doctorId, groupId);
+        mMemberModel.getMemberList(doctorId, ownerId);
     }
 
     @Override
@@ -93,12 +93,12 @@ public class GroupDoctorRemovePresenter extends BasePagePresenter implements IGr
     @Override
     public void onRemoveDoctorsSuccess(GroupDoctorUpdateMemberEntity.RetValuesEntity valuesEntity) {
         mListener.hideLoading();
-        mListener.removeSuccess(valuesEntity.getDoctorGroupId());
+        mListener.removeSuccess();
     }
 
     public interface GroupRemoveDoctorPresenterListener extends BasePagePresenterListener {
         void showMemberList(List<GroupDoctorBean> doctorBeanList);
 
-        void removeSuccess(String newGroupId);
+        void removeSuccess();
     }
 }

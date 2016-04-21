@@ -39,7 +39,7 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
     public final static int RESULT_CODE_SUCCESS = 12345;
 
     public final static String EXTRA_SERVICE_PACKAGE_ID = "servicePackageId";
-    public final static String EXTRA_GROUP_ID = "groupId";
+    public final static String EXTRA_OWNER_ID = "ownerId";
     public final static String EXTRA_PUBLISHED = "published";
     public final static String EXTRA_IS_ADMIN = "isAdmin";
 
@@ -51,7 +51,7 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
     CardView mCardViewBottom;
 
     private String mServicePackageId;//模板id
-    private String mGroupId;
+    private String mOwnerId;
     private boolean mPublished;
     private boolean mIsAdmin;
 
@@ -91,7 +91,7 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
             return;
         }
         mServicePackageId = intent.getStringExtra(EXTRA_SERVICE_PACKAGE_ID);
-        mGroupId = intent.getStringExtra(EXTRA_GROUP_ID);
+        mOwnerId = intent.getStringExtra(EXTRA_OWNER_ID);
         mPublished = intent.getBooleanExtra(EXTRA_PUBLISHED, false);
         mIsAdmin = intent.getBooleanExtra(EXTRA_IS_ADMIN, false);
 
@@ -122,7 +122,7 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
 
         mPresenter = new GroupServiceModifyPresenter(this);
         addPresenter(mPresenter);
-        mPresenter.getServicePackageInfo(mGroupId, mServicePackageId);
+        mPresenter.getServicePackageInfo(mOwnerId, mServicePackageId);
     }
 
     private void initCustomValueAlertDialog() {
@@ -228,7 +228,7 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
         }
         GroupPackagePublishBody body = new GroupPackagePublishBody();
         body.setDoctorId(AIManager.getInstance().getDoctorId());
-        body.setDoctorGroupId(mGroupId);
+        body.setOwnerId(mOwnerId);
         body.setDoctorPackageId(mDoctorPackageId);
         body.setPublishType(isPublish ? "Publish" : "Unpublish");
         body.setServicePackageId(mServicePackageId);

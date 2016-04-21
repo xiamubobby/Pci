@@ -15,7 +15,7 @@ import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.chatroom.ChatRoomActivity;
-import com.wonders.xlab.pci.doctor.module.chatroom.otto.ChatRoomRecordInsertOtto;
+import com.wonders.xlab.pci.doctor.module.chatroom.chat.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.pci.doctor.otto.ForceExitOtto;
 import com.wonders.xlab.pci.doctor.realm.NotifiGroupInviteRealm;
 import com.wonders.xlab.pci.doctor.realm.NotifiOthersRealm;
@@ -79,6 +79,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 OttoManager.post(new ForceExitOtto());
                 break;
             case 3:
+                //聊天信息
                 String groupId = message.getStringAttribute("groupId", "");
                 String groupName = message.getStringAttribute("groupName", "");
                 String imGroupId = message.getStringAttribute("imGroupId", "");

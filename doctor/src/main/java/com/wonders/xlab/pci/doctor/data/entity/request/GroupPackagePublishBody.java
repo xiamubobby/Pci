@@ -8,7 +8,7 @@ public class GroupPackagePublishBody {
     /**
      * doctorPackageId : 1
      * publishType : Publish
-     * doctorGroupId : 1
+     * ownerId : 1
      * servicePackageId : 1
      * numberValue : 200
      */
@@ -16,7 +16,7 @@ public class GroupPackagePublishBody {
     private String doctorId;
     private String doctorPackageId;
     private String publishType;
-    private String doctorGroupId;
+    private String ownerId;
     private String servicePackageId;
     private int numberValue;
 
@@ -36,12 +36,12 @@ public class GroupPackagePublishBody {
         this.publishType = publishType;
     }
 
-    public String getDoctorGroupId() {
-        return doctorGroupId;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public void setDoctorGroupId(String doctorGroupId) {
-        this.doctorGroupId = doctorGroupId;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getServicePackageId() {
