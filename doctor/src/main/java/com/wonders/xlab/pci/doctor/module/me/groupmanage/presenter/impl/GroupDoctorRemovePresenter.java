@@ -55,6 +55,7 @@ public class GroupDoctorRemovePresenter extends BasePagePresenter implements IGr
                     public Observable<GroupDoctorBean> call(GroupMembersEntity.RetValuesEntity retValuesEntity) {
                         GroupDoctorBean bean = new GroupDoctorBean();
                         bean.doctorId.set(retValuesEntity.getId());
+                        bean.doctorImId.set(retValuesEntity.getImId());
                         bean.doctorName.set(retValuesEntity.getName());
                         bean.doctorAvatarUrl.set(retValuesEntity.getAvatarUrl());
                         bean.doctorHospital.set(retValuesEntity.getHospital().getName());

@@ -7,23 +7,30 @@ import io.realm.RealmObject;
  */
 public class UnReadMessageRealm extends RealmObject {
     private String imGroupId;
-    private String groupId;
-    private int type;
+    private String ownerId;
+    /**
+     * 3：聊天
+     * 5：血压异常
+     * 6、血糖异常
+     * 7、上传就诊记录图片
+     * 8、保存了不适症状
+     */
+    private int type = 3;
 
     public UnReadMessageRealm() {
     }
 
-    public UnReadMessageRealm(String groupId, String imGroupId) {
-        this.groupId = groupId;
+    public UnReadMessageRealm(String ownerId, String imGroupId) {
+        this.ownerId = ownerId;
         this.imGroupId = imGroupId;
     }
 
-    public String getGroupId() {
-        return groupId;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getImGroupId() {

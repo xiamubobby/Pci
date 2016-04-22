@@ -40,7 +40,7 @@ public class PatientEntity extends BaseEntity {
         private String tel;
         private String gender;
         private String lastOperationTime;
-        private String doctorGroupId;
+        private String ownerId;
         private String groupName;
         private String imGroupId;
 
@@ -70,10 +70,6 @@ public class PatientEntity extends BaseEntity {
 
         public void setLastOperationTime(String lastOperationTime) {
             this.lastOperationTime = lastOperationTime;
-        }
-
-        public void setDoctorGroupId(String doctorGroupId) {
-            this.doctorGroupId = doctorGroupId;
         }
 
         public void setGroupName(String groupName) {
@@ -108,10 +104,6 @@ public class PatientEntity extends BaseEntity {
             return lastOperationTime;
         }
 
-        public String getDoctorGroupId() {
-            return doctorGroupId;
-        }
-
         public String getGroupName() {
             return groupName;
         }
@@ -130,6 +122,14 @@ public class PatientEntity extends BaseEntity {
 
         public void setImGroupId(String imGroupId) {
             this.imGroupId = imGroupId;
+        }
+
+        public String getOwnerId() {
+            return ownerId;
+        }
+
+        public void setOwnerId(String ownerId) {
+            this.ownerId = ownerId;
         }
     }
 }

@@ -42,13 +42,13 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
     /**
      * 患者和医生所在聊天组的id
      */
-    public final static String ARG_GROUP_ID = "GROUP_ID";
-    public final static String ARG_IM_GROUP_ID = "IM_GROUP_ID";
-    public final static String ARG_GROUP_NAME = "GROUP_NAME";
+    public final static String ARG_OWNER_ID = "ownerId";
+    public final static String ARG_IM_GROUP_ID = "imGroupId";
+    public final static String ARG_GROUP_NAME = "groupName";
 
     private String patientId;
     private String imGroupId;
-    private String groupId;
+    private String ownerId;
     private String groupName;
     private String patientName;
     private String patientTel;
@@ -68,9 +68,9 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
         // Required empty public constructor
     }
 
-    public static ChatFragment newInstance(String patientId, String patientName, String patientTel, String groupId, String imGroupId, String groupName) {
+    public static ChatFragment newInstance(String patientId, String patientName, String patientTel, String ownerId, String imGroupId, String groupName) {
         Bundle data = new Bundle();
-        data.putString(ARG_GROUP_ID, groupId);
+        data.putString(ARG_OWNER_ID, ownerId);
         data.putString(ARG_GROUP_NAME, groupName);
         data.putString(ARG_IM_GROUP_ID, imGroupId);
         data.putString(ARG_PATIENT_ID, patientId);
@@ -86,7 +86,7 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle data = getArguments();
-        groupId = data.getString(ARG_GROUP_ID);
+        ownerId = data.getString(ARG_OWNER_ID);
         groupName = data.getString(ARG_GROUP_NAME);
         imGroupId = data.getString(ARG_IM_GROUP_ID);
         patientId = data.getString(ARG_PATIENT_ID);
@@ -108,7 +108,7 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
         super.onViewCreated(view, savedInstanceState);
         OttoManager.register(this);
         //cancel notification
-        new NotifyUtil().cancel(getActivity(), Integer.parseInt(groupId));
+        new NotifyUtil().cancel(getActivity(), (int) Long.parseLong(imGroupId));
 
         mRecyclerView.setRefreshEnable(false);
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
@@ -166,7 +166,7 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
 
             mEtChatRoomInput.setText("");
 
-            mChatRoomPresenter.sendMessage(message, AIManager.getInstance().getDoctorTel(), groupId, groupName, imGroupId, patientId, patientName, patientTel, sendTime, AIManager.getInstance().getDoctorPortraitUrl(), AIManager.getInstance().getDoctorName());
+            mChatRoomPresenter.sendMessage(message, AIManager.getInstance().getDoctorTel(), ownerId, groupName, imGroupId, patientId, patientName, patientTel, sendTime, AIManager.getInstance().getDoctorPortraitUrl(), AIManager.getInstance().getDoctorName());
         }
     }
 

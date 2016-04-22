@@ -123,27 +123,42 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
 
     @Override
     public void showEmptyView(String message) {
-        mRecyclerView.showEmptyView(null);
+        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+                mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
+            }
+        });
     }
 
     @Override
     public void showErrorToast(String message) {
-
-    }
-
-    @Override
-    public void showLoading(String message) {
-
-    }
-
-    @Override
-    public void showNetworkError(String message) {
         showShortToast(message);
     }
 
     @Override
-    public void showServerError(String message) {
+    public void showLoading(String message) {
+        mRecyclerView.setRefreshing(true);
+    }
 
+    @Override
+    public void showNetworkError(String message) {
+        mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
+            }
+        });
+    }
+
+    @Override
+    public void showServerError(String message) {
+        mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
+            }
+        });
     }
 
     @Override
@@ -151,13 +166,14 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
         if (null == mRecyclerView) {
             return;
         }
-        mRecyclerView.hideRefreshOrLoadMore(true,true);
+        mRecyclerView.hideRefreshOrLoadMore(true, true);
     }
 
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_doctors_all));
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_doctors_all));

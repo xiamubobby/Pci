@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.doctor.application.XApplication;
+import com.wonders.xlab.pci.doctor.module.me.notification.adapter.bean.NotifiOthersBean;
 import com.wonders.xlab.pci.doctor.module.me.notification.otto.NotifiGroupInviteOtto;
 import com.wonders.xlab.pci.doctor.module.me.notification.otto.NotifiOthersOtto;
 import com.wonders.xlab.pci.doctor.module.otto.MainBottomUnreadNotifyCountOtto;
@@ -138,9 +139,15 @@ public class RealmUtil {
         return realmList;
     }
 
-    public static void delectAllNotifiOthers() {
+    public static void deleteSelectedOthersNotification(@NonNull List<NotifiOthersBean> notifiOthersBeanList) {
         synchronized (objectNotifiOthersNotifi) {
             XApplication.realm.beginTransaction();
+            for (NotifiOthersBean bean : notifiOthersBeanList) {
+                RealmResults<NotifiOthersRealm> realmResults = XApplication.realm.where(NotifiOthersRealm.class)
+                        .equalTo("receiveTimeInMill", bean.recordTimeInMill.get())
+                        .findAll();
+                realmResults.clear();
+            }
             XApplication.realm.clear(NotifiOthersRealm.class);
             XApplication.realm.commitTransaction();
         }

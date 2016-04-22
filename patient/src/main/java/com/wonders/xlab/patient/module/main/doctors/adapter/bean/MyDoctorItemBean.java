@@ -19,6 +19,7 @@ public class MyDoctorItemBean extends BaseObservable{
      * 医生小组id
      */
     private String groupId;
+    private String ownerId;
     /**
      * 环信id
      */
@@ -101,5 +102,13 @@ public class MyDoctorItemBean extends BaseObservable{
 
     public void setImGroupId(String imGroupId) {
         this.imGroupId = imGroupId;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 }

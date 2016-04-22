@@ -1,8 +1,8 @@
 package com.wonders.xlab.pci.doctor.data.presenter.impl;
 
-import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
 import com.wonders.xlab.pci.doctor.data.entity.PatientEntity;
 import com.wonders.xlab.pci.doctor.data.model.impl.PatientModel;
+import com.wonders.xlab.pci.doctor.module.patient.bean.PatientBean;
 
 import java.util.ArrayList;
 
@@ -35,7 +35,7 @@ public class PatientPresenter extends BasePresenter implements PatientModel.Pati
         mListener.hideLoading();
         ArrayList<PatientBean> patientBeen = new ArrayList<>();
         if (null == entity.getRet_values()) {
-            mListener.showEmptyView("数据为空，请重试！");
+            mListener.showEmptyView(entity.getMessage());
             return;
         }
         for (int i = 0; i < entity.getRet_values().size(); i++) {
@@ -50,15 +50,13 @@ public class PatientPresenter extends BasePresenter implements PatientModel.Pati
             bean.setPatientName(valuesEntity.getName());
             bean.setTimeAfterSurgery(valuesEntity.getLastOperationTime());
             bean.setGroupName(valuesEntity.getGroupName());
-            bean.setGroupId(valuesEntity.getDoctorGroupId());
+            bean.setOwnerId(valuesEntity.getOwnerId());
             bean.setImGroupId(valuesEntity.getImGroupId());
             bean.setPhoneNumber(valuesEntity.getTel());
 
             patientBeen.add(bean);
         }
-
         mListener.showPatientList(patientBeen);
-
     }
 
     @Override

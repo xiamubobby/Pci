@@ -9,15 +9,7 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="false"
         android:src="@drawable/pic_tips_timeout_retry"/>
 
-    <Button
-        android:id="@+id/btn_common_network_error_retry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/item_interval_middle"
-        android:background="@drawable/shape_rectangle_primary_solid_corner"
-        android:text="点击重试"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_middle"/>
 </LinearLayout>

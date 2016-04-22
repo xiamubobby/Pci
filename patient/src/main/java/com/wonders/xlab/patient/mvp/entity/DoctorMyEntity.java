@@ -98,20 +98,12 @@ public class DoctorMyEntity extends BaseEntity {
             }
 
             public static class ContentEntity {
-                private String doctorGroupId;
+                private String ownerId;
                 private String imGroupId;
                 private String name;
                 private String content;
                 private String timeExp;
                 private List<String> avatars;
-
-                public String getDoctorGroupId() {
-                    return doctorGroupId;
-                }
-
-                public void setDoctorGroupId(String doctorGroupId) {
-                    this.doctorGroupId = doctorGroupId;
-                }
 
                 public String getImGroupId() {
                     return imGroupId;
@@ -152,24 +144,24 @@ public class DoctorMyEntity extends BaseEntity {
                 public void setAvatars(List<String> avatars) {
                     this.avatars = avatars;
                 }
+
+                public String getOwnerId() {
+                    return ownerId;
+                }
+
+                public void setOwnerId(String ownerId) {
+                    this.ownerId = ownerId;
+                }
             }
         }
 
         public static class ServiceTrueEntity {
-            private String doctorGroupId;
             private String imGroupId;
+            private String ownerId;
             private String name;
             private String content;
             private String timeExp;
             private List<String> avatars;
-
-            public String getDoctorGroupId() {
-                return doctorGroupId;
-            }
-
-            public void setDoctorGroupId(String doctorGroupId) {
-                this.doctorGroupId = doctorGroupId;
-            }
 
             public String getImGroupId() {
                 return imGroupId;
@@ -209,6 +201,14 @@ public class DoctorMyEntity extends BaseEntity {
 
             public void setAvatars(List<String> avatars) {
                 this.avatars = avatars;
+            }
+
+            public String getOwnerId() {
+                return ownerId;
+            }
+
+            public void setOwnerId(String ownerId) {
+                this.ownerId = ownerId;
             }
         }
     }

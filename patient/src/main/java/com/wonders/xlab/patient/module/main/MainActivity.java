@@ -23,6 +23,7 @@ import com.wonders.xlab.patient.module.main.me.MeFragment;
 import com.wonders.xlab.patient.module.main.otto.MainBottomUnreadNotifyCountOtto;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.otto.MeNotifyCountOtto;
+import com.wonders.xlab.patient.service.XEMChatService;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class MainActivity extends BaseActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-//                startService(new Intent(MainActivity.this, XEMChatService.class));
+                startService(new Intent(MainActivity.this, XEMChatService.class));
             }
         }).start();
     }

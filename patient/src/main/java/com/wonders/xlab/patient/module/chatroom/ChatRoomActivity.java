@@ -3,8 +3,6 @@ package com.wonders.xlab.patient.module.chatroom;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -46,10 +44,8 @@ import im.hua.utils.NotifyUtil;
  */
 public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresenter.ChatRoomPresenterListener {
     public final static String EXTRA_GROUP_NAME = "groupName";
-    /**
-     * 患者和医生所在聊天组的id(不是环信id)
-     */
-    public final static String EXTRA_GROUP_ID = "groupId";
+
+    public final static String EXTRA_OWNER_ID = "ownerId";
     public final static String EXTRA_IM_GROUP_ID = "imGroupId";
 
     /**
@@ -57,7 +53,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
      */
     public final static String EXTRA_CAN_CHAT = "canChat";
 
-    private String groupId;
+    private String ownerId;
     private String imGroupId;
     private String groupName;
     private boolean canChat;
@@ -107,9 +103,9 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             finish();
             return;
         }
-        groupId = intent.getStringExtra(EXTRA_GROUP_ID);
+        ownerId = intent.getStringExtra(EXTRA_OWNER_ID);
         imGroupId = intent.getStringExtra(EXTRA_IM_GROUP_ID);
-        if (TextUtils.isEmpty(groupId) || TextUtils.isEmpty(imGroupId)) {
+        if (TextUtils.isEmpty(ownerId) || TextUtils.isEmpty(imGroupId)) {
             showShortToast(getResources().getString(R.string.query_patient_info_failed));
             finish();
             return;
@@ -118,7 +114,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         canChat = intent.getBooleanExtra(EXTRA_CAN_CHAT, false);
 
         //如果有的话，移除通知栏对应的通知，以groupId为通知id
-        new NotifyUtil().cancel(this, Integer.parseInt(groupId));
+        new NotifyUtil().cancel(this, (int) Long.parseLong(imGroupId));
         UnReadMessageUtil.readMessage(imGroupId);
 
         initServiceStatus(canChat);
@@ -152,7 +148,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         mChatRoomPresenter.getChatList(imGroupId, true);
     }
 
-    @Override
+  /*  @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_chat_room, menu);
         return true;
@@ -166,13 +162,13 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     private void goToDoctorDetailActivity() {
-        if (!TextUtils.isEmpty(groupName) && !TextUtils.isEmpty(groupId)) {
+        if (!TextUtils.isEmpty(groupName) && !TextUtils.isEmpty(ownerId)) {
             Intent intent = new Intent(ChatRoomActivity.this, DoctorDetailActivity.class);
             intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, groupName);
-            intent.putExtra(DoctorDetailActivity.EXTRA_ID, groupId);
+            intent.putExtra(DoctorDetailActivity.EXTRA_ID, ownerId);
             startActivity(intent);
         } else {
             showShortToast("请重新进入聊天");
@@ -222,7 +218,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             Map<String, Object> ext = new HashMap<>();
             ext.put("type", 3);//3:表示聊天信息
             ext.put("imGroupId", imGroupId);
-            ext.put("groupId", groupId);
+            ext.put("ownerId", ownerId);
             ext.put("groupName", groupName);
             ext.put("txtContent", message);
             ext.put("patientId", AIManager.getInstance().getPatientId());

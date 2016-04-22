@@ -24,7 +24,9 @@ import com.wonders.xlab.pci.doctor.module.me.notification.adapter.bean.NotifiOth
 import com.wonders.xlab.pci.doctor.module.me.notification.otto.NotifiOthersOtto;
 import com.wonders.xlab.pci.doctor.module.me.notification.presenter.INotifiOthersPresenter;
 import com.wonders.xlab.pci.doctor.module.me.notification.presenter.impl.NotifiOthersPresenter;
+import com.wonders.xlab.pci.doctor.util.RealmUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -32,6 +34,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import im.hua.library.base.BaseFragment;
 import im.hua.uikit.crv.CommonRecyclerView;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
 
 /**
  * 其他通知
@@ -181,8 +186,30 @@ public class NotifiOthersFragment extends BaseFragment implements NotifiOthersPr
 
     @OnClick(R.id.tv_notifi_others_delete)
     public void delete(View view) {
-        /*RealmUtil.delectAllNotifiOthers();
-        mRVAdapter.clear();*/
+        Observable.from(mRVAdapter.getBeanList())
+                .filter(new Func1<NotifiOthersBean, Boolean>() {
+                    @Override
+                    public Boolean call(NotifiOthersBean notifiOthersBean) {
+                        return notifiOthersBean.selected.get();
+                    }
+                })
+                .subscribe(new Subscriber<NotifiOthersBean>() {
+                    List<NotifiOthersBean> notifications = new ArrayList<>();
+                    @Override
+                    public void onCompleted() {
+                        RealmUtil.deleteSelectedOthersNotification(notifications);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(NotifiOthersBean notifiOthersBean) {
+                        notifications.add(notifiOthersBean);
+                    }
+                });
         mRVAdapter.deleteSelectedItem();
 //        mRVAdapter.showRadioButton(false);
 //        bottomMenuAnimatorOut.setFloatValues(mCardViewBottom.getTranslationY(), mCardViewBottom.getBottom());

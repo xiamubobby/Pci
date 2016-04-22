@@ -8,6 +8,7 @@ import io.realm.RealmObject;
  */
 public class NotifiGroupInviteRealm extends RealmObject {
     private String groupId;
+    private String ownerId;
     private String groupName;
     private String groupDesc;
     private String ownerName;
@@ -87,5 +88,13 @@ public class NotifiGroupInviteRealm extends RealmObject {
 
     public void setRecordTimeInMill(long recordTimeInMill) {
         this.recordTimeInMill = recordTimeInMill;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 }

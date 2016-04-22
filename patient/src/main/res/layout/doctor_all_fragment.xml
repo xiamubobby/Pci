@@ -6,4 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:emptyView="@layout/common_empty"
+    app:networkErrorView="@layout/common_network_error"
+    app:serverErrorView="@layout/common_server_error"
     tools:context=".module.main.doctors.DoctorAllFragment"/>

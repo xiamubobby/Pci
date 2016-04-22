@@ -7,23 +7,23 @@ import io.realm.RealmObject;
  */
 public class UnReadMessageRealm extends RealmObject {
     private String imGroupId;
-    private String groupId;
+    private String ownerId;
     private int type;
 
     public UnReadMessageRealm() {
     }
 
-    public UnReadMessageRealm(String groupId, String imGroupId) {
-        this.groupId = groupId;
+    public UnReadMessageRealm(String ownerId, String imGroupId) {
+        this.ownerId = ownerId;
         this.imGroupId = imGroupId;
     }
 
-    public String getGroupId() {
-        return groupId;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
     public String getImGroupId() {

@@ -16,6 +16,7 @@ import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.chat.otto.ChatRoomRecordInsertOtto;
+import com.wonders.xlab.pci.doctor.module.me.notification.NotificationActivity;
 import com.wonders.xlab.pci.doctor.otto.ForceExitOtto;
 import com.wonders.xlab.pci.doctor.realm.NotifiGroupInviteRealm;
 import com.wonders.xlab.pci.doctor.realm.NotifiOthersRealm;
@@ -50,6 +51,12 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         if (message == null) {
             return;
         }
+        String bodyMessage = "";
+        try {
+            bodyMessage = new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         //忽略自己发送的消息
         if (!TextUtils.isEmpty(username) && username.equals("doctor" + AIManager.getInstance().getDoctorTel())) {
             return;
@@ -67,20 +74,15 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         int notifyColor = 0xff30bdf2;
         switch (type) {
             case -1:
-                String title = "";
-                try {
-                    title = new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                new NotifyUtil().showNotification(context, ChatRoomActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), title, R.drawable.ic_notification, true, true, true, notifyColor);
+
+                new NotifyUtil().showNotification(context, ChatRoomActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
                 break;
             case 2:
                 OttoManager.post(new ForceExitOtto());
                 break;
             case 3:
                 //聊天信息
-                String groupId = message.getStringAttribute("groupId", "");
+                String ownerId = message.getStringAttribute("ownerId", "");
                 String groupName = message.getStringAttribute("groupName", "");
                 String imGroupId = message.getStringAttribute("imGroupId", "");
                 String patientId = message.getStringAttribute("patientId", "");
@@ -93,21 +95,21 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 /**
                  * 缓存未读通知数量
                  */
-                RealmUtil.addNewUnread(new UnReadMessageRealm(groupId, imGroupId));
+                RealmUtil.addNewUnread(new UnReadMessageRealm(ownerId, imGroupId));
                 /**
                  * post event, if the current chat is showing, then append this message to chat list, or update the mydoctor page
                  */
-                OttoManager.post(new ChatRoomRecordInsertOtto(groupId, groupName, imGroupId, txtContent, fromWhoAvatarUrl, fromWhoName, message.getMsgTime()));
+                OttoManager.post(new ChatRoomRecordInsertOtto(ownerId, groupName, imGroupId, txtContent, fromWhoAvatarUrl, fromWhoName, message.getMsgTime()));
 
                 Bundle data = new Bundle();
-                data.putString(ChatRoomActivity.EXTRA_GROUP_ID,groupId);
-                data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID,imGroupId);
-                data.putString(ChatRoomActivity.EXTRA_GROUP_NAME,groupName);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_ID,patientId);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_NAME,patientName);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER,patientTel);
+                data.putString(ChatRoomActivity.EXTRA_OWNER_ID, ownerId);
+                data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID, imGroupId);
+                data.putString(ChatRoomActivity.EXTRA_GROUP_NAME, groupName);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_ID, patientId);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_NAME, patientName);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
 
-                if (TextUtils.isDigitsOnly(groupId)) {
+                if (TextUtils.isDigitsOnly(imGroupId)) {
                     notifyId = (int) Long.parseLong(imGroupId);
                 }
 
@@ -117,7 +119,13 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             case 4:
                 //邀请通知
                 String gId = message.getStringAttribute("groupId", "");
-                String gName = message.getStringAttribute("groupName", "");
+                String gOwnerId = "0";
+                try {
+                    gOwnerId = message.getJSONObjectAttribute("ownerId").toString();
+                } catch (EaseMobException e) {
+                    e.printStackTrace();
+                }
+                groupName = message.getStringAttribute("groupName", "");
                 String gDesc = message.getStringAttribute("groupDescription", "");
                 String ownerName = message.getStringAttribute("ownerName", "");
                 String ownerHos = message.getStringAttribute("ownerHos", "");
@@ -139,7 +147,8 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
 
                 NotifiGroupInviteRealm realm = new NotifiGroupInviteRealm();
                 realm.setGroupId(gId);
-                realm.setGroupName(gName);
+                realm.setOwnerId(gOwnerId);
+                realm.setGroupName(groupName);
                 realm.setGroupDesc(gDesc);
                 realm.setOwnerName(ownerName);
                 realm.setOwnerHospital(ownerHos);
@@ -148,18 +157,111 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 realm.setAvatarUrls(avatarUrls);
 
                 RealmUtil.saveGroupInviteNotifi(realm);
+
+                if (TextUtils.isEmpty(gOwnerId) || !TextUtils.isDigitsOnly(gOwnerId)) {
+                    gOwnerId = "0";
+                }
+                new NotifyUtil().showNotification(context, NotificationActivity.class, null, (int) Long.parseLong(gOwnerId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+                break;
+            case 5:
+                //血压
+                patientTel = message.getStringAttribute("patient_phone", "");
+                patientId = message.getStringAttribute("patient_id", "");
+                patientName = message.getStringAttribute("patient_name", "");
+                ownerId = message.getStringAttribute("ownerId", "");
+                String groupId = message.getStringAttribute("groupId", "");
+                imGroupId = message.getStringAttribute("imGroupId", "");
+                groupName = message.getStringAttribute("groupName", "");
+
+                data = new Bundle();
+                data.putInt(ChatRoomActivity.EXTRA_TAB_POSITION, ChatRoomActivity.TAB_POSITION_BP);
+                data.putString(ChatRoomActivity.EXTRA_OWNER_ID, ownerId);
+                data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID, imGroupId);
+                data.putString(ChatRoomActivity.EXTRA_GROUP_NAME, groupName);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_ID, patientId);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_NAME, patientName);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
+
+
+                new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+                break;
+            case 6:
+                //血糖
+                patientTel = message.getStringAttribute("patient_phone", "");
+                patientId = message.getStringAttribute("patient_id", "");
+                patientName = message.getStringAttribute("patient_name", "");
+                ownerId = message.getStringAttribute("ownerId", "");
+                groupId = message.getStringAttribute("groupId", "");
+                imGroupId = message.getStringAttribute("imGroupId", "");
+                groupName = message.getStringAttribute("groupName", "");
+
+                data = new Bundle();
+                data.putInt(ChatRoomActivity.EXTRA_TAB_POSITION, ChatRoomActivity.TAB_POSITION_BS);
+                data.putString(ChatRoomActivity.EXTRA_OWNER_ID, ownerId);
+                data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID, imGroupId);
+                data.putString(ChatRoomActivity.EXTRA_GROUP_NAME, groupName);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_ID, patientId);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_NAME, patientName);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
+
+                new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+
+                break;
+            case 7:
+                //就诊记录图片
+                patientTel = message.getStringAttribute("patient_phone", "");
+                patientId = message.getStringAttribute("patient_id", "");
+                patientName = message.getStringAttribute("patient_name", "");
+                ownerId = message.getStringAttribute("ownerId", "");
+                groupId = message.getStringAttribute("groupId", "");
+                imGroupId = message.getStringAttribute("imGroupId", "");
+                groupName = message.getStringAttribute("groupName", "");
+
+                data = new Bundle();
+                data.putInt(ChatRoomActivity.EXTRA_TAB_POSITION, ChatRoomActivity.TAB_POSITION_MEDICAL);
+                data.putString(ChatRoomActivity.EXTRA_OWNER_ID, ownerId);
+                data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID, imGroupId);
+                data.putString(ChatRoomActivity.EXTRA_GROUP_NAME, groupName);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_ID, patientId);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_NAME, patientName);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
+
+                new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+
+                break;
+            case 8:
+                //不适症状
+                patientTel = message.getStringAttribute("patient_phone", "");
+                patientId = message.getStringAttribute("patient_id", "");
+                patientName = message.getStringAttribute("patient_name", "");
+                ownerId = message.getStringAttribute("ownerId", "");
+                groupId = message.getStringAttribute("groupId", "");
+                imGroupId = message.getStringAttribute("imGroupId", "");
+                groupName = message.getStringAttribute("groupName", "");
+
+                data = new Bundle();
+                data.putInt(ChatRoomActivity.EXTRA_TAB_POSITION, ChatRoomActivity.TAB_POSITION_SYMPTOM);
+                data.putString(ChatRoomActivity.EXTRA_OWNER_ID, ownerId);
+                data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID, imGroupId);
+                data.putString(ChatRoomActivity.EXTRA_GROUP_NAME, groupName);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_ID, patientId);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_NAME, patientName);
+                data.putString(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
+
+                new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+
                 break;
             case 99:
                 //其他通知，只有string
-                try {
-                    String txtMessage = new String(((TextMessageBody) message.getBody()).getMessage().getBytes(), "UTF-8");
-                    NotifiOthersRealm othersRealm = new NotifiOthersRealm();
-                    othersRealm.setMessage(txtMessage);
-                    othersRealm.setReceiveTimeInMill(message.getMsgTime());
-                    RealmUtil.saveOthersNotifi(othersRealm);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
+                NotifiOthersRealm othersRealm = new NotifiOthersRealm();
+                othersRealm.setMessage(bodyMessage);
+                othersRealm.setReceiveTimeInMill(message.getMsgTime());
+                RealmUtil.saveOthersNotifi(othersRealm);
+
+                data = new Bundle();
+                data.putInt(NotificationActivity.EXTRA_TAB_POSITION,1);
+
+                new NotifyUtil().showNotification(context, NotificationActivity.class, data, (int) message.getMsgTime(), context.getResources().getString(R.string.app_name), bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
                 break;
         }
     }

@@ -44,8 +44,8 @@ public class ChatRoomPresenter extends BasePresenter implements ChatRoomModel.Ch
         mChatRoomModel.getChatList(groupId);
     }
 
-    public void sendMessage(String message, String doctorTel, String groupId, String groupName, String imGroupId, String patientId, String patientName, String patientTel, long time, String currentDoctorAvatarUrl,String fromWhoName) {
-        mSendMessageModel.sendMessage(message, doctorTel, groupId, groupName, imGroupId, time, patientId, patientName, patientTel, currentDoctorAvatarUrl,fromWhoName);
+    public void sendMessage(String message, String doctorTel, String ownerId, String groupName, String imGroupId, String patientId, String patientName, String patientTel, long time, String currentDoctorAvatarUrl,String fromWhoName) {
+        mSendMessageModel.sendMessage(message, doctorTel, ownerId, groupName, imGroupId, time, patientId, patientName, patientTel, currentDoctorAvatarUrl,fromWhoName);
     }
 
     @Override

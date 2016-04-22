@@ -109,7 +109,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
                 @Override
                 public void onItemClick(int position) {
                     Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
-                    intent.putExtra(ChatRoomActivity.EXTRA_GROUP_ID, mMyDoctorRVAdapter.getBean(position).getGroupId());
+                    intent.putExtra(ChatRoomActivity.EXTRA_OWNER_ID, mMyDoctorRVAdapter.getBean(position).getOwnerId());
                     intent.putExtra(ChatRoomActivity.EXTRA_IM_GROUP_ID, mMyDoctorRVAdapter.getBean(position).getImGroupId());
                     intent.putExtra(ChatRoomActivity.EXTRA_GROUP_NAME, mMyDoctorRVAdapter.getBean(position).getDoctorGroupName());
                     intent.putExtra(ChatRoomActivity.EXTRA_CAN_CHAT, MyDoctorItemBean.TYPE_IN_SERVICE == mMyDoctorRVAdapter.getBean(position).getType());
@@ -135,28 +135,43 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
 
     @Override
     public void showEmptyView(String message) {
-        mRecyclerView.showEmptyView(null);
+        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
+            }
+        });
         OttoManager.post(new DoctorTabChangeOtto(1));
     }
 
     @Override
     public void showErrorToast(String message) {
-
-    }
-
-    @Override
-    public void showLoading(String message) {
-
-    }
-
-    @Override
-    public void showNetworkError(String message) {
         showShortToast(message);
     }
 
     @Override
-    public void showServerError(String message) {
+    public void showLoading(String message) {
+        mRecyclerView.setRefreshing(true);
+    }
 
+    @Override
+    public void showNetworkError(String message) {
+        mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
+            }
+        });
+    }
+
+    @Override
+    public void showServerError(String message) {
+        mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
+            }
+        });
     }
 
     @Subscribe

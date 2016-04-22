@@ -221,6 +221,10 @@ public class GroupServiceModifyActivity extends AppbarActivity implements GroupS
     }
 
     private void update(boolean isPublish) {
+        if (null == defaultSpValues) {
+            showShortToast("请等待数据加载完成...");
+            return;
+        }
         String value = defaultSpValues.get(mSp.getSelectedItemPosition()).get("value");
         if (!TextUtils.isDigitsOnly(value)) {
             showShortToast("请选择一个值");

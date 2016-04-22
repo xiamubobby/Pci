@@ -88,7 +88,7 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
                     intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_ID, mPatientRVAdapter.getBean(position).getPatientId());
                     intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_NAME, mPatientRVAdapter.getBean(position).getPatientName());
                     intent.putExtra(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER, mPatientRVAdapter.getBean(position).getPhoneNumber());
-                    intent.putExtra(ChatRoomActivity.EXTRA_GROUP_ID, mPatientRVAdapter.getBean(position).getGroupId());
+                    intent.putExtra(ChatRoomActivity.EXTRA_OWNER_ID, mPatientRVAdapter.getBean(position).getOwnerId());
                     intent.putExtra(ChatRoomActivity.EXTRA_IM_GROUP_ID, mPatientRVAdapter.getBean(position).getImGroupId());
                     intent.putExtra(ChatRoomActivity.EXTRA_GROUP_NAME, mPatientRVAdapter.getBean(position).getGroupName());
                     getActivity().startActivity(intent);
@@ -153,7 +153,7 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
 
     @Override
     public void showErrorToast(String message) {
-
+        showShortToast(message);
     }
 
     @Override

@@ -20,6 +20,7 @@ public class PatientBean extends BaseObservable {
     private String phoneNumber;
     private String groupName;
     private String groupId;
+    private String ownerId;
     private String imGroupId;
 
     public void copyFromAnother(PatientBean bean) {
@@ -33,6 +34,7 @@ public class PatientBean extends BaseObservable {
         this.phoneNumber = bean.getPhoneNumber();
         this.groupName = bean.getGroupName();
         this.groupId = bean.getGroupId();
+        this.ownerId = bean.getOwnerId();
         this.imGroupId = bean.getImGroupId();
     }
 
@@ -138,5 +140,13 @@ public class PatientBean extends BaseObservable {
 
     public void setImGroupId(String imGroupId) {
         this.imGroupId = imGroupId;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 }

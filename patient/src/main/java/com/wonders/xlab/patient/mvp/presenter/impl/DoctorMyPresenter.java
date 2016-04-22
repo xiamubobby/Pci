@@ -46,7 +46,7 @@ public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPre
         for (DoctorMyEntity.RetValuesEntity.ServiceTrueEntity entity : inServiceEntityList) {
             MyDoctorItemBean itemBean = new MyDoctorItemBean();
             itemBean.setType(MyDoctorItemBean.TYPE_IN_SERVICE);
-            itemBean.setGroupId(entity.getDoctorGroupId());
+            itemBean.setOwnerId(entity.getOwnerId());
             itemBean.setImGroupId(entity.getImGroupId());
             itemBean.setDoctorGroupName(entity.getName());
             itemBean.setLatestChatMessage(entity.getContent());
@@ -62,7 +62,7 @@ public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPre
             MyDoctorItemBean itemBean = new MyDoctorItemBean();
             itemBean.setType(MyDoctorItemBean.TYPE_OUT_OF_SERVICE);
             itemBean.setImGroupId(entity.getImGroupId());
-            itemBean.setGroupId(entity.getDoctorGroupId());
+            itemBean.setOwnerId(entity.getOwnerId());
             itemBean.setDoctorGroupName(entity.getName());
             itemBean.setLatestChatMessage(entity.getContent());
             itemBean.setTimeStr(entity.getTimeExp());

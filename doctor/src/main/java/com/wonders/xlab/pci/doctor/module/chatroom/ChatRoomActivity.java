@@ -25,19 +25,26 @@ import butterknife.ButterKnife;
 import im.hua.utils.KeyboardUtil;
 
 public class ChatRoomActivity extends AppbarActivity {
+    public final static int TAB_POSITION_SYMPTOM = 2;
+    public final static int TAB_POSITION_MEDICAL = 3;
+    public final static int TAB_POSITION_BP = 4;
+    public final static int TAB_POSITION_BS = 5;
+
+    public final static String EXTRA_TAB_POSITION = "tabPosition";
     public final static String EXTRA_PATIENT_ID = "PATIENT_ID";
     public final static String EXTRA_PATIENT_NAME = "PATIENT_NAME";
     public final static String EXTRA_PATIENT_PHONE_NUMBER = "PATIENT_NUMBER";
     /**
      * 患者和医生所在聊天组的id
      */
-    public final static String EXTRA_GROUP_ID = "GROUP_ID";
+    public final static String EXTRA_OWNER_ID = "ownerId";
     public final static String EXTRA_IM_GROUP_ID = "IM_GROUP_ID";
     public final static String EXTRA_GROUP_NAME = "GROUP_NAME";
-    private String patientId;
 
+    private int tabPosition;
+    private String patientId;
     private String imGroupId;
-    private String groupId;
+    private String ownerId;
     private String groupName;
     private String patientName;
     private String patientPhoneNumber;
@@ -71,8 +78,9 @@ public class ChatRoomActivity extends AppbarActivity {
             finish();
             return;
         }
+        tabPosition = intent.getIntExtra(EXTRA_TAB_POSITION,0);
         patientId = intent.getStringExtra(EXTRA_PATIENT_ID);
-        groupId = intent.getStringExtra(EXTRA_GROUP_ID);
+        ownerId = intent.getStringExtra(EXTRA_OWNER_ID);
         imGroupId = intent.getStringExtra(EXTRA_IM_GROUP_ID);
         groupName = intent.getStringExtra(EXTRA_GROUP_NAME);
         if (TextUtils.isEmpty(patientId) || TextUtils.isEmpty(groupName) || TextUtils.isEmpty(imGroupId)) {
@@ -86,7 +94,7 @@ public class ChatRoomActivity extends AppbarActivity {
         setToolbarTitle("患者:" + patientName);
 
         mVPAdapter = new FragmentVPAdapter(getFragmentManager());
-        mVPAdapter.addFragment(ChatFragment.newInstance(patientId, patientName, patientPhoneNumber, groupId, imGroupId, groupName), "聊天");
+        mVPAdapter.addFragment(ChatFragment.newInstance(patientId, patientName, patientPhoneNumber, ownerId, imGroupId, groupName), "聊天");
         mVPAdapter.addFragment(UserInfoFragment.newInstance(patientId), "基本信息");
 //        mVPAdapter.addFragment(SymptomFragment.newInstance(patientId), "不适症状");
         mVPAdapter.addFragment(SymptomHRFragment.newInstance(patientId), "不适症状");
@@ -112,6 +120,7 @@ public class ChatRoomActivity extends AppbarActivity {
         });
 
         mStlChatRoomTop.setViewPager(mViewPager);
+        mViewPager.setCurrentItem(tabPosition);
     }
 
     @Override

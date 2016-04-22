@@ -3,7 +3,6 @@ package com.wonders.xlab.pci.doctor.module.me;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +23,9 @@ import butterknife.OnClick;
 import im.hua.library.base.BaseFragment;
 
 /**
- * A simple {@link Fragment} subclass.
+ * TODO 暂时隐藏了没有开放的模块
  */
 public class MeFragment extends BaseFragment {
-
 
     @Bind(R.id.btn_me_exit)
     Button mBtnMeExit;

@@ -76,7 +76,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         } else if (type == 2) {
             OttoManager.post(new ForceExitOtto());
         } else if (3 == type) {
-            String groupId = message.getStringAttribute("groupId", "");
+            String ownerId = message.getStringAttribute("ownerId", "");
             String groupName = message.getStringAttribute("groupName", "");
             String imGroupId = message.getStringAttribute("imGroupId", "");
             String txtContent = message.getStringAttribute("txtContent", "");
@@ -86,15 +86,15 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             /**
              * 缓存未读通知数量
              */
-            UnReadMessageUtil.addNewUnread(new UnReadMessageRealm(groupId, imGroupId));
+            UnReadMessageUtil.addNewUnread(new UnReadMessageRealm(ownerId, imGroupId));
 
             /**
              * post event, if the current chat is showing, then append this message to chat list, or update the mydoctor page
              */
-            OttoManager.post(new ChatRoomRecordInsertOtto(groupId, groupName, imGroupId, txtContent, fromWhoAvatarUrl, fromWhoName, message.getMsgTime()));
+            OttoManager.post(new ChatRoomRecordInsertOtto(ownerId, groupName, imGroupId, txtContent, fromWhoAvatarUrl, fromWhoName, message.getMsgTime()));
 
             Bundle data = new Bundle();
-            data.putString(ChatRoomActivity.EXTRA_GROUP_ID, groupId);
+            data.putString(ChatRoomActivity.EXTRA_OWNER_ID, ownerId);
             data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID, imGroupId);
             data.putString(ChatRoomActivity.EXTRA_GROUP_NAME, groupName);
             data.putBoolean(ChatRoomActivity.EXTRA_CAN_CHAT, true);

@@ -27,7 +27,7 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
     /**
      * @param message
      * @param doctorTel
-     * @param groupId  环信id
+     * @param ownerId  环信id
      * @param groupName
      * @param imGroupId
      * @param time
@@ -36,7 +36,7 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
      * @param patientTel
      * @param fromWhoAvatarUrl
      */
-    public void sendMessage(String message, String doctorTel, String groupId, String groupName, String imGroupId, long time, String patientId, String patientName, String patientTel, String fromWhoAvatarUrl,String fromWhoName) {
+    public void sendMessage(String message, String doctorTel, String ownerId, String groupName, String imGroupId, long time, String patientId, String patientName, String patientTel, String fromWhoAvatarUrl,String fromWhoName) {
         SendMessageBody body = new SendMessageBody();
 
         List<String> targets = new ArrayList<>();
@@ -50,7 +50,7 @@ public class SendMessageModel extends DoctorBaseModel<SendMessageEntity> {
         Map<String, Object> ext = new HashMap<>();
         ext.put("type", 3);//3:表示聊天信息
         ext.put("imGroupId", imGroupId);
-        ext.put("groupId", groupId);
+        ext.put("ownerId", ownerId);
         ext.put("groupName", groupName);
         ext.put("patientId", patientId);
         ext.put("patientName", patientName);
