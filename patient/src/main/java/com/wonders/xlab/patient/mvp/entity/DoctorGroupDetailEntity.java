@@ -79,6 +79,7 @@ public class DoctorGroupDetailEntity extends BaseEntity {
         public static class BelongGroupEntity {
             private String name;
             private String doctorGroupId;
+            private String ownerId;
             private List<String> avatars;
 
             public String getName() {
@@ -103,6 +104,14 @@ public class DoctorGroupDetailEntity extends BaseEntity {
 
             public void setDoctorGroupId(String doctorGroupId) {
                 this.doctorGroupId = doctorGroupId;
+            }
+
+            public String getOwnerId() {
+                return ownerId;
+            }
+
+            public void setOwnerId(String ownerId) {
+                this.ownerId = ownerId;
             }
         }
 

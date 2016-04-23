@@ -10,6 +10,7 @@ import com.wonders.xlab.patient.Constant;
  */
 public class DoctorDetailGroupOfDoctorBean {
     public ObservableField<String> groupId = new ObservableField<>();
+    public ObservableField<String> ownerId = new ObservableField<>();
 
     /**
      * 小组名称

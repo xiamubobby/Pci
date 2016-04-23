@@ -142,6 +142,7 @@ public class DoctorDetailEntity extends BaseEntity {
 
         public static class BelongGroupEntity {
             private String doctorGroupId;
+            private String ownerId;
             private String name;
             private List<String> avatars;
 
@@ -167,6 +168,14 @@ public class DoctorDetailEntity extends BaseEntity {
 
             public void setAvatars(List<String> avatars) {
                 this.avatars = avatars;
+            }
+
+            public String getOwnerId() {
+                return ownerId;
+            }
+
+            public void setOwnerId(String ownerId) {
+                this.ownerId = ownerId;
             }
         }
 

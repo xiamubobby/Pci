@@ -278,7 +278,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
                 public void onItemClick(int position) {
                     Intent intent = new Intent(DoctorDetailActivity.this, DoctorDetailActivity.class);
                     intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, mGroupOfDoctorRVAdapter.getBean(position).name.get());
-                    intent.putExtra(DoctorDetailActivity.EXTRA_ID, mGroupOfDoctorRVAdapter.getBean(position).groupId.get());
+                    intent.putExtra(DoctorDetailActivity.EXTRA_ID, mGroupOfDoctorRVAdapter.getBean(position).ownerId.get());
                     intent.putExtra(DoctorDetailActivity.EXTRA_TYPE, DoctorDetailActivity.TYPE_DOCTOR_GROUP);
                     startActivity(intent);
                 }
