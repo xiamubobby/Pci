@@ -1,12 +1,10 @@
 package im.hua.uikit;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.os.Build;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -31,13 +29,8 @@ public class ForegroundImageView extends ImageView {
     }
 
     public ForegroundImageView(Context context, AttributeSet attrs, int defStyleAttr) {
-        this(context, attrs, defStyleAttr, 0);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public ForegroundImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ForegroundImageView, defStyleAttr, defStyleRes);
+        super(context, attrs, defStyleAttr);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.ForegroundImageView);
         mForegroundColor = array.getColor(R.styleable.ForegroundImageView_foregroundColor, 0xa9eceaea);
         mForegroundTextColor = array.getColor(R.styleable.ForegroundImageView_foregroundTextColor, getResources().getColor(android.R.color.holo_red_dark));
         mShowForeground = array.getBoolean(R.styleable.ForegroundImageView_showForeground, false);
@@ -51,7 +44,6 @@ public class ForegroundImageView extends ImageView {
         textPaint.setTextAlign(Paint.Align.CENTER);
         textPaint.setStyle(Paint.Style.FILL);
         textPaint.setColor(mForegroundTextColor);
-
     }
 
     private TextPaint textPaint;
