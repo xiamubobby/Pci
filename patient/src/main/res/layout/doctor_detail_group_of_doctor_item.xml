@@ -16,8 +16,9 @@
                   android:orientation="vertical"
                   android:padding="@dimen/item_interval_middle">
 
-        <ImageView
+        <im.hua.avatarassemble.library.MultiAvatarView
             android:id="@+id/iv_doctor_detail_group_of_doctor_item_portrait"
+            android:background="@color/background_gray"
             android:layout_width="@dimen/doctor_list_icon_size"
             android:layout_height="@dimen/doctor_list_icon_size"/>
 

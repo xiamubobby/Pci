@@ -2,7 +2,7 @@ package com.wonders.xlab.patient.module.main.doctors.detail.adapter.bean;
 
 import android.databinding.ObservableField;
 
-import com.wonders.xlab.patient.Constant;
+import java.util.List;
 
 /**
  * Created by hua on 16/3/16.
@@ -19,5 +19,5 @@ public class DoctorDetailGroupOfDoctorBean {
     /**
      * 小组头像
      */
-    public ObservableField<String> groupPortraitUrl = new ObservableField<>(Constant.DEFAULT_PORTRAIT);
+    public ObservableField<List<String>> groupPortraitUrls = new ObservableField<>();
 }

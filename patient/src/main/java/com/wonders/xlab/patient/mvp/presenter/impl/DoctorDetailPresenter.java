@@ -1,8 +1,5 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
-import android.text.TextUtils;
-
-import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.module.main.doctors.detail.adapter.bean.DoctorDetailGroupOfDoctorBean;
 import com.wonders.xlab.patient.module.main.doctors.detail.adapter.bean.DoctorDetailPackageBean;
 import com.wonders.xlab.patient.module.main.doctors.detail.bean.DoctorBasicInfoBean;
@@ -80,10 +77,8 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
             DoctorDetailGroupOfDoctorBean bean = new DoctorDetailGroupOfDoctorBean();
             bean.name.set(entity.getName());
             bean.groupId.set(entity.getDoctorGroupId());
-            //TODO 还需要后台接口返回ownerId
             bean.ownerId.set(entity.getOwnerId());
-            List<String> avatars = entity.getAvatars();
-            bean.groupPortraitUrl.set(null != avatars && avatars.size() > 0 && !TextUtils.isEmpty(avatars.get(0)) ? avatars.get(0) : Constant.DEFAULT_PORTRAIT);
+            bean.groupPortraitUrls.set(entity.getAvatars());
 
             memberBeanList.add(bean);
         }
