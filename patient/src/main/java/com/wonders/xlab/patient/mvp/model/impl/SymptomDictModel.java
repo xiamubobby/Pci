@@ -2,8 +2,8 @@ package com.wonders.xlab.patient.mvp.model.impl;
 
 
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
-import com.wonders.xlab.patient.mvp.api.SymptomAPI;
-import com.wonders.xlab.patient.mvp.entity.SymptomEntity;
+import com.wonders.xlab.patient.data.api.SymptomAPI;
+import com.wonders.xlab.patient.data.entity.SymptomEntity;
 import com.wonders.xlab.patient.mvp.model.ISymptomDictModel;
 
 import im.hua.library.base.mvp.listener.BaseModelListener;

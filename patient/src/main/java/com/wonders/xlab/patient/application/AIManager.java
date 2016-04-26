@@ -4,8 +4,8 @@ import android.text.TextUtils;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.Constant;
-import com.wonders.xlab.patient.realm.PatientInfoRealm;
-import com.wonders.xlab.patient.realm.UnReadMessageRealm;
+import com.wonders.xlab.patient.data.realm.PatientInfoRealm;
+import com.wonders.xlab.patient.data.realm.UnReadMessageRealm;
 
 /**
  * Created by hua on 15/12/17.

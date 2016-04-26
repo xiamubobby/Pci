@@ -11,7 +11,7 @@ import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.data.ScatterDataSet;
 import com.wonders.xlab.patient.module.healthreport.bp.bean.BPChartBean;
 import com.wonders.xlab.patient.module.healthreport.bp.bean.BPListBean;
-import com.wonders.xlab.patient.mvp.entity.BloodPressureEntity;
+import com.wonders.xlab.patient.data.entity.BloodPressureEntity;
 import com.wonders.xlab.patient.mvp.model.IBloodPressureModel;
 import com.wonders.xlab.patient.mvp.model.impl.BloodPressureModel;
 import com.wonders.xlab.patient.mvp.presenter.IBloodPressurePresenter;

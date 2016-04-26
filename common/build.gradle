@@ -48,7 +48,6 @@ android {
             //图表
             compile 'com.github.PhilJay:MPAndroidChart:v2.1.6'
             //选择图片
-//        compile 'im.hua.avatarassemble.library:library:1.0'
             compile 'com.github.mzhua:AvatarAssemble:a981e176a3'
 //            compile 'im.hua.avatarassemble.library:library:1.0.1'
 

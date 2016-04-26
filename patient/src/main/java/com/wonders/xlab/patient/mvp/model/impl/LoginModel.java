@@ -4,10 +4,12 @@ import android.support.annotation.NonNull;
 
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
-import com.wonders.xlab.patient.mvp.api.LoginAPI;
-import com.wonders.xlab.patient.mvp.entity.LoginEntity;
+import com.wonders.xlab.patient.data.api.LoginAPI;
+import com.wonders.xlab.patient.data.entity.LoginEntity;
 
 import java.util.HashMap;
+
+import javax.inject.Inject;
 
 import im.hua.library.base.mvp.listener.BaseModelListener;
 import im.hua.utils.MD5Util;
@@ -20,9 +22,11 @@ public class LoginModel extends PatientBaseModel<LoginEntity> {
     private LoginModelListener mLoginModelListener;
     private LoginAPI mLoginAPI;
 
-    public LoginModel(LoginModelListener loginModelListener) {
+    @Inject
+    public LoginModel(LoginModelListener loginModelListener,LoginAPI loginAPI) {
         mLoginModelListener = loginModelListener;
-        mLoginAPI = mRetrofit.create(LoginAPI.class);
+//        mLoginAPI = mRetrofit.create(LoginAPI.class);
+        mLoginAPI = loginAPI;
     }
 
     public void login(String tel, String password) {

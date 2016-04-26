@@ -7,6 +7,7 @@ import com.easemob.chat.EMChatManager;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
+import com.wonders.xlab.patient.di.ApplicationComponent;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -16,6 +17,7 @@ import io.realm.RealmConfiguration;
  */
 public class XApplication extends Application {
     public static Realm realm;
+    private static ApplicationComponent component;
 
     @Override
     public void onCreate() {
@@ -24,6 +26,8 @@ public class XApplication extends Application {
 //        if (BuildConfig.DEBUG) {
 //            BlockCanary.install(this, new AppBlockCanaryContext()).start();
 //        }
+
+        component = ApplicationComponent.Initializer.init(this);
 
         MobclickAgent.setDebugMode(false);
         UmengUpdateAgent.setUpdateOnlyWifi(false);
@@ -42,4 +46,7 @@ public class XApplication extends Application {
         EMChat.getInstance().setDebugMode(false);
     }
 
+    public static ApplicationComponent getComponent(){
+        return component;
+    }
 }

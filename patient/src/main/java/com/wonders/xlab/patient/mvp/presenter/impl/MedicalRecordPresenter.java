@@ -3,7 +3,7 @@ package com.wonders.xlab.patient.mvp.presenter.impl;
 
 import com.wonders.xlab.patient.module.main.home.medicalrecord.bean.MedicalRecordBean;
 import com.wonders.xlab.patient.module.main.home.medicalrecord.bean.MedicalRecordPhotoBean;
-import com.wonders.xlab.patient.mvp.entity.MedicalRecordEntity;
+import com.wonders.xlab.patient.data.entity.MedicalRecordEntity;
 import com.wonders.xlab.patient.mvp.model.impl.MedicalRecordModel;
 
 import java.util.ArrayList;

@@ -17,7 +17,7 @@ import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.patient.module.chatroom.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.patient.module.main.MainActivity;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
-import com.wonders.xlab.patient.realm.UnReadMessageRealm;
+import com.wonders.xlab.patient.data.realm.UnReadMessageRealm;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.io.UnsupportedEncodingException;

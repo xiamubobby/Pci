@@ -2,7 +2,7 @@ package com.wonders.xlab.patient.mvp.model.impl;
 
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.mvp.model.IDoctorMyModel;
-import com.wonders.xlab.patient.realm.MyDoctorRealm;
+import com.wonders.xlab.patient.data.realm.MyDoctorRealm;
 
 import im.hua.library.base.mvp.listener.BaseModelListener;
 import io.realm.RealmResults;

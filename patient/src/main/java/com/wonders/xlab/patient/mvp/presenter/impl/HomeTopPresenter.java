@@ -1,7 +1,7 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
 import com.wonders.xlab.patient.module.main.home.bean.HomeBannerBean;
-import com.wonders.xlab.patient.mvp.entity.HomeBannerEntity;
+import com.wonders.xlab.patient.data.entity.HomeBannerEntity;
 import com.wonders.xlab.patient.mvp.model.IHomeBannerModel;
 import com.wonders.xlab.patient.mvp.model.impl.HomeBannerModel;
 import com.wonders.xlab.patient.mvp.presenter.IHomeTopPresenter;

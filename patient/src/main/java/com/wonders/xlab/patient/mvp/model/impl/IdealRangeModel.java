@@ -2,7 +2,7 @@ package com.wonders.xlab.patient.mvp.model.impl;
 
 
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
-import com.wonders.xlab.patient.mvp.api.IdealRangeAPI;
+import com.wonders.xlab.patient.data.api.IdealRangeAPI;
 
 import im.hua.library.base.mvp.entity.SimpleEntity;
 import im.hua.library.base.mvp.listener.BaseModelListener;
