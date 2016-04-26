@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="im.hua.utils.DateUtil"/>
+
+        <variable
+            name="bean"
+            type="com.wonders.xlab.pci.doctor.module.chatroom.prescription.adapter.bean.PrescriptionBean"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_margin="@dimen/item_interval_small"
+                  android:background="@drawable/shape_rectangle_outline_gray_solid_white"
+                  android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/item_interval_small"
+            android:paddingRight="@dimen/item_interval_small"
+            android:singleLine="true"
+            android:text='@{"开处方时间：" + DateUtil.format(bean.recordTimeInMill,"yyyy-MM-dd")}'/>
+
+        <include layout="@layout/divider_vertical"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/item_interval_small"
+            android:paddingRight="@dimen/item_interval_small"
+            android:singleLine="true"
+            android:text='@{"医院名称："+bean.hospitalName}'/>
+
+        <include layout="@layout/divider_vertical"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
+            android:background="#eaeaea"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/item_interval_small"
+            android:paddingRight="@dimen/item_interval_small"
+            android:singleLine="true"
+            android:text="处方药名称列表"/>
+
+        <include layout="@layout/divider_vertical"/>
+
+        <LinearLayout
+            android:id="@+id/ll_prescription_medicine_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/item_interval_small"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/item_interval_small"
+            android:paddingRight="@dimen/item_interval_small"
+            android:singleLine="true">
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

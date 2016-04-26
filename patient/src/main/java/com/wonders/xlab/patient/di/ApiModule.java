@@ -1,6 +1,7 @@
 package com.wonders.xlab.patient.di;
 
 import com.wonders.xlab.patient.Constant;
+import com.wonders.xlab.patient.data.api.DoctorAPI;
 import com.wonders.xlab.patient.data.api.LoginAPI;
 
 import java.util.concurrent.TimeUnit;
@@ -42,5 +43,11 @@ public class ApiModule {
     @Singleton
     protected LoginAPI provideLoginAPI(Retrofit retrofit) {
         return retrofit.create(LoginAPI.class);
+    }
+
+    @Provides
+    @Singleton
+    protected DoctorAPI provideDoctorAPI(Retrofit retrofit) {
+        return retrofit.create(DoctorAPI.class);
     }
 }

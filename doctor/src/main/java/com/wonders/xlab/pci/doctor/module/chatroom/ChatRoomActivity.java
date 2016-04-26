@@ -17,6 +17,7 @@ import com.wonders.xlab.pci.doctor.module.chatroom.bp.BPFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.bs.BSFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.chat.ChatFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.MedicalRecordFragment;
+import com.wonders.xlab.pci.doctor.module.chatroom.prescription.PrescriptionFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomHRFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoFragment;
 
@@ -101,6 +102,7 @@ public class ChatRoomActivity extends AppbarActivity {
         mVPAdapter.addFragment(MedicalRecordFragment.newInstance(patientId), "就诊记录");
         mVPAdapter.addFragment(BPFragment.newInstance(patientId), "血压");
         mVPAdapter.addFragment(BSFragment.newInstance(patientId), "血糖");
+        mVPAdapter.addFragment(PrescriptionFragment.newInstance(patientId), "处方清单");
         mViewPager.setAdapter(mVPAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
