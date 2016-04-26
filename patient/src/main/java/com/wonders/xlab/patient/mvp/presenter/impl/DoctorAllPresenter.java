@@ -1,7 +1,7 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
-import com.wonders.xlab.patient.module.main.doctors.adapter.bean.AllDoctorItemBean;
 import com.wonders.xlab.patient.data.entity.DoctorAllEntity;
+import com.wonders.xlab.patient.module.main.doctors.adapter.bean.AllDoctorItemBean;
 import com.wonders.xlab.patient.mvp.model.IDoctorAllModel;
 import com.wonders.xlab.patient.mvp.model.impl.DoctorAllModel;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorAllPresenter;
@@ -21,7 +21,7 @@ public class DoctorAllPresenter extends BasePagePresenter implements IDoctorAllP
 
     public DoctorAllPresenter(DoctorAllPresenterListener doctorAllListener) {
         mDoctorAllListener = doctorAllListener;
-        mDoctorAllModel = new DoctorAllModel(this);
+//        mDoctorAllModel = DaggerModelComponent.builder();
     }
 
     public void getAllDoctors(String patientId, boolean isRefresh) {

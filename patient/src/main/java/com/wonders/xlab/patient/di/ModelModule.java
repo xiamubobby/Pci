@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.auth.login;
+package com.wonders.xlab.patient.di;
 
 import com.wonders.xlab.patient.mvp.model.impl.DoctorAllModel;
 import com.wonders.xlab.patient.mvp.model.impl.LoginModel;
@@ -10,17 +10,17 @@ import dagger.Provides;
  * Created by hua on 16/4/25.
  */
 @Module
-public class LoginModelModule {
+public class ModelModule {
 
     private LoginModel.LoginModelListener mLoginModelListener;
 
     private DoctorAllModel.DoctorAllModelListener mDoctorAllModelListener;
 
-    public LoginModelModule(LoginModel.LoginModelListener loginModelListener) {
+    public ModelModule(LoginModel.LoginModelListener loginModelListener) {
         mLoginModelListener = loginModelListener;
     }
 
-    public LoginModelModule(DoctorAllModel.DoctorAllModelListener doctorAllModelListener) {
+    public ModelModule(DoctorAllModel.DoctorAllModelListener doctorAllModelListener) {
         mDoctorAllModelListener = doctorAllModelListener;
     }
 
