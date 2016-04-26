@@ -3,9 +3,10 @@ package com.wonders.xlab.patient.mvp.model.impl;
 import android.support.annotation.NonNull;
 
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.module.base.PatientBaseModel;
 import com.wonders.xlab.patient.data.api.LoginAPI;
 import com.wonders.xlab.patient.data.entity.LoginEntity;
+import com.wonders.xlab.patient.module.base.PatientBaseModel;
+import com.wonders.xlab.patient.mvp.model.ILoginModel;
 
 import java.util.HashMap;
 
@@ -17,7 +18,7 @@ import im.hua.utils.MD5Util;
 /**
  * Created by hua on 15/12/17.
  */
-public class LoginModel extends PatientBaseModel<LoginEntity> {
+public class LoginModel extends PatientBaseModel<LoginEntity> implements ILoginModel {
 
     private LoginModelListener mLoginModelListener;
     private LoginAPI mLoginAPI;
@@ -29,6 +30,7 @@ public class LoginModel extends PatientBaseModel<LoginEntity> {
         mLoginAPI = loginAPI;
     }
 
+    @Override
     public void login(String tel, String password) {
         HashMap<String, String> body = new HashMap<>();
         body.put("tel", tel);

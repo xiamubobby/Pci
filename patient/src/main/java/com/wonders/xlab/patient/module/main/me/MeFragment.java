@@ -12,7 +12,9 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.main.me.setting.SettingActivity;
+import com.wonders.xlab.patient.util.ImageViewManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -28,6 +30,10 @@ public class MeFragment extends BaseFragment {
     ImageView mIvMePortrait;
     @Bind(R.id.tv_me_setting)
     TextView mTvMeSetting;
+    @Bind(R.id.tv_me_name)
+    TextView mTvMeName;
+    @Bind(R.id.tv_me_tel)
+    TextView mTvMeTel;
 
     public MeFragment() {
         // Required empty public constructor
@@ -46,6 +52,14 @@ public class MeFragment extends BaseFragment {
         return view;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ImageViewManager.setImageViewWithUrl(getActivity(), mIvMePortrait, AIManager.getInstance().getPatientPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
+        mTvMeName.setText(AIManager.getInstance().getPatientName());
+        mTvMeTel.setText(String.format("账号：%s", AIManager.getInstance().getPatientTel()));
+    }
+
     @OnClick(R.id.tv_me_setting)
     public void goToSettingActivity() {
         startActivity(new Intent(getActivity(), SettingActivity.class));
@@ -61,6 +75,7 @@ public class MeFragment extends BaseFragment {
         super.onResume();
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_me));
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_me));

@@ -1,8 +1,9 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
-import com.wonders.xlab.patient.di.LoginModelModule;
+import com.wonders.xlab.patient.module.auth.login.DaggerLoginModelComponent;
+import com.wonders.xlab.patient.module.auth.login.LoginModelModule;
+import com.wonders.xlab.patient.mvp.model.ILoginModel;
 import com.wonders.xlab.patient.mvp.model.impl.LoginModel;
-import com.wonders.xlab.patient.mvp.presenter.DaggerLoginPresenterComponent;
 import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
@@ -15,13 +16,13 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
 public class LoginPresenter extends BasePresenter implements ILoginPresenter, LoginModel.LoginModelListener {
 
     private LoginPresenterListener mLoginPresenterListener;
-    private LoginModel mLoginModel;
+    private ILoginModel mLoginModel;
 
     public LoginPresenter(LoginPresenterListener loginPresenterListener) {
         mLoginPresenterListener = loginPresenterListener;
 
-        mLoginModel = DaggerLoginPresenterComponent.builder()
-                .modelModule(new LoginModelModule(this))
+        mLoginModel = DaggerLoginModelComponent.builder()
+                .loginModelModule(new LoginModelModule(this))
                 .build()
                 .getLoginModel();
 

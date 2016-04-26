@@ -5,8 +5,10 @@
               android:layout_margin="@dimen/item_interval_middle"
               android:orientation="vertical">
 
-    <ImageView android:id="@+id/iv_simple"
+    <ImageView
+        android:id="@+id/iv_simple"
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:background="@color/background_gray"
         android:scaleType="centerCrop"/>
 </LinearLayout>
