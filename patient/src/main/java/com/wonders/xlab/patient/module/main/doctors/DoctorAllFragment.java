@@ -14,6 +14,8 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.di.DaggerPresenterComponent;
+import com.wonders.xlab.patient.di.PresenterModule;
 import com.wonders.xlab.patient.module.main.doctors.adapter.AllDoctorRVAdapter;
 import com.wonders.xlab.patient.module.main.doctors.adapter.bean.AllDoctorItemBean;
 import com.wonders.xlab.patient.module.main.doctors.detail.DoctorDetailActivity;
@@ -54,7 +56,10 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
         View view = inflater.inflate(R.layout.doctor_all_fragment, container, false);
         ButterKnife.bind(this, view);
 
-        mDoctorAllPresenter = new DoctorAllPresenter(this);
+        mDoctorAllPresenter = DaggerPresenterComponent.builder()
+                .presenterModule(new PresenterModule(this))
+                .build()
+                .getDoctorAllPresenter();
         addPresenter(mDoctorAllPresenter);
         return view;
     }

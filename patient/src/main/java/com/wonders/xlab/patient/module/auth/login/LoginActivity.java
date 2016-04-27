@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.di.DaggerPresenterComponent;
+import com.wonders.xlab.patient.di.PresenterModule;
 import com.wonders.xlab.patient.module.main.MainActivity;
 import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.LoginPresenter;
@@ -36,10 +38,10 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
         setContentView(R.layout.login_activity);
         ButterKnife.bind(this);
 
-        mLoginPresenter = DaggerLoginPresenterComponent.builder()
-                .loginPresenterModule(new LoginPresenterModule(this))
+        mLoginPresenter = DaggerPresenterComponent.builder()
+                .presenterModule(new PresenterModule(this))
                 .build()
-                .getILoginPresenter();
+                .getLoginPresenter();
 
         addPresenter(mLoginPresenter);
     }

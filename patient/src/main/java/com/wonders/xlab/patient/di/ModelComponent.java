@@ -11,7 +11,7 @@ import dagger.Component;
  * Created by hua on 16/4/25.
  */
 @Singleton
-@Component(modules = {ModelModule.class, ApiModule.class})
+@Component(modules = {ModelModule.class,ApiModule.class})
 public interface ModelComponent {
     LoginModel getLoginModel();
 

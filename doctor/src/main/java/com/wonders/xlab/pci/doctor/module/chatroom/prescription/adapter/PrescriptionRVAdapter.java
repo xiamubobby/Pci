@@ -41,10 +41,6 @@ public class PrescriptionRVAdapter extends SimpleRVAdapter<PrescriptionBean> {
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_prescription_time)
-        TextView mTvTime;
-        @Bind(R.id.tv_prescription_hospital_name)
-        TextView mTvHospitalName;
         @Bind(R.id.ll_prescription_medicine_list)
         LinearLayout mLlMedicineList;
         PrescriptionItemBinding binding;
