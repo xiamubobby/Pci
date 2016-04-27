@@ -48,6 +48,7 @@ public class PrescriptionFragment extends BaseFragment implements PrescriptionPr
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.prescription_fragment, container, false);
         ButterKnife.bind(this, view);
+
         return view;
     }
 
@@ -71,7 +72,7 @@ public class PrescriptionFragment extends BaseFragment implements PrescriptionPr
     @Override
     public void showPrescriptionList(List<PrescriptionBean> prescriptionBeanList) {
         if (null == mRVAdapter) {
-            mRVAdapter = new PrescriptionRVAdapter();
+            mRVAdapter = new PrescriptionRVAdapter(getActivity());
             mRecyclerView.setAdapter(mRVAdapter);
         }
         mRVAdapter.setDatas(prescriptionBeanList);

@@ -27,7 +27,6 @@ public class PrescriptionPresenter extends BasePagePresenter implements IPrescri
         for (int i = 0; i < 3; i++) {
             medicineList.add("药品名" + i);
         }
-
         for (int i = 0; i < 5; i++) {
             PrescriptionBean bean = new PrescriptionBean();
             bean.hospitalName.set("name" + i);

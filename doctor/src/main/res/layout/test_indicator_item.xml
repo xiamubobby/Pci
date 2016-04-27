@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/item_interval_very_small"
+    android:background="@drawable/shape_rectangle_outline_gray_solid_white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_test_indicator_item_time"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeightSmall"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/item_interval_small"
+        android:paddingRight="@dimen/item_interval_small"
+        android:singleLine="true"
+        android:text="检验时间：2016-04-22" />
+
+    <include layout="@layout/divider_vertical" />
+
+    <TextView
+        android:id="@+id/tv_test_indicator_item_hospital_name"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeightSmall"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/item_interval_small"
+        android:paddingRight="@dimen/item_interval_small"
+        android:singleLine="true"
+        android:text="医院名称：上海市闵行区江川社区卫生服务中心" />
+
+    <include layout="@layout/divider_vertical" />
+
+    <TextView
+        android:id="@+id/tv_test_indicator_item_department_name"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeightSmall"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/item_interval_small"
+        android:paddingRight="@dimen/item_interval_small"
+        android:singleLine="true"
+        android:text="科室名称：内分泌代谢科" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_rectangle_outline_gray_solid_white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="项目" />
+
+        <include layout="@layout/divider_horizontal" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="结果" />
+
+        <include layout="@layout/divider_horizontal" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="参考值" />
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_test_indicator_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

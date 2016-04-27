@@ -13,11 +13,14 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.Medicalrecords.MedicalrecordsFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.bp.BPFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.bs.BSFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.chat.ChatFragment;
+import com.wonders.xlab.pci.doctor.module.chatroom.indicator.TestIndicatorFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.MedicalRecordFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.prescription.PrescriptionFragment;
+import com.wonders.xlab.pci.doctor.module.chatroom.surgicalhistory.SurgicalHistoryFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.symptom.SymptomHRFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.userinfo.UserInfoFragment;
 
@@ -79,7 +82,7 @@ public class ChatRoomActivity extends AppbarActivity {
             finish();
             return;
         }
-        tabPosition = intent.getIntExtra(EXTRA_TAB_POSITION,0);
+        tabPosition = intent.getIntExtra(EXTRA_TAB_POSITION, 0);
         patientId = intent.getStringExtra(EXTRA_PATIENT_ID);
         ownerId = intent.getStringExtra(EXTRA_OWNER_ID);
         imGroupId = intent.getStringExtra(EXTRA_IM_GROUP_ID);
@@ -103,6 +106,9 @@ public class ChatRoomActivity extends AppbarActivity {
         mVPAdapter.addFragment(BPFragment.newInstance(patientId), "血压");
         mVPAdapter.addFragment(BSFragment.newInstance(patientId), "血糖");
         mVPAdapter.addFragment(PrescriptionFragment.newInstance(patientId), "处方清单");
+        mVPAdapter.addFragment(TestIndicatorFragment.newInstance(patientId), "检验指标");
+        mVPAdapter.addFragment(SurgicalHistoryFragment.newInstance(patientId), "住院手术史");
+        mVPAdapter.addFragment(MedicalrecordsFragment.newInstance(patientId), "就诊记录");
         mViewPager.setAdapter(mVPAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
