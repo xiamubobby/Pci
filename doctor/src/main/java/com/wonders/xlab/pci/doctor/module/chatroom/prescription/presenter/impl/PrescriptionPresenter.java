@@ -25,12 +25,11 @@ public class PrescriptionPresenter extends BasePagePresenter implements IPrescri
         List<PrescriptionBean> prescriptionBeanList = new ArrayList<>();
         List<String> medicineList = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            medicineList.add("药品名" + i);
+            medicineList.add("药品" + i);
         }
-
         for (int i = 0; i < 5; i++) {
             PrescriptionBean bean = new PrescriptionBean();
-            bean.hospitalName.set("name" + i);
+            bean.hospitalName.set("瑞金医院");
             bean.recordTimeInMill.set(Calendar.getInstance().getTimeInMillis());
             bean.medicineList.set(medicineList);
 
