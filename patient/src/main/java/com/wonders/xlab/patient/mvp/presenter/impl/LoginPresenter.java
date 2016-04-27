@@ -1,7 +1,7 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
-import com.wonders.xlab.patient.module.auth.login.DaggerLoginModelComponent;
-import com.wonders.xlab.patient.module.auth.login.LoginModelModule;
+import com.wonders.xlab.patient.di.DaggerModelComponent;
+import com.wonders.xlab.patient.di.ModelModule;
 import com.wonders.xlab.patient.mvp.model.ILoginModel;
 import com.wonders.xlab.patient.mvp.model.impl.LoginModel;
 import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
@@ -21,8 +21,8 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter, Lo
     public LoginPresenter(LoginPresenterListener loginPresenterListener) {
         mLoginPresenterListener = loginPresenterListener;
 
-        mLoginModel = DaggerLoginModelComponent.builder()
-                .loginModelModule(new LoginModelModule(this))
+        mLoginModel = DaggerModelComponent.builder()
+                .modelModule(new ModelModule(this))
                 .build()
                 .getLoginModel();
 

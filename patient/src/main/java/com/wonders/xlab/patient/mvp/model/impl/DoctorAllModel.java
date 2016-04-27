@@ -5,6 +5,8 @@ import com.wonders.xlab.patient.data.api.DoctorAPI;
 import com.wonders.xlab.patient.data.entity.DoctorAllEntity;
 import com.wonders.xlab.patient.mvp.model.IDoctorAllModel;
 
+import javax.inject.Inject;
+
 import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
@@ -15,10 +17,10 @@ public class DoctorAllModel extends PatientBaseModel<DoctorAllEntity> implements
 
     private DoctorAPI mDoctorAPI;
 
-    public DoctorAllModel(DoctorAllModelListener doctorAllModelListener) {
+    @Inject
+    public DoctorAllModel(DoctorAllModelListener doctorAllModelListener,DoctorAPI doctorAPI) {
         mDoctorAllModelListener = doctorAllModelListener;
-
-        mDoctorAPI = mRetrofit.create(DoctorAPI.class);
+        mDoctorAPI = doctorAPI;
     }
 
     @Override
