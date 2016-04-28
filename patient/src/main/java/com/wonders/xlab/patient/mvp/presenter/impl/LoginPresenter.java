@@ -31,6 +31,7 @@ public class LoginPresenter extends BasePresenter implements ILoginPresenter, Lo
 
     @Override
     public void login(String tel, String password) {
+        mLoginPresenterListener.showLoading("正在登录，请稍候...");
         mLoginModel.login(tel, password);
     }
 
