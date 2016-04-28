@@ -99,16 +99,15 @@ public class ChatRoomActivity extends AppbarActivity {
 
         mVPAdapter = new FragmentVPAdapter(getFragmentManager());
         mVPAdapter.addFragment(ChatFragment.newInstance(patientId, patientName, patientPhoneNumber, ownerId, imGroupId, groupName), "聊天");
-        mVPAdapter.addFragment(UserInfoFragment.newInstance(patientId), "基本信息");
-//        mVPAdapter.addFragment(SymptomFragment.newInstance(patientId), "不适症状");
+        mVPAdapter.addFragment(MedicalrecordsFragment.newInstance(patientId), "就诊记录");
+        mVPAdapter.addFragment(SurgicalHistoryFragment.newInstance(patientId), "住院手术史");
+        mVPAdapter.addFragment(TestIndicatorFragment.newInstance(patientId), "检验指标");
+        mVPAdapter.addFragment(PrescriptionFragment.newInstance(patientId), "处方清单");
         mVPAdapter.addFragment(SymptomHRFragment.newInstance(patientId), "不适症状");
-        mVPAdapter.addFragment(MedicalRecordFragment.newInstance(patientId), "就诊记录");
         mVPAdapter.addFragment(BPFragment.newInstance(patientId), "血压");
         mVPAdapter.addFragment(BSFragment.newInstance(patientId), "血糖");
-        mVPAdapter.addFragment(PrescriptionFragment.newInstance(patientId), "处方清单");
-        mVPAdapter.addFragment(TestIndicatorFragment.newInstance(patientId), "检验指标");
-        mVPAdapter.addFragment(SurgicalHistoryFragment.newInstance(patientId), "住院手术史");
-        mVPAdapter.addFragment(MedicalrecordsFragment.newInstance(patientId), "就诊记录");
+        mVPAdapter.addFragment(UserInfoFragment.newInstance(patientId), "基本信息");
+        mVPAdapter.addFragment(MedicalRecordFragment.newInstance(patientId), "自传资料");
         mViewPager.setAdapter(mVPAdapter);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
