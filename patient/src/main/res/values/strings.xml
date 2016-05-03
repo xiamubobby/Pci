@@ -87,5 +87,6 @@
     <string name="umeng_page_title_doctor_detail">医生详情</string>
     <string name="title_activity_register">注册</string>
     <string name="register_btn_register">注册</string>
+    <string name="title_activity_authorize">身份认证</string>
 
 </resources>
