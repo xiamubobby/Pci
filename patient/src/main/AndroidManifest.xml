@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.wonders.xlab.patient"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wonders.xlab.patient">
 
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- Required -->
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".application.XApplication"
@@ -33,16 +33,16 @@
         <!-- 设置环信应用的appkey -->
         <meta-data
             android:name="EASEMOB_APPKEY"
-            android:value="xlab#pci"/>
+            android:value="xlab#pci" />
         <!-- 声明sdk所需的service SDK核心功能 -->
-        <service android:name="com.easemob.chat.EMChatService"/>
+        <service android:name="com.easemob.chat.EMChatService" />
         <!-- umeng -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="56e8df59e0f55abf8a000364"/>
+            android:value="56e8df59e0f55abf8a000364" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="internal"/>
+            android:value="internal" />
 
         <activity
             android:name=".module.main.MainActivity"
@@ -51,9 +51,9 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.MaterialColdStart">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -62,43 +62,40 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            android:windowSoftInputMode="stateHidden"/>
 
         <service
             android:name=".service.XEMChatService"
-            android:enabled="true"/>
+            android:enabled="true" />
 
         <receiver
             android:name=".receiver.BootstrapReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.EMChatMessageBroadcastReceiver"/>
+        <receiver android:name=".receiver.EMChatMessageBroadcastReceiver" />
 
         <!-- umeng -->
         <service
             android:name="com.umeng.update.net.DownloadingService"
-            android:process=":DownloadingService"/>
+            android:process=":DownloadingService" />
 
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <receiver android:name=".receiver.TimeClickReceiver">
-        </receiver>
-        <receiver android:name=".receiver.ConnectionBroadcastReceiver">
-        </receiver>
+        <receiver android:name=".receiver.TimeClickReceiver"/>
+        <receiver android:name=".receiver.ConnectionBroadcastReceiver"/>
 
         <activity
             android:name=".module.WebActivity"
             android:label="@string/title_activity_web"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.chatroom.ChatRoomActivity"
             android:label="@string/title_activity_chat_room"
@@ -107,56 +104,65 @@
             android:windowSoftInputMode="adjustResize|stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".module.main.MainActivity"/>
+                android:value=".module.main.MainActivity" />
         </activity>
         <activity
             android:name=".module.main.home.dailyreport.DailyReportActivity"
             android:label="@string/title_activity_daily_record"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar.DailyRecordActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar.DailyRecordActionBar" />
         <activity
             android:name=".module.main.home.dailyreport.datarecord.bp.BPAddActivity"
             android:label="@string/title_activity_bp_measure"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".module.main.home.dailyreport.datarecord.bs.BSAddActivity"
             android:label="@string/title_activity_bs_measure"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".module.main.home.dailyreport.datarecord.bp.BPGuideActivity"
             android:label="@string/title_activity_bp_measure"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.main.home.dailyreport.datarecord.bs.BSGuideActivity"
             android:label="@string/title_activity_bs_measure"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.main.home.dailyreport.datarecord.symptom.SymptomActivity"
             android:label="@string/title_activity_symptom"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.main.home.medicalrecord.MedicalRecordActivity"
             android:label="@string/title_activity_medical_record"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".module.main.doctors.detail.DoctorDetailActivity"
-            android:label="@string/title_activity_doctor_detail"/>
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_doctor_detail" />
         <activity
             android:name=".module.main.me.setting.SettingActivity"
-            android:label="@string/title_activity_setting"/>
+            android:screenOrientation="portrait"
+            android:label="@string/title_activity_setting" />
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
-            android:theme="@style/PhotoPickerTheme"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/PhotoPickerTheme" />
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"
-            android:theme="@style/PhotoPickerTheme"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/PhotoPickerTheme" />
         <activity
             android:name=".module.healthreport.HealthReportActivity"
             android:label="@string/title_activity_health_report"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".module.auth.register.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.di.DaggerPresenterComponent;
 import com.wonders.xlab.patient.di.PresenterModule;
+import com.wonders.xlab.patient.module.auth.register.RegisterActivity;
 import com.wonders.xlab.patient.module.main.MainActivity;
 import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.LoginPresenter;
@@ -73,6 +74,11 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
         }
 
         mLoginPresenter.login(tel, password);
+    }
+
+    @OnClick(R.id.tv_login_go_register)
+    public void register() {
+        startActivity(new Intent(this, RegisterActivity.class));
     }
 
 
