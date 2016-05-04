@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.SymptomReportBean;
 import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.SymptomReportLabelBean;
-import com.wonders.xlab.patient.data.entity.SymptomRetrieveEntity;
+import com.wonders.xlab.patient.mvp.entity.SymptomRetrieveEntity;
 import com.wonders.xlab.patient.mvp.model.ISymptomRetrieveModel;
 import com.wonders.xlab.patient.mvp.model.impl.SymptomRetrieveModel;
 import com.wonders.xlab.patient.mvp.presenter.ISymptomReportPresenter;

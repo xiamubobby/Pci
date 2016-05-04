@@ -3,7 +3,7 @@ package com.wonders.xlab.patient.mvp.presenter.impl;
 import com.wonders.xlab.patient.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.OthersChatRoomBean;
-import com.wonders.xlab.patient.data.entity.ChatRoomEntity;
+import com.wonders.xlab.patient.mvp.entity.ChatRoomEntity;
 import com.wonders.xlab.patient.mvp.model.IChatRoomRecordsModel;
 import com.wonders.xlab.patient.mvp.model.ISendMessageModel;
 import com.wonders.xlab.patient.mvp.model.impl.ChatRoomRecordsModel;

@@ -1,8 +1,8 @@
 package com.wonders.xlab.patient.di;
 
 import com.wonders.xlab.patient.Constant;
-import com.wonders.xlab.patient.data.api.DoctorAPI;
-import com.wonders.xlab.patient.data.api.LoginAPI;
+import com.wonders.xlab.patient.mvp.api.DoctorAPI;
+import com.wonders.xlab.patient.mvp.api.LoginAPI;
 
 import java.util.concurrent.TimeUnit;
 
