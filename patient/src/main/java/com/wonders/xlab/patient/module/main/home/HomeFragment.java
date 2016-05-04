@@ -24,6 +24,7 @@ import com.wonders.xlab.patient.module.main.home.adapter.bean.HomeItemBean;
 import com.wonders.xlab.patient.module.main.home.bean.HomeBannerBean;
 import com.wonders.xlab.patient.module.main.home.dailyreport.DailyReportActivity;
 import com.wonders.xlab.patient.module.main.home.medicalrecord.MedicalRecordActivity;
+import com.wonders.xlab.patient.module.main.home.medicineremind.MedicineRemindActivity;
 import com.wonders.xlab.patient.mvp.presenter.IHomeTopPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.HomeTopPresenter;
 import com.wonders.xlab.patient.util.UmengEventId;
@@ -114,6 +115,9 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
                             Intent intent = new Intent(getActivity(), MedicalRecordActivity.class);
                             intent.putExtra(MedicalRecordActivity.EXTRA_PATIENT_ID, AIManager.getInstance().getPatientId());
                             startActivity(intent);
+                            break;
+                        case 2:
+                            startActivity(new Intent(getActivity(), MedicineRemindActivity.class));
                             break;
                         case 3:
                             startActivity(new Intent(getActivity(), HealthReportActivity.class));

@@ -1,9 +1,9 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
 
+import com.wonders.xlab.patient.data.entity.MedicalRecordEntity;
 import com.wonders.xlab.patient.module.main.home.medicalrecord.bean.MedicalRecordBean;
 import com.wonders.xlab.patient.module.main.home.medicalrecord.bean.MedicalRecordPhotoBean;
-import com.wonders.xlab.patient.data.entity.MedicalRecordEntity;
 import com.wonders.xlab.patient.mvp.model.impl.MedicalRecordModel;
 
 import java.util.ArrayList;
@@ -89,7 +89,9 @@ public class MedicalRecordPresenter extends BasePagePresenter implements Medical
 
     public interface MedicalRecordPresenterListener extends BasePresenterListener {
         void showMedicalRecordList(List<MedicalRecordBean> beanList);
+
         void appendMedicalRecordList(List<MedicalRecordBean> beanList);
+
         void showReachTheLastPageNotice(String message);
     }
 }

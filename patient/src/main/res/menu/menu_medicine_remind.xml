@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".module.main.home.medicineremind.MedicineRemindActivity">
+    <item
+        android:id="@+id/menu_medicine_remind_add"
+        android:icon="@drawable/ic_add_white_36dp"
+        android:orderInCategory="100"
+        android:title="提醒时间"
+        app:showAsAction="always"/>
+</menu>
