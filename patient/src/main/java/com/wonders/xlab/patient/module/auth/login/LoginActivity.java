@@ -3,13 +3,17 @@ package com.wonders.xlab.patient.module.auth.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.di.DaggerPresenterComponent;
 import com.wonders.xlab.patient.di.PresenterModule;
+import com.wonders.xlab.patient.module.auth.register.RegisterActivity;
 import com.wonders.xlab.patient.module.main.MainActivity;
 import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.LoginPresenter;
@@ -21,7 +25,7 @@ import im.hua.library.base.BaseActivity;
 import im.hua.utils.KeyboardUtil;
 import im.hua.utils.ViewHelper;
 
-public class LoginActivity extends BaseActivity implements LoginPresenter.LoginPresenterListener {
+public class LoginActivity extends BaseActivity implements LoginPresenter.LoginPresenterListener, TextView.OnEditorActionListener {
 
     @Bind(R.id.login_phone_number)
     EditText mEtPhoneNumber;
@@ -37,6 +41,8 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
         ButterKnife.bind(this);
+
+        mEtPassword.setOnEditorActionListener(this);
 
         mLoginPresenter = DaggerPresenterComponent.builder()
                 .presenterModule(new PresenterModule(this))
@@ -73,6 +79,11 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
         }
 
         mLoginPresenter.login(tel, password);
+    }
+
+    @OnClick(R.id.tv_login_go_register)
+    public void register() {
+        startActivity(new Intent(this, RegisterActivity.class));
     }
 
 
@@ -125,5 +136,15 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        switch (actionId) {
+            case EditorInfo.IME_ACTION_DONE:
+                login();
+                break;
+        }
+        return false;
     }
 }

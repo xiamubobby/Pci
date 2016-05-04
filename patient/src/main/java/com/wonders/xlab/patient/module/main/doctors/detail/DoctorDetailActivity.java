@@ -45,7 +45,7 @@ import butterknife.ButterKnife;
 import im.hua.library.base.BaseActivity;
 
 /**
- *
+ *医生详情
  */
 public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDetailPresenter.DoctorGroupDetailPresenterListener, DoctorDetailPresenter.DoctorDetailPresenterListener {
     public final static int TYPE_DOCTOR = 0;
