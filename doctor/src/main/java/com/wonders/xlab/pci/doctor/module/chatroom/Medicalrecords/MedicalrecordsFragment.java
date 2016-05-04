@@ -1,14 +1,13 @@
 package com.wonders.xlab.pci.doctor.module.chatroom.medicalrecords;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.wonders.xlab.pci.doctor.R;
-import com.wonders.xlab.pci.doctor.application.AIManager;
-import com.wonders.xlab.pci.doctor.data.presenter.impl.MedicalRecordPresenter;
-import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecord.bean.MedicalRecordBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecords.adapter.MedicalRecordsRVAdapter;
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecords.adapter.bean.MedicalRecordsBean;
 import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecords.presenter.impl.MedicalRecordsPresenter;
@@ -24,19 +23,37 @@ import im.hua.uikit.crv.CommonRecyclerView;
  * Created by jimmy on 16/4/27.
  */
 public class MedicalRecordsFragment extends BaseFragment implements MedicalRecordsPresenter.MedicalRecordsPresenterListener {
+    private static final String ARG_PATIENT_ID = "patientId";
+    private String mPatientId;
 
     @Bind(R.id.recycler_view_medicalRecords)
-    public CommonRecyclerView mRecycler;
+    public CommonRecyclerView mRecyclerView;
 
     MedicalRecordsRVAdapter mRVAdapter;
 
     MedicalRecordsPresenter mPresenter;
 
+    public MedicalRecordsFragment() {
+    }
+
     public static MedicalRecordsFragment newInstance(String patientId) {
         MedicalRecordsFragment fragment = new MedicalRecordsFragment();
+        Bundle data = new Bundle();
+        data.putString(ARG_PATIENT_ID, patientId);
+        fragment.setArguments(data);
         return fragment;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle data = getArguments();
+        if (null == data) {
+            Toast.makeText(getActivity(), "获取就诊记录失败", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        mPatientId = data.getString(ARG_PATIENT_ID);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,7 +68,19 @@ public class MedicalRecordsFragment extends BaseFragment implements MedicalRecor
         super.onViewCreated(view, savedInstanceState);
         mPresenter = new MedicalRecordsPresenter(this);
         addPresenter(mPresenter);
-        mPresenter.getMedicalRecordsList("", AIManager.getInstance().getDoctorId());
+        mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.getMedicalRecordsList(mPatientId, true);
+            }
+        });
+        mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                mPresenter.getMedicalRecordsList(mPatientId, false);
+            }
+        });
+        mPresenter.getMedicalRecordsList(mPatientId, true);
     }
 
     @Override
@@ -65,44 +94,68 @@ public class MedicalRecordsFragment extends BaseFragment implements MedicalRecor
     @Override
     public void showMedicalRecordsList(List<MedicalRecordsBean> medicalRecordsBeanList) {
         if (mRVAdapter == null) {
-            mRVAdapter = new MedicalRecordsRVAdapter(getActivity());
-            mRecycler.setAdapter(mRVAdapter);
+            mRVAdapter = new MedicalRecordsRVAdapter();
+            mRecyclerView.setAdapter(mRVAdapter);
         }
         mRVAdapter.setDatas(medicalRecordsBeanList);
     }
 
     @Override
-    public void showReachTheLastPageNotice(String message) {
+    public void appendMedicalRecordsList(List<MedicalRecordsBean> medicalRecordsBeanList) {
+        if (mRVAdapter == null) {
+            mRVAdapter = new MedicalRecordsRVAdapter();
+            mRecyclerView.setAdapter(mRVAdapter);
+        }
+        mRVAdapter.appendDatas(medicalRecordsBeanList);
+    }
 
+    @Override
+    public void showReachTheLastPageNotice(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showLoading(String message) {
-
+        mRecyclerView.setRefreshing(true);
     }
 
     @Override
     public void showNetworkError(String message) {
-
+        mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mPresenter.getMedicalRecordsList(mPatientId,true);
+            }
+        });
     }
 
     @Override
     public void showServerError(String message) {
-
+        mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mPresenter.getMedicalRecordsList(mPatientId,true);
+            }
+        });
     }
 
     @Override
     public void showEmptyView(String message) {
-
+        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+                mPresenter.getMedicalRecordsList(mPatientId,true);
+            }
+        });
     }
 
     @Override
     public void showErrorToast(String message) {
-
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void hideLoading() {
-
+        mRecyclerView.hideRefreshOrLoadMore(true,true);
     }
 }

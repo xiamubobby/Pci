@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
-import com.wonders.xlab.pci.doctor.databinding.SurgicalHistoryItemBinding;
 import com.wonders.xlab.pci.doctor.module.chatroom.surgicalhistory.adapter.bean.SurgicalHistoryBean;
 
 import butterknife.Bind;
@@ -43,8 +42,7 @@ public class SurgicalHistoryRVAdapter extends SimpleRVAdapter<SurgicalHistoryBea
         viewHolder.departmentName.setText(bean.getDepartmentName().get());
         viewHolder.doctorSuggestion.setText(bean.getDoctorSuggestion().get());
         viewHolder.leaveHospital.setText(bean.getLeaveHospitalDiagnostics().get());
-        viewHolder.time.setText(DateUtil.format(bean.getSurgicalHistoryBeginTime().get(), "yyyy-MM-dd") + " — " + DateUtil.format(bean.getSurgicalHistoryBeginTime().get(), "yyyy-MM-dd"))
-        ;
+        viewHolder.time.setText(String.format("%s — %s", DateUtil.format(bean.getSurgicalHistoryBeginTime().get(), "yyyy-MM-dd"), DateUtil.format(bean.getSurgicalHistoryBeginTime().get(), "yyyy-MM-dd")));
         viewHolder.clickMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

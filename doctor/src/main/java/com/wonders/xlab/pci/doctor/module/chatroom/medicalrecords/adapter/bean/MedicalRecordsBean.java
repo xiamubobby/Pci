@@ -1,7 +1,5 @@
 package com.wonders.xlab.pci.doctor.module.chatroom.medicalrecords.adapter.bean;
 
-import android.databinding.ObservableField;
-
 /**
  * Created by jimmy on 16/5/3.
  */
@@ -10,65 +8,64 @@ public class MedicalRecordsBean {
     /**
      * 就诊时间
      */
-    private ObservableField<Long> time;
+    private String time;
 
     /**
      * 门诊标签
      */
-    private ObservableField<String> tag;
+    private String tag;
 
     /**
      * 就诊医院
      */
-    public ObservableField<String> hospitalName;
+    public String hospitalName;
     /**
      * 就诊科室
      */
-    public ObservableField<String> departmentName;
+    public String departmentName;
 
     /**
      * 就诊结果
      */
-    public ObservableField<String> medicalResult;
+    public String medicalResult;
 
-
-    public ObservableField<String> getHospitalName() {
-        return hospitalName;
-    }
-
-    public void setHospitalName(ObservableField<String> hospitalName) {
-        this.hospitalName = hospitalName;
-    }
-
-    public ObservableField<String> getDepartmentName() {
-        return departmentName;
-    }
-
-    public void setDepartmentName(ObservableField<String> departmentName) {
-        this.departmentName = departmentName;
-    }
-
-    public ObservableField<String> getMedicalResult() {
-        return medicalResult;
-    }
-
-    public void setMedicalResult(ObservableField<String> medicalResult) {
-        this.medicalResult = medicalResult;
-    }
-
-    public ObservableField<Long> getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(ObservableField<Long> time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
-    public ObservableField<String> getTag() {
+    public String getTag() {
         return tag;
     }
 
-    public void setTag(ObservableField<String> tag) {
+    public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public String getHospitalName() {
+        return hospitalName;
+    }
+
+    public void setHospitalName(String hospitalName) {
+        this.hospitalName = hospitalName;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public String getMedicalResult() {
+        return medicalResult;
+    }
+
+    public void setMedicalResult(String medicalResult) {
+        this.medicalResult = medicalResult;
     }
 }

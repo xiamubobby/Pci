@@ -7,5 +7,5 @@ import im.hua.library.base.mvp.IBasePresenter;
  */
 public interface IMedicalRecordsPresenter extends IBasePresenter {
 
-    void getMedicalRecordsList(String patientId, String doctorId);
+    void getMedicalRecordsList(String patientId, boolean isRefresh);
 }
