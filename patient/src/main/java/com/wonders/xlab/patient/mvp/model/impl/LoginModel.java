@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.mvp.api.LoginAPI;
 import com.wonders.xlab.patient.mvp.entity.LoginEntity;
-import com.wonders.xlab.patient.module.base.PatientBaseModel;
+import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.model.ILoginModel;
 
 import java.util.HashMap;

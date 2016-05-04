@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".module.main.doctors.detail.DoctorDetailActivity"
+    tools:context=".module.doctordetail.DoctorDetailActivity"
     tools:showIn="@layout/doctor_detail_activity">
 
     <data>
 
         <variable
             name="bean"
-            type="com.wonders.xlab.patient.module.main.doctors.detail.bean.DoctorBasicInfoBean"/>
+            type="com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorBasicInfoBean"/>
 
         <import type="android.view.View"/>
 

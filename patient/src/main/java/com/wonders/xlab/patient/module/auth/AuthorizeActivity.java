@@ -7,7 +7,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.module.base.AppbarActivity;
+import com.wonders.xlab.patient.base.AppbarActivity;
 
 public class AuthorizeActivity extends AppbarActivity {
 

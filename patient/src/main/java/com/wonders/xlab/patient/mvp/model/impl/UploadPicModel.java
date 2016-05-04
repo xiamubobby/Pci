@@ -2,7 +2,7 @@ package com.wonders.xlab.patient.mvp.model.impl;
 
 import android.support.annotation.NonNull;
 
-import com.wonders.xlab.patient.module.base.PatientBaseModel;
+import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.UploadPicAPI;
 import com.wonders.xlab.patient.mvp.model.IUploadModel;
 

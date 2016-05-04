@@ -23,7 +23,7 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.module.main.MainActivity;
+import com.wonders.xlab.patient.module.MainActivity;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.receiver.ConnectionBroadcastReceiver;
 import com.wonders.xlab.patient.receiver.EMChatMessageBroadcastReceiver;

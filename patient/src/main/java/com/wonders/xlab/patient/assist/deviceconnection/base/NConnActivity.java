@@ -18,7 +18,7 @@ import com.wonders.xlab.patient.assist.deviceconnection.BSConnectedThread;
 import com.wonders.xlab.patient.assist.deviceconnection.aamodel.BPAAModel;
 import com.wonders.xlab.patient.assist.deviceconnection.aamodel.BSAAModel;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.ConnStatusOtto;
-import com.wonders.xlab.patient.module.base.AppbarActivity;
+import com.wonders.xlab.patient.base.AppbarActivity;
 
 import java.util.Set;
 

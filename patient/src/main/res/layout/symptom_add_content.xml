@@ -6,7 +6,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
               app:layout_behavior="@string/appbar_scrolling_view_behavior"
-              tools:context=".module.main.home.dailyreport.datarecord.symptom.SymptomActivity"
+              tools:context=".module.dailyreport.datarecord.symptom.SymptomActivity"
               tools:showIn="@layout/symptom_add_activity">
 
     <TextView

@@ -4,8 +4,8 @@ package com.wonders.xlab.patient.mvp.model.impl;
 import android.text.TextUtils;
 
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.module.base.PatientBaseModel;
-import com.wonders.xlab.patient.module.main.home.dailyreport.adapter.bean.BSReportBean;
+import com.wonders.xlab.patient.base.PatientBaseModel;
+import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportBean;
 import com.wonders.xlab.patient.mvp.api.BSAPI;
 import com.wonders.xlab.patient.mvp.entity.BSSaveEntity;
 

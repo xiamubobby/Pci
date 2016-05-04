@@ -14,7 +14,7 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.di.DaggerPresenterComponent;
 import com.wonders.xlab.patient.di.PresenterModule;
 import com.wonders.xlab.patient.module.auth.register.RegisterActivity;
-import com.wonders.xlab.patient.module.main.MainActivity;
+import com.wonders.xlab.patient.module.MainActivity;
 import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.LoginPresenter;
 
