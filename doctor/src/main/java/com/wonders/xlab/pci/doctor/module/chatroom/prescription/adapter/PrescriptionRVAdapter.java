@@ -1,10 +1,7 @@
 package com.wonders.xlab.pci.doctor.module.chatroom.prescription.adapter;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
