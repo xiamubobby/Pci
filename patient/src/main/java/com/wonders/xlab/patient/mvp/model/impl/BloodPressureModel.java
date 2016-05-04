@@ -1,8 +1,8 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
-import com.wonders.xlab.patient.data.api.BPAPI;
-import com.wonders.xlab.patient.data.entity.BloodPressureEntity;
+import com.wonders.xlab.patient.mvp.api.BPAPI;
+import com.wonders.xlab.patient.mvp.entity.BloodPressureEntity;
 import com.wonders.xlab.patient.mvp.model.IBloodPressureModel;
 
 import im.hua.library.base.mvp.listener.BaseModelListener;

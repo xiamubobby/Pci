@@ -7,7 +7,7 @@ import com.wonders.xlab.patient.module.main.doctors.detail.adapter.bean.DoctorDe
 import com.wonders.xlab.patient.module.main.doctors.detail.adapter.bean.DoctorDetailGroupOfDoctorBean;
 import com.wonders.xlab.patient.module.main.doctors.detail.adapter.bean.DoctorDetailPackageBean;
 import com.wonders.xlab.patient.module.main.doctors.detail.bean.DoctorBasicInfoBean;
-import com.wonders.xlab.patient.data.entity.DoctorGroupDetailEntity;
+import com.wonders.xlab.patient.mvp.entity.DoctorGroupDetailEntity;
 import com.wonders.xlab.patient.mvp.model.IDoctorGroupDetailModel;
 import com.wonders.xlab.patient.mvp.model.IOrderPackageServiceModel;
 import com.wonders.xlab.patient.mvp.model.impl.DoctorGroupDetailModel;

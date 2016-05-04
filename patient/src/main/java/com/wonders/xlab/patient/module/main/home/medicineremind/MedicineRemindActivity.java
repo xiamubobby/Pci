@@ -24,6 +24,8 @@ public class MedicineRemindActivity extends AppbarActivity {
     @Bind(R.id.recycler_view_medicine_remind)
     CommonRecyclerView mRecyclerView;
 
+
+
     @Override
     public int getContentLayout() {
         return R.layout.medicine_remind_activity;

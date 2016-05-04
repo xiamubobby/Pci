@@ -13,7 +13,7 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
-import com.wonders.xlab.pci.doctor.module.chatroom.Medicalrecords.MedicalrecordsFragment;
+import com.wonders.xlab.pci.doctor.module.chatroom.medicalrecords.MedicalRecordsFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.bp.BPFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.bs.BSFragment;
 import com.wonders.xlab.pci.doctor.module.chatroom.chat.ChatFragment;
@@ -99,7 +99,7 @@ public class ChatRoomActivity extends AppbarActivity {
 
         mVPAdapter = new FragmentVPAdapter(getFragmentManager());
         mVPAdapter.addFragment(ChatFragment.newInstance(patientId, patientName, patientPhoneNumber, ownerId, imGroupId, groupName), "聊天");
-        mVPAdapter.addFragment(MedicalrecordsFragment.newInstance(patientId), "就诊记录");
+        mVPAdapter.addFragment(MedicalRecordsFragment.newInstance(patientId), "就诊记录");
         mVPAdapter.addFragment(SurgicalHistoryFragment.newInstance(patientId), "住院手术史");
         mVPAdapter.addFragment(TestIndicatorFragment.newInstance(patientId), "检验指标");
         mVPAdapter.addFragment(PrescriptionFragment.newInstance(patientId), "处方清单");

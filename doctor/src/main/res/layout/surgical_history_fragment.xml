@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<im.hua.uikit.crv.CommonRecyclerView
+    android:id="@+id/recycler_view_surgicalHistory"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/pic_surgical_history"
-    android:orientation="vertical">
-
-</LinearLayout>
+    app:emptyView="@layout/common_empty"
+    app:networkErrorView="@layout/common_network_error"
+    app:serverErrorView="@layout/common_server_error"
+    tools:context="com.wonders.xlab.pci.doctor.module.chatroom.surgicalhistory.SurgicalHistoryFragment"/>

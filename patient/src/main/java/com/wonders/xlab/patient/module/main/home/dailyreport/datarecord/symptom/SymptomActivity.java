@@ -20,7 +20,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.base.AppbarActivity;
-import com.wonders.xlab.patient.data.entity.SymptomEntity;
+import com.wonders.xlab.patient.mvp.entity.SymptomEntity;
 import com.wonders.xlab.patient.mvp.presenter.ISymptomPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.SymptomRecordPresenter;
 import com.zhy.view.flowlayout.FlowLayout;

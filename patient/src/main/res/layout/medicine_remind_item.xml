@@ -33,6 +33,7 @@
             android:textStyle="bold" />
 
         <Switch
+            android:id="@+id/sh_medicine_remind_item_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

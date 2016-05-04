@@ -1,8 +1,8 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
-import com.wonders.xlab.patient.data.api.BannerAPI;
-import com.wonders.xlab.patient.data.entity.HomeBannerEntity;
+import com.wonders.xlab.patient.mvp.api.BannerAPI;
+import com.wonders.xlab.patient.mvp.entity.HomeBannerEntity;
 import com.wonders.xlab.patient.mvp.model.IHomeBannerModel;
 
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
 
-import com.wonders.xlab.patient.data.api.MedicineRemindAPI;
-import com.wonders.xlab.patient.data.entity.MedicineRemindEntity;
+import com.wonders.xlab.patient.mvp.api.MedicineRemindAPI;
+import com.wonders.xlab.patient.mvp.entity.MedicineRemindEntity;
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
 
 import im.hua.library.base.mvp.listener.BasePageModelListener;

@@ -1,8 +1,8 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
 import com.wonders.xlab.patient.module.base.PatientBaseModel;
-import com.wonders.xlab.patient.data.api.DoctorAPI;
-import com.wonders.xlab.patient.data.entity.DoctorMyEntity;
+import com.wonders.xlab.patient.mvp.api.DoctorAPI;
+import com.wonders.xlab.patient.mvp.entity.DoctorMyEntity;
 import com.wonders.xlab.patient.mvp.model.IDoctorMyModel;
 
 import im.hua.library.base.mvp.listener.BaseModelListener;

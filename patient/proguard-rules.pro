@@ -218,7 +218,7 @@
 -dontwarn com.contec.jar.**
 
 #entity
--keep class com.wonders.xlab.patient.data.entity.** {*;}
+-keep class com.wonders.xlab.patient.mvp.entity.** {*;}
 
 #common
 -keep class com.wonders.xlab.common.** { *; }
