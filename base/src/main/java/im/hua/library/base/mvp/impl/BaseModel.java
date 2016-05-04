@@ -34,9 +34,11 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
 
     public abstract String getBaseUrl();
 
-    protected abstract void onSuccess(T response);
+    @Deprecated
+    protected void onSuccess(T response) {}
 
-    protected abstract void onFailed(int code, String message);
+    @Deprecated
+    protected void onFailed(int code, String message) {}
 
     public BaseModel() {
         /**
@@ -130,6 +132,9 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                 });
     }
 
+    /**
+     * cancel the network request and release the resource
+     */
     @Override
     public void cancel() {
         if (subscribe != null) {
@@ -139,6 +144,14 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
         mObservable = null;
     }
 
+    /**
+     * get ready for the use of dagger2 and unittest
+     * use {@link BaseModel#request(Observable, Callback)} instead
+     *
+     * @param observable
+     * @param autoCancelPreFetch
+     */
+    @Deprecated
     protected void request(@NonNull Observable<Response<T>> observable, boolean autoCancelPreFetch) {
         if (autoCancelPreFetch && subscribe != null) {
             subscribe.unsubscribe();
@@ -146,5 +159,91 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
         }
         mObservable = observable;
         request();
+    }
+
+    /**
+     *
+     * @param observable
+     * @param callback
+     */
+    protected void request(@NonNull Observable<Response<T>> observable, final Callback<T> callback) {
+        if (subscribe != null) {
+            subscribe.unsubscribe();
+            subscribe = null;
+        }
+        subscribe = observable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<Response<T>>() {
+
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (e != null) {
+                            if (e instanceof SocketException) {
+                                callback.onFailed(ERROR_CODE_CONNECT_EXCEPTION, "连接出错，请检查网络后重试！");
+                            } else if (e instanceof JsonParseException) {
+                                callback.onFailed(ERROR_CODE_CLIENT_EXCEPTION, "数据解析出错，请稍候重试！");
+                            } else {
+                                onFailed(ERROR_CODE_CLIENT_EXCEPTION, "请求失败，请检查网络后重试！");
+                            }
+                        } else {
+                            callback.onFailed(ERROR_CODE_CLIENT_EXCEPTION, "请求失败，请检查网络后重试！");
+                        }
+                    }
+
+                    @Override
+                    public void onNext(Response<T> result) {
+                        int code = result.code();
+                        switch (code) {
+                            case 400:
+                                callback.onFailed(code, "服务器开小差了，请稍候重试哦！");
+                                break;
+                            case 401:
+                                callback.onFailed(code, "请确保在正确授权的情况下，再重试哦！");
+                                return;
+                            case 403:
+                                callback.onFailed(code, "服务器拒绝了你的请求，请稍候重试吧！");
+                                return;
+                            case 404:
+                                callback.onFailed(code, "好像没有找到服务器哦，请稍候重试吧！");
+                                return;
+                            case 405:
+                                callback.onFailed(code, "一定是你请求的方式有问题，换个方法吧！");
+                                return;
+                            case 415:
+                                callback.onFailed(code, "你上传了不支持的媒体类型哦，请先确认上传的类型是对的吧！");
+                                return;
+                            case 500:
+                                callback.onFailed(code, "服务器内部出错啦，请稍候重试！");
+                                return;
+                            case 503:
+                                callback.onFailed(code, "服务不可用咯，请稍候重试！");
+                                return;
+                        }
+
+                        T body = result.body();
+                        if (null == body) {
+                            callback.onFailed(-1, "获取数据出错，请重试！");
+                        } else if (0 > body.getRet_code()) {
+                            callback.onFailed(body.getRet_code(), body.getMessage());
+                        } else {
+                            callback.onSuccess(result.body());
+                        }
+                    }
+                });
+    }
+
+    /**
+     * callback when the request success or occur an error
+     * @param <T>
+     */
+    public interface Callback<T> {
+        void onSuccess(T response);
+
+        void onFailed(int code, String message);
     }
 }

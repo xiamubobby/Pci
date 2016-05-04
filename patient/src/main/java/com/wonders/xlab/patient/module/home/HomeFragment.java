@@ -18,12 +18,13 @@ import com.wonders.xlab.common.viewpager.LooperViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.module.dailyreport.DailyReportActivity;
 import com.wonders.xlab.patient.module.healthreport.HealthReportActivity;
 import com.wonders.xlab.patient.module.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.patient.module.home.adapter.bean.HomeItemBean;
 import com.wonders.xlab.patient.module.home.bean.HomeBannerBean;
-import com.wonders.xlab.patient.module.dailyreport.DailyReportActivity;
 import com.wonders.xlab.patient.module.medicalrecord.MedicalRecordActivity;
+import com.wonders.xlab.patient.module.medicineremind.MedicineRemindActivity;
 import com.wonders.xlab.patient.mvp.presenter.IHomeTopPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.HomeTopPresenter;
 import com.wonders.xlab.patient.util.UmengEventId;
@@ -93,7 +94,7 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
                 }
             });
         }
-        topVPAdapter.addFragment(HomeTopCircleFragment.newInstance(null),"最近健康数据");
+        topVPAdapter.addFragment(HomeTopCircleFragment.newInstance(null), "最近健康数据");
 
         mIHomeTopPresenter.getHomeBanner();
 
@@ -114,6 +115,11 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
                             Intent intent = new Intent(getActivity(), MedicalRecordActivity.class);
                             intent.putExtra(MedicalRecordActivity.EXTRA_PATIENT_ID, AIManager.getInstance().getPatientId());
                             startActivity(intent);
+                            break;
+                        case 2:
+                            Intent intent1 = new Intent(getActivity(), MedicineRemindActivity.class);
+                            intent1.putExtra(MedicineRemindActivity.EXTRA_PATIENT_ID, AIManager.getInstance().getPatientId());
+                            startActivity(intent1);
                             break;
                         case 3:
                             startActivity(new Intent(getActivity(), HealthReportActivity.class));
@@ -177,7 +183,7 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
     @Override
     public void showHomeTopBanner(List<HomeBannerBean> homeBannerBeanList) {
         for (HomeBannerBean bean : homeBannerBeanList) {
-            topVPAdapter.addFragment(HomeTopImageFragment.newInstance(bean.getImageUrl(), bean.getLinkUrl(), bean.getTitle()),bean.getTitle());
+            topVPAdapter.addFragment(HomeTopImageFragment.newInstance(bean.getImageUrl(), bean.getLinkUrl(), bean.getTitle()), bean.getTitle());
         }
     }
 
@@ -215,6 +221,7 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
         super.onResume();
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_home));
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_home));

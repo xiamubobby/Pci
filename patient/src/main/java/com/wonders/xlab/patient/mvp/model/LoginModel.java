@@ -1,7 +1,5 @@
 package com.wonders.xlab.patient.mvp.model;
 
-import android.support.annotation.NonNull;
-
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
@@ -28,33 +26,33 @@ public class LoginModel extends PatientBaseModel<LoginEntity> implements LoginMo
     }
 
     @Override
-    public void login(String tel, String password, LoginModelContract.Callback callback) {
+    public void login(String tel, String password, final LoginModelContract.Callback callback) {
         HashMap<String, String> body = new HashMap<>();
         body.put("tel", tel);
         body.put("password", new MD5Util().encrypt(password));
-//        request(mLoginAPI.login(body), true);
+        request(mLoginAPI.login(body), new Callback<LoginEntity>() {
+            @Override
+            public void onSuccess(LoginEntity response) {
+                LoginEntity.RetValuesEntity retValues = response.getRet_values();
+                if (null == retValues) {
+                    callback.onReceiveFailed(-1, "登录失败，请重试！");
+                    return;
+                }
 
-        callback.onReceiveFailed(-1,"登录失败");
+                /**
+                 * save user info
+                 */
+                AIManager.getInstance().savePatientInfo(retValues.getId(), retValues.getTel(), retValues.getAvatarUrl(), retValues.getName());
+
+                callback.loginSuccess();
+            }
+
+            @Override
+            public void onFailed(int code, String message) {
+                callback.onReceiveFailed(code, message);
+            }
+        });
+
     }
 
-    @Override
-    protected void onSuccess(@NonNull LoginEntity response) {
-        LoginEntity.RetValuesEntity retValues = response.getRet_values();
-        if (null == retValues) {
-//            mLoginModelListener.onReceiveFailed(-1, "登录失败，请重试！");
-            return;
-        }
-
-        /**
-         * save user info
-         */
-        AIManager.getInstance().savePatientInfo(retValues.getId(), retValues.getTel(), retValues.getAvatarUrl(), retValues.getName());
-
-//        mLoginModelListener.loginSuccess();
-    }
-
-    @Override
-    protected void onFailed(int code, String message) {
-//        mLoginModelListener.onReceiveFailed(code, message);
-    }
 }

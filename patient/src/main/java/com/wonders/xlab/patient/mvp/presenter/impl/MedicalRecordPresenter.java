@@ -89,7 +89,9 @@ public class MedicalRecordPresenter extends BasePagePresenter implements Medical
 
     public interface MedicalRecordPresenterListener extends BasePresenterListener {
         void showMedicalRecordList(List<MedicalRecordBean> beanList);
+
         void appendMedicalRecordList(List<MedicalRecordBean> beanList);
+
         void showReachTheLastPageNotice(String message);
     }
 }
