@@ -1,6 +1,7 @@
 package com.wonders.xlab.patient.di;
 
 import com.wonders.xlab.patient.Constant;
+import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.mvp.api.DoctorAPI;
 
 import java.util.concurrent.TimeUnit;
@@ -21,6 +22,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 public class ManagerModule {
 
+    /**
+     * the scope of the providers must the same with its component's scope
+     * @return
+     */
     @Provides
     @Singleton
     protected Retrofit provideRetrofit() {
@@ -36,6 +41,12 @@ public class ManagerModule {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//必须加上
                 .client(client)
                 .build();
+    }
+
+    @Provides
+    @Singleton
+    protected AIManager provideAIManager() {
+        return new AIManager();
     }
 
     @Provides

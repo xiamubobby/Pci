@@ -17,9 +17,9 @@ public class AIManager {
 
     private static AIManager aiManager;
 
-    private AIManager() {
-
-    }
+//    private AIManager() {
+//
+//    }
 
     public static AIManager getInstance() {
         if (aiManager == null) {

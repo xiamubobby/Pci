@@ -46,7 +46,7 @@ public class XApplication extends Application {
         EMChat.getInstance().setDebugMode(false);
     }
 
-    public static ApplicationComponent getComponent(){
+    public ApplicationComponent getComponent() {
         return component;
     }
 }

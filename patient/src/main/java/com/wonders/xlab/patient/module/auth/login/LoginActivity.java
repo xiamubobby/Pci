@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.MainActivity;
 import com.wonders.xlab.patient.module.auth.register.RegisterActivity;
 import com.wonders.xlab.patient.mvp.presenter.LoginPresenterContract;
@@ -42,7 +43,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenterContrac
         mEtPassword.setOnEditorActionListener(this);
 
         mLoginPresenter = DaggerLoginActivityComponent.builder()
-                .apiComponent()
+                .applicationComponent(((XApplication)getApplication()).getComponent())
                 .loginModule(new LoginModule(this))
                 .build()
                 .getLoginPresenter();
