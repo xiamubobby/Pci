@@ -4,9 +4,9 @@ import android.support.annotation.NonNull;
 
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.doctor.application.XApplication;
-import com.wonders.xlab.pci.doctor.module.me.notification.adapter.bean.NotifiOthersBean;
-import com.wonders.xlab.pci.doctor.module.me.notification.otto.NotifiGroupInviteOtto;
-import com.wonders.xlab.pci.doctor.module.me.notification.otto.NotifiOthersOtto;
+import com.wonders.xlab.pci.doctor.module.notification.adapter.bean.NotifiOthersBean;
+import com.wonders.xlab.pci.doctor.module.notification.otto.NotifiGroupInviteOtto;
+import com.wonders.xlab.pci.doctor.module.notification.otto.NotifiOthersOtto;
 import com.wonders.xlab.pci.doctor.module.otto.MainBottomUnreadNotifyCountOtto;
 import com.wonders.xlab.pci.doctor.realm.NotifiGroupInviteRealm;
 import com.wonders.xlab.pci.doctor.realm.NotifiOthersRealm;

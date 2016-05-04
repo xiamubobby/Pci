@@ -14,9 +14,9 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
-import com.wonders.xlab.pci.doctor.module.chatroom.ChatRoomActivity;
-import com.wonders.xlab.pci.doctor.module.chatroom.chat.otto.ChatRoomRecordInsertOtto;
-import com.wonders.xlab.pci.doctor.module.me.notification.NotificationActivity;
+import com.wonders.xlab.pci.doctor.module.patientinfo.PatientInfoContainerActivity;
+import com.wonders.xlab.pci.doctor.module.chatroom.otto.ChatRoomRecordInsertOtto;
+import com.wonders.xlab.pci.doctor.module.notification.NotificationActivity;
 import com.wonders.xlab.pci.doctor.otto.ForceExitOtto;
 import com.wonders.xlab.pci.doctor.realm.NotifiGroupInviteRealm;
 import com.wonders.xlab.pci.doctor.realm.NotifiOthersRealm;
@@ -75,7 +75,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         switch (type) {
             case -1:
 
-                new NotifyUtil().showNotification(context, ChatRoomActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+                new NotifyUtil().showNotification(context, PatientInfoContainerActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
                 break;
             case 2:
                 OttoManager.post(new ForceExitOtto());
@@ -102,18 +102,18 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 OttoManager.post(new ChatRoomRecordInsertOtto(ownerId, groupName, imGroupId, txtContent, fromWhoAvatarUrl, fromWhoName, message.getMsgTime()));
 
                 Bundle data = new Bundle();
-                data.putString(ChatRoomActivity.EXTRA_OWNER_ID, ownerId);
-                data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID, imGroupId);
-                data.putString(ChatRoomActivity.EXTRA_GROUP_NAME, groupName);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_ID, patientId);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_NAME, patientName);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
+                data.putString(PatientInfoContainerActivity.EXTRA_OWNER_ID, ownerId);
+                data.putString(PatientInfoContainerActivity.EXTRA_IM_GROUP_ID, imGroupId);
+                data.putString(PatientInfoContainerActivity.EXTRA_GROUP_NAME, groupName);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_ID, patientId);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_NAME, patientName);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
 
                 if (TextUtils.isDigitsOnly(imGroupId)) {
                     notifyId = (int) Long.parseLong(imGroupId);
                 }
 
-                new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, notifyId, groupName, fromWhoName + "：" + txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
+                new NotifyUtil().showNotification(context, PatientInfoContainerActivity.class, data, notifyId, groupName, fromWhoName + "：" + txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
 
                 break;
             case 4:
@@ -174,16 +174,16 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 groupName = message.getStringAttribute("groupName", "");
 
                 data = new Bundle();
-                data.putInt(ChatRoomActivity.EXTRA_TAB_POSITION, ChatRoomActivity.TAB_POSITION_BP);
-                data.putString(ChatRoomActivity.EXTRA_OWNER_ID, ownerId);
-                data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID, imGroupId);
-                data.putString(ChatRoomActivity.EXTRA_GROUP_NAME, groupName);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_ID, patientId);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_NAME, patientName);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
+                data.putInt(PatientInfoContainerActivity.EXTRA_TAB_POSITION, PatientInfoContainerActivity.TAB_POSITION_BP);
+                data.putString(PatientInfoContainerActivity.EXTRA_OWNER_ID, ownerId);
+                data.putString(PatientInfoContainerActivity.EXTRA_IM_GROUP_ID, imGroupId);
+                data.putString(PatientInfoContainerActivity.EXTRA_GROUP_NAME, groupName);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_ID, patientId);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_NAME, patientName);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
 
 
-                new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+                new NotifyUtil().showNotification(context, PatientInfoContainerActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
                 break;
             case 6:
                 //血糖
@@ -196,15 +196,15 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 groupName = message.getStringAttribute("groupName", "");
 
                 data = new Bundle();
-                data.putInt(ChatRoomActivity.EXTRA_TAB_POSITION, ChatRoomActivity.TAB_POSITION_BS);
-                data.putString(ChatRoomActivity.EXTRA_OWNER_ID, ownerId);
-                data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID, imGroupId);
-                data.putString(ChatRoomActivity.EXTRA_GROUP_NAME, groupName);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_ID, patientId);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_NAME, patientName);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
+                data.putInt(PatientInfoContainerActivity.EXTRA_TAB_POSITION, PatientInfoContainerActivity.TAB_POSITION_BS);
+                data.putString(PatientInfoContainerActivity.EXTRA_OWNER_ID, ownerId);
+                data.putString(PatientInfoContainerActivity.EXTRA_IM_GROUP_ID, imGroupId);
+                data.putString(PatientInfoContainerActivity.EXTRA_GROUP_NAME, groupName);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_ID, patientId);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_NAME, patientName);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
 
-                new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+                new NotifyUtil().showNotification(context, PatientInfoContainerActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
 
                 break;
             case 7:
@@ -218,15 +218,15 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 groupName = message.getStringAttribute("groupName", "");
 
                 data = new Bundle();
-                data.putInt(ChatRoomActivity.EXTRA_TAB_POSITION, ChatRoomActivity.TAB_POSITION_MEDICAL);
-                data.putString(ChatRoomActivity.EXTRA_OWNER_ID, ownerId);
-                data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID, imGroupId);
-                data.putString(ChatRoomActivity.EXTRA_GROUP_NAME, groupName);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_ID, patientId);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_NAME, patientName);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
+                data.putInt(PatientInfoContainerActivity.EXTRA_TAB_POSITION, PatientInfoContainerActivity.TAB_POSITION_MEDICAL);
+                data.putString(PatientInfoContainerActivity.EXTRA_OWNER_ID, ownerId);
+                data.putString(PatientInfoContainerActivity.EXTRA_IM_GROUP_ID, imGroupId);
+                data.putString(PatientInfoContainerActivity.EXTRA_GROUP_NAME, groupName);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_ID, patientId);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_NAME, patientName);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
 
-                new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+                new NotifyUtil().showNotification(context, PatientInfoContainerActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
 
                 break;
             case 8:
@@ -240,15 +240,15 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 groupName = message.getStringAttribute("groupName", "");
 
                 data = new Bundle();
-                data.putInt(ChatRoomActivity.EXTRA_TAB_POSITION, ChatRoomActivity.TAB_POSITION_SYMPTOM);
-                data.putString(ChatRoomActivity.EXTRA_OWNER_ID, ownerId);
-                data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID, imGroupId);
-                data.putString(ChatRoomActivity.EXTRA_GROUP_NAME, groupName);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_ID, patientId);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_NAME, patientName);
-                data.putString(ChatRoomActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
+                data.putInt(PatientInfoContainerActivity.EXTRA_TAB_POSITION, PatientInfoContainerActivity.TAB_POSITION_SYMPTOM);
+                data.putString(PatientInfoContainerActivity.EXTRA_OWNER_ID, ownerId);
+                data.putString(PatientInfoContainerActivity.EXTRA_IM_GROUP_ID, imGroupId);
+                data.putString(PatientInfoContainerActivity.EXTRA_GROUP_NAME, groupName);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_ID, patientId);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_NAME, patientName);
+                data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
 
-                new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+                new NotifyUtil().showNotification(context, PatientInfoContainerActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
 
                 break;
             case 99:

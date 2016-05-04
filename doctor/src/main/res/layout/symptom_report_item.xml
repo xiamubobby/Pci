@@ -10,7 +10,7 @@
 
         <variable
             name="bean"
-            type="com.wonders.xlab.pci.doctor.module.chatroom.symptom.bean.SymptomReportBean"/>
+            type="com.wonders.xlab.pci.doctor.module.patientinfo.symptom.bean.SymptomReportBean"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

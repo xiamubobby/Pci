@@ -4,14 +4,14 @@
 
         <variable
             name="handler"
-            type="com.wonders.xlab.pci.doctor.module.me.MeFragment"/>
+            type="com.wonders.xlab.pci.doctor.module.MeFragment"/>
     </data>
 
     <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
                                                 xmlns:tools="http://schemas.android.com/tools"
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                tools:context=".module.me.MeFragment">
+                                                tools:context=".module.MeFragment">
 
         <LinearLayout
             android:layout_width="match_parent"

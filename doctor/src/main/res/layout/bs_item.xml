@@ -5,7 +5,7 @@
 
         <variable
             name="bs"
-            type="com.wonders.xlab.pci.doctor.module.chatroom.bs.bean.BSBean"/>
+            type="com.wonders.xlab.pci.doctor.module.patientinfo.bloodsugar.bean.BSBean"/>
 
         <import type="im.hua.utils.DateUtil"/>
 

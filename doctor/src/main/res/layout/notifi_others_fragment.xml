@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
-    tools:context=".module.me.notification.NotifiOthersFragment">
+    tools:context=".module.notification.NotifiOthersFragment">
 
     <im.hua.uikit.crv.CommonRecyclerView
         android:id="@+id/recycler_view_notifi_others"

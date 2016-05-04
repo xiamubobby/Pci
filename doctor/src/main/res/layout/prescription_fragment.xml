@@ -8,4 +8,4 @@
     app:emptyView="@layout/common_empty"
     app:networkErrorView="@layout/common_network_error"
     app:serverErrorView="@layout/common_server_error"
-    tools:context="com.wonders.xlab.pci.doctor.module.chatroom.prescription.PrescriptionFragment"/>
+    tools:context=".module.patientinfo.prescription.PrescriptionFragment"/>

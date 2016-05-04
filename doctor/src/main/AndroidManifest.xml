@@ -89,7 +89,7 @@
             android:windowSoftInputMode="stateHidden">
         </activity>
         <activity
-            android:name=".module.chatroom.ChatRoomActivity"
+            android:name=".module.patientinfo.PatientInfoContainerActivity"
             android:label="@string/title_activity_chat"
             android:parentActivityName=".module.MainActivity"
             android:screenOrientation="portrait"
@@ -106,7 +106,7 @@
             android:name="me.iwf.photopicker.PhotoPagerActivity"
             android:theme="@style/PhotoPickerTheme"/>
         <activity
-            android:name=".module.me.groupmanage.GroupListActivity"
+            android:name=".module.groupmanage.GroupListActivity"
             android:label="@string/title_activity_group_manage"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -116,7 +116,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.me.groupmanage.GroupModifyActivity"
+            android:name=".module.groupmanage.GroupModifyActivity"
             android:label="@string/title_activity_group_modify"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -126,7 +126,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.me.groupmanage.GroupNameModifyActivity"
+            android:name=".module.groupmanage.GroupNameModifyActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="com.wonders.xlab.pci.doctor.GroupNameModifyActivity"/>
@@ -135,7 +135,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.me.groupmanage.GroupDescModifyActivity"
+            android:name=".module.groupmanage.GroupDescModifyActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
@@ -145,7 +145,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.me.groupmanage.GroupInviteDoctorActivity"
+            android:name=".module.groupmanage.GroupInviteDoctorActivity"
             android:label="@string/title_activity_group_invite"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -155,7 +155,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.me.groupmanage.GroupRemoveDoctorActivity"
+            android:name=".module.groupmanage.GroupRemoveDoctorActivity"
             android:label="@string/title_activity_group_remove_doctor"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -165,7 +165,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.me.groupmanage.GroupAuthActivity"
+            android:name=".module.groupmanage.GroupAuthActivity"
             android:label="@string/title_activity_group_auth"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -175,7 +175,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.me.groupmanage.packagemanage.GroupServicesActivity"
+            android:name=".module.packagemanage.GroupServicesActivity"
             android:label="@string/title_activity_group_service_list"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -185,7 +185,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.me.groupmanage.packagemanage.GroupServiceModifyActivity"
+            android:name=".module.packagemanage.GroupServiceModifyActivity"
             android:label="@string/title_activity_group_service_modify"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -195,7 +195,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.me.notification.NotificationActivity"
+            android:name=".module.notification.NotificationActivity"
             android:label="@string/title_activity_notification"
             android:parentActivityName=".module.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

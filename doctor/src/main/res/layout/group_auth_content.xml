@@ -10,5 +10,5 @@
     app:serverErrorView="@layout/common_server_error"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     app:networkErrorView="@layout/common_network_error"
-    tools:context="com.wonders.xlab.pci.doctor.module.me.groupmanage.GroupAuthActivity"
+    tools:context=".module.groupmanage.GroupAuthActivity"
     tools:showIn="@layout/group_auth_activity"/>

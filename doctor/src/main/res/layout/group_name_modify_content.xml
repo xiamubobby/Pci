@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/item_interval_middle"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.wonders.xlab.pci.doctor.module.me.groupmanage.GroupNameModifyActivity"
+    tools:context=".module.groupmanage.GroupNameModifyActivity"
     tools:showIn="@layout/group_name_modify_activity">
 
     <EditText

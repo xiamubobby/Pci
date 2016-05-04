@@ -15,8 +15,9 @@ import android.widget.Toast;
 import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.application.XApplication;
 import com.wonders.xlab.pci.doctor.module.MainActivity;
-import com.wonders.xlab.pci.doctor.data.presenter.impl.LoginPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.LoginPresenterContract;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,7 +26,7 @@ import im.hua.library.base.BaseActivity;
 import im.hua.utils.KeyboardUtil;
 import im.hua.utils.ViewHelper;
 
-public class LoginActivity extends BaseActivity implements LoginPresenter.LoginPresenterListener {
+public class LoginActivity extends BaseActivity implements LoginPresenterContract.ViewListener {
 
     @Bind(R.id.login_phone_number)
     EditText mEtPhoneNumber;
@@ -36,7 +37,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
-    private LoginPresenter mLoginPresenter;
+    private LoginPresenterContract.Actions mLoginPresenter;
 
     private ProgressDialog mDialog;
 
@@ -70,7 +71,12 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
                 return false;
             }
         });
-        mLoginPresenter = new LoginPresenter(this);
+
+        mLoginPresenter = DaggerLoginComponent.builder()
+                .applicationComponent(((XApplication) getApplication()).getComponent())
+                .loginModule(new LoginModule(this))
+                .build()
+                .getLoginPresenter();
         addPresenter(mLoginPresenter);
 
     }

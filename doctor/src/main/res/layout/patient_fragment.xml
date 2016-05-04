@@ -8,4 +8,4 @@
     app:emptyView="@layout/common_empty"
     app:networkErrorView="@layout/common_network_error"
     app:serverErrorView="@layout/common_server_error"
-    tools:context=".module.patient.PatientFragment"/>
+    tools:context=".module.patientlist.PatientFragment"/>
