@@ -1,7 +1,6 @@
 package com.wonders.xlab.patient.di;
 
-import com.wonders.xlab.patient.mvp.presenter.IDoctorAllPresenter;
-import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
+import com.wonders.xlab.patient.mvp.presenter.impl.DoctorAllPresenter;
 
 import dagger.Component;
 
@@ -10,7 +9,6 @@ import dagger.Component;
  */
 @Component(modules = {PresenterModule.class})
 public interface PresenterComponent {
-    ILoginPresenter getLoginPresenter();
 
-    IDoctorAllPresenter getDoctorAllPresenter();
+    DoctorAllPresenter getDoctorAllPresenter();
 }

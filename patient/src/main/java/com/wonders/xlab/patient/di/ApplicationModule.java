@@ -5,8 +5,6 @@ import android.content.res.Resources;
 
 import com.wonders.xlab.patient.application.XApplication;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
 
@@ -22,13 +20,11 @@ public class ApplicationModule {
     }
 
     @Provides
-    @Singleton
     protected Application provideApplication() {
         return mApplication;
     }
 
     @Provides
-    @Singleton
     protected Resources provideApplicationContext() {
         return mApplication.getResources();
     }

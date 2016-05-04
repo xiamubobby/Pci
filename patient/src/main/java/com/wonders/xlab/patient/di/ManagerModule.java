@@ -2,7 +2,6 @@ package com.wonders.xlab.patient.di;
 
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.mvp.api.DoctorAPI;
-import com.wonders.xlab.patient.mvp.api.LoginAPI;
 
 import java.util.concurrent.TimeUnit;
 
@@ -20,13 +19,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by hua on 16/4/25.
  */
 @Module
-public class ApiModule {
+public class ManagerModule {
 
     @Provides
     @Singleton
     protected Retrofit provideRetrofit() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(10, TimeUnit.SECONDS);
+        builder.connectTimeout(30, TimeUnit.SECONDS);
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(logging);
@@ -37,12 +36,6 @@ public class ApiModule {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//必须加上
                 .client(client)
                 .build();
-    }
-
-    @Provides
-    @Singleton
-    protected LoginAPI provideLoginAPI(Retrofit retrofit) {
-        return retrofit.create(LoginAPI.class);
     }
 
     @Provides

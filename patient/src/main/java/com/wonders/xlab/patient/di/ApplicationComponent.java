@@ -7,7 +7,7 @@ import dagger.Component;
 /**
  * Created by hua on 16/4/25.
  */
-@Component(modules = {ApplicationModule.class, ApiModule.class})
+@Component(modules = {ApplicationModule.class})
 public interface ApplicationComponent {
 
     final class Initializer {

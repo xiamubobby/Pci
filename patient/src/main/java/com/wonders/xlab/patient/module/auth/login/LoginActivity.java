@@ -11,12 +11,9 @@ import android.widget.TextView;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.di.DaggerPresenterComponent;
-import com.wonders.xlab.patient.di.PresenterModule;
-import com.wonders.xlab.patient.module.auth.register.RegisterActivity;
 import com.wonders.xlab.patient.module.MainActivity;
-import com.wonders.xlab.patient.mvp.presenter.ILoginPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.LoginPresenter;
+import com.wonders.xlab.patient.module.auth.register.RegisterActivity;
+import com.wonders.xlab.patient.mvp.presenter.LoginPresenterContract;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -25,7 +22,7 @@ import im.hua.library.base.BaseActivity;
 import im.hua.utils.KeyboardUtil;
 import im.hua.utils.ViewHelper;
 
-public class LoginActivity extends BaseActivity implements LoginPresenter.LoginPresenterListener, TextView.OnEditorActionListener {
+public class LoginActivity extends BaseActivity implements LoginPresenterContract.ViewListener, TextView.OnEditorActionListener {
 
     @Bind(R.id.login_phone_number)
     EditText mEtPhoneNumber;
@@ -34,7 +31,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
     @Bind(R.id.container)
     LinearLayout mContainer;
 
-    private ILoginPresenter mLoginPresenter;
+    private LoginPresenterContract.Actions mLoginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +41,12 @@ public class LoginActivity extends BaseActivity implements LoginPresenter.LoginP
 
         mEtPassword.setOnEditorActionListener(this);
 
-        mLoginPresenter = DaggerPresenterComponent.builder()
-                .presenterModule(new PresenterModule(this))
+        mLoginPresenter = DaggerLoginActivityComponent.builder()
+                .apiComponent()
+                .loginModule(new LoginModule(this))
                 .build()
                 .getLoginPresenter();
+
 
         addPresenter(mLoginPresenter);
     }

@@ -198,11 +198,6 @@
 -keep public interface com.umeng.scrshot.**
 -dontwarn com.umeng.**
 
-#growingio
--keep class com.growingio.android.sdk.** {
-      public *;
-  }
-
 #flyco
 -keep class com.flyco.** { *; }
 -keep class com.github.** { *; }
