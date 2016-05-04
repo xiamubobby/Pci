@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.module.main.otto.MainBottomUnreadNotifyCountOtto;
+import com.wonders.xlab.patient.module.otto.MainBottomUnreadNotifyCountOtto;
 import com.wonders.xlab.patient.data.realm.UnReadMessageRealm;
 
 import io.realm.RealmResults;

@@ -13,6 +13,6 @@ import rx.Observable;
  * Created by hua on 16/2/25.
  */
 public interface MedicineRemindAPI {
-    @GET("")
+    @GET("v1/medicationReminders/queryAllRemindersRecordByUserId/{userId}")
     Observable<Response<MedicineRemindEntity>> getMedicineRemindList(@Path("userId") String userId, @Query("page") int page, @Query("size") int size);
 }

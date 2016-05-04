@@ -1,6 +1,6 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
-import com.wonders.xlab.patient.module.base.PatientBaseModel;
+import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.BannerAPI;
 import com.wonders.xlab.patient.mvp.entity.HomeBannerEntity;
 import com.wonders.xlab.patient.mvp.model.IHomeBannerModel;

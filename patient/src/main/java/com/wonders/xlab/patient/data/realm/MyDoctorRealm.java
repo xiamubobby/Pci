@@ -1,6 +1,6 @@
 package com.wonders.xlab.patient.data.realm;
 
-import com.wonders.xlab.patient.module.main.doctors.adapter.bean.MyDoctorItemBean;
+import com.wonders.xlab.patient.module.mydoctor.adapter.MyDoctorItemBean;
 
 import io.realm.RealmObject;
 

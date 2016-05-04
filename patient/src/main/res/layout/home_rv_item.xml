@@ -5,7 +5,7 @@
 
         <variable
             name="home"
-            type="com.wonders.xlab.patient.module.main.home.adapter.bean.HomeItemBean"/>
+            type="com.wonders.xlab.patient.module.home.adapter.bean.HomeItemBean"/>
     </data>
 
     <LinearLayout android:id="@+id/ll_home_rv_item"

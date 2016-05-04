@@ -10,7 +10,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.module.base.AppbarActivity;
+import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.healthreport.bp.BPHRFragment;
 import com.wonders.xlab.patient.module.healthreport.bs.BSHRFragment;
 import com.wonders.xlab.patient.module.healthreport.symptom.SymptomHRFragment;

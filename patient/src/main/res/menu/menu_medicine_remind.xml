@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".module.main.home.medicineremind.MedicineRemindActivity">
+    tools:context=".module.medicineremind.MedicineRemindActivity">
     <item
         android:id="@+id/menu_medicine_remind_add"
         android:icon="@drawable/ic_add_white_36dp"

@@ -9,100 +9,146 @@ import im.hua.library.base.mvp.entity.BaseEntity;
  */
 public class MedicineRemindEntity extends BaseEntity {
 
-    private RetValuesEntity ret_values;
 
-    public RetValuesEntity getRet_values() {
+    /**
+     * endDate : 2016-05-23
+     * expire : false
+     * remindersTime : 10:00
+     * id : 1
+     * remindersDesc : 记得提醒我啊
+     * startDate : 2016-04-23
+     * medicationUsages : [{"id":1,"startDate":"2016-04-23","endDate":"2016-05-23","remindersTime":"10:00","remindersDesc":"记得提醒我啊","delete":false,"expire":false},"medicationName":"感冒药","medicationNum":3,"pharmaceuticalUnit":"粒","use":true}]
+     */
+
+    private List<RetValuesEntity> ret_values;
+
+    public List<RetValuesEntity> getRet_values() {
         return ret_values;
     }
 
-    public void setRet_values(RetValuesEntity ret_values) {
+    public void setRet_values(List<RetValuesEntity> ret_values) {
         this.ret_values = ret_values;
     }
 
     public static class RetValuesEntity {
-        private int totalPages;
-        private int totalElements;
-        private boolean last;
-        private boolean first;
-        private int numberOfElements;
-        private Object sort;
-        private int size;
-        private int number;
-        private List<ContentEntity> content;
+        private String endDate;
+        private boolean expire;
+        private String remindersTime;
+        private int id;
+        private String remindersDesc;
+        private String startDate;
+        /**
+         * id : 1
+         * medicationName : 感冒药
+         * medicationNum : 3
+         * pharmaceuticalUnit : 粒
+         * use : true
+         */
 
-        public int getTotalPages() {
-            return totalPages;
+        private List<MedicationUsagesEntity> medicationUsages;
+
+        public String getEndDate() {
+            return endDate;
         }
 
-        public void setTotalPages(int totalPages) {
-            this.totalPages = totalPages;
+        public void setEndDate(String endDate) {
+            this.endDate = endDate;
         }
 
-        public int getTotalElements() {
-            return totalElements;
+        public boolean isExpire() {
+            return expire;
         }
 
-        public void setTotalElements(int totalElements) {
-            this.totalElements = totalElements;
+        public void setExpire(boolean expire) {
+            this.expire = expire;
         }
 
-        public boolean isLast() {
-            return last;
+        public String getRemindersTime() {
+            return remindersTime;
         }
 
-        public void setLast(boolean last) {
-            this.last = last;
+        public void setRemindersTime(String remindersTime) {
+            this.remindersTime = remindersTime;
         }
 
-        public boolean isFirst() {
-            return first;
+        public int getId() {
+            return id;
         }
 
-        public void setFirst(boolean first) {
-            this.first = first;
+        public void setId(int id) {
+            this.id = id;
         }
 
-        public int getNumberOfElements() {
-            return numberOfElements;
+        public String getRemindersDesc() {
+            return remindersDesc;
         }
 
-        public void setNumberOfElements(int numberOfElements) {
-            this.numberOfElements = numberOfElements;
+        public void setRemindersDesc(String remindersDesc) {
+            this.remindersDesc = remindersDesc;
         }
 
-        public Object getSort() {
-            return sort;
+        public String getStartDate() {
+            return startDate;
         }
 
-        public void setSort(Object sort) {
-            this.sort = sort;
+        public void setStartDate(String startDate) {
+            this.startDate = startDate;
         }
 
-        public int getSize() {
-            return size;
+        public List<MedicationUsagesEntity> getMedicationUsages() {
+            return medicationUsages;
         }
 
-        public void setSize(int size) {
-            this.size = size;
+        public void setMedicationUsages(List<MedicationUsagesEntity> medicationUsages) {
+            this.medicationUsages = medicationUsages;
         }
 
-        public int getNumber() {
-            return number;
-        }
+        public static class MedicationUsagesEntity {
+            private int id;
+            private String medicationName;
+            private int medicationNum;
+            private String pharmaceuticalUnit;
+            private boolean use;
 
-        public void setNumber(int number) {
-            this.number = number;
-        }
+            public int getId() {
+                return id;
+            }
 
-        public List<ContentEntity> getContent() {
-            return content;
-        }
+            public void setId(int id) {
+                this.id = id;
+            }
 
-        public void setContent(List<ContentEntity> content) {
-            this.content = content;
-        }
+            public String getMedicationName() {
+                return medicationName;
+            }
 
-        public static class ContentEntity {
+            public void setMedicationName(String medicationName) {
+                this.medicationName = medicationName;
+            }
+
+            public int getMedicationNum() {
+                return medicationNum;
+            }
+
+            public void setMedicationNum(int medicationNum) {
+                this.medicationNum = medicationNum;
+            }
+
+            public String getPharmaceuticalUnit() {
+                return pharmaceuticalUnit;
+            }
+
+            public void setPharmaceuticalUnit(String pharmaceuticalUnit) {
+                this.pharmaceuticalUnit = pharmaceuticalUnit;
+            }
+
+            public boolean isUse() {
+                return use;
+            }
+
+            public void setUse(boolean use) {
+                this.use = use;
+            }
 
         }
     }

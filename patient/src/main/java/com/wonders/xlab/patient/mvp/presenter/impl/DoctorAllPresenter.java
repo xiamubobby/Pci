@@ -3,7 +3,7 @@ package com.wonders.xlab.patient.mvp.presenter.impl;
 import com.wonders.xlab.patient.mvp.entity.DoctorAllEntity;
 import com.wonders.xlab.patient.di.DaggerModelComponent;
 import com.wonders.xlab.patient.di.ModelModule;
-import com.wonders.xlab.patient.module.main.doctors.adapter.bean.AllDoctorItemBean;
+import com.wonders.xlab.patient.module.alldoctor.adapter.AllDoctorItemBean;
 import com.wonders.xlab.patient.mvp.model.IDoctorAllModel;
 import com.wonders.xlab.patient.mvp.model.impl.DoctorAllModel;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorAllPresenter;
