@@ -11,6 +11,6 @@ import dagger.Component;
  */
 @ActivityScoped
 @Component(dependencies = ApplicationComponent.class,modules = LoginModule.class)
-public interface LoginActivityComponent {
+public interface LoginComponent {
     LoginPresenter getLoginPresenter();
 }

@@ -10,6 +10,7 @@ import retrofit2.Retrofit;
 
 /**
  * Created by hua on 16/5/4.
+ * for LoginComponent
  */
 @Module
 public class LoginModule {

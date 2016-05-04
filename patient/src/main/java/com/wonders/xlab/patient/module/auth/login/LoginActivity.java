@@ -42,7 +42,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenterContrac
 
         mEtPassword.setOnEditorActionListener(this);
 
-        mLoginPresenter = DaggerLoginActivityComponent.builder()
+        mLoginPresenter = DaggerLoginComponent.builder()
                 .applicationComponent(((XApplication)getApplication()).getComponent())
                 .loginModule(new LoginModule(this))
                 .build()

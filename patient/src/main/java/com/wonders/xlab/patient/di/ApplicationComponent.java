@@ -15,6 +15,8 @@ import retrofit2.Retrofit;
 @Component(modules = {ApplicationModule.class, ManagerModule.class})
 public interface ApplicationComponent {
 
+    void inject(Object object);
+
     //TODO Important ,figure it out later
     // downstream components need these exposed
     Retrofit getRetrofit();
