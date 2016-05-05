@@ -48,7 +48,6 @@ public class LoginActivity extends BaseActivity implements LoginPresenterContrac
                 .build()
                 .getLoginPresenter();
 
-
         addPresenter(mLoginPresenter);
     }
 

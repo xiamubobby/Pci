@@ -54,4 +54,5 @@ public class LoginPresenter extends BasePresenter implements LoginPresenterContr
         mLoginPresenterListener.hideLoading();
         mLoginPresenterListener.showNetworkError(message);
     }*/
+
 }

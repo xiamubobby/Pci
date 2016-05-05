@@ -2,7 +2,6 @@ package com.wonders.xlab.patient.mvp.model;
 
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.base.PatientBaseModel;
-import com.wonders.xlab.patient.di.scope.ActivityScoped;
 import com.wonders.xlab.patient.mvp.api.LoginAPI;
 import com.wonders.xlab.patient.mvp.entity.LoginEntity;
 
@@ -15,7 +14,6 @@ import im.hua.utils.MD5Util;
 /**
  * Created by hua on 15/12/17.
  */
-@ActivityScoped
 public class LoginModel extends PatientBaseModel<LoginEntity> implements LoginModelContract.Actions {
 
     private LoginAPI mLoginAPI;

@@ -22,13 +22,13 @@ public class LoginModule {
 
     @Provides
     @ActivityScoped
-    protected LoginPresenterContract.ViewListener provideLoginPresenterListener() {
+    LoginPresenterContract.ViewListener provideLoginPresenterListener() {
         return mLoginPresenterListener;
     }
 
     @Provides
     @ActivityScoped
-    protected LoginAPI provideLoginAPI(Retrofit retrofit) {
+    LoginAPI provideLoginAPI(Retrofit retrofit) {
         return retrofit.create(LoginAPI.class);
     }
 }
