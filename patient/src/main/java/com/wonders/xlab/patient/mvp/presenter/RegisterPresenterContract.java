@@ -8,14 +8,14 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
  */
 public interface RegisterPresenterContract {
     interface ViewListener extends BasePresenterListener {
-        void showGetCaptureSuccess(String message);
+        void getCaptchaSuccess(String message);
 
         void onRegisterSuccess(String message);
     }
 
     interface Actions extends IBasePresenter {
-        void getCapture(String mobile);
+        void getCaptcha(String mobile);
 
-        void register(String mobile, String password, String capture);
+        void register(String mobile, String password, String captcha);
     }
 }

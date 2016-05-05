@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.gson.JsonParseException;
+import com.google.gson.stream.MalformedJsonException;
 
 import java.net.SocketException;
 import java.util.concurrent.TimeUnit;
@@ -185,7 +186,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                         if (e != null) {
                             if (e instanceof SocketException) {
                                 callback.onFailed(ERROR_CODE_CONNECT_EXCEPTION, "连接出错，请检查网络后重试！");
-                            } else if (e instanceof JsonParseException) {
+                            } else if (e instanceof JsonParseException || e instanceof MalformedJsonException) {
                                 callback.onFailed(ERROR_CODE_CLIENT_EXCEPTION, "数据解析出错，请稍候重试！");
                             } else {
                                 onFailed(ERROR_CODE_CLIENT_EXCEPTION, "请求失败，请检查网络后重试！");

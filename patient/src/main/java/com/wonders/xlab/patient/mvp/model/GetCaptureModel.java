@@ -19,8 +19,8 @@ public class GetCaptureModel extends PatientBaseModel<SimpleEntity> implements G
     }
 
     @Override
-    public void getCapture(String mobile, final GetCaptureModelContract.Callback callback) {
-        request(mApi.getCapture(mobile), new Callback<SimpleEntity>() {
+    public void getCaptcha(String mobile, final GetCaptureModelContract.Callback callback) {
+        request(mApi.getCaptcha(mobile), new Callback<SimpleEntity>() {
             @Override
             public void onSuccess(SimpleEntity response) {
                 callback.onGetCaptureSuccess();

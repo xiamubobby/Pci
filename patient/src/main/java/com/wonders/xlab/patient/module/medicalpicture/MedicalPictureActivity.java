@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.medicalrecord;
+package com.wonders.xlab.patient.module.medicalpicture;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,8 +19,8 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.base.AppbarActivity;
-import com.wonders.xlab.patient.module.medicalrecord.adapter.MedicalRecordRVAdapter;
-import com.wonders.xlab.patient.module.medicalrecord.bean.MedicalRecordBean;
+import com.wonders.xlab.patient.module.medicalpicture.adapter.MedicalRecordRVAdapter;
+import com.wonders.xlab.patient.module.medicalpicture.bean.MedicalRecordBean;
 import com.wonders.xlab.patient.mvp.presenter.IUploadPicPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.MedicalRecordPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.UploadPicPresenter;
@@ -42,7 +42,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-public class MedicalRecordActivity extends AppbarActivity implements MedicalRecordPresenter.MedicalRecordPresenterListener, UploadPicPresenter.UploadPicModelListener {
+public class MedicalPictureActivity extends AppbarActivity implements MedicalRecordPresenter.MedicalRecordPresenterListener, UploadPicPresenter.UploadPicModelListener {
 
     public static final String EXTRA_PATIENT_ID = "patientId";
 
@@ -135,9 +135,9 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
                                 }
                             }
                             if (canUpload) {
-                                final EditText editText = (EditText) LayoutInflater.from(MedicalRecordActivity.this).inflate(R.layout.simple_single_line_edit_text, null, false);
+                                final EditText editText = (EditText) LayoutInflater.from(MedicalPictureActivity.this).inflate(R.layout.simple_single_line_edit_text, null, false);
                                 editText.setHint("请输入自传病历报告标题(最多200个字符)");
-                                final AlertDialog alertDialog = new AlertDialog.Builder(MedicalRecordActivity.this)
+                                final AlertDialog alertDialog = new AlertDialog.Builder(MedicalPictureActivity.this)
                                         .setTitle("自传病历报告")
                                         .setPositiveButton("确定", null)
                                         .setNegativeButton("取消", null)
@@ -152,7 +152,7 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
                                             public void onClick(View v) {
                                                 String title = editText.getText().toString();
                                                 if (!TextUtils.isEmpty(title)) {
-                                                    KeyboardUtil.hide(MedicalRecordActivity.this);
+                                                    KeyboardUtil.hide(MedicalPictureActivity.this);
                                                     mUploadPicPresenter.upload(AIManager.getInstance().getPatientId(), title, fileList);
                                                     alertDialog.dismiss();
                                                 } else {
@@ -210,7 +210,7 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
             mMedicalRecordRVAdapter.setOnPhotoClickListener(new MedicalRecordRVAdapter.OnPhotoClickListener() {
                 @Override
                 public void onPhotoClick(ArrayList<String> photoUrls, int selectedPosition) {
-                    Intent intent = new Intent(MedicalRecordActivity.this, PhotoPagerActivity.class);
+                    Intent intent = new Intent(MedicalPictureActivity.this, PhotoPagerActivity.class);
                     intent.putExtra(PhotoPagerActivity.EXTRA_CURRENT_ITEM, selectedPosition);
                     intent.putExtra(PhotoPagerActivity.EXTRA_PHOTOS, photoUrls);
                     intent.putExtra(PhotoPagerActivity.EXTRA_SHOW_DELETE, false); // default is true
@@ -292,7 +292,7 @@ public class MedicalRecordActivity extends AppbarActivity implements MedicalReco
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_medical_record_photo_upload:
-                PhotoPickerIntent intent = new PhotoPickerIntent(MedicalRecordActivity.this);
+                PhotoPickerIntent intent = new PhotoPickerIntent(MedicalPictureActivity.this);
                 intent.setPhotoCount(9);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;

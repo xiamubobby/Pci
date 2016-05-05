@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".module.medicalpicture.MedicalPictureActivity">
+    tools:context="com.wonders.xlab.patient.base.TextInputActivity">
 
     <include layout="@layout/appbar"/>
 
-    <include layout="@layout/medical_record_content"/>
+    <include layout="@layout/text_input_content"/>
 
 </android.support.design.widget.CoordinatorLayout>

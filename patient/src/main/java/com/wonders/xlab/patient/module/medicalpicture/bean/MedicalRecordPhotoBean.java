@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.medicalrecord.bean;
+package com.wonders.xlab.patient.module.medicalpicture.bean;
 
 import java.util.ArrayList;
 

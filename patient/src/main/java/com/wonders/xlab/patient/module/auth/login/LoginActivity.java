@@ -9,10 +9,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.MainActivity;
+import com.wonders.xlab.patient.module.auth.FinishLoginOtto;
 import com.wonders.xlab.patient.module.auth.register.RegisterActivity;
 import com.wonders.xlab.patient.mvp.presenter.LoginPresenterContract;
 
@@ -38,6 +41,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenterContrac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
+        OttoManager.register(this);
         ButterKnife.bind(this);
 
         mEtPassword.setOnEditorActionListener(this);
@@ -119,6 +123,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenterContrac
     @Override
     public void onDestroy() {
         super.onDestroy();
+        OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
 
@@ -145,5 +150,10 @@ public class LoginActivity extends BaseActivity implements LoginPresenterContrac
                 break;
         }
         return false;
+    }
+
+    @Subscribe
+    public void forceExit(FinishLoginOtto otto) {
+        finish();
     }
 }

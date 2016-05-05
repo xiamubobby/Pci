@@ -1,16 +1,19 @@
 package com.wonders.xlab.patient.module.auth.register;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.mvp.presenter.RegisterPresenter;
+import com.wonders.xlab.patient.module.MainActivity;
+import com.wonders.xlab.patient.module.auth.FinishLoginOtto;
 import com.wonders.xlab.patient.mvp.presenter.RegisterPresenterContract;
 
 import butterknife.Bind;
@@ -32,7 +35,9 @@ public class RegisterActivity extends BaseActivity implements RegisterPresenterC
     @Bind(R.id.btn_register)
     Button btnRegister;
 
-    private RegisterPresenter mRegisterPresenter;
+    private RegisterPresenterContract.Actions mRegisterPresenter;
+
+    CountDownTimer mCountDownTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,19 @@ public class RegisterActivity extends BaseActivity implements RegisterPresenterC
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mCountDownTimer = new CountDownTimer(60000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                btnRegisterCap.setText(String.format("%ss后重试", String.valueOf(millisUntilFinished / 1000)));
+            }
+
+            @Override
+            public void onFinish() {
+                btnRegisterCap.setEnabled(true);
+                btnRegisterCap.setText("获取验证码");
+            }
+        };
 
         mRegisterPresenter = DaggerRegisterComponent.builder()
                 .applicationComponent(((XApplication) getApplication()).getComponent())
@@ -52,11 +70,9 @@ public class RegisterActivity extends BaseActivity implements RegisterPresenterC
     @OnClick(R.id.btn_register_cap)
     public void getCapture() {
         String tel = loginPhoneNumber.getText().toString();
-        if (TextUtils.isEmpty(tel)) {
-            showShortToast("请输入");
-            return;
-        }
-        mRegisterPresenter.getCapture(tel);
+        mCountDownTimer.start();
+        btnRegisterCap.setEnabled(false);
+        mRegisterPresenter.getCaptcha(tel);
     }
 
     @OnClick(R.id.btn_register)
@@ -64,7 +80,8 @@ public class RegisterActivity extends BaseActivity implements RegisterPresenterC
         String tel = loginPhoneNumber.getText().toString();
         String pwd = registerPassword.getText().toString();
         String cap = etRegisterCap.getText().toString();
-        mRegisterPresenter.register(tel,pwd,cap);
+
+        mRegisterPresenter.register(tel, pwd, cap);
     }
 
     @OnClick(R.id.container)
@@ -89,28 +106,37 @@ public class RegisterActivity extends BaseActivity implements RegisterPresenterC
     }
 
     @Override
-    public void showGetCaptureSuccess(String message) {
-
+    public void getCaptchaSuccess(String message) {
+        showShortToast(message);
     }
 
     @Override
     public void onRegisterSuccess(String message) {
-
+        OttoManager.post(new FinishLoginOtto());
+        showShortToast(message);
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 
     @Override
     public void showLoading(String message) {
-
+        showProgressDialog("", message, null);
     }
 
     @Override
     public void showNetworkError(String message) {
-
+        showShortToast(message);
+        mCountDownTimer.cancel();
+        btnRegisterCap.setEnabled(true);
+        btnRegisterCap.setText("获取验证码");
     }
 
     @Override
     public void showServerError(String message) {
-
+        showShortToast(message);
+        mCountDownTimer.cancel();
+        btnRegisterCap.setEnabled(true);
+        btnRegisterCap.setText("获取验证码");
     }
 
     @Override
@@ -120,11 +146,14 @@ public class RegisterActivity extends BaseActivity implements RegisterPresenterC
 
     @Override
     public void showErrorToast(String message) {
-
+        showShortToast(message);
+        mCountDownTimer.cancel();
+        btnRegisterCap.setEnabled(true);
+        btnRegisterCap.setText("获取验证码");
     }
 
     @Override
     public void hideLoading() {
-
+        dismissProgressDialog();
     }
 }

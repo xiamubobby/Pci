@@ -28,7 +28,7 @@ public class RegisterEntity extends BaseEntity{
         private String avatarUrl;
         private String name;
         private String tel;
-        private int id;
+        private String id;
 
         public String getAvatarUrl() {
             return avatarUrl;
@@ -54,11 +54,11 @@ public class RegisterEntity extends BaseEntity{
             this.tel = tel;
         }
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
     }

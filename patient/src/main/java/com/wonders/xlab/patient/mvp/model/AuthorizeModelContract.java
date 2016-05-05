@@ -1,18 +1,20 @@
 package com.wonders.xlab.patient.mvp.model;
 
+import java.io.File;
+
 import im.hua.library.base.mvp.IBaseModel;
 import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
- * Created by hua on 16/5/4.
- * 获取验证码Model回调与接口
+ * Created by hua on 16/5/5.
+ * 市民云认证
  */
-public interface GetCaptureModelContract {
+public interface AuthorizeModelContract {
     interface Callback extends BaseModelListener {
-        void onGetCaptureSuccess();
+        void authorizeSuccess(String message);
     }
 
     interface Actions extends IBaseModel {
-        void getCaptcha(String mobile, Callback callback);
+        void authorize(String patientId, String name, String idNo, File idPic, Callback callback);
     }
 }
