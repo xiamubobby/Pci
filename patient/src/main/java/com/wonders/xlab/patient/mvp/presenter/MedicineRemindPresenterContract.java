@@ -1,6 +1,6 @@
 package com.wonders.xlab.patient.mvp.presenter;
 
-import com.wonders.xlab.patient.module.medicineremind.bean.MedicineRemindBean;
+import com.wonders.xlab.patient.module.medicineremind.list.bean.MedicineRemindBean;
 
 import java.util.List;
 

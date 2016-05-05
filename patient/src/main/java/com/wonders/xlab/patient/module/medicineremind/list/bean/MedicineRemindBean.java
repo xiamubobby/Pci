@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.medicineremind.bean;
+package com.wonders.xlab.patient.module.medicineremind.list.bean;
 
 import android.databinding.ObservableField;
 

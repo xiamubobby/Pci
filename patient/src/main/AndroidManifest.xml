@@ -154,19 +154,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/PhotoPickerTheme"/>
         <activity
-            android:name=".module.medicineremind.MedicineRemindActivity"
+            android:name=".module.medicineremind.list.MedicineRemindActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".module.medicineremind.edit.MedicineRemindEditActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".module.medicineremind.edit.medicine.edit.EditMedicineDoseActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".module.medicineremind.edit.medicine.add.AddMedicineActivity"
+            android:label="@string/title_activity_medicine_remind_edit"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity

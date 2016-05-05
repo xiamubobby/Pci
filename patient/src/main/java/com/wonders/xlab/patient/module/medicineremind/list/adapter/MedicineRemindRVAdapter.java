@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.medicineremind.adapter;
+package com.wonders.xlab.patient.module.medicineremind.list.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.MedicineRemindItemBinding;
-import com.wonders.xlab.patient.module.medicineremind.bean.MedicineRemindBean;
+import com.wonders.xlab.patient.module.medicineremind.list.bean.MedicineRemindBean;
 
 /**
  * Created by wzh on 16/5/4.

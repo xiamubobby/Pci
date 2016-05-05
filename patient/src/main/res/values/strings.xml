@@ -95,5 +95,6 @@
     <string name="title_activity_health_record">健康档案</string>
     <string name="text_authorize_notice">您还未认证，请认证后查看您的健康档案数据。\n点击屏幕下方的实名认证完成认证。\n在未认证的状态下您可以点击补充上传图片和医生进行互动。</string>
     <string name="health_record_btn_authorize">实名认证</string>
+    <string name="title_activity_medicine_remind_edit">新增提醒</string>
 
 </resources>

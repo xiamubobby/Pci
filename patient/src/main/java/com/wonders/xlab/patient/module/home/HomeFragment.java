@@ -23,7 +23,7 @@ import com.wonders.xlab.patient.module.healthrecord.HealthRecordActivity;
 import com.wonders.xlab.patient.module.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.patient.module.home.adapter.bean.HomeItemBean;
 import com.wonders.xlab.patient.module.home.bean.HomeBannerBean;
-import com.wonders.xlab.patient.module.medicineremind.MedicineRemindActivity;
+import com.wonders.xlab.patient.module.medicineremind.list.MedicineRemindActivity;
 import com.wonders.xlab.patient.mvp.presenter.IHomeTopPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.HomeTopPresenter;
 import com.wonders.xlab.patient.util.UmengEventId;

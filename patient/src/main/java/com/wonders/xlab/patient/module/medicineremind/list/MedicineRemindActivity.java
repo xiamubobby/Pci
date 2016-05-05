@@ -1,5 +1,6 @@
-package com.wonders.xlab.patient.module.medicineremind;
+package com.wonders.xlab.patient.module.medicineremind.list;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
@@ -8,12 +9,14 @@ import android.widget.Toast;
 
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
+import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
-import com.wonders.xlab.patient.module.medicineremind.adapter.MedicineRemindRVAdapter;
-import com.wonders.xlab.patient.module.medicineremind.bean.MedicineRemindBean;
+import com.wonders.xlab.patient.module.medicineremind.edit.MedicineRemindEditActivity;
+import com.wonders.xlab.patient.module.medicineremind.list.adapter.MedicineRemindRVAdapter;
+import com.wonders.xlab.patient.module.medicineremind.list.bean.MedicineRemindBean;
 import com.wonders.xlab.patient.mvp.presenter.MedicineRemindPresenterContract;
 
 import java.util.List;
@@ -86,6 +89,12 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
     public void showMedicineRemind(List<MedicineRemindBean> medicineRemindBeanList) {
         if (mMedicineRemindRVAdapter == null) {
             mMedicineRemindRVAdapter = new MedicineRemindRVAdapter();
+            mMedicineRemindRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    startActivity(new Intent(MedicineRemindActivity.this, MedicineRemindEditActivity.class));
+                }
+            });
             mRecyclerView.setAdapter(mMedicineRemindRVAdapter);
         }
         mMedicineRemindRVAdapter.setDatas(medicineRemindBeanList);
@@ -102,6 +111,7 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
 
         switch (item.getItemId()) {
             case R.id.menu_medicine_remind_add:
+                startActivity(new Intent(MedicineRemindActivity.this, MedicineRemindEditActivity.class));
                 break;
         }
         return super.onOptionsItemSelected(item);

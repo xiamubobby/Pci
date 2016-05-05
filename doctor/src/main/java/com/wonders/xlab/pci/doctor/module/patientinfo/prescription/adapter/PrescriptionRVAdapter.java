@@ -40,6 +40,7 @@ public class PrescriptionRVAdapter extends SimpleRVAdapter<PrescriptionBean> {
         PrescriptionBean bean = getBean(position);
         viewHolder.hospitalName.setText("医院名称：" + bean.getHospitalName());
         viewHolder.itemDate.setText("开处方时间：" + bean.getRecordTime());
+        viewHolder.mLlMedicineList.removeAllViews();
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DensityUtil.dp2px(context, 48.0f));
         for (int i = 0; i < bean.medicineList.size(); i++) {
             TextView textView = new TextView(holder.itemView.getContext());
