@@ -190,6 +190,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
     @Override
     public void authorizeSuccess(String message) {
         showShortToast(message);
+        finish();
     }
 
     @Override

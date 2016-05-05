@@ -1,7 +1,5 @@
 package com.wonders.xlab.pci.doctor.module.patientinfo.indicator.adapter.bean;
 
-import android.databinding.ObservableField;
-
 import java.util.List;
 
 /**
@@ -13,19 +11,19 @@ public class TestIndicatorBean {
     /**
      * 检验时间
      */
-    private ObservableField<String> testTimeInStr = new ObservableField<>();
+    private String testTimeInStr;
     /**
      * 医院名称
      */
-    private ObservableField<String> hospitalName = new ObservableField<>();
+    private String hospitalName;
     /**
      * 科室名称
      */
-    private ObservableField<String> departmentsName = new ObservableField<>();
+    private int departmentsName;
     /**
      * 指标列表
      */
-    private ObservableField<List<IndicatorBean>> indicatorList = new ObservableField<>();
+    private List<IndicatorBean> indicatorList;
 
     public static class IndicatorBean {
 
@@ -59,19 +57,54 @@ public class TestIndicatorBean {
     }
 
 
-    public ObservableField<String> getTestTimeInStr() {
+    public String getTestTimeInStr() {
         return testTimeInStr;
     }
 
-    public ObservableField<String> getHospitalName() {
+    public void setTestTimeInStr(String testTimeInStr) {
+        this.testTimeInStr = testTimeInStr;
+    }
+
+    public String getHospitalName() {
         return hospitalName;
     }
 
-    public ObservableField<String> getDepartmentsName() {
-        return departmentsName;
+    public void setHospitalName(String hospitalName) {
+        this.hospitalName = hospitalName;
     }
 
-    public ObservableField<List<IndicatorBean>> getIndicatorList() {
+    public String getDepartmentsName() {
+        switch (departmentsName) {
+            case 1:
+                return "普通门诊";
+            case 2:
+                return "专科门诊";
+            case 3:
+                return "专家门诊";
+            case 4:
+                return "特需门诊";
+            case 5:
+                return "转病门诊";
+            case 6:
+                return "急诊";
+            case 7:
+                return "体检";
+            case 8:
+                return "其他";
+            default:
+                return "其他";
+        }
+    }
+
+    public void setDepartmentsName(int departmentsName) {
+        this.departmentsName = departmentsName;
+    }
+
+    public List<IndicatorBean> getIndicatorList() {
         return indicatorList;
+    }
+
+    public void setIndicatorList(List<IndicatorBean> indicatorList) {
+        this.indicatorList = indicatorList;
     }
 }
