@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.healthreport.bs;
+package com.wonders.xlab.patient.module.healthchart.bs;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,8 +13,8 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.module.healthreport.bs.adapter.BSRVAdapter;
-import com.wonders.xlab.patient.module.healthreport.bs.bean.BSBean;
+import com.wonders.xlab.patient.module.healthchart.bs.adapter.BSRVAdapter;
+import com.wonders.xlab.patient.module.healthchart.bs.bean.BSBean;
 import com.wonders.xlab.patient.mvp.presenter.IBloodSugarPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.BloodSugarPresenter;
 

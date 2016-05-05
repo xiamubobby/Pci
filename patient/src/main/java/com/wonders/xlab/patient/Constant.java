@@ -16,7 +16,7 @@ public class Constant {
     /**
      * 刘毅地址
      */
-    public static String BASE_URL = "http://172.16.76.210:8080/";
+//    public static String BASE_URL = "http://172.16.76.210:8080/";
     /**
      * 内网地址
      */
@@ -24,5 +24,5 @@ public class Constant {
     /**
      * 外网地址
      */
-//    public static String BASE_URL = "http://xlab-tech.com:45675/pci-user/";
+    public static String BASE_URL = "http://xlab-tech.com:45675/pci-user/";
 }

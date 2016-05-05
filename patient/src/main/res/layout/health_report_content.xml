@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.wonders.xlab.patient.module.healthreport.HealthReportActivity"
+    tools:context=".module.healthchart.HealthChartActivity"
     tools:showIn="@layout/health_report_activity">
 
     <com.flyco.tablayout.CommonTabLayout

@@ -5,7 +5,7 @@
 
         <variable
             name="bp"
-            type="com.wonders.xlab.patient.module.healthreport.bp.bean.BPListBean"/>
+            type="com.wonders.xlab.patient.module.healthchart.bp.bean.BPListBean"/>
 
         <import type="im.hua.utils.DateUtil"/>
     </data>

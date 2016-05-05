@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by hua on 16/3/8.
+ * 在首页和健康档案中都用到了
  */
 public class HomeRVAdapter extends SimpleRVAdapter<HomeItemBean> {
 

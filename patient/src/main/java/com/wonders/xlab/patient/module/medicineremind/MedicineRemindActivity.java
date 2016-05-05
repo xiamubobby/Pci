@@ -3,7 +3,6 @@ package com.wonders.xlab.patient.module.medicineremind;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -13,6 +12,7 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.multi.MultiRVAdapter;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.medicineremind.adapter.MedicineRemindRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.bean.MedicineRemindBean;
@@ -30,8 +30,6 @@ import im.hua.uikit.crv.CommonRecyclerView;
  */
 public class MedicineRemindActivity extends AppbarActivity implements MedicineRemindPresenter.MedicineRemindPresenterListener {
 
-    public static final String EXTRA_PATIENT_ID = "patientId";
-
     private static final int REQUEST_CODE = 2333;
 
     @Bind(R.id.recycler_view_medicine_remind)
@@ -40,7 +38,6 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
     private MedicineRemindRVAdapter mMedicineRemindRVAdapter;
 
     private MedicineRemindPresenter mMedicineRemindPresenter;
-
     private String mPatientId;
 
     @Override
@@ -60,18 +57,7 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
         OttoManager.register(this);
         ButterKnife.bind(this);
 
-        Intent intent = getIntent();
-        if (null == intent) {
-            Toast.makeText(this, "获取用药提醒失败，请重试！", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
-        mPatientId = intent.getStringExtra(EXTRA_PATIENT_ID);
-        if (TextUtils.isEmpty(mPatientId)) {
-            Toast.makeText(this, "获取用药提醒失败，请重试！", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
+        mPatientId = AIManager.getInstance().getPatientId();
 
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 5));
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {

@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.healthreport.bs.adapter;
+package com.wonders.xlab.patient.module.healthchart.bs.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.BsHrItemBinding;
-import com.wonders.xlab.patient.module.healthreport.bs.bean.BSBean;
+import com.wonders.xlab.patient.module.healthchart.bs.bean.BSBean;
 
 import java.util.Collections;
 import java.util.Comparator;

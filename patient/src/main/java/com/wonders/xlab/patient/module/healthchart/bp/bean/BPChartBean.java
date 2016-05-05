@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.healthreport.bp.bean;
+package com.wonders.xlab.patient.module.healthchart.bp.bean;
 
 /**
  * Created by hua on 16/2/26.

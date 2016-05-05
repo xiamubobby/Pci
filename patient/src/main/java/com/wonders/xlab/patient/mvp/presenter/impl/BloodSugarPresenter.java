@@ -1,6 +1,6 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
-import com.wonders.xlab.patient.module.healthreport.bs.bean.BSBean;
+import com.wonders.xlab.patient.module.healthchart.bs.bean.BSBean;
 import com.wonders.xlab.patient.mvp.entity.BloodSugarEntity;
 import com.wonders.xlab.patient.mvp.model.IBloodSugarModel;
 import com.wonders.xlab.patient.mvp.model.impl.BloodSugarModel;

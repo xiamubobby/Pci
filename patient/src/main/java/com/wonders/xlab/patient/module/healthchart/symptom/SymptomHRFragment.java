@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.healthreport.symptom;
+package com.wonders.xlab.patient.module.healthchart.symptom;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;

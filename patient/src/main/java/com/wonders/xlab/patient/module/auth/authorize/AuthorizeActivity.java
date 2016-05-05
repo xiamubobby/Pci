@@ -53,6 +53,9 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
     TextView mTvAuthorizeExample;
 
     private AuthorizePresenterContract.Actions mAuthorizePresenter;
+    /**
+     * 保存选择的图片
+     */
     private File mPickedIdPicFile;
 
     @Override

@@ -9,5 +9,5 @@
     android:layout_marginTop="?attr/actionBarSize"
     app:emptyView="@layout/common_empty"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".module.healthreport.bp.BPHRFragment"
+    tools:context=".module.healthchart.bp.BPHRFragment"
     tools:showIn="@layout/bp_hr_fragment"/>

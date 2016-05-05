@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.healthreport.symptom.bean;
+package com.wonders.xlab.patient.module.healthchart.symptom.bean;
 
 /**
  * Created by hua on 16/3/22.

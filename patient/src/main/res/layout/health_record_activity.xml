@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".module.healthchart.HealthChartActivity">
+    tools:context="com.wonders.xlab.patient.module.healthrecord.HealthRecordActivity">
 
     <include layout="@layout/appbar"/>
 
-    <include layout="@layout/health_report_content"/>
+    <include layout="@layout/health_record_content"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.healthreport.bs.bean;
+package com.wonders.xlab.patient.module.healthchart.bs.bean;
 
 import android.databinding.BaseObservable;
 

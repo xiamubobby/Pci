@@ -11,6 +11,7 @@ import android.view.View;
 
 /**
  * Created by hua on 16/3/17.
+ * 定时自动播放
  */
 public class LooperViewPager extends ViewPager {
     private Handler mHandler;

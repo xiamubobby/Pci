@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.healthreport;
+package com.wonders.xlab.patient.module.healthchart;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -11,16 +11,16 @@ import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.base.AppbarActivity;
-import com.wonders.xlab.patient.module.healthreport.bp.BPHRFragment;
-import com.wonders.xlab.patient.module.healthreport.bs.BSHRFragment;
-import com.wonders.xlab.patient.module.healthreport.symptom.SymptomHRFragment;
+import com.wonders.xlab.patient.module.healthchart.bp.BPHRFragment;
+import com.wonders.xlab.patient.module.healthchart.bs.BSHRFragment;
+import com.wonders.xlab.patient.module.healthchart.symptom.SymptomHRFragment;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class HealthReportActivity extends AppbarActivity {
+public class HealthChartActivity extends AppbarActivity {
 
     @Bind(R.id.view_pager_health_report)
     ViewPager mViewPager;

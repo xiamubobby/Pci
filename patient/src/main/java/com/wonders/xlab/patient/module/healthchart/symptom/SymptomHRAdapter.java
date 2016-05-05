@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.healthreport.symptom;
+package com.wonders.xlab.patient.module.healthchart.symptom;
 
 import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;

@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.healthreport.bp;
+package com.wonders.xlab.patient.module.healthchart.bp;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,8 +19,8 @@ import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.module.healthreport.bp.adapter.BPRVAdapter;
-import com.wonders.xlab.patient.module.healthreport.bp.bean.BPListBean;
+import com.wonders.xlab.patient.module.healthchart.bp.adapter.BPRVAdapter;
+import com.wonders.xlab.patient.module.healthchart.bp.bean.BPListBean;
 import com.wonders.xlab.patient.mvp.presenter.IBloodPressurePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.BloodPressurePresenter;
 
