@@ -29,10 +29,13 @@ import butterknife.ButterKnife;
 import im.hua.utils.KeyboardUtil;
 
 public class PatientInfoContainerActivity extends AppbarActivity {
-    public final static int TAB_POSITION_SYMPTOM = 2;
-    public final static int TAB_POSITION_MEDICAL = 3;
-    public final static int TAB_POSITION_BP = 4;
-    public final static int TAB_POSITION_BS = 5;
+    /**
+     * TODO 如果改变了tab显示的顺序，记得修改这里，因为从通知点进来是根据这个位置定位tab的
+     */
+    public final static int TAB_POSITION_SYMPTOM = 5;
+    public final static int TAB_POSITION_MEDICAL = 9;
+    public final static int TAB_POSITION_BP = 6;
+    public final static int TAB_POSITION_BS = 7;
 
     public final static String EXTRA_TAB_POSITION = "tabPosition";
     public final static String EXTRA_PATIENT_ID = "PATIENT_ID";
