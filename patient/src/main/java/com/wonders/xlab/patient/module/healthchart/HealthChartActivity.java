@@ -54,13 +54,13 @@ public class HealthChartActivity extends AppbarActivity {
         for (int i = 0; i < 3; i++) {
             switch (i) {
                 case 0:
-                    tabEntities.add(new TabEntity("血糖", R.drawable.tab_home_select, R.drawable.tab_home_unselect));
+                    tabEntities.add(new TabEntity("血糖", R.drawable.tab_home_selected, R.drawable.tab_home_unselect));
                     break;
                 case 1:
-                    tabEntities.add(new TabEntity("血压", R.drawable.tab_home_select, R.drawable.tab_home_unselect));
+                    tabEntities.add(new TabEntity("血压", R.drawable.tab_home_selected, R.drawable.tab_home_unselect));
                     break;
                 case 2:
-                    tabEntities.add(new TabEntity("不适症状", R.drawable.tab_home_select, R.drawable.tab_home_unselect));
+                    tabEntities.add(new TabEntity("不适症状", R.drawable.tab_home_selected, R.drawable.tab_home_unselect));
                     break;
             }
         }
