@@ -12,26 +12,24 @@ import im.hua.library.base.mvp.entity.SimpleEntity;
  */
 public class GetCaptureModel extends PatientBaseModel<SimpleEntity> implements GetCaptureModelContract.Actions {
     private AuthAPI mApi;
-    private GetCaptureModelContract.ViewListener mListener;
 
     @Inject
-    public GetCaptureModel(GetCaptureModelContract.ViewListener listener, AuthAPI api) {
-        mListener = listener;
+    public GetCaptureModel(AuthAPI api) {
         mApi = api;
     }
 
     @Override
-    protected void onSuccess(SimpleEntity response) {
-        mListener.onGetCaptureSuccess();
-    }
+    public void getCaptcha(String mobile, final GetCaptureModelContract.Callback callback) {
+        request(mApi.getCaptcha(mobile), new Callback<SimpleEntity>() {
+            @Override
+            public void onSuccess(SimpleEntity response) {
+                callback.onGetCaptureSuccess();
+            }
 
-    @Override
-    protected void onFailed(int code, String message) {
-        mListener.onReceiveFailed(code, message);
-    }
-
-    @Override
-    public void getCapture(String mobile) {
-        request(mApi.getCapture(mobile), true);
+            @Override
+            public void onFailed(int code, String message) {
+                callback.onReceiveFailed(code, message);
+            }
+        });
     }
 }

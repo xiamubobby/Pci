@@ -8,11 +8,11 @@ import im.hua.library.base.mvp.listener.BaseModelListener;
  * 获取验证码Model回调与接口
  */
 public interface GetCaptureModelContract {
-    interface ViewListener extends BaseModelListener {
+    interface Callback extends BaseModelListener {
         void onGetCaptureSuccess();
     }
 
     interface Actions extends IBaseModel {
-        void getCapture(String mobile);
+        void getCaptcha(String mobile, Callback callback);
     }
 }

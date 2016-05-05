@@ -33,22 +33,15 @@ public class UploadPicModel extends PatientBaseModel<SimpleEntity> implements IU
             RequestBody iUserId = RequestBody.create(MediaType.parse("text"), userId);
             RequestBody iTitle = RequestBody.create(MediaType.parse("text"), title);
 
-//            IdentityHashMap<String, MultipartBody> identityHashMap = new IdentityHashMap<>();
-
             MultipartBody.Builder builder = new MultipartBody.Builder();
 
             for (File itemFile : fileList) {
                 if (itemFile != null && itemFile.exists()) {
-//                    MultipartBody.Part part = MultipartBody.Part.create(RequestBody.create(MediaType.parse("image/*"), itemFile));
                     builder.addFormDataPart("file",itemFile.getName(),RequestBody.create(MediaType.parse("image/*"), itemFile));
-
-//                    MultipartBody multipartBody = new MultipartBody.Builder().addFormDataPart("file", itemFile.getName(), RequestBody.create(MediaType.parse("image/*"), itemFile)).build();
-//                    identityHashMap.put(new String("file"), multipartBody);
                 }
             }
 
             request(mUploadPicAPI.upload(iUserId, iTitle, builder.build()), true);
-//            request(mUploadPicAPI.upload(iUserId, identityHashMap), true);
         } else {
             onFailed(-1, "请选择要上传的图片");
         }

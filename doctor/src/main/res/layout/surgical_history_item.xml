@@ -13,7 +13,6 @@
         android:paddingLeft="@dimen/item_interval_middle"
         android:paddingRight="@dimen/item_interval_middle"
         android:singleLine="true"
-        android:text="2016-01-22 ---2016-04-12"
         android:textColor="#FF36AFE6" />
 
     <TextView
@@ -24,7 +23,8 @@
         android:paddingLeft="@dimen/item_interval_middle"
         android:paddingRight="@dimen/item_interval_middle"
         android:singleLine="true"
-        android:text="医院名称：上海市第六人民医院临港新城分院" />
+        android:ellipsize="marquee"
+        android:text="医院名称：" />
 
     <TextView
         android:id="@+id/surgical_history_item_department_name"
@@ -34,7 +34,7 @@
         android:paddingLeft="@dimen/item_interval_middle"
         android:paddingRight="@dimen/item_interval_middle"
         android:singleLine="true"
-        android:text="科室名称：内分泌代谢科" />
+        android:text="科室名称：" />
 
     <TextView
         android:id="@+id/surgical_history_item_leave_hospital"
@@ -44,16 +44,15 @@
         android:paddingLeft="@dimen/item_interval_middle"
         android:paddingRight="@dimen/item_interval_middle"
         android:singleLine="true"
-        android:text="出院诊断：急性上呼吸道感染" />
+        android:text="出院诊断：" />
 
     <TextView
         android:id="@+id/surgical_history_item_doctor_suggestion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="10dp"
-        android:paddingLeft="@dimen/item_interval_middle"
-        android:paddingRight="@dimen/item_interval_middle"
-        android:text="医生建议：果酸可以帮助消化，如果你消化不良,那我鼓励你饭后吃个水果。但如果你消化功能良好,饭后可能会帮倒忙.因为这不仅会加重消化负担。果酸可以帮助消化。如果你消化不良,那我鼓励你饭后吃个水果。\n但如果你消化功能良好,饭后可能会帮倒忙.因为这不仅会加重消化负担。" />
+        android:padding="@dimen/item_interval_middle"
+        android:text="医生建议：" />
 
     <TextView
         android:id="@+id/surgical_history_item_click_more"
@@ -63,6 +62,6 @@
         android:layout_margin="@dimen/activity_horizontal_margin"
         android:drawableLeft="@drawable/ic_arrow_down"
         android:drawablePadding="5dp"
-        android:text="点击查看更多" />
+        android:text="@string/text_click_to_see_more" />
 
 </LinearLayout>

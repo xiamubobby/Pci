@@ -2,7 +2,6 @@ package com.wonders.xlab.patient.mvp.model;
 
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.base.PatientBaseModel;
-import com.wonders.xlab.patient.di.scope.ActivityScoped;
 import com.wonders.xlab.patient.mvp.api.LoginAPI;
 import com.wonders.xlab.patient.mvp.entity.LoginEntity;
 
@@ -19,8 +18,13 @@ public class LoginModel extends PatientBaseModel<LoginEntity> implements LoginMo
 
     private LoginAPI mLoginAPI;
 
+    /**
+     * 注入
+     * 为避免人为的手动创建对象，构造函数不设为public
+     * @param loginAPI
+     */
     @Inject
-    public LoginModel(LoginAPI loginAPI) {
+    LoginModel(LoginAPI loginAPI) {
         mLoginAPI = loginAPI;
     }
 

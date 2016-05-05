@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.gson.JsonParseException;
+import com.google.gson.stream.MalformedJsonException;
 
 import java.net.SocketException;
 import java.util.concurrent.TimeUnit;
@@ -185,7 +186,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                         if (e != null) {
                             if (e instanceof SocketException) {
                                 callback.onFailed(ERROR_CODE_CONNECT_EXCEPTION, "连接出错，请检查网络后重试！");
-                            } else if (e instanceof JsonParseException) {
+                            } else if (e instanceof JsonParseException || e instanceof MalformedJsonException) {
                                 callback.onFailed(ERROR_CODE_CLIENT_EXCEPTION, "数据解析出错，请稍候重试！");
                             } else {
                                 onFailed(ERROR_CODE_CLIENT_EXCEPTION, "请求失败，请检查网络后重试！");
@@ -212,7 +213,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                                 callback.onFailed(code, "好像没有找到服务器哦，请稍候重试吧！");
                                 return;
                             case 405:
-                                callback.onFailed(code, "一定是你请求的方式有问题，换个方法吧！");
+                                callback.onFailed(code, "请求的方式有问题，请稍候重试吧！");
                                 return;
                             case 415:
                                 callback.onFailed(code, "你上传了不支持的媒体类型哦，请先确认上传的类型是对的吧！");

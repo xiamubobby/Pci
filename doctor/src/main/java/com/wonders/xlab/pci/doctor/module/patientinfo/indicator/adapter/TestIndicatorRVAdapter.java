@@ -30,13 +30,13 @@ public class TestIndicatorRVAdapter extends SimpleRVAdapter<TestIndicatorBean> {
         super.onBindViewHolder(holder, position);
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         TestIndicatorBean bean = getBean(position);
-        viewHolder.tvDepartmentName.setText("科室名称："+bean.getDepartmentsName().get());
-        viewHolder.tvTime.setText("检验时间："+bean.getTestTimeInStr().get());
-        viewHolder.tvHospitalName.setText("医院名称："+bean.getHospitalName().get());
+        viewHolder.tvDepartmentName.setText("科室名称：" + bean.getDepartmentsName());
+        viewHolder.tvTime.setText("检验时间：" + bean.getTestTimeInStr());
+        viewHolder.tvHospitalName.setText("医院名称：" + bean.getHospitalName());
         IndicatorListRVAdapter rvAdapter = new IndicatorListRVAdapter();
-        rvAdapter.setDatas(bean.getIndicatorList().get());
+        rvAdapter.setDatas(bean.getIndicatorList());
 
-        viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(viewHolder.itemView.getContext(),LinearLayoutManager.VERTICAL,false));
+        viewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(viewHolder.itemView.getContext(), LinearLayoutManager.VERTICAL, false));
         viewHolder.recyclerView.setAdapter(rvAdapter);
 
 

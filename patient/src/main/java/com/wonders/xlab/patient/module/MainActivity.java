@@ -21,6 +21,7 @@ import com.wonders.xlab.patient.module.doctors.DoctorFragment;
 import com.wonders.xlab.patient.module.home.HomeFragment;
 import com.wonders.xlab.patient.module.me.MeFragment;
 import com.wonders.xlab.patient.module.otto.MainBottomUnreadNotifyCountOtto;
+import com.wonders.xlab.patient.module.service.ServiceFragment;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.otto.MeNotifyCountOtto;
 import com.wonders.xlab.patient.service.XEMChatService;
@@ -72,6 +73,7 @@ public class MainActivity extends BaseActivity {
         mFragmentVPAdapter = new FragmentVPAdapter(getFragmentManager());
         mFragmentVPAdapter.addFragment(HomeFragment.getInstance());
         mFragmentVPAdapter.addFragment(DoctorFragment.getInstance());
+        mFragmentVPAdapter.addFragment(ServiceFragment.getInstance());
         mFragmentVPAdapter.addFragment(MeFragment.getInstance());
         mViewPagerMain.setOffscreenPageLimit(3);
         mViewPagerMain.setAdapter(mFragmentVPAdapter);
@@ -94,7 +96,7 @@ public class MainActivity extends BaseActivity {
 
     private void setupBottomTab() {
         ArrayList<CustomTabEntity> tabEntities = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             switch (i) {
                 case 0:
                     tabEntities.add(new TabEntity("首页", R.drawable.tab_home_select, R.drawable.tab_home_unselect));
@@ -103,6 +105,9 @@ public class MainActivity extends BaseActivity {
                     tabEntities.add(new TabEntity("医生", R.drawable.tab_contact_select, R.drawable.tab_contact_unselect));
                     break;
                 case 2:
+                    tabEntities.add(new TabEntity("服务", R.drawable.tab_contact_select, R.drawable.tab_contact_unselect));
+                    break;
+                case 3:
                     tabEntities.add(new TabEntity("我", R.drawable.tab_me_selected, R.drawable.tab_me_unselected));
                     break;
             }

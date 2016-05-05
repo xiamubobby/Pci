@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
-import com.wonders.xlab.pci.doctor.databinding.PrescriptionItemBinding;
 import com.wonders.xlab.pci.doctor.module.patientinfo.prescription.adapter.bean.PrescriptionBean;
 
 import butterknife.Bind;
@@ -39,12 +38,12 @@ public class PrescriptionRVAdapter extends SimpleRVAdapter<PrescriptionBean> {
         super.onBindViewHolder(holder, position);
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         PrescriptionBean bean = getBean(position);
-        viewHolder.binding.setBean(bean);
-
+        viewHolder.hospitalName.setText("医院名称：" + bean.getHospitalName());
+        viewHolder.itemDate.setText("开处方时间：" + bean.getRecordTime());
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DensityUtil.dp2px(context, 48.0f));
-        for (int i = 0; i < bean.medicineList.get().size(); i++) {
+        for (int i = 0; i < bean.medicineList.size(); i++) {
             TextView textView = new TextView(holder.itemView.getContext());
-            textView.setText(bean.medicineList.get().get(i));
+            textView.setText(bean.medicineList.get(i));
             textView.setGravity(Gravity.CENTER_VERTICAL);
             textView.setPadding(8, 0, 8, 0);
             textView.setSingleLine(true);
@@ -55,12 +54,15 @@ public class PrescriptionRVAdapter extends SimpleRVAdapter<PrescriptionBean> {
     class ItemViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.ll_prescription_medicine_list)
         LinearLayout mLlMedicineList;
-        PrescriptionItemBinding binding;
+
+        @Bind(R.id.prescription_item_date)
+        TextView itemDate;
+        @Bind(R.id.prescription_item_hospital_name)
+        TextView hospitalName;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            binding = PrescriptionItemBinding.bind(itemView);
         }
     }
 }

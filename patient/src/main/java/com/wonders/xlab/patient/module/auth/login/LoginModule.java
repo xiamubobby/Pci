@@ -20,15 +20,19 @@ public class LoginModule {
         mLoginPresenterListener = loginPresenterListener;
     }
 
+    /**
+     * @ActivityScoped 必须与其所在的Component一致
+     * @return
+     */
     @Provides
     @ActivityScoped
-    protected LoginPresenterContract.ViewListener provideLoginPresenterListener() {
+    LoginPresenterContract.ViewListener provideLoginPresenterListener() {
         return mLoginPresenterListener;
     }
 
     @Provides
     @ActivityScoped
-    protected LoginAPI provideLoginAPI(Retrofit retrofit) {
+    LoginAPI provideLoginAPI(Retrofit retrofit) {
         return retrofit.create(LoginAPI.class);
     }
 }

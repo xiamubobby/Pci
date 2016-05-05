@@ -18,12 +18,12 @@ import com.wonders.xlab.common.viewpager.LooperViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.module.auth.authorize.AuthorizeActivity;
 import com.wonders.xlab.patient.module.dailyreport.DailyReportActivity;
 import com.wonders.xlab.patient.module.healthreport.HealthReportActivity;
 import com.wonders.xlab.patient.module.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.patient.module.home.adapter.bean.HomeItemBean;
 import com.wonders.xlab.patient.module.home.bean.HomeBannerBean;
-import com.wonders.xlab.patient.module.medicalrecord.MedicalRecordActivity;
 import com.wonders.xlab.patient.module.medicineremind.MedicineRemindActivity;
 import com.wonders.xlab.patient.mvp.presenter.IHomeTopPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.HomeTopPresenter;
@@ -112,8 +112,11 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
                             startActivity(new Intent(getActivity(), DailyReportActivity.class));
                             break;
                         case 1:
-                            Intent intent = new Intent(getActivity(), MedicalRecordActivity.class);
-                            intent.putExtra(MedicalRecordActivity.EXTRA_PATIENT_ID, AIManager.getInstance().getPatientId());
+                           /* Intent intent = new Intent(getActivity(), MedicalPictureActivity.class);
+                            intent.putExtra(MedicalPictureActivity.EXTRA_PATIENT_ID, AIManager.getInstance().getPatientId());
+                            startActivity(intent);
+*/
+                            Intent intent = new Intent(getActivity(), AuthorizeActivity.class);
                             startActivity(intent);
                             break;
                         case 2:
@@ -146,7 +149,7 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
                     case 1:
                         backgroundDrawableId = R.drawable.shape_home_label_medical_report;
                         drawableResId = R.drawable.ic_home_medical_record;
-                        title = "就诊记录";
+                        title = "健康档案";
                         break;
                     case 2:
                         backgroundDrawableId = R.drawable.shape_home_label_medicine_remind;
