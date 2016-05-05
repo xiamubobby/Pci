@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.medicalrecord.bean;
+package com.wonders.xlab.patient.module.medicalpicture.bean;
 
 import com.wonders.xlab.common.recyclerview.adapter.bean.BaseBean;
 import com.wonders.xlab.patient.R;

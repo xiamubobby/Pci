@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.medicalrecord.viewholder;
+package com.wonders.xlab.patient.module.medicalpicture.viewholder;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +12,7 @@ import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.common.recyclerview.adapter.multi.MultiViewHolder;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.module.medicalrecord.bean.MedicalRecordPhotoBean;
+import com.wonders.xlab.patient.module.medicalpicture.bean.MedicalRecordPhotoBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;

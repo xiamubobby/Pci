@@ -1,12 +1,12 @@
-package com.wonders.xlab.patient.module.medicalrecord.adapter;
+package com.wonders.xlab.patient.module.medicalpicture.adapter;
 
 import android.view.View;
 
 import com.wonders.xlab.common.recyclerview.adapter.multi.MultiRVAdapter;
 import com.wonders.xlab.common.recyclerview.adapter.multi.MultiViewHolder;
-import com.wonders.xlab.patient.module.medicalrecord.bean.MedicalRecordBean;
-import com.wonders.xlab.patient.module.medicalrecord.bean.MedicalRecordPhotoBean;
-import com.wonders.xlab.patient.module.medicalrecord.viewholder.MedicalRecordPhotoVH;
+import com.wonders.xlab.patient.module.medicalpicture.bean.MedicalRecordBean;
+import com.wonders.xlab.patient.module.medicalpicture.bean.MedicalRecordPhotoBean;
+import com.wonders.xlab.patient.module.medicalpicture.viewholder.MedicalRecordPhotoVH;
 
 import java.util.ArrayList;
 
