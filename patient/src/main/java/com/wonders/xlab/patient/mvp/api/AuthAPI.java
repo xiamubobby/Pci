@@ -48,5 +48,5 @@ public interface AuthAPI {
      */
     @Multipart
     @POST("idCardValidates/validate")
-    Observable<Response<SimpleEntity>> authorize(@Part("name") RequestBody name, @Part("idCardNum") RequestBody idCardNum,@Part("userId") RequestBody patientId, @Part("file") MultipartBody idCardPic);
+    Observable<Response<SimpleEntity>> authorize(@Part("userId") RequestBody patientId,@Part("name") RequestBody name, @Part("idCardNum") RequestBody idCardNum, @Part("file") MultipartBody idCardPic);
 }
