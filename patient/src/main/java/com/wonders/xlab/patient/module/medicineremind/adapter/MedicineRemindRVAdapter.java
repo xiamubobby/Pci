@@ -1,37 +1,39 @@
 package com.wonders.xlab.patient.module.medicineremind.adapter;
 
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import com.wonders.xlab.common.recyclerview.adapter.multi.MultiRVAdapter;
-import com.wonders.xlab.common.recyclerview.adapter.multi.MultiViewHolder;
+import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
+import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.databinding.MedicineRemindItemBinding;
 import com.wonders.xlab.patient.module.medicineremind.bean.MedicineRemindBean;
-import com.wonders.xlab.patient.module.medicineremind.viewholder.MedicineRemindVH;
 
 /**
  * Created by wzh on 16/5/4.
  */
-public class MedicineRemindRVAdapter extends MultiRVAdapter<MedicineRemindBean> {
-
+public class MedicineRemindRVAdapter extends SimpleRVAdapter<MedicineRemindBean> {
 
     @Override
-    public MultiViewHolder createViewHolder(View itemView, int viewType) {
-        MultiViewHolder viewHolder = null;
-        switch (viewType) {
-            case MedicineRemindBean.ITEM_LAYOUT_MEDICINE_REMIND:
-                viewHolder = new MedicineRemindVH(itemView);
-                break;
-        }
-        return viewHolder;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.medicine_remind_item, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final MultiViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        switch (getItemViewType(position)) {
-            case MedicineRemindBean.ITEM_LAYOUT_MEDICINE_REMIND:
-                MedicineRemindVH viewHolder = (MedicineRemindVH) holder;
-                break;
-        }
+        ItemViewHolder viewHolder = (ItemViewHolder) holder;
+        viewHolder.binding.setBean(getBean(position));
     }
 
+    class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        MedicineRemindItemBinding binding;
+
+        public ItemViewHolder(View itemView) {
+            super(itemView);
+            binding = MedicineRemindItemBinding.bind(itemView);
+        }
+    }
 }

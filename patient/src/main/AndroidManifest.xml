@@ -158,7 +158,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".module.medicineremind.MedicineRemindEditActivity"
+            android:name=".module.medicineremind.edit.MedicineRemindEditActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".module.medicineremind.edit.medicine.edit.EditMedicineDoseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".module.medicineremind.edit.medicine.add.AddMedicineActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity

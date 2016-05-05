@@ -1,23 +1,20 @@
 package com.wonders.xlab.patient.module.medicineremind;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
-import com.wonders.xlab.common.recyclerview.adapter.multi.MultiRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.medicineremind.adapter.MedicineRemindRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.bean.MedicineRemindBean;
-import com.wonders.xlab.patient.module.medicineremind.bean.MedicineRemindDataBean;
-import com.wonders.xlab.patient.mvp.presenter.impl.MedicineRemindPresenter;
+import com.wonders.xlab.patient.mvp.presenter.MedicineRemindPresenterContract;
 
 import java.util.List;
 
@@ -28,16 +25,14 @@ import im.hua.uikit.crv.CommonRecyclerView;
 /**
  * 用药提醒
  */
-public class MedicineRemindActivity extends AppbarActivity implements MedicineRemindPresenter.MedicineRemindPresenterListener {
-
-    private static final int REQUEST_CODE = 2333;
+public class MedicineRemindActivity extends AppbarActivity implements MedicineRemindPresenterContract.ViewListener {
 
     @Bind(R.id.recycler_view_medicine_remind)
     CommonRecyclerView mRecyclerView;
 
     private MedicineRemindRVAdapter mMedicineRemindRVAdapter;
 
-    private MedicineRemindPresenter mMedicineRemindPresenter;
+    private MedicineRemindPresenterContract.Actions mMedicineRemindPresenter;
     private String mPatientId;
 
     @Override
@@ -57,28 +52,44 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
         OttoManager.register(this);
         ButterKnife.bind(this);
 
+        mMedicineRemindPresenter = DaggerMedicineRemindComponent.builder()
+                .applicationComponent(((XApplication) getApplication()).getComponent())
+                .medicineRemindModule(new MedicineRemindModule(this))
+                .build()
+                .getMedicineRemindPresenter();
+
+        addPresenter(mMedicineRemindPresenter);
+
         mPatientId = AIManager.getInstance().getPatientId();
 
-        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 5));
+        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 10));
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mMedicineRemindPresenter.getMedicineRemindList(mPatientId, false);
+                mMedicineRemindPresenter.getMedicineReminds();
             }
         });
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mMedicineRemindPresenter.getMedicineRemindList(mPatientId, true);
+                mMedicineRemindPresenter.getMedicineReminds();
             }
         });
-        mMedicineRemindPresenter = new MedicineRemindPresenter(this);
-        addPresenter(mMedicineRemindPresenter);
 
-        mRecyclerView.setRefreshing(true);
-        mMedicineRemindPresenter.getMedicineRemindList(mPatientId, true);
+
+        mRecyclerView.setRefreshing(false);
+        mMedicineRemindPresenter.getMedicineReminds();
     }
 
+
+    @Override
+    public void showMedicineRemind(List<MedicineRemindBean> medicineRemindBeanList) {
+        if (mMedicineRemindRVAdapter == null) {
+            mMedicineRemindRVAdapter = new MedicineRemindRVAdapter();
+            mRecyclerView.setAdapter(mMedicineRemindRVAdapter);
+        }
+        mMedicineRemindRVAdapter.setDatas(medicineRemindBeanList);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,18 +102,9 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
 
         switch (item.getItemId()) {
             case R.id.menu_medicine_remind_add:
-                startActivityForResult(new Intent(this, MedicineRemindEditActivity.class), REQUEST_CODE);
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            //TODO 刷新页面
-        }
     }
 
     @Override
@@ -110,48 +112,6 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
         super.onDestroy();
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_medicine_remind));
-        MobclickAgent.onResume(this);       //统计时长
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_medicine_remind));
-        MobclickAgent.onPause(this);
-    }
-
-    private void initMedicineRemindRVAdapter() {
-        if (null == mMedicineRemindRVAdapter) {
-            mMedicineRemindRVAdapter = new MedicineRemindRVAdapter();
-            mMedicineRemindRVAdapter.setOnItemClickListener(new MultiRVAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    MedicineRemindDataBean bean = (MedicineRemindDataBean) mMedicineRemindRVAdapter.getItemData(position);
-                    Intent intent = new Intent(MedicineRemindActivity.this, MedicineRemindEditActivity.class);
-                    startActivityForResult(intent, REQUEST_CODE);
-
-
-                }
-            });
-        }
-    }
-
-    @Override
-    public void showMedicineRemindList(List<MedicineRemindBean> beanList) {
-        initMedicineRemindRVAdapter();
-        mRecyclerView.setAdapter(mMedicineRemindRVAdapter);
-        mMedicineRemindRVAdapter.setDatas(beanList);
-    }
-
-    @Override
-    public void appendMedicineRemindList(List<MedicineRemindBean> beanList) {
-        initMedicineRemindRVAdapter();
-        mRecyclerView.setAdapter(mMedicineRemindRVAdapter);
-        mMedicineRemindRVAdapter.appendDatas(beanList);
     }
 
     @Override
@@ -186,7 +146,7 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
 
     @Override
     public void hideLoading() {
-        mRecyclerView.hideRefreshOrLoadMore(true,true);
-        dismissProgressDialog();
+        mRecyclerView.hideRefreshOrLoadMore(true, true);
     }
+
 }
