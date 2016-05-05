@@ -213,7 +213,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                                 callback.onFailed(code, "好像没有找到服务器哦，请稍候重试吧！");
                                 return;
                             case 405:
-                                callback.onFailed(code, "一定是你请求的方式有问题，换个方法吧！");
+                                callback.onFailed(code, "请求的方式有问题，请稍候重试吧！");
                                 return;
                             case 415:
                                 callback.onFailed(code, "你上传了不支持的媒体类型哦，请先确认上传的类型是对的吧！");
