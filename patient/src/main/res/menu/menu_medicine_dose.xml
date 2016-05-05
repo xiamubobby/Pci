@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".module.medicineremind.MedicineRemindActivity">
+    tools:context=".module.medicineremind.edit.medicine.edit.EditMedicineDoseActivity">
     <item
-        android:id="@+id/menu_medicine_remind_add"
+        android:id="@+id/menu_medicine_dose"
         android:orderInCategory="100"
-        android:title="添加"
+        android:title="保存"
         app:showAsAction="always"/>
 </menu>

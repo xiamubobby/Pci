@@ -17,6 +17,7 @@ import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.medicineremind.adapter.MedicineRemindRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.bean.MedicineRemindBean;
 import com.wonders.xlab.patient.module.medicineremind.bean.MedicineRemindDataBean;
+import com.wonders.xlab.patient.module.medicineremind.edit.MedicineRemindEditActivity;
 import com.wonders.xlab.patient.mvp.presenter.impl.MedicineRemindPresenter;
 
 import java.util.List;
@@ -73,7 +74,7 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
             return;
         }
 
-        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 5));
+        mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 10));
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -89,7 +90,7 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
         mMedicineRemindPresenter = new MedicineRemindPresenter(this);
         addPresenter(mMedicineRemindPresenter);
 
-        mRecyclerView.setRefreshing(true);
+        mRecyclerView.setRefreshing(false);
         mMedicineRemindPresenter.getMedicineRemindList(mPatientId, true);
     }
 
@@ -105,7 +106,8 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
 
         switch (item.getItemId()) {
             case R.id.menu_medicine_remind_add:
-                startActivityForResult(new Intent(this, MedicineRemindEditActivity.class), REQUEST_CODE);
+                Intent intent = new Intent(this, MedicineRemindEditActivity.class);
+                startActivityForResult(intent, REQUEST_CODE);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -146,9 +148,16 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
                 public void onItemClick(int position) {
                     MedicineRemindDataBean bean = (MedicineRemindDataBean) mMedicineRemindRVAdapter.getItemData(position);
                     Intent intent = new Intent(MedicineRemindActivity.this, MedicineRemindEditActivity.class);
+                    intent.putExtra(MedicineRemindEditActivity.REMIND_ID,bean.getId());
                     startActivityForResult(intent, REQUEST_CODE);
 
-
+                }
+            });
+            mMedicineRemindRVAdapter.setmOnItemSwitchChangeListener(new MedicineRemindRVAdapter.OnItemSwitchChangeListener() {
+                @Override
+                public void onItemChange(MedicineRemindDataBean bean, boolean isChecked) {
+                    String message = "remind id is " + bean.getId() + "state is " + isChecked;
+                    Toast.makeText(MedicineRemindActivity.this, message, Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -200,7 +209,7 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
 
     @Override
     public void hideLoading() {
-        mRecyclerView.hideRefreshOrLoadMore(true,true);
+        mRecyclerView.hideRefreshOrLoadMore(true, true);
         dismissProgressDialog();
     }
 }

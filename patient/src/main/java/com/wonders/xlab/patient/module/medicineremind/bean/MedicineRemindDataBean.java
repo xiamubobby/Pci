@@ -12,6 +12,7 @@ public class MedicineRemindDataBean extends MedicineRemindBean {
     private String timeStr;
     private boolean isRemind;
     private List<Medicine> medicines;
+    private String startTime;
     private String endTime;
     private String reminderDesc;
 
@@ -58,6 +59,14 @@ public class MedicineRemindDataBean extends MedicineRemindBean {
 
     public void setMedicines(List<Medicine> medicines) {
         this.medicines = medicines;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
     }
 
     public String getEndTime() {

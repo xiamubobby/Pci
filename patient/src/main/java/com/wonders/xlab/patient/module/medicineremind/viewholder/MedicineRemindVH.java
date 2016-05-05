@@ -1,6 +1,8 @@
 package com.wonders.xlab.patient.module.medicineremind.viewholder;
 
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -27,6 +29,9 @@ public class MedicineRemindVH extends MultiViewHolder<MedicineRemindDataBean> {
     @Bind(R.id.tv_medicine_remind_item_end_time)
     TextView endTime;
 
+    private OnSwitchChangeListener mOnSwitchChangeListener;
+
+    private int curColor;
 
     public MedicineRemindVH(View itemView) {
         super(itemView);
@@ -38,17 +43,52 @@ public class MedicineRemindVH extends MultiViewHolder<MedicineRemindDataBean> {
         timePeriod.setText(data.getTimePeriod());
         time.setText(data.getTimeStr());
         switsh.setChecked(data.isRemind());
+        if (data.isRemind()) {
+            curColor = ContextCompat.getColor(itemView.getContext(), R.color.colorPrimaryDark);
+        } else {
+            curColor = ContextCompat.getColor(itemView.getContext(), R.color.text_color_primary_gray);
+        }
+        timePeriod.setTextColor(curColor);
+        time.setTextColor(curColor);
         String medicineStr = "药品名称：";
         for (int i = 0; i < data.getMedicines().size(); i++) {
-            medicineStr += data.getMedicines().get(i).getMedicineName();
+            if (i == 0) {
+                medicineStr += data.getMedicines().get(i).getMedicineName();
+            } else {
+                medicineStr += "，" + data.getMedicines().get(i).getMedicineName();
+            }
+
         }
         medicines.setText(medicineStr);
         if (data.getEndTime() != null && !data.getEndTime().equals("")) {
-            endTime.setText(data.getEndTime());
+            endTime.setText("结束时间：" + data.getEndTime());
         } else {
-            endTime.setText("长期");
+            endTime.setText("结束时间：长期");
         }
+        switsh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (null != mOnSwitchChangeListener) {
+                    mOnSwitchChangeListener.onChange(isChecked);
+                    if (isChecked) {
+                        curColor = ContextCompat.getColor(itemView.getContext(), R.color.colorPrimaryDark);
+                    } else {
+                        curColor = ContextCompat.getColor(itemView.getContext(), R.color.text_color_primary_gray);
+                    }
+                    timePeriod.setTextColor(curColor);
+                    time.setTextColor(curColor);
+                }
+
+            }
+        });
 
     }
 
+    public void setmOnSwitchChangeListener(OnSwitchChangeListener onSwitchChangeListener) {
+        mOnSwitchChangeListener = onSwitchChangeListener;
+    }
+
+    public interface OnSwitchChangeListener {
+        void onChange(boolean isChecked);
+    }
 }

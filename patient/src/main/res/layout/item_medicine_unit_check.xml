@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="wrap_content"
+    android:background="@color/black_40"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/unit_slice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/white_pressed"
+        android:gravity="center"
+        android:text="片"
+        android:layout_margin="10dp"/>
+    <TextView
+        android:id="@+id/unit_grain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/white_pressed"
+        android:gravity="center"
+        android:text="粒"
+        android:layout_margin="10dp"/>
+    <TextView
+        android:id="@+id/unit_ml"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/white_pressed"
+        android:gravity="center"
+        android:text="毫升"
+        android:layout_margin="10dp"/>
+
+
+</LinearLayout>

@@ -5,6 +5,7 @@ import android.view.View;
 import com.wonders.xlab.common.recyclerview.adapter.multi.MultiRVAdapter;
 import com.wonders.xlab.common.recyclerview.adapter.multi.MultiViewHolder;
 import com.wonders.xlab.patient.module.medicineremind.bean.MedicineRemindBean;
+import com.wonders.xlab.patient.module.medicineremind.bean.MedicineRemindDataBean;
 import com.wonders.xlab.patient.module.medicineremind.viewholder.MedicineRemindVH;
 
 /**
@@ -12,7 +13,7 @@ import com.wonders.xlab.patient.module.medicineremind.viewholder.MedicineRemindV
  */
 public class MedicineRemindRVAdapter extends MultiRVAdapter<MedicineRemindBean> {
 
-
+private OnItemSwitchChangeListener mOnItemSwitchChangeListener;
     @Override
     public MultiViewHolder createViewHolder(View itemView, int viewType) {
         MultiViewHolder viewHolder = null;
@@ -25,13 +26,28 @@ public class MedicineRemindRVAdapter extends MultiRVAdapter<MedicineRemindBean> 
     }
 
     @Override
-    public void onBindViewHolder(final MultiViewHolder holder, int position) {
+    public void onBindViewHolder(final MultiViewHolder holder, final int position) {
         super.onBindViewHolder(holder, position);
         switch (getItemViewType(position)) {
             case MedicineRemindBean.ITEM_LAYOUT_MEDICINE_REMIND:
                 MedicineRemindVH viewHolder = (MedicineRemindVH) holder;
+                viewHolder.setmOnSwitchChangeListener(new MedicineRemindVH.OnSwitchChangeListener() {
+                    @Override
+                    public void onChange(boolean isChecked) {
+                        if (null!=mOnItemSwitchChangeListener){
+                            mOnItemSwitchChangeListener.onItemChange((MedicineRemindDataBean)getItemData(holder.getAdapterPosition()),isChecked);
+                        }
+                    }
+                });
                 break;
         }
     }
 
+    public void setmOnItemSwitchChangeListener(OnItemSwitchChangeListener onItemSwitchChangeListener) {
+        mOnItemSwitchChangeListener = onItemSwitchChangeListener;
+    }
+
+    public interface OnItemSwitchChangeListener {
+        void onItemChange(MedicineRemindDataBean bean, boolean isChecked);
+    }
 }

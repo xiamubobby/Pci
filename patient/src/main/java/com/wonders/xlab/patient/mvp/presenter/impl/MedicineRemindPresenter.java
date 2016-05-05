@@ -114,7 +114,12 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
 
             bean.setMedicines(medicines);
             bean.setEndTime(valueEntity.getEndDate());
-            bean.setRemind(valueEntity.isExpire());
+            if (valueEntity.isExpire()){
+                bean.setRemind(false);
+            }else {
+                bean.setRemind(true);
+            }
+
 
             beanList.add(bean);
         }
