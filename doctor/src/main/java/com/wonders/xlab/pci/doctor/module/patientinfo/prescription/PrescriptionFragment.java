@@ -6,13 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.wonders.xlab.pci.doctor.R;
-import com.wonders.xlab.pci.doctor.application.AIManager;
 import com.wonders.xlab.pci.doctor.module.patientinfo.prescription.adapter.PrescriptionRVAdapter;
 import com.wonders.xlab.pci.doctor.module.patientinfo.prescription.adapter.bean.PrescriptionBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.IPrescriptionPresenter;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.PrescriptionPresenter;
+import com.wonders.xlab.pci.doctor.mvp.presenter.PrescriptionPresenterContract;
 
 import java.util.List;
 
@@ -24,14 +23,17 @@ import im.hua.uikit.crv.CommonRecyclerView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PrescriptionFragment extends BaseFragment implements PrescriptionPresenter.PrescriptionPresenterListener {
+public class PrescriptionFragment extends BaseFragment implements PrescriptionPresenterContract.ViewListener {
+
+    private static final String ARG_PATIENT_ID = "patientId";
+    private String mPatientId;
 
     @Bind(R.id.recycler_view_prescription)
     CommonRecyclerView mRecyclerView;
 
     private PrescriptionRVAdapter mRVAdapter;
 
-    private IPrescriptionPresenter mPresenter;
+    private PrescriptionPresenterContract mPresenter;
 
     public PrescriptionFragment() {
         // Required empty public constructor
@@ -39,7 +41,22 @@ public class PrescriptionFragment extends BaseFragment implements PrescriptionPr
 
     public static PrescriptionFragment newInstance(String patientId) {
         PrescriptionFragment fragment = new PrescriptionFragment();
+        Bundle data = new Bundle();
+        data.putString(ARG_PATIENT_ID, patientId);
+        fragment.setArguments(data);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle data = getArguments();
+        if (null == data) {
+            Toast.makeText(getActivity(), "获取处方清单失败", Toast.LENGTH_SHORT).show();
+        }
+        mPatientId = data.getString(ARG_PATIENT_ID);
+
+
     }
 
     @Override
@@ -56,10 +73,11 @@ public class PrescriptionFragment extends BaseFragment implements PrescriptionPr
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mPresenter = new PrescriptionPresenter(this);
-        addPresenter(mPresenter);
+//        mPresenter =
+//        addPresenter(mPresenter);
 
-        mPresenter.getPrescriptionList("", AIManager.getInstance().getDoctorId());
+//
+//        mPresenter.getPrescriptionList("", AIManager.getInstance().getDoctorId());
     }
 
     @Override
@@ -76,6 +94,11 @@ public class PrescriptionFragment extends BaseFragment implements PrescriptionPr
             mRecyclerView.setAdapter(mRVAdapter);
         }
         mRVAdapter.setDatas(prescriptionBeanList);
+    }
+
+    @Override
+    public void appendPrescriptionList(List<PrescriptionBean> prescriptionBeanList) {
+
     }
 
     @Override

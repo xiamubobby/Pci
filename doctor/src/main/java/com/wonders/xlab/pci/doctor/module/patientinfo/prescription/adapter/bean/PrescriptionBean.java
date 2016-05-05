@@ -1,14 +1,36 @@
 package com.wonders.xlab.pci.doctor.module.patientinfo.prescription.adapter.bean;
 
-import android.databinding.ObservableField;
-
 import java.util.List;
 
 /**
  * Created by hua on 16/4/26.
  */
 public class PrescriptionBean {
-    public ObservableField<Long> recordTimeInMill = new ObservableField<>();
-    public ObservableField<String> hospitalName = new ObservableField<>();
-    public ObservableField<List<String>> medicineList = new ObservableField<>();
+    public String recordTime;
+    private String hospitalName;
+    public List<String> medicineList;
+
+    public String getRecordTime() {
+        return recordTime;
+    }
+
+    public void setRecordTime(String recordTime) {
+        this.recordTime = recordTime;
+    }
+
+    public String getHospitalName() {
+        return hospitalName;
+    }
+
+    public void setHospitalName(String hospitalName) {
+        this.hospitalName = hospitalName;
+    }
+
+    public List<String> getMedicineList() {
+        return medicineList;
+    }
+
+    public void setMedicineList(List<String> medicineList) {
+        this.medicineList = medicineList;
+    }
 }
