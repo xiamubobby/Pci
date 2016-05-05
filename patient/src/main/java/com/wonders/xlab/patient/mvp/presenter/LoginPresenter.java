@@ -16,8 +16,14 @@ public class LoginPresenter extends BasePresenter implements LoginPresenterContr
     private LoginPresenterContract.ViewListener mLoginPresenterListener;
     private LoginModelContract.Actions mLoginModel;
 
+    /**
+     * 注入
+     * 为避免人为的手动创建对象，构造函数不设为public
+     * @param loginPresenterListener
+     * @param loginModel
+     */
     @Inject
-    public LoginPresenter(LoginPresenterContract.ViewListener loginPresenterListener,LoginModel loginModel) {
+    LoginPresenter(LoginPresenterContract.ViewListener loginPresenterListener,LoginModel loginModel) {
         mLoginPresenterListener = loginPresenterListener;
 
         mLoginModel = loginModel;

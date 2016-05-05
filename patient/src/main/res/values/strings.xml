@@ -89,5 +89,6 @@
     <string name="title_activity_register">注册</string>
     <string name="register_btn_register">注册</string>
     <string name="title_activity_authorize">身份认证</string>
+    <string name="title_activity_all_doctor">AllDoctorActivity</string>
 
 </resources>

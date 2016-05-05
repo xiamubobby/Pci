@@ -1,73 +1,55 @@
 package com.wonders.xlab.patient.module.alldoctor;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.di.DaggerPresenterComponent;
-import com.wonders.xlab.patient.di.PresenterModule;
-import com.wonders.xlab.patient.module.alldoctor.adapter.AllDoctorRVAdapter;
+import com.wonders.xlab.patient.application.XApplication;
+import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.alldoctor.adapter.AllDoctorItemBean;
+import com.wonders.xlab.patient.module.alldoctor.adapter.AllDoctorRVAdapter;
 import com.wonders.xlab.patient.module.doctordetail.DoctorDetailActivity;
-import com.wonders.xlab.patient.mvp.presenter.IDoctorAllPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.DoctorAllPresenter;
+import com.wonders.xlab.patient.mvp.presenter.AllDoctorPresenterContract;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import im.hua.library.base.BaseFragment;
 import im.hua.uikit.crv.CommonRecyclerView;
 
-/**
- * 所有医生
- */
-public class DoctorAllFragment extends BaseFragment implements DoctorAllPresenter.DoctorAllPresenterListener {
-
+public class AllDoctorActivity extends AppbarActivity implements AllDoctorPresenterContract.ViewListener {
     @Bind(R.id.recycler_view_doctor_all)
     CommonRecyclerView mRecyclerView;
 
-    private IDoctorAllPresenter mDoctorAllPresenter;
+    private AllDoctorPresenterContract.Actions mDoctorAllPresenter;
 
     private AllDoctorRVAdapter mAllDoctorRVAdapter;
 
-    public DoctorAllFragment() {
-        // Required empty public constructor
-    }
-
-    public static DoctorAllFragment newInstance() {
-        return new DoctorAllFragment();
+    @Override
+    public int getContentLayout() {
+        return R.layout.all_doctor_activity;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.doctor_all_fragment, container, false);
-        ButterKnife.bind(this, view);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
 
-        mDoctorAllPresenter = DaggerPresenterComponent.builder()
-                .presenterModule(new PresenterModule(this))
+        mDoctorAllPresenter = DaggerAllDoctorComponent.builder()
+                .applicationComponent(((XApplication) getApplication()).getComponent())
+                .allDoctorModule(new AllDoctorModule(this))
                 .build()
-                .getDoctorAllPresenter();
-        addPresenter(mDoctorAllPresenter);
-        return view;
-    }
+                .getAllDoctorPresenter();
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
+        addPresenter(mDoctorAllPresenter);
+
+        mRecyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
@@ -87,8 +69,8 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onDestroy() {
+        super.onDestroy();
         mAllDoctorRVAdapter = null;
         ButterKnife.unbind(this);
     }
@@ -99,7 +81,7 @@ public class DoctorAllFragment extends BaseFragment implements DoctorAllPresente
             mAllDoctorRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    Intent intent = new Intent(getActivity(), DoctorDetailActivity.class);
+                    Intent intent = new Intent(AllDoctorActivity.this, DoctorDetailActivity.class);
                     intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, mAllDoctorRVAdapter.getBean(position).getDoctorGroupName());
                     intent.putExtra(DoctorDetailActivity.EXTRA_ID, mAllDoctorRVAdapter.getBean(position).getOwnerId());
                     startActivity(intent);

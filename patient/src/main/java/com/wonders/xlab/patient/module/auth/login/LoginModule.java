@@ -20,6 +20,10 @@ public class LoginModule {
         mLoginPresenterListener = loginPresenterListener;
     }
 
+    /**
+     * @ActivityScoped 必须与其所在的Component一致
+     * @return
+     */
     @Provides
     @ActivityScoped
     LoginPresenterContract.ViewListener provideLoginPresenterListener() {

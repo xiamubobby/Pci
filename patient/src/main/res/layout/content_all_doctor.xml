@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <im.hua.uikit.crv.CommonRecyclerView
     android:id="@+id/recycler_view_doctor_all"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -6,6 +7,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:emptyView="@layout/common_empty"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     app:networkErrorView="@layout/common_network_error"
     app:serverErrorView="@layout/common_server_error"
-    tools:context=".module.alldoctor.AllDoctorFragment"/>
+    tools:context="com.wonders.xlab.patient.module.alldoctor.AllDoctorActivity"
+    tools:showIn="@layout/all_doctor_activity"/>

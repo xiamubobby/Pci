@@ -16,7 +16,7 @@ import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.module.alldoctor.DoctorAllFragment;
+import com.wonders.xlab.patient.module.alldoctor.AllDoctorFragment;
 import com.wonders.xlab.patient.module.mydoctor.DoctorMyFragment;
 import com.wonders.xlab.patient.otto.DoctorTabChangeOtto;
 
@@ -60,7 +60,7 @@ public class DoctorFragment extends BaseFragment {
 
         FragmentVPAdapter fragmentVPAdapter = new FragmentVPAdapter(getActivity().getFragmentManager());
         fragmentVPAdapter.addFragment(DoctorMyFragment.newInstance());
-        fragmentVPAdapter.addFragment(DoctorAllFragment.newInstance());
+        fragmentVPAdapter.addFragment(AllDoctorFragment.newInstance());
         mViewPager.setAdapter(fragmentVPAdapter);
 
         setupTopTab();
