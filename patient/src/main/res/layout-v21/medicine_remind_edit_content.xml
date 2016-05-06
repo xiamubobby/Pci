@@ -14,12 +14,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
         <TimePicker
             android:id="@+id/timePicker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"/>
+            android:layout_gravity="center_vertical"
+            android:timePickerMode="spinner"/>
 
         <include layout="@layout/medicine_remind_edit_content_bottom"/>
     </LinearLayout>

@@ -1,24 +1,51 @@
 package com.wonders.xlab.patient.module.medicineremind.edit;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.NumberPicker;
+import android.widget.DatePicker;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
+import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
+import com.wonders.xlab.patient.module.medicineremind.edit.adapter.MedicineRemindEditBean;
+import com.wonders.xlab.patient.module.medicineremind.edit.adapter.MedicineRemindEditRVAdapter;
+import com.wonders.xlab.patient.mvp.presenter.MedicineRemindEditPresenterContract;
+
+import java.util.Calendar;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import im.hua.utils.DateUtil;
 
-public class MedicineRemindEditActivity extends AppbarActivity {
+public class MedicineRemindEditActivity extends AppbarActivity implements MedicineRemindEditPresenterContract.ViewListener {
 
-    @Bind(R.id.nb_medicine_remind_edit_am_or_pm)
-    NumberPicker mNbAMOrPM;
-    @Bind(R.id.nb_medicine_remind_edit_hour)
-    NumberPicker mNbHour;
-    @Bind(R.id.nb_medicine_remind_edit_minutes)
-    NumberPicker mNbMinutes;
+    @Bind(R.id.timePicker)
+    TimePicker mTimePicker;
+    @Bind(R.id.tv_medicine_remind_edit_start_date)
+    TextView mTvStartDate;
+    @Bind(R.id.tv_medicine_remind_edit_end_date)
+    TextView mTvEndDate;
+    @Bind(R.id.tv_medicine_remind_edit_message)
+    TextView mTvMessage;
+    @Bind(R.id.recycler_view_medicine_remind_edit)
+    RecyclerView mRecyclerView;
+
+    private Calendar mStartCalendar = Calendar.getInstance();
+    private Calendar mEndCalendar = Calendar.getInstance();
+
+    private MedicineRemindEditRVAdapter mRVAdapter;
+
+    private MedicineRemindEditPresenterContract.Actions mPresenter;
 
     @Override
     public int getContentLayout() {
@@ -29,11 +56,67 @@ public class MedicineRemindEditActivity extends AppbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        mNbAMOrPM.setMaxValue(1);
-        mNbAMOrPM.setDisplayedValues(new String[]{"上午", "下午"});
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        mRecyclerView.addItemDecoration(new VerticalItemDecoration(this,getResources().getColor(R.color.divider),1));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mNbHour.setMaxValue(11);
-        mNbHour.setDisplayedValues(new String[]{"00","01","02","03","04","05","06","07","08","09","10","11","12"});
+        mTvStartDate.setText(DateUtil.format(mStartCalendar.getTimeInMillis(), "yyyy-MM-dd"));
+
+        mPresenter = DaggerMedicineRemindEditComponent.builder()
+                .applicationComponent(((XApplication) getApplication()).getComponent())
+                .medicineRemindEditModule(new MedicineRemindEditModule(this))
+                .build()
+                .getMedicineRemindEditPresenter();
+        addPresenter(mPresenter);
+
+        mPresenter.getMedicineRemindInfoById("1");
+    }
+
+    @OnClick(R.id.ll_medicine_remind_edit_start_date)
+    public void showStartDate() {
+
+        DatePickerDialog mDatePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        mStartCalendar.set(year, monthOfYear, dayOfMonth);
+                        mTvStartDate.setText(DateUtil.format(mStartCalendar.getTimeInMillis(), "yyyy-MM-dd"));
+                    }
+                },
+                mStartCalendar.get(Calendar.YEAR),
+                mStartCalendar.get(Calendar.MONTH),
+                mStartCalendar.get(Calendar.DAY_OF_MONTH)
+        );
+        mDatePickerDialog.getDatePicker().setMaxDate(Math.min(mEndCalendar.getTimeInMillis(), Calendar.getInstance().getTimeInMillis()));
+        mDatePickerDialog.show();
+    }
+
+    @OnClick(R.id.ll_medicine_remind_edit_end_date)
+    public void showEndDate() {
+        DatePickerDialog mDatePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        mEndCalendar.set(year, monthOfYear, dayOfMonth);
+                        mTvEndDate.setText(DateUtil.format(mEndCalendar.getTimeInMillis(), "yyyy-MM-dd"));
+                    }
+                },
+                mEndCalendar.get(Calendar.YEAR),
+                mEndCalendar.get(Calendar.MONTH),
+                mEndCalendar.get(Calendar.DAY_OF_MONTH)
+        );
+        mDatePickerDialog.getDatePicker().setMinDate(mStartCalendar.getTimeInMillis());
+        mDatePickerDialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
+        mDatePickerDialog.show();
+    }
+
+    @OnClick(R.id.tv_medicine_remind_edit_add_medicine)
+    public void addMedicine() {
+
+    }
+
+    @OnClick(R.id.ll_medicine_remind_edit_message)
+    public void setMessage() {
 
     }
 
@@ -50,5 +133,56 @@ public class MedicineRemindEditActivity extends AppbarActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showMedicineRemindInfo(int hour, int minutes, long startDate, Long endDate, String message, List<MedicineRemindEditBean> beanList) {
+
+        mTimePicker.setCurrentHour(hour);
+        mTimePicker.setCurrentMinute(minutes);
+
+        mStartCalendar.setTimeInMillis(startDate);
+        mTvStartDate.setText(DateUtil.format(mStartCalendar.getTimeInMillis(), "yyyy-MM-dd"));
+        if (null != endDate) {
+            mEndCalendar.setTimeInMillis(endDate);
+            mTvEndDate.setText(DateUtil.format(mEndCalendar.getTimeInMillis(), "yyyy-MM-dd"));
+        }
+
+        mTvMessage.setText(message);
+        if (null == mRVAdapter) {
+            mRVAdapter = new MedicineRemindEditRVAdapter();
+            mRecyclerView.setAdapter(mRVAdapter);
+        }
+        mRVAdapter.setDatas(beanList);
+    }
+
+    @Override
+    public void showLoading(String message) {
+
+    }
+
+    @Override
+    public void showNetworkError(String message) {
+
+    }
+
+    @Override
+    public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
+
+    }
+
+    @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
     }
 }
