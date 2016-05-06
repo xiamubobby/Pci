@@ -44,8 +44,6 @@ import rx.schedulers.Schedulers;
 
 public class MedicalPictureActivity extends AppbarActivity implements MedicalRecordPresenter.MedicalRecordPresenterListener, UploadPicPresenter.UploadPicModelListener {
 
-    public static final String EXTRA_PATIENT_ID = "patientId";
-
     private static final int REQUEST_CODE = 1123;
 
     private static final int REQUEST_PICTURES_CODE = 1124;
@@ -76,18 +74,7 @@ public class MedicalPictureActivity extends AppbarActivity implements MedicalRec
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
 
-        Intent intent = getIntent();
-        if (null == intent) {
-            Toast.makeText(this, "获取患者就诊记录失败，请重试！", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
-        mPatientId = intent.getStringExtra(EXTRA_PATIENT_ID);
-        if (TextUtils.isEmpty(mPatientId)) {
-            Toast.makeText(this, "获取患者就诊记录失败，请重试！", Toast.LENGTH_SHORT).show();
-            finish();
-            return;
-        }
+        mPatientId = AIManager.getInstance().getPatientId();
 
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 5));
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {

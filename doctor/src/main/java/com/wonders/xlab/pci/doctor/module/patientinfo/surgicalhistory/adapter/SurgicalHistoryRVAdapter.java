@@ -1,12 +1,14 @@
 package com.wonders.xlab.pci.doctor.module.patientinfo.surgicalhistory.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
@@ -14,18 +16,14 @@ import com.wonders.xlab.pci.doctor.module.patientinfo.surgicalhistory.adapter.be
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import im.hua.utils.DateUtil;
 
 /**
  * Created by jimmy on 16/5/3.
  */
 public class SurgicalHistoryRVAdapter extends SimpleRVAdapter<SurgicalHistoryBean> {
 
+    public SurgicalHistoryRVAdapter() {
 
-    private Context context;
-
-    public SurgicalHistoryRVAdapter(Context context) {
-        this.context = context;
     }
 
     @Override
@@ -38,15 +36,29 @@ public class SurgicalHistoryRVAdapter extends SimpleRVAdapter<SurgicalHistoryBea
         super.onBindViewHolder(holder, position);
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         SurgicalHistoryBean bean = getBean(position);
-        viewHolder.hospitalName.setText(bean.getHospitalName().get());
-        viewHolder.departmentName.setText(bean.getDepartmentName().get());
-        viewHolder.doctorSuggestion.setText(bean.getDoctorSuggestion().get());
-        viewHolder.leaveHospital.setText(bean.getLeaveHospitalDiagnostics().get());
-        viewHolder.time.setText(String.format("%s — %s", DateUtil.format(bean.getSurgicalHistoryBeginTime().get(), "yyyy-MM-dd"), DateUtil.format(bean.getSurgicalHistoryBeginTime().get(), "yyyy-MM-dd")));
+
+        int length = "医院名称：".length();
+
+        Spannable hospitalSp = new SpannableStringBuilder(String.format("医院名称：%s", bean.getHospitalName()));
+        hospitalSp.setSpan(new ForegroundColorSpan(viewHolder.itemView.getContext().getResources().getColor(R.color.text_color_primary_black)),0,length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        Spannable departmentSp = new SpannableStringBuilder(String.format("科室名称：%s", bean.getDepartmentName()));
+        departmentSp.setSpan(new ForegroundColorSpan(viewHolder.itemView.getContext().getResources().getColor(R.color.text_color_primary_black)),0,length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        Spannable suggestionSp = new SpannableStringBuilder(String.format("医生建议：%s", bean.getDoctorSuggestion()));
+        suggestionSp.setSpan(new ForegroundColorSpan(viewHolder.itemView.getContext().getResources().getColor(R.color.text_color_primary_black)),0,length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        Spannable diagnosticsSp = new SpannableStringBuilder(String.format("出院诊断：%s", bean.getLeaveHospitalDiagnostics()));
+        diagnosticsSp.setSpan(new ForegroundColorSpan(viewHolder.itemView.getContext().getResources().getColor(R.color.text_color_primary_black)),0,length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        viewHolder.hospitalName.setText(hospitalSp);
+        viewHolder.departmentName.setText(departmentSp);
+        viewHolder.doctorSuggestion.setText(suggestionSp);
+        viewHolder.leaveHospital.setText(diagnosticsSp);
+        viewHolder.time.setText(bean.getSurgicalHistoryTime());
         viewHolder.clickMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "查看更多", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -66,7 +78,6 @@ public class SurgicalHistoryRVAdapter extends SimpleRVAdapter<SurgicalHistoryBea
         TextView doctorSuggestion;
         @Bind(R.id.surgical_history_item_click_more)
         TextView clickMore;
-
 
         public ItemViewHolder(View itemView) {
             super(itemView);

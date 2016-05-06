@@ -1,7 +1,5 @@
 package com.wonders.xlab.pci.doctor.module.patientinfo.surgicalhistory.adapter.bean;
 
-import android.databinding.ObservableField;
-
 /**
  * Created by jimmy on 16/5/3.
  */
@@ -10,74 +8,62 @@ public class SurgicalHistoryBean {
     /**
      * 手术史开始时间
      */
-    public ObservableField<Long> surgicalHistoryBeginTime;
-    /**
-     * 手术史结束时间
-     */
-    public ObservableField<Long> surgicalHistoryEndTime;
+    public String surgicalHistoryTime;
     /**
      * 医院名称
      */
-    public ObservableField<String> hospitalName;
+    public String hospitalName;
     /**
      * 科室名称
      */
-    public ObservableField<String> departmentName;
+    public String departmentName;
 
     /**
      * 出院诊断
      */
-    public ObservableField<String> leaveHospitalDiagnostics;
+    public String leaveHospitalDiagnostics;
     /**
      * 医生建议
      */
-    public ObservableField<String> doctorSuggestion;
+    public String doctorSuggestion;
 
-    public ObservableField<Long> getSurgicalHistoryBeginTime() {
-        return surgicalHistoryBeginTime;
+    public String getSurgicalHistoryTime() {
+        return surgicalHistoryTime;
     }
 
-    public void setSurgicalHistoryBeginTime(ObservableField<Long> surgicalHistoryBeginTime) {
-        this.surgicalHistoryBeginTime = surgicalHistoryBeginTime;
+    public void setSurgicalHistoryTime(String surgicalHistoryTime) {
+        this.surgicalHistoryTime = surgicalHistoryTime;
     }
 
-    public ObservableField<Long> getSurgicalHistoryEndTime() {
-        return surgicalHistoryEndTime;
-    }
-
-    public void setSurgicalHistoryEndTime(ObservableField<Long> surgicalHistoryEndTime) {
-        this.surgicalHistoryEndTime = surgicalHistoryEndTime;
-    }
-
-    public ObservableField<String> getHospitalName() {
+    public String getHospitalName() {
         return hospitalName;
     }
 
-    public void setHospitalName(ObservableField<String> hospitalName) {
+    public void setHospitalName(String hospitalName) {
         this.hospitalName = hospitalName;
     }
 
-    public ObservableField<String> getDepartmentName() {
+    public String getDepartmentName() {
         return departmentName;
     }
 
-    public void setDepartmentName(ObservableField<String> departmentName) {
+    public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
     }
 
-    public ObservableField<String> getLeaveHospitalDiagnostics() {
+    public String getLeaveHospitalDiagnostics() {
         return leaveHospitalDiagnostics;
     }
 
-    public void setLeaveHospitalDiagnostics(ObservableField<String> leaveHospitalDiagnostics) {
+    public void setLeaveHospitalDiagnostics(String leaveHospitalDiagnostics) {
         this.leaveHospitalDiagnostics = leaveHospitalDiagnostics;
     }
 
-    public ObservableField<String> getDoctorSuggestion() {
+    public String getDoctorSuggestion() {
         return doctorSuggestion;
     }
 
-    public void setDoctorSuggestion(ObservableField<String> doctorSuggestion) {
+    public void setDoctorSuggestion(String doctorSuggestion) {
         this.doctorSuggestion = doctorSuggestion;
     }
 }

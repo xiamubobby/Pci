@@ -99,4 +99,5 @@ public class AIManager {
         patientInfoRealm.setPatientPortraitUrl(portraitUrl);
         XApplication.realm.commitTransaction();
     }
+
 }

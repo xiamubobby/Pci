@@ -71,10 +71,10 @@ public class DoctorFragment extends BaseFragment {
         for (int i = 0; i < 2; i++) {
             switch (i) {
                 case 0:
-                    tabEntities.add(new TabEntity("我的医生", R.drawable.tab_home_select, R.drawable.tab_home_unselect));
+                    tabEntities.add(new TabEntity("我的医生", R.drawable.tab_home_selected, R.drawable.tab_home_unselect));
                     break;
                 case 1:
-                    tabEntities.add(new TabEntity("所有医生", R.drawable.tab_contact_select, R.drawable.tab_contact_unselect));
+                    tabEntities.add(new TabEntity("所有医生", R.drawable.tab_home_selected, R.drawable.tab_home_unselect));
                     break;
             }
         }

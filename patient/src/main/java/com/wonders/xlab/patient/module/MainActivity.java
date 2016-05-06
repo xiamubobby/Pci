@@ -99,16 +99,16 @@ public class MainActivity extends BaseActivity {
         for (int i = 0; i < 4; i++) {
             switch (i) {
                 case 0:
-                    tabEntities.add(new TabEntity("首页", R.drawable.tab_home_select, R.drawable.tab_home_unselect));
+                    tabEntities.add(new TabEntity("首页", R.drawable.tab_home_selected, R.drawable.tab_home_unselect));
                     break;
                 case 1:
-                    tabEntities.add(new TabEntity("医生", R.drawable.tab_contact_select, R.drawable.tab_contact_unselect));
+                    tabEntities.add(new TabEntity("医生", R.drawable.tab_doctor_selected, R.drawable.tab_doctor_unselect));
                     break;
                 case 2:
-                    tabEntities.add(new TabEntity("服务", R.drawable.tab_contact_select, R.drawable.tab_contact_unselect));
+                    tabEntities.add(new TabEntity("服务", R.drawable.tab_service_selected, R.drawable.tab_service_unselect));
                     break;
                 case 3:
-                    tabEntities.add(new TabEntity("我", R.drawable.tab_me_selected, R.drawable.tab_me_unselected));
+                    tabEntities.add(new TabEntity("我", R.drawable.tab_me_selected, R.drawable.tab_me_unselect));
                     break;
             }
         }

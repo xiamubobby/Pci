@@ -17,14 +17,13 @@ import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.common.viewpager.LooperViewPager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.module.auth.authorize.AuthorizeActivity;
 import com.wonders.xlab.patient.module.dailyreport.DailyReportActivity;
-import com.wonders.xlab.patient.module.healthreport.HealthReportActivity;
+import com.wonders.xlab.patient.module.healthchart.HealthChartActivity;
+import com.wonders.xlab.patient.module.healthrecord.HealthRecordActivity;
 import com.wonders.xlab.patient.module.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.patient.module.home.adapter.bean.HomeItemBean;
 import com.wonders.xlab.patient.module.home.bean.HomeBannerBean;
-import com.wonders.xlab.patient.module.medicineremind.MedicineRemindActivity;
+import com.wonders.xlab.patient.module.medicineremind.list.MedicineRemindActivity;
 import com.wonders.xlab.patient.mvp.presenter.IHomeTopPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.HomeTopPresenter;
 import com.wonders.xlab.patient.util.UmengEventId;
@@ -112,20 +111,13 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
                             startActivity(new Intent(getActivity(), DailyReportActivity.class));
                             break;
                         case 1:
-                           /* Intent intent = new Intent(getActivity(), MedicalPictureActivity.class);
-                            intent.putExtra(MedicalPictureActivity.EXTRA_PATIENT_ID, AIManager.getInstance().getPatientId());
-                            startActivity(intent);
-*/
-                            Intent intent = new Intent(getActivity(), AuthorizeActivity.class);
-                            startActivity(intent);
+                            startActivity(new Intent(getActivity(), HealthRecordActivity.class));
                             break;
                         case 2:
-                            Intent intent1 = new Intent(getActivity(), MedicineRemindActivity.class);
-                            intent1.putExtra(MedicineRemindActivity.EXTRA_PATIENT_ID, AIManager.getInstance().getPatientId());
-                            startActivity(intent1);
+                            startActivity(new Intent(getActivity(), MedicineRemindActivity.class));
                             break;
                         case 3:
-                            startActivity(new Intent(getActivity(), HealthReportActivity.class));
+                            startActivity(new Intent(getActivity(), HealthChartActivity.class));
                             break;
                         default:
                             MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_MEDICINE_REMIND);
