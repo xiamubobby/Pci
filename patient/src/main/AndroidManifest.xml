@@ -175,22 +175,13 @@
         <activity
             android:name=".module.auth.authorize.AuthorizeActivity"
             android:label="@string/title_activity_authorize"
-<<<<<<< HEAD
+
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.alldoctor.AllDoctorActivity"
             android:label="@string/title_activity_all_doctor"
             android:theme="@style/AppTheme.NoActionBar" />
-=======
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name=".module.alldoctor.AllDoctorActivity"
-            android:label="@string/title_activity_all_doctor"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
->>>>>>> 4f5fd0d56045ffb7e38877f73f715c1e72ef4704
+
         <activity
             android:name=".base.TextInputActivity"
             android:label="@string/title_activity_text_input"
@@ -198,23 +189,17 @@
         <activity
             android:name=".module.healthrecord.HealthRecordActivity"
             android:label="@string/title_activity_health_record"
-<<<<<<< HEAD
+
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".module.order.OrderListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-=======
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
         <activity
             android:name=".module.medicineremind.searchmedicine.MedicineSearchActivity"
             android:label="@string/title_activity_medicine_search"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
->>>>>>> 4f5fd0d56045ffb7e38877f73f715c1e72ef4704
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"></activity>
     </application>
 
 </manifest>
