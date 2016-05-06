@@ -14,4 +14,5 @@
 
     <color name="bs_cell_bg">@android:color/white</color>
     <color name="bs_cell_bg_dark">#e8eaef</color>
+    <color name="red">#FFF70414</color>
 </resources>

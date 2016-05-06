@@ -1,10 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:paddingTop="@dimen/item_interval_middle"
-              tools:context=".module.me.MeFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/item_interval_middle"
+    tools:context=".module.me.MeFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
             android:id="@+id/iv_me_portrait"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/tv_me_name"
@@ -28,8 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/item_interval_middle"
             android:layout_toRightOf="@+id/iv_me_portrait"
+            android:text="刘二"
             android:textColor="@color/text_color_primary_black"
-            android:textSize="@dimen/text_size_large"/>
+            android:textSize="@dimen/text_size_large" />
 
         <TextView
             android:id="@+id/tv_me_tel"
@@ -39,12 +40,12 @@
             android:layout_marginLeft="@dimen/item_interval_middle"
             android:layout_marginTop="@dimen/item_interval_small"
             android:layout_toRightOf="@+id/iv_me_portrait"
-            android:text="账号:"
+            android:text="账号：138001380000"
             android:textColor="@color/text_color_primary_gray"
-            android:textSize="@dimen/text_size_middle"/>
+            android:textSize="@dimen/text_size_middle" />
     </RelativeLayout>
 
-    <include layout="@layout/divider_vertical_large"/>
+    <include layout="@layout/divider_vertical_large" />
 
     <TextView
         android:layout_width="match_parent"
@@ -57,9 +58,9 @@
         android:text="个人资料"
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
-    <include layout="@layout/divider_vertical"/>
+    <include layout="@layout/divider_vertical" />
 
     <TextView
         android:layout_width="match_parent"
@@ -72,14 +73,29 @@
         android:text="消息"
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
-    <include layout="@layout/divider_vertical"/>
+    <include layout="@layout/divider_vertical" />
+
+    <TextView
+        android:id="@+id/tv_me_order"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeightSmall"
+        android:layout_marginTop="@dimen/item_interval_middle"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:minHeight="@dimen/item_height_min"
+        android:paddingLeft="@dimen/item_interval_middle"
+        android:paddingRight="@dimen/item_interval_middle"
+        android:text="我的订单" />
+
+    <include layout="@layout/divider_vertical" />
 
     <TextView
         android:id="@+id/tv_me_setting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/item_interval_small"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
         android:minHeight="@dimen/item_height_min"
@@ -87,9 +103,9 @@
         android:paddingRight="@dimen/item_interval_middle"
         android:text="设置"
         android:textColor="@color/text_color_primary_gray"
-        android:textSize="@dimen/text_size_middle"/>
+        android:textSize="@dimen/text_size_middle" />
 
-    <include layout="@layout/divider_vertical"/>
+    <include layout="@layout/divider_vertical" />
 
     <TextView
         android:layout_width="match_parent"
@@ -102,8 +118,8 @@
         android:text="关于"
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
-    <include layout="@layout/divider_vertical"/>
+    <include layout="@layout/divider_vertical" />
 
 </LinearLayout>
