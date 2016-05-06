@@ -11,6 +11,7 @@
     <string name="setting_pref_key_measure_default">measure_method_default</string>
 
     <string name="title_activity_setting">设置</string>
+    <string name="title_activity_my_order">我的订单</string>
     <string name="title_activity_web">网页</string>
     <string name="title_activity_doctor_detail">医生详情</string>
 
