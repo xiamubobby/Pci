@@ -31,7 +31,7 @@ public class RegisterPresenter extends BasePresenter implements RegisterPresente
     @Override
     public void getCaptcha(String mobile) {
         if (TextUtils.isEmpty(mobile) || mobile.length() != 11) {
-//            mListener.showErrorToast("请填写11位的手机号！");
+            mListener.showErrorToast("请填写11位的手机号！");
             return;
         }
         mGetCaptureModel.getCaptcha(mobile, new GetCaptureModelContract.Callback() {
