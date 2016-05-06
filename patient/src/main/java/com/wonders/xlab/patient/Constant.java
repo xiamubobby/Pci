@@ -23,5 +23,5 @@ public class Constant {
     /**
      * 外网地址
      */
-    public static String BASE_URL = "http://xlab-tech.com:45675/pci-user/";
+    //public static String BASE_URL = "http://xlab-tech.com:45675/pci-user/";
 }
