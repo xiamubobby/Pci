@@ -1,6 +1,7 @@
 package com.wonders.xlab.patient.module.medicineremind.edit;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,8 +16,10 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
+import com.wonders.xlab.patient.base.TextInputActivity;
 import com.wonders.xlab.patient.module.medicineremind.edit.adapter.MedicineRemindEditBean;
 import com.wonders.xlab.patient.module.medicineremind.edit.adapter.MedicineRemindEditRVAdapter;
+import com.wonders.xlab.patient.module.medicineremind.searchmedicine.MedicineSearchActivity;
 import com.wonders.xlab.patient.mvp.presenter.MedicineRemindEditPresenterContract;
 
 import java.util.Calendar;
@@ -28,6 +31,8 @@ import butterknife.OnClick;
 import im.hua.utils.DateUtil;
 
 public class MedicineRemindEditActivity extends AppbarActivity implements MedicineRemindEditPresenterContract.ViewListener {
+
+    private final int REQUEST_CODE_MESSAGE = 1234;
 
     @Bind(R.id.timePicker)
     TimePicker mTimePicker;
@@ -112,12 +117,29 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
 
     @OnClick(R.id.tv_medicine_remind_edit_add_medicine)
     public void addMedicine() {
-
+        startActivity(new Intent(this, MedicineSearchActivity.class));
     }
 
     @OnClick(R.id.ll_medicine_remind_edit_message)
     public void setMessage() {
+        Intent intent = new Intent(this, TextInputActivity.class);
+        intent.putExtra(TextInputActivity.EXTRA_TITLE, "提醒语");
+        intent.putExtra(TextInputActivity.EXTRA_HINT, "请输入提醒语");
+        intent.putExtra(TextInputActivity.EXTRA_DEFAULT_VALUE, mTvMessage.getText().toString());
+        startActivityForResult(intent,REQUEST_CODE_MESSAGE);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (null == data || resultCode != RESULT_OK) {
+            return;
+        }
+        switch (requestCode) {
+            case REQUEST_CODE_MESSAGE:
+                mTvMessage.setText(data.getStringExtra(TextInputActivity.EXTRA_RESULT));
+                break;
+        }
     }
 
     @Override
@@ -163,22 +185,22 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
 
     @Override
     public void showNetworkError(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void showServerError(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void showEmptyView(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void showErrorToast(String message) {
-
+        showShortToast(message);
     }
 
     @Override

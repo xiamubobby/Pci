@@ -69,9 +69,7 @@ public class TextInputActivity extends AppbarActivity {
             case R.id.menu_save:
                 String result = mEtTextInput.getText().toString();
                 Intent intent = new Intent();
-                Bundle data = new Bundle();
-                data.putString(EXTRA_RESULT, result);
-                intent.putExtras(data);
+                intent.putExtra(EXTRA_RESULT,result);
                 setResult(RESULT_OK, intent);
 
                 finish();

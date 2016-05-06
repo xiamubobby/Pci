@@ -110,17 +110,14 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
         if (data == null) {
             return;
         }
-        Bundle extras = data.getExtras();
-        if (null == extras) {
-            return;
-        }
+
         if (RESULT_OK == resultCode) {
             switch (requestCode) {
                 case REQUEST_CODE_NAME:
-                    mTvAuthorizeName.setText(extras.getString(TextInputActivity.EXTRA_RESULT, ""));
+                    mTvAuthorizeName.setText(data.getStringExtra(TextInputActivity.EXTRA_RESULT));
                     break;
                 case REQUEST_CODE_ID:
-                    mTvAuthorizeId.setText(extras.getString(TextInputActivity.EXTRA_RESULT, ""));
+                    mTvAuthorizeId.setText(data.getStringExtra(TextInputActivity.EXTRA_RESULT));
                     break;
                 case REQUEST_CODE_ID_PIC:
                     ArrayList<String> photos =

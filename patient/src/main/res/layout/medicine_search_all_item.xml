@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="bean"
+            type="com.wonders.xlab.patient.module.medicineremind.searchmedicine.adapter.bean.MedicineSearchAllBean"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="?attr/selectableItemBackground"
+                  android:clickable="true"
+                  android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:padding="@dimen/item_interval_small"
+            android:text="@{bean.medicineName}"
+            android:textColor="@color/text_color_primary_black"
+            android:textSize="@dimen/text_size_middle"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/item_interval_very_small"
+            android:paddingLeft="@dimen/item_interval_small"
+            android:paddingRight="@dimen/item_interval_small"
+            android:paddingTop="@dimen/item_interval_very_small"
+            android:singleLine="true"
+            android:text="@{bean.specifications}"
+            android:textColor="@color/text_color_primary_gray"
+            android:textSize="@dimen/text_size_small"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/item_interval_very_small"
+            android:paddingLeft="@dimen/item_interval_small"
+            android:paddingRight="@dimen/item_interval_small"
+            android:paddingTop="@dimen/item_interval_very_small"
+            android:singleLine="true"
+            android:text="@{bean.companyName}"
+            android:textColor="@color/text_color_primary_gray"
+            android:textSize="@dimen/text_size_small"/>
+    </LinearLayout>
+</layout>
