@@ -1,7 +1,6 @@
 package com.wonders.xlab.patient.mvp.presenter;
 
-import com.wonders.xlab.patient.module.medicineremind.searchmedicine.adapter.bean.MedicineSearchAllBean;
-import com.wonders.xlab.patient.module.medicineremind.searchmedicine.adapter.bean.MedicineSearchHistoryBean;
+import com.wonders.xlab.patient.module.medicineremind.MedicineBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +22,12 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
 
     @Override
     public void search(String medicineName) {
-        List<MedicineSearchAllBean> beanList = new ArrayList<>();
+        List<MedicineBean> beanList = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            MedicineSearchAllBean bean = new MedicineSearchAllBean();
+            MedicineBean bean = new MedicineBean();
             bean.setCompanyName("XXX公司");
             bean.setFormOfDrug("片");
-            bean.setMedicineName("药品"+i);
+            bean.setMedicineName("药品" + i);
             bean.setSpecifications("24盒装");
             beanList.add(bean);
         }
@@ -37,12 +36,12 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
 
     @Override
     public void getAllMedicines() {
-        List<MedicineSearchAllBean> beanList = new ArrayList<>();
+        List<MedicineBean> beanList = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            MedicineSearchAllBean bean = new MedicineSearchAllBean();
+            MedicineBean bean = new MedicineBean();
             bean.setCompanyName("XXX公司");
             bean.setFormOfDrug("片");
-            bean.setMedicineName("药品"+i);
+            bean.setMedicineName("药品" + i);
             bean.setSpecifications("24盒装");
             beanList.add(bean);
         }
@@ -51,10 +50,14 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
 
     @Override
     public void getSearchHistory() {
-        List<MedicineSearchHistoryBean> beanList = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            MedicineSearchHistoryBean bean = new MedicineSearchHistoryBean();
-            bean.setMedicineName("药品"+i);
+        List<MedicineBean> beanList = new ArrayList<>();
+        for (int i = 0; i < 2; i++) {
+            MedicineBean bean = new MedicineBean();
+            bean.setCompanyName("XXX公司");
+            bean.setFormOfDrug("颗");
+            bean.setDose("" + (i + 1));
+            bean.setMedicineName("药品" + i);
+            bean.setSpecifications("24盒装");
             beanList.add(bean);
         }
         mViewListener.showSearchHistoryList(beanList);

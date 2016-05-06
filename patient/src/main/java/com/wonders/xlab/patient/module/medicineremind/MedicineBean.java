@@ -1,9 +1,11 @@
-package com.wonders.xlab.patient.module.medicineremind.searchmedicine.adapter.bean;
+package com.wonders.xlab.patient.module.medicineremind;
+
+import io.realm.RealmObject;
 
 /**
  * Created by hua on 16/5/6.
  */
-public class MedicineSearchAllBean {
+public class MedicineBean extends RealmObject{
     /**
      * 药品名
      */
@@ -20,6 +22,11 @@ public class MedicineSearchAllBean {
      * 剂型
      */
     private String formOfDrug;
+
+    /**
+     * 剂量
+     */
+    private String dose;
 
     public String getMedicineName() {
         return medicineName;
@@ -51,5 +58,13 @@ public class MedicineSearchAllBean {
 
     public void setFormOfDrug(String formOfDrug) {
         this.formOfDrug = formOfDrug;
+    }
+
+    public String getDose() {
+        return dose;
+    }
+
+    public void setDose(String dose) {
+        this.dose = dose;
     }
 }

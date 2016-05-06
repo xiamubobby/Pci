@@ -12,12 +12,14 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import com.squareup.otto.Subscribe;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.base.TextInputActivity;
-import com.wonders.xlab.patient.module.medicineremind.edit.adapter.MedicineRemindEditBean;
+import com.wonders.xlab.patient.module.medicineremind.MedicineBean;
 import com.wonders.xlab.patient.module.medicineremind.edit.adapter.MedicineRemindEditRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.searchmedicine.MedicineSearchActivity;
 import com.wonders.xlab.patient.mvp.presenter.MedicineRemindEditPresenterContract;
@@ -61,8 +63,9 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        mRecyclerView.addItemDecoration(new VerticalItemDecoration(this,getResources().getColor(R.color.divider),1));
+        OttoManager.register(this);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         mTvStartDate.setText(DateUtil.format(mStartCalendar.getTimeInMillis(), "yyyy-MM-dd"));
@@ -75,6 +78,11 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
         addPresenter(mPresenter);
 
         mPresenter.getMedicineRemindInfoById("1");
+    }
+
+    @Subscribe
+    public void receiveMedicineBean(MedicineBean bean) {
+        mRVAdapter.appendToLast(bean);
     }
 
     @OnClick(R.id.ll_medicine_remind_edit_start_date)
@@ -126,7 +134,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
         intent.putExtra(TextInputActivity.EXTRA_TITLE, "提醒语");
         intent.putExtra(TextInputActivity.EXTRA_HINT, "请输入提醒语");
         intent.putExtra(TextInputActivity.EXTRA_DEFAULT_VALUE, mTvMessage.getText().toString());
-        startActivityForResult(intent,REQUEST_CODE_MESSAGE);
+        startActivityForResult(intent, REQUEST_CODE_MESSAGE);
     }
 
     @Override
@@ -158,7 +166,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
     }
 
     @Override
-    public void showMedicineRemindInfo(int hour, int minutes, long startDate, Long endDate, String message, List<MedicineRemindEditBean> beanList) {
+    public void showMedicineRemindInfo(int hour, int minutes, long startDate, Long endDate, String message, List<MedicineBean> beanList) {
 
         mTimePicker.setCurrentHour(hour);
         mTimePicker.setCurrentMinute(minutes);
@@ -206,5 +214,12 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
     @Override
     public void hideLoading() {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        OttoManager.unregister(this);
+        ButterKnife.unbind(this);
     }
 }

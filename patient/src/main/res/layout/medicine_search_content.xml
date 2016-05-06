@@ -71,6 +71,5 @@
     <im.hua.uikit.crv.CommonRecyclerView
         android:id="@+id/recycler_view_medicine_search_all_medicine"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
+        android:layout_height="match_parent"/>
 </LinearLayout>

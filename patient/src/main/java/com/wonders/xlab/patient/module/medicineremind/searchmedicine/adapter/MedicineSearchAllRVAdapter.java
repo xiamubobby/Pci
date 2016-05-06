@@ -8,12 +8,12 @@ import android.view.ViewGroup;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.MedicineSearchAllItemBinding;
-import com.wonders.xlab.patient.module.medicineremind.searchmedicine.adapter.bean.MedicineSearchAllBean;
+import com.wonders.xlab.patient.module.medicineremind.MedicineBean;
 
 /**
  * Created by hua on 16/5/6.
  */
-public class MedicineSearchAllRVAdapter extends SimpleRVAdapter<MedicineSearchAllBean> {
+public class MedicineSearchAllRVAdapter extends SimpleRVAdapter<MedicineBean> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.medicine_search_all_item, parent, false));

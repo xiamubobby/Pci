@@ -1,7 +1,6 @@
 package com.wonders.xlab.patient.mvp.presenter;
 
-import com.wonders.xlab.patient.module.medicineremind.searchmedicine.adapter.bean.MedicineSearchAllBean;
-import com.wonders.xlab.patient.module.medicineremind.searchmedicine.adapter.bean.MedicineSearchHistoryBean;
+import com.wonders.xlab.patient.module.medicineremind.MedicineBean;
 
 import java.util.List;
 
@@ -13,11 +12,11 @@ import im.hua.library.base.mvp.listener.BasePagePresenterListener;
  */
 public interface MedicineSearchPresenterContract {
     interface ViewListener extends BasePagePresenterListener {
-        void showMedicineList(List<MedicineSearchAllBean> beanList);
+        void showMedicineList(List<MedicineBean> beanList);
 
-        void appendMedicineList(List<MedicineSearchAllBean> beanList);
+        void appendMedicineList(List<MedicineBean> beanList);
 
-        void showSearchHistoryList(List<MedicineSearchHistoryBean> beanList);
+        void showSearchHistoryList(List<MedicineBean> beanList);
     }
 
     interface Actions extends IBasePresenter {

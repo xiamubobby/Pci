@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.MedicineSearchHistoryItemBinding;
-import com.wonders.xlab.patient.module.medicineremind.searchmedicine.adapter.bean.MedicineSearchHistoryBean;
+import com.wonders.xlab.patient.module.medicineremind.MedicineBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 /**
  * Created by hua on 16/5/6.
  */
-public class MedicineSearchHistoryRVAdapter extends SimpleRVAdapter<MedicineSearchHistoryBean> {
+public class MedicineSearchHistoryRVAdapter extends SimpleRVAdapter<MedicineBean> {
 
 
     @Override

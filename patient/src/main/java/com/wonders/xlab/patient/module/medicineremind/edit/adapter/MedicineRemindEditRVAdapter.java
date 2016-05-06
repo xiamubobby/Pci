@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.module.medicineremind.MedicineBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -16,7 +17,7 @@ import butterknife.ButterKnife;
 /**
  * Created by hua on 16/5/6.
  */
-public class MedicineRemindEditRVAdapter extends SimpleRVAdapter<MedicineRemindEditBean> {
+public class MedicineRemindEditRVAdapter extends SimpleRVAdapter<MedicineBean> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -27,9 +28,9 @@ public class MedicineRemindEditRVAdapter extends SimpleRVAdapter<MedicineRemindE
     public void onBindViewHolder(RecyclerView.ViewHolder holder,int position) {
         super.onBindViewHolder(holder, position);
         final ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        MedicineRemindEditBean bean = getBean(position);
-        viewHolder.mTvName.setText(bean.getName());
-        viewHolder.mTvDose.setText(String.format("%s%s", bean.getNumber(), bean.getUnit()));
+        MedicineBean bean = getBean(position);
+        viewHolder.mTvName.setText(bean.getMedicineName());
+        viewHolder.mTvDose.setText(String.format("%s%s", bean.getDose(), bean.getFormOfDrug()));
         viewHolder.mIvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
