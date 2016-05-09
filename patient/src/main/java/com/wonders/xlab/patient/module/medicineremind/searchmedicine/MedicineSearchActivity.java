@@ -107,6 +107,7 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
         final TextView textView = (TextView) linearLayout.findViewById(R.id.tv_medicine_search_dialog);
         textView.setText(bean.getFormOfDrug());
         final AlertDialog alertDialog = new AlertDialog.Builder(MedicineSearchActivity.this)
+                .setTitle(bean.getMedicineName())
                 .setPositiveButton("确定", null)
                 .setNegativeButton("取消", null)
                 .setView(linearLayout).create();
@@ -131,6 +132,7 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
                         } else {
                             showShortToast("请输入每次服用剂量");
                         }
+                        editText.requestFocus();
                         showSoftInput(editText);
                     }
                 });
