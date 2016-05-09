@@ -11,5 +11,6 @@ public class MedicineRemindBean {
     public ObservableField<String> timeInStr = new ObservableField<>();
     public ObservableField<String> medicineNameStr = new ObservableField<>();
     public ObservableField<String> expiredDateInStr = new ObservableField<>();
-    public ObservableField<Boolean> isChecked = new ObservableField<>();
+    public ObservableField<Boolean> shouldAlarm = new ObservableField<>();
+    public ObservableField<Boolean> isExpired = new ObservableField<>();
 }

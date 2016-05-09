@@ -16,7 +16,6 @@ import android.widget.TimePicker;
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
-import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
@@ -25,8 +24,9 @@ import com.wonders.xlab.patient.module.medicineremind.MedicineBean;
 import com.wonders.xlab.patient.module.medicineremind.edit.adapter.MedicineRemindEditRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.searchmedicine.MedicineSearchActivity;
 import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
-import com.wonders.xlab.patient.mvp.presenter.MedicineRemindDetailPresenterContract;
+import com.wonders.xlab.patient.mvp.presenter.MedicineRemindEditPresenterContract;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -34,8 +34,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import im.hua.utils.DateUtil;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
 
-public class MedicineRemindEditActivity extends AppbarActivity implements MedicineRemindDetailPresenterContract.ViewListener {
+public class MedicineRemindEditActivity extends AppbarActivity implements MedicineRemindEditPresenterContract.ViewListener {
 
     public static final String EXTRA_MEDICINE_REMIND_ID = "medicineRemindId";
     private String mMedicineRemindId;
@@ -58,7 +61,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
 
     private MedicineRemindEditRVAdapter mRVAdapter;
 
-    private MedicineRemindDetailPresenterContract.Actions mPresenter;
+    private MedicineRemindEditPresenterContract.Actions mPresenter;
 
     @Override
     public int getContentLayout() {
@@ -74,11 +77,12 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
         Intent intent = getIntent();
         if (null != intent) {
             mMedicineRemindId = intent.getStringExtra(EXTRA_MEDICINE_REMIND_ID);
-            setToolbarTitle("编辑提醒");
-        } else {
-            setToolbarTitle("添加提醒");
+            if (TextUtils.isEmpty(mMedicineRemindId)) {
+                setToolbarTitle("添加提醒");
+            } else {
+                setToolbarTitle("编辑提醒");
+            }
         }
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -102,6 +106,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
 
     @Subscribe
     public void receiveMedicineBean(MedicineBean bean) {
+        initMedicineListAdapter();
         mRVAdapter.appendToLast(bean);
     }
 
@@ -139,7 +144,6 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
                 mEndCalendar.get(Calendar.DAY_OF_MONTH)
         );
         mDatePickerDialog.getDatePicker().setMinDate(mStartCalendar.getTimeInMillis());
-        mDatePickerDialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
         mDatePickerDialog.show();
     }
 
@@ -180,7 +184,52 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_save:
-                MedicineRemindEditBody body = new MedicineRemindEditBody();
+                if (null == mRVAdapter || mRVAdapter.getBeanList().size() == 0) {
+                    showShortToast("请添加药品");
+                    break;
+                }
+                final MedicineRemindEditBody body = new MedicineRemindEditBody();
+                body.setId(mMedicineRemindId);
+                body.setStartDate(mStartCalendar.getTimeInMillis());
+                /**
+                 * 是否长期
+                 */
+                if (mTvEndDate.getText().toString().equals(getResources().getString(R.string.medicine_remind_edit_end_date_default))) {
+                    body.setEndDate(null);
+                } else {
+                    body.setEndDate(mEndCalendar.getTimeInMillis());
+                }
+                body.setRemindersTime(mTimePicker.getCurrentHour() + ":" + mTimePicker.getCurrentMinute());
+                body.setRemindersDesc(mTvMessage.getText().toString());
+                Observable.from(mRVAdapter.getBeanList())
+                        .flatMap(new Func1<MedicineBean, Observable<MedicineRemindEditBody.MedicationUsagesEntity>>() {
+                            @Override
+                            public Observable<MedicineRemindEditBody.MedicationUsagesEntity> call(MedicineBean medicineBean) {
+                                MedicineRemindEditBody.MedicationUsagesEntity entity = new MedicineRemindEditBody.MedicationUsagesEntity();
+                                entity.setMedicationName(medicineBean.getMedicineName());
+                                entity.setMedicationNum(medicineBean.getDose());
+                                entity.setPharmaceuticalUnit(medicineBean.getFormOfDrug());
+                                return Observable.just(entity);
+                            }
+                        })
+                        .subscribe(new Subscriber<MedicineRemindEditBody.MedicationUsagesEntity>() {
+                            List<MedicineRemindEditBody.MedicationUsagesEntity> mUsagesEntityList = new ArrayList<>();
+
+                            @Override
+                            public void onCompleted() {
+                                body.setMedicationUsages(mUsagesEntityList);
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(MedicineRemindEditBody.MedicationUsagesEntity medicationUsagesEntity) {
+                                mUsagesEntityList.add(medicationUsagesEntity);
+                            }
+                        });
 
                 mPresenter.addOrModify(body);
                 break;
@@ -202,11 +251,15 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
         }
 
         mTvMessage.setText(message);
+        initMedicineListAdapter();
+        mRVAdapter.setDatas(beanList);
+    }
+
+    private void initMedicineListAdapter() {
         if (null == mRVAdapter) {
             mRVAdapter = new MedicineRemindEditRVAdapter();
             mRecyclerView.setAdapter(mRVAdapter);
         }
-        mRVAdapter.setDatas(beanList);
     }
 
     @Override
@@ -217,7 +270,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
 
     @Override
     public void showLoading(String message) {
-        showProgressDialog("", Constant.Message.LOADING_PLEASE_WAIT, null);
+        showProgressDialog("", message, null);
     }
 
     @Override

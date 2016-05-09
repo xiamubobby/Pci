@@ -9,8 +9,9 @@ import im.hua.library.base.mvp.entity.BasePageEntity;
  */
 public class MedicineRemindListEntity extends BasePageEntity<MedicineRemindListEntity.ContentEntity> {
     public static class ContentEntity {
-        private long endDate;
+        private Long endDate;
         private boolean expire;
+        private boolean manualCloseReminder;
         private String remindersTime;
         private String id;
         private String remindersDesc;
@@ -23,11 +24,15 @@ public class MedicineRemindListEntity extends BasePageEntity<MedicineRemindListE
 
         private List<MedicationUsagesEntity> medicationUsages;
 
-        public long getEndDate() {
+        /**
+         * 为null，则表示长期
+         * @return
+         */
+        public Long getEndDate() {
             return endDate;
         }
 
-        public void setEndDate(long endDate) {
+        public void setEndDate(Long endDate) {
             this.endDate = endDate;
         }
 
@@ -77,6 +82,14 @@ public class MedicineRemindListEntity extends BasePageEntity<MedicineRemindListE
 
         public void setMedicationUsages(List<MedicationUsagesEntity> medicationUsages) {
             this.medicationUsages = medicationUsages;
+        }
+
+        public boolean isManualCloseReminder() {
+            return manualCloseReminder;
+        }
+
+        public void setManualCloseReminder(boolean manualCloseReminder) {
+            this.manualCloseReminder = manualCloseReminder;
         }
 
         public static class MedicationUsagesEntity {

@@ -1,5 +1,9 @@
 package com.wonders.xlab.patient.mvp.presenter;
 
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+
+import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.medicineremind.list.bean.MedicineRemindBean;
 import com.wonders.xlab.patient.mvp.entity.MedicineRemindListEntity;
@@ -32,6 +36,7 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
     public MedicineRemindPresenter(MedicineRemindListModel remindListModel, MedicineRemindPresenterContract.ViewListener viewListener) {
         mRemindListModel = remindListModel;
         mViewListener = viewListener;
+        addModel(mRemindListModel);
     }
 
     @Override
@@ -40,7 +45,8 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
             resetPageInfo();
         }
         if (mIsLast) {
-            mViewListener.showReachTheLastPageNotice("没有更多数据了");
+            mViewListener.hideLoading();
+            mViewListener.showReachTheLastPageNotice(Constant.Message.NO_MORE_DATA);
             return;
         }
         mViewListener.showLoading("");
@@ -49,6 +55,7 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
 
     @Override
     public void onReceiveMedicineRemindListSuccess(MedicineRemindListEntity.RetValuesEntity<MedicineRemindListEntity.ContentEntity> valuesEntity) {
+        mViewListener.hideLoading();
         //TODO 分页
         updatePageInfo(valuesEntity.getNumber(), valuesEntity.isFirst(), valuesEntity.isLast());
         Observable.from(valuesEntity.getContent())
@@ -57,9 +64,11 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
                     public Observable<MedicineRemindBean> call(MedicineRemindListEntity.ContentEntity contentEntity) {
                         final MedicineRemindBean bean = new MedicineRemindBean();
                         bean.id.set(contentEntity.getId());
-                        bean.amOrPmStr.set("AM");
-                        bean.timeInStr.set(contentEntity.getRemindersTime());
-                        bean.expiredDateInStr.set(DateUtil.format(contentEntity.getEndDate(),"yyyy-MM-dd"));
+                        String amOrPm = distinctAMOrPMFromTimeStr(contentEntity);
+                        bean.amOrPmStr.set(amOrPm);
+                        bean.timeInStr.set(DateUtil.format(DateUtil.parse(contentEntity.getRemindersTime(), "HH:mm"), "HH:mm"));
+                        Long endDate = contentEntity.getEndDate();
+                        bean.expiredDateInStr.set(null == endDate ? "长期" : DateUtil.format(endDate, "yyyy-MM-dd"));
                         Observable.from(contentEntity.getMedicationUsages())
                                 .map(new Func1<MedicineRemindListEntity.ContentEntity.MedicationUsagesEntity, String>() {
                                     @Override
@@ -73,12 +82,11 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
                                     @Override
                                     public void onCompleted() {
                                         bean.medicineNameStr.set(mStringBuilder.toString().substring(0, mStringBuilder.length() - 1));
-
                                     }
 
                                     @Override
                                     public void onError(Throwable e) {
-
+                                        mViewListener.showErrorToast(e.getMessage());
                                     }
 
                                     @Override
@@ -86,7 +94,8 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
                                         mStringBuilder.append(s).append("，");
                                     }
                                 });
-                        bean.isChecked.set(contentEntity.isExpire());
+                        bean.shouldAlarm.set(!contentEntity.isManualCloseReminder());
+                        bean.isExpired.set(contentEntity.isExpire());
                         return Observable.just(bean);
                     }
                 })
@@ -95,7 +104,15 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
 
                     @Override
                     public void onCompleted() {
-                        mViewListener.showMedicineRemind(medicineRemindBeanList);
+                        if (shouldAppend()) {
+                            if (medicineRemindBeanList.size() == 0) {
+                                mViewListener.showReachTheLastPageNotice(Constant.Message.NO_MORE_DATA);
+                                return;
+                            }
+                            mViewListener.appendMedicineRemind(medicineRemindBeanList);
+                        } else {
+                            mViewListener.showMedicineRemind(medicineRemindBeanList);
+                        }
                     }
 
                     @Override
@@ -111,8 +128,18 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
 
     }
 
+    @NonNull
+    private String distinctAMOrPMFromTimeStr(MedicineRemindListEntity.ContentEntity contentEntity) {
+        String remindHour = contentEntity.getRemindersTime().split(":")[0];
+        String amOrPm = "AM";
+        if (TextUtils.isDigitsOnly(remindHour) && Integer.parseInt(remindHour) >= 12) {
+            amOrPm = "PM";
+        }
+        return amOrPm;
+    }
+
     @Override
     public void onReceiveFailed(int code, String message) {
-
+        showError(mViewListener, code, message);
     }
 }

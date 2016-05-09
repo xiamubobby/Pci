@@ -29,11 +29,13 @@ public class MedicineRemindRVAdapter extends SimpleRVAdapter<MedicineRemindBean>
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         final ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        viewHolder.binding.setBean(getBean(position));
+        MedicineRemindBean bean = getBean(position);
+        viewHolder.binding.setBean(bean);
+        viewHolder.mSwOn.setEnabled(!bean.isExpired.get());
         viewHolder.mSwOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                getBean(viewHolder.getAdapterPosition()).isChecked.set(isChecked);
+                getBean(viewHolder.getAdapterPosition()).shouldAlarm.set(isChecked);
             }
         });
     }

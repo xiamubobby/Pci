@@ -17,6 +17,6 @@ public interface MedicineRemindAddOrModifyModelContract {
 
     interface Actions extends IBaseModel {
 
-        void addOrModify(MedicineRemindEditBody body, Callback callback);
+        void addOrModify(String patientId, MedicineRemindEditBody body, Callback callback);
     }
 }

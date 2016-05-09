@@ -30,12 +30,12 @@ public class MedicineRemindDetailEntity extends BaseEntity {
     }
 
     public static class RetValuesEntity {
-        private String endDate;
+        private Long endDate;
         private boolean expire;
         private String remindersTime;
-        private int id;
+        private String id;
         private String remindersDesc;
-        private String startDate;
+        private long startDate;
         /**
          * medicationName : 感冒药
          * medicationNum : 3
@@ -44,11 +44,11 @@ public class MedicineRemindDetailEntity extends BaseEntity {
 
         private List<MedicationUsagesEntity> medicationUsages;
 
-        public String getEndDate() {
+        public Long getEndDate() {
             return endDate;
         }
 
-        public void setEndDate(String endDate) {
+        public void setEndDate(Long endDate) {
             this.endDate = endDate;
         }
 
@@ -68,11 +68,11 @@ public class MedicineRemindDetailEntity extends BaseEntity {
             this.remindersTime = remindersTime;
         }
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 
@@ -84,11 +84,11 @@ public class MedicineRemindDetailEntity extends BaseEntity {
             this.remindersDesc = remindersDesc;
         }
 
-        public String getStartDate() {
+        public long getStartDate() {
             return startDate;
         }
 
-        public void setStartDate(String startDate) {
+        public void setStartDate(long startDate) {
             this.startDate = startDate;
         }
 
@@ -102,7 +102,7 @@ public class MedicineRemindDetailEntity extends BaseEntity {
 
         public static class MedicationUsagesEntity {
             private String medicationName;
-            private int medicationNum;
+            private String medicationNum;
             private String pharmaceuticalUnit;
 
             public String getMedicationName() {
@@ -113,11 +113,11 @@ public class MedicineRemindDetailEntity extends BaseEntity {
                 this.medicationName = medicationName;
             }
 
-            public int getMedicationNum() {
+            public String getMedicationNum() {
                 return medicationNum;
             }
 
-            public void setMedicationNum(int medicationNum) {
+            public void setMedicationNum(String medicationNum) {
                 this.medicationNum = medicationNum;
             }
 
