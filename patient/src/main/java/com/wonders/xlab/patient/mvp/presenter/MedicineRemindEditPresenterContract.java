@@ -11,7 +11,7 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
 /**
  * Created by hua on 16/5/6.
  */
-public interface MedicineRemindDetailPresenterContract {
+public interface MedicineRemindEditPresenterContract {
     interface ViewListener extends BasePresenterListener {
         void showMedicineRemindInfo(int hour, int minutes, long startDate, Long endDate, String message, List<MedicineBean> beanList);
 

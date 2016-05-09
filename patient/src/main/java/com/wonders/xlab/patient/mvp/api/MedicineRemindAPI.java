@@ -5,7 +5,7 @@ import com.wonders.xlab.patient.mvp.entity.MedicineRemindDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.MedicineRemindListEntity;
 import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
 
-import im.hua.library.base.mvp.entity.BaseEntity;
+import im.hua.library.base.mvp.entity.EmptyValueEntity;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -24,18 +24,24 @@ public interface MedicineRemindAPI {
     @GET("v1/medicationReminders/queryDetailByRemindersRecordId/{remindersRecordId}")
     Observable<Response<MedicineRemindDetailEntity>> getMedicineRemindDetail(@Path("remindersRecordId") String remindersRecordId);
 
+    /**
+     * body不需要设置id
+     * @param userId
+     * @param body
+     * @return
+     */
     @POST("v1/medicationReminders/createNewRemindersRecord/{userId}")
-    Observable<Response<BaseEntity>> createMedicineRemind(@Path("userId") String userId, @Body MedicineRemindEditBody body);
+    Observable<Response<EmptyValueEntity>> createMedicineRemind(@Path("userId") String userId, @Body MedicineRemindEditBody body);
 
     /**
-     * 如果是修改，则body需要设置id
+     * body需要设置id
      * @param body
      * @return
      */
     @POST("v1/medicationReminders/editReminderRecord")
-    Observable<Response<BaseEntity>> addOrModifyMedicineRemind(@Body MedicineRemindEditBody body);
+    Observable<Response<EmptyValueEntity>> modifyMedicineRemind(@Body MedicineRemindEditBody body);
 
     @POST("v1/medicationReminders/createNewRemindersRecord/{userId}")
-    Observable<Response<BaseEntity>> deleteMedicineRemind(@Path("userId") String userId, @Body MedicineRemindEditBody body);
+    Observable<Response<EmptyValueEntity>> deleteMedicineRemind(@Path("userId") String userId, @Body MedicineRemindEditBody body);
 
 }

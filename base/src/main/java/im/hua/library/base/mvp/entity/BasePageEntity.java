@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * Created by hua on 16/5/9.
+ * 分页
  */
 public class BasePageEntity<T> extends BaseEntity {
 
