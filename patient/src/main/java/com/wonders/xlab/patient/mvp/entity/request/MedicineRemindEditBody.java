@@ -16,7 +16,7 @@ public class MedicineRemindEditBody {
      * remindersDesc : 记得提醒我啊
      */
 
-    private int id;
+    private String id;
     private String startDate;
     private String endDate;
     private String remindersTime;
@@ -29,11 +29,11 @@ public class MedicineRemindEditBody {
 
     private List<MedicationUsagesEntity> medicationUsages;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -11,11 +11,13 @@ import im.hua.library.base.mvp.listener.BasePagePresenterListener;
  * Created by hua on 16/5/5.
  */
 public interface MedicineRemindPresenterContract {
-    interface ViewListener extends BasePagePresenterListener{
+    interface ViewListener extends BasePagePresenterListener {
         void showMedicineRemind(List<MedicineRemindBean> medicineRemindBeanList);
+
+        void appendMedicineRemind(List<MedicineRemindBean> medicineRemindBeanList);
     }
 
-    interface Actions extends IBasePresenter{
-        void getMedicineReminds();
+    interface Actions extends IBasePresenter {
+        void getMedicineReminds(boolean isRefresh);
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
@@ -15,6 +16,7 @@ import android.widget.TimePicker;
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
+import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
@@ -22,7 +24,8 @@ import com.wonders.xlab.patient.base.TextInputActivity;
 import com.wonders.xlab.patient.module.medicineremind.MedicineBean;
 import com.wonders.xlab.patient.module.medicineremind.edit.adapter.MedicineRemindEditRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.searchmedicine.MedicineSearchActivity;
-import com.wonders.xlab.patient.mvp.presenter.MedicineRemindEditPresenterContract;
+import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
+import com.wonders.xlab.patient.mvp.presenter.MedicineRemindDetailPresenterContract;
 
 import java.util.Calendar;
 import java.util.List;
@@ -32,7 +35,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import im.hua.utils.DateUtil;
 
-public class MedicineRemindEditActivity extends AppbarActivity implements MedicineRemindEditPresenterContract.ViewListener {
+public class MedicineRemindEditActivity extends AppbarActivity implements MedicineRemindDetailPresenterContract.ViewListener {
+
+    public static final String EXTRA_MEDICINE_REMIND_ID = "medicineRemindId";
+    private String mMedicineRemindId;
 
     private final int REQUEST_CODE_MESSAGE = 1234;
 
@@ -52,7 +58,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
 
     private MedicineRemindEditRVAdapter mRVAdapter;
 
-    private MedicineRemindEditPresenterContract.Actions mPresenter;
+    private MedicineRemindDetailPresenterContract.Actions mPresenter;
 
     @Override
     public int getContentLayout() {
@@ -64,6 +70,15 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         OttoManager.register(this);
+
+        Intent intent = getIntent();
+        if (null != intent) {
+            mMedicineRemindId = intent.getStringExtra(EXTRA_MEDICINE_REMIND_ID);
+            setToolbarTitle("编辑提醒");
+        } else {
+            setToolbarTitle("添加提醒");
+        }
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -77,7 +92,12 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
                 .getMedicineRemindEditPresenter();
         addPresenter(mPresenter);
 
-        mPresenter.getMedicineRemindInfoById("1");
+        /**
+         * 编辑的时候才获取详细信息
+         */
+        if (!TextUtils.isEmpty(mMedicineRemindId)) {
+            mPresenter.getMedicineRemindInfoById(mMedicineRemindId);
+        }
     }
 
     @Subscribe
@@ -160,6 +180,9 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_save:
+                MedicineRemindEditBody body = new MedicineRemindEditBody();
+
+                mPresenter.addOrModify(body);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -187,8 +210,14 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
     }
 
     @Override
-    public void showLoading(String message) {
+    public void saveSuccess(String message) {
+        showShortToast(message);
+        finish();
+    }
 
+    @Override
+    public void showLoading(String message) {
+        showProgressDialog("", Constant.Message.LOADING_PLEASE_WAIT, null);
     }
 
     @Override
@@ -213,7 +242,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
 
     @Override
     public void hideLoading() {
-
+        dismissProgressDialog();
     }
 
     @Override

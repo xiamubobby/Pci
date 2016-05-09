@@ -1,26 +1,34 @@
 package com.wonders.xlab.patient.module.medicineremind.edit;
 
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
-import com.wonders.xlab.patient.mvp.presenter.MedicineRemindEditPresenterContract;
+import com.wonders.xlab.patient.mvp.api.MedicineRemindAPI;
+import com.wonders.xlab.patient.mvp.presenter.MedicineRemindDetailPresenterContract;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
 
 /**
  * Created by hua on 16/5/6.
  */
 @Module
 public class MedicineRemindEditModule {
-    private MedicineRemindEditPresenterContract.ViewListener mViewListener;
+    private MedicineRemindDetailPresenterContract.ViewListener mViewListener;
 
 
-    public MedicineRemindEditModule(MedicineRemindEditPresenterContract.ViewListener viewListener) {
+    public MedicineRemindEditModule(MedicineRemindDetailPresenterContract.ViewListener viewListener) {
         mViewListener = viewListener;
     }
 
     @Provides
     @ActivityScoped
-    MedicineRemindEditPresenterContract.ViewListener provideViewListener() {
+    MedicineRemindDetailPresenterContract.ViewListener provideViewListener() {
         return mViewListener;
+    }
+
+    @Provides
+    @ActivityScoped
+    MedicineRemindAPI provideMedicineRemindAPI(Retrofit retrofit) {
+        return retrofit.create(MedicineRemindAPI.class);
     }
 }

@@ -2,56 +2,32 @@ package com.wonders.xlab.patient.mvp.entity;
 
 import java.util.List;
 
-import im.hua.library.base.mvp.entity.BaseEntity;
+import im.hua.library.base.mvp.entity.BasePageEntity;
 
 /**
  * Created by hua on 16/2/25.
  */
-public class MedicineRemindEntity extends BaseEntity {
-
-
-    /**
-     * endDate : 2016-05-23
-     * expire : false
-     * remindersTime : 10:00
-     * id : 1
-     * remindersDesc : 记得提醒我啊
-     * startDate : 2016-04-23
-     * medicationUsages : [{"id":1,"startDate":"2016-04-23","endDate":"2016-05-23","remindersTime":"10:00","remindersDesc":"记得提醒我啊","delete":false,"expire":false},"medicationName":"感冒药","medicationNum":3,"pharmaceuticalUnit":"粒","use":true}]
-     */
-
-    private List<RetValuesEntity> ret_values;
-
-    public List<RetValuesEntity> getRet_values() {
-        return ret_values;
-    }
-
-    public void setRet_values(List<RetValuesEntity> ret_values) {
-        this.ret_values = ret_values;
-    }
-
-    public static class RetValuesEntity {
-        private String endDate;
+public class MedicineRemindListEntity extends BasePageEntity<MedicineRemindListEntity.ContentEntity> {
+    public static class ContentEntity {
+        private long endDate;
         private boolean expire;
         private String remindersTime;
-        private int id;
+        private String id;
         private String remindersDesc;
-        private String startDate;
+        private long startDate;
         /**
-         * id : 1
          * medicationName : 感冒药
          * medicationNum : 3
          * pharmaceuticalUnit : 粒
-         * use : true
          */
 
         private List<MedicationUsagesEntity> medicationUsages;
 
-        public String getEndDate() {
+        public long getEndDate() {
             return endDate;
         }
 
-        public void setEndDate(String endDate) {
+        public void setEndDate(long endDate) {
             this.endDate = endDate;
         }
 
@@ -71,11 +47,11 @@ public class MedicineRemindEntity extends BaseEntity {
             this.remindersTime = remindersTime;
         }
 
-        public int getId() {
+        public String getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(String id) {
             this.id = id;
         }
 
@@ -87,11 +63,11 @@ public class MedicineRemindEntity extends BaseEntity {
             this.remindersDesc = remindersDesc;
         }
 
-        public String getStartDate() {
+        public long getStartDate() {
             return startDate;
         }
 
-        public void setStartDate(String startDate) {
+        public void setStartDate(long startDate) {
             this.startDate = startDate;
         }
 
@@ -104,19 +80,9 @@ public class MedicineRemindEntity extends BaseEntity {
         }
 
         public static class MedicationUsagesEntity {
-            private int id;
             private String medicationName;
             private int medicationNum;
             private String pharmaceuticalUnit;
-            private boolean use;
-
-            public int getId() {
-                return id;
-            }
-
-            public void setId(int id) {
-                this.id = id;
-            }
 
             public String getMedicationName() {
                 return medicationName;
@@ -141,15 +107,6 @@ public class MedicineRemindEntity extends BaseEntity {
             public void setPharmaceuticalUnit(String pharmaceuticalUnit) {
                 this.pharmaceuticalUnit = pharmaceuticalUnit;
             }
-
-            public boolean isUse() {
-                return use;
-            }
-
-            public void setUse(boolean use) {
-                this.use = use;
-            }
-
         }
     }
 }

@@ -2,7 +2,6 @@ package com.wonders.xlab.patient.di;
 
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.mvp.api.DoctorAPI;
 
 import java.util.concurrent.TimeUnit;
 
@@ -49,9 +48,4 @@ public class ManagerModule {
         return new AIManager();
     }
 
-    @Provides
-    @Singleton
-    protected DoctorAPI provideDoctorAPI(Retrofit retrofit) {
-        return retrofit.create(DoctorAPI.class);
-    }
 }
