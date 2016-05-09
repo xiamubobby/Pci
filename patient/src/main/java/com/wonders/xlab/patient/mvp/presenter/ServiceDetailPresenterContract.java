@@ -1,5 +1,7 @@
 package com.wonders.xlab.patient.mvp.presenter;
 
+import com.wonders.xlab.patient.mvp.entity.ServiceDetailEntity;
+
 import im.hua.library.base.mvp.IBasePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
 
@@ -8,7 +10,7 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
  */
 public interface ServiceDetailPresenterContract {
     interface ViewListener extends BasePresenterListener {
-        void showServiceDetail();
+        void showServiceDetail(ServiceDetailEntity entity);
     }
 
     interface Actions extends IBasePresenter {

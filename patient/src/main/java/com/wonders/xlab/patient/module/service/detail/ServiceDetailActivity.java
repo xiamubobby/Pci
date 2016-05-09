@@ -7,6 +7,8 @@ import android.view.View;
 
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.base.AppbarActivity;
+import com.wonders.xlab.patient.mvp.entity.ServiceDetailEntity;
+import com.wonders.xlab.patient.mvp.presenter.ServiceDetailPresenterContract;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -14,11 +16,13 @@ import butterknife.ButterKnife;
 /**
  * Created by WZH on 16/5/9.
  */
-public class ServiceDetailActivity extends AppbarActivity {
+public class ServiceDetailActivity extends AppbarActivity implements ServiceDetailPresenterContract.ViewListener {
 
     @Bind(R.id.view_pager_service_detail)
     ViewPager mViewPager;
-    @Override
+
+    private ServiceDetailPresenterContract.Actions mServiceDetailPresenter;
+
     public int getContentLayout() {
         return R.layout.service_detail_activity;
     }
@@ -33,6 +37,7 @@ public class ServiceDetailActivity extends AppbarActivity {
         super.onCreate(savedInstanceState);
 
         ButterKnife.bind(this);
+
         mViewPager.setAdapter(new PagerAdapter() {
             @Override
             public int getCount() {
@@ -46,5 +51,41 @@ public class ServiceDetailActivity extends AppbarActivity {
 
         });
     }
+
+    @Override
+    public void showServiceDetail(ServiceDetailEntity entity) {
+
+    }
+
+    @Override
+    public void showLoading(String message) {
+        showProgressDialog("", message, null);
+    }
+
+    @Override
+    public void showNetworkError(String message) {
+        showShortToast(message);
+    }
+
+    @Override
+    public void showServerError(String message) {
+
+    }
+
+    @Override
+    public void showEmptyView(String message) {
+
+    }
+
+    @Override
+    public void showErrorToast(String message) {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
 
 }
