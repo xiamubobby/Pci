@@ -8,48 +8,36 @@ import java.util.List;
 public class MedicineRemindEditBody {
 
     /**
-     * id : 1
-     * startDate : 2016-05-04
-     * endDate : 2016-05-12
-     * remindersTime : 10:00
-     * medicationUsages : [{"medicationName":"感冒药","medicationNum":3,"pharmaceuticalUnit":"粒"}]
-     * remindersDesc : 记得提醒我啊
+     * 如果是修改，则需要设置id
      */
-
-    private int id;
-    private String startDate;
-    private String endDate;
+    private String id;
+    private long startDate;
+    private Long endDate;
     private String remindersTime;
     private String remindersDesc;
-    /**
-     * medicationName : 感冒药
-     * medicationNum : 3
-     * pharmaceuticalUnit : 粒
-     */
-
     private List<MedicationUsagesEntity> medicationUsages;
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getStartDate() {
+    public long getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(long startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public Long getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Long endDate) {
         this.endDate = endDate;
     }
 
@@ -79,7 +67,7 @@ public class MedicineRemindEditBody {
 
     public static class MedicationUsagesEntity {
         private String medicationName;
-        private int medicationNum;
+        private String medicationNum;
         private String pharmaceuticalUnit;
 
         public String getMedicationName() {
@@ -90,11 +78,11 @@ public class MedicineRemindEditBody {
             this.medicationName = medicationName;
         }
 
-        public int getMedicationNum() {
+        public String getMedicationNum() {
             return medicationNum;
         }
 
-        public void setMedicationNum(int medicationNum) {
+        public void setMedicationNum(String medicationNum) {
             this.medicationNum = medicationNum;
         }
 

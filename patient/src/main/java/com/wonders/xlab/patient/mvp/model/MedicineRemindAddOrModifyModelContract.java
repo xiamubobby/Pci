@@ -1,6 +1,6 @@
 package com.wonders.xlab.patient.mvp.model;
 
-import java.util.Map;
+import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
 
 import im.hua.library.base.mvp.IBaseModel;
 import im.hua.library.base.mvp.listener.BaseModelListener;
@@ -8,15 +8,15 @@ import im.hua.library.base.mvp.listener.BaseModelListener;
 /**
  * Created by WZH on 16/5/5.
  */
-public interface MedicineRemindEditEditModelContract {
+public interface MedicineRemindAddOrModifyModelContract {
 
     interface Callback extends BaseModelListener {
 
-        void editSuccess();
+        void addOrModifySuccess(String message);
     }
 
     interface Actions extends IBaseModel {
 
-        void edit(Map<String, Object> ext, Callback callback);
+        void addOrModify(String patientId, MedicineRemindEditBody body, Callback callback);
     }
 }

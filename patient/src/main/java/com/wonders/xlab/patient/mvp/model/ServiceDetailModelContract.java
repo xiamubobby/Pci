@@ -1,22 +1,20 @@
 package com.wonders.xlab.patient.mvp.model;
 
-import java.util.Map;
+
+import com.wonders.xlab.patient.mvp.entity.ServiceDetailEntity;
 
 import im.hua.library.base.mvp.IBaseModel;
 import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
- * Created by WZH on 16/5/5.
+ * Created by WZH on 16/5/9.
  */
-public interface MedicineRemindEditCreateModelContract {
-
+public interface ServiceDetailModelContract {
     interface Callback extends BaseModelListener {
-        void createSuccess();
-
+        void showServiceDetail(ServiceDetailEntity entity);
     }
 
     interface Actions extends IBaseModel {
-
-        void create(Map<String, Object> ext, Callback callback);
+        void getServiceDetail(Long serviceId,Callback callback);
     }
 }

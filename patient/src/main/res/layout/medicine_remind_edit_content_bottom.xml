@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="right"
-            android:text="长期"
+            android:text="@string/medicine_remind_edit_end_date_default"
             android:textColor="@color/text_color_primary_gray"
             android:textSize="@dimen/text_size_middle"/>
     </LinearLayout>
