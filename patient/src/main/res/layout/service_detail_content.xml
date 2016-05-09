@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="data"
+            type="com.wonders.xlab.patient.module.service.detail.ServiceDetailDataUnit" />
+    </data>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -23,7 +28,8 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:textColor="@color/text_color_primary_black"
-            android:textSize="@dimen/text_size_middle" />
+            android:textSize="@dimen/text_size_middle"
+            android:text="@{data.getTitle()}"/>
 
         <android.support.v4.widget.Space
             android:layout_width="match_parent"
@@ -36,7 +42,8 @@
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:textColor="@color/red"
-            android:textSize="@dimen/text_size_middle" />
+            android:textSize="@dimen/text_size_middle"
+            android:text="@{data.getPrice().toString()}"/>
 
         <android.support.v4.widget.Space
             android:layout_width="match_parent"
@@ -150,3 +157,4 @@
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>
+</layout>

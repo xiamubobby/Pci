@@ -1,6 +1,8 @@
 package com.wonders.xlab.patient.mvp.presenter;
 
+import com.wonders.xlab.patient.module.service.detail.ServiceDetailDataUnit;
 import com.wonders.xlab.patient.mvp.entity.ServiceDetailEntity;
+import com.wonders.xlab.patient.mvp.model.ServiceDetailModel;
 import com.wonders.xlab.patient.mvp.model.ServiceDetailModelContract;
 
 import javax.inject.Inject;
@@ -16,7 +18,7 @@ public class ServiceDetailPresenter extends BasePresenter implements  ServiceDet
     private ServiceDetailModelContract.Actions mServiceDetailModel;
 
     @Inject
-    public ServiceDetailPresenter(ServiceDetailPresenterContract.ViewListener viewListener,ServiceDetailModelContract.Actions serviceDetailModel) {
+    public ServiceDetailPresenter(ServiceDetailPresenterContract.ViewListener viewListener,ServiceDetailModel serviceDetailModel) {
         mViewListener = viewListener;
         mServiceDetailModel = serviceDetailModel;
         addModel(serviceDetailModel);
@@ -29,7 +31,7 @@ public class ServiceDetailPresenter extends BasePresenter implements  ServiceDet
             @Override
             public void showServiceDetail(ServiceDetailEntity entity) {
                 mViewListener.hideLoading();
-                mViewListener.showServiceDetail(entity);
+                mViewListener.showServiceDetail(new ServiceDetailDataUnit(entity));
             }
 
             @Override

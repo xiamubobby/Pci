@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="data"
+            type="com.wonders.xlab.patient.module.service.detail.ServiceDetailDataUnit" />
+    </data>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/coordinator"
@@ -9,6 +15,8 @@
 
     <include layout="@layout/appbar" />
 
-    <include layout="@layout/service_detail_content" />
+    <include layout="@layout/service_detail_content"
+        bind:data="@{data}"/>
 
 </android.support.design.widget.CoordinatorLayout>
+</layout>

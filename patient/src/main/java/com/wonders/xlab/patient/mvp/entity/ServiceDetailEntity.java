@@ -33,7 +33,7 @@ public class ServiceDetailEntity extends BaseEntity {
     public static class RetValuesEntity {
         private String title;
         private String description;
-        private int price;
+        private Float price;
         private String organizationName;
         private String organizationImageUrl;
         private String organizationStatus;
@@ -69,11 +69,11 @@ public class ServiceDetailEntity extends BaseEntity {
             this.description = description;
         }
 
-        public int getPrice() {
+        public Float getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(Float price) {
             this.price = price;
         }
 

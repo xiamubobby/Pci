@@ -1,6 +1,7 @@
 package com.wonders.xlab.patient.module.service;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,6 +15,7 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
+import com.wonders.xlab.patient.module.service.detail.ServiceDetailActivity;
 import com.wonders.xlab.patient.mvp.presenter.ServicePresenterContract;
 
 import java.util.List;
@@ -80,7 +82,9 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
         adapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
             @Override
             public void onItemClick(int position) {
-
+                Intent i = new Intent(getActivity(), ServiceDetailActivity.class);
+                i.putExtra(ServiceDetailActivity._key_SERVICE_ID_, adapter.getBean(position).getId());
+                startActivity(i);
             }
         });
         recyclerView.setAdapter(adapter);
