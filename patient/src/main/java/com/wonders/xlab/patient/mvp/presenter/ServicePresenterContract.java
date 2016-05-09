@@ -4,6 +4,7 @@ import com.wonders.xlab.patient.module.alldoctor.adapter.AllDoctorItemBean;
 import com.wonders.xlab.patient.module.service.ServiceListCellDataUnit;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import im.hua.library.base.mvp.IBasePresenter;
 import im.hua.library.base.mvp.listener.BasePagePresenterListener;
@@ -13,12 +14,12 @@ import im.hua.library.base.mvp.listener.BasePagePresenterListener;
  */
 public class ServicePresenterContract {
     public interface ViewListener extends BasePagePresenterListener {
-        void showAllServiceList(ArrayList<ServiceListCellDataUnit> list);
+        void showAllServiceList(List<ServiceListCellDataUnit> list);
 
-        void appendAllServiceList(ArrayList<ServiceListCellDataUnit> list);
+        void appendAllServiceList(List<ServiceListCellDataUnit> list);
     }
 
     public interface Actions extends IBasePresenter {
-        void getAllServices(String serviceId, boolean isRefresh);
+        void getAllServices(boolean isRefresh);
     }
 }

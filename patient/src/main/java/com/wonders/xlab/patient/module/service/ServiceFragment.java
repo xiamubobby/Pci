@@ -1,7 +1,6 @@
 package com.wonders.xlab.patient.module.service;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,13 +13,10 @@ import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.module.alldoctor.adapter.AllDoctorRVAdapter;
-import com.wonders.xlab.patient.module.doctordetail.DoctorDetailActivity;
 import com.wonders.xlab.patient.mvp.presenter.ServicePresenterContract;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -69,13 +65,13 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
         recyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                servicePresenter.getAllServices(AIManager.getInstance().getPatientId(), false);
+                servicePresenter.getAllServices(false);
             }
         });
         recyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                servicePresenter.getAllServices(AIManager.getInstance().getPatientId(), true);
+                servicePresenter.getAllServices(true);
             }
         });
 
@@ -88,18 +84,18 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
             }
         });
         recyclerView.setAdapter(adapter);
-        servicePresenter.getAllServices(AIManager.getInstance().getPatientId(), true);
+        servicePresenter.getAllServices(true);
     }
 
 
 
     @Override
-    public void showAllServiceList(ArrayList<ServiceListCellDataUnit> list) {
+    public void showAllServiceList(List<ServiceListCellDataUnit> list) {
         adapter.setDatas(list);
     }
 
     @Override
-    public void appendAllServiceList(ArrayList<ServiceListCellDataUnit> list) {
+    public void appendAllServiceList(List<ServiceListCellDataUnit> list) {
         adapter.appendDatas(list);
     }
 
