@@ -14,6 +14,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.me.setting.SettingActivity;
+import com.wonders.xlab.patient.module.order.OrderListActivity;
 import com.wonders.xlab.patient.util.ImageViewManager;
 
 import butterknife.Bind;
@@ -28,8 +29,6 @@ public class MeFragment extends BaseFragment {
 
     @Bind(R.id.iv_me_portrait)
     ImageView mIvMePortrait;
-    @Bind(R.id.tv_me_setting)
-    TextView mTvMeSetting;
     @Bind(R.id.tv_me_name)
     TextView mTvMeName;
     @Bind(R.id.tv_me_tel)
@@ -63,6 +62,11 @@ public class MeFragment extends BaseFragment {
     @OnClick(R.id.tv_me_setting)
     public void goToSettingActivity() {
         startActivity(new Intent(getActivity(), SettingActivity.class));
+    }
+
+    @OnClick(R.id.tv_me_order)
+    public void goToMyOrderListActivity() {
+        startActivity(new Intent(getActivity(), OrderListActivity.class));
     }
 
     @Override
