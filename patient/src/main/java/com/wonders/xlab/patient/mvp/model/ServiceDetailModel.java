@@ -1,7 +1,7 @@
 package com.wonders.xlab.patient.mvp.model;
 
 import com.wonders.xlab.patient.base.PatientBaseModel;
-import com.wonders.xlab.patient.mvp.api.ServiceAPIN;
+import com.wonders.xlab.patient.mvp.api.ServiceAPI;
 import com.wonders.xlab.patient.mvp.entity.ServiceDetailEntity;
 
 import javax.inject.Inject;
@@ -10,17 +10,17 @@ import javax.inject.Inject;
  * Created by WZH on 16/5/9.
  */
 public class ServiceDetailModel extends PatientBaseModel<ServiceDetailEntity> implements ServiceDetailModelContract.Actions {
-    private ServiceAPIN mServiceAPIN;
+    private ServiceAPI mServiceAPI;
 
     @Inject
-    ServiceDetailModel(ServiceAPIN serviceAPIN) {
-        mServiceAPIN = serviceAPIN;
+    ServiceDetailModel(ServiceAPI serviceAPI) {
+        mServiceAPI = serviceAPI;
     }
 
     @Override
     public void getServiceDetail(Long serviceId, final ServiceDetailModelContract.Callback callback) {
 
-        request(mServiceAPIN.getServiceDetail(serviceId), new Callback<ServiceDetailEntity>() {
+        request(mServiceAPI.getServiceDetail(serviceId), new Callback<ServiceDetailEntity>() {
             @Override
             public void onSuccess(ServiceDetailEntity response) {
                 ServiceDetailEntity.RetValuesEntity retValues = response.getRet_values();

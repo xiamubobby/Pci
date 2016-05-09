@@ -1,7 +1,7 @@
 package com.wonders.xlab.patient.module.service;
 
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
-import com.wonders.xlab.patient.mvp.api.ServiceAPIN;
+import com.wonders.xlab.patient.mvp.api.ServiceAPI;
 import com.wonders.xlab.patient.mvp.presenter.ServicePresenterContract;
 
 import dagger.Module;
@@ -26,8 +26,8 @@ public class ServiceModule {
 
     @Provides
     @ActivityScoped
-    ServiceAPIN provideServiceAPI(Retrofit retrofit) {
-        return retrofit.create(ServiceAPIN.class);
+    ServiceAPI provideServiceAPI(Retrofit retrofit) {
+        return retrofit.create(ServiceAPI.class);
     }
 
 }

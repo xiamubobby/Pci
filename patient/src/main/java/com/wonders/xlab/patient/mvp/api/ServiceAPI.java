@@ -12,7 +12,7 @@ import rx.Observable;
  * Created by natsuki on 16/5/6.
  * Created by WZH on 16/5/9.
  */
-public interface ServiceAPIN {
+public interface ServiceAPI {
     /**
      * 获取所有健康服务
      *

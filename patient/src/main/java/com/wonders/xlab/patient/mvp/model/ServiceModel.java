@@ -1,7 +1,7 @@
 package com.wonders.xlab.patient.mvp.model;
 
 import com.wonders.xlab.patient.base.PatientBaseModel;
-import com.wonders.xlab.patient.mvp.api.ServiceAPIN;
+import com.wonders.xlab.patient.mvp.api.ServiceAPI;
 import com.wonders.xlab.patient.mvp.entity.ServiceListEntity;
 
 import javax.inject.Inject;
@@ -11,16 +11,16 @@ import javax.inject.Inject;
  */
 public class ServiceModel extends PatientBaseModel<ServiceListEntity> implements ServiceModelContract.Actions {
 
-    private ServiceAPIN mServiceAPIN;
+    private ServiceAPI mServiceAPI;
 
     @Inject
-    ServiceModel(ServiceAPIN serviceAPIN) {
-        this.mServiceAPIN = serviceAPIN;
+    ServiceModel(ServiceAPI serviceAPI) {
+        this.mServiceAPI = serviceAPI;
     }
 
     @Override
     public void getServiceList(final ServiceModelContract.Callback callback) {
-        request(mServiceAPIN.listHealthService(), new Callback<ServiceListEntity>() {
+        request(mServiceAPI.listHealthService(), new Callback<ServiceListEntity>() {
             @Override
             public void onSuccess(ServiceListEntity response) {
                 callback.onReceiveServiceListSuccess(response.getRet_values());
