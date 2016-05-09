@@ -15,9 +15,13 @@ public interface MedicineRemindPresenterContract {
         void showMedicineRemind(List<MedicineRemindBean> medicineRemindBeanList);
 
         void appendMedicineRemind(List<MedicineRemindBean> medicineRemindBeanList);
+
+        void changeRemindStateSuccess(String message);
     }
 
     interface Actions extends IBasePresenter {
         void getMedicineReminds(boolean isRefresh);
+
+        void changeRemindState(String remindersRecordId, boolean manualCloseReminder);
     }
 }

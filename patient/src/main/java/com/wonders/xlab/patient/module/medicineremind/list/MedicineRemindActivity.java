@@ -94,6 +94,11 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
         mMedicineRemindRVAdapter.appendDatas(medicineRemindBeanList);
     }
 
+    @Override
+    public void changeRemindStateSuccess(String message) {
+
+    }
+
     private void initMedicineRemindAdapter() {
         if (mMedicineRemindRVAdapter == null) {
             mMedicineRemindRVAdapter = new MedicineRemindRVAdapter();

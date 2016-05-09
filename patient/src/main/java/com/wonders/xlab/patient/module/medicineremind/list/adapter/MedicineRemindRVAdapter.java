@@ -52,4 +52,8 @@ public class MedicineRemindRVAdapter extends SimpleRVAdapter<MedicineRemindBean>
             binding = MedicineRemindItemBinding.bind(itemView);
         }
     }
+
+    public interface OnSwitchChangeListener{
+        void onSwitchStateChange();
+    }
 }

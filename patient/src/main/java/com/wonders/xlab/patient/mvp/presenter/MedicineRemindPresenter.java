@@ -9,6 +9,8 @@ import com.wonders.xlab.patient.module.medicineremind.list.bean.MedicineRemindBe
 import com.wonders.xlab.patient.mvp.entity.MedicineRemindListEntity;
 import com.wonders.xlab.patient.mvp.model.MedicineRemindListModel;
 import com.wonders.xlab.patient.mvp.model.MedicineRemindListModelContract;
+import com.wonders.xlab.patient.mvp.model.MedicineStateModifyModel;
+import com.wonders.xlab.patient.mvp.model.MedicineStateModifyModelContract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,19 +26,22 @@ import rx.functions.Func1;
 /**
  * Created by WZH on 16/5/4.
  */
-public class MedicineRemindPresenter extends BasePagePresenter implements MedicineRemindPresenterContract.Actions, MedicineRemindListModelContract.Callback {
+public class MedicineRemindPresenter extends BasePagePresenter implements MedicineRemindPresenterContract.Actions, MedicineRemindListModelContract.Callback, MedicineStateModifyModelContract.Callback {
 
     @Inject
     AIManager mAIManager;
 
     private MedicineRemindListModelContract.Actions mRemindListModel;
+    private MedicineStateModifyModelContract.Actions mStateModifyModel;
     private MedicineRemindPresenterContract.ViewListener mViewListener;
 
     @Inject
-    public MedicineRemindPresenter(MedicineRemindListModel remindListModel, MedicineRemindPresenterContract.ViewListener viewListener) {
-        mRemindListModel = remindListModel;
+    public MedicineRemindPresenter(MedicineRemindPresenterContract.ViewListener viewListener, MedicineRemindListModel remindListModel, MedicineStateModifyModel stateModifyModel) {
         mViewListener = viewListener;
+        mRemindListModel = remindListModel;
+        mStateModifyModel = stateModifyModel;
         addModel(mRemindListModel);
+        addModel(mStateModifyModel);
     }
 
     @Override
@@ -51,6 +56,11 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
         }
         mViewListener.showLoading("");
         mRemindListModel.getMedicineRemindList(mAIManager.getPatientId(), getNextPageIndex(), DEFAULT_PAGE_SIZE, this);
+    }
+
+    @Override
+    public void changeRemindState(String remindersRecordId, boolean manualCloseReminder) {
+        mStateModifyModel.changeRemindState(remindersRecordId,manualCloseReminder,this);
     }
 
     @Override
@@ -141,5 +151,10 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
     @Override
     public void onReceiveFailed(int code, String message) {
         showError(mViewListener, code, message);
+    }
+
+    @Override
+    public void onChangeRemindStateSuccess(String message) {
+        mViewListener.changeRemindStateSuccess(message);
     }
 }

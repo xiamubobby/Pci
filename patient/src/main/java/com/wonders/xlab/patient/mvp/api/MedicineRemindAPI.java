@@ -8,6 +8,8 @@ import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
 import im.hua.library.base.mvp.entity.EmptyValueEntity;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -44,4 +46,7 @@ public interface MedicineRemindAPI {
     @POST("v1/medicationReminders/createNewRemindersRecord/{userId}")
     Observable<Response<EmptyValueEntity>> deleteMedicineRemind(@Path("userId") String userId, @Body MedicineRemindEditBody body);
 
+    @FormUrlEncoded
+    @POST("v1/medicationReminders/changeManualCloseReminder/{remindersRecordId}")
+    Observable<Response<EmptyValueEntity>> changeRemindState(@Path("remindersRecordId") String remindersRecordId, @Field("manualCloseReminder") boolean manualCloseReminder);
 }
