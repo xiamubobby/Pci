@@ -264,6 +264,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
 
     @Override
     public void saveSuccess(String message) {
+        OttoManager.post(new SaveRemindSuccessOtto());
         showShortToast(message);
         finish();
     }
