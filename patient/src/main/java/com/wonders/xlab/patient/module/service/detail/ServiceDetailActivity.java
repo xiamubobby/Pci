@@ -1,13 +1,15 @@
 package com.wonders.xlab.patient.module.service.detail;
 
+import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +24,9 @@ import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.databinding.ServiceDetailActivityBinding;
-import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorDetailPackageBean;
 import com.wonders.xlab.patient.mvp.presenter.ServiceDetailPresenterContract;
 import com.wonders.xlab.patient.util.ImageViewManager;
 
@@ -43,16 +43,27 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
 
     public final static String _key_SERVICE_ID_ = "serviceId";
 
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
     @Bind(R.id.view_pager_service_detail)
     ViewPager mBannerPager;
     @Bind(R.id.tab)
     CommonTabLayout mTab;
     @Bind(R.id.pager)
     ViewPager pager;
+    @Bind(R.id.tv_service_detail_price)
+    TextView price;
     @Bind(R.id.specificans)
     LinearLayout specifican;
-    private BottomSheetDialog dialog;
+    @Bind(R.id.tv_service_detail_selected)
+    TextView selectedService;
 
+    private BottomSheetDialog dialog;
+    private TextView dgPrice;
+    private SpecificanAdapter specificanAdapter;
+
+    private ServiceDetailDataUnit.Specifican selectedSpecifican;
+    private ServiceDetailDataUnit.Specifican tempSpecifican;
 
     private ServiceDetailPresenterContract.Actions mServiceDetailPresenter;
     private long serviceId;
@@ -73,7 +84,13 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.service_detail_activity);
         ButterKnife.bind(this);
-        ((Toolbar) findViewById(R.id.toolbar)).setTitle("服务详情／购买");
+        mToolbar.setTitle("服务详情／购买");
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mServiceDetailPresenter = DaggerServiceDetailComponent.builder()
                 .applicationComponent(((XApplication) getApplication()).getComponent())
                 .serviceDetailModule(new ServiceDetailModule(this))
@@ -91,15 +108,14 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
             }
 
             @Override
-            public void destroyItem(ViewGroup container, int position, Object object) { }
+            public void destroyItem(ViewGroup container, int position, Object object) {
+            }
 
             @Override
             public boolean isViewFromObject(View view, Object object) {
                 return view == object;
             }
         });
-
-
 
         setupTopTab();
     }
@@ -108,6 +124,7 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
     protected void onStart() {
         super.onStart();
         serviceId = getIntent().getExtras().getLong(_key_SERVICE_ID_);
+        mServiceDetailPresenter.getServiceContentDetail(serviceId);
         mServiceDetailPresenter.getServiceDetail(serviceId);
     }
 
@@ -156,6 +173,7 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
     @Override
     public void showServiceDetail(final ServiceDetailDataUnit dataUnit) {
         binding.setData(dataUnit);
+        selectedSpecifican = dataUnit.getSpecificanList().get(0);
         specifican.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,39 +181,36 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
                     dialog = new BottomSheetDialog(ServiceDetailActivity.this);
                 }
                 View view = LayoutInflater.from(ServiceDetailActivity.this).inflate(R.layout.bs_service_specifican, null, false);//layout pch
+
+                dgPrice = (TextView) view.findViewById(R.id.price);
+                Button dgConfirm = (Button) view.findViewById(R.id.confirm);
+                dgConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
                 dialog.setContentView(view);
-                SimpleRVAdapter<ServiceDetailDataUnit.Specifican> adapter = new SimpleRVAdapter<ServiceDetailDataUnit.Specifican>() {
+                dgPrice.setText("¥" + selectedSpecifican.getPrice());
+                specificanAdapter = new SpecificanAdapter();
+                specificanAdapter.setSelectedId(selectedSpecifican.getId());
+                specificanAdapter.setDatas(dataUnit.getSpecificanList());
+                ((CommonRecyclerView) view.findViewById(R.id.recycler)).setAdapter(specificanAdapter);
 
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
-                    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                        TextView tv = new TextView(ServiceDetailActivity.this);
-                        tv.setText("");
-                        VH ret = new VH(tv);
-                        return ret;
-                    }
-
-                    @Override
-                    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-                        VH vh = (VH) holder;
-                        vh.str = getBean(position).getName();
-                        vh.textView.setText(vh.str);
-                    }
-
-                    class VH extends RecyclerView.ViewHolder{
-
-                        public VH(View itemView) {
-                            super(itemView);
+                    public void onDismiss(DialogInterface dialog) {
+                        if (tempSpecifican != null) {
+                            selectedSpecifican = tempSpecifican;
+                            price.setText("¥" + selectedSpecifican.getPrice());
+                            selectedService.setText(selectedSpecifican.getName());
                         }
-
-                        private String str;
-                        private TextView textView;
                     }
-                };
-                ((CommonRecyclerView) view.findViewById(R.id.recycler)).setAdapter(adapter);
-                adapter.setDatas(dataUnit.getSpecificanList());
+                });
                 dialog.show();
             }
         });
+
 
         mBannerPager.setAdapter(new PagerAdapter() {
             @Override
@@ -214,14 +229,68 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
             }
 
             @Override
-            public void destroyItem(ViewGroup container, int position, Object object) { }
+            public void destroyItem(ViewGroup container, int position, Object object) {
+            }
 
             @Override
             public boolean isViewFromObject(View view, Object object) {
-                return view==object;
+                return view == object;
             }
 
         });
+    }
+
+    public class SpecificanAdapter extends SimpleRVAdapter<ServiceDetailDataUnit.Specifican> {
+
+        private int selectedId;
+
+        public void setSelectedId(int selectedId) {
+            this.selectedId = selectedId;
+        }
+
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            final View view = getLayoutInflater().inflate(R.layout.item_service_specifican, parent, false);
+            return new VH(view);
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+            final VH vh = (VH) holder;
+            vh.str = getBean(position).getName();
+            if (selectedId == getBean(position).getId()) {
+                vh.textView.setTextColor(ContextCompat.getColor(ServiceDetailActivity.this, R.color.red));
+            } else {
+                vh.textView.setTextColor(ContextCompat.getColor(ServiceDetailActivity.this, R.color.text_color_primary_black));
+            }
+            vh.textView.setText(vh.str);
+            vh.textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tempSpecifican = getBean(position);
+                    selectedId = tempSpecifican.getId();
+                    dgPrice.setText("¥" + tempSpecifican.getPrice());
+                    notifyDataSetChanged();
+                }
+            });
+        }
+
+        class VH extends RecyclerView.ViewHolder {
+            private String str;
+            private TextView textView;
+
+            public VH(View itemView) {
+                super(itemView);
+                textView = (TextView) itemView.findViewById(R.id.item_service_name);
+            }
+
+
+        }
+    }
+
+    @Override
+    public void showServiceContentDetail(String desc) {
+        ((TextView) findViewById(R.id.desc)).setText(Html.fromHtml(desc));
     }
 
     @Override

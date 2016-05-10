@@ -60,21 +60,21 @@
 
                     <android.support.v4.widget.Space
                         android:layout_width="match_parent"
-                        android:layout_height="15dp" />
+                        android:layout_height="@dimen/fab_margin" />
 
                     <TextView
                         android:id="@+id/tv_service_detail_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
+                        android:paddingLeft="@dimen/fab_margin"
+                        android:paddingRight="@dimen/fab_margin"
                         android:textColor="@color/red"
                         android:textSize="@dimen/text_size_middle"
-                        android:text="@{data.getPrice().toString()}"/>
+                        android:text='@{"¥" + data.getPrice().toString()}'/>
 
                     <android.support.v4.widget.Space
                         android:layout_width="match_parent"
-                        android:layout_height="15dp" />
+                        android:layout_height="@dimen/fab_margin" />
 
                     <View
                         android:layout_width="match_parent"
@@ -86,9 +86,9 @@
                         android:layout_height="wrap_content"
                         android:minHeight="@dimen/actionBarSize"
                         android:orientation="horizontal"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
-                        android:paddingTop="15dp"
+                        android:paddingLeft="@dimen/fab_margin"
+                        android:paddingRight="@dimen/fab_margin"
+                        android:paddingTop="@dimen/fab_margin"
                         android:weightSum="1"
                         android:id="@+id/specificans">
 
@@ -104,8 +104,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:paddingLeft="15dp"
-                            android:paddingRight="15dp"
+                            android:paddingLeft="@dimen/fab_margin"
+                            android:paddingRight="@dimen/fab_margin"
                             android:text="成人健康管理服务套餐（尊享卡）－不含设备"
                             android:textColor="@color/text_color_primary_black"
                             android:textSize="@dimen/text_size_middle" />
@@ -137,13 +137,13 @@
                         android:paddingBottom="20dp"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
-                        android:paddingTop="15dp">
+                        android:paddingTop="@dimen/fab_margin">
 
                         <ImageView
                             android:id="@+id/img_service_detail_organization"
                             android:layout_width="@dimen/doctor_list_icon_size"
                             android:layout_height="@dimen/doctor_list_icon_size"
-                            android:src="@drawable/ic_login_logo" />
+                            android:scaleType="centerInside" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -180,9 +180,10 @@
                 </LinearLayout>
 
             </android.support.v4.widget.NestedScrollView>
-            <View
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </android.support.v4.view.ViewPager>
     </LinearLayout>
 

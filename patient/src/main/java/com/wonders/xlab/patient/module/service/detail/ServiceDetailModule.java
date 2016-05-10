@@ -2,10 +2,12 @@ package com.wonders.xlab.patient.module.service.detail;
 
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
 import com.wonders.xlab.patient.mvp.api.ServiceAPI;
+import com.wonders.xlab.patient.mvp.model.ServiceContentDetailModel;
 import com.wonders.xlab.patient.mvp.presenter.ServiceDetailPresenterContract;
 
 import dagger.Module;
 import dagger.Provides;
+import im.hua.uikit.crv.MaterialProgressDrawable;
 import retrofit2.Retrofit;
 
 /**
@@ -31,4 +33,5 @@ public class ServiceDetailModule {
     ServiceAPI provideServiceAPI(Retrofit retrofit) {
         return retrofit.create(ServiceAPI.class);
     }
+
 }
