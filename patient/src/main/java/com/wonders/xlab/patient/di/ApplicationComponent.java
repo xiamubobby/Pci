@@ -6,6 +6,7 @@ import com.wonders.xlab.patient.application.XApplication;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import io.realm.Realm;
 import retrofit2.Retrofit;
 
 /**
@@ -22,6 +23,8 @@ public interface ApplicationComponent {
     Retrofit getRetrofit();
 
     AIManager getAIManager();
+
+    Realm getRealm();
 
     final class Initializer {
         private Initializer() {

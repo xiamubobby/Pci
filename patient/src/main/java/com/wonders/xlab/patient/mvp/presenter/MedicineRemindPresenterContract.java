@@ -22,6 +22,11 @@ public interface MedicineRemindPresenterContract {
     interface Actions extends IBasePresenter {
         void getMedicineReminds(boolean isRefresh);
 
+        /**
+         *
+         * @param remindersRecordId
+         * @param manualCloseReminder 是否关闭提醒
+         */
         void changeRemindState(String remindersRecordId, boolean manualCloseReminder);
     }
 }

@@ -1,11 +1,12 @@
-package com.wonders.xlab.patient.module.medicineremind;
+package com.wonders.xlab.patient.data.realm;
 
 import io.realm.RealmObject;
 
 /**
- * Created by hua on 16/5/6.
+ * Created by hua on 16/5/10.
  */
-public class MedicineBean extends RealmObject{
+public class MedicineSearchHistoryRealm extends RealmObject {
+    private String id;
     /**
      * 药品名
      */
@@ -66,5 +67,13 @@ public class MedicineBean extends RealmObject{
 
     public void setDose(String dose) {
         this.dose = dose;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

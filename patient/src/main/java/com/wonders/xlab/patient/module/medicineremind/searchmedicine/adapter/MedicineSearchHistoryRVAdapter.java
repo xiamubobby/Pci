@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.databinding.MedicineSearchHistoryItemBinding;
-import com.wonders.xlab.patient.module.medicineremind.MedicineBean;
+import com.wonders.xlab.patient.module.medicineremind.MedicineRealmBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -17,8 +17,8 @@ import butterknife.ButterKnife;
 /**
  * Created by hua on 16/5/6.
  */
-public class MedicineSearchHistoryRVAdapter extends SimpleRVAdapter<MedicineBean> {
-
+public class MedicineSearchHistoryRVAdapter extends SimpleRVAdapter<MedicineRealmBean> {
+    private OnRemoveClickListener mRemoveClickListener;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,10 +33,18 @@ public class MedicineSearchHistoryRVAdapter extends SimpleRVAdapter<MedicineBean
         viewHolder.mIvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                remove(viewHolder.getAdapterPosition());
+                int adapterPosition = viewHolder.getAdapterPosition();
+                if (null != mRemoveClickListener) {
+                    mRemoveClickListener.onClick(getBean(adapterPosition).getId());
+                }
+                remove(adapterPosition);
             }
         });
 
+    }
+
+    public void setRemoveClickListener(OnRemoveClickListener removeClickListener) {
+        mRemoveClickListener = removeClickListener;
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -52,4 +60,7 @@ public class MedicineSearchHistoryRVAdapter extends SimpleRVAdapter<MedicineBean
         }
     }
 
+    public interface OnRemoveClickListener{
+        void onClick(String id);
+    }
 }

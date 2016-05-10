@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.di;
 
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.application.XApplication;
 
 import java.util.concurrent.TimeUnit;
 
@@ -10,6 +11,7 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import im.hua.library.base.retrofit.HttpLoggingInterceptor;
+import io.realm.Realm;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -48,4 +50,9 @@ public class ManagerModule {
         return new AIManager();
     }
 
+    @Provides
+    @Singleton
+    Realm provideRealm(){
+        return XApplication.realm;
+    }
 }

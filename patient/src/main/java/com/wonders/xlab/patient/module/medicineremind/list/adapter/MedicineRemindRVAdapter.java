@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
  */
 public class MedicineRemindRVAdapter extends SimpleRVAdapter<MedicineRemindBean> {
 
+    private OnSwitchChangeListener mSwitchChangeListener;
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.medicine_remind_item, parent, false));
@@ -36,8 +37,15 @@ public class MedicineRemindRVAdapter extends SimpleRVAdapter<MedicineRemindBean>
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 getBean(viewHolder.getAdapterPosition()).shouldAlarm.set(isChecked);
+                if (null != mSwitchChangeListener) {
+                    mSwitchChangeListener.onSwitchStateChange(viewHolder.getAdapterPosition());
+                }
             }
         });
+    }
+
+    public void setSwitchChangeListener(OnSwitchChangeListener switchChangeListener) {
+        mSwitchChangeListener = switchChangeListener;
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
@@ -54,6 +62,6 @@ public class MedicineRemindRVAdapter extends SimpleRVAdapter<MedicineRemindBean>
     }
 
     public interface OnSwitchChangeListener{
-        void onSwitchStateChange();
+        void onSwitchStateChange(int position);
     }
 }
