@@ -135,7 +135,7 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
 
     @Override
     public void hideLoading() {
-
+        recyclerView.hideRefreshOrLoadMore(true, true);
     }
 
     public void onResume() {

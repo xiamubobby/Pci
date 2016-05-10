@@ -1,5 +1,6 @@
 package com.wonders.xlab.patient.mvp.api;
 
+import com.wonders.xlab.patient.mvp.entity.ServiceContentDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.ServiceListEntity;
 import com.wonders.xlab.patient.mvp.entity.ServiceDetailEntity;
 
@@ -23,4 +24,7 @@ public interface ServiceAPI {
 
     @GET("healthServices/retrieveHealthServiceDetail/{serviceId}")
     Observable<Response<ServiceDetailEntity>> getServiceDetail(@Path("serviceId") Long serviceId);
+
+    @GET("healthServices/retrieveHealthServiceContentDetail/{serviceId}")
+    Observable<Response<ServiceContentDetailEntity>> getServiceContentDetail(@Path("serviceId") Long serviceId);
 }

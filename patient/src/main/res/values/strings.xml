@@ -100,5 +100,9 @@
     <string name="title_activity_medicine_remind_edit">新增提醒</string>
     <string name="title_activity_medicine_search">搜索药品</string>
     <string name="medicine_remind_edit_end_date_default">长期</string>
+    <string name="health_record_test_indicator">检验指标</string>
+    <string name="health_record_prescription">住院手术史</string>
+    <string name="health_record_surgical_history">处方清单</string>
+
 
 </resources>

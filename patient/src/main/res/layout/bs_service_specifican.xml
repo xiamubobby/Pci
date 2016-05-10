@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionBarSize"
+        android:textColor="@color/red"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:paddingLeft="@dimen/fab_margin"
+        android:textSize="@dimen/text_size_middle"/>
+
+    <im.hua.uikit.crv.CommonRecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="@dimen/divider_height_large" />
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/actionBarSize"
+        android:layout_marginTop="@dimen/item_interval_middle"
+        android:background="@drawable/selector_btn_primary_bg"
+        android:text="确认套餐"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/text_size_middle" />
+</LinearLayout>
