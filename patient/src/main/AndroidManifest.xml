@@ -192,6 +192,27 @@
 
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".module.healthrecord.testindicator.TestIndicatorActivity"
+            android:label="@string/health_record_test_indicator"
+
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".module.healthrecord.surgicalhistory.SurgicalHistoryActivity"
+            android:label="@string/health_record_surgical_history"
+
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".module.healthrecord.prescription.PrescriptionActivity"
+            android:label="@string/health_record_prescription"
+
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".module.healthrecord.healthrecords.HealthRecodsActivity"
+            android:label="@string/title_activity_medical_record"
+
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".module.order.OrderListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

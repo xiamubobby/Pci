@@ -12,6 +12,10 @@ import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.auth.authorize.AuthorizeActivity;
+import com.wonders.xlab.patient.module.healthrecord.healthrecords.HealthRecodsActivity;
+import com.wonders.xlab.patient.module.healthrecord.prescription.PrescriptionActivity;
+import com.wonders.xlab.patient.module.healthrecord.surgicalhistory.SurgicalHistoryActivity;
+import com.wonders.xlab.patient.module.healthrecord.testindicator.TestIndicatorActivity;
 import com.wonders.xlab.patient.module.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.patient.module.home.adapter.bean.HomeItemBean;
 import com.wonders.xlab.patient.module.medicalpicture.MedicalPictureActivity;
@@ -58,9 +62,22 @@ public class HealthRecordActivity extends AppbarActivity {
                 @Override
                 public void onItemClick(int position) {
                     switch (position) {
+                        case 0:
+                            startActivity(new Intent(HealthRecordActivity.this, TestIndicatorActivity.class));
+                            break;
+                        case 1:
+                            startActivity(new Intent(HealthRecordActivity.this, HealthRecodsActivity.class));
+                            break;
+                        case 2:
+                            startActivity(new Intent(HealthRecordActivity.this, PrescriptionActivity.class));
+                            break;
+                        case 3:
+                            startActivity(new Intent(HealthRecordActivity.this, SurgicalHistoryActivity.class));
+                            break;
                         case 4:
                             startActivity(new Intent(HealthRecordActivity.this, MedicalPictureActivity.class));
                             break;
+
                     }
                 }
             });
