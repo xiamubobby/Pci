@@ -1,6 +1,5 @@
 package com.wonders.xlab.patient.module.healthrecord.prescription.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -8,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
@@ -23,12 +21,6 @@ import im.hua.utils.DensityUtil;
  */
 public class PrescriptionRVAdapter extends SimpleRVAdapter<PrescriptionBean> {
 
-    Context context;
-
-    public PrescriptionRVAdapter(Context context) {
-        this.context = context;
-    }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.prescription_item, parent, false));
@@ -42,7 +34,7 @@ public class PrescriptionRVAdapter extends SimpleRVAdapter<PrescriptionBean> {
         viewHolder.hospitalName.setText("医院名称：" + bean.getHospitalName());
         viewHolder.itemDate.setText("开处方时间：" + bean.getRecordTime());
         viewHolder.mLlMedicineList.removeAllViews();
-        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DensityUtil.dp2px(context, 48.0f));
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, DensityUtil.dp2px(viewHolder.itemView.getContext(), 48.0f));
         for (int i = 0; i < bean.medicineList.size(); i++) {
             TextView textView = new TextView(holder.itemView.getContext());
             textView.setText(bean.medicineList.get(i));
