@@ -55,6 +55,10 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
     LinearLayout specifican;
     @Bind(R.id.tv_service_detail_selected)
     TextView selectedService;
+    @Bind(R.id.purchase_price)
+    TextView purchasePriceView;
+    @Bind(R.id.confirm)
+    TextView confirmBtn;
 
     private BottomSheetDialog dialog;
     private TextView dgPrice;
@@ -108,7 +112,13 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
                 return view == object;
             }
         });
+        confirmBtn.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View v) {
+                mServiceDetailPresenter.orderService((long) selectedSpecifican.getId());
+            }
+        });
         setupTopTab();
     }
 
@@ -184,6 +194,7 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
                 });
                 dialog.setContentView(view);
                 dgPrice.setText("¥" + selectedSpecifican.getPrice());
+                purchasePriceView.setText("¥" + selectedSpecifican.getPrice());
                 specificanAdapter = new SpecificanAdapter();
                 specificanAdapter.setSelectedId(selectedSpecifican.getId());
                 specificanAdapter.setDatas(dataUnit.getSpecificanList());
@@ -283,6 +294,16 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
     @Override
     public void showServiceContentDetail(String desc) {
         ((TextView) findViewById(R.id.desc)).setText(Html.fromHtml(desc));
+    }
+
+    @Override
+    public void onServiceSuccess() {
+        showShortToast("购买成功");
+    }
+
+    @Override
+    public void onServiceFail() {
+        showShortToast("购买失败啦");
     }
 
     @Override

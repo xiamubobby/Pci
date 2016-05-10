@@ -7,9 +7,12 @@ import com.wonders.xlab.patient.mvp.model.ServiceContentDetailModel;
 import com.wonders.xlab.patient.mvp.model.ServiceContentDetailModelContract;
 import com.wonders.xlab.patient.mvp.model.ServiceDetailModel;
 import com.wonders.xlab.patient.mvp.model.ServiceDetailModelContract;
+import com.wonders.xlab.patient.mvp.model.ServiceOrderModel;
+import com.wonders.xlab.patient.mvp.model.ServiceOrderModelContract;
 
 import javax.inject.Inject;
 
+import im.hua.library.base.mvp.entity.BaseEntity;
 import im.hua.library.base.mvp.impl.BasePresenter;
 
 /**
@@ -20,12 +23,14 @@ public class ServiceDetailPresenter extends BasePresenter implements  ServiceDet
     private ServiceDetailPresenterContract.ViewListener mViewListener;
     private ServiceDetailModelContract.Actions mServiceDetailModel;
     private ServiceContentDetailModelContract.Actions mServiceContentDetailModel;
+    private ServiceOrderModelContract.Actions mServiceOrderModel;
 
     @Inject
-    public ServiceDetailPresenter(ServiceDetailPresenterContract.ViewListener viewListener, ServiceDetailModel serviceDetailModel, ServiceContentDetailModel serviceContentDetailModel) {
+    public ServiceDetailPresenter(ServiceDetailPresenterContract.ViewListener viewListener, ServiceDetailModel serviceDetailModel, ServiceContentDetailModel serviceContentDetailModel, ServiceOrderModel serviceOrderModel) {
         mViewListener = viewListener;
         mServiceDetailModel = serviceDetailModel;
         mServiceContentDetailModel = serviceContentDetailModel;
+        mServiceOrderModel = serviceOrderModel;
         addModel(serviceDetailModel);
     }
 
@@ -58,6 +63,21 @@ public class ServiceDetailPresenter extends BasePresenter implements  ServiceDet
             @Override
             public void showServiceContentDetail(ServiceContentDetailEntity entity) {
                 mViewListener.showServiceContentDetail(entity.getRet_values());
+            }
+        });
+    }
+
+    @Override
+    public void orderService(Long serviceId) {
+        mServiceOrderModel.orderService(serviceId, new ServiceOrderModelContract.Callback() {
+            @Override
+            public void onOrderSuccessed(BaseEntity entity) {
+                mViewListener.onServiceSuccess();
+            }
+
+            @Override
+            public void onReceiveFailed(int code, String message) {
+                mViewListener.onServiceFail();
             }
         });
     }
