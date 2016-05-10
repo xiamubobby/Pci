@@ -43,6 +43,8 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
 
     public final static String _key_SERVICE_ID_ = "serviceId";
 
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
     @Bind(R.id.view_pager_service_detail)
     ViewPager mBannerPager;
     @Bind(R.id.tab)
@@ -55,6 +57,10 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
     LinearLayout specifican;
     @Bind(R.id.tv_service_detail_selected)
     TextView selectedService;
+    @Bind(R.id.purchase_price)
+    TextView purchasePriceView;
+    @Bind(R.id.confirm)
+    TextView confirmBtn;
 
     private BottomSheetDialog dialog;
     private TextView dgPrice;
@@ -82,7 +88,13 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.service_detail_activity);
         ButterKnife.bind(this);
-        ((Toolbar) findViewById(R.id.toolbar)).setTitle("服务详情／购买");
+        mToolbar.setTitle("服务详情／购买");
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mServiceDetailPresenter = DaggerServiceDetailComponent.builder()
                 .applicationComponent(((XApplication) getApplication()).getComponent())
                 .serviceDetailModule(new ServiceDetailModule(this))
@@ -108,7 +120,13 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
                 return view == object;
             }
         });
+        confirmBtn.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View v) {
+                mServiceDetailPresenter.orderService((long) selectedSpecifican.getId());
+            }
+        });
         setupTopTab();
     }
 
@@ -184,6 +202,7 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
                 });
                 dialog.setContentView(view);
                 dgPrice.setText("¥" + selectedSpecifican.getPrice());
+                purchasePriceView.setText("¥" + selectedSpecifican.getPrice());
                 specificanAdapter = new SpecificanAdapter();
                 specificanAdapter.setSelectedId(selectedSpecifican.getId());
                 specificanAdapter.setDatas(dataUnit.getSpecificanList());
@@ -283,6 +302,16 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
     @Override
     public void showServiceContentDetail(String desc) {
         ((TextView) findViewById(R.id.desc)).setText(Html.fromHtml(desc));
+    }
+
+    @Override
+    public void onServiceSuccess() {
+        showShortToast("购买成功");
+    }
+
+    @Override
+    public void onServiceFail() {
+        showShortToast("购买失败啦");
     }
 
     @Override

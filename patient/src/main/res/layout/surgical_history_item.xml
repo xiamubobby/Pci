@@ -1,6 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/item_interval_small"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/surgical_history_item_time"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeightSmall"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/item_interval_middle"
+        android:paddingRight="@dimen/item_interval_middle"
+        android:singleLine="true"
+        android:textColor="#FF36AFE6" />
+
+    <TextView
+        android:id="@+id/surgical_history_item_hospital_name"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeightSmall"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/item_interval_middle"
+        android:paddingRight="@dimen/item_interval_middle"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:text="医院名称：" />
+
+    <TextView
+        android:id="@+id/surgical_history_item_department_name"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeightSmall"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/item_interval_middle"
+        android:paddingRight="@dimen/item_interval_middle"
+        android:singleLine="true"
+        android:text="科室名称：" />
+
+    <TextView
+        android:id="@+id/surgical_history_item_leave_hospital"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeightSmall"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/item_interval_middle"
+        android:paddingRight="@dimen/item_interval_middle"
+        android:singleLine="true"
+        android:text="出院诊断：" />
+
+    <TextView
+        android:id="@+id/surgical_history_item_doctor_suggestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingExtra="10dp"
+        android:padding="@dimen/item_interval_middle"
+        android:text="医生建议：" />
+
+    <TextView
+        android:id="@+id/surgical_history_item_click_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:drawableLeft="@drawable/ic_arrow_down"
+        android:drawablePadding="5dp"
+        android:text="@string/text_click_to_see_more" />
 
 </LinearLayout>
