@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.module.medicineremind.searchmedicine;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,7 +22,7 @@ import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
-import com.wonders.xlab.patient.module.medicineremind.MedicineBean;
+import com.wonders.xlab.patient.module.medicineremind.MedicineRealmBean;
 import com.wonders.xlab.patient.module.medicineremind.searchmedicine.adapter.MedicineSearchAllRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.searchmedicine.adapter.MedicineSearchHistoryRVAdapter;
 import com.wonders.xlab.patient.mvp.presenter.MedicineSearchPresenterContract;
@@ -35,7 +36,7 @@ import im.hua.uikit.crv.CommonRecyclerView;
 import im.hua.utils.KeyboardUtil;
 
 /**
- * 如果需要接收选择的结果，通过注册otto监听{@link MedicineBean}即可
+ * 如果需要接收选择的结果，通过注册otto监听{@link MedicineRealmBean}即可
  */
 public class MedicineSearchActivity extends AppbarActivity implements MedicineSearchPresenterContract.ViewListener {
 
@@ -64,12 +65,19 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
         mRecyclerViewHistory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerViewHistory.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
         mRecyclerViewHistory.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerViewAllMedicine.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mPresenter.getAllMedicines();
+            }
+        });
 
         mPresenter = DaggerMedicineSearchComponent.builder()
                 .applicationComponent(((XApplication) getApplication()).getComponent())
                 .medicineSearchModule(new MedicineSearchModule(this))
                 .build()
                 .getMedicineSearchPresenter();
+
         mPresenter.getSearchHistory();
         mPresenter.getAllMedicines();
     }
@@ -101,7 +109,7 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
      *显示剂量输入对话框
      * @param bean
      */
-    private void showInputAlertDialog(final MedicineBean bean) {
+    private void showInputAlertDialog(final MedicineRealmBean bean) {
         final LinearLayout linearLayout = (LinearLayout) LayoutInflater.from(MedicineSearchActivity.this).inflate(R.layout.medicine_search_dialog, null, false);
         final EditText editText = (EditText) linearLayout.findViewById(R.id.et_medicine_search_dialog);
         final TextView textView = (TextView) linearLayout.findViewById(R.id.tv_medicine_search_dialog);
@@ -121,6 +129,7 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
                     public void onClick(View v) {
                         String dose = editText.getText().toString();
                         if (!TextUtils.isEmpty(dose) || dose.equals("0")) {
+                            mPresenter.saveSearchHistory(bean);
                             /**
                              * post threw the otto event bus
                              */
@@ -155,21 +164,27 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
     }
 
     @Override
-    public void showMedicineList(List<MedicineBean> beanList) {
+    public void showMedicineList(List<MedicineRealmBean> beanList) {
         initMedicineSearchAllAdapter();
         mAllRVAdapter.setDatas(beanList);
     }
 
     @Override
-    public void appendMedicineList(List<MedicineBean> beanList) {
+    public void appendMedicineList(List<MedicineRealmBean> beanList) {
         initMedicineSearchAllAdapter();
         mAllRVAdapter.appendDatas(beanList);
     }
 
     @Override
-    public void showSearchHistoryList(List<MedicineBean> beanList) {
+    public void showSearchHistoryList(List<MedicineRealmBean> beanList) {
         if (null == mHistoryRVAdapter) {
             mHistoryRVAdapter = new MedicineSearchHistoryRVAdapter();
+            mHistoryRVAdapter.setRemoveClickListener(new MedicineSearchHistoryRVAdapter.OnRemoveClickListener() {
+                @Override
+                public void onClick(String id) {
+                    mPresenter.removeSearchHistoryById(id);
+                }
+            });
             mHistoryRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {

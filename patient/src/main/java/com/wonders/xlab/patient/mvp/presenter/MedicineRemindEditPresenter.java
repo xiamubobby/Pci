@@ -2,7 +2,7 @@ package com.wonders.xlab.patient.mvp.presenter;
 
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.module.medicineremind.MedicineBean;
+import com.wonders.xlab.patient.module.medicineremind.MedicineRealmBean;
 import com.wonders.xlab.patient.mvp.entity.MedicineRemindDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
 import com.wonders.xlab.patient.mvp.model.MedicineRemindAddOrModifyModel;
@@ -78,18 +78,18 @@ public class MedicineRemindEditPresenter extends BasePresenter implements Medici
         final MedicineRemindDetailEntity.RetValuesEntity retValues = entity.getRet_values();
 
         Observable.from(retValues.getMedicationUsages())
-                .map(new Func1<MedicineRemindDetailEntity.RetValuesEntity.MedicationUsagesEntity, MedicineBean>() {
+                .map(new Func1<MedicineRemindDetailEntity.RetValuesEntity.MedicationUsagesEntity, MedicineRealmBean>() {
                     @Override
-                    public MedicineBean call(MedicineRemindDetailEntity.RetValuesEntity.MedicationUsagesEntity medicationUsagesEntity) {
-                        MedicineBean bean = new MedicineBean();
+                    public MedicineRealmBean call(MedicineRemindDetailEntity.RetValuesEntity.MedicationUsagesEntity medicationUsagesEntity) {
+                        MedicineRealmBean bean = new MedicineRealmBean();
                         bean.setMedicineName(medicationUsagesEntity.getMedicationName());
                         bean.setDose(medicationUsagesEntity.getMedicationNum());
                         bean.setFormOfDrug(medicationUsagesEntity.getPharmaceuticalUnit());
                         return bean;
                     }
                 })
-                .subscribe(new Subscriber<MedicineBean>() {
-                    List<MedicineBean> beanList = new ArrayList<>();
+                .subscribe(new Subscriber<MedicineRealmBean>() {
+                    List<MedicineRealmBean> beanList = new ArrayList<>();
 
                     String[] times = retValues.getRemindersTime().split(":");
 
@@ -109,8 +109,8 @@ public class MedicineRemindEditPresenter extends BasePresenter implements Medici
                     }
 
                     @Override
-                    public void onNext(MedicineBean medicineBean) {
-                        beanList.add(medicineBean);
+                    public void onNext(MedicineRealmBean medicineRealmBean) {
+                        beanList.add(medicineRealmBean);
                     }
                 });
 

@@ -1,6 +1,6 @@
 package com.wonders.xlab.patient.mvp.presenter;
 
-import com.wonders.xlab.patient.module.medicineremind.MedicineBean;
+import com.wonders.xlab.patient.module.medicineremind.MedicineRealmBean;
 import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
  */
 public interface MedicineRemindEditPresenterContract {
     interface ViewListener extends BasePresenterListener {
-        void showMedicineRemindInfo(int hour, int minutes, long startDate, Long endDate, String message, List<MedicineBean> beanList);
+        void showMedicineRemindInfo(int hour, int minutes, long startDate, Long endDate, String message, List<MedicineRealmBean> beanList);
 
         void saveSuccess(String message);
     }
