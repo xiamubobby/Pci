@@ -17,4 +17,5 @@ public interface ServiceDetailPresenterContract {
     interface Actions extends IBasePresenter {
         void getServiceDetail(Long serviceId);
     }
+
 }
