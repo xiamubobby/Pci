@@ -76,7 +76,7 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
                         bean.id.set(contentEntity.getId());
                         String amOrPm = distinctAMOrPMFromTimeStr(contentEntity);
                         bean.amOrPmStr.set(amOrPm);
-                        bean.timeInStr.set(DateUtil.format(DateUtil.parse(contentEntity.getRemindersTime(), "HH:mm"), "HH:mm"));
+                        bean.timeInStr.set(DateUtil.format(DateUtil.parse(contentEntity.getRemindersTime(), "HH:mm"), "hh:mm"));
                         Long endDate = contentEntity.getEndDate();
                         bean.expiredDateInStr.set(null == endDate ? "长期" : DateUtil.format(endDate, "yyyy-MM-dd"));
                         Observable.from(contentEntity.getMedicationUsages())

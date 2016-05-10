@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
@@ -14,6 +15,7 @@ import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.medicineremind.edit.MedicineRemindEditActivity;
+import com.wonders.xlab.patient.module.medicineremind.edit.SaveRemindSuccessOtto;
 import com.wonders.xlab.patient.module.medicineremind.list.adapter.MedicineRemindRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.list.bean.MedicineRemindBean;
 import com.wonders.xlab.patient.mvp.presenter.MedicineRemindPresenterContract;
@@ -82,6 +84,11 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
         mMedicineRemindPresenter.getMedicineReminds(true);
     }
 
+    @Subscribe
+    public void onSaveRemindSuccess(SaveRemindSuccessOtto otto) {
+        mMedicineRemindPresenter.getMedicineReminds(true);
+    }
+
     @Override
     public void showMedicineRemind(List<MedicineRemindBean> medicineRemindBeanList) {
         initMedicineRemindAdapter();
@@ -102,6 +109,13 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
     private void initMedicineRemindAdapter() {
         if (mMedicineRemindRVAdapter == null) {
             mMedicineRemindRVAdapter = new MedicineRemindRVAdapter();
+            mMedicineRemindRVAdapter.setSwitchChangeListener(new MedicineRemindRVAdapter.OnSwitchChangeListener() {
+                @Override
+                public void onSwitchStateChange(int position) {
+                    MedicineRemindBean bean = mMedicineRemindRVAdapter.getBean(position);
+                    mMedicineRemindPresenter.changeRemindState(bean.id.get(), !bean.shouldAlarm.get());
+                }
+            });
             mMedicineRemindRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {

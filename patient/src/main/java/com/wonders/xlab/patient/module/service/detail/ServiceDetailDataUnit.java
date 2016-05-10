@@ -144,7 +144,7 @@ public class ServiceDetailDataUnit {
             this.enable = enable;
         }
     }
-    private class Specifican {
+    public class Specifican {
         private int id;
         private String name;
         private int price;

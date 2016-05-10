@@ -20,7 +20,7 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.base.TextInputActivity;
-import com.wonders.xlab.patient.module.medicineremind.MedicineBean;
+import com.wonders.xlab.patient.module.medicineremind.MedicineRealmBean;
 import com.wonders.xlab.patient.module.medicineremind.edit.adapter.MedicineRemindEditRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.searchmedicine.MedicineSearchActivity;
 import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
@@ -105,7 +105,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
     }
 
     @Subscribe
-    public void receiveMedicineBean(MedicineBean bean) {
+    public void receiveMedicineBean(MedicineRealmBean bean) {
         initMedicineListAdapter();
         mRVAdapter.appendToLast(bean);
     }
@@ -202,13 +202,13 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
                 body.setRemindersTime(mTimePicker.getCurrentHour() + ":" + mTimePicker.getCurrentMinute());
                 body.setRemindersDesc(mTvMessage.getText().toString());
                 Observable.from(mRVAdapter.getBeanList())
-                        .flatMap(new Func1<MedicineBean, Observable<MedicineRemindEditBody.MedicationUsagesEntity>>() {
+                        .flatMap(new Func1<MedicineRealmBean, Observable<MedicineRemindEditBody.MedicationUsagesEntity>>() {
                             @Override
-                            public Observable<MedicineRemindEditBody.MedicationUsagesEntity> call(MedicineBean medicineBean) {
+                            public Observable<MedicineRemindEditBody.MedicationUsagesEntity> call(MedicineRealmBean medicineRealmBean) {
                                 MedicineRemindEditBody.MedicationUsagesEntity entity = new MedicineRemindEditBody.MedicationUsagesEntity();
-                                entity.setMedicationName(medicineBean.getMedicineName());
-                                entity.setMedicationNum(medicineBean.getDose());
-                                entity.setPharmaceuticalUnit(medicineBean.getFormOfDrug());
+                                entity.setMedicationName(medicineRealmBean.getMedicineName());
+                                entity.setMedicationNum(medicineRealmBean.getDose());
+                                entity.setPharmaceuticalUnit(medicineRealmBean.getFormOfDrug());
                                 return Observable.just(entity);
                             }
                         })
@@ -238,7 +238,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
     }
 
     @Override
-    public void showMedicineRemindInfo(int hour, int minutes, long startDate, Long endDate, String message, List<MedicineBean> beanList) {
+    public void showMedicineRemindInfo(int hour, int minutes, long startDate, Long endDate, String message, List<MedicineRealmBean> beanList) {
 
         mTimePicker.setCurrentHour(hour);
         mTimePicker.setCurrentMinute(minutes);
@@ -264,6 +264,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
 
     @Override
     public void saveSuccess(String message) {
+        OttoManager.post(new SaveRemindSuccessOtto());
         showShortToast(message);
         finish();
     }

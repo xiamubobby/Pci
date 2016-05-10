@@ -1,94 +1,60 @@
 package com.wonders.xlab.patient.mvp.entity;
 
-
-import java.util.List;
-
-import im.hua.library.base.mvp.entity.BaseEntity;
-
 /**
- * Created by hua on 15/12/22.
+ * Created by hua on 16/5/10.
+ * 药品
  */
-public class MedicineEntity extends BaseEntity {
-
+public class MedicineEntity {
     /**
-     * name : 阿斯匹灵
-     * userMedicineRecords : [{"id":3,"measurement":"6","doseCount":4,"recordTimeInStr":1450710000000},{"id":2,"measurement":"3","doseCount":1,"recordTimeInStr":1450706400000},{"id":1,"measurement":"2","doseCount":2,"recordTimeInStr":1450627200000}]
+     * id : 28
+     * name : 华法林钠片（华法令）
+     * company : 信谊
+     * dosageForm : 片剂
+     * doseSpecification : 2.5mg*30片*2板/盒
      */
+    private String id;
+    private String name;
+    private String company;
+    private String dosageForm;
+    private String doseSpecification;
 
-    private List<RetValuesEntity> ret_values;
-
-    public void setRet_values(List<RetValuesEntity> ret_values) {
-        this.ret_values = ret_values;
+    public String getId() {
+        return id;
     }
 
-    public List<RetValuesEntity> getRet_values() {
-        return ret_values;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public static class RetValuesEntity {
-        private String name;
-        /**
-         * id : 3
-         * measurement : 6
-         * doseCount : 4
-         * recordTimeInStr : 1450710000000
-         */
+    public String getName() {
+        return name;
+    }
 
-        private List<UserMedicineRecordsEntity> userMedicineRecords;
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        public void setName(String name) {
-            this.name = name;
-        }
+    public String getCompany() {
+        return company;
+    }
 
-        public void setUserMedicineRecords(List<UserMedicineRecordsEntity> userMedicineRecords) {
-            this.userMedicineRecords = userMedicineRecords;
-        }
+    public void setCompany(String company) {
+        this.company = company;
+    }
 
-        public String getName() {
-            return name;
-        }
+    public String getDosageForm() {
+        return dosageForm;
+    }
 
-        public List<UserMedicineRecordsEntity> getUserMedicineRecords() {
-            return userMedicineRecords;
-        }
+    public void setDosageForm(String dosageForm) {
+        this.dosageForm = dosageForm;
+    }
 
-        public static class UserMedicineRecordsEntity {
-            private int id;
-            private String measurement;
-            private int doseCount;
-            private long recordTime;
+    public String getDoseSpecification() {
+        return doseSpecification;
+    }
 
-            public void setId(int id) {
-                this.id = id;
-            }
-
-            public void setMeasurement(String measurement) {
-                this.measurement = measurement;
-            }
-
-            public void setDoseCount(int doseCount) {
-                this.doseCount = doseCount;
-            }
-
-            public void setRecordTime(long recordTime) {
-                this.recordTime = recordTime;
-            }
-
-            public int getId() {
-                return id;
-            }
-
-            public String getMeasurement() {
-                return measurement;
-            }
-
-            public int getDoseCount() {
-                return doseCount;
-            }
-
-            public long getRecordTime() {
-                return recordTime;
-            }
-        }
+    public void setDoseSpecification(String doseSpecification) {
+        this.doseSpecification = doseSpecification;
     }
 }
