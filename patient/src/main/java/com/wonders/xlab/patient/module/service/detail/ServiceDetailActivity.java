@@ -43,6 +43,8 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
 
     public final static String _key_SERVICE_ID_ = "serviceId";
 
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
     @Bind(R.id.view_pager_service_detail)
     ViewPager mBannerPager;
     @Bind(R.id.tab)
@@ -82,7 +84,13 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.service_detail_activity);
         ButterKnife.bind(this);
-        ((Toolbar) findViewById(R.id.toolbar)).setTitle("服务详情／购买");
+        mToolbar.setTitle("服务详情／购买");
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mServiceDetailPresenter = DaggerServiceDetailComponent.builder()
                 .applicationComponent(((XApplication) getApplication()).getComponent())
                 .serviceDetailModule(new ServiceDetailModule(this))

@@ -1,9 +1,7 @@
 package com.wonders.xlab.patient.mvp.presenter;
 
-import com.wonders.xlab.patient.module.alldoctor.adapter.AllDoctorItemBean;
 import com.wonders.xlab.patient.module.service.ServiceListCellDataUnit;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import im.hua.library.base.mvp.IBasePresenter;
