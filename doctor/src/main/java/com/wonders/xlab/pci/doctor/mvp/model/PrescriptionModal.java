@@ -1,6 +1,5 @@
 package com.wonders.xlab.pci.doctor.mvp.model;
 
-import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.DoctorBaseModel;
 import com.wonders.xlab.pci.doctor.mvp.api.PrescriptionAPI;
 import com.wonders.xlab.pci.doctor.mvp.entity.PrescriptionEntity;

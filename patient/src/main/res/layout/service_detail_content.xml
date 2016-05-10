@@ -51,7 +51,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:background="@color/divider" />
 
         <LinearLayout
@@ -91,21 +91,17 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:background="@color/divider" />
 
         <android.support.v4.widget.Space
             android:layout_width="match_parent"
             android:layout_height="10dp" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/divider" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:background="@color/divider" />
 
         <RelativeLayout
@@ -151,7 +147,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="2dp"
             android:background="@color/divider" />
 
     </LinearLayout>
