@@ -8,9 +8,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -99,8 +101,6 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
             }
         });
 
-
-
         setupTopTab();
     }
 
@@ -108,6 +108,7 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
     protected void onStart() {
         super.onStart();
         serviceId = getIntent().getExtras().getLong(_key_SERVICE_ID_);
+        mServiceDetailPresenter.getServiceContentDetail(serviceId);
         mServiceDetailPresenter.getServiceDetail(serviceId);
     }
 
@@ -222,6 +223,11 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
             }
 
         });
+    }
+
+    @Override
+    public void showServiceContentDetail(String desc) {
+        ((TextView) findViewById(R.id.desc)).setText(Html.fromHtml(desc));
     }
 
     @Override

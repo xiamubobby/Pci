@@ -12,10 +12,12 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
 public interface ServiceDetailPresenterContract {
     interface ViewListener extends BasePresenterListener {
         void showServiceDetail(ServiceDetailDataUnit dataUnit);
+        void showServiceContentDetail(String desc);
     }
 
     interface Actions extends IBasePresenter {
         void getServiceDetail(Long serviceId);
+        void getServiceContentDetail(Long serviceId);
     }
 
 }

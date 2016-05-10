@@ -1,21 +1,18 @@
 package com.wonders.xlab.patient.mvp.model;
 
-
 import com.wonders.xlab.patient.mvp.entity.ServiceContentDetailEntity;
-import com.wonders.xlab.patient.mvp.entity.ServiceDetailEntity;
 
 import im.hua.library.base.mvp.IBaseModel;
 import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
- * Created by WZH on 16/5/9.
+ * Created by natsuki on 16/5/10.
  */
-public interface ServiceDetailModelContract {
+public interface ServiceContentDetailModelContract {
     interface Callback extends BaseModelListener {
-        void showServiceDetail(ServiceDetailEntity entity);
+        void showServiceContentDetail(ServiceContentDetailEntity entity);
     }
-
     interface Actions extends IBaseModel {
-        void getServiceDetail(Long serviceId,Callback callback);
+        void getServiceContentDetail(Long serviceId, Callback cb);
     }
 }

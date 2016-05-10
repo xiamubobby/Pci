@@ -1,7 +1,10 @@
 package com.wonders.xlab.patient.mvp.presenter;
 
 import com.wonders.xlab.patient.module.service.detail.ServiceDetailDataUnit;
+import com.wonders.xlab.patient.mvp.entity.ServiceContentDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.ServiceDetailEntity;
+import com.wonders.xlab.patient.mvp.model.ServiceContentDetailModel;
+import com.wonders.xlab.patient.mvp.model.ServiceContentDetailModelContract;
 import com.wonders.xlab.patient.mvp.model.ServiceDetailModel;
 import com.wonders.xlab.patient.mvp.model.ServiceDetailModelContract;
 
@@ -16,11 +19,13 @@ public class ServiceDetailPresenter extends BasePresenter implements  ServiceDet
 
     private ServiceDetailPresenterContract.ViewListener mViewListener;
     private ServiceDetailModelContract.Actions mServiceDetailModel;
+    private ServiceContentDetailModelContract.Actions mServiceContentDetailModel;
 
     @Inject
-    public ServiceDetailPresenter(ServiceDetailPresenterContract.ViewListener viewListener,ServiceDetailModel serviceDetailModel) {
+    public ServiceDetailPresenter(ServiceDetailPresenterContract.ViewListener viewListener, ServiceDetailModel serviceDetailModel, ServiceContentDetailModel serviceContentDetailModel) {
         mViewListener = viewListener;
         mServiceDetailModel = serviceDetailModel;
+        mServiceContentDetailModel = serviceContentDetailModel;
         addModel(serviceDetailModel);
     }
 
@@ -38,6 +43,21 @@ public class ServiceDetailPresenter extends BasePresenter implements  ServiceDet
             public void onReceiveFailed(int code, String message) {
                 mViewListener.hideLoading();
                 mViewListener.showNetworkError(message);
+            }
+        });
+    }
+
+    @Override
+    public void getServiceContentDetail(Long serviceId) {
+        mServiceContentDetailModel.getServiceContentDetail(serviceId, new ServiceContentDetailModelContract.Callback() {
+
+            @Override
+            public void onReceiveFailed(int code, String message) {
+            }
+
+            @Override
+            public void showServiceContentDetail(ServiceContentDetailEntity entity) {
+                mViewListener.showServiceContentDetail(entity.getRet_values());
             }
         });
     }
