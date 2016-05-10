@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +17,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.camnter.easyrecyclerviewsidebar.EasyRecyclerViewSidebar;
+import com.camnter.easyrecyclerviewsidebar.sections.EasyImageSection;
+import com.camnter.easyrecyclerviewsidebar.sections.EasySection;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
@@ -26,6 +30,7 @@ import com.wonders.xlab.patient.module.medicineremind.MedicineRealmBean;
 import com.wonders.xlab.patient.module.medicineremind.searchmedicine.adapter.MedicineSearchAllRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.searchmedicine.adapter.MedicineSearchHistoryRVAdapter;
 import com.wonders.xlab.patient.mvp.presenter.MedicineSearchPresenterContract;
+import com.wonders.xlab.patient.util.CharacterParser;
 
 import java.util.List;
 
@@ -46,6 +51,12 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
     RecyclerView mRecyclerViewHistory;
     @Bind(R.id.recycler_view_medicine_search_all_medicine)
     CommonRecyclerView mRecyclerViewAllMedicine;
+    @Bind(R.id.section_sidebar)
+    EasyRecyclerViewSidebar mSectionSidebar;
+    @Bind(R.id.tv_medicine_search_float_view)
+    TextView mTvFloatView;
+    @Bind(R.id.card_medicine_search_float_view)
+    CardView mCardFloatView;
 
     private MedicineSearchAllRVAdapter mAllRVAdapter;
     private MedicineSearchHistoryRVAdapter mHistoryRVAdapter;
@@ -86,10 +97,11 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
     public void search() {
         String name = mEtMedicineSearchName.getText().toString();
         if (TextUtils.isEmpty(name)) {
-            return;
+            mPresenter.getAllMedicines();
+        } else {
+            mPresenter.search(name);
         }
         KeyboardUtil.hide(this);
-        mPresenter.search(name);
     }
 
     @Override
@@ -105,8 +117,10 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
             inputMethodManager.showSoftInput(inputText, 0);
         }
     }
+
     /**
-     *显示剂量输入对话框
+     * 显示剂量输入对话框
+     *
      * @param bean
      */
     private void showInputAlertDialog(final MedicineRealmBean bean) {
@@ -164,9 +178,35 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
     }
 
     @Override
-    public void showMedicineList(List<MedicineRealmBean> beanList) {
+    public void showMedicineList(List<MedicineRealmBean> beanList, String[] sections) {
+        mSectionSidebar.setFloatView(mCardFloatView);
+        mSectionSidebar.setSections(sections);
+        mSectionSidebar.setOnTouchSectionListener(new EasyRecyclerViewSidebar.OnTouchSectionListener() {
+            @Override
+            public void onTouchImageSection(int sectionIndex, EasyImageSection imageSection) {
+
+            }
+
+            @Override
+            public void onTouchLetterSection(int sectionIndex, EasySection letterSection) {
+                mTvFloatView.setText(letterSection.letter);
+                goToPositionOfLetter(letterSection.letter);
+            }
+        });
         initMedicineSearchAllAdapter();
         mAllRVAdapter.setDatas(beanList);
+    }
+
+    public void goToPositionOfLetter(String letter) {
+        int index = 0;
+        for (int i = 0;i<mAllRVAdapter.getBeanList().size();i++) {
+            String letterTarget = CharacterParser.getInstance().getSelling(mAllRVAdapter.getBeanList().get(i).getMedicineName()).substring(0, 1).toUpperCase();
+            if (letterTarget.toUpperCase().equals(letter)) {
+                index = i;
+                break;
+            }
+        }
+        mRecyclerViewAllMedicine.getRecyclerView().scrollToPosition(index);
     }
 
     @Override

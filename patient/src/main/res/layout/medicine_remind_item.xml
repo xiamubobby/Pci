@@ -39,11 +39,13 @@
                 android:textSize="@dimen/text_size_very_large"
                 android:textStyle="bold"/>
 
-            <Switch android:id="@+id/sw_medicine_remind_item_on"
+            <Switch
+                android:id="@+id/sw_medicine_remind_item_on"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:checked="@{bean.shouldAlarm}"/>
+                android:checked="@{bean.shouldAlarm}"
+                android:enabled="@{!bean.isExpired}"/>
         </LinearLayout>
 
         <LinearLayout

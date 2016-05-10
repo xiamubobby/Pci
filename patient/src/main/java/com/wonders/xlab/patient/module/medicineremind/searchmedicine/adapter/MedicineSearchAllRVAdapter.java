@@ -14,6 +14,7 @@ import com.wonders.xlab.patient.module.medicineremind.MedicineRealmBean;
  * Created by hua on 16/5/6.
  */
 public class MedicineSearchAllRVAdapter extends SimpleRVAdapter<MedicineRealmBean> {
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.medicine_search_all_item, parent, false));

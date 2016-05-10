@@ -12,7 +12,7 @@ import im.hua.library.base.mvp.listener.BasePagePresenterListener;
  */
 public interface MedicineSearchPresenterContract {
     interface ViewListener extends BasePagePresenterListener {
-        void showMedicineList(List<MedicineRealmBean> beanList);
+        void showMedicineList(List<MedicineRealmBean> beanList, String[] sections);
 
         void appendMedicineList(List<MedicineRealmBean> beanList);
 
