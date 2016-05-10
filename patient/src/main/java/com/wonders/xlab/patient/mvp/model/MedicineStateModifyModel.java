@@ -10,7 +10,7 @@ import im.hua.library.base.mvp.entity.EmptyValueEntity;
 /**
  * Created by hua on 16/5/9.
  */
-public class MedicineStateModifyModel extends PatientBaseModel<EmptyValueEntity> implements MedicineStateModifyModelContract.Actions {
+public class MedicineStateModifyModel extends PatientBaseModel implements MedicineStateModifyModelContract.Actions {
     private MedicineRemindAPI mAPI;
 
     @Inject

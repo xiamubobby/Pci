@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.wonders.xlab.patient.module.alldoctor.AllDoctorActivity">
+    tools:context="com.wonders.xlab.patient.module.me.userinfo.UserInfoActivity">
 
     <include layout="@layout/appbar"/>
 
-    <include layout="@layout/all_doctor_content"/>
+    <include layout="@layout/user_info_content"/>
 
 </android.support.design.widget.CoordinatorLayout>

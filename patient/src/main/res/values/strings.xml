@@ -91,7 +91,7 @@
     <string name="title_activity_register">注册</string>
     <string name="register_btn_register">注册</string>
     <string name="title_activity_authorize">身份认证</string>
-    <string name="title_activity_all_doctor">AllDoctorActivity</string>
+    <string name="title_activity_all_doctor">所有医生</string>
     <string name="title_activity_text_input">请输入</string>
     <string name="hint_please_text_something">请输入</string>
     <string name="title_activity_health_record">健康档案</string>
@@ -104,6 +104,9 @@
     <string name="health_record_prescription">住院手术史</string>
     <string name="health_record_surgical_history">处方清单</string>
     <string name="text_click_to_see_more">点击查看更多</string>
+    <string name="title_activity_user_info">基本信息</string>
+    <string name="me_my_order">我的订单</string>
+    <string name="me_setting">设置</string>
 
 
 </resources>

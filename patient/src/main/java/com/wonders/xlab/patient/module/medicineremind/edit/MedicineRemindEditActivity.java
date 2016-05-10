@@ -199,7 +199,9 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
                 } else {
                     body.setEndDate(mEndCalendar.getTimeInMillis());
                 }
-                body.setRemindersTime(mTimePicker.getCurrentHour() + ":" + mTimePicker.getCurrentMinute());
+                //TODO 到底是什么格式了？
+                String timeStr = mTimePicker.getCurrentHour() + ":" + mTimePicker.getCurrentMinute();
+                body.setRemindersTime(timeStr);
                 body.setRemindersDesc(mTvMessage.getText().toString());
                 Observable.from(mRVAdapter.getBeanList())
                         .flatMap(new Func1<MedicineRealmBean, Observable<MedicineRemindEditBody.MedicationUsagesEntity>>() {

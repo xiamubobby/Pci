@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.mvp.api;
 
 import com.wonders.xlab.patient.mvp.entity.RegisterEntity;
 
+import im.hua.library.base.mvp.entity.EmptyValueEntity;
 import im.hua.library.base.mvp.entity.SimpleEntity;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -49,4 +50,12 @@ public interface AuthAPI {
     @Multipart
     @POST("idCardValidates/validate")
     Observable<Response<SimpleEntity>> authorize(@Part("userId") RequestBody patientId,@Part("name") RequestBody name, @Part("idCardNum") RequestBody idCardNum, @Part("file") MultipartBody idCardPic);
+
+    /**
+     * 获取市民云实名认证审核结果
+     * @param patientId
+     * @return
+     */
+    @GET("idCardValidates/retrieveValidateResult/{userId}")
+    Observable<Response<EmptyValueEntity>> getRealNameValidateState(@Path("userId") String patientId);
 }

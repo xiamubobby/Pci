@@ -12,7 +12,7 @@ import im.hua.library.base.mvp.impl.BaseModel;
 /**
  * Created by jimmy on 16/5/5.
  */
-public class PrescriptionModal extends PatientBaseModel<PrescriptionEntity> implements PrescriptionModalContract.Actions {
+public class PrescriptionModal extends PatientBaseModel implements PrescriptionModalContract.Actions {
 
     private PrescriptionAPI prescriptionAPI;
 

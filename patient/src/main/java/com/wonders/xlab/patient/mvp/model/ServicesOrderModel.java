@@ -11,7 +11,7 @@ import im.hua.library.base.mvp.entity.BaseEntity;
 /**
  * Created by natsuki on 16/5/10.
  */
-public class ServicesOrderModel extends PatientBaseModel<BaseEntity> implements ServiceOrderModelContract.Actions{
+public class ServicesOrderModel extends PatientBaseModel implements ServiceOrderModelContract.Actions{
     private ServiceAPI mServiceAPI;
 
     @Inject

@@ -11,7 +11,7 @@ import im.hua.utils.MD5Util;
 /**
  * Created by hua on 16/5/5.
  */
-public class RegisterModel extends PatientBaseModel<RegisterEntity> implements RegisterModelContract.Actions {
+public class RegisterModel extends PatientBaseModel implements RegisterModelContract.Actions {
 
     private AuthAPI mAuthAPI;
 

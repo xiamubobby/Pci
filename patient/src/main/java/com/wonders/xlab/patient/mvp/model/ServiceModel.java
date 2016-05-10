@@ -9,7 +9,7 @@ import javax.inject.Inject;
 /**
  * Created by natsuki on 16/5/6.
  */
-public class ServiceModel extends PatientBaseModel<ServiceListEntity> implements ServiceModelContract.Actions {
+public class ServiceModel extends PatientBaseModel implements ServiceModelContract.Actions {
 
     private ServiceAPI mServiceAPI;
 

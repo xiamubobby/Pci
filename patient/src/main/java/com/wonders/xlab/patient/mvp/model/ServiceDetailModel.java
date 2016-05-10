@@ -2,7 +2,6 @@ package com.wonders.xlab.patient.mvp.model;
 
 import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.ServiceAPI;
-import com.wonders.xlab.patient.mvp.entity.ServiceContentDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.ServiceDetailEntity;
 
 import javax.inject.Inject;
@@ -10,7 +9,7 @@ import javax.inject.Inject;
 /**
  * Created by WZH on 16/5/9.
  */
-public class ServiceDetailModel extends PatientBaseModel<ServiceDetailEntity> implements ServiceDetailModelContract.Actions {
+public class ServiceDetailModel extends PatientBaseModel implements ServiceDetailModelContract.Actions {
     private ServiceAPI mServiceAPI;
 
     @Inject

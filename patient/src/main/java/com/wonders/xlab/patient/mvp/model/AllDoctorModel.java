@@ -9,7 +9,7 @@ import javax.inject.Inject;
 /**
  * Created by hua on 16/3/17.
  */
-public class AllDoctorModel extends PatientBaseModel<DoctorAllEntity> implements AllDoctorModelContract.Actions {
+public class AllDoctorModel extends PatientBaseModel implements AllDoctorModelContract.Actions {
 
     private DoctorAPI mDoctorAPI;
 

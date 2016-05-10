@@ -9,7 +9,7 @@ import javax.inject.Inject;
 /**
  * Created by jimmy on 16/5/9.
  */
-public class OrderListModal extends PatientBaseModel<OrderListEntity> implements OrderListModalContract.Actions {
+public class OrderListModal extends PatientBaseModel implements OrderListModalContract.Actions {
 
     private OrderListApi mOrderListAPI;
 
