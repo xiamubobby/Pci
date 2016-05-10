@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.mvp.model;
 
 import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.ServiceAPI;
+import com.wonders.xlab.patient.mvp.entity.ServiceContentDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.ServiceDetailEntity;
 
 import javax.inject.Inject;
