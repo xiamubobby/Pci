@@ -1,87 +1,61 @@
-package com.wonders.xlab.patient.module.service;
-
+package com.wonders.xlab.patient.module.service.thirdservice;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
-import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.module.alldoctor.AllDoctorActivity;
+import com.wonders.xlab.patient.base.AppbarActivity;
+import com.wonders.xlab.patient.module.service.DaggerServiceComponent;
+import com.wonders.xlab.patient.module.service.ServiceListCellDataUnit;
+import com.wonders.xlab.patient.module.service.ServiceModule;
+import com.wonders.xlab.patient.module.service.ServiceRecyclerViewAdapter;
 import com.wonders.xlab.patient.module.service.detail.ServiceDetailActivity;
-import com.wonders.xlab.patient.module.service.thirdservice.ThirdServiceActivity;
 import com.wonders.xlab.patient.mvp.presenter.ServicePresenterContract;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import im.hua.library.base.BaseFragment;
 import im.hua.uikit.crv.CommonRecyclerView;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Created by WZH on 16/5/10.
  */
-public class ServiceFragment extends BaseFragment implements ServicePresenterContract.ViewListener {
+public class ThirdServiceActivity extends AppbarActivity implements ServicePresenterContract.ViewListener {
 
-    @Bind(R.id.rl_find_doctor)
-    RelativeLayout doctor;
-    @Bind(R.id.rl_third_service)
-    RelativeLayout thirdService;
-    @Bind(R.id.recycler)
+    @Bind(R.id.recycler_view_third_service)
     CommonRecyclerView recyclerView;
     ServiceRecyclerViewAdapter adapter;
-
-    public ServiceFragment() {
-        // Required empty public constructor
-    }
-
-    public static ServiceFragment getInstance() {
-        return new ServiceFragment();
-    }
 
     private ServicePresenterContract.Actions servicePresenter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.service_fragment, container, false);
-        ButterKnife.bind(this, v);
+    public int getContentLayout() {
+        return R.layout.third_service_activity;
+    }
+
+    @Override
+    public String getToolbarTitle() {
+        return "服务列表";
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ButterKnife.bind(this);
         servicePresenter = DaggerServiceComponent.builder()
-                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .applicationComponent(((XApplication) getApplication()).getComponent())
                 .serviceModule(new ServiceModule(this))
                 .build()
                 .getServicePresenter();
         addPresenter(servicePresenter);
-        return v;
-    }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        doctor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), AllDoctorActivity.class));
-            }
-        });
-        thirdService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), ThirdServiceActivity.class));
-            }
-        });
-        recyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
+        recyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
@@ -101,7 +75,7 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
         adapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent i = new Intent(getActivity(), ServiceDetailActivity.class);
+                Intent i = new Intent(ThirdServiceActivity.this, ServiceDetailActivity.class);
                 i.putExtra(ServiceDetailActivity._key_SERVICE_ID_, adapter.getBean(position).getId());
                 startActivity(i);
             }
@@ -110,7 +84,6 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
         servicePresenter.getAllServices(true);
     }
 
-
     @Override
     public void showAllServiceList(List<ServiceListCellDataUnit> list) {
         adapter.setDatas(list);
@@ -118,7 +91,7 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
 
     @Override
     public void appendAllServiceList(List<ServiceListCellDataUnit> list) {
-        adapter.appendDatas(list);
+
     }
 
     @Override
@@ -154,15 +127,5 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
     @Override
     public void hideLoading() {
         recyclerView.hideRefreshOrLoadMore(true, true);
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_service));
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_service));
     }
 }

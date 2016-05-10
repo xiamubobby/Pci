@@ -24,7 +24,7 @@ import im.hua.uikit.crv.CommonRecyclerView;
 public class OrderListActivity extends AppbarActivity implements OrderListPresenterContract.viewListener {
 
 
-    @Bind(R.id.recycler_view_prescription)
+    @Bind(R.id.recycler_view_order_list)
     CommonRecyclerView mRecyclerView;
 
     private OrderListPresenterContract.Action mOrderListPresenter;
@@ -58,7 +58,7 @@ public class OrderListActivity extends AppbarActivity implements OrderListPresen
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mOrderListPresenter.getOrderList(mPatientId,true);
+                mOrderListPresenter.getOrderList(mPatientId, true);
             }
         });
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -115,7 +115,7 @@ public class OrderListActivity extends AppbarActivity implements OrderListPresen
         mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
             @Override
             public void onClick() {
-                mOrderListPresenter.getOrderList(mPatientId,true);
+                mOrderListPresenter.getOrderList(mPatientId, true);
             }
         });
     }

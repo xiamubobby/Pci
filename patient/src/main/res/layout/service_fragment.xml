@@ -18,6 +18,7 @@
             android:weightSum="2">
 
             <RelativeLayout
+                android:id="@+id/rl_find_doctor"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent">
@@ -27,7 +28,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="12dp"
                     android:src="@android:drawable/ic_menu_camera"
-                    android:id="@+id/pic"/>
+                    android:id="@+id/doctor_pic"/>
                 <android.support.v4.widget.Space
                     android:layout_width="match_parent"
                     android:layout_height="12dp" />
@@ -35,11 +36,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_below="@id/pic"
+                    android:layout_below="@id/doctor_pic"
                     android:text="找医生"
                     android:textSize="18sp"/>
             </RelativeLayout>
             <RelativeLayout
+                android:id="@+id/rl_third_service"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent">
@@ -49,7 +51,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="12dp"
                     android:src="@android:drawable/ic_menu_camera"
-                    android:id="@+id/pic"/>
+                    android:id="@+id/service_pic"/>
                 <android.support.v4.widget.Space
                     android:layout_width="match_parent"
                     android:layout_height="12dp" />
@@ -57,7 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:layout_below="@id/pic"
+                    android:layout_below="@id/service_pic"
                     android:text="第三方服务"
                     android:textSize="18sp"/>
             </RelativeLayout>
