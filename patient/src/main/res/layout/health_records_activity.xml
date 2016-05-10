@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/appbar"/>
+
+    <im.hua.uikit.crv.CommonRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/recycler_view_medicalRecords"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:emptyView="@layout/common_empty"
+        app:networkErrorView="@layout/common_network_error"
+        app:serverErrorView="@layout/common_server_error"
+        tools:context=".module.healthrecord.healthrecords.HealthRecordsActivity" />
+
+</LinearLayout>

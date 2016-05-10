@@ -66,7 +66,7 @@ public class MedicalPictureActivity extends AppbarActivity implements MedicalRec
 
     @Override
     public String getToolbarTitle() {
-        return "就诊记录";
+        return "补充资料";
     }
 
     @Override
@@ -253,7 +253,7 @@ public class MedicalPictureActivity extends AppbarActivity implements MedicalRec
 
     @Override
     public void hideLoading() {
-        mRecyclerView.hideRefreshOrLoadMore(true,true);
+        mRecyclerView.hideRefreshOrLoadMore(true, true);
         dismissProgressDialog();
     }
 
@@ -292,6 +292,7 @@ public class MedicalPictureActivity extends AppbarActivity implements MedicalRec
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_medical_record));
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_medical_record));
