@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/item_interval_small"
+    android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/prescription_item_date"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeightSmall"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/item_interval_small"
+        android:paddingRight="@dimen/item_interval_small"
+        android:singleLine="true"
+        android:text='开处方时间：2015-8-19' />
+
+    <include layout="@layout/divider_vertical" />
+
+    <TextView
+        android:id="@+id/prescription_item_hospital_name"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeightSmall"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/item_interval_small"
+        android:paddingRight="@dimen/item_interval_small"
+        android:singleLine="true"
+        android:text='医院名称：瑞金医院' />
+
+    <include layout="@layout/divider_vertical" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="#eaeaea"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/item_interval_small"
+        android:paddingRight="@dimen/item_interval_small"
+        android:singleLine="true"
+        android:text="处方药名称列表" />
+
+    <include layout="@layout/divider_vertical" />
+
+    <LinearLayout
+        android:id="@+id/ll_prescription_medicine_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/item_interval_small"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/item_interval_small"
+        android:paddingRight="@dimen/item_interval_small"
+        android:showDividers="middle"
+        android:singleLine="true">
+
+
+    </LinearLayout>
 </LinearLayout>
