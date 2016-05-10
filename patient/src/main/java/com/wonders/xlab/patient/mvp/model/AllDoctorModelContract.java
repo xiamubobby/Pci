@@ -14,6 +14,6 @@ public interface AllDoctorModelContract {
     }
 
     interface Actions extends IBaseModel{
-        void getAllDoctorList(String patientId, int page, int pageSize,Callback callback);
+        void getAllDoctorList(String patientId, int page, int pageSize, Callback callback);
     }
 }

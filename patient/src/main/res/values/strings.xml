@@ -87,6 +87,7 @@
     <string name="umeng_page_title_chat_room">聊天界面</string>
     <string name="umeng_page_title_doctor_detail">医生详情</string>
     <string name="umeng_page_title_medicine_remind">用药提醒</string>
+    <string name="umeng_page_title_service">服务首页</string>
     <string name="title_activity_register">注册</string>
     <string name="register_btn_register">注册</string>
     <string name="title_activity_authorize">身份认证</string>
@@ -98,5 +99,6 @@
     <string name="health_record_btn_authorize">实名认证</string>
     <string name="title_activity_medicine_remind_edit">新增提醒</string>
     <string name="title_activity_medicine_search">搜索药品</string>
+    <string name="medicine_remind_edit_end_date_default">长期</string>
 
 </resources>

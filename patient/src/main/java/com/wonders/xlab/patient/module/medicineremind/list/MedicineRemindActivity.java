@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
@@ -69,35 +68,50 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mMedicineRemindPresenter.getMedicineReminds();
+                mMedicineRemindPresenter.getMedicineReminds(false);
             }
         });
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mMedicineRemindPresenter.getMedicineReminds();
+                mMedicineRemindPresenter.getMedicineReminds(true);
             }
         });
 
-
         mRecyclerView.setRefreshing(false);
-        mMedicineRemindPresenter.getMedicineReminds();
+        mMedicineRemindPresenter.getMedicineReminds(true);
     }
-
 
     @Override
     public void showMedicineRemind(List<MedicineRemindBean> medicineRemindBeanList) {
+        initMedicineRemindAdapter();
+        mMedicineRemindRVAdapter.setDatas(medicineRemindBeanList);
+    }
+
+    @Override
+    public void appendMedicineRemind(List<MedicineRemindBean> medicineRemindBeanList) {
+        initMedicineRemindAdapter();
+        mMedicineRemindRVAdapter.appendDatas(medicineRemindBeanList);
+    }
+
+    @Override
+    public void changeRemindStateSuccess(String message) {
+
+    }
+
+    private void initMedicineRemindAdapter() {
         if (mMedicineRemindRVAdapter == null) {
             mMedicineRemindRVAdapter = new MedicineRemindRVAdapter();
             mMedicineRemindRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    startActivity(new Intent(MedicineRemindActivity.this, MedicineRemindEditActivity.class));
+                    Intent intent = new Intent(MedicineRemindActivity.this, MedicineRemindEditActivity.class);
+                    intent.putExtra(MedicineRemindEditActivity.EXTRA_MEDICINE_REMIND_ID, mMedicineRemindRVAdapter.getBean(position).id.get());
+                    startActivity(intent);
                 }
             });
             mRecyclerView.setAdapter(mMedicineRemindRVAdapter);
         }
-        mMedicineRemindRVAdapter.setDatas(medicineRemindBeanList);
     }
 
     @Override
@@ -131,27 +145,42 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
 
     @Override
     public void showLoading(String message) {
-
+        mRecyclerView.setRefreshing(true);
     }
 
     @Override
     public void showNetworkError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mMedicineRemindPresenter.getMedicineReminds(true);
+            }
+        });
     }
 
     @Override
     public void showServerError(String message) {
-
+        mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                mMedicineRemindPresenter.getMedicineReminds(true);
+            }
+        });
     }
 
     @Override
     public void showEmptyView(String message) {
-
+        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+                mMedicineRemindPresenter.getMedicineReminds(true);
+            }
+        });
     }
 
     @Override
     public void showErrorToast(String message) {
-
+        showShortToast(message);
     }
 
     @Override
