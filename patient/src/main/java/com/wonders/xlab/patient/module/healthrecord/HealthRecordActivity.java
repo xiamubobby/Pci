@@ -12,7 +12,7 @@ import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.auth.authorize.AuthorizeActivity;
-import com.wonders.xlab.patient.module.healthrecord.healthrecords.HealthRecodsActivity;
+import com.wonders.xlab.patient.module.healthrecord.healthrecords.HealthRecordsActivity;
 import com.wonders.xlab.patient.module.healthrecord.prescription.PrescriptionActivity;
 import com.wonders.xlab.patient.module.healthrecord.surgicalhistory.SurgicalHistoryActivity;
 import com.wonders.xlab.patient.module.healthrecord.testindicator.TestIndicatorActivity;
@@ -66,7 +66,7 @@ public class HealthRecordActivity extends AppbarActivity {
                             startActivity(new Intent(HealthRecordActivity.this, TestIndicatorActivity.class));
                             break;
                         case 1:
-                            startActivity(new Intent(HealthRecordActivity.this, HealthRecodsActivity.class));
+                            startActivity(new Intent(HealthRecordActivity.this, HealthRecordsActivity.class));
                             break;
                         case 2:
                             startActivity(new Intent(HealthRecordActivity.this, PrescriptionActivity.class));

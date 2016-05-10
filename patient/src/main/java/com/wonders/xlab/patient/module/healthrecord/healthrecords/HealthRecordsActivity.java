@@ -6,7 +6,7 @@ import com.wonders.xlab.patient.base.AppbarActivity;
 /**
  * Created by jimmy on 16/5/10.
  */
-public class HealthRecodsActivity extends AppbarActivity {
+public class HealthRecordsActivity extends AppbarActivity {
     @Override
     public int getContentLayout() {
         return R.layout.health_records_activity;
