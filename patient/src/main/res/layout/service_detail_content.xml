@@ -8,184 +8,242 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:weightSum="1"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <com.flyco.tablayout.CommonTabLayout
-            android:id="@+id/tab"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@android:color/white"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            app:tl_iconVisible="false"
-            app:tl_indicator_bounce_enable="true"
-            app:tl_indicator_color="@color/colorPrimary"
-            app:tl_indicator_corner_radius="4dp"
-            app:tl_indicator_margin_left="25dp"
-            app:tl_indicator_margin_right="25dp"
-            app:tl_indicator_style="BLOCK"
-            app:tl_textSelectColor="@android:color/white"
-            app:tl_textUnselectColor="@color/text_color_primary_gray"
-            app:tl_textsize="14sp"/>
-        <android.support.v4.view.ViewPager
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:id="@+id/pager">
-            <android.support.v4.widget.NestedScrollView
+            android:orientation="vertical"
+            android:weightSum="1"
+            >
+            <com.flyco.tablayout.CommonTabLayout
+                android:id="@+id/tab"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
+                android:layout_height="48dp"
+                android:background="@android:color/white"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                app:tl_iconVisible="false"
+                app:tl_indicator_bounce_enable="true"
+                app:tl_indicator_color="@color/colorPrimary"
+                app:tl_indicator_corner_radius="4dp"
+                app:tl_indicator_margin_left="25dp"
+                app:tl_indicator_margin_right="25dp"
+                app:tl_indicator_style="BLOCK"
+                app:tl_textSelectColor="@android:color/white"
+                app:tl_textUnselectColor="@color/text_color_primary_gray"
+                app:tl_textsize="14sp"/>
+            <android.support.v4.view.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/pager">
+                <android.support.v4.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <android.support.v4.view.ViewPager
-                        android:id="@+id/view_pager_service_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp" />
-
-                    <TextView
-                        android:id="@+id/tv_service_detail_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="2"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
-                        android:textColor="@color/text_color_primary_black"
-                        android:textSize="@dimen/text_size_middle"
-                        android:text="@{data.getTitle()}"/>
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/fab_margin" />
-
-                    <TextView
-                        android:id="@+id/tv_service_detail_price"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/fab_margin"
-                        android:paddingRight="@dimen/fab_margin"
-                        android:textColor="@color/red"
-                        android:textSize="@dimen/text_size_middle"
-                        android:text='@{"¥" + data.getPrice().toString()}'/>
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/fab_margin" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/divider" />
+                    android:layout_height="match_parent">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:minHeight="@dimen/actionBarSize"
-                        android:orientation="horizontal"
-                        android:paddingLeft="@dimen/fab_margin"
-                        android:paddingRight="@dimen/fab_margin"
-                        android:paddingTop="@dimen/fab_margin"
-                        android:weightSum="1"
-                        android:id="@+id/specificans">
+                        android:orientation="vertical">
+
+                        <android.support.v4.view.ViewPager
+                            android:id="@+id/view_pager_service_detail"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="已选："
-                            android:textColor="@color/text_color_primary_gray"
-                            android:textSize="@dimen/text_size_middle" />
-
-                        <TextView
-                            android:id="@+id/tv_service_detail_selected"
+                            android:id="@+id/tv_service_detail_title"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_marginTop="3dp"
+                            android:maxLines="2"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp"
+                            android:textColor="@color/text_color_primary_black"
+                            android:textSize="@dimen/text_size_middle"
+                            android:text="@{data.getTitle()}"/>
+
+                        <android.support.v4.widget.Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/fab_margin" />
+
+                        <TextView
+                            android:id="@+id/tv_service_detail_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:paddingLeft="@dimen/fab_margin"
                             android:paddingRight="@dimen/fab_margin"
-                            android:text="成人健康管理服务套餐（尊享卡）－不含设备"
-                            android:textColor="@color/text_color_primary_black"
-                            android:textSize="@dimen/text_size_middle" />
+                            android:textColor="@color/red"
+                            android:textSize="@dimen/text_size_middle"
+                            android:text='@{"¥" + data.getPrice().toString()}'/>
 
-                        <ImageButton
-                            android:id="@+id/tv_service_detail_point"
-                            android:layout_width="30dp"
-                            android:layout_height="20dp"
-                            android:src="@android:drawable/ic_delete" />
-                    </LinearLayout>
+                        <android.support.v4.widget.Space
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/fab_margin" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/divider" />
-
-                    <android.support.v4.widget.Space
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/divider" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="20dp"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:paddingTop="@dimen/fab_margin">
-
-                        <ImageView
-                            android:id="@+id/img_service_detail_organization"
-                            android:layout_width="@dimen/doctor_list_icon_size"
-                            android:layout_height="@dimen/doctor_list_icon_size"
-                            android:scaleType="centerInside" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="@color/divider" />
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_toRightOf="@id/img_service_detail_organization"
-                            android:orientation="vertical">
+                            android:minHeight="@dimen/actionBarSize"
+                            android:orientation="horizontal"
+                            android:paddingLeft="@dimen/fab_margin"
+                            android:paddingRight="@dimen/fab_margin"
+                            android:paddingTop="@dimen/fab_margin"
+                            android:weightSum="1"
+                            android:id="@+id/specificans">
 
                             <TextView
-                                android:id="@+id/tv_service_detail_organization_name"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                            <android.support.v4.widget.Space
-                                android:layout_width="match_parent"
-                                android:layout_height="20dp" />
-
-                            <Button
-                                android:id="@+id/tv_service_detail_organization_authenticated"
-                                android:layout_width="55dp"
-                                android:layout_height="25dp"
-                                android:background="@color/colorPrimary"
-                                android:text="已认证"
-                                android:textColor="@color/white_pressed"
+                                android:layout_height="wrap_content"
+                                android:text="已选："
+                                android:textColor="@color/text_color_primary_gray"
                                 android:textSize="@dimen/text_size_middle" />
+
+                            <TextView
+                                android:id="@+id/tv_service_detail_selected"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:paddingLeft="@dimen/fab_margin"
+                                android:paddingRight="@dimen/fab_margin"
+                                android:text="成人健康管理服务套餐（尊享卡）－不含设备"
+                                android:textColor="@color/text_color_primary_black"
+                                android:textSize="@dimen/text_size_middle" />
+
+                            <ImageButton
+                                android:id="@+id/tv_service_detail_point"
+                                android:layout_width="30dp"
+                                android:layout_height="20dp"
+                                android:src="@android:drawable/ic_delete" />
                         </LinearLayout>
-                    </RelativeLayout>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/divider" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="@color/divider" />
 
-                </LinearLayout>
+                        <android.support.v4.widget.Space
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp" />
 
-            </android.support.v4.widget.NestedScrollView>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="@color/divider" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="20dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            android:paddingTop="@dimen/fab_margin">
+
+                            <ImageView
+                                android:id="@+id/img_service_detail_organization"
+                                android:layout_width="@dimen/doctor_list_icon_size"
+                                android:layout_height="@dimen/doctor_list_icon_size"
+                                android:scaleType="centerInside" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@id/img_service_detail_organization"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_service_detail_organization_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+
+                                <android.support.v4.widget.Space
+                                    android:layout_width="match_parent"
+                                    android:layout_height="20dp" />
+
+                                <Button
+                                    android:id="@+id/tv_service_detail_organization_authenticated"
+                                    android:layout_width="55dp"
+                                    android:layout_height="25dp"
+                                    android:background="@color/colorPrimary"
+                                    android:text="已认证"
+                                    android:textColor="@color/white_pressed"
+                                    android:textSize="@dimen/text_size_middle" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="2dp"
+                            android:background="@color/divider" />
+
+                    </LinearLayout>
+
+                </android.support.v4.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </android.support.v4.view.ViewPager>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="2">
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/divider" />
+                <TextView
+                    android:id="@+id/purchase_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:layout_margin="2dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="@{data.title}"/>
+                <TextView
+                    android:id="@+id/purchase_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:layout_margin="2dp"
+                    android:layout_marginLeft="20dp"
+                    android:textColor="@color/red"
+                    android:text='@{"￥"+data.price.toString()}'/>
+            </LinearLayout>
             <TextView
-                android:id="@+id/desc"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </android.support.v4.view.ViewPager>
+                android:id="@+id/confirm"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:background="@color/red"
+                android:gravity="center"
+                android:text="购买"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
     </LinearLayout>
+
 
 
 </layout>

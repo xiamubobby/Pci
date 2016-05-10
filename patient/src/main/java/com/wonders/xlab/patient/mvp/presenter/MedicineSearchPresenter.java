@@ -6,8 +6,12 @@ import com.wonders.xlab.patient.mvp.entity.MedicineEntity;
 import com.wonders.xlab.patient.mvp.entity.MedicineListEntity;
 import com.wonders.xlab.patient.mvp.model.MedicineModel;
 import com.wonders.xlab.patient.mvp.model.MedicineModelContract;
+import com.wonders.xlab.patient.util.CharacterParser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -112,7 +116,7 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
     }
 
     @Override
-    public void onReceiveMedicinesSuccess(MedicineListEntity entity) {
+    public void onReceiveMedicinesSuccess(final MedicineListEntity entity) {
         Observable.from(entity.getRet_values())
                 .flatMap(new Func1<MedicineEntity, Observable<MedicineRealmBean>>() {
                     @Override
@@ -127,12 +131,38 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
                     }
                 })
                 .subscribe(new Subscriber<MedicineRealmBean>() {
+                    HashSet<String> hashSet = new HashSet<>();
                     List<MedicineRealmBean> beanList = new ArrayList<>();
-
                     @Override
                     public void onCompleted() {
+
                         mViewListener.hideLoading();
-                        mViewListener.showMedicineList(beanList);
+                        Collections.sort(beanList, new Comparator<MedicineRealmBean>() {
+                            @Override
+                            public int compare(MedicineRealmBean lhs, MedicineRealmBean rhs) {
+                                //这里主要是用来对ListView里面的数据根据ABCDEFG...来排序
+                                String str1 = CharacterParser.getInstance().getSelling(lhs.getMedicineName()).substring(0, 1);
+                                String str2 = CharacterParser.getInstance().getSelling(rhs.getMedicineName()).substring(0, 1);
+                                return str1.compareTo(str2);
+                            }
+                        });
+
+                        String[] sections = new String[hashSet.size()];
+                        List<String> tmp = new ArrayList<>();
+                        for (String set : hashSet) {
+                            tmp.add(set);
+                        }
+                        Collections.sort(tmp, new Comparator<String>() {
+                            @Override
+                            public int compare(String lhs, String rhs) {
+                                return lhs.compareTo(rhs);
+                            }
+                        });
+                        for (int i = 0; i < tmp.size(); i++) {
+                            sections[i]=tmp.get(i);
+                        }
+
+                        mViewListener.showMedicineList(beanList, sections);
                     }
 
                     @Override
@@ -143,6 +173,8 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
                     @Override
                     public void onNext(MedicineRealmBean medicineRealmBean) {
                         beanList.add(medicineRealmBean);
+                        hashSet.add(CharacterParser.getInstance().getSelling(medicineRealmBean.getMedicineName()).substring(0, 1).toUpperCase());
+
                     }
                 });
 

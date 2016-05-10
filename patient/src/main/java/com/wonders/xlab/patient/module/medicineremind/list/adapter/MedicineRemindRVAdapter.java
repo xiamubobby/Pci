@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
@@ -16,7 +15,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by wzh on 16/5/4.
  */
 public class MedicineRemindRVAdapter extends SimpleRVAdapter<MedicineRemindBean> {
 
@@ -32,10 +30,10 @@ public class MedicineRemindRVAdapter extends SimpleRVAdapter<MedicineRemindBean>
         final ItemViewHolder viewHolder = (ItemViewHolder) holder;
         MedicineRemindBean bean = getBean(position);
         viewHolder.binding.setBean(bean);
-        viewHolder.mSwOn.setEnabled(!bean.isExpired.get());
-        viewHolder.mSwOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        viewHolder.mSwOn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onClick(View v) {
+                boolean isChecked = viewHolder.mSwOn.isChecked();
                 getBean(viewHolder.getAdapterPosition()).shouldAlarm.set(isChecked);
                 if (null != mSwitchChangeListener) {
                     mSwitchChangeListener.onSwitchStateChange(viewHolder.getAdapterPosition());

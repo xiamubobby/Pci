@@ -24,7 +24,6 @@ import rx.Subscriber;
 import rx.functions.Func1;
 
 /**
- * Created by WZH on 16/5/4.
  */
 public class MedicineRemindPresenter extends BasePagePresenter implements MedicineRemindPresenterContract.Actions, MedicineRemindListModelContract.Callback, MedicineStateModifyModelContract.Callback {
 
@@ -114,6 +113,7 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
 
                     @Override
                     public void onCompleted() {
+
                         if (shouldAppend()) {
                             if (medicineRemindBeanList.size() == 0) {
                                 mViewListener.showReachTheLastPageNotice(Constant.Message.NO_MORE_DATA);

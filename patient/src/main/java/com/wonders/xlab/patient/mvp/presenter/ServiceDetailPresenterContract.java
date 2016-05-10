@@ -13,11 +13,14 @@ public interface ServiceDetailPresenterContract {
     interface ViewListener extends BasePresenterListener {
         void showServiceDetail(ServiceDetailDataUnit dataUnit);
         void showServiceContentDetail(String desc);
+        void onServiceSuccess();
+        void onServiceFail();
     }
 
     interface Actions extends IBasePresenter {
         void getServiceDetail(Long serviceId);
         void getServiceContentDetail(Long serviceId);
+        void orderService(Long serviceId);
     }
 
 }
