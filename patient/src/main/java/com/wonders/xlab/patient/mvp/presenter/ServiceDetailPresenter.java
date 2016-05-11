@@ -7,8 +7,8 @@ import com.wonders.xlab.patient.mvp.model.ServiceContentDetailModel;
 import com.wonders.xlab.patient.mvp.model.ServiceContentDetailModelContract;
 import com.wonders.xlab.patient.mvp.model.ServiceDetailModel;
 import com.wonders.xlab.patient.mvp.model.ServiceDetailModelContract;
-import com.wonders.xlab.patient.mvp.model.ServicesOrderModel;
 import com.wonders.xlab.patient.mvp.model.ServiceOrderModelContract;
+import com.wonders.xlab.patient.mvp.model.ServicesOrderModel;
 
 import javax.inject.Inject;
 
@@ -18,7 +18,7 @@ import im.hua.library.base.mvp.impl.BasePresenter;
 /**
  * Created by WZH on 16/5/9.
  */
-public class ServiceDetailPresenter extends BasePresenter implements  ServiceDetailPresenterContract.Actions{
+public class ServiceDetailPresenter extends BasePresenter implements ServiceDetailPresenterContract.Actions {
 
     private ServiceDetailPresenterContract.ViewListener mViewListener;
     private ServiceDetailModelContract.Actions mServiceDetailModel;
@@ -58,11 +58,15 @@ public class ServiceDetailPresenter extends BasePresenter implements  ServiceDet
 
             @Override
             public void onReceiveFailed(int code, String message) {
+                mViewListener.hideLoading();
+                mViewListener.showNetworkError(message);
             }
 
             @Override
             public void showServiceContentDetail(ServiceContentDetailEntity entity) {
+                mViewListener.hideLoading();
                 mViewListener.showServiceContentDetail(entity.getRet_values());
+
             }
         });
     }
@@ -72,12 +76,15 @@ public class ServiceDetailPresenter extends BasePresenter implements  ServiceDet
         mServiceOrderModel.orderService(serviceId, new ServiceOrderModelContract.Callback() {
             @Override
             public void onOrderSuccessed(BaseEntity entity) {
+                mViewListener.hideLoading();
                 mViewListener.onServiceSuccess();
             }
 
             @Override
             public void onReceiveFailed(int code, String message) {
+                mViewListener.hideLoading();
                 mViewListener.onServiceFail();
+                mViewListener.showNetworkError(message);
             }
         });
     }

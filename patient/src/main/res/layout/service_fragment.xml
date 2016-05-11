@@ -27,7 +27,7 @@
                     android:layout_height="62dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="12dp"
-                    android:src="@android:drawable/ic_menu_camera"
+                    android:src="@drawable/ic_service_doctor"
                     android:id="@+id/doctor_pic"/>
                 <android.support.v4.widget.Space
                     android:layout_width="match_parent"
@@ -50,7 +50,7 @@
                     android:layout_height="62dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="12dp"
-                    android:src="@android:drawable/ic_menu_camera"
+                    android:src="@drawable/ic_service_third_service"
                     android:id="@+id/service_pic"/>
                 <android.support.v4.widget.Space
                     android:layout_width="match_parent"
