@@ -14,7 +14,7 @@ import im.hua.utils.MD5Util;
 /**
  * Created by hua on 15/12/17.
  */
-public class LoginModel extends PatientBaseModel<LoginEntity> implements LoginModelContract.Actions {
+public class LoginModel extends PatientBaseModel implements LoginModelContract.Actions {
 
     private LoginAPI mLoginAPI;
 

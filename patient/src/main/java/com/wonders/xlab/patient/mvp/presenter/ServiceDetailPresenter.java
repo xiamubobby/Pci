@@ -9,7 +9,7 @@ import com.wonders.xlab.patient.mvp.model.ServiceContentDetailModelContract;
 import com.wonders.xlab.patient.mvp.model.ServiceDetailModel;
 import com.wonders.xlab.patient.mvp.model.ServiceDetailModelContract;
 import com.wonders.xlab.patient.mvp.model.ServiceOrderModelContract;
-import com.wonders.xlab.patient.mvp.model.ServicesOrderModel;
+import com.wonders.xlab.patient.mvp.model.ServiceOrderModel;
 
 import javax.inject.Inject;
 
@@ -26,11 +26,11 @@ public class ServiceDetailPresenter extends BasePresenter implements ServiceDeta
     private ServiceOrderModelContract.Actions mServiceOrderModel;
 
     @Inject
-    public ServiceDetailPresenter(ServiceDetailPresenterContract.ViewListener viewListener, ServiceDetailModel serviceDetailModel, ServiceContentDetailModel serviceContentDetailModel, ServicesOrderModel ServicesOrderModel) {
+    public ServiceDetailPresenter(ServiceDetailPresenterContract.ViewListener viewListener, ServiceDetailModel serviceDetailModel, ServiceContentDetailModel serviceContentDetailModel, ServiceOrderModel ServiceOrderModel) {
         mViewListener = viewListener;
         mServiceDetailModel = serviceDetailModel;
         mServiceContentDetailModel = serviceContentDetailModel;
-        mServiceOrderModel = ServicesOrderModel;
+        mServiceOrderModel = ServiceOrderModel;
         addModel(serviceDetailModel);
     }
 

@@ -17,7 +17,7 @@ import okhttp3.RequestBody;
  * Created by hua on 16/5/5.
  * 市民云认证
  */
-public class AuthorizeModel extends PatientBaseModel<SimpleEntity> implements AuthorizeModelContract.Actions {
+public class AuthorizeModel extends PatientBaseModel implements AuthorizeModelContract.Actions {
 
     private AuthAPI mAuthAPI;
 

@@ -11,7 +11,7 @@ import im.hua.library.base.mvp.impl.BaseModel;
 /**
  * Created by jimmy on 16/5/5.
  */
-public class TestIndicatorModel extends PatientBaseModel<TestIndicatorEntity> implements TestIndicatorModelContract.Actions {
+public class TestIndicatorModel extends PatientBaseModel implements TestIndicatorModelContract.Actions {
 
     private TestIndicatorAPI mTestIndicatorAPI;
 

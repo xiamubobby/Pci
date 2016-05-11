@@ -56,7 +56,7 @@ public class TestIndicatorActivity extends AppbarActivity implements TestIndicat
         addPresenter(mTestIndicatorPresenter);
         mPatientId = AIManager.getInstance().getPatientId();
 
-        mRecyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
+        mRecyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 10));
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {

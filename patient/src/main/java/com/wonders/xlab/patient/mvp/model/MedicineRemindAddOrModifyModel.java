@@ -15,7 +15,7 @@ import rx.Observable;
 /**
  * Created by WZH on 16/5/5.
  */
-public class MedicineRemindAddOrModifyModel extends PatientBaseModel<EmptyValueEntity> implements MedicineRemindAddOrModifyModelContract.Actions {
+public class MedicineRemindAddOrModifyModel extends PatientBaseModel implements MedicineRemindAddOrModifyModelContract.Actions {
 
     private MedicineRemindAPI mMedicineRemindAPI;
 

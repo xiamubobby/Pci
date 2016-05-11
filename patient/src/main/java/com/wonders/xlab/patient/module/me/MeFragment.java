@@ -14,6 +14,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.me.setting.SettingActivity;
+import com.wonders.xlab.patient.module.me.userinfo.UserInfoActivity;
 import com.wonders.xlab.patient.module.order.OrderListActivity;
 import com.wonders.xlab.patient.util.ImageViewManager;
 
@@ -59,6 +60,10 @@ public class MeFragment extends BaseFragment {
         mTvMeTel.setText(String.format("账号：%s", AIManager.getInstance().getPatientTel()));
     }
 
+    @OnClick(R.id.rl_me_user_info)
+    public void goToUserInfoActivity() {
+        startActivity(new Intent(getActivity(), UserInfoActivity.class));
+    }
     @OnClick(R.id.tv_me_setting)
     public void goToSettingActivity() {
         startActivity(new Intent(getActivity(), SettingActivity.class));
