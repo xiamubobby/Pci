@@ -95,7 +95,6 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
                 servicePresenter.getAllServices(true);
             }
         });
-
         recyclerView.setRefreshing(true);
         adapter = new ServiceRecyclerViewAdapter();
         adapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
@@ -123,36 +122,54 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
 
     @Override
     public void showReachTheLastPageNotice(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void showLoading(String message) {
-
+        recyclerView.setRefreshing(true);
     }
 
     @Override
     public void showNetworkError(String message) {
-
+        recyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+                servicePresenter.getAllServices(true);
+            }
+        });
     }
 
     @Override
     public void showServerError(String message) {
-
+        recyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+                servicePresenter.getAllServices(true);
+            }
+        });
     }
 
     @Override
     public void showEmptyView(String message) {
-
+        recyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+                servicePresenter.getAllServices(true);
+            }
+        });
     }
 
     @Override
     public void showErrorToast(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void hideLoading() {
+        if (null == recyclerView) {
+            return;
+        }
         recyclerView.hideRefreshOrLoadMore(true, true);
     }
 
