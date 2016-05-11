@@ -12,6 +12,17 @@ public interface RealNameValidateModelContract {
         void onReceiveValidateResultSuccess(EmptyValueEntity entity);
     }
 
+    /**
+     * ret_code
+     * 0是未实名
+     * UnAudit,
+     * 1是已实名
+     * Audited,
+     * 2是审核中
+     * Auditing,
+     * 3是审核失败
+     * Failure
+     */
     interface Actions extends IBaseModel {
         void getValidateResult(String patientId, Callback callback);
     }

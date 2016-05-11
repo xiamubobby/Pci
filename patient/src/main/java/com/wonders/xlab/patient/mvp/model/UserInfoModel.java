@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.mvp.model;
 
 import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.UserInfoAPI;
+import com.wonders.xlab.patient.mvp.entity.HospitalAllEntity;
 import com.wonders.xlab.patient.mvp.entity.UserInfoEntity;
 import com.wonders.xlab.patient.mvp.entity.request.UserInfoBody;
 
@@ -42,6 +43,21 @@ public class UserInfoModel extends PatientBaseModel implements UserInfoModelCont
             @Override
             public void onSuccess(EmptyValueEntity response) {
                 callback.onModifyUserInfoSuccess(response);
+            }
+
+            @Override
+            public void onFailed(int code, String message) {
+                callback.onReceiveFailed(code, message);
+            }
+        });
+    }
+
+    @Override
+    public void getAllHospitals(final UserInfoModelContract.Callback callback) {
+        request(mAPI.getHospitals(), new Callback<HospitalAllEntity>() {
+            @Override
+            public void onSuccess(HospitalAllEntity response) {
+                callback.onReceiveHospitalsSuccess(response);
             }
 
             @Override

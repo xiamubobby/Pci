@@ -7,6 +7,8 @@ import com.google.gson.JsonParseException;
 import com.google.gson.stream.MalformedJsonException;
 
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import im.hua.library.base.mvp.IBaseModel;
@@ -31,7 +33,8 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
     public final static int ERROR_CODE_CONNECT_EXCEPTION = -12345;
     protected Retrofit mRetrofit;
     private Observable<Response<T>> mObservable;
-    private Subscription subscribe;
+    private Subscription mSubscription;
+    private List<Subscription> mSubscriptionList = new ArrayList<>();
 
     public abstract String getBaseUrl();
 
@@ -69,7 +72,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
             return;
         }
 
-        subscribe = mObservable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
+        mSubscription = mObservable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Response<T>>() {
 
@@ -140,9 +143,15 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
      */
     @Override
     public void cancel() {
-        if (subscribe != null) {
-            subscribe.unsubscribe();
-            subscribe = null;
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
+            mSubscription = null;
+        }
+        for (Subscription s : mSubscriptionList) {
+            if (s != null) {
+                s.unsubscribe();
+                s = null;
+            }
         }
         mObservable = null;
     }
@@ -156,9 +165,9 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
      */
     @Deprecated
     protected void request(@NonNull Observable<Response<T>> observable, boolean autoCancelPreFetch) {
-        if (autoCancelPreFetch && subscribe != null) {
-            subscribe.unsubscribe();
-            subscribe = null;
+        if (autoCancelPreFetch && mSubscription != null) {
+            mSubscription.unsubscribe();
+            mSubscription = null;
         }
         mObservable = observable;
         request();
@@ -169,11 +178,8 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
      * @param callback
      */
     protected <Entity extends BaseEntity> void request(@NonNull Observable<Response<Entity>> observable, final Callback<Entity> callback) {
-        if (subscribe != null) {
-            subscribe.unsubscribe();
-            subscribe = null;
-        }
-        subscribe = observable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
+
+        Subscription subscribe = observable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Response<Entity>>() {
 
@@ -237,6 +243,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                         }
                     }
                 });
+        mSubscriptionList.add(subscribe);
     }
 
     /**

@@ -28,8 +28,8 @@ public class UserInfoEntity extends BaseEntity {
 
     public static class RetValuesEntity {
         private String address;
-        private int bracketNum;
-        private String lastOperationDate;
+        private String bracketNum;
+        private long lastOperationDate;
         private String hospital;
         private String surgeon;
         private String caseHistory;
@@ -42,19 +42,19 @@ public class UserInfoEntity extends BaseEntity {
             this.address = address;
         }
 
-        public int getBracketNum() {
+        public String getBracketNum() {
             return bracketNum;
         }
 
-        public void setBracketNum(int bracketNum) {
+        public void setBracketNum(String bracketNum) {
             this.bracketNum = bracketNum;
         }
 
-        public String getLastOperationDate() {
+        public long getLastOperationDate() {
             return lastOperationDate;
         }
 
-        public void setLastOperationDate(String lastOperationDate) {
+        public void setLastOperationDate(long lastOperationDate) {
             this.lastOperationDate = lastOperationDate;
         }
 
