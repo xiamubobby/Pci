@@ -14,6 +14,6 @@ public interface SurgicalHistoryModelContract {
     }
 
     interface Actions extends IBaseModel {
-        void getSurgicalHistory(String patientId, int pageIndex,Callback callback);
+        void getSurgicalHistoryList(String patientId, int pageIndex,Callback callback);
     }
 }

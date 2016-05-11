@@ -18,7 +18,7 @@ public class SurgicalHistoryModel extends DoctorBaseModel<SurgicalHistoryEntity>
     }
 
     @Override
-    public void getSurgicalHistory(String patientId, int pageIndex, final SurgicalHistoryModelContract.Callback callback) {
+    public void getSurgicalHistoryList(String patientId, int pageIndex, final SurgicalHistoryModelContract.Callback callback) {
         request(mAPI.getSurgicalHistory(patientId, pageIndex), new Callback<SurgicalHistoryEntity>() {
             @Override
             public void onSuccess(SurgicalHistoryEntity response) {

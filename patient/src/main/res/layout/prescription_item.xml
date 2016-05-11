@@ -2,6 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:showDividers="middle"
+    android:divider="@drawable/shape_line_divider"
     android:layout_margin="@dimen/item_interval_middle"
     android:background="@drawable/shape_rectangle_outline_gray_solid_white"
     android:orientation="vertical">
@@ -15,7 +17,6 @@
         android:paddingRight="@dimen/item_interval_small"
         android:singleLine="true" />
 
-    <include layout="@layout/divider_vertical" />
 
     <TextView
         android:id="@+id/prescription_item_hospital_name"
@@ -29,14 +30,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="?attr/listPreferredItemHeightSmall"
-        android:background="#eaeaea"
+        android:background="#eaebeb"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/item_interval_small"
         android:paddingRight="@dimen/item_interval_small"
         android:singleLine="true"
         android:text="处方药名称列表" />
 
-    <include layout="@layout/divider_vertical" />
 
     <LinearLayout
         android:id="@+id/ll_prescription_medicine_list"
@@ -47,5 +47,5 @@
         android:paddingLeft="@dimen/item_interval_small"
         android:paddingRight="@dimen/item_interval_small"
         android:showDividers="middle"
-        android:singleLine="true"></LinearLayout>
+        android:singleLine="true"/>
 </LinearLayout>

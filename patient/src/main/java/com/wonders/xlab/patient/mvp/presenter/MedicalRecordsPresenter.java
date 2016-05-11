@@ -59,7 +59,7 @@ public class MedicalRecordsPresenter extends BasePagePresenter implements Medica
                             public MedicalRecordsBean call(MedicalRecordsEntity.RetValuesEntity.DataEntity.ContentEntity contentEntity) {
                                 MedicalRecordsBean bean = new MedicalRecordsBean();
                                 bean.setTime(contentEntity.getDate());
-                                bean.setTag(contentEntity.getOffice_type() + "");
+                                bean.setOfficeType(contentEntity.getOffice_type());
                                 bean.setHospitalName(contentEntity.getHospital_name());
                                 bean.setDepartmentName(contentEntity.getOffice_name());
                                 bean.setMedicalResult(contentEntity.getDiagnose_result());

@@ -31,10 +31,10 @@ public class MedicalRecordsRVAdapter extends SimpleRVAdapter<MedicalRecordsBean>
         final ItemViewHolder item = (ItemViewHolder) holder;
         MedicalRecordsBean bean = getBean(position);
         item.time.setText(bean.getTime());
-        item.tag.setText(bean.getTag());
-        item.hospitalName.setText(bean.getHospitalName());
-        item.departmentName.setText(bean.getDepartmentName());
-        item.medicalResult.setText(bean.getMedicalResult());
+        item.tag.setText(bean.getOfficeType());
+        item.hospitalName.setText("就诊医院：" + bean.getHospitalName());
+        item.departmentName.setText("就诊科室：" + bean.getDepartmentName());
+        item.medicalResult.setText("就诊结果：" + bean.getMedicalResult());
         item.clickMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +62,7 @@ public class MedicalRecordsRVAdapter extends SimpleRVAdapter<MedicalRecordsBean>
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
