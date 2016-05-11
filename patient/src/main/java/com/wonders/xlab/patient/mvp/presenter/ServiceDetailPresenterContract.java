@@ -14,7 +14,7 @@ public interface ServiceDetailPresenterContract {
         void showServiceDetail(ServiceDetailDataUnit dataUnit);
         void showServiceContentDetail(String desc);
         void onServiceSuccess();
-        void onServiceFail();
+        void onServiceFail(String message);
     }
 
     interface Actions extends IBasePresenter {
