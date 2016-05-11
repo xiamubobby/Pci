@@ -36,6 +36,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:layout_marginTop="10dp"
                     android:layout_below="@id/doctor_pic"
                     android:text="找医生"
                     android:textSize="18sp"/>
@@ -59,6 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:layout_marginTop="10dp"
                     android:layout_below="@id/service_pic"
                     android:text="第三方服务"
                     android:textSize="18sp"/>

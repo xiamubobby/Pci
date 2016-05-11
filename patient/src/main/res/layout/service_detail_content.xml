@@ -171,7 +171,8 @@
                                 <TextView
                                     android:id="@+id/tv_service_detail_organization_name"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:text="@{data.organizationName}"/>
 
                                 <android.support.v4.widget.Space
                                     android:layout_width="match_parent"
@@ -248,7 +249,7 @@
                 android:id="@+id/confirm"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:background="@color/red"
+                android:background="@drawable/selector_confirm_button_red"
                 android:gravity="center"
                 android:text="购买"
                 android:textColor="@android:color/white"

@@ -55,11 +55,13 @@ public class TestIndicatorPresenter extends BasePagePresenter implements TestInd
                     TestIndicatorBean bean = new TestIndicatorBean();
                     bean.setTestTimeInStr(content.getDate());
                     bean.setHospitalName(content.getHospital_name());
-                    bean.setDepartmentsName(content.getOffice_type());
+                    bean.setDepartmentsName(content.getReport_type());
+                    bean.setOfficeType(content.getOffice_type());
                     List<TestIndicatorBean.IndicatorBean> indicatorList = new ArrayList<>();
                     for (TestIndicatorEntity.RetValuesBean.DataBean.ContentBean.ListBean list : content.getList()) {
                         TestIndicatorBean.IndicatorBean itemBean = new TestIndicatorBean.IndicatorBean();
                         itemBean.setItem(list.getItem_name());
+                        itemBean.setStatus(list.getItem_status());
                         itemBean.setResult(list.getItem_value());
                         itemBean.setReferenceValue(list.getRefer_value());
                         indicatorList.add(itemBean);

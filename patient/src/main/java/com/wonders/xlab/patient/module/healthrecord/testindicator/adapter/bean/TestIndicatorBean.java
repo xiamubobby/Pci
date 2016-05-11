@@ -19,7 +19,13 @@ public class TestIndicatorBean {
     /**
      * 科室名称
      */
-    private int departmentsName;
+    private String departmentsName;
+
+    /**
+     * 科室类型
+     */
+    private int officeType;
+
     /**
      * 指标列表
      */
@@ -28,6 +34,7 @@ public class TestIndicatorBean {
     public static class IndicatorBean {
 
         String item;
+        int status;
         String result;
         String referenceValue;
 
@@ -37,6 +44,14 @@ public class TestIndicatorBean {
 
         public void setItem(String item) {
             this.item = item;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+            this.status = status;
         }
 
         public String getResult() {
@@ -56,7 +71,6 @@ public class TestIndicatorBean {
         }
     }
 
-
     public String getTestTimeInStr() {
         return testTimeInStr;
     }
@@ -69,12 +83,16 @@ public class TestIndicatorBean {
         return hospitalName;
     }
 
-    public void setHospitalName(String hospitalName) {
-        this.hospitalName = hospitalName;
+    public String getDepartmentsName() {
+        return departmentsName;
     }
 
-    public String getDepartmentsName() {
-        switch (departmentsName) {
+    public void setDepartmentsName(String departmentsName) {
+        this.departmentsName = departmentsName;
+    }
+
+    public String getOfficeType() {
+        switch (officeType) {
             case 1:
                 return "普通门诊";
             case 2:
@@ -96,8 +114,12 @@ public class TestIndicatorBean {
         }
     }
 
-    public void setDepartmentsName(int departmentsName) {
-        this.departmentsName = departmentsName;
+    public void setOfficeType(int officeType) {
+        this.officeType = officeType;
+    }
+
+    public void setHospitalName(String hospitalName) {
+        this.hospitalName = hospitalName;
     }
 
     public List<IndicatorBean> getIndicatorList() {

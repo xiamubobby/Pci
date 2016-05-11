@@ -81,7 +81,7 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
                 startActivity(new Intent(getActivity(), ThirdServiceActivity.class));
             }
         });
-        recyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
+        recyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 4));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override

@@ -9,22 +9,28 @@
         android:layout_width="0dp"
         android:layout_height="?attr/listPreferredItemHeightSmall"
         android:layout_weight="1"
-        android:gravity="center"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="@dimen/item_interval_middle"
         android:singleLine="true"
-        android:text="餐后血糖120分钟"
         android:textSize="@dimen/text_size_small" />
 
     <include layout="@layout/divider_horizontal" />
 
-    <TextView
-        android:id="@+id/tv_test_indicator_sub_result"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="?attr/listPreferredItemHeightSmall"
         android:layout_weight="1"
-        android:gravity="center"
-        android:singleLine="true"
-        android:text="9.43"
-        android:textSize="@dimen/text_size_small" />
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_test_indicator_sub_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/item_interval_very_small"
+            android:paddingLeft="@dimen/item_interval_middle"
+            android:singleLine="true"
+            android:textSize="@dimen/text_size_small" />
+    </LinearLayout>
 
     <include layout="@layout/divider_horizontal" />
 
@@ -33,9 +39,9 @@
         android:layout_width="0dp"
         android:layout_height="?attr/listPreferredItemHeightSmall"
         android:layout_weight="1"
-        android:gravity="center"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="@dimen/item_interval_middle"
         android:singleLine="true"
-        android:text="3.9～7.8mmol/L"
         android:textSize="@dimen/text_size_small" />
 
 </LinearLayout>

@@ -73,16 +73,18 @@ public class ServiceDetailPresenter extends BasePresenter implements ServiceDeta
 
     @Override
     public void orderService(Long serviceId) {
+        mViewListener.showLoading("购买中请稍候...");
         mServiceOrderModel.orderService(serviceId, new ServiceOrderModelContract.Callback() {
             @Override
             public void onOrderSuccessed(ServiceOrderEntity entity) {
+                mViewListener.hideLoading();
                 mViewListener.onServiceSuccess();
             }
 
             @Override
             public void onReceiveFailed(int code, String message) {
                 mViewListener.hideLoading();
-                mViewListener.onServiceFail();
+                mViewListener.onServiceFail(message);
                 mViewListener.showNetworkError(message);
             }
         });
