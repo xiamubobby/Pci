@@ -110,5 +110,9 @@
     <string name="title_activity_authorize_guide">示例参考</string>
     <string name="authorize_guide_tips">1.必须为需要身份核实的用户，本人手持其身份证\n2.照片中的信息必须真实有效\n3.手持证件人的五官应清晰\n4.身份证上所有信息为真实信息。</string>
 
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
 
 </resources>

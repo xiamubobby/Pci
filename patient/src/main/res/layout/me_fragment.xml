@@ -2,7 +2,9 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:divider="@drawable/shape_line_divider"
               android:orientation="vertical"
+              android:showDividers="middle"
               tools:context=".module.me.MeFragment">
 
     <RelativeLayout
@@ -60,8 +62,6 @@
         android:textSize="@dimen/text_size_middle"
         android:visibility="gone"/>
 
-    <include layout="@layout/divider_vertical"/>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,8 +75,6 @@
         android:textSize="@dimen/text_size_middle"
         android:visibility="gone"/>
 
-    <include layout="@layout/divider_vertical"/>
-
     <TextView
         android:id="@+id/tv_me_order"
         android:layout_width="match_parent"
@@ -88,8 +86,6 @@
         android:text="@string/me_my_order"
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"/>
-
-    <include layout="@layout/divider_vertical"/>
 
     <TextView
         android:id="@+id/tv_me_setting"
@@ -103,8 +99,6 @@
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"/>
 
-    <include layout="@layout/divider_vertical"/>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -117,7 +111,5 @@
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"
         android:visibility="gone"/>
-
-    <include layout="@layout/divider_vertical"/>
 
 </LinearLayout>

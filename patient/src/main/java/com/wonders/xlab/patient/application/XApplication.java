@@ -18,6 +18,7 @@ import io.realm.RealmConfiguration;
 public class XApplication extends Application {
     public static Realm realm;
     private static ApplicationComponent component;
+    private boolean mHasStarted;
 
     @Override
     public void onCreate() {

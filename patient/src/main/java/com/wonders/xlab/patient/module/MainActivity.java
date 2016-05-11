@@ -50,6 +50,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        startActivity(new Intent(this,SplashActivity.class));
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         OttoManager.register(this);

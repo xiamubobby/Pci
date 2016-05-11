@@ -231,6 +231,12 @@
             android:label="@string/title_activity_authorize_guide"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".module.SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_splash"
+            android:theme="@style/FullscreenTheme">
+        </activity>
     </application>
 
 </manifest>
