@@ -56,6 +56,7 @@ public class PrescriptionPresenter extends BasePagePresenter implements Prescrip
                 }
                 if (shouldAppend()) {
                     mPrescriptionPresenter.appendPrescriptionList(prescriptionBeanList);
+                    return;
                 }
                 mPrescriptionPresenter.showPrescriptionList(prescriptionBeanList);
 
