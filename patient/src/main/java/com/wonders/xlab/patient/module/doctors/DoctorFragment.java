@@ -109,7 +109,6 @@ public class DoctorFragment extends BaseFragment {
 
     @Subscribe
     public void changeTabPostion(DoctorTabChangeOtto otto) {
-        mViewPager.setCurrentItem(otto.getPosition(),true);
     }
     
     @Override

@@ -63,6 +63,8 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
     TextView confirmBtn;
     @Bind(R.id.img_service_detail_organization)
     ImageView organizationImg;
+    @Bind(R.id.tv_service_detail_organization_name)
+    TextView organizationName;
 
     private BottomSheetDialog dialog;
     private TextView dgPrice;
@@ -313,8 +315,8 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
     }
 
     @Override
-    public void onServiceFail() {
-        showShortToast("购买失败啦");
+    public void onServiceFail(String message) {
+        showShortToast(message);
     }
 
     @Override

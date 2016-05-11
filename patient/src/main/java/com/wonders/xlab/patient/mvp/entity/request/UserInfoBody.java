@@ -18,7 +18,7 @@ public class UserInfoBody {
     private int bracketNum;
     private long lastOperationDate;
     private String surgeon;
-    private int hospitalId;
+    private String hospitalId;
     private String caseHistory;
 
     public String getAddress() {
@@ -53,11 +53,11 @@ public class UserInfoBody {
         this.surgeon = surgeon;
     }
 
-    public int getHospitalId() {
+    public String getHospitalId() {
         return hospitalId;
     }
 
-    public void setHospitalId(int hospitalId) {
+    public void setHospitalId(String hospitalId) {
         this.hospitalId = hospitalId;
     }
 

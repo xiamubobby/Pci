@@ -37,8 +37,8 @@ public class UserInfoModel extends PatientBaseModel implements UserInfoModelCont
     }
 
     @Override
-    public void modifyUserInfo(UserInfoBody body, final UserInfoModelContract.Callback callback) {
-        request(mAPI.modifyUserInfo(body), new Callback<EmptyValueEntity>() {
+    public void modifyUserInfo(UserInfoBody body, String patientId, final UserInfoModelContract.Callback callback) {
+        request(mAPI.modifyUserInfo(body,patientId), new Callback<EmptyValueEntity>() {
 
             @Override
             public void onSuccess(EmptyValueEntity response) {

@@ -1,9 +1,9 @@
 package com.wonders.xlab.patient.mvp.presenter;
 
-import com.wonders.xlab.patient.mvp.entity.HospitalDicEntity;
 import com.wonders.xlab.patient.mvp.entity.UserInfoEntity;
 import com.wonders.xlab.patient.mvp.entity.request.UserInfoBody;
 
+import java.util.HashMap;
 import java.util.List;
 
 import im.hua.library.base.mvp.IBasePresenter;
@@ -18,7 +18,7 @@ public interface UserInfoPresenterContract {
 
         void modifyUserInfoSuccess(String message);
 
-        void showHospitalList(List<HospitalDicEntity> dicEntityList);
+        void showHospitalList(List<HashMap<String,String>> dicEntityList);
     }
 
     interface Actions extends IBasePresenter {
