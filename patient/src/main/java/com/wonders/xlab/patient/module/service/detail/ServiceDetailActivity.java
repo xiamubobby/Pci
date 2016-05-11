@@ -61,6 +61,8 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
     TextView purchasePriceView;
     @Bind(R.id.confirm)
     TextView confirmBtn;
+    @Bind(R.id.img_service_detail_organization)
+    ImageView organizationImg;
 
     private BottomSheetDialog dialog;
     private TextView dgPrice;
@@ -249,6 +251,7 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
             }
 
         });
+        ImageViewManager.setImageViewWithUrl(this, organizationImg, dataUnit.getOrganizationImageUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
     }
 
     public class SpecificanAdapter extends SimpleRVAdapter<ServiceDetailDataUnit.Specifican> {

@@ -12,7 +12,7 @@ import im.hua.library.base.mvp.impl.BaseModel;
 /**
  * Created by hua on 16/5/5.
  */
-public class SurgicalHistoryModel extends PatientBaseModel<SurgicalHistoryEntity> implements SurgicalHistoryModelContract.Actions{
+public class SurgicalHistoryModel extends PatientBaseModel implements SurgicalHistoryModelContract.Actions{
     private PatientRecordAPI mAPI;
 
     @Inject

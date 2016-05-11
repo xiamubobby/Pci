@@ -7,16 +7,14 @@ import com.wonders.xlab.patient.mvp.entity.ServiceOrderEntity;
 
 import javax.inject.Inject;
 
-import im.hua.library.base.mvp.entity.BaseEntity;
-
 /**
  * Created by natsuki on 16/5/10.
  */
-public class ServicesOrderModel extends PatientBaseModel<ServiceOrderEntity> implements ServiceOrderModelContract.Actions{
+public class ServiceOrderModel extends PatientBaseModel implements ServiceOrderModelContract.Actions {
     private ServiceAPI mServiceAPI;
 
     @Inject
-    public ServicesOrderModel(ServiceAPI serviceAPI) {
+    public ServiceOrderModel(ServiceAPI serviceAPI) {
         this.mServiceAPI = serviceAPI;
     }
 

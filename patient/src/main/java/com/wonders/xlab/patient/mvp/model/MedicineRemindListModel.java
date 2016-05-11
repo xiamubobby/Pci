@@ -9,7 +9,7 @@ import javax.inject.Inject;
 /**
  * Created by hua on 16/5/9.
  */
-public class MedicineRemindListModel extends PatientBaseModel<MedicineRemindListEntity> implements MedicineRemindListModelContract.Actions{
+public class MedicineRemindListModel extends PatientBaseModel implements MedicineRemindListModelContract.Actions{
     private MedicineRemindAPI mAPI;
 
     @Inject

@@ -10,7 +10,7 @@ import im.hua.library.base.mvp.entity.SimpleEntity;
 /**
  * Created by hua on 16/5/4.
  */
-public class GetCaptureModel extends PatientBaseModel<SimpleEntity> implements GetCaptureModelContract.Actions {
+public class GetCaptureModel extends PatientBaseModel implements GetCaptureModelContract.Actions {
     private AuthAPI mApi;
 
     @Inject

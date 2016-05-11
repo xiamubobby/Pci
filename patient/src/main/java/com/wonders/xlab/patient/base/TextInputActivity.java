@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
 import com.wonders.xlab.patient.R;
@@ -16,6 +17,7 @@ public class TextInputActivity extends AppbarActivity {
     public final static String EXTRA_TITLE = "title";
     public final static String EXTRA_HINT = "hint";
     public final static String EXTRA_DEFAULT_VALUE = "defaultValue";
+    public final static String EXTRA_INPUT_TYPE_NUMBER = "typeNumber";
 
     public final static String EXTRA_RESULT = "result";
 
@@ -53,6 +55,9 @@ public class TextInputActivity extends AppbarActivity {
             }
             if (!TextUtils.isEmpty(mTextDefault)) {
                 mEtTextInput.setText(mTextDefault);
+            }
+            if (data.getBoolean(EXTRA_INPUT_TYPE_NUMBER, false)) {
+                mEtTextInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
             }
         }
     }

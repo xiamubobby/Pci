@@ -7,6 +7,8 @@ import com.google.gson.JsonParseException;
 import com.google.gson.stream.MalformedJsonException;
 
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import im.hua.library.base.mvp.IBaseModel;
@@ -31,15 +33,18 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
     public final static int ERROR_CODE_CONNECT_EXCEPTION = -12345;
     protected Retrofit mRetrofit;
     private Observable<Response<T>> mObservable;
-    private Subscription subscribe;
+    private Subscription mSubscription;
+    private List<Subscription> mSubscriptionList = new ArrayList<>();
 
     public abstract String getBaseUrl();
 
     @Deprecated
-    protected void onSuccess(T response) {}
+    protected void onSuccess(T response) {
+    }
 
     @Deprecated
-    protected void onFailed(int code, String message) {}
+    protected void onFailed(int code, String message) {
+    }
 
     public BaseModel() {
         /**
@@ -67,7 +72,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
             return;
         }
 
-        subscribe = mObservable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
+        mSubscription = mObservable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Response<T>>() {
 
@@ -138,9 +143,15 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
      */
     @Override
     public void cancel() {
-        if (subscribe != null) {
-            subscribe.unsubscribe();
-            subscribe = null;
+        if (mSubscription != null) {
+            mSubscription.unsubscribe();
+            mSubscription = null;
+        }
+        for (Subscription s : mSubscriptionList) {
+            if (s != null) {
+                s.unsubscribe();
+                s = null;
+            }
         }
         mObservable = null;
     }
@@ -154,27 +165,23 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
      */
     @Deprecated
     protected void request(@NonNull Observable<Response<T>> observable, boolean autoCancelPreFetch) {
-        if (autoCancelPreFetch && subscribe != null) {
-            subscribe.unsubscribe();
-            subscribe = null;
+        if (autoCancelPreFetch && mSubscription != null) {
+            mSubscription.unsubscribe();
+            mSubscription = null;
         }
         mObservable = observable;
         request();
     }
 
     /**
-     *
      * @param observable
      * @param callback
      */
-    protected void request(@NonNull Observable<Response<T>> observable, final Callback<T> callback) {
-        if (subscribe != null) {
-            subscribe.unsubscribe();
-            subscribe = null;
-        }
-        subscribe = observable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
+    protected <Entity extends BaseEntity> void request(@NonNull Observable<Response<Entity>> observable, final Callback<Entity> callback) {
+
+        Subscription subscribe = observable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Response<T>>() {
+                .subscribe(new Subscriber<Response<Entity>>() {
 
                     @Override
                     public void onCompleted() {
@@ -197,7 +204,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                     }
 
                     @Override
-                    public void onNext(Response<T> result) {
+                    public void onNext(Response<Entity> result) {
                         int code = result.code();
                         switch (code) {
                             case 400:
@@ -226,7 +233,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                                 return;
                         }
 
-                        T body = result.body();
+                        Entity body = result.body();
                         if (null == body) {
                             callback.onFailed(-1, "获取数据出错，请重试！");
                         } else if (0 > body.getRet_code()) {
@@ -236,13 +243,15 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                         }
                     }
                 });
+        mSubscriptionList.add(subscribe);
     }
 
     /**
      * callback when the request success or occur an error
+     *
      * @param <T>
      */
-    public interface Callback<T> {
+    public interface Callback<T extends BaseEntity> {
         void onSuccess(T response);
 
         void onFailed(int code, String message);
