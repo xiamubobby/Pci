@@ -14,6 +14,6 @@
         app:emptyView="@layout/common_empty"
         app:networkErrorView="@layout/common_network_error"
         app:serverErrorView="@layout/common_server_error"
-        tools:context=".module.healthrecord.healthrecords.HealthRecordsActivity" />
+        tools:context=".module.healthrecord.medicalrecords.MedicalRecordsActivity" />
 
 </LinearLayout>

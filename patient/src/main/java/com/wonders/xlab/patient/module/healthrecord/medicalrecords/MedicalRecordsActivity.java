@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.healthrecord.prescription;
+package com.wonders.xlab.patient.module.healthrecord.medicalrecords;
 
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -7,9 +7,9 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
-import com.wonders.xlab.patient.module.healthrecord.prescription.adapter.PrescriptionRVAdapter;
-import com.wonders.xlab.patient.module.healthrecord.prescription.adapter.bean.PrescriptionBean;
-import com.wonders.xlab.patient.mvp.presenter.PrescriptionPresenterContract;
+import com.wonders.xlab.patient.module.healthrecord.medicalrecords.adapter.MedicalRecordsRVAdapter;
+import com.wonders.xlab.patient.module.healthrecord.medicalrecords.adapter.bean.MedicalRecordsBean;
+import com.wonders.xlab.patient.mvp.presenter.MedicalRecordsPresenterContract;
 
 import java.util.List;
 
@@ -20,75 +20,78 @@ import im.hua.uikit.crv.CommonRecyclerView;
 /**
  * Created by jimmy on 16/5/10.
  */
-public class PrescriptionActivity extends AppbarActivity implements PrescriptionPresenterContract.ViewListener {
-    @Bind(R.id.recycler_view_prescription)
+public class MedicalRecordsActivity extends AppbarActivity implements MedicalRecordsPresenterContract.ViewListener {
+    @Bind(R.id.recycler_view_medicalRecords)
     CommonRecyclerView mRecyclerView;
 
-    PrescriptionPresenterContract.Actions mPrescriptionPresenter;
+    MedicalRecordsPresenterContract.Actions mMedicalRecordsPresenter;
 
-    PrescriptionRVAdapter mRVAdapter;
+    MedicalRecordsRVAdapter mRVAdapter;
 
     private String mPatientId;
 
     @Override
     public int getContentLayout() {
-        return R.layout.prescription_activity;
+        return R.layout.medical_records_activity;
     }
 
     @Override
     public String getToolbarTitle() {
-        return getString(R.string.health_record_prescription);
+        return getString(R.string.title_activity_medical_record);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         mPatientId = AIManager.getInstance().getPatientId();
-        mPrescriptionPresenter = DaggerPrescriptionComponent.builder()
+        mMedicalRecordsPresenter = DaggerMedicalRecordsComponent.builder()
                 .applicationComponent(((XApplication) getApplication()).getComponent())
-                .prescriptionModule(new PrescriptionModule(this))
+                .medicalRecordsModule(new MedicalRecordsModule(this))
                 .build()
-                .getPrescriptionPresenter();
+                .getMedicalRecordsPresenter();
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mPrescriptionPresenter.getPrescriptionList(mPatientId, true);
+                mMedicalRecordsPresenter.getMedicalRecordsList(mPatientId, true);
+
             }
         });
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPrescriptionPresenter.getPrescriptionList(mPatientId, false);
+                mMedicalRecordsPresenter.getMedicalRecordsList(mPatientId, false);
+
             }
         });
-        mPrescriptionPresenter.getPrescriptionList(mPatientId, false);
+        mMedicalRecordsPresenter.getMedicalRecordsList(mPatientId, true);
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
         mRecyclerView = null;
     }
 
-    private void initAdapter() {
+    private void ininAdapter() {
         if (mRVAdapter == null) {
-            mRVAdapter = new PrescriptionRVAdapter();
+            mRVAdapter = new MedicalRecordsRVAdapter();
             mRecyclerView.setAdapter(mRVAdapter);
         }
     }
 
     @Override
-    public void showPrescriptionList(List<PrescriptionBean> prescriptionBeanList) {
-        initAdapter();
-        mRVAdapter.setDatas(prescriptionBeanList);
+    public void showMedicalRecordsList(List<MedicalRecordsBean> medicalRecordsBeanList) {
+        ininAdapter();
+        mRVAdapter.setDatas(medicalRecordsBeanList);
     }
 
     @Override
-    public void appendPrescriptionList(List<PrescriptionBean> prescriptionBeanList) {
-        initAdapter();
-        mRVAdapter.appendDatas(prescriptionBeanList);
+    public void appendMedicalRecordsList(List<MedicalRecordsBean> medicalRecordsBeanList) {
+        ininAdapter();
+        mRVAdapter.appendDatas(medicalRecordsBeanList);
     }
 
     @Override
@@ -106,7 +109,7 @@ public class PrescriptionActivity extends AppbarActivity implements Prescription
         mRecyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
             @Override
             public void onClick() {
-                mPrescriptionPresenter.getPrescriptionList(mPatientId, true);
+                mMedicalRecordsPresenter.getMedicalRecordsList(mPatientId, true);
             }
         });
     }
@@ -116,7 +119,7 @@ public class PrescriptionActivity extends AppbarActivity implements Prescription
         mRecyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
             @Override
             public void onClick() {
-                mPrescriptionPresenter.getPrescriptionList(mPatientId, true);
+                mMedicalRecordsPresenter.getMedicalRecordsList(mPatientId, true);
             }
         });
     }
@@ -126,7 +129,7 @@ public class PrescriptionActivity extends AppbarActivity implements Prescription
         mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
             @Override
             public void onClick() {
-                mPrescriptionPresenter.getPrescriptionList(mPatientId, true);
+                mMedicalRecordsPresenter.getMedicalRecordsList(mPatientId, true);
             }
         });
     }
