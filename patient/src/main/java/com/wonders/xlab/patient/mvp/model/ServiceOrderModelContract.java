@@ -1,5 +1,7 @@
 package com.wonders.xlab.patient.mvp.model;
 
+import com.wonders.xlab.patient.mvp.entity.ServiceOrderEntity;
+
 import im.hua.library.base.mvp.IBaseModel;
 import im.hua.library.base.mvp.entity.BaseEntity;
 import im.hua.library.base.mvp.listener.BaseModelListener;
@@ -9,7 +11,7 @@ import im.hua.library.base.mvp.listener.BaseModelListener;
  */
 public interface ServiceOrderModelContract {
     public interface Callback extends BaseModelListener {
-        void onOrderSuccessed(BaseEntity entity);
+        void onOrderSuccessed(ServiceOrderEntity entity);
     }
 
     public interface Actions extends IBaseModel {

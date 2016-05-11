@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.mvp.presenter;
 import com.wonders.xlab.patient.module.service.detail.ServiceDetailDataUnit;
 import com.wonders.xlab.patient.mvp.entity.ServiceContentDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.ServiceDetailEntity;
+import com.wonders.xlab.patient.mvp.entity.ServiceOrderEntity;
 import com.wonders.xlab.patient.mvp.model.ServiceContentDetailModel;
 import com.wonders.xlab.patient.mvp.model.ServiceContentDetailModelContract;
 import com.wonders.xlab.patient.mvp.model.ServiceDetailModel;
@@ -71,7 +72,7 @@ public class ServiceDetailPresenter extends BasePresenter implements  ServiceDet
     public void orderService(Long serviceId) {
         mServiceOrderModel.orderService(serviceId, new ServiceOrderModelContract.Callback() {
             @Override
-            public void onOrderSuccessed(BaseEntity entity) {
+            public void onOrderSuccessed(ServiceOrderEntity entity) {
                 mViewListener.onServiceSuccess();
             }
 
