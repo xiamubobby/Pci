@@ -13,6 +13,6 @@ import rx.Observable;
  * Created by jimmy on 16/5/5.
  */
 public interface PrescriptionAPI {
-    @GET(" v1/healthRecords/pharmacyRecordList/{patientId}/{pageIndex}")
+    @GET("v1/healthRecords/pharmacyRecordList/{patientId}/{pageIndex}")
     Observable<Response<PrescriptionEntity>> getPrescriptionList(@Path("patientId") String patientId, @Path("pageIndex") int pageIndex);
 }
