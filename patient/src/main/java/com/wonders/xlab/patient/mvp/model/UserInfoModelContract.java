@@ -23,7 +23,7 @@ public interface UserInfoModelContract {
     interface Actions extends IBaseModel {
         void getUserInfo(String patientId, Callback callback);
 
-        void modifyUserInfo(UserInfoBody body, Callback callback);
+        void modifyUserInfo(UserInfoBody body, String patientId, Callback callback);
 
         void getAllHospitals(Callback callback);
     }

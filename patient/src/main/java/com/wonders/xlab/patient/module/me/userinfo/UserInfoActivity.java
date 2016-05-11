@@ -1,26 +1,34 @@
 package com.wonders.xlab.patient.module.me.userinfo;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.DatePicker;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.base.TextInputActivity;
-import com.wonders.xlab.patient.mvp.entity.HospitalDicEntity;
 import com.wonders.xlab.patient.mvp.entity.UserInfoEntity;
+import com.wonders.xlab.patient.mvp.entity.request.UserInfoBody;
 import com.wonders.xlab.patient.mvp.presenter.UserInfoPresenter;
 import com.wonders.xlab.patient.mvp.presenter.UserInfoPresenterContract;
 
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import im.hua.utils.DateUtil;
-import rx.Observable;
-import rx.Subscriber;
 
 public class UserInfoActivity extends AppbarActivity implements UserInfoPresenterContract.ViewListener {
 
@@ -30,8 +38,8 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
     private final int REQUEST_CODE_HISTORY = REQUEST_CODE << 3;
     private final int REQUEST_CODE_ADDRESS = REQUEST_CODE << 4;
 
-    @Bind(R.id.tv_user_info_hospital)
-    TextView mTvUserInfoHospital;
+    @Bind(R.id.sp_user_info_hospital)
+    Spinner mSpUserInfoHospital;
     @Bind(R.id.tv_user_info_doctor)
     TextView mTvUserInfoDoctor;
     @Bind(R.id.tv_user_info_surgery_time)
@@ -45,6 +53,8 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
 
     private UserInfoPresenter mPresenter;
 
+    private int mHospitalSpSelectedPosition = 0;
+
     @Override
     public int getContentLayout() {
         return R.layout.user_info_activity;
@@ -54,7 +64,17 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        mSpUserInfoHospital.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mHospitalSpSelectedPosition = position;
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         mPresenter = DaggerUserInfoComponent.builder()
                 .applicationComponent(((XApplication) getApplication()).getComponent())
                 .userInfoModule(new UserInfoModule(this))
@@ -62,7 +82,8 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
                 .getUserInfoPresenter();
 
         mPresenter.getAllHospitals();
-        mPresenter.getUserInfo();
+
+        addPresenter(mPresenter);
     }
 
     @Override
@@ -76,10 +97,36 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
         mTvUserInfoNumber.setText(entity.getBracketNum());
         mTvUserInfoHistory.setText(entity.getCaseHistory());
         mTvUserInfoAddress.setText(entity.getAddress());
+
+        if (null != mDicEntityList) {
+            for (int i = 0; i < mDicEntityList.size(); i++) {
+                if (entity.getHospital().equals(mDicEntityList.get(i).get("name"))) {
+                    mSpUserInfoHospital.setSelection(i);
+                    break;
+                }
+            }
+        }
     }
 
-    @OnClick(R.id.tv_user_info_hospital)
-    public void selectHospital() {
+    private Calendar mCalendarSurgeryDate = Calendar.getInstance();
+
+    @OnClick(R.id.tv_user_info_surgery_time)
+    public void pickSurgeryTime() {
+        final Calendar calendar = Calendar.getInstance();
+        DatePickerDialog mDatePickerDialog = new DatePickerDialog(this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        mCalendarSurgeryDate.set(year, monthOfYear, dayOfMonth);
+                        mTvUserInfoSurgeryTime.setText(DateUtil.format(mCalendarSurgeryDate.getTimeInMillis(), "yyyy-MM-dd"));
+                    }
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        );
+        mDatePickerDialog.getDatePicker().setMaxDate(Calendar.getInstance().getTimeInMillis());
+        mDatePickerDialog.show();
     }
 
     @OnClick(R.id.tv_user_info_doctor)
@@ -112,50 +159,21 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (null == data) {
-            return;
-        }
-        String result = data.getStringExtra(TextInputActivity.EXTRA_RESULT);
-        switch (requestCode) {
-            case REQUEST_CODE_DOCTOR:
-                mTvUserInfoDoctor.setText(result);
-                break;
-            case REQUEST_CODE_ADDRESS:
-                mTvUserInfoAddress.setText(result);
-                break;
-            case REQUEST_CODE_HISTORY:
-                mTvUserInfoHistory.setText(result);
-                break;
-            case REQUEST_CODE_NUMBER:
-                mTvUserInfoNumber.setText(result);
-                break;
-        }
-    }
-
-    @Override
     public void modifyUserInfoSuccess(String message) {
-
+        showShortToast(message);
     }
 
+    /**
+     * 医院字典表数据
+     */
+    private List<HashMap<String, String>> mDicEntityList;
+
     @Override
-    public void showHospitalList(List<HospitalDicEntity> dicEntityList) {
-        Observable.from(dicEntityList)
-                .subscribe(new Subscriber<HospitalDicEntity>() {
-                    @Override
-                    public void onCompleted() {
-                    }
+    public void showHospitalList(List<HashMap<String, String>> dicEntityList) {
+        mDicEntityList = dicEntityList;
+        mSpUserInfoHospital.setAdapter(new SimpleAdapter(this, dicEntityList, R.layout.item_spinner_text, new String[]{"name"}, new int[]{R.id.tv_spinner}));
 
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onNext(HospitalDicEntity hospitalDicEntity) {
-                    }
-                });
+        mPresenter.getUserInfo();
     }
 
     @Override
@@ -187,4 +205,56 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
     public void hideLoading() {
         dismissProgressDialog();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_save, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_save:
+                if (null == mDicEntityList || mDicEntityList.size() <= mHospitalSpSelectedPosition) {
+                    showShortToast("请等待获取医院列表");
+                    break;
+                }
+                UserInfoBody body = new UserInfoBody();
+                body.setAddress(mTvUserInfoAddress.getText().toString());
+                body.setLastOperationDate(mCalendarSurgeryDate.getTimeInMillis());
+                body.setBracketNum(Integer.parseInt(mTvUserInfoNumber.getText().toString()));
+                body.setCaseHistory(mTvUserInfoHistory.getText().toString());
+                body.setSurgeon(mTvUserInfoDoctor.getText().toString());
+                body.setHospitalId(mDicEntityList.get(mHospitalSpSelectedPosition).get("id"));
+
+                mPresenter.modifyUserInfo(body);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (null == data) {
+            return;
+        }
+        String result = data.getStringExtra(TextInputActivity.EXTRA_RESULT);
+        switch (requestCode) {
+            case REQUEST_CODE_DOCTOR:
+                mTvUserInfoDoctor.setText(result);
+                break;
+            case REQUEST_CODE_ADDRESS:
+                mTvUserInfoAddress.setText(result);
+                break;
+            case REQUEST_CODE_HISTORY:
+                mTvUserInfoHistory.setText(result);
+                break;
+            case REQUEST_CODE_NUMBER:
+                mTvUserInfoNumber.setText(result);
+                break;
+        }
+    }
+
 }

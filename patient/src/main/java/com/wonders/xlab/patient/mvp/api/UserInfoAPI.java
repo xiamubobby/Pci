@@ -30,7 +30,7 @@ public interface UserInfoAPI {
      * @return
      */
     @POST("v1/users/updateUser/{userId}")
-    Observable<Response<EmptyValueEntity>> modifyUserInfo(@Body UserInfoBody body);
+    Observable<Response<EmptyValueEntity>> modifyUserInfo(@Body UserInfoBody body,@Path("userId") String userId);
 
     /**
      * 获取医院字典表

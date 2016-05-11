@@ -25,21 +25,18 @@
             android:paddingRight="@dimen/item_interval_middle">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="手术医院"
                 android:textColor="@color/text_color_primary_black"
                 android:textSize="@dimen/text_size_middle"/>
 
-            <TextView
-                android:id="@+id/tv_user_info_hospital"
-                android:layout_width="match_parent"
+            <Spinner
+                android:id="@+id/sp_user_info_hospital"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="right|center_vertical"
-                android:hint="暂无"
-                android:singleLine="true"
-                android:textColor="@color/text_color_primary_gray"
-                android:textSize="@dimen/text_size_middle"/>
+                android:layout_gravity="right"/>
         </LinearLayout>
 
         <include layout="@layout/divider_vertical"/>
@@ -62,8 +59,8 @@
             <TextView
                 android:id="@+id/tv_user_info_doctor"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
                 android:hint="暂无"
                 android:singleLine="true"
                 android:textColor="@color/text_color_primary_gray"
@@ -90,8 +87,8 @@
             <TextView
                 android:id="@+id/tv_user_info_surgery_time"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
                 android:hint="暂无"
                 android:singleLine="true"
                 android:textColor="@color/text_color_primary_gray"
@@ -118,8 +115,8 @@
             <TextView
                 android:id="@+id/tv_user_info_number"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
                 android:singleLine="true"
                 android:text="0"
                 android:textColor="@color/text_color_primary_gray"
@@ -146,8 +143,9 @@
             <TextView
                 android:id="@+id/tv_user_info_history"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/item_interval_middle"
+                android:gravity="right|center_vertical"
                 android:hint="暂无"
                 android:singleLine="true"
                 android:textColor="@color/text_color_primary_gray"
@@ -174,8 +172,9 @@
             <TextView
                 android:id="@+id/tv_user_info_address"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/item_interval_middle"
+                android:gravity="right|center_vertical"
                 android:hint="暂无"
                 android:singleLine="true"
                 android:textColor="@color/text_color_primary_gray"
