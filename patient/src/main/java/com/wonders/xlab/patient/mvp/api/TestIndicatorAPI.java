@@ -12,6 +12,6 @@ import rx.Observable;
  */
 public interface TestIndicatorAPI {
 
-    @GET("http://172.16.74.6:8080/pci-doctor/v1/healthRecords/physicalExaminationRecord/{patientId}/{pageIndex}")
+    @GET("v1/healthRecords/physicalExaminationRecord/{patientId}/{pageIndex}")
     Observable<Response<TestIndicatorEntity>> getTestIndicatorList(@Path("patientId") String patientId, @Path("pageIndex") int pageIndex);
 }

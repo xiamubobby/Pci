@@ -124,10 +124,12 @@
                                 android:textColor="@color/text_color_primary_black"
                                 android:textSize="@dimen/text_size_middle" />
 
-                            <ImageButton
+                            <ImageView
                                 android:id="@+id/tv_service_detail_point"
-                                android:layout_width="30dp"
-                                android:layout_height="20dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_width="20dp"
+                                android:layout_height="10dp"
+                                android:scaleType="fitCenter"
                                 android:src="@drawable/ic_service_detail_selected_point" />
                         </LinearLayout>
 
