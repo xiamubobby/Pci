@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.mvp.api;
 import com.wonders.xlab.patient.mvp.entity.ServiceContentDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.ServiceListEntity;
 import com.wonders.xlab.patient.mvp.entity.ServiceDetailEntity;
+import com.wonders.xlab.patient.mvp.entity.ServiceOrderEntity;
 
 import im.hua.library.base.mvp.entity.BaseEntity;
 import retrofit2.Response;
@@ -34,5 +35,5 @@ public interface ServiceAPI {
 
     @FormUrlEncoded
     @POST("healthServiceOrders/generateServiceOrder")
-    Observable<Response<BaseEntity>> generateServiceOrder(@Field("userId") Long userId, @Field("specificationId") Long specificationId);
+    Observable<Response<ServiceOrderEntity>> generateServiceOrder(@Field("userId") Long userId, @Field("specificationId") Long specificationId);
 }

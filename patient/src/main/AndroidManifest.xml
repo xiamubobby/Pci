@@ -201,7 +201,7 @@
             android:label="@string/health_record_prescription"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".module.healthrecord.healthrecords.HealthRecordsActivity"
+            android:name=".module.healthrecord.medicalrecords.MedicalRecordsActivity"
             android:label="@string/title_activity_medical_record"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity

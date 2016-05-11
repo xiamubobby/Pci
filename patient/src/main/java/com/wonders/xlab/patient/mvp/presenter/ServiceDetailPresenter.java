@@ -3,22 +3,22 @@ package com.wonders.xlab.patient.mvp.presenter;
 import com.wonders.xlab.patient.module.service.detail.ServiceDetailDataUnit;
 import com.wonders.xlab.patient.mvp.entity.ServiceContentDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.ServiceDetailEntity;
+import com.wonders.xlab.patient.mvp.entity.ServiceOrderEntity;
 import com.wonders.xlab.patient.mvp.model.ServiceContentDetailModel;
 import com.wonders.xlab.patient.mvp.model.ServiceContentDetailModelContract;
 import com.wonders.xlab.patient.mvp.model.ServiceDetailModel;
 import com.wonders.xlab.patient.mvp.model.ServiceDetailModelContract;
-import com.wonders.xlab.patient.mvp.model.ServicesOrderModel;
 import com.wonders.xlab.patient.mvp.model.ServiceOrderModelContract;
+import com.wonders.xlab.patient.mvp.model.ServiceOrderModel;
 
 import javax.inject.Inject;
 
-import im.hua.library.base.mvp.entity.BaseEntity;
 import im.hua.library.base.mvp.impl.BasePresenter;
 
 /**
  * Created by WZH on 16/5/9.
  */
-public class ServiceDetailPresenter extends BasePresenter implements  ServiceDetailPresenterContract.Actions{
+public class ServiceDetailPresenter extends BasePresenter implements ServiceDetailPresenterContract.Actions {
 
     private ServiceDetailPresenterContract.ViewListener mViewListener;
     private ServiceDetailModelContract.Actions mServiceDetailModel;
@@ -26,11 +26,11 @@ public class ServiceDetailPresenter extends BasePresenter implements  ServiceDet
     private ServiceOrderModelContract.Actions mServiceOrderModel;
 
     @Inject
-    public ServiceDetailPresenter(ServiceDetailPresenterContract.ViewListener viewListener, ServiceDetailModel serviceDetailModel, ServiceContentDetailModel serviceContentDetailModel, ServicesOrderModel ServicesOrderModel) {
+    public ServiceDetailPresenter(ServiceDetailPresenterContract.ViewListener viewListener, ServiceDetailModel serviceDetailModel, ServiceContentDetailModel serviceContentDetailModel, ServiceOrderModel ServiceOrderModel) {
         mViewListener = viewListener;
         mServiceDetailModel = serviceDetailModel;
         mServiceContentDetailModel = serviceContentDetailModel;
-        mServiceOrderModel = ServicesOrderModel;
+        mServiceOrderModel = ServiceOrderModel;
         addModel(serviceDetailModel);
     }
 
@@ -58,11 +58,15 @@ public class ServiceDetailPresenter extends BasePresenter implements  ServiceDet
 
             @Override
             public void onReceiveFailed(int code, String message) {
+                mViewListener.hideLoading();
+                mViewListener.showNetworkError(message);
             }
 
             @Override
             public void showServiceContentDetail(ServiceContentDetailEntity entity) {
+                mViewListener.hideLoading();
                 mViewListener.showServiceContentDetail(entity.getRet_values());
+
             }
         });
     }
@@ -71,13 +75,15 @@ public class ServiceDetailPresenter extends BasePresenter implements  ServiceDet
     public void orderService(Long serviceId) {
         mServiceOrderModel.orderService(serviceId, new ServiceOrderModelContract.Callback() {
             @Override
-            public void onOrderSuccessed(BaseEntity entity) {
+            public void onOrderSuccessed(ServiceOrderEntity entity) {
                 mViewListener.onServiceSuccess();
             }
 
             @Override
             public void onReceiveFailed(int code, String message) {
+                mViewListener.hideLoading();
                 mViewListener.onServiceFail();
+                mViewListener.showNetworkError(message);
             }
         });
     }

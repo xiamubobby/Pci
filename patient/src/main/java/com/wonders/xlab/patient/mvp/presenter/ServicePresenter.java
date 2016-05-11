@@ -34,7 +34,8 @@ public class ServicePresenter extends BasePagePresenter implements ServicePresen
         serviceModel.getServiceList(new ServiceModelContract.Callback() {
             @Override
             public void onReceiveFailed(int code, String message) {
-
+                serviceListener.hideLoading();
+                serviceListener.showNetworkError(message);
             }
 
             @Override
