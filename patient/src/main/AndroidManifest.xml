@@ -21,6 +21,7 @@
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:name=".application.XApplication"
@@ -236,6 +237,17 @@
             android:label="@string/title_activity_authorize_guide"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+
+        <service
+            android:name=".service.AlarmService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
+        <service
+            android:name=".service.InitialService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>

@@ -25,7 +25,7 @@ import com.wonders.xlab.patient.module.otto.MainBottomUnreadNotifyCountOtto;
 import com.wonders.xlab.patient.module.service.ServiceFragment;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.otto.MeNotifyCountOtto;
-import com.wonders.xlab.patient.service.XEMChatService;
+import com.wonders.xlab.patient.service.InitialService;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.util.ArrayList;
@@ -91,12 +91,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                startService(new Intent(MainActivity.this, XEMChatService.class));
-            }
-        }).start();
+        startService(new Intent(MainActivity.this, InitialService.class));
     }
 
     private void setupBottomTab() {

@@ -23,6 +23,7 @@ import com.wonders.xlab.patient.base.TextInputActivity;
 import com.wonders.xlab.patient.module.medicineremind.MedicineRealmBean;
 import com.wonders.xlab.patient.module.medicineremind.edit.adapter.MedicineRemindEditRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.searchmedicine.MedicineSearchActivity;
+import com.wonders.xlab.patient.mvp.entity.MedicationUsagesEntity;
 import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
 import com.wonders.xlab.patient.mvp.presenter.MedicineRemindEditPresenterContract;
 
@@ -195,7 +196,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
                  * 是否长期
                  */
                 if (mTvEndDate.getText().toString().equals(getResources().getString(R.string.medicine_remind_edit_end_date_default))) {
-                    body.setEndDate(null);
+                    body.setEndDate(0L);
                 } else {
                     body.setEndDate(mEndCalendar.getTimeInMillis());
                 }
@@ -204,22 +205,23 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
                 body.setRemindersTime(timeStr);
                 body.setRemindersDesc(mTvMessage.getText().toString());
                 Observable.from(mRVAdapter.getBeanList())
-                        .flatMap(new Func1<MedicineRealmBean, Observable<MedicineRemindEditBody.MedicationUsagesEntity>>() {
+                        .flatMap(new Func1<MedicineRealmBean, Observable<MedicationUsagesEntity>>() {
                             @Override
-                            public Observable<MedicineRemindEditBody.MedicationUsagesEntity> call(MedicineRealmBean medicineRealmBean) {
-                                MedicineRemindEditBody.MedicationUsagesEntity entity = new MedicineRemindEditBody.MedicationUsagesEntity();
+                            public Observable<MedicationUsagesEntity> call(MedicineRealmBean medicineRealmBean) {
+                                MedicationUsagesEntity entity = new MedicationUsagesEntity();
                                 entity.setMedicationName(medicineRealmBean.getMedicineName());
                                 entity.setMedicationNum(medicineRealmBean.getDose());
                                 entity.setPharmaceuticalUnit(medicineRealmBean.getFormOfDrug());
                                 return Observable.just(entity);
                             }
                         })
-                        .subscribe(new Subscriber<MedicineRemindEditBody.MedicationUsagesEntity>() {
-                            List<MedicineRemindEditBody.MedicationUsagesEntity> mUsagesEntityList = new ArrayList<>();
+                        .subscribe(new Subscriber<MedicationUsagesEntity>() {
+                            List<MedicationUsagesEntity> mUsagesEntityList = new ArrayList<>();
 
                             @Override
                             public void onCompleted() {
                                 body.setMedicationUsages(mUsagesEntityList);
+                                mPresenter.addOrModify(body);
                             }
 
                             @Override
@@ -228,12 +230,11 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
                             }
 
                             @Override
-                            public void onNext(MedicineRemindEditBody.MedicationUsagesEntity medicationUsagesEntity) {
+                            public void onNext(MedicationUsagesEntity medicationUsagesEntity) {
                                 mUsagesEntityList.add(medicationUsagesEntity);
                             }
                         });
 
-                mPresenter.addOrModify(body);
                 break;
         }
         return super.onOptionsItemSelected(item);

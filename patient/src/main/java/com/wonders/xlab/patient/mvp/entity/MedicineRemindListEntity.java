@@ -9,13 +9,13 @@ import im.hua.library.base.mvp.entity.BasePageEntity;
  */
 public class MedicineRemindListEntity extends BasePageEntity<MedicineRemindListEntity.ContentEntity> {
     public static class ContentEntity {
+        private String id;
+        private long startDate;
         private Long endDate;
+        private String remindersTime;
+        private String remindersDesc;
         private boolean expire;
         private boolean manualCloseReminder;
-        private String remindersTime;
-        private String id;
-        private String remindersDesc;
-        private long startDate;
         /**
          * medicationName : 感冒药
          * medicationNum : 3
@@ -92,34 +92,5 @@ public class MedicineRemindListEntity extends BasePageEntity<MedicineRemindListE
             this.manualCloseReminder = manualCloseReminder;
         }
 
-        public static class MedicationUsagesEntity {
-            private String medicationName;
-            private int medicationNum;
-            private String pharmaceuticalUnit;
-
-            public String getMedicationName() {
-                return medicationName;
-            }
-
-            public void setMedicationName(String medicationName) {
-                this.medicationName = medicationName;
-            }
-
-            public int getMedicationNum() {
-                return medicationNum;
-            }
-
-            public void setMedicationNum(int medicationNum) {
-                this.medicationNum = medicationNum;
-            }
-
-            public String getPharmaceuticalUnit() {
-                return pharmaceuticalUnit;
-            }
-
-            public void setPharmaceuticalUnit(String pharmaceuticalUnit) {
-                this.pharmaceuticalUnit = pharmaceuticalUnit;
-            }
-        }
     }
 }

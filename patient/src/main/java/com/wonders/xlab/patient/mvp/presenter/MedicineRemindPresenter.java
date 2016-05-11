@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.medicineremind.list.bean.MedicineRemindBean;
+import com.wonders.xlab.patient.mvp.entity.MedicationUsagesEntity;
 import com.wonders.xlab.patient.mvp.entity.MedicineRemindListEntity;
 import com.wonders.xlab.patient.mvp.model.MedicineRemindListModel;
 import com.wonders.xlab.patient.mvp.model.MedicineRemindListModelContract;
@@ -19,6 +20,7 @@ import javax.inject.Inject;
 
 import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.utils.DateUtil;
+import io.realm.Realm;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
@@ -29,6 +31,8 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
 
     @Inject
     AIManager mAIManager;
+    @Inject
+    Realm mRealm;
 
     private MedicineRemindListModelContract.Actions mRemindListModel;
     private MedicineStateModifyModelContract.Actions mStateModifyModel;
@@ -63,7 +67,7 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
     }
 
     @Override
-    public void onReceiveMedicineRemindListSuccess(MedicineRemindListEntity.RetValuesEntity<MedicineRemindListEntity.ContentEntity> valuesEntity) {
+    public void onReceiveMedicineRemindListSuccess(final MedicineRemindListEntity.RetValuesEntity<MedicineRemindListEntity.ContentEntity> valuesEntity) {
         mViewListener.hideLoading();
         //TODO 分页
         updatePageInfo(valuesEntity.getNumber(), valuesEntity.isFirst(), valuesEntity.isLast());
@@ -71,6 +75,15 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
                 .flatMap(new Func1<MedicineRemindListEntity.ContentEntity, Observable<MedicineRemindBean>>() {
                     @Override
                     public Observable<MedicineRemindBean> call(MedicineRemindListEntity.ContentEntity contentEntity) {
+                        //cache
+                       /* mRealm.beginTransaction();
+                        final MedicineRemindRealm remindRealm = mRealm.createObject(MedicineRemindRealm.class);
+                        remindRealm.setId(contentEntity.getId());
+                        remindRealm.setEndDate(contentEntity.getEndDate());
+                        remindRealm.setStartDate(contentEntity.getStartDate());
+                        remindRealm.setRemindersTime(contentEntity.getRemindersTime());
+                        remindRealm.setRemindersDesc(contentEntity.getRemindersDesc());*/
+
                         final MedicineRemindBean bean = new MedicineRemindBean();
                         bean.id.set(contentEntity.getId());
                         String amOrPm = distinctAMOrPMFromTimeStr(contentEntity);
@@ -79,9 +92,9 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
                         Long endDate = contentEntity.getEndDate();
                         bean.expiredDateInStr.set(null == endDate ? "长期" : DateUtil.format(endDate, "yyyy-MM-dd"));
                         Observable.from(contentEntity.getMedicationUsages())
-                                .map(new Func1<MedicineRemindListEntity.ContentEntity.MedicationUsagesEntity, String>() {
+                                .map(new Func1<MedicationUsagesEntity, String>() {
                                     @Override
-                                    public String call(MedicineRemindListEntity.ContentEntity.MedicationUsagesEntity medicationUsagesEntity) {
+                                    public String call(MedicationUsagesEntity medicationUsagesEntity) {
                                         return medicationUsagesEntity.getMedicationName();
                                     }
                                 })

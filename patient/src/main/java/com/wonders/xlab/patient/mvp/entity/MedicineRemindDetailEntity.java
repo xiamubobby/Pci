@@ -99,35 +99,5 @@ public class MedicineRemindDetailEntity extends BaseEntity {
         public void setMedicationUsages(List<MedicationUsagesEntity> medicationUsages) {
             this.medicationUsages = medicationUsages;
         }
-
-        public static class MedicationUsagesEntity {
-            private String medicationName;
-            private String medicationNum;
-            private String pharmaceuticalUnit;
-
-            public String getMedicationName() {
-                return medicationName;
-            }
-
-            public void setMedicationName(String medicationName) {
-                this.medicationName = medicationName;
-            }
-
-            public String getMedicationNum() {
-                return medicationNum;
-            }
-
-            public void setMedicationNum(String medicationNum) {
-                this.medicationNum = medicationNum;
-            }
-
-            public String getPharmaceuticalUnit() {
-                return pharmaceuticalUnit;
-            }
-
-            public void setPharmaceuticalUnit(String pharmaceuticalUnit) {
-                this.pharmaceuticalUnit = pharmaceuticalUnit;
-            }
-        }
     }
 }

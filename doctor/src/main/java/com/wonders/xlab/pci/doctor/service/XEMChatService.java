@@ -1,5 +1,6 @@
 package com.wonders.xlab.pci.doctor.service;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -19,7 +20,10 @@ import com.easemob.util.NetUtils;
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.manager.SPManager;
+import com.wonders.xlab.pci.doctor.Constant;
+import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
+import com.wonders.xlab.pci.doctor.module.MainActivity;
 import com.wonders.xlab.pci.doctor.otto.ForceExitOtto;
 import com.wonders.xlab.pci.doctor.receiver.EMChatMessageBroadcastReceiver;
 import com.wonders.xlab.pci.doctor.receiver.TimeClickReceiver;
@@ -48,8 +52,8 @@ public class XEMChatService extends Service {
     public void onCreate() {
         super.onCreate();
         OttoManager.register(this);
-//        Notification notification = new NotifyUtil().generateNotification(this, MainActivity.class, null, getResources().getString(R.string.app_name), "正在运行", R.drawable.ic_notification, false, false, false, 0xff30bdf2);
-//        startForeground(Constant.NOTIFY_ID, notification);
+        Notification notification = new NotifyUtil().generateNotification(this, MainActivity.class, null, getResources().getString(R.string.app_name), "正在运行", R.drawable.ic_notification, false, false, false, 0xff30bdf2);
+        startForeground(Constant.NOTIFY_ID, notification);
         initAutoStart();
         login();
         initBroadcastReceiver();

@@ -20,10 +20,10 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.module.home.bean.HomeTopCircleBean;
 import com.wonders.xlab.patient.module.dailyreport.DailyReportActivity;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportBean;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportBean;
+import com.wonders.xlab.patient.module.home.bean.HomeTopCircleBean;
 import com.wonders.xlab.patient.otto.BPSaveSuccessOtto;
 import com.wonders.xlab.patient.otto.BSSaveSuccessOtto;
 import com.wonders.xlab.patient.util.UmengEventId;
@@ -116,21 +116,18 @@ public class HomeTopCircleFragment extends BaseFragment {
     @OnClick(R.id.ll_home_top_circle_middle)
     public void onBPClick() {
         MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_TOP_CIRCLE_BP);
-
         goToDailyRecordActivity(DailyReportActivity.SHOW_TAB_POSITION_BP);
     }
 
     @OnClick(R.id.tv_home_top_circle_right)
     public void onHeartRateClick() {
         MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_TOP_CIRCLE_HEART_RATE);
-
         goToDailyRecordActivity(DailyReportActivity.SHOW_TAB_POSITION_BP);
     }
 
     @OnClick(R.id.tv_home_top_circle_left)
     public void onBSClick() {
         MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_TOP_CIRCLE_BS);
-
         goToDailyRecordActivity(DailyReportActivity.SHOW_TAB_POSITION_BS);
     }
 

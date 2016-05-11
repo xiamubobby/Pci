@@ -1,5 +1,6 @@
 package com.wonders.xlab.patient.service;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -19,7 +20,10 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.util.NetUtils;
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
+import com.wonders.xlab.patient.Constant;
+import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.module.MainActivity;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.receiver.ConnectionBroadcastReceiver;
 import com.wonders.xlab.patient.receiver.EMChatMessageBroadcastReceiver;
@@ -47,9 +51,8 @@ public class XEMChatService extends Service {
     public void onCreate() {
         super.onCreate();
         OttoManager.register(this);
-
-//        Notification notification = new NotifyUtil().generateNotification(this, MainActivity.class, null, getResources().getString(R.string.app_name), "正在运行", R.drawable.ic_notification, true, false, false, 0xff30bdf2);
-//        startForeground(Constant.NOTIFY_ID, notification);
+        Notification notification = new NotifyUtil().generateNotification(this, MainActivity.class, null, getResources().getString(R.string.app_name), "正在运行", R.drawable.ic_notification, true, false, false, 0xff30bdf2);
+        startForeground(Constant.NOTIFY_ID, notification);
 
         initAutoStart();
         login();

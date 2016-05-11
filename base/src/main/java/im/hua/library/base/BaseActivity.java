@@ -2,15 +2,12 @@ package im.hua.library.base;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import im.hua.library.base.mvp.IBasePresenter;
@@ -27,9 +24,12 @@ public class BaseActivity extends AppCompatActivity {
 
     private ProgressDialog mDialog;
 
+    private Toast mShortToast;
+    private Toast mLongToast;
+
     /**
      * 发起两次toast的时间间隔的最小值，否则不显示第二次
-     * <p>
+     * <p/>
      * ms
      */
     private long mShowToastInterval = 800;
@@ -37,30 +37,34 @@ public class BaseActivity extends AppCompatActivity {
     private long mLastToastTime = 0;
 
     public void showShortToast(String message) {
-        long nowTime = Calendar.getInstance().getTimeInMillis();
-        if (nowTime - mLastToastTime < mShowToastInterval) {
-            return;
+        if (null != mShortToast) {
+            mShortToast.cancel();
         }
-        mLastToastTime = nowTime;
+        if (null != mLongToast) {
+            mLongToast.cancel();
+        }
 
         if (!TextUtils.isEmpty(message)) {
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            mShortToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+            mShortToast.show();
         }
     }
 
     public void showLongToast(String message) {
-        long nowTime = Calendar.getInstance().getTimeInMillis();
-        if (nowTime - mLastToastTime < mShowToastInterval) {
-            return;
+        if (null != mShortToast) {
+            mShortToast.cancel();
         }
-        mLastToastTime = nowTime;
+        if (null != mLongToast) {
+            mLongToast.cancel();
+        }
 
         if (!TextUtils.isEmpty(message)) {
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+            mLongToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+            mLongToast.show();
         }
     }
 
-    public interface OnDialogDismissListener{
+    public interface OnDialogDismissListener {
         void onDismiss();
     }
 
@@ -95,11 +99,6 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     public void addPresenter(BasePresenter presenter) {
         if (mBasePresenterList == null) {
             mBasePresenterList = new ArrayList<>();
@@ -121,6 +120,12 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (null != mShortToast) {
+            mShortToast.cancel();
+        }
+        if (null != mLongToast) {
+            mLongToast.cancel();
+        }
         if (mBasePresenterList != null) {
             for (BasePresenter presenter : mBasePresenterList) {
                 presenter.onDestroy();

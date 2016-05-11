@@ -1,23 +1,24 @@
-package com.wonders.xlab.patient.mvp.entity.request;
+package com.wonders.xlab.patient.data.realm;
 
-import com.wonders.xlab.patient.mvp.entity.MedicationUsagesEntity;
-
-import java.util.List;
+import io.realm.RealmList;
+import io.realm.RealmObject;
 
 /**
- * Created by WZH on 16/5/5.
+ * Created by hua on 16/5/11.
  */
-public class MedicineRemindEditBody {
-
-    /**
-     * 如果是修改，则需要设置id
-     */
+public class MedicineRemindRealm extends RealmObject {
     private String id;
     private long startDate;
     private Long endDate;
     private String remindersTime;
+    private long remindersTimeInMill;
+    /**
+     * 过期时间
+     * 如果为长期的，则设为0
+     */
+    private long expireTimeInMill;
     private String remindersDesc;
-    private List<MedicationUsagesEntity> medicationUsages;
+    private RealmList<MedicationUsagesRealm> medicationUsages;
 
     public String getId() {
         return id;
@@ -59,12 +60,27 @@ public class MedicineRemindEditBody {
         this.remindersDesc = remindersDesc;
     }
 
-    public List<MedicationUsagesEntity> getMedicationUsages() {
+    public RealmList<MedicationUsagesRealm> getMedicationUsages() {
         return medicationUsages;
     }
 
-    public void setMedicationUsages(List<MedicationUsagesEntity> medicationUsages) {
+    public void setMedicationUsages(RealmList<MedicationUsagesRealm> medicationUsages) {
         this.medicationUsages = medicationUsages;
     }
 
+    public long getRemindersTimeInMill() {
+        return remindersTimeInMill;
+    }
+
+    public void setRemindersTimeInMill(long remindersTimeInMill) {
+        this.remindersTimeInMill = remindersTimeInMill;
+    }
+
+    public long getExpireTimeInMill() {
+        return expireTimeInMill;
+    }
+
+    public void setExpireTimeInMill(long expireTimeInMill) {
+        this.expireTimeInMill = expireTimeInMill;
+    }
 }

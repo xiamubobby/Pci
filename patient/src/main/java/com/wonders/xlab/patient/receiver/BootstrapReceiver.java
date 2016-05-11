@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.service.XEMChatService;
+import com.wonders.xlab.patient.service.InitialService;
 
 
 public class BootstrapReceiver extends BroadcastReceiver {
@@ -15,7 +15,7 @@ public class BootstrapReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (AIManager.getInstance().hasLogin()) {
-            context.startService(new Intent(context, XEMChatService.class));
+            context.startService(new Intent(context, InitialService.class));
         }
     }
 }

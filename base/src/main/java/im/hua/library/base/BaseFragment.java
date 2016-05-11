@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import im.hua.library.base.mvp.IBasePresenter;
@@ -22,7 +21,8 @@ public class BaseFragment extends Fragment {
     private List<IBasePresenter> mIBasePresenterList;
 
     private ProgressDialog mDialog;
-
+    private Toast mShortToast;
+    private Toast mLongToast;
     /**
      * 发起两次toast的时间间隔的最小值，否则不显示第二次
      *
@@ -33,29 +33,30 @@ public class BaseFragment extends Fragment {
     private long mLastToastTime = 0;
 
     public void showShortToast(String message) {
-        long nowTime = Calendar.getInstance().getTimeInMillis();
-        if (nowTime - mLastToastTime < mShowToastInterval) {
-            return;
+        if (null != mShortToast) {
+            mShortToast.cancel();
         }
-        mLastToastTime = nowTime;
+        if (null != mLongToast) {
+            mLongToast.cancel();
+        }
 
         if (!TextUtils.isEmpty(message)) {
-            if (null == getActivity()) {
-                return;
-            }
-            Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+            mShortToast = Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT);
+            mShortToast.show();
         }
     }
 
     public void showLongToast(String message) {
-        long nowTime = Calendar.getInstance().getTimeInMillis();
-        if (nowTime - mLastToastTime < mShowToastInterval) {
-            return;
+        if (null != mShortToast) {
+            mShortToast.cancel();
         }
-        mLastToastTime = nowTime;
+        if (null != mLongToast) {
+            mLongToast.cancel();
+        }
 
         if (!TextUtils.isEmpty(message)) {
-            Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+            mLongToast = Toast.makeText(getActivity(), message, Toast.LENGTH_LONG);
+            mLongToast.show();
         }
     }
 
@@ -112,7 +113,12 @@ public class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
+        if (null != mShortToast) {
+            mShortToast.cancel();
+        }
+        if (null != mLongToast) {
+            mLongToast.cancel();
+        }
         if (mBasePresenterList != null) {
             for (BasePresenter presenter : mBasePresenterList) {
                 presenter.onDestroy();
