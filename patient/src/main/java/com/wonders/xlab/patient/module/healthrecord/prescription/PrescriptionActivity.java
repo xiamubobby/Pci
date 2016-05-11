@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.module.healthrecord.prescription;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 
+import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
@@ -50,6 +51,7 @@ public class PrescriptionActivity extends AppbarActivity implements Prescription
                 .prescriptionModule(new PrescriptionModule(this))
                 .build()
                 .getPrescriptionPresenter();
+        mRecyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 10));
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
