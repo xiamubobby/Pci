@@ -59,8 +59,8 @@
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@+id/tv_authorize_id_title"
             android:gravity="right"
-            android:singleLine="true"
             android:hint="请填写"
+            android:singleLine="true"
             android:textColor="@color/text_color_primary_gray"
             android:textSize="@dimen/text_size_large"/>
     </RelativeLayout>
@@ -92,6 +92,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:padding="@dimen/item_interval_middle"
         android:text="示例参考"
         android:textColor="@color/colorAccent"/>
 

@@ -38,10 +38,11 @@ public class AuthorizePresenter extends BasePresenter implements AuthorizePresen
             mViewListener.showErrorToast("请先填写身份证号码");
             return;
         }
-
+        mViewListener.showLoading("正在保存，请稍候...");
         mAuthorizeModel.authorize(patientId, name, idNo, idPic, new AuthorizeModelContract.Callback() {
             @Override
             public void authorizeSuccess(String message) {
+                mViewListener.hideLoading();
                 mViewListener.authorizeSuccess(message);
             }
 

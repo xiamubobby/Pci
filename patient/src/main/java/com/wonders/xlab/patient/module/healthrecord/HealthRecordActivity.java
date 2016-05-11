@@ -6,10 +6,13 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.auth.authorize.AuthorizeActivity;
 import com.wonders.xlab.patient.module.healthrecord.medicalrecords.MedicalRecordsActivity;
@@ -19,6 +22,8 @@ import com.wonders.xlab.patient.module.healthrecord.testindicator.TestIndicatorA
 import com.wonders.xlab.patient.module.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.patient.module.home.adapter.bean.HomeItemBean;
 import com.wonders.xlab.patient.module.medicalpicture.MedicalPictureActivity;
+import com.wonders.xlab.patient.mvp.presenter.HealthRecordPresenter;
+import com.wonders.xlab.patient.mvp.presenter.HealthRecordPresenterContract;
 
 import java.util.ArrayList;
 
@@ -26,14 +31,19 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HealthRecordActivity extends AppbarActivity {
+public class HealthRecordActivity extends AppbarActivity implements HealthRecordPresenterContract.ViewListener {
 
     @Bind(R.id.recycler_view_health_record)
     RecyclerView mRecyclerView;
     @Bind(R.id.btn_health_record_authorize)
     Button mBtnAuthorize;
+    @Bind(R.id.tv_health_record_notice)
+    TextView mTvNotice;
 
     private HomeRVAdapter homeRVAdapter;
+
+    private HealthRecordPresenter mHealthRecordPresenter;
+
 
     @Override
     public int getContentLayout() {
@@ -47,6 +57,14 @@ public class HealthRecordActivity extends AppbarActivity {
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         setupBottomFunctionView();
+
+        mHealthRecordPresenter = DaggerHealthRecordComponent.builder()
+                .applicationComponent(((XApplication) getApplication()).getComponent())
+                .healthRecordModule(new HealthRecordModule(this))
+                .build()
+                .getHealthRecordPresenter();
+        addPresenter(mHealthRecordPresenter);
+        mHealthRecordPresenter.getValidateResult();
     }
 
     @OnClick(R.id.btn_health_record_authorize)
@@ -130,5 +148,46 @@ public class HealthRecordActivity extends AppbarActivity {
     public void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void showResultMessage(String message) {
+        showShortToast(message);
+    }
+
+    @Override
+    public void showValidateButton(boolean show) {
+        mBtnAuthorize.setVisibility(show ? View.VISIBLE : View.GONE);
+        mTvNotice.setVisibility(show ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void showLoading(String message) {
+        showShortToast(message);
+    }
+
+    @Override
+    public void showNetworkError(String message) {
+        showShortToast(message);
+    }
+
+    @Override
+    public void showServerError(String message) {
+        showShortToast(message);
+    }
+
+    @Override
+    public void showEmptyView(String message) {
+        showShortToast(message);
+    }
+
+    @Override
+    public void showErrorToast(String message) {
+        showShortToast(message);
+    }
+
+    @Override
+    public void hideLoading() {
+
     }
 }

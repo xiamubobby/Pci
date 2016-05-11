@@ -1,8 +1,8 @@
 package com.wonders.xlab.patient.mvp.api;
 
+import com.wonders.xlab.patient.mvp.entity.RealNameValidateEntity;
 import com.wonders.xlab.patient.mvp.entity.RegisterEntity;
 
-import im.hua.library.base.mvp.entity.EmptyValueEntity;
 import im.hua.library.base.mvp.entity.SimpleEntity;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -57,5 +57,5 @@ public interface AuthAPI {
      * @return
      */
     @GET("idCardValidates/retrieveValidateResult/{userId}")
-    Observable<Response<EmptyValueEntity>> getRealNameValidateState(@Path("userId") String patientId);
+    Observable<Response<RealNameValidateEntity>> getRealNameValidateState(@Path("userId") String patientId);
 }

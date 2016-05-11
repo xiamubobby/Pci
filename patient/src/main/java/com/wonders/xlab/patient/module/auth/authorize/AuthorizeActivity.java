@@ -49,8 +49,6 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
     RelativeLayout mRlAuthorizeId;
     @Bind(R.id.iv_authorize_add_pic)
     ImageView mIvAuthorizeAddPic;
-    @Bind(R.id.tv_authorize_example)
-    TextView mTvAuthorizeExample;
 
     private AuthorizePresenterContract.Actions mAuthorizePresenter;
     /**
@@ -73,6 +71,11 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
                 .authorizeModule(new AuthorizeModule(this))
                 .build()
                 .getAuthorizePresenter();
+    }
+
+    @OnClick(R.id.tv_authorize_example)
+    public void showGuide() {
+        startActivity(new Intent(this,AuthorizeGuideActivity.class));
     }
 
     @OnClick(R.id.rl_authorize_name)
@@ -210,7 +213,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
 
     @Override
     public void showEmptyView(String message) {
-
+        showShortToast(message);
     }
 
     @Override

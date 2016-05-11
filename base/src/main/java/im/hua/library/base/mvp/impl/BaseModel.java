@@ -53,7 +53,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
          * 如果后面okhttp更新了，可去掉，而用square的
          */
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(30, TimeUnit.SECONDS);
+        builder.connectTimeout(40, TimeUnit.SECONDS);
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(logging);

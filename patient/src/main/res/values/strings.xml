@@ -90,7 +90,7 @@
     <string name="umeng_page_title_service">服务首页</string>
     <string name="title_activity_register">注册</string>
     <string name="register_btn_register">注册</string>
-    <string name="title_activity_authorize">身份认证</string>
+    <string name="title_activity_authorize">实名认证</string>
     <string name="title_activity_all_doctor">所有医生</string>
     <string name="title_activity_text_input">请输入</string>
     <string name="hint_please_text_something">请输入</string>
@@ -107,6 +107,8 @@
     <string name="title_activity_user_info">基本信息</string>
     <string name="me_my_order">我的订单</string>
     <string name="me_setting">设置</string>
+    <string name="title_activity_authorize_guide">示例参考</string>
+    <string name="authorize_guide_tips">1.必须为需要身份核实的用户，本人手持其身份证\n2.照片中的信息必须真实有效\n3.手持证件人的五官应清晰\n4.身份证上所有信息为真实信息。</string>
 
 
 </resources>

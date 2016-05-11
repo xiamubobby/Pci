@@ -1,7 +1,8 @@
 package com.wonders.xlab.patient.mvp.model;
 
+import com.wonders.xlab.patient.mvp.entity.RealNameValidateEntity;
+
 import im.hua.library.base.mvp.IBaseModel;
-import im.hua.library.base.mvp.entity.EmptyValueEntity;
 import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
@@ -9,7 +10,7 @@ import im.hua.library.base.mvp.listener.BaseModelListener;
  */
 public interface RealNameValidateModelContract {
     interface Callback extends BaseModelListener {
-        void onReceiveValidateResultSuccess(EmptyValueEntity entity);
+        void onReceiveValidateResultSuccess(RealNameValidateEntity entity);
     }
 
     /**
