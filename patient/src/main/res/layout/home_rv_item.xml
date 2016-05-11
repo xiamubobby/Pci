@@ -21,18 +21,18 @@
             android:id="@+id/iv_home_rv_item"
             android:layout_width="26dp"
             android:layout_height="26dp"
-            android:layout_marginLeft="@dimen/item_interval_large"
+            android:layout_marginLeft="@dimen/item_interval_middle"
             android:scaleType="fitXY"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/item_interval_small"
-            android:layout_marginRight="@dimen/item_interval_middle"
+            android:layout_marginRight="@dimen/item_interval_small"
             android:singleLine="true"
             android:text="@{home.title}"
             android:textColor="@color/text_color_primary_gray"
-            android:textSize="@dimen/text_size_large"/>
+            android:textSize="@dimen/text_size_middle"/>
 
     </LinearLayout>
 </layout>

@@ -67,7 +67,11 @@
         </receiver>
         <receiver android:name=".receiver.EMChatMessageBroadcastReceiver"/>
         <receiver android:name=".receiver.TimeClickReceiver"/>
-
+        <activity
+            android:name=".module.SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_splash"
+            android:theme="@style/FullscreenTheme"/>
         <activity
             android:name=".module.MainActivity"
             android:launchMode="singleTask"

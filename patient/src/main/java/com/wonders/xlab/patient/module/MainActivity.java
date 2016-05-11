@@ -16,6 +16,7 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.auth.login.LoginActivity;
 import com.wonders.xlab.patient.module.doctors.DoctorFragment;
 import com.wonders.xlab.patient.module.home.HomeFragment;
@@ -50,7 +51,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        startActivity(new Intent(this,SplashActivity.class));
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         OttoManager.register(this);
@@ -60,7 +60,11 @@ public class MainActivity extends BaseActivity {
             finish();
             return;
         }
-
+        XApplication application = (XApplication) getApplication();
+        if (application.showSplash()) {
+            startActivity(new Intent(this, SplashActivity.class));
+            application.setHasShowed(true);
+        }
         /**
          * 友盟用户标识
          */
@@ -193,6 +197,7 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         MobclickAgent.onResume(this);       //统计时长
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

@@ -26,4 +26,5 @@
     <color name="group_service_modify_btn_unpublish_pressed">#a42c2c</color>
 
     <color name="appYellow">#fed256</color>
+    <color name="black_overlay">#66000000</color>
 </resources>

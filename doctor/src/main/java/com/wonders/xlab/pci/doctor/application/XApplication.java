@@ -15,6 +15,7 @@ import io.realm.RealmConfiguration;
 public class XApplication extends Application {
     public static Realm realm;
     private static ApplicationComponent component;
+    private boolean mHasShowed = false;
 
     @Override
     public void onCreate() {
@@ -40,5 +41,13 @@ public class XApplication extends Application {
 
     public ApplicationComponent getComponent() {
         return component;
+    }
+
+    public boolean showSplash() {
+        return !mHasShowed;
+    }
+
+    public void setHasShowed(boolean hasShowed) {
+        mHasShowed = hasShowed;
     }
 }

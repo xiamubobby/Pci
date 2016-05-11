@@ -1,16 +1,10 @@
 package com.wonders.xlab.pci.doctor;
 
-import android.content.Context;
-
-import com.wonders.xlab.common.manager.SPManager;
-
 /**
  * Created by hua on 16/2/19.
  */
 public class Constant {
     public static final int NOTIFY_ID = 11111;
-
-    public final static String PREF_KEY_BASE_URL = "base_url";
 
     public final static String DEFAULT_PORTRAIT = "http://7xp6gb.com2.z0.glb.qiniucdn.com/2.pic.jpg";
     /**
@@ -24,8 +18,4 @@ public class Constant {
     public static String BASE_URL = DEFAULT_BASE_URL;
 
     public final static long VIEW_CLICK_SKIP_DURATION = 1000;//ms
-
-    public static void setBaseUrl(Context context) {
-        BASE_URL = SPManager.get(context).getString(PREF_KEY_BASE_URL,DEFAULT_BASE_URL);
-    }
 }

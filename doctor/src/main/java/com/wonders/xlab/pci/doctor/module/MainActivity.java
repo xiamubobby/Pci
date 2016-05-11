@@ -13,9 +13,9 @@ import com.umeng.update.UmengUpdateAgent;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
-import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
+import com.wonders.xlab.pci.doctor.application.XApplication;
 import com.wonders.xlab.pci.doctor.module.login.LoginActivity;
 import com.wonders.xlab.pci.doctor.module.otto.MainBottomUnreadNotifyCountOtto;
 import com.wonders.xlab.pci.doctor.module.patientlist.PatientFragment;
@@ -41,15 +41,19 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         OttoManager.register(this);
-        setTheme(R.style.AppTheme_NoActionBar);
-        Constant.setBaseUrl(this);
-
         if (!AIManager.getInstance().hasLogin()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
+        }
+        XApplication application = (XApplication) getApplication();
+        if (application.showSplash()) {
+            startActivity(new Intent(this, SplashActivity.class));
+            application.setHasShowed(true);
+
         }
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
@@ -140,6 +144,7 @@ public class MainActivity extends BaseActivity {
 
     /**
      * 优雅的退出全部Activity
+     *
      * @param bean
      */
     @Subscribe

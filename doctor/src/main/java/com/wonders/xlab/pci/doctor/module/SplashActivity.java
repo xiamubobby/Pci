@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module;
+package com.wonders.xlab.pci.doctor.module;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import com.wonders.xlab.patient.R;
+import com.wonders.xlab.pci.doctor.R;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +23,7 @@ import rx.functions.Action1;
  */
 public class SplashActivity extends AppCompatActivity {
 
+    private final int SPLASH_SHOW_TIME_IN_MILL = 2500;
     @Bind(R.id.container_splash)
     FrameLayout mContainerSplash;
 
@@ -35,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
         mContainerSplash.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         ButterKnife.bind(this);
         Observable.just(null)
-                .delaySubscription(2500, TimeUnit.MILLISECONDS)
+                .delaySubscription(SPLASH_SHOW_TIME_IN_MILL, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Object>() {
                     @Override
