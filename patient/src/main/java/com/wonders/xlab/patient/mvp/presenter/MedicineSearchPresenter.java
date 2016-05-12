@@ -21,7 +21,9 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hua on 16/5/6.
@@ -57,6 +59,7 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
         RealmResults<MedicineSearchHistoryRealm> historyRealms = mRealm.allObjects(MedicineSearchHistoryRealm.class);
 
         Observable.from(historyRealms.subList(0, Math.min(2, historyRealms.size())))
+                .subscribeOn(Schedulers.io())
                 .flatMap(new Func1<MedicineSearchHistoryRealm, Observable<MedicineRealmBean>>() {
                     @Override
                     public Observable<MedicineRealmBean> call(MedicineSearchHistoryRealm realm) {
@@ -70,6 +73,7 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
                         return Observable.just(bean);
                     }
                 })
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<MedicineRealmBean>() {
                     List<MedicineRealmBean> beanList = new ArrayList<>();
 
@@ -118,6 +122,7 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
     @Override
     public void onReceiveMedicinesSuccess(final MedicineListEntity entity) {
         Observable.from(entity.getRet_values())
+                .subscribeOn(Schedulers.io())
                 .flatMap(new Func1<MedicineEntity, Observable<MedicineRealmBean>>() {
                     @Override
                     public Observable<MedicineRealmBean> call(MedicineEntity medicineEntity) {
@@ -130,9 +135,11 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
                         return Observable.just(bean);
                     }
                 })
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<MedicineRealmBean>() {
                     HashSet<String> hashSet = new HashSet<>();
                     List<MedicineRealmBean> beanList = new ArrayList<>();
+
                     @Override
                     public void onCompleted() {
 
@@ -159,7 +166,7 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
                             }
                         });
                         for (int i = 0; i < tmp.size(); i++) {
-                            sections[i]=tmp.get(i);
+                            sections[i] = tmp.get(i);
                         }
 
                         mViewListener.showMedicineList(beanList, sections);

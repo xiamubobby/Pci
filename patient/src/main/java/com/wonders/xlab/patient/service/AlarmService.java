@@ -2,17 +2,40 @@ package com.wonders.xlab.patient.service;
 
 import android.app.AlertDialog;
 import android.app.Service;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.WindowManager;
 
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.module.medicineremind.list.MedicineRemindActivity;
+import com.wonders.xlab.patient.application.XApplication;
+import com.wonders.xlab.patient.data.realm.MedicationUsagesRealm;
+import com.wonders.xlab.patient.data.realm.MedicineRemindRealm;
+import com.wonders.xlab.patient.util.AlarmUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import io.realm.RealmResults;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
 
 public class AlarmService extends Service {
+    public final static String EXTRA_TIME = "time";
+
+    AlarmUtil mAlarmUtil = AlarmUtil.newInstance();
+
+    private AlertDialog.Builder builder;
+
     private AlertDialog ad;
+
+    private MedicineRemindDialogRVAdapter adapter;
+    private RecyclerView recyclerView;
+
 
     public AlarmService() {
     }
@@ -24,33 +47,69 @@ public class AlarmService extends Service {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
-    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this,0);
+        long remindTime = intent.getLongExtra(EXTRA_TIME, 0);
+        Log.d("AlarmService", "remindTime:" + remindTime);
+        RealmResults<MedicineRemindRealm> remindRealmResults = XApplication.realm.where(MedicineRemindRealm.class)
+                .equalTo("remindersTimeInMill", remindTime)
+                .findAll();
 
-        builder.setIcon(R.mipmap.ic_launcher);
-        builder.setPositiveButton("吃了", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(AlarmService.this, MedicineRemindActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+        try {
+            MedicineRemindRealm medicineRemindRealm = remindRealmResults.first();
 
+            final List<MedicationUsagesRealm> usagesRealmList = new ArrayList<>();
+            Observable.from(remindRealmResults)
+                    .flatMap(new Func1<MedicineRemindRealm, Observable<MedicationUsagesRealm>>() {
+                        @Override
+                        public Observable<MedicationUsagesRealm> call(MedicineRemindRealm medicineRemindRealm) {
+                            return Observable.from(medicineRemindRealm.getMedicationUsages());
+                        }
+                    })
+                    .subscribe(new Subscriber<MedicationUsagesRealm>() {
+                        @Override
+                        public void onCompleted() {
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(MedicationUsagesRealm usagesRealm) {
+                            usagesRealmList.add(usagesRealm);
+                        }
+                    });
+            if (adapter == null) {
+                adapter = new MedicineRemindDialogRVAdapter();
             }
-        }).setNegativeButton("暂时不吃", null);
-        if (ad != null && ad.isShowing()) {
-            ad.dismiss();
-            ad = null;
+            adapter.setDatas(usagesRealmList);
+            if (recyclerView == null) {
+                recyclerView = (RecyclerView) LayoutInflater.from(this).inflate(R.layout.medicine_remind_dialog, null, false);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+                recyclerView.setAdapter(adapter);
+            }
 
+            if (null == builder) {
+                builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
+                builder.setIcon(R.mipmap.ic_launcher)
+                        .setView(recyclerView)
+                        .setPositiveButton("知道了", null);
+
+                if (ad != null && ad.isShowing()) {
+                    ad.dismiss();
+                    ad = null;
+                }
+                ad = builder.create();
+                ad.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+            }
+            ad.setTitle(medicineRemindRealm.getRemindersDesc());
+            ad.show();
+            mAlarmUtil.scheduleMedicineRemindAlarm(this);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
-        ad = builder.create();
-        ad.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-        ad.show();
-        Log.d("AlarmService", "start alarm");
+
         return super.onStartCommand(intent, flags, startId);
     }
 

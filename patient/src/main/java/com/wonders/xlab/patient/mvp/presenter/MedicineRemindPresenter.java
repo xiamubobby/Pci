@@ -20,7 +20,6 @@ import javax.inject.Inject;
 
 import im.hua.library.base.mvp.impl.BasePagePresenter;
 import im.hua.utils.DateUtil;
-import io.realm.Realm;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
@@ -31,8 +30,6 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
 
     @Inject
     AIManager mAIManager;
-    @Inject
-    Realm mRealm;
 
     private MedicineRemindListModelContract.Actions mRemindListModel;
     private MedicineStateModifyModelContract.Actions mStateModifyModel;
@@ -63,7 +60,7 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
 
     @Override
     public void changeRemindState(String remindersRecordId, boolean manualCloseReminder) {
-        mStateModifyModel.changeRemindState(remindersRecordId,manualCloseReminder,this);
+        mStateModifyModel.changeRemindState(remindersRecordId, manualCloseReminder, this);
     }
 
     @Override
@@ -75,18 +72,9 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
                 .flatMap(new Func1<MedicineRemindListEntity.ContentEntity, Observable<MedicineRemindBean>>() {
                     @Override
                     public Observable<MedicineRemindBean> call(MedicineRemindListEntity.ContentEntity contentEntity) {
-                        //cache
-                       /* mRealm.beginTransaction();
-                        final MedicineRemindRealm remindRealm = mRealm.createObject(MedicineRemindRealm.class);
-                        remindRealm.setId(contentEntity.getId());
-                        remindRealm.setEndDate(contentEntity.getEndDate());
-                        remindRealm.setStartDate(contentEntity.getStartDate());
-                        remindRealm.setRemindersTime(contentEntity.getRemindersTime());
-                        remindRealm.setRemindersDesc(contentEntity.getRemindersDesc());*/
-
                         final MedicineRemindBean bean = new MedicineRemindBean();
                         bean.id.set(contentEntity.getId());
-                        String amOrPm = distinctAMOrPMFromTimeStr(contentEntity);
+                        String amOrPm = distinctAMOrPMFromTimeStr(contentEntity.getRemindersTime());
                         bean.amOrPmStr.set(amOrPm);
                         bean.timeInStr.set(DateUtil.format(DateUtil.parse(contentEntity.getRemindersTime(), "HH:mm"), "hh:mm"));
                         Long endDate = contentEntity.getEndDate();
@@ -152,11 +140,11 @@ public class MedicineRemindPresenter extends BasePagePresenter implements Medici
     }
 
     @NonNull
-    private String distinctAMOrPMFromTimeStr(MedicineRemindListEntity.ContentEntity contentEntity) {
-        String remindHour = contentEntity.getRemindersTime().split(":")[0];
-        String amOrPm = "AM";
+    private String distinctAMOrPMFromTimeStr(String time) {
+        String remindHour = time.split(":")[0];
+        String amOrPm = "上午";
         if (TextUtils.isDigitsOnly(remindHour) && Integer.parseInt(remindHour) >= 12) {
-            amOrPm = "PM";
+            amOrPm = "下午";
         }
         return amOrPm;
     }

@@ -14,7 +14,7 @@ public class MedicineRemindEditBody {
      */
     private String id;
     private long startDate;
-    private Long endDate;
+    private long endDate;
     private String remindersTime;
     private String remindersDesc;
     private List<MedicationUsagesEntity> medicationUsages;
@@ -35,11 +35,11 @@ public class MedicineRemindEditBody {
         this.startDate = startDate;
     }
 
-    public Long getEndDate() {
+    public long getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Long endDate) {
+    public void setEndDate(long endDate) {
         this.endDate = endDate;
     }
 

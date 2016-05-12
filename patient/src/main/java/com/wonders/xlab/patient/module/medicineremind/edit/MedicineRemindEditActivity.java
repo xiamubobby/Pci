@@ -26,6 +26,7 @@ import com.wonders.xlab.patient.module.medicineremind.searchmedicine.MedicineSea
 import com.wonders.xlab.patient.mvp.entity.MedicationUsagesEntity;
 import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
 import com.wonders.xlab.patient.mvp.presenter.MedicineRemindEditPresenterContract;
+import com.wonders.xlab.patient.util.AlarmUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -241,14 +242,14 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
     }
 
     @Override
-    public void showMedicineRemindInfo(int hour, int minutes, long startDate, Long endDate, String message, List<MedicineRealmBean> beanList) {
+    public void showMedicineRemindInfo(int hour, int minutes, long startDate, long endDate, String message, List<MedicineRealmBean> beanList) {
 
         mTimePicker.setCurrentHour(hour);
         mTimePicker.setCurrentMinute(minutes);
 
         mStartCalendar.setTimeInMillis(startDate);
         mTvStartDate.setText(DateUtil.format(mStartCalendar.getTimeInMillis(), "yyyy-MM-dd"));
-        if (null != endDate) {
+        if (0 != endDate) {
             mEndCalendar.setTimeInMillis(endDate);
             mTvEndDate.setText(DateUtil.format(mEndCalendar.getTimeInMillis(), "yyyy-MM-dd"));
         }
@@ -267,6 +268,8 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
 
     @Override
     public void saveSuccess(String message) {
+        AlarmUtil mAlarmUtil = AlarmUtil.newInstance();
+        mAlarmUtil.scheduleMedicineRemindAlarm(this);
         OttoManager.post(new SaveRemindSuccessOtto());
         showShortToast(message);
         finish();

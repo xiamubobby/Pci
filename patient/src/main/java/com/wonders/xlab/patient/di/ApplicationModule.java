@@ -1,6 +1,5 @@
 package com.wonders.xlab.patient.di;
 
-import android.app.Application;
 import android.content.res.Resources;
 
 import com.wonders.xlab.patient.application.XApplication;
@@ -25,7 +24,7 @@ public class ApplicationModule {
     }
 
     @Provides
-    Application provideApplication() {
+    XApplication provideApplication() {
         return mApplication;
     }
 
