@@ -1,5 +1,6 @@
 package com.wonders.xlab.patient.module.healthchart.bs.adapter;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,8 @@ import im.hua.utils.DateUtil;
 /**
  * Created by hua on 16/2/23.
  */
-public class BSRVAdapter extends SimpleRVAdapter<BSBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>{
+public class BSRVAdapter extends SimpleRVAdapter<BSBean> implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
+
 
     private void reunionList() {
         List<BSBean> beanList = getBeanList();
@@ -62,14 +64,52 @@ public class BSRVAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycl
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.bs_hr_item,parent,false));
+        return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.bs_hr_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        viewHolder.mBinding.setBs(getBean(position));
+        BSBean bean = getBean(position);
+        viewHolder.mBinding.setBs(bean);
+
+        if (bean.getBeforeSleepBS() == 0) {
+            viewHolder.beforeSleepBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+        } else if (bean.getBeforeSleepBS() == 2) {
+            viewHolder.beforeSleepBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
+        }
+        if (bean.getBreakfastAfterBS() == 0) {
+            viewHolder.breakfastAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+        } else if (bean.getBreakfastAfterBS() == 2) {
+            viewHolder.breakfastAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
+        }
+        if (bean.getBreakfastBeforeBS() == 0) {
+            viewHolder.breakfastBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+        } else if (bean.getBreakfastBeforeBS() == 2) {
+            viewHolder.breakfastBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
+        }
+        if (bean.getDinnerAfterBS() == 0) {
+            viewHolder.dinnerAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+        } else if (bean.getDinnerAfterBS() == 2) {
+            viewHolder.dinnerAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
+        }
+        if (bean.getDinnerBeforeBS() == 0) {
+            viewHolder.dinnerBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+        } else if (bean.getDinnerBeforeBS() == 2) {
+            viewHolder.dinnerBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
+        }
+        if (bean.getLunchAfterBS() == 0) {
+            viewHolder.lunchAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+        } else if (bean.getDinnerBeforeBS() == 2) {
+            viewHolder.lunchAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
+        }
+        if (bean.getLunchBeforeBS() == 0) {
+            viewHolder.lunchBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+        } else if (bean.getLunchBeforeBS() == 2) {
+            viewHolder.lunchBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
+        }
+
     }
 
     @Override
@@ -93,14 +133,31 @@ public class BSRVAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycl
                 break;
             }
         }
-        viewHolder.bpTitle.setText(DateUtil.format(time,"yyyy/MM"));
+        viewHolder.bpTitle.setText(DateUtil.format(time, "yyyy/MM"));
     }
 
-    class ItemViewHolder extends RecyclerView.ViewHolder{
+    class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        @Bind(R.id.breakfastBeforeBS)
+        TextView breakfastBeforeBS;
+        @Bind(R.id.breakfastAfterBS)
+        TextView breakfastAfterBS;
+        @Bind(R.id.lunchBeforeBS)
+        TextView lunchBeforeBS;
+        @Bind(R.id.lunchAfterBS)
+        TextView lunchAfterBS;
+        @Bind(R.id.dinnerBeforeBS)
+        TextView dinnerBeforeBS;
+        @Bind(R.id.dinnerAfterBS)
+        TextView dinnerAfterBS;
+        @Bind(R.id.beforeSleepBS)
+        TextView beforeSleepBS;
 
         BsHrItemBinding mBinding;
+
         public ItemViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this,itemView);
             mBinding = BsHrItemBinding.bind(itemView);
         }
     }

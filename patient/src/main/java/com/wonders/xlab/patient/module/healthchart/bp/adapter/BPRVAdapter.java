@@ -1,5 +1,6 @@
 package com.wonders.xlab.patient.module.healthchart.bp.adapter;
 
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -74,7 +75,23 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
         super.onBindViewHolder(holder, position);
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         viewHolder.mBinding.setBp(getBean(position));
-
+        BPListBean bean = getBean(position);
+        Resources resources = viewHolder.itemView.getResources();
+        if (bean.getDiastolicStandard() == 0) {
+            viewHolder.diastolic.setTextColor(resources.getColor(R.color.colorAccent));
+        } else if (bean.getDiastolicStandard() == 2) {
+            viewHolder.diastolic.setTextColor(resources.getColor(R.color.appYellow));
+        }
+        if (bean.getHeartStandard() == 0) {
+            viewHolder.diastolic.setTextColor(resources.getColor(R.color.colorAccent));
+        } else if (bean.getHeartStandard() == 2) {
+            viewHolder.diastolic.setTextColor(resources.getColor(R.color.appYellow));
+        }
+        if (bean.getSystolicStandard() == 0) {
+            viewHolder.systolic.setTextColor(resources.getColor(R.color.colorAccent));
+        } else if (bean.getSystolicStandard() == 2) {
+            viewHolder.systolic.setTextColor(resources.getColor(R.color.appYellow));
+        }
     }
 
     @Override
@@ -98,15 +115,24 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
                 break;
             }
         }
-        viewHolder.bpTitle.setText(DateUtil.format(time,DateUtil.DEFAULT_FORMAT_DAY));
+        viewHolder.bpTitle.setText(DateUtil.format(time, DateUtil.DEFAULT_FORMAT_DAY));
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
+        @Bind(R.id.systolic)
+        TextView systolic;
+        @Bind(R.id.diastolic)
+        TextView diastolic;
+        @Bind(R.id.heartRate)
+        TextView heartRate;
+
         BpHrItemBinding mBinding;
+
 
         public ItemViewHolder(View itemView) {
             super(itemView);
+            ButterKnife.bind(this,itemView);
             mBinding = BpHrItemBinding.bind(itemView);
         }
     }

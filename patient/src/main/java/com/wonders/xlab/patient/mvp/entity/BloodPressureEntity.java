@@ -199,6 +199,9 @@ public class BloodPressureEntity extends BaseEntity {
                 private int heartRate;
                 private int systolicPressure;
                 private int diastolicPressure;
+                private int heartStandand;
+                private int systolicStandand;
+                private int diastolicStandand;
                 private long recordTime;
 
                 public void setId(int id) {
@@ -219,6 +222,30 @@ public class BloodPressureEntity extends BaseEntity {
 
                 public void setRecordTime(long recordTime) {
                     this.recordTime = recordTime;
+                }
+
+                public int getHeartStandand() {
+                    return heartStandand;
+                }
+
+                public void setHeartStandand(int heartStandand) {
+                    this.heartStandand = heartStandand;
+                }
+
+                public int getSystolicStandand() {
+                    return systolicStandand;
+                }
+
+                public void setSystolicStandand(int systolicStandand) {
+                    this.systolicStandand = systolicStandand;
+                }
+
+                public int getDiastolicStandand() {
+                    return diastolicStandand;
+                }
+
+                public void setDiastolicStandand(int diastolicStandand) {
+                    this.diastolicStandand = diastolicStandand;
                 }
 
                 public int getId() {

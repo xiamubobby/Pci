@@ -263,4 +263,4 @@
 
 
 #不混淆网络请求实体
--keep class com.wonders.xlab.pci.doctor.data.entity.** {*;}
+-keep class com.wonders.xlab.pci.doctor.mvp.entity.** {*;}

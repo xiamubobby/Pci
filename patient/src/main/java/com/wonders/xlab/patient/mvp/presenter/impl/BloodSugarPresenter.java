@@ -72,13 +72,27 @@ public class BloodSugarPresenter extends BasePagePresenter implements IBloodSuga
 
             BSBean bean = new BSBean();
             bean.setBreakfastBeforeBS(contentEntity.getBeforeBreakfast());
+            bean.setBreakfastBeforeStandard(contentEntity.getBeforeBreakfastStandard());
+
             bean.setBreakfastAfterBS(contentEntity.getAfterBreakfast());
+            bean.setBreakfastAfterStandard(contentEntity.getAfterBreakfastStandard());
+
             bean.setLunchBeforeBS(contentEntity.getBeforeLunch());
+            bean.setLunchBeforeStandard(contentEntity.getBeforeLunchStandard());
+
             bean.setLunchAfterBS(contentEntity.getAfterLunch());
+            bean.setLunchAfterStandard(contentEntity.getAfterLunchStandard());
+
             bean.setDinnerBeforeBS(contentEntity.getBeforeDinner());
+            bean.setDinnerBeforeStandard(contentEntity.getBeforeDinnerStandard());
+
             bean.setDinnerAfterBS(contentEntity.getAfterDinner());
+            bean.setDinnerAfterStandard(contentEntity.getAfterDinnerStandard());
+
             bean.setBeforeSleepBS(contentEntity.getBeforeDawn());
+            bean.setBeforeDawnStandard(contentEntity.getBeforeDawnStandard());
             bean.setRecordTimeInMill(contentEntity.getRecordTime2Long());
+
             bsBeanList.add(bean);
         }
 

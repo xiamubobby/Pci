@@ -69,6 +69,7 @@
         <receiver android:name=".receiver.TimeClickReceiver"/>
         <activity
             android:name=".module.SplashActivity"
+            android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_splash"
             android:theme="@style/FullscreenTheme"/>
