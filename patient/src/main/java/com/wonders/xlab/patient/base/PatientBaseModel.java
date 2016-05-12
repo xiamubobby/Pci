@@ -1,6 +1,9 @@
 package com.wonders.xlab.patient.base;
 
 
+import android.util.Log;
+
+import com.wonders.xlab.patient.BuildConfig;
 import com.wonders.xlab.patient.Constant;
 
 import im.hua.library.base.mvp.entity.BaseEntity;
@@ -13,6 +16,8 @@ public abstract class PatientBaseModel<T extends BaseEntity> extends BaseModel<T
 
     @Override
     public String getBaseUrl() {
-        return Constant.BASE_URL;
+        String endPoint = BuildConfig.DEBUG ? Constant.BASE_URL_DEBUG : Constant.BASE_URL;
+        if (BuildConfig.DEBUG) Log.d("PatientBaseModel", endPoint);
+        return endPoint;
     }
 }

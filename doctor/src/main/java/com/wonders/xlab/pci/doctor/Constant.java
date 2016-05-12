@@ -10,12 +10,11 @@ public class Constant {
     /**
      * 外网正式服务器
      */
-    public final static String DEFAULT_BASE_URL = "http://xlab-tech.com:45675/pci-doctor/";
+    public final static String BASE_URL = "http://xlab-tech.com:45675/pci-doctor/";
     /**
      * 内网测试服务器
      */
-//    public final static String DEFAULT_BASE_URL = "http://172.16.74.6:8080/pci-doctor/";
-    public static String BASE_URL = DEFAULT_BASE_URL;
+    public final static String BASE_URL_DEBUG = "http://172.16.74.6:8080/pci-doctor/";
 
     public final static long VIEW_CLICK_SKIP_DURATION = 1000;//ms
 }

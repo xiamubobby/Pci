@@ -74,6 +74,7 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
         super.onBindViewHolder(holder, position);
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         viewHolder.mBinding.setBp(getBean(position));
+
     }
 
     @Override

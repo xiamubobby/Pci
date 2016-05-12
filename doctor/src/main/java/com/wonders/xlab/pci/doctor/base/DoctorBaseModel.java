@@ -1,5 +1,8 @@
 package com.wonders.xlab.pci.doctor.base;
 
+import android.util.Log;
+
+import com.wonders.xlab.pci.doctor.BuildConfig;
 import com.wonders.xlab.pci.doctor.Constant;
 
 import im.hua.library.base.mvp.entity.BaseEntity;
@@ -48,6 +51,8 @@ public abstract class DoctorBaseModel<T extends BaseEntity> extends BaseModel<T>
 
     @Override
     public String getBaseUrl() {
-        return Constant.BASE_URL;
+        String endPoint = BuildConfig.DEBUG ? Constant.BASE_URL_DEBUG : Constant.BASE_URL;
+        if (BuildConfig.DEBUG) Log.d("DoctorBaseModel", endPoint);
+        return endPoint;
     }
 }

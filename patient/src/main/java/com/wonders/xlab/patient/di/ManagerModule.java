@@ -1,5 +1,8 @@
 package com.wonders.xlab.patient.di;
 
+import android.util.Log;
+
+import com.wonders.xlab.patient.BuildConfig;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.application.AIManager;
 
@@ -28,6 +31,8 @@ public class ManagerModule {
     @Provides
     @Singleton
     protected Retrofit provideRetrofit() {
+        String endPoint = BuildConfig.DEBUG ? Constant.BASE_URL_DEBUG : Constant.BASE_URL;
+        if (BuildConfig.DEBUG) Log.d("ManagerModule", endPoint);
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(30, TimeUnit.SECONDS);
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -35,7 +40,7 @@ public class ManagerModule {
         builder.addInterceptor(logging);
         OkHttpClient client = builder.build();
 
-        return new Retrofit.Builder().baseUrl(Constant.BASE_URL)
+        return new Retrofit.Builder().baseUrl(endPoint)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//必须加上
                 .client(client)

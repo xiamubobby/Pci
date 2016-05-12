@@ -6,14 +6,11 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import com.wonders.xlab.patient.data.realm.MedicineRemindRealm;
-
 import java.util.Calendar;
 
 import javax.inject.Inject;
 
 import io.realm.Realm;
-import io.realm.Sort;
 
 public class InitialService extends Service {
     @Inject
@@ -31,10 +28,10 @@ public class InitialService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        MedicineRemindRealm remindRealm = mRealm.where(MedicineRemindRealm.class).greaterThan("endDate",Calendar.getInstance().getTimeInMillis()).findAllSorted("remindersTimeInMill", Sort.ASCENDING).first();
-        if (null != remindRealm) {
-
-        }
+//        MedicineRemindRealm remindRealm = mRealm.where(MedicineRemindRealm.class).greaterThan("endDate",Calendar.getInstance().getTimeInMillis()).findAllSorted("remindersTimeInMill", Sort.ASCENDING).first();
+//        if (null != remindRealm) {
+//
+//        }
 
 
         PendingIntent mAlarmSender = PendingIntent.getService(this,
