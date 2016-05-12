@@ -106,6 +106,12 @@ public class MedicineRemindCachePresenter extends BasePagePresenter implements M
 
     @Override
     public void changeRemindState(String remindersRecordId, boolean manualCloseReminder) {
+        mRealm.beginTransaction();
+        MedicineRemindRealm remindRealm = mRealm.where(MedicineRemindRealm.class).equalTo("id", remindersRecordId).findFirst();
+        if (null != remindRealm) {
+            remindRealm.setShouldAlarm(!manualCloseReminder);
+        }
+        mRealm.commitTransaction();
     }
 
     @NonNull
