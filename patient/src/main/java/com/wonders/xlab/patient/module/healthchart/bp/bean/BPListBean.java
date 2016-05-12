@@ -16,6 +16,19 @@ public class BPListBean {
     private long headerId;
     private long recordTimeInMill;
 
+    /**
+     * 心率标准
+     */
+    private int heartStandard;
+    /**
+     * 收缩压标准
+     */
+    private int systolicStandard;
+    /**
+     * 舒张压标准
+     */
+    private int diastolicStandard;
+
     public String getSystolic() {
         return systolic;
     }
@@ -54,5 +67,29 @@ public class BPListBean {
 
     public void setRecordTimeInMill(long recordTimeInMill) {
         this.recordTimeInMill = recordTimeInMill;
+    }
+
+    public int getHeartStandard() {
+        return heartStandard;
+    }
+
+    public void setHeartStandard(int heartStandard) {
+        this.heartStandard = heartStandard;
+    }
+
+    public int getSystolicStandard() {
+        return systolicStandard;
+    }
+
+    public void setSystolicStandard(int systolicStandard) {
+        this.systolicStandard = systolicStandard;
+    }
+
+    public int getDiastolicStandard() {
+        return diastolicStandard;
+    }
+
+    public void setDiastolicStandard(int diastolicStandard) {
+        this.diastolicStandard = diastolicStandard;
     }
 }

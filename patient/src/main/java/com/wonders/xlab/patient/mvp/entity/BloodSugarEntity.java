@@ -145,6 +145,13 @@ public class BloodSugarEntity extends BaseEntity {
             private float afterDinner;
             private float beforeDawn;
             private long recordTime2Long;
+            private int beforeBreakfastStandard;
+            private int afterBreakfastStandard;
+            private int beforeLunchStandard;
+            private int afterLunchStandard;
+            private int beforeDinnerStandard;
+            private int afterDinnerStandard;
+            private int beforeDawnStandard;
 
             public void setId(String id) {
                 this.id = id;
@@ -216,6 +223,62 @@ public class BloodSugarEntity extends BaseEntity {
 
             public long getRecordTime2Long() {
                 return recordTime2Long;
+            }
+
+            public int getBeforeBreakfastStandard() {
+                return beforeBreakfastStandard;
+            }
+
+            public void setBeforeBreakfastStandard(int beforeBreakfastStandard) {
+                this.beforeBreakfastStandard = beforeBreakfastStandard;
+            }
+
+            public int getAfterBreakfastStandard() {
+                return afterBreakfastStandard;
+            }
+
+            public void setAfterBreakfastStandard(int afterBreakfastStandard) {
+                this.afterBreakfastStandard = afterBreakfastStandard;
+            }
+
+            public int getBeforeLunchStandard() {
+                return beforeLunchStandard;
+            }
+
+            public void setBeforeLunchStandard(int beforeLunchStandard) {
+                this.beforeLunchStandard = beforeLunchStandard;
+            }
+
+            public int getAfterLunchStandard() {
+                return afterLunchStandard;
+            }
+
+            public void setAfterLunchStandard(int afterLunchStandard) {
+                this.afterLunchStandard = afterLunchStandard;
+            }
+
+            public int getBeforeDinnerStandard() {
+                return beforeDinnerStandard;
+            }
+
+            public void setBeforeDinnerStandard(int beforeDinnerStandard) {
+                this.beforeDinnerStandard = beforeDinnerStandard;
+            }
+
+            public int getAfterDinnerStandard() {
+                return afterDinnerStandard;
+            }
+
+            public void setAfterDinnerStandard(int afterDinnerStandard) {
+                this.afterDinnerStandard = afterDinnerStandard;
+            }
+
+            public int getBeforeDawnStandard() {
+                return beforeDawnStandard;
+            }
+
+            public void setBeforeDawnStandard(int beforeDawnStandard) {
+                this.beforeDawnStandard = beforeDawnStandard;
             }
         }
 
