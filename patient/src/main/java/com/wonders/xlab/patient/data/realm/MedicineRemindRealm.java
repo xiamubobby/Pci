@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.data.realm;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 
 /**
  * Created by hua on 16/5/11.
@@ -11,6 +12,8 @@ public class MedicineRemindRealm extends RealmObject {
     private long startDate;
     private Long endDate;
     private String remindersTime;
+
+    @Index
     private long remindersTimeInMill;
     /**
      * 过期时间

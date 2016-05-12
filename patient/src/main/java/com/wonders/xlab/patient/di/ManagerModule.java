@@ -5,6 +5,7 @@ import android.util.Log;
 import com.wonders.xlab.patient.BuildConfig;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.util.AlarmUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +31,7 @@ public class ManagerModule {
      */
     @Provides
     @Singleton
-    protected Retrofit provideRetrofit() {
+    Retrofit provideRetrofit() {
         String endPoint = BuildConfig.DEBUG ? Constant.BASE_URL_DEBUG : Constant.BASE_URL;
         if (BuildConfig.DEBUG) Log.d("ManagerModule", endPoint);
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
@@ -49,7 +50,13 @@ public class ManagerModule {
 
     @Provides
     @Singleton
-    protected AIManager provideAIManager() {
+    AIManager provideAIManager() {
         return new AIManager();
+    }
+
+    @Provides
+    @Singleton
+    AlarmUtil provideAlarmUtil() {
+        return AlarmUtil.newInstance();
     }
 }

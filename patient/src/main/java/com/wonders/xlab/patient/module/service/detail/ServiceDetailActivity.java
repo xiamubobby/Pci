@@ -128,7 +128,9 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
 
             @Override
             public void onClick(View v) {
-                mServiceDetailPresenter.orderService((long) selectedSpecifican.getId());
+                if (null != selectedSpecifican) {
+                    mServiceDetailPresenter.orderService((long) selectedSpecifican.getId());
+                }
             }
         });
         setupTopTab();

@@ -61,17 +61,19 @@ public class MainActivity extends BaseActivity {
             return;
         }
         XApplication application = (XApplication) getApplication();
-        if (application.showSplash()) {
+        boolean showSplash = application.showSplash();
+        if (showSplash) {
             startActivity(new Intent(this, SplashActivity.class));
             application.setHasShowed(true);
         }
+
         /**
          * 友盟用户标识
          */
         MobclickAgent.onProfileSignIn(AIManager.getInstance().getPatientId());
 
         setContentView(R.layout.main_activity);
-        ButterKnife.bind(this);
+        ButterKnife.bind(MainActivity.this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -85,7 +87,8 @@ public class MainActivity extends BaseActivity {
 
         setupBottomTab();
 
-        UmengUpdateAgent.update(this);
+        UmengUpdateAgent.update(MainActivity.this);
+
     }
 
     @Override

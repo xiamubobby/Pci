@@ -1,17 +1,14 @@
 package com.wonders.xlab.patient.service;
 
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import javax.inject.Inject;
-
-import io.realm.Realm;
+import com.wonders.xlab.patient.util.AlarmUtil;
 
 public class InitialService extends Service {
-    @Inject
-    Realm mRealm;
+
+    AlarmUtil mAlarmUtil = AlarmUtil.newInstance();
 
     public InitialService() {
     }
@@ -25,18 +22,13 @@ public class InitialService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-//        MedicineRemindRealm remindRealm = mRealm.where(MedicineRemindRealm.class).greaterThan("endDate",Calendar.getInstance().getTimeInMillis()).findAllSorted("remindersTimeInMill", Sort.ASCENDING).first();
-//        if (null != remindRealm) {
-//
-//        }
-
-
-        PendingIntent mAlarmSender = PendingIntent.getService(this,
-                0, new Intent(this, AlarmService.class), 0);
-//        AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
-//        am.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + 3 * 1000, mAlarmSender);
-
         startService(new Intent(this, XEMChatService.class));
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        mAlarmUtil.scheduleMedicineRemindAlarm(this);
+        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override

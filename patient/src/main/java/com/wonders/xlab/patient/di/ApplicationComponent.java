@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.di;
 
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
+import com.wonders.xlab.patient.util.AlarmUtil;
 
 import javax.inject.Singleton;
 
@@ -18,6 +19,8 @@ public interface ApplicationComponent {
 
     void inject(Object object);
 
+    XApplication getXApplication();
+
     //TODO Important ,figure it out later
     // downstream components need these exposed
     Retrofit getRetrofit();
@@ -25,6 +28,8 @@ public interface ApplicationComponent {
     AIManager getAIManager();
 
     Realm getRealm();
+
+    AlarmUtil getAlarmUtil();
 
     final class Initializer {
         private Initializer() {
