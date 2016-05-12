@@ -1,12 +1,9 @@
 package com.wonders.xlab.patient.service;
 
-import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-
-import java.util.Calendar;
 
 import javax.inject.Inject;
 
@@ -36,8 +33,8 @@ public class InitialService extends Service {
 
         PendingIntent mAlarmSender = PendingIntent.getService(this,
                 0, new Intent(this, AlarmService.class), 0);
-        AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + 3 * 1000, mAlarmSender);
+//        AlarmManager am = (AlarmManager)getSystemService(ALARM_SERVICE);
+//        am.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis() + 3 * 1000, mAlarmSender);
 
         startService(new Intent(this, XEMChatService.class));
     }
