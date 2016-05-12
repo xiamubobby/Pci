@@ -19,6 +19,7 @@ public class MedicineRemindRealm extends RealmObject {
     private long expireTimeInMill;
     private String remindersDesc;
     private RealmList<MedicationUsagesRealm> medicationUsages;
+    private boolean shouldAlarm;
 
     public String getId() {
         return id;
@@ -36,11 +37,11 @@ public class MedicineRemindRealm extends RealmObject {
         this.startDate = startDate;
     }
 
-    public Long getEndDate() {
+    public long getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Long endDate) {
+    public void setEndDate(long endDate) {
         this.endDate = endDate;
     }
 
@@ -82,5 +83,13 @@ public class MedicineRemindRealm extends RealmObject {
 
     public void setExpireTimeInMill(long expireTimeInMill) {
         this.expireTimeInMill = expireTimeInMill;
+    }
+
+    public boolean isShouldAlarm() {
+        return shouldAlarm;
+    }
+
+    public void setShouldAlarm(boolean shouldAlarm) {
+        this.shouldAlarm = shouldAlarm;
     }
 }

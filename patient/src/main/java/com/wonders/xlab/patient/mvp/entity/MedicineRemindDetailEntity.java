@@ -44,11 +44,11 @@ public class MedicineRemindDetailEntity extends BaseEntity {
 
         private List<MedicationUsagesEntity> medicationUsages;
 
-        public Long getEndDate() {
+        public long getEndDate() {
             return endDate;
         }
 
-        public void setEndDate(Long endDate) {
+        public void setEndDate(long endDate) {
             this.endDate = endDate;
         }
 

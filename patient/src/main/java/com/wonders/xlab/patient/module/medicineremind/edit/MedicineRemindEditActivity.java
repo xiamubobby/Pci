@@ -241,14 +241,14 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
     }
 
     @Override
-    public void showMedicineRemindInfo(int hour, int minutes, long startDate, Long endDate, String message, List<MedicineRealmBean> beanList) {
+    public void showMedicineRemindInfo(int hour, int minutes, long startDate, long endDate, String message, List<MedicineRealmBean> beanList) {
 
         mTimePicker.setCurrentHour(hour);
         mTimePicker.setCurrentMinute(minutes);
 
         mStartCalendar.setTimeInMillis(startDate);
         mTvStartDate.setText(DateUtil.format(mStartCalendar.getTimeInMillis(), "yyyy-MM-dd"));
-        if (null != endDate) {
+        if (0 != endDate) {
             mEndCalendar.setTimeInMillis(endDate);
             mTvEndDate.setText(DateUtil.format(mEndCalendar.getTimeInMillis(), "yyyy-MM-dd"));
         }

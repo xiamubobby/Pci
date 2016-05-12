@@ -67,12 +67,6 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
         mPatientId = AIManager.getInstance().getPatientId();
 
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 10));
-        mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                mMedicineRemindPresenter.getMedicineReminds(false);
-            }
-        });
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

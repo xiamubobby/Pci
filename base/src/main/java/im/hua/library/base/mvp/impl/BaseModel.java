@@ -128,7 +128,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
 
                         T body = result.body();
                         if (null == body) {
-                            onFailed(-1, "获取数据出错，请重试！");
+                            onFailed(-1, "请求失败，请重试！");
                         } else if (0 > body.getRet_code()) {
                             onFailed(body.getRet_code(), body.getMessage());
                         } else {
@@ -235,7 +235,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
 
                         Entity body = result.body();
                         if (null == body) {
-                            callback.onFailed(-1, "获取数据出错，请重试！");
+                            callback.onFailed(-1, "请求失败，请重试！");
                         } else if (0 > body.getRet_code()) {
                             callback.onFailed(body.getRet_code(), body.getMessage());
                         } else {

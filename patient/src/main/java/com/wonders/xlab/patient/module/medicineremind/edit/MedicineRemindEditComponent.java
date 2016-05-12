@@ -2,7 +2,7 @@ package com.wonders.xlab.patient.module.medicineremind.edit;
 
 import com.wonders.xlab.patient.di.ApplicationComponent;
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
-import com.wonders.xlab.patient.mvp.presenter.MedicineRemindEditPresenter;
+import com.wonders.xlab.patient.mvp.presenter.MedicineRemindEditCachePresenter;
 
 import dagger.Component;
 
@@ -12,5 +12,5 @@ import dagger.Component;
 @ActivityScoped
 @Component(dependencies = ApplicationComponent.class,modules = MedicineRemindEditModule.class)
 public interface MedicineRemindEditComponent {
-    MedicineRemindEditPresenter getMedicineRemindEditPresenter();
+    MedicineRemindEditCachePresenter getMedicineRemindEditPresenter();
 }

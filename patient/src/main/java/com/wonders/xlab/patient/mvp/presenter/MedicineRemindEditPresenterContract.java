@@ -13,7 +13,7 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
  */
 public interface MedicineRemindEditPresenterContract {
     interface ViewListener extends BasePresenterListener {
-        void showMedicineRemindInfo(int hour, int minutes, long startDate, Long endDate, String message, List<MedicineRealmBean> beanList);
+        void showMedicineRemindInfo(int hour, int minutes, long startDate, long endDate, String message, List<MedicineRealmBean> beanList);
 
         void saveSuccess(String message);
     }
