@@ -30,6 +30,7 @@
             android:background="@drawable/shape_rectangle_primary_solid_corner"
             android:gravity="center_vertical"
             android:paddingLeft="6dp"
+            android:textColor="@color/white_pressed"
             android:paddingRight="6dp"
             android:text="普通门诊" />
 
