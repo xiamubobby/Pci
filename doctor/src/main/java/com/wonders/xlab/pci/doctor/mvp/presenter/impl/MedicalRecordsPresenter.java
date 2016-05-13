@@ -38,7 +38,7 @@ public class MedicalRecordsPresenter extends BasePagePresenter implements IMedic
             mListener.showReachTheLastPageNotice("没有更多数据了");
             return;
         }
-        mMedicalRecordsModel.getMedicalRecordsList(patientId,getNextPageIndex());
+        mMedicalRecordsModel.getMedicalRecordsList(patientId, getNextPageIndex());
     }
 
     @Override
@@ -46,7 +46,7 @@ public class MedicalRecordsPresenter extends BasePagePresenter implements IMedic
         mListener.hideLoading();
         MedicalRecordsEntity.RetValuesEntity.DataEntity dataEntity = valuesEntity.getData();
 
-        updatePageInfo(dataEntity.getMore_params().getFlag(),dataEntity.isMore(),!dataEntity.isMore());
+        updatePageInfo(dataEntity.getMore_params().getFlag(), dataEntity.isMore(), !dataEntity.isMore());
 
         /*
         List<MedicalRecordsBean> medicalRecordsBeanList = new ArrayList<>();
@@ -74,10 +74,10 @@ public class MedicalRecordsPresenter extends BasePagePresenter implements IMedic
                     public MedicalRecordsBean call(MedicalRecordsEntity.RetValuesEntity.DataEntity.ContentEntity contentEntity) {
                         MedicalRecordsBean bean = new MedicalRecordsBean();
                         bean.setTime(contentEntity.getDate());
-                        bean.setTag(contentEntity.getOffice_type()+"");
-                        bean.setHospitalName(contentEntity.getHospital_name());
-                        bean.setDepartmentName(contentEntity.getOffice_name());
-                        bean.setMedicalResult(contentEntity.getDiagnose_result());
+                        bean.setTag(contentEntity.getOffice_type());
+                        bean.setHospitalName("就诊医院：" + contentEntity.getHospital_name());
+                        bean.setDepartmentName("就诊科室：" + contentEntity.getOffice_name());
+                        bean.setMedicalResult("就诊结果：" + contentEntity.getDiagnose_result());
                         return bean;
                     }
                 })
@@ -108,11 +108,12 @@ public class MedicalRecordsPresenter extends BasePagePresenter implements IMedic
 
     @Override
     public void onReceiveFailed(int code, String message) {
-        showError(mListener,code,message);
+        showError(mListener, code, message);
     }
 
     public interface MedicalRecordsPresenterListener extends BasePagePresenterListener {
         void showMedicalRecordsList(List<MedicalRecordsBean> medicalRecordsBeanList);
+
         void appendMedicalRecordsList(List<MedicalRecordsBean> medicalRecordsBeanList);
     }
 }
