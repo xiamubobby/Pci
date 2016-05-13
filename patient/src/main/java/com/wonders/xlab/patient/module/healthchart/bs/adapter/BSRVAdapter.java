@@ -74,39 +74,39 @@ public class BSRVAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycl
         BSBean bean = getBean(position);
         viewHolder.mBinding.setBs(bean);
 
-        if (bean.getBeforeSleepBS() == 0) {
+        if (bean.getBeforeDawnStandard() == 0) {
             viewHolder.beforeSleepBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
-        } else if (bean.getBeforeSleepBS() == 2) {
+        } else if (bean.getBeforeDawnStandard() == 2) {
             viewHolder.beforeSleepBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
         }
-        if (bean.getBreakfastAfterBS() == 0) {
+        if (bean.getBreakfastAfterStandard() == 0) {
             viewHolder.breakfastAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
-        } else if (bean.getBreakfastAfterBS() == 2) {
+        } else if (bean.getBreakfastAfterStandard() == 2) {
             viewHolder.breakfastAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
         }
-        if (bean.getBreakfastBeforeBS() == 0) {
+        if (bean.getBreakfastBeforeStandard() == 0) {
             viewHolder.breakfastBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
-        } else if (bean.getBreakfastBeforeBS() == 2) {
+        } else if (bean.getBreakfastBeforeStandard() == 2) {
             viewHolder.breakfastBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
         }
-        if (bean.getDinnerAfterBS() == 0) {
+        if (bean.getDinnerAfterStandard() == 0) {
             viewHolder.dinnerAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
-        } else if (bean.getDinnerAfterBS() == 2) {
+        } else if (bean.getDinnerAfterStandard() == 2) {
             viewHolder.dinnerAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
         }
-        if (bean.getDinnerBeforeBS() == 0) {
+        if (bean.getDinnerBeforeStandard() == 0) {
             viewHolder.dinnerBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
-        } else if (bean.getDinnerBeforeBS() == 2) {
+        } else if (bean.getDinnerBeforeStandard() == 2) {
             viewHolder.dinnerBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
         }
-        if (bean.getLunchAfterBS() == 0) {
+        if (bean.getLunchAfterStandard() == 0) {
             viewHolder.lunchAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
-        } else if (bean.getDinnerBeforeBS() == 2) {
+        } else if (bean.getLunchAfterStandard() == 2) {
             viewHolder.lunchAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
         }
-        if (bean.getLunchBeforeBS() == 0) {
+        if (bean.getLunchBeforeStandard() == 0) {
             viewHolder.lunchBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
-        } else if (bean.getLunchBeforeBS() == 2) {
+        } else if (bean.getLunchBeforeStandard() == 2) {
             viewHolder.lunchBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
         }
 
@@ -157,7 +157,7 @@ public class BSRVAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycl
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             mBinding = BsHrItemBinding.bind(itemView);
             ButterKnife.bind(this, itemView);
         }

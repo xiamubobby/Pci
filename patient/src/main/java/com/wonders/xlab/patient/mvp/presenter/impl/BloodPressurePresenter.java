@@ -77,9 +77,9 @@ public class BloodPressurePresenter extends BasePagePresenter implements IBloodP
             bean.setSystolic(String.valueOf(contentEntity.getSystolicPressure()));
             bean.setHeartRate(String.valueOf(contentEntity.getHeartRate()));
             bean.setRecordTimeInMill(contentEntity.getRecordTime());
-            bean.setHeartStandard(contentEntity.getHeartStandand());
-            bean.setDiastolicStandard(contentEntity.getDiastolicStandand());
-            bean.setSystolicStandard(contentEntity.getSystolicStandand());
+            bean.setHeartStandard(contentEntity.getHeartStandard());
+            bean.setDiastolicStandard(contentEntity.getDiastolicStandard());
+            bean.setSystolicStandard(contentEntity.getSystolicStandard());
             bpListBeanList.add(bean);
         }
 
