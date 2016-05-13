@@ -83,9 +83,9 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
             viewHolder.diastolic.setTextColor(resources.getColor(R.color.appYellow));
         }
         if (bean.getHeartStandard() == 0) {
-            viewHolder.diastolic.setTextColor(resources.getColor(R.color.colorAccent));
+            viewHolder.heartRate.setTextColor(resources.getColor(R.color.colorAccent));
         } else if (bean.getHeartStandard() == 2) {
-            viewHolder.diastolic.setTextColor(resources.getColor(R.color.appYellow));
+            viewHolder.heartRate.setTextColor(resources.getColor(R.color.appYellow));
         }
         if (bean.getSystolicStandard() == 0) {
             viewHolder.systolic.setTextColor(resources.getColor(R.color.colorAccent));
@@ -134,6 +134,7 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
             super(itemView);
             ButterKnife.bind(this,itemView);
             mBinding = BpHrItemBinding.bind(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

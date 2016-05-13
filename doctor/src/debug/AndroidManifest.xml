@@ -34,7 +34,7 @@
         <meta-data
             android:name="EASEMOB_APPKEY"
             tools:replace="android:value"
-            android:value="xlab#pci"/>
+            android:value="xlab#pcitest"/>
         <!-- 声明sdk所需的service SDK核心功能 -->
         <service android:name="com.easemob.chat.EMChatService"/>
 

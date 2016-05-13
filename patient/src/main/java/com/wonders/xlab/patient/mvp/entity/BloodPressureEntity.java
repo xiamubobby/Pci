@@ -199,9 +199,9 @@ public class BloodPressureEntity extends BaseEntity {
                 private int heartRate;
                 private int systolicPressure;
                 private int diastolicPressure;
-                private int heartStandand;
-                private int systolicStandand;
-                private int diastolicStandand;
+                private int heartStandard;
+                private int systolicStandard;
+                private int diastolicStandard;
                 private long recordTime;
 
                 public void setId(int id) {
@@ -224,28 +224,28 @@ public class BloodPressureEntity extends BaseEntity {
                     this.recordTime = recordTime;
                 }
 
-                public int getHeartStandand() {
-                    return heartStandand;
+                public int getHeartStandard() {
+                    return heartStandard;
                 }
 
-                public void setHeartStandand(int heartStandand) {
-                    this.heartStandand = heartStandand;
+                public void setHeartStandard(int heartStandard) {
+                    this.heartStandard = heartStandard;
                 }
 
-                public int getSystolicStandand() {
-                    return systolicStandand;
+                public int getSystolicStandard() {
+                    return systolicStandard;
                 }
 
-                public void setSystolicStandand(int systolicStandand) {
-                    this.systolicStandand = systolicStandand;
+                public void setSystolicStandard(int systolicStandard) {
+                    this.systolicStandard = systolicStandard;
                 }
 
-                public int getDiastolicStandand() {
-                    return diastolicStandand;
+                public int getDiastolicStandard() {
+                    return diastolicStandard;
                 }
 
-                public void setDiastolicStandand(int diastolicStandand) {
-                    this.diastolicStandand = diastolicStandand;
+                public void setDiastolicStandard(int diastolicStandard) {
+                    this.diastolicStandard = diastolicStandard;
                 }
 
                 public int getId() {
