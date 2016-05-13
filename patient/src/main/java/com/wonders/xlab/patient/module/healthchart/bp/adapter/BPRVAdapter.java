@@ -133,6 +133,7 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
         public ItemViewHolder(View itemView) {
             super(itemView);
             mBinding = BpHrItemBinding.bind(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 

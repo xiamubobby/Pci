@@ -158,6 +158,7 @@ public class BSRVAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycl
         public ItemViewHolder(View itemView) {
             super(itemView);
             mBinding = BsHrItemBinding.bind(itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 
