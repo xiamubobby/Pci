@@ -14,7 +14,7 @@ import android.support.v4.app.TaskStackBuilder;
  * Created by hua on 15/12/24.
  */
 public class NotifyUtil {
-    public void showNotification(Context context, Class targetClass, Bundle data, int id, String title, String message, @DrawableRes int smallIconResId, boolean autoCancel, boolean vibrate, boolean hasParent, int color) {
+    public static void showNotification(Context context, Class targetClass, Bundle data, int id, String title, String message, @DrawableRes int smallIconResId, boolean autoCancel, boolean vibrate, boolean hasParent, int color) {
         Notification notification = generateNotification(context, targetClass, data, title, message, smallIconResId, autoCancel, vibrate, hasParent, color);
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(id, notification);
@@ -33,7 +33,7 @@ public class NotifyUtil {
      * @param hasParent
      * @param color        @return
      */
-    public Notification generateNotification(Context context, Class targetClass, Bundle data, String title, String message, @DrawableRes int smallIconResId, boolean autoCancel, boolean vibrate, boolean hasParent, int color) {
+    public static Notification generateNotification(Context context, Class targetClass, Bundle data, String title, String message, @DrawableRes int smallIconResId, boolean autoCancel, boolean vibrate, boolean hasParent, int color) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(smallIconResId)
                 .setContentTitle(title)
@@ -72,12 +72,12 @@ public class NotifyUtil {
         return notification;
     }
 
-    public void cancelAll(Context context) {
+    public static void cancelAll(Context context) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
     }
 
-    public void cancel(Context context,int notifyId) {
+    public static void cancel(Context context,int notifyId) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(notifyId);
     }

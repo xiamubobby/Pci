@@ -20,14 +20,9 @@ public class InitialService extends Service {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-        startService(new Intent(this, XEMChatService.class));
-    }
-
-    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         mAlarmUtil.scheduleMedicineRemindAlarm(this);
+        startService(new Intent(this, XEMChatService.class));
         return super.onStartCommand(intent, flags, startId);
     }
 

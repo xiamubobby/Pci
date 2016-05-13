@@ -75,7 +75,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         switch (type) {
             case -1:
 
-                new NotifyUtil().showNotification(context, PatientInfoContainerActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+                NotifyUtil.showNotification(context, PatientInfoContainerActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
                 break;
             case 2:
                 OttoManager.post(new ForceExitOtto());
@@ -113,7 +113,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                     notifyId = (int) Long.parseLong(imGroupId);
                 }
 
-                new NotifyUtil().showNotification(context, PatientInfoContainerActivity.class, data, notifyId, groupName, fromWhoName + "：" + txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
+                NotifyUtil.showNotification(context, PatientInfoContainerActivity.class, data, notifyId, groupName, fromWhoName + "：" + txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
 
                 break;
             case 4:
@@ -161,7 +161,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 if (TextUtils.isEmpty(gOwnerId) || !TextUtils.isDigitsOnly(gOwnerId)) {
                     gOwnerId = "0";
                 }
-                new NotifyUtil().showNotification(context, NotificationActivity.class, null, (int) Long.parseLong(gOwnerId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+                NotifyUtil.showNotification(context, NotificationActivity.class, null, (int) Long.parseLong(gOwnerId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
                 break;
             case 5:
                 //血压
@@ -183,7 +183,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
 
 
-                new NotifyUtil().showNotification(context, PatientInfoContainerActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+                NotifyUtil.showNotification(context, PatientInfoContainerActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
                 break;
             case 6:
                 //血糖
@@ -204,7 +204,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_NAME, patientName);
                 data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
 
-                new NotifyUtil().showNotification(context, PatientInfoContainerActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+                NotifyUtil.showNotification(context, PatientInfoContainerActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
 
                 break;
             case 7:
@@ -226,7 +226,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_NAME, patientName);
                 data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
 
-                new NotifyUtil().showNotification(context, PatientInfoContainerActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+                NotifyUtil.showNotification(context, PatientInfoContainerActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
 
                 break;
             case 8:
@@ -248,7 +248,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_NAME, patientName);
                 data.putString(PatientInfoContainerActivity.EXTRA_PATIENT_PHONE_NUMBER, patientTel);
 
-                new NotifyUtil().showNotification(context, PatientInfoContainerActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+                NotifyUtil.showNotification(context, PatientInfoContainerActivity.class, data, (int) Long.parseLong(imGroupId), groupName, bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
 
                 break;
             case 99:
@@ -261,7 +261,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 data = new Bundle();
                 data.putInt(NotificationActivity.EXTRA_TAB_POSITION,1);
 
-                new NotifyUtil().showNotification(context, NotificationActivity.class, data, (int) message.getMsgTime(), context.getResources().getString(R.string.app_name), bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
+                NotifyUtil.showNotification(context, NotificationActivity.class, data, (int) message.getMsgTime(), context.getResources().getString(R.string.app_name), bodyMessage, R.drawable.ic_notification, true, true, true, notifyColor);
                 break;
         }
     }

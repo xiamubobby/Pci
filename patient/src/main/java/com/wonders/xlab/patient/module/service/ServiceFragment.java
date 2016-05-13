@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.umeng.analytics.MobclickAgent;
-import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
@@ -81,7 +80,6 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
                 startActivity(new Intent(getActivity(), ThirdServiceActivity.class));
             }
         });
-        recyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 4));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override

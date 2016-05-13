@@ -23,6 +23,7 @@ public class Constant {
 //    public static String BASE_URL_DEBUG = "http://172.16.77.221:8080/";
     public static String BASE_URL_DEBUG = "http://172.16.74.6:8080/pci-user/";
 //    public static String BASE_URL_DEBUG = "http://xlab-tech.com:45675/pci-user/";
+//    public static String BASE_URL_DEBUG = "http://xlab-tech.com:45675/pci-user/";
 
     /**
      * 外网地址

@@ -126,6 +126,7 @@ public class XEMChatService extends Service {
         EMChatManager.getInstance().login(tel, new MD5Util().encrypt("pci_user" + tel).toLowerCase(Locale.CHINA), new EMCallBack() {//回调
             @Override
             public void onSuccess() {
+                showToast("患者登录成功");
                 if (BuildConfig.DEBUG) Log.d("XEMChatService", "患者登录成功");
                 EMChat.getInstance().setAppInited();
                 //注册一个监听连接状态的listener
@@ -139,9 +140,22 @@ public class XEMChatService extends Service {
 
             @Override
             public void onError(int code, String message) {
-                if (BuildConfig.DEBUG) Log.d("XEMChatService", "患者登录是失败");
+                showToast("患者登录失败:" + message);
+                if (BuildConfig.DEBUG) Log.d("XEMChatService", "患者登录失败:" + message);
+                stopSelf();
             }
         });
+    }
+
+    private void showToast(String message) {
+        Observable.just(message)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        Toast.makeText(XEMChatService.this, s, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override

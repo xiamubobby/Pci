@@ -70,9 +70,9 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
          */
         int notifyColor = 0xff30bdf2;
         if (type == 0) {
-            new NotifyUtil().showNotification(context, MainActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), title, R.drawable.ic_notification, true, true, true, notifyColor);
+            NotifyUtil.showNotification(context, MainActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), title, R.drawable.ic_notification, true, true, true, notifyColor);
         } else if (type == 1) {
-            new NotifyUtil().showNotification(context, MainActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), title, R.drawable.ic_notification, true, true, true, notifyColor);
+            NotifyUtil.showNotification(context, MainActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), title, R.drawable.ic_notification, true, true, true, notifyColor);
         } else if (type == 2) {
             OttoManager.post(new ForceExitOtto());
         } else if (3 == type) {
@@ -106,7 +106,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
                 notifyId = (int) Long.parseLong(imGroupId);
             }
 
-            new NotifyUtil().showNotification(context, ChatRoomActivity.class, data, notifyId, groupName, fromWhoName + "：" + txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
+            NotifyUtil.showNotification(context, ChatRoomActivity.class, data, notifyId, groupName, fromWhoName + "：" + txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
 
         } else if (type == -1) {
             try {
@@ -114,7 +114,7 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            new NotifyUtil().showNotification(context, ChatRoomActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), title, R.drawable.ic_notification, true, true, true, notifyColor);
+            NotifyUtil.showNotification(context, ChatRoomActivity.class, null, notifyId, context.getResources().getString(R.string.app_name), title, R.drawable.ic_notification, true, true, true, notifyColor);
         }
 
     }
