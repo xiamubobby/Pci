@@ -4,6 +4,8 @@ import android.text.TextUtils;
 
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.Constant;
+import com.wonders.xlab.patient.data.realm.MedicationUsagesRealm;
+import com.wonders.xlab.patient.data.realm.MedicineRemindRealm;
 import com.wonders.xlab.patient.data.realm.PatientInfoRealm;
 import com.wonders.xlab.patient.data.realm.UnReadMessageRealm;
 
@@ -45,6 +47,8 @@ public class AIManager {
             XApplication.realm.beginTransaction();
             XApplication.realm.clear(PatientInfoRealm.class);
             XApplication.realm.clear(UnReadMessageRealm.class);
+            XApplication.realm.clear(MedicineRemindRealm.class);
+            XApplication.realm.clear(MedicationUsagesRealm.class);
             XApplication.realm.commitTransaction();
         }
 

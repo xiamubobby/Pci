@@ -36,7 +36,6 @@ public class AlarmService extends Service {
     private MedicineRemindDialogRVAdapter adapter;
     private RecyclerView recyclerView;
 
-
     public AlarmService() {
     }
 
