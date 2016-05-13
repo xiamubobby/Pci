@@ -19,8 +19,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/item_interval_small"
             android:paddingRight="@dimen/item_interval_small"
-            android:singleLine="true"
-            android:text="检验时间：2016-04-22" />
+            android:singleLine="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,7 +27,6 @@
             android:layout_marginRight="@dimen/item_interval_small"
             android:background="@drawable/shape_rectangle_primary_solid_corner"
             android:padding="@dimen/item_interval_very_small"
-            android:text="普通门诊"
             android:textColor="@android:color/white" />
 
     </LinearLayout>
@@ -42,8 +40,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/item_interval_small"
         android:paddingRight="@dimen/item_interval_small"
-        android:singleLine="true"
-        android:text="医院名称：上海市闵行区江川社区卫生服务中心" />
+        android:singleLine="true" />
 
     <include layout="@layout/divider_vertical" />
 
@@ -54,8 +51,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/item_interval_small"
         android:paddingRight="@dimen/item_interval_small"
-        android:singleLine="true"
-        android:text="科室名称：内分泌代谢科" />
+        android:singleLine="true" />
 
 
     <LinearLayout
