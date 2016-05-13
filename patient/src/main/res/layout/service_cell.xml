@@ -1,84 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
+
     <data>
+
         <variable
             name="data"
-            type="com.wonders.xlab.patient.module.service.ServiceListCellDataUnit" />
+            type="com.wonders.xlab.patient.module.service.ServiceListCellDataUnit"/>
     </data>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <include layout="@layout/divider_vertical" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:weightSum="1">
-        <RelativeLayout
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:background="@color/divider"
+                  android:divider="@drawable/shape_line_divider_vertical"
+                  android:orientation="vertical"
+                  android:showDividers="middle">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="3dp">
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/item_interval_small">
+
             <ImageView
                 android:id="@+id/somepic"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_centerVertical="true"
-                android:src="@drawable/ic_service_cell_title"/>
+                android:background="@color/background_gray"
+                android:scaleType="centerInside"/>
+
             <TextView
                 android:id="@+id/tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/somepic"
-                android:layout_marginLeft="20dp"
-                android:textColor="@color/colorPrimary"
-                android:text="@{data.provider}"/>
-        </RelativeLayout>
-        <include layout="@layout/divider_vertical" />
+                android:layout_marginLeft="@dimen/item_interval_small"
+                android:text="@{data.provider}"
+                android:textColor="@color/text_color_primary_gray"
+                android:textSize="@dimen/text_size_middle"/>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/item_interval_middle"
+            android:background="@android:color/white"
             android:orientation="horizontal"
-            android:weightSum="1"
-            android:padding="6dp"
-            android:paddingLeft="10dp">
+            android:padding="@dimen/item_interval_small">
+
             <ImageView
                 android:id="@+id/portrait"
                 android:layout_width="77dp"
                 android:layout_height="77dp"
+                android:background="@color/background_gray"
                 android:gravity="center_vertical"
-                android:src="@drawable/ic_default_avatar_patient"/>
+                android:scaleType="centerInside"/>
+
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_marginLeft="@dimen/item_interval_middle"
                 android:gravity="center_vertical"
-                android:paddingLeft="20dp">
+                android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="@{data.title}"
                     android:textColor="@color/text_color_primary_black"
-                    android:textSize="20sp"
-                    android:text="@{data.title}"/>
+                    android:textSize="@dimen/text_size_middle"/>
+
                 <TextView
                     android:id="@+id/content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:lines="2"
-                    android:textColor="@color/text_color_primary_gray"
-                    android:text="@{data.brief}"/>
+                    android:layout_marginTop="@dimen/item_interval_very_small"
+                    android:maxLines="2"
+                    android:text="@{data.brief}"
+                    android:textColor="@color/text_color_primary_gray"/>
+
                 <TextView
                     android:id="@+id/price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/item_interval_middle"
+                    android:text='@{"￥"+data.price.toString()}'
                     android:textColor="#ff0000"
-                    android:text='@{"￥"+data.price.toString()}'/>
+                    android:textSize="@dimen/text_size_small"/>
             </LinearLayout>
         </LinearLayout>
-        <include layout="@layout/divider_vertical" />
+
     </LinearLayout>
-</LinearLayout>
-    </layout>
+</layout>

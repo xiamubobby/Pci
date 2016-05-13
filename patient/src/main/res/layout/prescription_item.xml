@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:showDividers="middle"
-    android:divider="@drawable/shape_line_divider"
+    android:divider="@drawable/shape_line_divider_vertical"
     android:layout_margin="@dimen/item_interval_middle"
     android:background="@drawable/shape_rectangle_outline_gray_solid_white"
     android:orientation="vertical">
@@ -42,7 +42,7 @@
         android:id="@+id/ll_prescription_medicine_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@drawable/shape_line_divider"
+        android:divider="@drawable/shape_line_divider_vertical"
         android:orientation="vertical"
         android:paddingLeft="@dimen/item_interval_small"
         android:paddingRight="@dimen/item_interval_small"

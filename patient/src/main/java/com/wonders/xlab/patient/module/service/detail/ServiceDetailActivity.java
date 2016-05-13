@@ -84,7 +84,7 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
 
     @Override
     public String getToolbarTitle() {
-        return "服务详情／购买";
+        return "服务详情";
     }
 
     @Override
@@ -92,13 +92,6 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.service_detail_activity);
         ButterKnife.bind(this);
-        mToolbar.setTitle("服务详情／购买");
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         mServiceDetailPresenter = DaggerServiceDetailComponent.builder()
                 .applicationComponent(((XApplication) getApplication()).getComponent())
                 .serviceDetailModule(new ServiceDetailModule(this))
