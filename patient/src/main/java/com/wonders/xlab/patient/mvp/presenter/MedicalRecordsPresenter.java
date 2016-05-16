@@ -34,8 +34,9 @@ public class MedicalRecordsPresenter extends BasePagePresenter implements Medica
     @Override
     public void getMedicalRecordsList(String patientId, boolean isRefresh) {
         if (isRefresh) {
-            mMedicalRecordsPresenter.showLoading("");
-            resetPageInfo();
+            mCurrentIndex = -1;
+            mIsFirst = true;
+            mIsLast = false;
         }
         if (mIsLast) {
             mMedicalRecordsPresenter.showReachTheLastPageNotice("没有更多数据了");
@@ -47,12 +48,13 @@ public class MedicalRecordsPresenter extends BasePagePresenter implements Medica
             public void onReceiveFailed(int code, String message) {
                 showError(mMedicalRecordsPresenter, code, message);
             }
-
             @Override
             public void onReceiveMedicalRecordsSuccess(MedicalRecordsEntity valuesEntity) {
                 mMedicalRecordsPresenter.hideLoading();
                 MedicalRecordsEntity.RetValuesEntity.DataEntity dataEntity = valuesEntity.getRet_values().getData();
+
                 updatePageInfo(dataEntity.getMore_params().getFlag(), dataEntity.isMore(), !dataEntity.isMore());
+
                 Observable.from(dataEntity.getContent())
                         .map(new Func1<MedicalRecordsEntity.RetValuesEntity.DataEntity.ContentEntity, MedicalRecordsBean>() {
                             @Override
