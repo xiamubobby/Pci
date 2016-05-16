@@ -1,5 +1,6 @@
 package com.wonders.xlab.patient.module;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -40,6 +41,7 @@ public class SplashActivity extends AppCompatActivity {
                 .subscribe(new Action1<Object>() {
                     @Override
                     public void call(Object o) {
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
                         finish();
                     }
                 });

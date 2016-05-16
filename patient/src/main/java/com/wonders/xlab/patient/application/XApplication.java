@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.easemob.chat.EMChat;
 import com.easemob.chat.EMChatManager;
+import com.github.moduth.blockcanary.BlockCanary;
+import com.squareup.leakcanary.LeakCanary;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
@@ -23,10 +25,9 @@ public class XApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
         // Do it on main process
-//        if (BuildConfig.DEBUG) {
-//            BlockCanary.install(this, new AppBlockCanaryContext()).start();
-//        }
+        BlockCanary.install(this, new AppBlockCanaryContext()).start();
 
         component = ApplicationComponent.Initializer.init(this);
 

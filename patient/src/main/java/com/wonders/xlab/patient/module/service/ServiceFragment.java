@@ -5,13 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
@@ -80,7 +78,6 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
                 startActivity(new Intent(getActivity(), ThirdServiceActivity.class));
             }
         });
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
@@ -93,28 +90,39 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
                 servicePresenter.getAllServices(true);
             }
         });
-        recyclerView.setRefreshing(true);
-        adapter = new ServiceRecyclerViewAdapter();
-        adapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Intent i = new Intent(getActivity(), ServiceDetailActivity.class);
-                i.putExtra(ServiceDetailActivity._key_SERVICE_ID_, adapter.getBean(position).getId());
-                startActivity(i);
-            }
-        });
-        recyclerView.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         servicePresenter.getAllServices(true);
     }
 
-
     @Override
     public void showAllServiceList(List<ServiceListCellDataUnit> list) {
+        initAdapter();
         adapter.setDatas(list);
+    }
+
+    private void initAdapter() {
+        if (null == adapter) {
+            adapter = new ServiceRecyclerViewAdapter();
+            adapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    Intent i = new Intent(getActivity(), ServiceDetailActivity.class);
+                    i.putExtra(ServiceDetailActivity._key_SERVICE_ID_, adapter.getBean(position).getId());
+                    startActivity(i);
+                }
+            });
+            recyclerView.setAdapter(adapter);
+        }
     }
 
     @Override
     public void appendAllServiceList(List<ServiceListCellDataUnit> list) {
+        initAdapter();
         adapter.appendDatas(list);
     }
 
@@ -171,13 +179,9 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
         recyclerView.hideRefreshOrLoadMore(true, true);
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_service));
-    }
-
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_service));
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        adapter = null;
     }
 }

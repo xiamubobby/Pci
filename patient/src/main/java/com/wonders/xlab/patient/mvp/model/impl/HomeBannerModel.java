@@ -12,7 +12,7 @@ import im.hua.library.base.mvp.listener.BaseModelListener;
 /**
  * Created by hua on 16/4/5.
  */
-public class HomeBannerModel extends PatientBaseModel<HomeBannerEntity> implements IHomeBannerModel{
+public class HomeBannerModel extends PatientBaseModel implements IHomeBannerModel {
     private HomeBannerModelListener mListener;
     private BannerAPI mBannerAPI;
 
@@ -22,22 +22,22 @@ public class HomeBannerModel extends PatientBaseModel<HomeBannerEntity> implemen
     }
 
     @Override
-    protected void onSuccess(HomeBannerEntity response) {
-        if (response.getRet_values() == null) {
-            mListener.onReceiveFailed(-1, "");
-        } else {
-            mListener.onReceiveHomeBannerSuccess(response.getRet_values());
-        }
-    }
-
-    @Override
-    protected void onFailed(int code, String message) {
-        mListener.onReceiveFailed(code, message);
-    }
-
-    @Override
     public void getHomeBanner() {
-        request(mBannerAPI.getHomeBannerList(),true);
+        request(mBannerAPI.getHomeBannerList(), new Callback<HomeBannerEntity>() {
+            @Override
+            public void onSuccess(HomeBannerEntity response) {
+                if (response.getRet_values() == null) {
+                    mListener.onReceiveFailed(-1, "");
+                } else {
+                    mListener.onReceiveHomeBannerSuccess(response.getRet_values());
+                }
+            }
+
+            @Override
+            public void onFailed(int code, String message) {
+                mListener.onReceiveFailed(code, message);
+            }
+        });
     }
 
     public interface HomeBannerModelListener extends BaseModelListener {

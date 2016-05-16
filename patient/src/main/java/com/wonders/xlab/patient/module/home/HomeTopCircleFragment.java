@@ -23,12 +23,10 @@ import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.dailyreport.DailyReportActivity;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportBean;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportBean;
-import com.wonders.xlab.patient.module.home.bean.HomeTopCircleBean;
 import com.wonders.xlab.patient.otto.BPSaveSuccessOtto;
 import com.wonders.xlab.patient.otto.BSSaveSuccessOtto;
 import com.wonders.xlab.patient.util.UmengEventId;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import butterknife.Bind;
@@ -52,26 +50,12 @@ public class HomeTopCircleFragment extends BaseFragment {
     @Bind(R.id.tv_home_top_circle_right)
     TextView mTvRight;
 
-    private ArrayList<HomeTopCircleBean> mValueList;
-
     public HomeTopCircleFragment() {
         // Required empty public constructor
     }
 
-    public static HomeTopCircleFragment newInstance(ArrayList<HomeTopCircleBean> valueList) {
-        HomeTopCircleFragment fragment = new HomeTopCircleFragment();
-        Bundle args = new Bundle();
-        args.putParcelableArrayList(ARG_VALUE_LIST, valueList);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mValueList = getArguments().getParcelableArrayList(ARG_VALUE_LIST);
-        }
+    public static HomeTopCircleFragment newInstance() {
+        return new HomeTopCircleFragment();
     }
 
     @Override

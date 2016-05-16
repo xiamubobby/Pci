@@ -47,7 +47,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
         // Required empty public constructor
     }
 
-    public static DoctorMyFragment newInstance() {
+    public static DoctorMyFragment getInstance() {
         return new DoctorMyFragment();
     }
 

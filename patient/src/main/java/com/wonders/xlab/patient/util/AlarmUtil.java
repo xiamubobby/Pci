@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.data.realm.MedicineRemindRealm;
@@ -39,6 +38,8 @@ public class AlarmUtil {
     }
 
     public void scheduleMedicineRemindAlarm(Context context) {
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
         calendar.setTimeInMillis(System.currentTimeMillis());
 
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -49,7 +50,6 @@ public class AlarmUtil {
             RealmResults<MedicineRemindRealm> realmResults = XApplication.realm.where(MedicineRemindRealm.class)
                     .greaterThan("expireTimeInMill", System.currentTimeMillis())
                     .greaterThan("remindersTimeInMill", nowTime)
-                    .equalTo("shouldAlarm", true)
                     .findAll()
                     .distinct("remindersTimeInMill");
 
@@ -60,12 +60,15 @@ public class AlarmUtil {
 
                 Intent intent = new Intent(context, AlarmService.class);
                 intent.putExtra(AlarmService.EXTRA_TIME, realm.getRemindersTimeInMill());
-                Log.d("AlarmUtil", realm.getId() + ":" + realm.getRemindersTime() + ":" + realm.getMedicationUsages().get(0).getMedicationName());
                 PendingIntent mAlarmSender = PendingIntent.getService(context,
                         Integer.parseInt(realm.getId()), intent, 0);
 
-                AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-                am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mAlarmSender);
+                if (realm.isShouldAlarm()) {
+                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mAlarmSender);
+                } else {
+                    am.cancel(mAlarmSender);
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();

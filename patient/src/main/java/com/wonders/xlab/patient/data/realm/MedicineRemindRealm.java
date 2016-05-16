@@ -11,6 +11,9 @@ public class MedicineRemindRealm extends RealmObject {
     private String id;
     private long startDate;
     private Long endDate;
+    /**
+     * 24小时制的时间字符串
+     */
     private String remindersTime;
 
     @Index

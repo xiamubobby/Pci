@@ -45,21 +45,30 @@ public class LoginActivity extends BaseActivity implements LoginPresenterContrac
         if (application.showSplash()) {
             startActivity(new Intent(this, SplashActivity.class));
             application.setHasShowed(true);
-
         }
         setContentView(R.layout.login_activity);
         OttoManager.register(this);
         ButterKnife.bind(this);
 
         mEtPassword.setOnEditorActionListener(this);
+    }
 
+    public void onResume() {
+        super.onResume();
         mLoginPresenter = DaggerLoginComponent.builder()
-                .applicationComponent(((XApplication)getApplication()).getComponent())
+                .applicationComponent(((XApplication) getApplication()).getComponent())
                 .loginModule(new LoginModule(this))
                 .build()
                 .getLoginPresenter();
 
         addPresenter(mLoginPresenter);
+
+        MobclickAgent.onResume(this);       //统计时长
+    }
+
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @OnClick(R.id.container)
@@ -138,15 +147,6 @@ public class LoginActivity extends BaseActivity implements LoginPresenterContrac
     public void loginSuccess() {
         startActivity(new Intent(this, MainActivity.class));
         finish();
-    }
-
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);       //统计时长
-    }
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
     }
 
     @Override

@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.wonders.xlab.patient.R;
@@ -34,7 +34,8 @@ public class AlarmService extends Service {
     private AlertDialog ad;
 
     private MedicineRemindDialogRVAdapter adapter;
-    private RecyclerView recyclerView;
+    private View container;
+
 
     public AlarmService() {
     }
@@ -48,7 +49,6 @@ public class AlarmService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         long remindTime = intent.getLongExtra(EXTRA_TIME, 0);
-        Log.d("AlarmService", "remindTime:" + remindTime);
         RealmResults<MedicineRemindRealm> remindRealmResults = XApplication.realm.where(MedicineRemindRealm.class)
                 .equalTo("remindersTimeInMill", remindTime)
                 .findAll();
@@ -83,8 +83,9 @@ public class AlarmService extends Service {
                 adapter = new MedicineRemindDialogRVAdapter();
             }
             adapter.setDatas(usagesRealmList);
-            if (recyclerView == null) {
-                recyclerView = (RecyclerView) LayoutInflater.from(this).inflate(R.layout.medicine_remind_dialog, null, false);
+            if (container == null) {
+                container = LayoutInflater.from(this).inflate(R.layout.medicine_remind_dialog, null, false);
+                RecyclerView recyclerView = (RecyclerView) container.findViewById(R.id.recycler_view);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
                 recyclerView.setAdapter(adapter);
             }
@@ -92,8 +93,8 @@ public class AlarmService extends Service {
             if (null == builder) {
                 builder = new AlertDialog.Builder(this, R.style.MyAlertDialogStyle);
                 builder.setIcon(R.mipmap.ic_launcher)
-                        .setView(recyclerView)
-                        .setPositiveButton("知道了", null);
+                        .setView(container)
+                        .setPositiveButton("吃了", null);
 
                 if (ad != null && ad.isShowing()) {
                     ad.dismiss();

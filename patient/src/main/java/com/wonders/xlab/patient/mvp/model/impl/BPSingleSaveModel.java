@@ -42,6 +42,7 @@ public class BPSingleSaveModel extends PatientBaseModel<BPSaveEntity> {
          * cache to realm
          */
         if (null != retValues) {
+
             XApplication.realm.beginTransaction();
             BPReportBean bean = XApplication.realm.createObject(BPReportBean.class);
             bean.setLowPressure(retValues.getDiastolicPressure());

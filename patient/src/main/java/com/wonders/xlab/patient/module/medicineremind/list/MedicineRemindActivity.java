@@ -19,6 +19,7 @@ import com.wonders.xlab.patient.module.medicineremind.edit.SaveRemindSuccessOtto
 import com.wonders.xlab.patient.module.medicineremind.list.adapter.MedicineRemindRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.list.bean.MedicineRemindBean;
 import com.wonders.xlab.patient.mvp.presenter.MedicineRemindPresenterContract;
+import com.wonders.xlab.patient.util.AlarmUtil;
 
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
 
     private MedicineRemindPresenterContract.Actions mMedicineRemindPresenter;
     private String mPatientId;
+
+    private AlarmUtil mAlarmUtil = AlarmUtil.newInstance();
 
     @Override
     public int getContentLayout() {
@@ -108,6 +111,8 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
                 public void onSwitchStateChange(int position) {
                     MedicineRemindBean bean = mMedicineRemindRVAdapter.getBean(position);
                     mMedicineRemindPresenter.changeRemindState(bean.id.get(), !bean.shouldAlarm.get());
+
+                    mAlarmUtil.scheduleMedicineRemindAlarm(MedicineRemindActivity.this);
                 }
             });
             mMedicineRemindRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {

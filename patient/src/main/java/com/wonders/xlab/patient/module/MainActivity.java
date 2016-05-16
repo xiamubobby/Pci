@@ -18,14 +18,15 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.auth.login.LoginActivity;
-import com.wonders.xlab.patient.module.doctors.DoctorFragment;
 import com.wonders.xlab.patient.module.home.HomeFragment;
 import com.wonders.xlab.patient.module.me.MeFragment;
+import com.wonders.xlab.patient.module.mydoctor.DoctorMyFragment;
 import com.wonders.xlab.patient.module.otto.MainBottomUnreadNotifyCountOtto;
 import com.wonders.xlab.patient.module.service.ServiceFragment;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.otto.MeNotifyCountOtto;
-import com.wonders.xlab.patient.service.InitialService;
+import com.wonders.xlab.patient.service.XEMChatService;
+import com.wonders.xlab.patient.util.AlarmUtil;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.util.ArrayList;
@@ -49,6 +50,8 @@ public class MainActivity extends BaseActivity {
 
     private FragmentVPAdapter mFragmentVPAdapter;
 
+    private AlarmUtil mAlarmUtil = AlarmUtil.newInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_NoActionBar);
@@ -65,21 +68,16 @@ public class MainActivity extends BaseActivity {
         if (showSplash) {
             startActivity(new Intent(this, SplashActivity.class));
             application.setHasShowed(true);
+            finish();
+            return;
         }
-
-        /**
-         * 友盟用户标识
-         */
-        MobclickAgent.onProfileSignIn(AIManager.getInstance().getPatientId());
 
         setContentView(R.layout.main_activity);
         ButterKnife.bind(MainActivity.this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
         mFragmentVPAdapter = new FragmentVPAdapter(getFragmentManager());
         mFragmentVPAdapter.addFragment(HomeFragment.getInstance());
-        mFragmentVPAdapter.addFragment(DoctorFragment.getInstance());
+        mFragmentVPAdapter.addFragment(DoctorMyFragment.getInstance());
         mFragmentVPAdapter.addFragment(ServiceFragment.getInstance());
         mFragmentVPAdapter.addFragment(MeFragment.getInstance());
         mViewPagerMain.setOffscreenPageLimit(3);
@@ -87,14 +85,13 @@ public class MainActivity extends BaseActivity {
 
         setupBottomTab();
 
-        UmengUpdateAgent.update(MainActivity.this);
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        startService(new Intent(MainActivity.this, InitialService.class));
+        mAlarmUtil.scheduleMedicineRemindAlarm(this);
+        this.startService(new Intent(this, XEMChatService.class));
     }
 
     private void setupBottomTab() {
@@ -183,7 +180,7 @@ public class MainActivity extends BaseActivity {
      */
     @Subscribe
     public void forceExit(ForceExitOtto bean) {
-        new NotifyUtil().cancelAll(this);
+        NotifyUtil.cancelAll(this);
         AIManager.getInstance().logout();
 
         startActivity(new Intent(this, MainActivity.class));
@@ -193,6 +190,7 @@ public class MainActivity extends BaseActivity {
 
     public void onResume() {
         super.onResume();
+        UmengUpdateAgent.update(MainActivity.this);
         MobclickAgent.onResume(this);       //统计时长
     }
 

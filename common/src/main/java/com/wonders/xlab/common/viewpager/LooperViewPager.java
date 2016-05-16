@@ -117,4 +117,12 @@ public class LooperViewPager extends ViewPager {
         }
     }
 
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (null != mHandler) {
+            mHandler.removeMessages(0);
+            mHandler = null;
+        }
+    }
 }

@@ -72,7 +72,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
             return;
         }
 
-        mSubscription = mObservable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
+        mSubscription = mObservable.subscribeOn(Schedulers.io())//一定要设置在新线程中进行网络请求
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Response<T>>() {
 
