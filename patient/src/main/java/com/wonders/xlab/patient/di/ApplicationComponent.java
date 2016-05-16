@@ -2,7 +2,6 @@ package com.wonders.xlab.patient.di;
 
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.util.AlarmUtil;
 
 import javax.inject.Singleton;
 
@@ -28,8 +27,6 @@ public interface ApplicationComponent {
     AIManager getAIManager();
 
     Realm getRealm();
-
-    AlarmUtil getAlarmUtil();
 
     final class Initializer {
         private Initializer() {

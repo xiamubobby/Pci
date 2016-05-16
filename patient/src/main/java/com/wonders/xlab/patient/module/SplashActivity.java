@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.XApplication;
 
 import java.util.concurrent.TimeUnit;
 
@@ -32,11 +33,12 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
         ButterKnife.bind(this);
+        ((XApplication) getApplication()).setHasShowed(true);
         setFullscreen(true);
         mContainerSplash.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         ButterKnife.bind(this);
         Observable.just(null)
-                .delaySubscription(2500, TimeUnit.MILLISECONDS)
+                .delaySubscription(1800, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Object>() {
                     @Override

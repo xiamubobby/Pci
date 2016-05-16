@@ -82,8 +82,7 @@ public class AllDoctorPresenter extends BasePagePresenter implements AllDoctorPr
 
             @Override
             public void onReceiveFailed(int code, String message) {
-                mDoctorAllListener.hideLoading();
-                mDoctorAllListener.showNetworkError(message);
+                showError(mDoctorAllListener,code,message);
             }
         });
     }

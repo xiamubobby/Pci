@@ -114,7 +114,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         canChat = intent.getBooleanExtra(EXTRA_CAN_CHAT, false);
 
         //如果有的话，移除通知栏对应的通知，以groupId为通知id
-        new NotifyUtil().cancel(this, (int) Long.parseLong(imGroupId));
+        NotifyUtil.cancel(this, (int) Long.parseLong(imGroupId));
         UnReadMessageUtil.readMessage(imGroupId);
 
         initServiceStatus(canChat);
@@ -244,7 +244,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
              */
             if (!mIsPaused) {
                 if (TextUtils.isDigitsOnly(otto.getImGroupId())) {
-                    new NotifyUtil().cancel(this, (int) Long.parseLong(otto.getImGroupId()));
+                    NotifyUtil.cancel(this, (int) Long.parseLong(otto.getImGroupId()));
                 }
                 UnReadMessageUtil.readMessage(imGroupId);
             }
@@ -342,7 +342,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     protected void onResume() {
         super.onResume();
         mIsPaused = false;
-        new NotifyUtil().cancel(this, (int) Long.parseLong(imGroupId));
+        NotifyUtil.cancel(this, (int) Long.parseLong(imGroupId));
         UnReadMessageUtil.readMessage(imGroupId);
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_chat_room));
         MobclickAgent.onResume(this);       //统计时长

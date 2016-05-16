@@ -38,7 +38,6 @@ import io.realm.RealmResults;
 import io.realm.Sort;
 
 public class HomeTopCircleFragment extends BaseFragment {
-    private static final String ARG_VALUE_LIST = "valueList";
     @Bind(R.id.tv_home_top_circle_left)
     TextView mTvLeft;
     @Bind(R.id.tv_home_top_circle_middle_status)

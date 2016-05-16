@@ -33,10 +33,14 @@ public class HomeTopPresenter extends BasePresenter implements IHomeTopPresenter
     @Override
     public void onReceiveHomeBannerSuccess(List<HomeBannerEntity.RetValuesEntity> bannerList) {
         mListener.hideLoading();
+        if (null == bannerList || bannerList.size() == 0) {
+            return;
+        }
         List<HomeBannerBean> beanList = new ArrayList<>();
         for (HomeBannerEntity.RetValuesEntity entity : bannerList) {
             beanList.add(new HomeBannerBean(entity.getTitle(), entity.getImageUrl(), entity.getLinkUrl()));
         }
+
         mListener.showHomeTopBanner(beanList);
     }
 

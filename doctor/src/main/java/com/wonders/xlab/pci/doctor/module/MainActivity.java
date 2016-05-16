@@ -149,7 +149,7 @@ public class MainActivity extends BaseActivity {
      */
     @Subscribe
     public void forceExit(ForceExitOtto bean) {
-        new NotifyUtil().cancelAll(this);
+        NotifyUtil.cancelAll(this);
 
         AIManager.getInstance().logout();
         startActivity(new Intent(this, MainActivity.class));

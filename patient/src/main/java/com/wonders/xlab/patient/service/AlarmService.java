@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
@@ -19,6 +21,7 @@ import com.wonders.xlab.patient.util.AlarmUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import im.hua.utils.DateUtil;
 import io.realm.RealmResults;
 import rx.Observable;
 import rx.Subscriber;
@@ -85,6 +88,10 @@ public class AlarmService extends Service {
             adapter.setDatas(usagesRealmList);
             if (container == null) {
                 container = LayoutInflater.from(this).inflate(R.layout.medicine_remind_dialog, null, false);
+                TextView textView = (TextView) container.findViewById(R.id.text_time);
+
+                textView.setText(String.format("%s %s", distinctAMOrPMFromTimeStr(medicineRemindRealm.getRemindersTime()), DateUtil.format(remindTime, "hh:mm")));
+
                 RecyclerView recyclerView = (RecyclerView) container.findViewById(R.id.recycler_view);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
                 recyclerView.setAdapter(adapter);
@@ -103,6 +110,7 @@ public class AlarmService extends Service {
                 ad = builder.create();
                 ad.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             }
+            ad.setCanceledOnTouchOutside(false);
             ad.setTitle(medicineRemindRealm.getRemindersDesc());
             ad.show();
             mAlarmUtil.scheduleMedicineRemindAlarm(this);
@@ -111,6 +119,15 @@ public class AlarmService extends Service {
         }
 
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    private String distinctAMOrPMFromTimeStr(String time) {
+        String remindHour = time.split(":")[0];
+        String amOrPm = "上午";
+        if (TextUtils.isDigitsOnly(remindHour) && Integer.parseInt(remindHour) >= 12) {
+            amOrPm = "下午";
+        }
+        return amOrPm;
     }
 
     @Override

@@ -16,9 +16,10 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.module.alldoctor.AllDoctorActivity;
 import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
-import com.wonders.xlab.patient.module.mydoctor.adapter.MyDoctorRVAdapter;
 import com.wonders.xlab.patient.module.mydoctor.adapter.MyDoctorItemBean;
+import com.wonders.xlab.patient.module.mydoctor.adapter.MyDoctorRVAdapter;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorMyPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.DoctorMyPresenter;
 import com.wonders.xlab.patient.otto.BuyPackageSuccessOtto;
@@ -55,6 +56,8 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         OttoManager.register(this);
+        mDoctorMyPresenter = new DoctorMyPresenter(this);
+        addPresenter(mDoctorMyPresenter);
     }
 
     @Override
@@ -63,9 +66,6 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.doctor_my_fragment, container, false);
         ButterKnife.bind(this, view);
-
-        mDoctorMyPresenter = new DoctorMyPresenter(this);
-        addPresenter(mDoctorMyPresenter);
         return view;
     }
 
@@ -85,7 +85,6 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
                 mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), false);
             }
         });
-        mRecyclerView.setRefreshing(true);
         mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
     }
 
@@ -138,7 +137,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
         mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
             @Override
             public void onClick() {
-                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
+                startActivity(new Intent(getActivity(), AllDoctorActivity.class));
             }
         });
         OttoManager.post(new DoctorTabChangeOtto(1));
@@ -170,6 +169,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
             @Override
             public void onClick() {
                 mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
+
             }
         });
     }

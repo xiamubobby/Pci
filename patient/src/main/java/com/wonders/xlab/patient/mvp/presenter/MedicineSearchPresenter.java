@@ -144,15 +144,6 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
                     public void onCompleted() {
 
                         mViewListener.hideLoading();
-                        Collections.sort(beanList, new Comparator<MedicineRealmBean>() {
-                            @Override
-                            public int compare(MedicineRealmBean lhs, MedicineRealmBean rhs) {
-                                //这里主要是用来对ListView里面的数据根据ABCDEFG...来排序
-                                String str1 = CharacterParser.getInstance().getSelling(lhs.getMedicineName()).substring(0, 1);
-                                String str2 = CharacterParser.getInstance().getSelling(rhs.getMedicineName()).substring(0, 1);
-                                return str1.compareTo(str2);
-                            }
-                        });
 
                         String[] sections = new String[hashSet.size()];
                         List<String> tmp = new ArrayList<>();

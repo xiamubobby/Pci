@@ -108,7 +108,7 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
         super.onViewCreated(view, savedInstanceState);
         OttoManager.register(this);
         //cancel notification
-        new NotifyUtil().cancel(getActivity(), (int) Long.parseLong(imGroupId));
+        NotifyUtil.cancel(getActivity(), (int) Long.parseLong(imGroupId));
 
         mRecyclerView.setRefreshEnable(false);
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
@@ -129,7 +129,7 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
         super.onResume();
         mIsPaused = false;
         if (TextUtils.isDigitsOnly(imGroupId)) {
-            new NotifyUtil().cancel(getActivity(), (int) Long.parseLong(imGroupId));
+            NotifyUtil.cancel(getActivity(), (int) Long.parseLong(imGroupId));
         }
         RealmUtil.readMessage(imGroupId);
     }
@@ -264,7 +264,7 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
              */
             if (!mIsPaused) {
                 if (TextUtils.isDigitsOnly(otto.getImGroupId())) {
-                    new NotifyUtil().cancel(getActivity(), (int) Long.parseLong(otto.getImGroupId()));
+                    NotifyUtil.cancel(getActivity(), (int) Long.parseLong(otto.getImGroupId()));
                 }
                 RealmUtil.readMessage(imGroupId);
             }

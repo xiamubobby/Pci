@@ -50,8 +50,14 @@ public class XEMChatService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        EMChat.getInstance().init(getApplication());
+        EMChatManager.getInstance().getChatOptions().setNotifyBySoundAndVibrate(false);//不发通知，而是走广播
+        EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);
+        //TODO 在做打包混淆时，要关闭debug模式，避免消耗不必要的资源
+        EMChat.getInstance().setDebugMode(false);
+
         OttoManager.register(this);
-        Notification notification = new NotifyUtil().generateNotification(this, MainActivity.class, null, getResources().getString(R.string.app_name), "正在运行", R.drawable.ic_notification, true, false, false, 0xff30bdf2);
+        Notification notification = NotifyUtil.generateNotification(this, MainActivity.class, null, getResources().getString(R.string.app_name), "正在运行", R.drawable.ic_notification, true, false, false, 0xff30bdf2);
         startForeground(Constant.NOTIFY_ID, notification);
 
         initAutoStart();
@@ -102,7 +108,7 @@ public class XEMChatService extends Service {
 
     @Subscribe
     public void forceExit(ForceExitOtto forceExitOtto) {
-        new NotifyUtil().cancelAll(this);
+        NotifyUtil.cancelAll(this);
         AIManager.getInstance().logout();
         stopSelf();
     }
@@ -111,6 +117,7 @@ public class XEMChatService extends Service {
      * login em chat
      */
     private void login() {
+
         String tel = AIManager.getInstance().getPatientTel();
         if (TextUtils.isEmpty(tel)) {
             stopSelf();

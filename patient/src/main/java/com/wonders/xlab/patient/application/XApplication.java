@@ -2,8 +2,6 @@ package com.wonders.xlab.patient.application;
 
 import android.app.Application;
 
-import com.easemob.chat.EMChat;
-import com.easemob.chat.EMChatManager;
 import com.github.moduth.blockcanary.BlockCanary;
 import com.squareup.leakcanary.LeakCanary;
 import com.umeng.analytics.AnalyticsConfig;
@@ -40,12 +38,6 @@ public class XApplication extends Application {
         RealmConfiguration config = new RealmConfiguration.Builder(this).deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(config);
         realm = Realm.getDefaultInstance();
-
-        EMChat.getInstance().init(this);
-        EMChatManager.getInstance().getChatOptions().setNotifyBySoundAndVibrate(false);//不发通知，而是走广播
-        EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);
-        //TODO 在做打包混淆时，要关闭debug模式，避免消耗不必要的资源
-        EMChat.getInstance().setDebugMode(false);
     }
 
     public ApplicationComponent getComponent() {

@@ -50,7 +50,7 @@ public class XEMChatService extends Service {
     public void onCreate() {
         super.onCreate();
         OttoManager.register(this);
-        Notification notification = new NotifyUtil().generateNotification(this, MainActivity.class, null, getResources().getString(R.string.app_name), "正在运行", R.drawable.ic_notification, false, false, false, 0xff30bdf2);
+        Notification notification = NotifyUtil.generateNotification(this, MainActivity.class, null, getResources().getString(R.string.app_name), "正在运行", R.drawable.ic_notification, false, false, false, 0xff30bdf2);
         startForeground(Constant.NOTIFY_ID, notification);
         initAutoStart();
         login();
@@ -97,7 +97,7 @@ public class XEMChatService extends Service {
     @Subscribe
     public void forceExit(ForceExitOtto bean) {
         mIsNormalStop = true;
-        new NotifyUtil().cancelAll(this);
+        NotifyUtil.cancelAll(this);
         AIManager.getInstance().logout();
         SPManager.get(this).clear();
         stopSelf();

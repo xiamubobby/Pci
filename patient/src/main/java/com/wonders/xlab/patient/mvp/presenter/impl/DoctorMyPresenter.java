@@ -28,6 +28,7 @@ public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPre
 
     @Override
     public void getMyDoctors(String patientId, boolean isRefresh) {
+        mDoctorMyListener.showLoading("");
         if (isRefresh) {
             resetPageInfo();
         }
@@ -88,14 +89,12 @@ public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPre
 
     @Override
     public void onReceiveFailed(int code, String message) {
-        mDoctorMyListener.hideLoading();
-        mDoctorMyListener.showNetworkError(message);
+        showError(mDoctorMyListener,code,message);
     }
 
     public interface DoctorMyPresenterListener extends BasePagePresenterListener {
         void showMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList);
 
         void appendMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList);
-
     }
 }

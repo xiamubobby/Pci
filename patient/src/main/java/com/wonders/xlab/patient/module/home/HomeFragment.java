@@ -1,9 +1,11 @@
 package com.wonders.xlab.patient.module.home;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +17,6 @@ import android.view.ViewGroup;
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.common.viewpager.LooperViewPager;
-import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.dailyreport.DailyReportActivity;
 import com.wonders.xlab.patient.module.healthchart.HealthChartActivity;
@@ -50,12 +51,11 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
 
     private HomeRVAdapter homeRVAdapter;
 
-    private FragmentVPAdapter topVPAdapter;
+    private HomeTopVPAdapter mHomeTopVPAdapter;
 
     private IHomeTopPresenter mIHomeTopPresenter;
 
     private ArrayList<HomeItemBean> beanArrayList;
-
 
     public HomeFragment() {
         // Required empty public constructor
@@ -63,15 +63,6 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
 
     public static HomeFragment getInstance() {
         return new HomeFragment();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.home_fragment, container, false);
-        ButterKnife.bind(this, view);
-        return view;
     }
 
     @Override
@@ -122,24 +113,31 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.home_fragment, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerViewHome.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
         mRecyclerViewHome.setItemAnimator(new DefaultItemAnimator());
 
-        if (null == topVPAdapter) {
-            topVPAdapter = new FragmentVPAdapter(getActivity().getFragmentManager());
-            topVPAdapter.addFragment(HomeTopCircleFragment.newInstance(), "最近健康数据");
-            mViewPagerHome.setAdapter(topVPAdapter);
-            mIndicatorHome.setViewPager(mViewPagerHome);
-            topVPAdapter.registerDataSetObserver(new DataSetObserver() {
-                @Override
-                public void onChanged() {
-                    super.onChanged();
-                    mIndicatorHome.notifyDataSetChanged();
-                }
-            });
-        }
+        mHomeTopVPAdapter = new HomeTopVPAdapter(getFragmentManager());
+        mHomeTopVPAdapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                super.onChanged();
+                mIndicatorHome.notifyDataSetChanged();
+            }
+        });
+        mViewPagerHome.setAdapter(mHomeTopVPAdapter);
+
+        mIndicatorHome.setViewPager(mViewPagerHome);
 
         setupBottomFunctionView();
         mIHomeTopPresenter.getHomeBanner();
@@ -182,25 +180,22 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
                     }
                 }
             });
-            homeRVAdapter.setDatas(beanArrayList);
-            mRecyclerViewHome.setAdapter(homeRVAdapter);
         }
+        homeRVAdapter.setDatas(beanArrayList);
+        mRecyclerViewHome.setAdapter(homeRVAdapter);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
-        topVPAdapter = null;
-        homeRVAdapter.clear();
-        homeRVAdapter = null;
+        mHomeTopVPAdapter = null;
+//        homeRVAdapter = null;
     }
 
     @Override
     public void showHomeTopBanner(List<HomeBannerBean> homeBannerBeanList) {
-        for (HomeBannerBean bean : homeBannerBeanList) {
-            topVPAdapter.addFragment(HomeTopImageFragment.newInstance(bean.getImageUrl(), bean.getLinkUrl(), bean.getTitle()), bean.getTitle());
-        }
+        mHomeTopVPAdapter.setHomeBannerBeanList(homeBannerBeanList);
     }
 
     @Override
@@ -231,5 +226,45 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
     @Override
     public void hideLoading() {
 
+    }
+
+    class HomeTopVPAdapter extends FragmentPagerAdapter {
+        private List<HomeBannerBean> mHomeBannerBeanList = new ArrayList<>();
+
+        public HomeTopVPAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment;
+            switch (position) {
+                case 0:
+                    fragment = HomeTopCircleFragment.newInstance();
+                    break;
+                default:
+                    HomeBannerBean bean = mHomeBannerBeanList.get(position - 1);
+                    fragment = HomeTopImageFragment.newInstance(bean.getImageUrl(), bean.getLinkUrl(), bean.getTitle());
+
+                    break;
+            }
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return mHomeBannerBeanList.size() + 1;
+        }
+
+        public void setHomeBannerBeanList(List<HomeBannerBean> homeBannerBeanList) {
+            mHomeBannerBeanList.clear();
+            mHomeBannerBeanList = homeBannerBeanList;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
     }
 }

@@ -57,17 +57,13 @@ public class MainActivity extends BaseActivity {
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         OttoManager.register(this);
-        AIManager aiManager = AIManager.getInstance();
-        if (!aiManager.hasLogin()) {
+        if (!AIManager.getInstance().hasLogin()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
         }
-        XApplication application = (XApplication) getApplication();
-        boolean showSplash = application.showSplash();
-        if (showSplash) {
+        if (((XApplication) getApplication()).showSplash()) {
             startActivity(new Intent(this, SplashActivity.class));
-            application.setHasShowed(true);
             finish();
             return;
         }
@@ -80,11 +76,10 @@ public class MainActivity extends BaseActivity {
         mFragmentVPAdapter.addFragment(DoctorMyFragment.getInstance());
         mFragmentVPAdapter.addFragment(ServiceFragment.getInstance());
         mFragmentVPAdapter.addFragment(MeFragment.getInstance());
-        mViewPagerMain.setOffscreenPageLimit(3);
+        mViewPagerMain.setOffscreenPageLimit(4);
         mViewPagerMain.setAdapter(mFragmentVPAdapter);
 
         setupBottomTab();
-
     }
 
     @Override

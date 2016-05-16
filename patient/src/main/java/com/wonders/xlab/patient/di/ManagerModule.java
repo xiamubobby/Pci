@@ -5,7 +5,6 @@ import android.util.Log;
 import com.wonders.xlab.patient.BuildConfig;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.util.AlarmUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -52,11 +51,5 @@ public class ManagerModule {
     @Singleton
     AIManager provideAIManager() {
         return new AIManager();
-    }
-
-    @Provides
-    @Singleton
-    AlarmUtil provideAlarmUtil() {
-        return AlarmUtil.newInstance();
     }
 }
