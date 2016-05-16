@@ -2,7 +2,11 @@ package com.wonders.xlab.patient.service;
 
 import android.app.AlertDialog;
 import android.app.Service;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
 import android.os.IBinder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +22,7 @@ import com.wonders.xlab.patient.data.realm.MedicationUsagesRealm;
 import com.wonders.xlab.patient.data.realm.MedicineRemindRealm;
 import com.wonders.xlab.patient.util.AlarmUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +32,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
 
-public class AlarmService extends Service {
+public class AlarmService extends Service implements MediaPlayer.OnPreparedListener{
     public final static String EXTRA_TIME = "time";
 
     AlarmUtil mAlarmUtil = AlarmUtil.newInstance();
@@ -39,8 +44,29 @@ public class AlarmService extends Service {
     private MedicineRemindDialogRVAdapter adapter;
     private View container;
 
+    private MediaPlayer mMediaPlayer;
 
     public AlarmService() {
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        initMediaPlayer();
+    }
+
+    private void initMediaPlayer() {
+        if (null != mMediaPlayer) {
+            return;
+        }
+        mMediaPlayer = new MediaPlayer();
+        mMediaPlayer.setOnPreparedListener(this);
+        mMediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
+        try {
+            mMediaPlayer.setDataSource(this, RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -108,11 +134,27 @@ public class AlarmService extends Service {
                     ad = null;
                 }
                 ad = builder.create();
+                ad.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        if (null != mMediaPlayer) {
+                            mMediaPlayer.stop();
+                            mMediaPlayer.release();
+                            mMediaPlayer = null;
+                            stopSelf();
+                        }
+                    }
+                });
                 ad.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
             }
             ad.setCanceledOnTouchOutside(false);
             ad.setTitle(medicineRemindRealm.getRemindersDesc());
             ad.show();
+
+            //play music
+            initMediaPlayer();
+            mMediaPlayer.prepareAsync();
+
             mAlarmUtil.scheduleMedicineRemindAlarm(this);
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();
@@ -133,5 +175,14 @@ public class AlarmService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (null != mMediaPlayer) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
+        }
+    }
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        mp.start();
     }
 }
