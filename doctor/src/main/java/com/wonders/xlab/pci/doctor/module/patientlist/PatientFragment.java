@@ -148,7 +148,7 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
             public void onClick() {
                 mPatientPresenter.getPatientList(AIManager.getInstance().getDoctorId());
             }
-        });
+        }, true);
     }
 
     @Override

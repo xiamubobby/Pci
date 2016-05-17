@@ -135,7 +135,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoPresenter.
             public void onClick() {
                 mUserInfoPresenter.getUserInfo(mPatientId);
             }
-        });
+        }, true);
     }
 
     @Override

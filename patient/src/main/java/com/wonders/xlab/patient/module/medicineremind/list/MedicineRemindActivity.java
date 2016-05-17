@@ -184,7 +184,7 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
             public void onClick() {
                 mMedicineRemindPresenter.getMedicineReminds(true);
             }
-        });
+        }, true);
     }
 
     @Override

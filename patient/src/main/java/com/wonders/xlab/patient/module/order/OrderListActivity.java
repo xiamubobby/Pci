@@ -127,7 +127,7 @@ public class OrderListActivity extends AppbarActivity implements OrderListPresen
             public void onClick() {
                 mOrderListPresenter.getOrderList(mPatientId, true);
             }
-        });
+        }, true);
     }
 
     @Override

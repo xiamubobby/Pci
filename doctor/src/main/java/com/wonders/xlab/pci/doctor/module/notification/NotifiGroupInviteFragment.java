@@ -150,7 +150,7 @@ public class NotifiGroupInviteFragment extends BaseFragment implements NotifiGro
             public void onClick() {
                 mInvitePresenter.getInviteNotifications(AIManager.getInstance().getDoctorId());
             }
-        });
+        }, true);
     }
 
     @Override

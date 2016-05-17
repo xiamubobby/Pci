@@ -143,7 +143,7 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
             public void onClick() {
                 servicePresenter.getAllServices(true);
             }
-        });
+        }, true);
     }
 
     @Override
@@ -153,7 +153,7 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
             public void onClick() {
                 servicePresenter.getAllServices(true);
             }
-        });
+        }, true);
     }
 
     @Override
@@ -163,7 +163,7 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
             public void onClick() {
                 servicePresenter.getAllServices(true);
             }
-        });
+        }, true);
     }
 
     @Override

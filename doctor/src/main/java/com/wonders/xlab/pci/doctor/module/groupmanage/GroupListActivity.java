@@ -150,7 +150,7 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
             public void onClick() {
                 mGroupManagePresenter.getGroupList(true, AIManager.getInstance().getDoctorId());
             }
-        });
+        }, true);
     }
 
     @Override

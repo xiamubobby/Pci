@@ -1,6 +1,7 @@
 package com.wonders.xlab.patient.module.dailyreport.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,9 +18,10 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.dailyreport.adapter.SymptomReportAdapter;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.SymptomReportBean;
-import com.wonders.xlab.patient.otto.SymptomSaveSuccessOtto;
+import com.wonders.xlab.patient.module.dailyreport.datarecord.symptom.SymptomActivity;
 import com.wonders.xlab.patient.mvp.presenter.ISymptomReportPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.SymptomReportPresenter;
+import com.wonders.xlab.patient.otto.SymptomSaveSuccessOtto;
 
 import java.util.List;
 
@@ -121,7 +123,13 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
         if (null == mRecyclerView) {
             return;
         }
-        mRecyclerView.showEmptyView(null);
+        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
+                getActivity().startActivity(new Intent(getActivity(), SymptomActivity.class));
+            }
+        }, false);
+
     }
 
     @Override
@@ -161,6 +169,7 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
         super.onResume();
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_daily_report_symptom));
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_daily_report_symptom));

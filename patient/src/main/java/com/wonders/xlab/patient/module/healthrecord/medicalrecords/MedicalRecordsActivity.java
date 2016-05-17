@@ -131,7 +131,7 @@ public class MedicalRecordsActivity extends AppbarActivity implements MedicalRec
             public void onClick() {
                 mMedicalRecordsPresenter.getMedicalRecordsList(mPatientId, true);
             }
-        });
+        }, true);
     }
 
     @Override

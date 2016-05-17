@@ -128,7 +128,7 @@ public class TestIndicatorActivity extends AppbarActivity implements TestIndicat
             public void onClick() {
                 mTestIndicatorPresenter.getTestIndicatorList(mPatientId, true);
             }
-        });
+        }, true);
     }
 
     @Override

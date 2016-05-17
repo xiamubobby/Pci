@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
@@ -26,6 +27,8 @@ public class SplashActivity extends AppCompatActivity {
 
     @Bind(R.id.container_splash)
     FrameLayout mContainerSplash;
+    @Bind(R.id.imageView)
+    ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class SplashActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setFullscreen(true);
         mContainerSplash.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+
         ((XApplication) getApplication()).setHasShowed(true);
         Observable.just(null)
                 .delaySubscription(1800, TimeUnit.MILLISECONDS)

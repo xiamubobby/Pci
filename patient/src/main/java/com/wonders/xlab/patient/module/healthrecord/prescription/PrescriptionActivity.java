@@ -130,7 +130,7 @@ public class PrescriptionActivity extends AppbarActivity implements Prescription
             public void onClick() {
                 mPrescriptionPresenter.getPrescriptionList(mPatientId, true);
             }
-        });
+        }, true);
     }
 
     @Override

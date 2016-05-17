@@ -115,7 +115,7 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
             public void onClick() {
                 mGroupServicesPresenter.getPackages(mOwnerId);
             }
-        });
+        }, true);
     }
 
     @Override

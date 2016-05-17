@@ -108,7 +108,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
         });
         mGroupInvitePresenter = new GroupDoctorInvitePresenter(this);
         addPresenter(mGroupInvitePresenter);
-        mRecyclerView.showEmptyView(null);
+        mRecyclerView.showEmptyView(null, true);
     }
 
     @Override
@@ -181,7 +181,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
 
     @Override
     public void showEmptyView(String message) {
-        mRecyclerView.showEmptyView(null);
+        mRecyclerView.showEmptyView(null, true);
     }
 
     @Override

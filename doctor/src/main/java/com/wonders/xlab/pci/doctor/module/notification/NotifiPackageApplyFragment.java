@@ -114,7 +114,7 @@ public class NotifiPackageApplyFragment extends BaseFragment implements NotifiPa
             public void onClick() {
                 mPresenter.getPackageApplyNotifications(AIManager.getInstance().getDoctorId());
             }
-        });
+        }, true);
     }
 
     @Override

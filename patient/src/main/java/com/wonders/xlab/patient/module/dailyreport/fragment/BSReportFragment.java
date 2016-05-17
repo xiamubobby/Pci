@@ -108,7 +108,7 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
         if (null == mRecyclerView) {
             return;
         }
-        mRecyclerView.showEmptyView(null);
+        mRecyclerView.showEmptyView(null, true);
     }
 
     @Override

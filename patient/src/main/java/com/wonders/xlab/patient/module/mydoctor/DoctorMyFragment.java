@@ -139,7 +139,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
             public void onClick() {
                 startActivity(new Intent(getActivity(), AllDoctorActivity.class));
             }
-        });
+        }, true);
         OttoManager.post(new DoctorTabChangeOtto(1));
     }
 

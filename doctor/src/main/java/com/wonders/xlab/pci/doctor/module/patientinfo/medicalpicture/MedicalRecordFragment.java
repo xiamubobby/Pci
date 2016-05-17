@@ -144,7 +144,7 @@ public class MedicalRecordFragment extends BaseFragment implements MedicalRecord
             public void onClick() {
                 mMedicalRecordPresenter.getMedicalRecordList(mPatientId);
             }
-        });
+        }, true);
     }
 
     @Override

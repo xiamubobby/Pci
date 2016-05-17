@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.XApplication;
-import com.wonders.xlab.pci.doctor.di.ApplicationComponent;
 import com.wonders.xlab.pci.doctor.module.patientinfo.indicator.adapter.TestIndicatorRVAdapter;
 import com.wonders.xlab.pci.doctor.module.patientinfo.indicator.adapter.bean.TestIndicatorBean;
 import com.wonders.xlab.pci.doctor.mvp.presenter.TestIndicatorPresenterContract;
@@ -147,7 +146,7 @@ public class TestIndicatorFragment extends BaseFragment implements TestIndicator
             public void onClick() {
                 mPresenter.getTestIndicatorList(mPatientId, true);
             }
-        });
+        }, true);
     }
 
     @Override

@@ -11,12 +11,10 @@ import android.widget.Toast;
 
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.XApplication;
-import com.wonders.xlab.pci.doctor.di.ApplicationComponent;
 import com.wonders.xlab.pci.doctor.module.patientinfo.prescription.adapter.PrescriptionRVAdapter;
 import com.wonders.xlab.pci.doctor.module.patientinfo.prescription.adapter.bean.PrescriptionBean;
 import com.wonders.xlab.pci.doctor.mvp.presenter.PrescriptionPresenter;
 import com.wonders.xlab.pci.doctor.mvp.presenter.PrescriptionPresenterContract;
-import com.wonders.xlab.pci.doctor.mvp.presenter.TestIndicatorPresenter;
 
 import java.util.List;
 
@@ -162,7 +160,7 @@ public class PrescriptionFragment extends BaseFragment implements PrescriptionPr
             public void onClick() {
                 mPresenter.getPrescriptionList(mPatientId, true);
             }
-        });
+        }, true);
     }
 
     @Override

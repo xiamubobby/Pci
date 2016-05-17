@@ -161,7 +161,7 @@ public class BSFragment extends BaseFragment implements BSPresenter.BSPresenterL
             public void onClick() {
                 mBSPresenter.getBSList(mPatientId,true);
             }
-        });
+        }, true);
     }
 
     @Override

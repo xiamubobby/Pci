@@ -23,7 +23,9 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.base.AppbarActivity;
+import com.wonders.xlab.patient.module.auth.login.LoginActivity;
 import com.wonders.xlab.patient.module.dailyreport.datarecord.bp.BPAddActivity;
 import com.wonders.xlab.patient.module.dailyreport.datarecord.bp.BPGuideActivity;
 import com.wonders.xlab.patient.module.dailyreport.datarecord.bs.BSAddActivity;
@@ -78,6 +80,12 @@ public class DailyReportActivity extends AppbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OttoManager.register(this);
+        if (!AIManager.getInstance().hasLogin()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
         Intent intent = getIntent();
         if (null != intent) {
             Bundle data = intent.getExtras();
@@ -86,7 +94,6 @@ public class DailyReportActivity extends AppbarActivity {
             }
         }
 
-        OttoManager.register(this);
         ButterKnife.bind(this);
         initViewPager();
     }

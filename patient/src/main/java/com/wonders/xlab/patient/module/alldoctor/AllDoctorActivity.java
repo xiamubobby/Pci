@@ -115,7 +115,7 @@ public class AllDoctorActivity extends AppbarActivity implements AllDoctorPresen
             public void onClick() {
                 mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
             }
-        });
+        }, true);
     }
 
     @Override

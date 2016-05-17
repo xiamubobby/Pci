@@ -231,7 +231,7 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
             public void onClick() {
 
             }
-        });
+        }, true);
     }
 
     @Override

@@ -129,7 +129,7 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
             public void onClick() {
                 mGroupAuthPresenter.getGroupMemberList(mDoctorId, mOwnerId);
             }
-        });
+        }, true);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.wonders.xlab.patient.module.dailyreport.datarecord.symptom;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -20,6 +21,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.base.AppbarActivity;
+import com.wonders.xlab.patient.module.auth.login.LoginActivity;
 import com.wonders.xlab.patient.mvp.entity.SymptomEntity;
 import com.wonders.xlab.patient.mvp.presenter.ISymptomPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.SymptomRecordPresenter;
@@ -34,6 +36,7 @@ import butterknife.ButterKnife;
  * 不适症状选择
  */
 public class SymptomActivity extends AppbarActivity implements SymptomRecordPresenter.SymptomPresenterListener {
+
 
     @Bind(R.id.container_add_symptom)
     LinearLayout mContainerAddSymptom;
@@ -63,6 +66,11 @@ public class SymptomActivity extends AppbarActivity implements SymptomRecordPres
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!AIManager.getInstance().hasLogin()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
         ButterKnife.bind(this);
 
         mEmpty.setVisibility(View.GONE);

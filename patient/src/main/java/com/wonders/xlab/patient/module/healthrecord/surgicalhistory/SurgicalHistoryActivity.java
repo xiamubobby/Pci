@@ -124,7 +124,7 @@ public class SurgicalHistoryActivity extends AppbarActivity implements SurgicalH
             public void onClick() {
                 mSurgicalHistoryPresenter.getSurgicalHistory(mPatientId, true);
             }
-        });
+        }, true);
     }
 
     @Override

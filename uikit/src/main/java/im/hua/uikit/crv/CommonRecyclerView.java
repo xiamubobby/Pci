@@ -329,7 +329,7 @@ public class CommonRecyclerView extends FrameLayout {
                 if (adapter.getItemCount() > 0) {
                     showContentView();
                 } else {
-                    showEmptyView(null);
+                    showEmptyView(null, true);
                 }
             }
 
@@ -375,13 +375,15 @@ public class CommonRecyclerView extends FrameLayout {
         }
     }
 
-    public void showEmptyView(@Nullable final OnEmptyViewClickListener listener) {
+    public void showEmptyView(@Nullable final OnEmptyViewClickListener listener, final boolean autoShowLoading) {
         showView(mEmptyView);
         if (null != listener && null != mEmptyView) {
             mEmptyView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showLoadingView();
+                    if (autoShowLoading) {
+                        showLoadingView();
+                    }
                     listener.onClick();
                 }
             });

@@ -238,7 +238,7 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
             public void onClick() {
 
             }
-        });
+        }, true);
     }
 
     @Override

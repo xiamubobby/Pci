@@ -99,7 +99,7 @@ public class GroupRemoveDoctorActivity extends AppbarActivity implements GroupDo
             public void onClick() {
                 mRemoveDoctorPresenter.getCurrentMemberList(AIManager.getInstance().getDoctorId(), mOwnerId);
             }
-        });
+        }, true);
     }
 
     @Override

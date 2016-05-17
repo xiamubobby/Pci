@@ -289,7 +289,7 @@ public class NotifiOthersFragment extends BaseFragment implements NotifiOthersPr
             public void onClick() {
                 mOthersPresenter.getOthersNotifi(true, AIManager.getInstance().getDoctorId());
             }
-        });
+        }, true);
     }
 
     @Override

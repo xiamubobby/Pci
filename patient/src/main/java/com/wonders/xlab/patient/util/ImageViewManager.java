@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.util;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
@@ -20,7 +21,7 @@ public class ImageViewManager {
      * @param imageUrl
      * @param placeHolder
      */
-    public static void setImageViewWithUrl(Context context, ImageView imageView, String imageUrl,int placeHolder) {
+    public static void setImageViewWithUrl(Context context, ImageView imageView, String imageUrl, int placeHolder) {
         if (TextUtils.isEmpty(imageUrl)) {
             imageUrl = "";
         }
@@ -46,6 +47,20 @@ public class ImageViewManager {
         }
         DrawableRequestBuilder<Uri> builder = Glide.with(context)
                 .load(imageUri)
+                .crossFade()
+                .centerCrop();
+        if (PLACE_HOLDER_EMPTY != placeHolder) {
+            builder.placeholder(placeHolder);
+        }
+        builder.into(imageView);
+    }
+
+    public static void setImageViewWithDrawableId(Context context, ImageView imageView, @DrawableRes int resId, int placeHolder) {
+        if (imageView == null || context == null) {
+            return;
+        }
+        DrawableRequestBuilder builder = Glide.with(context)
+                .load(resId)
                 .crossFade()
                 .centerCrop();
         if (PLACE_HOLDER_EMPTY != placeHolder) {
