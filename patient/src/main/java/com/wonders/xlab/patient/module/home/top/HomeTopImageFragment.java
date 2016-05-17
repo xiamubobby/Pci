@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.home;
+package com.wonders.xlab.patient.module.home.top;
 
 
 import android.content.Intent;

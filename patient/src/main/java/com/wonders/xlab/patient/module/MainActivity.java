@@ -25,8 +25,6 @@ import com.wonders.xlab.patient.module.otto.MainBottomUnreadNotifyCountOtto;
 import com.wonders.xlab.patient.module.service.ServiceFragment;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.otto.MeNotifyCountOtto;
-import com.wonders.xlab.patient.service.XEMChatService;
-import com.wonders.xlab.patient.util.AlarmUtil;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.util.ArrayList;
@@ -49,8 +47,6 @@ public class MainActivity extends BaseActivity {
     CommonTabLayout mTabMainBottom;
 
     private FragmentVPAdapter mFragmentVPAdapter;
-
-    private AlarmUtil mAlarmUtil = AlarmUtil.newInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +81,16 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mAlarmUtil.scheduleMedicineRemindAlarm(this);
-        this.startService(new Intent(this, XEMChatService.class));
+        /*Observable.just(null)
+                .delaySubscription(5000, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<Object>() {
+                    @Override
+                    public void call(Object o) {
+                        mAlarmUtil.scheduleMedicineRemindAlarm(MainActivity.this);
+                        startService(new Intent(MainActivity.this, XEMChatService.class));
+                    }
+                });*/
     }
 
     private void setupBottomTab() {

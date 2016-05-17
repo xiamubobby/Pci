@@ -20,6 +20,7 @@ import com.easemob.chat.EMChatManager;
 import com.easemob.util.NetUtils;
 import com.squareup.otto.Subscribe;
 import com.wonders.xlab.common.manager.OttoManager;
+import com.wonders.xlab.common.manager.SPManager;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
@@ -50,29 +51,45 @@ public class XEMChatService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        EMChat.getInstance().init(getApplication());
-        EMChatManager.getInstance().getChatOptions().setNotifyBySoundAndVibrate(false);//不发通知，而是走广播
-        EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);
-        //TODO 在做打包混淆时，要关闭debug模式，避免消耗不必要的资源
-        EMChat.getInstance().setDebugMode(false);
-
         OttoManager.register(this);
-        Notification notification = NotifyUtil.generateNotification(this, MainActivity.class, null, getResources().getString(R.string.app_name), "正在运行", R.drawable.ic_notification, true, false, false, 0xff30bdf2);
-        startForeground(Constant.NOTIFY_ID, notification);
-
+        initEMChat();
         initAutoStart();
         login();
         initBroadcastReceiver();
     }
 
+    private void initEMChat() {
+        EMChat.getInstance().init(getApplication());
+        EMChatManager.getInstance().getChatOptions().setNotifyBySoundAndVibrate(false);//不发通知，而是走广播
+        EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);
+        //TODO 在做打包混淆时，要关闭debug模式，避免消耗不必要的资源
+        EMChat.getInstance().setDebugMode(false);
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // TODO: Return the communication channel to the service.
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        String key = getResources().getString(R.string.setting_pref_key_persistent_notification);
+        if (SPManager.get(this).getBoolean(key, true)) {
+            Notification notification = NotifyUtil.generateNotification(this, MainActivity.class, null, getResources().getString(R.string.app_name), "正在运行", R.drawable.ic_notification, false, false, false, 0xff30bdf2);
+            startForeground(Constant.NOTIFY_ID_PERSISTENT, notification);
+        }
+        return START_STICKY;
+    }
+
     private void initBroadcastReceiver() {
-        //监听事件变化
-        if (mTimeClickReceiver == null) {
+        //监听时间变化
+        /*if (mTimeClickReceiver == null) {
             mTimeClickReceiver = new TimeClickReceiver();
         }
         IntentFilter intentFilter = new IntentFilter(Intent.ACTION_TIME_TICK);
         intentFilter.setPriority(999);
-        registerReceiver(mTimeClickReceiver, intentFilter);
+        registerReceiver(mTimeClickReceiver, intentFilter);*/
 
         //监听网络变化
         if (mConnectionReceiver == null) {
@@ -92,18 +109,6 @@ public class XEMChatService extends Service {
             newstate = PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
             pm.setComponentEnabledSetting(cn, newstate, PackageManager.DONT_KILL_APP);
         }
-
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_STICKY;
     }
 
     @Subscribe
@@ -117,18 +122,10 @@ public class XEMChatService extends Service {
      * login em chat
      */
     private void login() {
-
         String tel = AIManager.getInstance().getPatientTel();
         if (TextUtils.isEmpty(tel)) {
             stopSelf();
             return;
-        }
-        //注册环信消息监听
-        if (msgReceiver == null) {
-            msgReceiver = new EMChatMessageBroadcastReceiver();
-            IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
-            intentFilter.setPriority(999);
-            registerReceiver(msgReceiver, intentFilter);
         }
         EMChatManager.getInstance().login(tel, new MD5Util().encrypt("pci_user" + tel).toLowerCase(Locale.CHINA), new EMCallBack() {//回调
             @Override
@@ -137,6 +134,14 @@ public class XEMChatService extends Service {
                 EMChat.getInstance().setAppInited();
                 //注册一个监听连接状态的listener
                 EMChatManager.getInstance().addConnectionListener(new MyConnectionListener());
+
+                //注册环信消息监听
+                if (msgReceiver == null) {
+                    msgReceiver = new EMChatMessageBroadcastReceiver();
+                    IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
+                    intentFilter.setPriority(999);
+                    registerReceiver(msgReceiver, intentFilter);
+                }
             }
 
             @Override
@@ -150,17 +155,6 @@ public class XEMChatService extends Service {
                 stopSelf();
             }
         });
-    }
-
-    private void showToast(String message) {
-        Observable.just(message)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
-                    @Override
-                    public void call(String s) {
-                        Toast.makeText(XEMChatService.this, s, Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 
     @Override
@@ -196,7 +190,7 @@ public class XEMChatService extends Service {
                         public String call(Integer integer) {
                             String message = null;
                             if (error == EMError.USER_REMOVED) {
-                                message = "显示帐号已经被移除,请联系客服";
+                                message = "帐号已经被移除,请联系客服";
                             } else if (error == EMError.CONNECTION_CONFLICT) {
                                 //帐号在其他设备登陆
                                 message = "帐号在其他设备登陆";

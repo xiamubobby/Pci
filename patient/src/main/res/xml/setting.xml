@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <SwitchPreference
-        android:defaultValue="false"
-        android:key="@string/setting_pref_key_measure_default"
-        android:summaryOn="使用您选择的默认的记录方式来记录健康数据"
-        android:summaryOff="需要记录健康数据时，弹窗提示选择数据记录方式"
-        android:title="默认记录方式"/>
-
+    <PreferenceCategory android:title="@string/setting_category_notification">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/setting_pref_key_persistent_notification"
+            android:summary="@string/setting_summary_stay_notification"
+            android:title="@string/setting_title_stay_notification"/>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/setting_category_health_device">
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/setting_pref_key_measure_default"
+            android:summaryOff="@string/setting_summary_off_measure"
+            android:title="@string/setting_title_measure"/>
+    </PreferenceCategory>
     <Preference
         android:summary="@string/app_version"
-        android:title="版本"/>
+        android:title="@string/setting_title_version"/>
 
 </PreferenceScreen>

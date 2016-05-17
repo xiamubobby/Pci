@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportBean;
+import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportRealmBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,7 +18,7 @@ import im.hua.utils.DateUtil;
 /**
  * Created by hua on 16/3/20.
  */
-public class BPReportAdapter extends SimpleRVAdapter<BPReportBean> {
+public class BPReportAdapter extends SimpleRVAdapter<BPReportRealmBean> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -30,7 +30,7 @@ public class BPReportAdapter extends SimpleRVAdapter<BPReportBean> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        BPReportBean bean = getBean(position);
+        BPReportRealmBean bean = getBean(position);
         viewHolder.mTvHigh.setText(String.format("高压：%smmHg", bean.getHighPressure()));
         viewHolder.mTvLow.setText(String.format("低压：%smmHg", bean.getLowPressure()));
         viewHolder.mTvHeartRate.setText(String.format("心率：%s次/分", bean.getHeartRate()));
@@ -49,35 +49,35 @@ public class BPReportAdapter extends SimpleRVAdapter<BPReportBean> {
         }
 
         switch (bean.getHighPressureStatus()) {
-            case BPReportBean.STATUS_HIGH:
+            case BPReportRealmBean.STATUS_HIGH:
                 viewHolder.mTvHigh.setCompoundDrawables(drawableUp, null, null, null);
                 break;
-            case BPReportBean.STATUS_NORMAL:
+            case BPReportRealmBean.STATUS_NORMAL:
                 viewHolder.mTvHigh.setCompoundDrawables(null, null, null, null);
                 break;
-            case BPReportBean.STATUS_LOW:
+            case BPReportRealmBean.STATUS_LOW:
                 viewHolder.mTvHigh.setCompoundDrawables(drawableDown, null, null, null);
                 break;
         }
         switch (bean.getLowPressureStatus()) {
-            case BPReportBean.STATUS_HIGH:
+            case BPReportRealmBean.STATUS_HIGH:
                 viewHolder.mTvLow.setCompoundDrawables(drawableUp, null, null, null);
                 break;
-            case BPReportBean.STATUS_NORMAL:
+            case BPReportRealmBean.STATUS_NORMAL:
                 viewHolder.mTvLow.setCompoundDrawables(null, null, null, null);
                 break;
-            case BPReportBean.STATUS_LOW:
+            case BPReportRealmBean.STATUS_LOW:
                 viewHolder.mTvLow.setCompoundDrawables(drawableDown, null, null, null);
                 break;
         }
         switch (bean.getHeartRateStatus()) {
-            case BPReportBean.STATUS_HIGH:
+            case BPReportRealmBean.STATUS_HIGH:
                 viewHolder.mTvHeartRate.setCompoundDrawables(drawableUp, null, null, null);
                 break;
-            case BPReportBean.STATUS_NORMAL:
+            case BPReportRealmBean.STATUS_NORMAL:
                 viewHolder.mTvHeartRate.setCompoundDrawables(null, null, null, null);
                 break;
-            case BPReportBean.STATUS_LOW:
+            case BPReportRealmBean.STATUS_LOW:
                 viewHolder.mTvHeartRate.setCompoundDrawables(drawableDown, null, null, null);
                 break;
         }

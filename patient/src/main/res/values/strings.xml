@@ -10,6 +10,18 @@
     <!--是否开启了默认健康数据记录方式-->
     <string name="setting_pref_key_measure_default">measure_method_default</string>
 
+    <string name="setting_title_stay_notification">常驻通知栏</string>
+    <string name="setting_summary_stay_notification">可提高优先级，确保通知能够及时到达</string>
+    <string name="setting_summary_off_measure">弹窗提示选择数据记录方式</string>
+    <string name="setting_summary_on_measure_device">默认使用健康设备进行测量健康数据</string>
+    <string name="setting_summary_on_measure_manual">默认手动输入健康数据</string>
+    <string name="setting_title_measure">默认记录方式</string>
+    <string name="setting_title_version">版本</string>
+    <string name="setting_pref_key_persistent_notification">stay_notification</string>
+    <string name="setting_category_notification">通知</string>
+    <string name="setting_category_health_device">健康设备</string>
+
+
     <string name="title_activity_setting">设置</string>
     <string name="title_activity_my_order">我的订单</string>
     <string name="title_activity_web">网页</string>
@@ -113,6 +125,6 @@
     <string name="title_activity_splash">@string/app_name</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-
+    <string name="title_activity_service_detail">服务详情</string>
 
 </resources>

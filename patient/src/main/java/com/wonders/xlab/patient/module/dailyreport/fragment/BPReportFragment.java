@@ -16,7 +16,7 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.dailyreport.adapter.BPReportAdapter;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportBean;
+import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportRealmBean;
 import com.wonders.xlab.patient.otto.BPSaveSuccessOtto;
 import com.wonders.xlab.patient.otto.ShowMeasureChooseDialogOtto;
 import com.wonders.xlab.patient.mvp.presenter.IBPReportPresenter;
@@ -96,7 +96,7 @@ public class BPReportFragment extends BaseFragment implements BPReportCachePrese
     }
 
     @Override
-    public void showBPList(List<BPReportBean> beanList) {
+    public void showBPList(List<BPReportRealmBean> beanList) {
         if (null == mBPReportAdapter) {
             mBPReportAdapter = new BPReportAdapter();
         }

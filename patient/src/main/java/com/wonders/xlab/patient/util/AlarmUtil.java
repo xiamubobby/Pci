@@ -23,9 +23,6 @@ public class AlarmUtil {
 
     private Calendar calendar = Calendar.getInstance();
 
-    private AlarmUtil() {
-    }
-
     public static AlarmUtil newInstance() {
         if (mAlarmUtil == null) {
             synchronized (AlarmUtil.class) {

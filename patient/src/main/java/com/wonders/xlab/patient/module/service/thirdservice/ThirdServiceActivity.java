@@ -3,7 +3,6 @@ package com.wonders.xlab.patient.module.service.thirdservice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
@@ -56,7 +55,6 @@ public class ThirdServiceActivity extends AppbarActivity implements ServicePrese
         addPresenter(servicePresenter);
 
         recyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {

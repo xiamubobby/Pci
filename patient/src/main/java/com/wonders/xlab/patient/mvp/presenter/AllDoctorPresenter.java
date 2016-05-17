@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import im.hua.library.base.mvp.entity.BasePageEntity;
 import im.hua.library.base.mvp.impl.BasePagePresenter;
 
 /**
@@ -31,16 +32,21 @@ public class AllDoctorPresenter extends BasePagePresenter implements AllDoctorPr
         if (isRefresh) {
             resetPageInfo();
         }
+        if (noMoreData()) {
+            mDoctorAllListener.showReachTheLastPageNotice("");
+            return;
+        }
         mDoctorAllModel.getAllDoctorList(patientId, getNextPageIndex(), DEFAULT_PAGE_SIZE, new AllDoctorModelContract.Callback() {
             @Override
-            public void onReceiveAllDoctorListSuccess(DoctorAllEntity.RetValuesEntity valuesEntity) {
+            public void onReceiveAllDoctorListSuccess(DoctorAllEntity valuesEntity) {
+                BasePageEntity.RetValuesEntity<DoctorAllEntity.ResultEntity> retValues = valuesEntity.getRet_values();
                 mDoctorAllListener.hideLoading();
 
-                updatePageInfo(valuesEntity.getPage());
+                updatePageInfo(retValues.getNumber(),retValues.isFirst(),retValues.isLast());
 
                 ArrayList<AllDoctorItemBean> doctorItemBeanArrayList = new ArrayList<>();
 
-                for (DoctorAllEntity.RetValuesEntity.ResultEntity entity : valuesEntity.getResult()) {
+                for (DoctorAllEntity.ResultEntity entity : retValues.getContent()) {
                     AllDoctorItemBean itemBean = new AllDoctorItemBean();
 
                     itemBean.setPersonal(!entity.isMulti());

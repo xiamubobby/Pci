@@ -1,7 +1,7 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportBean;
+import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportRealmBean;
 import com.wonders.xlab.patient.mvp.presenter.IBPReportPresenter;
 
 import java.util.ArrayList;
@@ -27,27 +27,27 @@ public class BPReportCachePresenter extends BasePresenter implements IBPReportPr
     @Override
     public void getBPCacheList(String patientId) {
 
-        RealmQuery<BPReportBean> query = XApplication.realm.where(BPReportBean.class)
+        RealmQuery<BPReportRealmBean> query = XApplication.realm.where(BPReportRealmBean.class)
                 .equalTo("patientId", patientId)
                 .between("recordTimeInMill", DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday());
 
-        RealmResults<BPReportBean> results = query.findAll();
+        RealmResults<BPReportRealmBean> results = query.findAll();
         results.sort("recordTimeInMill", Sort.DESCENDING);
 
         if (results.size() <= 0) {
             listener.showEmptyView();
             return;
         }
-        List<BPReportBean> bpReportBeanList = new ArrayList<>();
-        for (BPReportBean bean : results) {
-            bpReportBeanList.add(bean);
+        List<BPReportRealmBean> bpReportRealmBeanList = new ArrayList<>();
+        for (BPReportRealmBean bean : results) {
+            bpReportRealmBeanList.add(bean);
         }
 
-        listener.showBPList(bpReportBeanList);
+        listener.showBPList(bpReportRealmBeanList);
     }
 
     public interface BPReportCachePresenterListener extends BasePresenterListener {
-        void showBPList(List<BPReportBean> beanList);
+        void showBPList(List<BPReportRealmBean> beanList);
 
         void showEmptyView();
     }

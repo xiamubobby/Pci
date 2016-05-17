@@ -25,7 +25,6 @@ import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.databinding.ServiceDetailActivityBinding;
 import com.wonders.xlab.patient.mvp.presenter.ServiceDetailPresenterContract;
 import com.wonders.xlab.patient.util.ImageViewManager;
@@ -34,12 +33,13 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import im.hua.library.base.BaseActivity;
 import im.hua.uikit.crv.CommonRecyclerView;
 
 /**
  * Created by WZH on 16/5/9.
  */
-public class ServiceDetailActivity extends AppbarActivity implements ServiceDetailPresenterContract.ViewListener {
+public class ServiceDetailActivity extends BaseActivity implements ServiceDetailPresenterContract.ViewListener {
 
     public final static String _key_SERVICE_ID_ = "serviceId";
 
@@ -78,20 +78,18 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
     private ServiceDetailActivityBinding binding;
 
     @Override
-    public int getContentLayout() {
-        return R.layout.its_blank;
-    }
-
-    @Override
-    public String getToolbarTitle() {
-        return "服务详情";
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.service_detail_activity);
         ButterKnife.bind(this);
+        mToolbar.setTitle("服务详情");
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         mServiceDetailPresenter = DaggerServiceDetailComponent.builder()
                 .applicationComponent(((XApplication) getApplication()).getComponent())
                 .serviceDetailModule(new ServiceDetailModule(this))
@@ -117,7 +115,7 @@ public class ServiceDetailActivity extends AppbarActivity implements ServiceDeta
                 return view == object;
             }
         });
-        confirmBtn.setOnClickListener(new View.OnClickListener(){
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

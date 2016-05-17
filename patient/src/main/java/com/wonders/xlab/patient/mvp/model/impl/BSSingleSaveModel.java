@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.PatientBaseModel;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportBean;
+import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportRealmBean;
 import com.wonders.xlab.patient.mvp.api.BSAPI;
 import com.wonders.xlab.patient.mvp.entity.BSSaveEntity;
 
@@ -40,7 +40,7 @@ public class BSSingleSaveModel extends PatientBaseModel<BSSaveEntity> {
         BSSaveEntity.RetValuesEntity retValues = response.getRet_values();
         if (null != retValues) {
             XApplication.realm.beginTransaction();
-            BSReportBean bean = XApplication.realm.createObject(BSReportBean.class);
+            BSReportRealmBean bean = XApplication.realm.createObject(BSReportRealmBean.class);
             bean.setId(retValues.getId());
             bean.setMeasurePeriod(retValues.getBloodSugarTime());
             bean.setBloodSugar(retValues.getBloodSugar());

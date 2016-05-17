@@ -1,6 +1,5 @@
 //noinspection GradleCompatible
 apply plugin: 'com.android.library'
-
 android {
 
     compileSdkVersion 23
@@ -34,7 +33,7 @@ android {
             compile 'com.github.bumptech.glide:glide:3.6.1'
             compile 'com.jakewharton:butterknife:7.0.1'
             compile 'com.squareup:otto:1.3.8'
-            compile 'com.umeng.analytics:analytics:latest.integration'
+            compile 'com.umeng.analytics:analytics:6.0.0'
             compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.2@aar'
             compile 'com.flyco.tablayout:FlycoTabLayout_Lib:1.5.0@aar'
             compile 'com.zhy:flowlayout-lib:1.0.0'
@@ -49,4 +48,3 @@ android {
         abortOnError false
     }
 }
-

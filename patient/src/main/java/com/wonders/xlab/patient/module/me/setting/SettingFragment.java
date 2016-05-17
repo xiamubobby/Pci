@@ -1,10 +1,18 @@
 package com.wonders.xlab.patient.module.me.setting;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 
 import com.umeng.analytics.MobclickAgent;
+import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.service.XEMChatService;
+
+import im.hua.utils.NotifyUtil;
 
 /**
  * Created by hua on 15/11/16.
@@ -19,17 +27,37 @@ public class SettingFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.setting);
 
-//        boolean useEquipment = SPManager.get(getActivity()).getBoolean(getString(R.string.setting_pref_key_use_equipment), false);
-//
-//        SwitchPreference preference = (SwitchPreference) findPreference(getResources().getString(R.string.setting_pref_key_use_equipment));
-//        preference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-//            @Override
-//            public boolean onPreferenceChange(Preference preference, Object newValue) {
-//                Log.d("SettingFragment", "newValue:" + newValue);
-//                return false;
-//            }
-//        });
-//        preference.setSummary(useEquipment?"默认使用全程健康设备测量":"默认手动录入健康数据");
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        initMeasureDefaultSummary(preferences);
+        preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
+            @Override
+            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+                if (key.equals(getResources().getString(R.string.setting_pref_key_persistent_notification))) {
+                    boolean stayNotification = sharedPreferences.getBoolean(getResources().getString(R.string.setting_pref_key_persistent_notification), true);
+                    if (stayNotification) {
+                        getActivity().startService(new Intent(getActivity(), XEMChatService.class));
+                    } else {
+                        NotifyUtil.cancel(getActivity(), Constant.NOTIFY_ID_PERSISTENT);
+                    }
+                } else if(key.equals(getResources().getString(R.string.setting_pref_key_measure_default))){
+                    initMeasureDefaultSummary(sharedPreferences);
+                }
+            }
+        });
+    }
+
+    private void initMeasureDefaultSummary(SharedPreferences sharedPreferences) {
+        boolean measureDefault = sharedPreferences.getBoolean(getResources().getString(R.string.setting_pref_key_measure_default), true);
+        String summary = getResources().getString(R.string.setting_summary_off_measure);
+        if (measureDefault) {
+            if (sharedPreferences.getBoolean(getResources().getString(R.string.setting_pref_key_use_equipment), true)) {
+                summary = getResources().getString(R.string.setting_summary_on_measure_device);
+            } else {
+                summary = getResources().getString(R.string.setting_summary_on_measure_manual);
+            }
+        }
+        SwitchPreference preference = (SwitchPreference) getPreferenceManager().findPreference(getResources().getString(R.string.setting_pref_key_measure_default));
+        preference.setSummary(summary);
     }
 
     public void onResume() {

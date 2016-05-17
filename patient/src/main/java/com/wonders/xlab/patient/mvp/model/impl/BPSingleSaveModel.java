@@ -3,7 +3,7 @@ package com.wonders.xlab.patient.mvp.model.impl;
 
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.PatientBaseModel;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportBean;
+import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportRealmBean;
 import com.wonders.xlab.patient.mvp.api.BPAPI;
 import com.wonders.xlab.patient.mvp.entity.BPSaveEntity;
 
@@ -44,7 +44,7 @@ public class BPSingleSaveModel extends PatientBaseModel<BPSaveEntity> {
         if (null != retValues) {
 
             XApplication.realm.beginTransaction();
-            BPReportBean bean = XApplication.realm.createObject(BPReportBean.class);
+            BPReportRealmBean bean = XApplication.realm.createObject(BPReportRealmBean.class);
             bean.setLowPressure(retValues.getDiastolicPressure());
             bean.setLowPressureStatus(retValues.getDiastolicStatus());
             bean.setLowPressureRange(retValues.getDiastolicContent());

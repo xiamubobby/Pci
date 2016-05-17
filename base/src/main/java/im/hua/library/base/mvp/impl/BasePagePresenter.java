@@ -37,6 +37,15 @@ public class BasePagePresenter extends BasePresenter {
         return next < 0 ? 0 : next;
     }
 
+    /**
+     * 是否没有更多数据
+     * 即是否不可以继续加载更多
+     * @return
+     */
+    protected boolean noMoreData() {
+        return mIsLast;
+    }
+
     protected boolean shouldAppend() {
         return mCurrentIndex > 0;
     }

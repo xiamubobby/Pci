@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.home;
+package com.wonders.xlab.patient.module.home.top;
 
 
 import android.content.Intent;
@@ -18,26 +18,21 @@ import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.dailyreport.DailyReportActivity;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportBean;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportBean;
+import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportRealmBean;
+import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportRealmBean;
 import com.wonders.xlab.patient.otto.BPSaveSuccessOtto;
 import com.wonders.xlab.patient.otto.BSSaveSuccessOtto;
 import com.wonders.xlab.patient.util.UmengEventId;
-
-import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import im.hua.library.base.BaseFragment;
 import im.hua.utils.DensityUtil;
-import io.realm.RealmResults;
-import io.realm.Sort;
 
-public class HomeTopCircleFragment extends BaseFragment {
+public class HomeTopCircleFragment extends BaseFragment implements HomeTopPresenterContract.ViewListener {
     @Bind(R.id.tv_home_top_circle_left)
     TextView mTvLeft;
     @Bind(R.id.tv_home_top_circle_middle_status)
@@ -49,12 +44,25 @@ public class HomeTopCircleFragment extends BaseFragment {
     @Bind(R.id.tv_home_top_circle_right)
     TextView mTvRight;
 
+    private HomeTopPresenter mTopPresenter;
+
+
     public HomeTopCircleFragment() {
         // Required empty public constructor
     }
 
     public static HomeTopCircleFragment newInstance() {
         return new HomeTopCircleFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mTopPresenter = DaggerHomeTopComponent.builder()
+                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .homeTopModule(new HomeTopModule(this))
+                .build()
+                .getHomeTopPresenter();
     }
 
     @Override
@@ -122,24 +130,58 @@ public class HomeTopCircleFragment extends BaseFragment {
 
     @Subscribe
     public void refreshTopBP(BPSaveSuccessOtto otto) {
-        BPReportBean bpReportBean = getBPReportBean();
-        if (null != bpReportBean) {
+        mTopPresenter.getRecentBp();
+    }
+
+    @Subscribe
+    public void refreshTopBS(BSSaveSuccessOtto otto) {
+        mTopPresenter.getRecentBs();
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        OttoManager.unregister(this);
+        ButterKnife.unbind(this);
+    }
+
+    @Override
+    public void showRecentBs(BSReportRealmBean bean) {
+        if (null != bean) {
+            if (bean.getBloodSugarStatus() == 0) {
+                mTvLeft.setText(String.format("正常\n%s\nmmol/L", bean.getBloodSugar()));
+                mTvLeft.setTextColor(Color.parseColor("#006b93"));
+            } else {
+                SpannableString msp = new SpannableString(String.format("异常\n%s\nmmol/L", bean.getBloodSugar()));
+                msp.setSpan(new ForegroundColorSpan(Color.RED), 0, "异常".length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                mTvLeft.setText(msp);
+            }
+        } else {
+            mTvLeft.setText("记录\n0\nmmol/L");
+            mTvLeft.setTextColor(Color.parseColor("#006b93"));
+        }
+    }
+
+    @Override
+    public void showRecentBp(BPReportRealmBean bean) {
+        if (null != bean) {
             //血压
-            if (bpReportBean.getHighPressureStatus() == 0 && bpReportBean.getLowPressureStatus() == 0) {
+            if (bean.getHighPressureStatus() == 0 && bean.getLowPressureStatus() == 0) {
                 mTvMiddleStatus.setText("正常");
                 mTvMiddleStatus.setTextColor(Color.WHITE);
             } else {
                 mTvMiddleStatus.setText("异常");
                 mTvMiddleStatus.setTextColor(Color.RED);
             }
-            mTvMiddleValue.setText(String.format("%s/%s\nmmHg", bpReportBean.getHighPressure(), bpReportBean.getLowPressure()));
+            mTvMiddleValue.setText(String.format("%s/%s\nmmHg", bean.getHighPressure(), bean.getLowPressure()));
 
             //心率
-            if (bpReportBean.getHeartRateStatus() == 0) {
-                mTvRight.setText(String.format("正常\n%s\n次/分", bpReportBean.getHeartRate()));
+            if (bean.getHeartRateStatus() == 0) {
+                mTvRight.setText(String.format("正常\n%s\n次/分", bean.getHeartRate()));
                 mTvRight.setTextColor(Color.parseColor("#006b93"));
             } else {
-                SpannableString msp = new SpannableString(String.format("异常\n%s\n次/分", bpReportBean.getHeartRate()));
+                SpannableString msp = new SpannableString(String.format("异常\n%s\n次/分", bean.getHeartRate()));
                 msp.setSpan(new ForegroundColorSpan(Color.RED), 0, "异常".length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 mTvRight.setText(msp);
             }
@@ -151,76 +193,5 @@ public class HomeTopCircleFragment extends BaseFragment {
             mTvRight.setText("记录\n0\n次/分");
             mTvRight.setTextColor(Color.parseColor("#006b93"));
         }
-    }
-
-    @Subscribe
-    public void refreshTopBS(BSSaveSuccessOtto otto) {
-        BSReportBean bsReportBean = getBSReportBean();
-        if (null != bsReportBean) {
-            if (bsReportBean.getBloodSugarStatus() == 0) {
-                mTvLeft.setText(String.format("正常\n%s\nmmol/L", bsReportBean.getBloodSugar()));
-                mTvLeft.setTextColor(Color.parseColor("#006b93"));
-            } else {
-                SpannableString msp = new SpannableString(String.format("异常\n%s\nmmol/L", bsReportBean.getBloodSugar()));
-                msp.setSpan(new ForegroundColorSpan(Color.RED), 0, "异常".length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                mTvLeft.setText(msp);
-            }
-        } else {
-            mTvLeft.setText("记录\n0\nmmol/L");
-            mTvLeft.setTextColor(Color.parseColor("#006b93"));
-        }
-    }
-
-    /**
-     * 获取最新的一条血压数据
-     *
-     * @return
-     */
-    private BPReportBean getBPReportBean() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, -3);
-
-        RealmResults<BPReportBean> beanRealmResults = XApplication.realm
-                .where(BPReportBean.class)
-                .greaterThan("recordTimeInMill", calendar.getTimeInMillis())
-                .equalTo("patientId", AIManager.getInstance().getPatientId())
-                .findAllSorted("recordTimeInMill", Sort.DESCENDING);
-        BPReportBean first;
-        if (beanRealmResults.size() > 0) {
-            first = beanRealmResults.first();
-        } else {
-            first = null;
-        }
-        return first;
-    }
-
-    /**
-     * 获取最新的一条血糖数据
-     *
-     * @return
-     */
-    private BSReportBean getBSReportBean() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, -3);
-
-        RealmResults<BSReportBean> beanRealmResults = XApplication.realm
-                .where(BSReportBean.class)
-                .greaterThan("recordTimeInMill", calendar.getTimeInMillis())
-                .equalTo("patientId", AIManager.getInstance().getPatientId())
-                .findAllSorted("recordTimeInMill", Sort.DESCENDING);
-        BSReportBean first;
-        if (beanRealmResults.size() > 0) {
-            first = beanRealmResults.first();
-        } else {
-            first = null;
-        }
-        return first;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        OttoManager.unregister(this);
-        ButterKnife.unbind(this);
     }
 }

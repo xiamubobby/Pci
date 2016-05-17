@@ -2,8 +2,6 @@ package com.wonders.xlab.patient.mvp.presenter;
 
 import com.wonders.xlab.patient.module.service.ServiceListCellDataUnit;
 import com.wonders.xlab.patient.mvp.entity.ServiceListEntity;
-import com.wonders.xlab.patient.mvp.model.AllDoctorModel;
-import com.wonders.xlab.patient.mvp.model.AllDoctorModelContract;
 import com.wonders.xlab.patient.mvp.model.ServiceModel;
 import com.wonders.xlab.patient.mvp.model.ServiceModelContract;
 
@@ -22,6 +20,7 @@ public class ServicePresenter extends BasePagePresenter implements ServicePresen
 
     private ServicePresenterContract.ViewListener serviceListener;
     private ServiceModelContract.Actions serviceModel;
+
     @Inject
     ServicePresenter(ServicePresenterContract.ViewListener listener, ServiceModel model) {
         serviceListener = listener;
@@ -34,8 +33,7 @@ public class ServicePresenter extends BasePagePresenter implements ServicePresen
         serviceModel.getServiceList(new ServiceModelContract.Callback() {
             @Override
             public void onReceiveFailed(int code, String message) {
-                serviceListener.hideLoading();
-                serviceListener.showNetworkError(message);
+                showError(serviceListener, code, message);
             }
 
             @Override

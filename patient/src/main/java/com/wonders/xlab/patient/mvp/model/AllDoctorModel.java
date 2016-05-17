@@ -23,7 +23,7 @@ public class AllDoctorModel extends PatientBaseModel implements AllDoctorModelCo
         request(mDoctorAPI.getAllDoctors(patientId, page, pageSize), new Callback<DoctorAllEntity>() {
             @Override
             public void onSuccess(DoctorAllEntity response) {
-                callback.onReceiveAllDoctorListSuccess(response.getRet_values());
+                callback.onReceiveAllDoctorListSuccess(response);
             }
 
             @Override

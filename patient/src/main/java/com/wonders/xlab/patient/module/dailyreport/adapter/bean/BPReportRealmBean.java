@@ -6,7 +6,7 @@ import io.realm.annotations.Ignore;
 /**
  * Created by hua on 16/3/20.
  */
-public class BPReportBean extends RealmObject {
+public class BPReportRealmBean extends RealmObject {
     /**
      * 血压，心率的状态值
      */

@@ -24,6 +24,8 @@ import com.wonders.xlab.patient.module.healthrecord.HealthRecordActivity;
 import com.wonders.xlab.patient.module.home.adapter.HomeRVAdapter;
 import com.wonders.xlab.patient.module.home.adapter.bean.HomeItemBean;
 import com.wonders.xlab.patient.module.home.bean.HomeBannerBean;
+import com.wonders.xlab.patient.module.home.top.HomeTopCircleFragment;
+import com.wonders.xlab.patient.module.home.top.HomeTopImageFragment;
 import com.wonders.xlab.patient.module.medicineremind.list.MedicineRemindActivity;
 import com.wonders.xlab.patient.mvp.presenter.IHomeTopPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.HomeTopPresenter;
@@ -140,7 +142,7 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
         mIndicatorHome.setViewPager(mViewPagerHome);
 
         setupBottomFunctionView();
-        mIHomeTopPresenter.getHomeBanner();
+//        mIHomeTopPresenter.getHomeBanner();
     }
 
     public void onResume() {

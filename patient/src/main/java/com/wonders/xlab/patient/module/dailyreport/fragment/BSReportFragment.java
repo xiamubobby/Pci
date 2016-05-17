@@ -16,7 +16,7 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.dailyreport.adapter.BSReportAdapter;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportBean;
+import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportRealmBean;
 import com.wonders.xlab.patient.otto.BSSaveSuccessOtto;
 import com.wonders.xlab.patient.otto.ShowMeasureChooseDialogOtto;
 import com.wonders.xlab.patient.mvp.presenter.IBSReportPresenter;
@@ -95,7 +95,7 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
     }
 
     @Override
-    public void showBSList(List<BSReportBean> beanList) {
+    public void showBSList(List<BSReportRealmBean> beanList) {
         if (null == mBSReportAdapter) {
             mBSReportAdapter = new BSReportAdapter();
         }

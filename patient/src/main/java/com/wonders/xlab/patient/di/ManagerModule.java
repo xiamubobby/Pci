@@ -5,6 +5,8 @@ import android.util.Log;
 import com.wonders.xlab.patient.BuildConfig;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.application.XApplication;
+import com.wonders.xlab.patient.util.AlarmUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -13,6 +15,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import im.hua.library.base.retrofit.HttpLoggingInterceptor;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -51,5 +55,19 @@ public class ManagerModule {
     @Singleton
     AIManager provideAIManager() {
         return new AIManager();
+    }
+
+    @Provides
+    @Singleton
+    Realm provideRealm(XApplication application) {
+        RealmConfiguration config = new RealmConfiguration.Builder(application).deleteRealmIfMigrationNeeded().build();
+        Realm.setDefaultConfiguration(config);
+        return Realm.getDefaultInstance();
+    }
+
+    @Provides
+    @Singleton
+    AlarmUtil provideAlarmUtil(XApplication application) {
+        return new AlarmUtil();
     }
 }

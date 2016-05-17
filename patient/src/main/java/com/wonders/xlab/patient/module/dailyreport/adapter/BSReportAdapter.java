@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportBean;
+import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportRealmBean;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -18,7 +18,7 @@ import im.hua.utils.DateUtil;
 /**
  * Created by hua on 16/3/20.
  */
-public class BSReportAdapter extends SimpleRVAdapter<BSReportBean> {
+public class BSReportAdapter extends SimpleRVAdapter<BSReportRealmBean> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -30,7 +30,7 @@ public class BSReportAdapter extends SimpleRVAdapter<BSReportBean> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
-        BSReportBean bean = getBean(position);
+        BSReportRealmBean bean = getBean(position);
         viewHolder.mTvBs.setText(String.format("%s：%smmol/L", bean.getMeasurePeriod(), bean.getBloodSugar()));
         viewHolder.mTvTime.setText(String.format("记录时间：%s", DateUtil.format(bean.getRecordTimeInMill(), "HH:mm")));
         viewHolder.mTvRange.setText(bean.getContent());
@@ -45,13 +45,13 @@ public class BSReportAdapter extends SimpleRVAdapter<BSReportBean> {
         }
 
         switch (bean.getBloodSugarStatus()) {
-            case BSReportBean.STATUS_HIGH:
+            case BSReportRealmBean.STATUS_HIGH:
                 viewHolder.mTvBs.setCompoundDrawables(drawableUp, null, null, null);
                 break;
-            case BSReportBean.STATUS_NORMAL:
+            case BSReportRealmBean.STATUS_NORMAL:
                 viewHolder.mTvBs.setCompoundDrawables(null, null, null, null);
                 break;
-            case BSReportBean.STATUS_LOW:
+            case BSReportRealmBean.STATUS_LOW:
                 viewHolder.mTvBs.setCompoundDrawables(drawableDown, null, null, null);
                 break;
         }

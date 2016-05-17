@@ -1,7 +1,7 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportBean;
+import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportRealmBean;
 import com.wonders.xlab.patient.mvp.presenter.IBSReportPresenter;
 
 import java.util.ArrayList;
@@ -38,27 +38,27 @@ public class BSReportCachePresenter extends BasePresenter implements IBSReportPr
     @Override
     public void getBSCacheList(String patientId) {
 
-        RealmQuery<BSReportBean> query = XApplication.realm.where(BSReportBean.class)
+        RealmQuery<BSReportRealmBean> query = XApplication.realm.where(BSReportRealmBean.class)
                 .equalTo("patientId", patientId)
                 .between("recordTimeInMill", beginTime.getTimeInMillis(), endTime.getTimeInMillis());
 
-        RealmResults<BSReportBean> results = query.findAll();
+        RealmResults<BSReportRealmBean> results = query.findAll();
         results.sort("recordTimeInMill", Sort.DESCENDING);
         if (results.size() <= 0) {
             listener.showEmptyView();
             return;
         }
 
-        List<BSReportBean> BSReportBeanList = new ArrayList<>();
-        for (BSReportBean bean : results) {
-            BSReportBeanList.add(bean);
+        List<BSReportRealmBean> BSReportRealmBeanList = new ArrayList<>();
+        for (BSReportRealmBean bean : results) {
+            BSReportRealmBeanList.add(bean);
         }
 
-        listener.showBSList(BSReportBeanList);
+        listener.showBSList(BSReportRealmBeanList);
     }
 
     public interface BPReportCachePresenterListener extends BasePresenterListener {
-        void showBSList(List<BSReportBean> beanList);
+        void showBSList(List<BSReportRealmBean> beanList);
 
         void showEmptyView();
     }

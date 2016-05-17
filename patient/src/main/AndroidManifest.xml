@@ -228,6 +228,7 @@
         <activity
             android:name=".module.service.detail.ServiceDetailActivity"
             android:screenOrientation="portrait"
+            android:label="@string/title_activity_service_detail"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".module.me.userinfo.UserInfoActivity"

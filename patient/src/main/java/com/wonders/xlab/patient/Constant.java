@@ -4,7 +4,10 @@ package com.wonders.xlab.patient;
  * Created by hua on 15/12/13.
  */
 public class Constant {
-    public static final int NOTIFY_ID = 123456;
+    /**
+     * 常驻通知栏
+     */
+    public static final int NOTIFY_ID_PERSISTENT = 123456;
 
     /**
      * 血压理想范围

@@ -10,7 +10,7 @@ import im.hua.library.base.mvp.listener.BaseModelListener;
  */
 public interface AllDoctorModelContract {
     interface Callback extends BaseModelListener{
-        void onReceiveAllDoctorListSuccess(DoctorAllEntity.RetValuesEntity valuesEntity);
+        void onReceiveAllDoctorListSuccess(DoctorAllEntity valuesEntity);
     }
 
     interface Actions extends IBaseModel{

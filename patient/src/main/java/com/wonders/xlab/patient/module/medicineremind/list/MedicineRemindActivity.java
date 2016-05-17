@@ -19,7 +19,6 @@ import com.wonders.xlab.patient.module.medicineremind.edit.SaveRemindSuccessOtto
 import com.wonders.xlab.patient.module.medicineremind.list.adapter.MedicineRemindRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.list.bean.MedicineRemindBean;
 import com.wonders.xlab.patient.mvp.presenter.MedicineRemindPresenterContract;
-import com.wonders.xlab.patient.util.AlarmUtil;
 
 import java.util.List;
 
@@ -40,8 +39,6 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
     private MedicineRemindPresenterContract.Actions mMedicineRemindPresenter;
     private String mPatientId;
 
-    private AlarmUtil mAlarmUtil = AlarmUtil.newInstance();
-
     @Override
     public int getContentLayout() {
         return R.layout.medicine_remind_activity;
@@ -55,7 +52,6 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         OttoManager.register(this);
         ButterKnife.bind(this);
 
@@ -112,7 +108,7 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
                     MedicineRemindBean bean = mMedicineRemindRVAdapter.getBean(position);
                     mMedicineRemindPresenter.changeRemindState(bean.id.get(), !bean.shouldAlarm.get());
 
-                    mAlarmUtil.scheduleMedicineRemindAlarm(MedicineRemindActivity.this);
+                    ((XApplication)getApplication()).getComponent().getAlarmUtil().scheduleMedicineRemindAlarm(MedicineRemindActivity.this);
                 }
             });
             mMedicineRemindRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {

@@ -48,18 +48,11 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
         if (!TextUtils.isEmpty(username) && username.equals(AIManager.getInstance().getPatientTel())) {
             return;
         }
-        // 如果是群聊消息，获取到group id
-//        if (message.getChatType() == EMMessage.ChatType.GroupChat) {
-//            if (!message.getTo().equals(username)) {
-//                // 消息不是发给当前会话，return
-////                return;
-//            }
-//        }
 
         String title = message.getStringAttribute("title", "");
         int type = message.getIntAttribute("type", -1);//-1:默认处理，即通过环信后台发送 0:提醒 1:内容 2：强制退出(由于用户锁定账户等等原因的安全考虑)
 
-        int notifyId = Constant.NOTIFY_ID;
+        int notifyId = Constant.NOTIFY_ID_PERSISTENT;
 
         /**
          * -1:默认处理，即通过环信后台发送
