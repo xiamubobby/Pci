@@ -26,6 +26,6 @@ public interface MedicineRemindEditPresenterContract {
          * 如果是修改，则需要设置id
          * @param body
          */
-        void addOrModify(MedicineRemindEditBody body);
+        void saveMedicineRemind(MedicineRemindEditBody body);
     }
 }

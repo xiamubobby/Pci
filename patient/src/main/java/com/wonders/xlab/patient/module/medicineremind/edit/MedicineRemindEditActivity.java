@@ -221,7 +221,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
                             @Override
                             public void onCompleted() {
                                 body.setMedicationUsages(mUsagesEntityList);
-                                mPresenter.addOrModify(body);
+                                mPresenter.saveMedicineRemind(body);
                             }
 
                             @Override

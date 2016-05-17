@@ -142,7 +142,7 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
         mIndicatorHome.setViewPager(mViewPagerHome);
 
         setupBottomFunctionView();
-//        mIHomeTopPresenter.getHomeBanner();
+        mIHomeTopPresenter.getHomeBanner();
     }
 
     public void onResume() {

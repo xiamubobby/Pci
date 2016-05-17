@@ -1,7 +1,7 @@
 # Add project specific ProGuard rules here.
 # By default, the flags in this file are appended to flags specified
 # in /Users/hua/android-sdk-macosx/tools/proguard/proguard-android.txt
-# You can addOrModify the include path and order by changing the proguardFiles
+# You can saveMedicineRemind the include path and order by changing the proguardFiles
 # directive in build.gradle.
 #
 # For more details, see

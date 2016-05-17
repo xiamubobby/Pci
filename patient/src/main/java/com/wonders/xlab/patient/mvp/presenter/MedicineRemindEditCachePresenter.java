@@ -3,11 +3,14 @@ package com.wonders.xlab.patient.mvp.presenter;
 import android.text.TextUtils;
 
 import com.wonders.xlab.patient.Constant;
+import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.data.realm.MedicationUsagesRealm;
 import com.wonders.xlab.patient.data.realm.MedicineRemindRealm;
 import com.wonders.xlab.patient.module.medicineremind.MedicineRealmBean;
 import com.wonders.xlab.patient.mvp.entity.MedicationUsagesEntity;
 import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
+import com.wonders.xlab.patient.mvp.model.MedicineRemindAddOrModifyModel;
+import com.wonders.xlab.patient.mvp.model.MedicineRemindAddOrModifyModelContract;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,15 +29,22 @@ import rx.functions.Func1;
 /**
  * Created by hua on 16/5/6.
  */
-public class MedicineRemindEditCachePresenter extends BasePresenter implements MedicineRemindEditPresenterContract.Actions {
+public class MedicineRemindEditCachePresenter extends BasePresenter implements MedicineRemindEditPresenterContract.Actions, MedicineRemindAddOrModifyModelContract.Callback {
     @Inject
     Realm mRealm;
+
+    @Inject
+    AIManager mAIManager;
+
+    private MedicineRemindAddOrModifyModelContract.Actions mAddOrModifyModel;
 
     private MedicineRemindEditPresenterContract.ViewListener mViewListener;
 
     @Inject
-    public MedicineRemindEditCachePresenter(MedicineRemindEditPresenterContract.ViewListener viewListener) {
+    public MedicineRemindEditCachePresenter(MedicineRemindEditPresenterContract.ViewListener viewListener, MedicineRemindAddOrModifyModel modifyModel) {
+        mAddOrModifyModel = modifyModel;
         mViewListener = viewListener;
+        addModel(modifyModel);
     }
 
     @Override
@@ -85,7 +95,9 @@ public class MedicineRemindEditCachePresenter extends BasePresenter implements M
     private Calendar calendar = Calendar.getInstance();
 
     @Override
-    public void addOrModify(MedicineRemindEditBody body) {
+    public void saveMedicineRemind(MedicineRemindEditBody body) {
+        mAddOrModifyModel.addOrModify(mAIManager.getPatientId(),body,this);
+
         final MedicineRemindRealm remindRealm;
         mRealm.beginTransaction();
         if (TextUtils.isEmpty(body.getId())) {//创建
@@ -152,4 +164,13 @@ public class MedicineRemindEditCachePresenter extends BasePresenter implements M
         mViewListener.saveSuccess("保存成功");
     }
 
+    @Override
+    public void addOrModifySuccess(String message) {
+
+    }
+
+    @Override
+    public void onReceiveFailed(int code, String message) {
+
+    }
 }

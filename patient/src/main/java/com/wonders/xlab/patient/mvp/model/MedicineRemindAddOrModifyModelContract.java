@@ -1,5 +1,7 @@
 package com.wonders.xlab.patient.mvp.model;
 
+import android.support.annotation.NonNull;
+
 import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
 
 import im.hua.library.base.mvp.IBaseModel;
@@ -17,6 +19,6 @@ public interface MedicineRemindAddOrModifyModelContract {
 
     interface Actions extends IBaseModel {
 
-        void addOrModify(String patientId, MedicineRemindEditBody body, Callback callback);
+        void addOrModify(String patientId, MedicineRemindEditBody body,@NonNull Callback callback);
     }
 }

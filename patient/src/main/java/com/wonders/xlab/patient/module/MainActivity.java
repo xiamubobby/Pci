@@ -25,14 +25,19 @@ import com.wonders.xlab.patient.module.otto.MainBottomUnreadNotifyCountOtto;
 import com.wonders.xlab.patient.module.service.ServiceFragment;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.otto.MeNotifyCountOtto;
+import com.wonders.xlab.patient.service.XEMChatService;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseActivity;
 import im.hua.utils.NotifyUtil;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 /**
  * 包含整个APP的入口，容纳Viewpager
@@ -60,8 +65,6 @@ public class MainActivity extends BaseActivity {
         }
         if (((XApplication) getApplication()).showSplash()) {
             startActivity(new Intent(this, SplashActivity.class));
-            finish();
-            return;
         }
 
         setContentView(R.layout.main_activity);
@@ -81,16 +84,16 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        /*Observable.just(null)
+        Observable.just(null)
                 .delaySubscription(5000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Object>() {
                     @Override
                     public void call(Object o) {
-                        mAlarmUtil.scheduleMedicineRemindAlarm(MainActivity.this);
+                        ((XApplication)getApplication()).getComponent().getAlarmUtil().scheduleMedicineRemindAlarm(MainActivity.this);
                         startService(new Intent(MainActivity.this, XEMChatService.class));
                     }
-                });*/
+                });
     }
 
     private void setupBottomTab() {
