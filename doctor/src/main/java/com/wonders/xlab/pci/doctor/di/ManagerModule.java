@@ -1,8 +1,6 @@
 package com.wonders.xlab.pci.doctor.di;
 
 
-import android.util.Log;
-
 import com.wonders.xlab.pci.doctor.BuildConfig;
 import com.wonders.xlab.pci.doctor.Constant;
 import com.wonders.xlab.pci.doctor.application.AIManager;
@@ -33,12 +31,13 @@ public class ManagerModule {
     @Singleton
     protected Retrofit provideRetrofit() {
         String endPoint = BuildConfig.DEBUG ? Constant.BASE_URL_DEBUG : Constant.BASE_URL;
-        if (BuildConfig.DEBUG) Log.d("ManagerModule", endPoint);
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(30, TimeUnit.SECONDS);
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        builder.addInterceptor(logging);
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            builder.addInterceptor(logging);
+        }
         OkHttpClient client = builder.build();
 
         return new Retrofit.Builder().baseUrl(endPoint)

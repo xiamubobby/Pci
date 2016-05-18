@@ -52,9 +52,19 @@ public class XEMChatService extends Service {
         OttoManager.register(this);
         Notification notification = NotifyUtil.generateNotification(this, MainActivity.class, null, getResources().getString(R.string.app_name), "正在运行", R.drawable.ic_notification, false, false, false, 0xff30bdf2);
         startForeground(Constant.NOTIFY_ID, notification);
+
+        initEMChat();
         initAutoStart();
         login();
         initBroadcastReceiver();
+    }
+
+    private void initEMChat() {
+        EMChat.getInstance().init(this);
+        EMChatManager.getInstance().getChatOptions().setNotifyBySoundAndVibrate(false);//不发通知，而是走广播
+        EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);
+        //TODO 在做打包混淆时，要关闭debug模式，避免消耗不必要的资源
+        EMChat.getInstance().setDebugMode(false);
     }
 
     private void initBroadcastReceiver() {

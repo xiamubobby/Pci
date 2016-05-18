@@ -14,15 +14,15 @@ import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.base.AppbarActivity;
 import com.wonders.xlab.pci.doctor.module.chatroom.ChatFragment;
-import com.wonders.xlab.pci.doctor.module.patientinfo.medicalrecords.MedicalRecordsFragment;
+import com.wonders.xlab.pci.doctor.module.patientinfo.basicinfo.UserInfoFragment;
 import com.wonders.xlab.pci.doctor.module.patientinfo.bloodpressure.BPFragment;
 import com.wonders.xlab.pci.doctor.module.patientinfo.bloodsugar.BSFragment;
 import com.wonders.xlab.pci.doctor.module.patientinfo.indicator.TestIndicatorFragment;
 import com.wonders.xlab.pci.doctor.module.patientinfo.medicalpicture.MedicalRecordFragment;
+import com.wonders.xlab.pci.doctor.module.patientinfo.medicalrecords.MedicalRecordsFragment;
 import com.wonders.xlab.pci.doctor.module.patientinfo.prescription.PrescriptionFragment;
 import com.wonders.xlab.pci.doctor.module.patientinfo.surgicalhistory.SurgicalHistoryFragment;
 import com.wonders.xlab.pci.doctor.module.patientinfo.symptom.SymptomHRFragment;
-import com.wonders.xlab.pci.doctor.module.patientinfo.basicinfo.UserInfoFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -98,7 +98,7 @@ public class PatientInfoContainerActivity extends AppbarActivity {
         patientName = intent.getStringExtra(EXTRA_PATIENT_NAME);
         patientPhoneNumber = intent.getStringExtra(EXTRA_PATIENT_PHONE_NUMBER);
 
-        setToolbarTitle("患者:" + patientName);
+        setToolbarTitle(patientName);
 
         mVPAdapter = new FragmentVPAdapter(getFragmentManager());
         mVPAdapter.addFragment(ChatFragment.newInstance(patientId, patientName, patientPhoneNumber, ownerId, imGroupId, groupName), "聊天");

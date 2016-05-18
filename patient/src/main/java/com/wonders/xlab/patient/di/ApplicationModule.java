@@ -1,7 +1,5 @@
 package com.wonders.xlab.patient.di;
 
-import android.content.res.Resources;
-
 import com.wonders.xlab.patient.application.XApplication;
 
 import dagger.Module;
@@ -22,10 +20,5 @@ public class ApplicationModule {
     @Provides
     XApplication provideApplication() {
         return mApplication;
-    }
-
-    @Provides
-    Resources provideApplicationContext() {
-        return mApplication.getResources();
     }
 }
