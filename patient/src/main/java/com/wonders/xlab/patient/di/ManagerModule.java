@@ -1,10 +1,8 @@
 package com.wonders.xlab.patient.di;
 
-import com.wonders.xlab.patient.BuildConfig;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.util.AlarmUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -12,7 +10,6 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import im.hua.library.base.retrofit.HttpLoggingInterceptor;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import okhttp3.OkHttpClient;
@@ -33,20 +30,19 @@ public class ManagerModule {
     @Provides
     @Singleton
     Retrofit provideRetrofit() {
-        String endPoint = BuildConfig.DEBUG ? Constant.BASE_URL_DEBUG : Constant.BASE_URL;
+        String endPoint = Constant.BASE_URL;//BuildConfig.DEBUG ? Constant.BASE_URL_DEBUG : Constant.BASE_URL;
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(30, TimeUnit.SECONDS);
-        if (BuildConfig.DEBUG) {
+        /*if (BuildConfig.DEBUG) {
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(logging);
-        }
-        OkHttpClient client = builder.build();
+        }*/
 
         return new Retrofit.Builder().baseUrl(endPoint)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//必须加上
-                .client(client)
+                .client(builder.build())
                 .build();
     }
 
@@ -62,11 +58,5 @@ public class ManagerModule {
         RealmConfiguration config = new RealmConfiguration.Builder(application).deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(config);
         return Realm.getDefaultInstance();
-    }
-
-    @Provides
-    @Singleton
-    AlarmUtil provideAlarmUtil(XApplication application) {
-        return new AlarmUtil();
     }
 }

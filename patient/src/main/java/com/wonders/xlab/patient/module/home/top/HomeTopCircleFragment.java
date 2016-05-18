@@ -44,7 +44,7 @@ public class HomeTopCircleFragment extends BaseFragment implements HomeTopPresen
     @Bind(R.id.tv_home_top_circle_right)
     TextView mTvRight;
 
-    private HomeTopPresenter mTopPresenter;
+    private HomeTopPresenterContract.Actions mTopPresenter;
 
 
     public HomeTopCircleFragment() {
@@ -58,17 +58,20 @@ public class HomeTopCircleFragment extends BaseFragment implements HomeTopPresen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OttoManager.register(this);
+
         mTopPresenter = DaggerHomeTopComponent.builder()
                 .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
                 .homeTopModule(new HomeTopModule(this))
                 .build()
                 .getHomeTopPresenter();
+
+        addPresenter(mTopPresenter);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        OttoManager.register(this);
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.home_top_circle_fragment, container, false);
@@ -142,7 +145,6 @@ public class HomeTopCircleFragment extends BaseFragment implements HomeTopPresen
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
 
@@ -193,5 +195,11 @@ public class HomeTopCircleFragment extends BaseFragment implements HomeTopPresen
             mTvRight.setText("记录\n0\n次/分");
             mTvRight.setTextColor(Color.parseColor("#006b93"));
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        OttoManager.unregister(this);
     }
 }

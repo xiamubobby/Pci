@@ -12,6 +12,7 @@ import com.wonders.xlab.patient.service.AlarmService;
 import java.util.Calendar;
 
 import im.hua.utils.DateUtil;
+import io.realm.Realm;
 import io.realm.RealmResults;
 
 /**
@@ -34,40 +35,47 @@ public class AlarmUtil {
         return mAlarmUtil;
     }
 
-    public void scheduleMedicineRemindAlarm(Context context) {
-        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+    public void scheduleMedicineRemindAlarm(final Context context) {
+        final AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         calendar.setTimeInMillis(System.currentTimeMillis());
 
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        long nowTime = DateUtil.parseToLong(hour + ":" + minute, "HH:mm");
+        final long nowTime = DateUtil.parseToLong(hour + ":" + minute, "HH:mm");
 
         try {
-            RealmResults<MedicineRemindRealm> realmResults = XApplication.realm.where(MedicineRemindRealm.class)
-                    .greaterThan("expireTimeInMill", System.currentTimeMillis())
-                    .greaterThan("remindersTimeInMill", nowTime)
-                    .findAll()
-                    .distinct("remindersTimeInMill");
 
-            for (MedicineRemindRealm realm : realmResults) {
-                String[] timeSplit = realm.getRemindersTime().split(":");
-                calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeSplit[0]));
-                calendar.set(Calendar.MINUTE, Integer.parseInt(timeSplit[1]));
+            XApplication.realm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    RealmResults<MedicineRemindRealm> realmResults = realm.where(MedicineRemindRealm.class)
+                            .greaterThan("expireTimeInMill", System.currentTimeMillis())
+                            .greaterThan("remindersTimeInMill", nowTime)
+                            .findAll()
+                            .distinct("remindersTimeInMill");
 
-                Intent intent = new Intent(context, AlarmService.class);
-                intent.putExtra(AlarmService.EXTRA_TIME, realm.getRemindersTimeInMill());
-                PendingIntent mAlarmSender = PendingIntent.getService(context,
-                        Integer.parseInt(realm.getId()), intent, 0);
+                    for (MedicineRemindRealm remindRealm : realmResults) {
+                        String[] timeSplit = remindRealm.getRemindersTime().split(":");
+                        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeSplit[0]));
+                        calendar.set(Calendar.MINUTE, Integer.parseInt(timeSplit[1]));
 
-                if (realm.isShouldAlarm()) {
-                    am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mAlarmSender);
-                } else {
-                    am.cancel(mAlarmSender);
+                        Intent intent = new Intent(context, AlarmService.class);
+                        intent.putExtra(AlarmService.EXTRA_TIME, remindRealm.getRemindersTimeInMill());
+                        PendingIntent mAlarmSender = PendingIntent.getService(context,
+                                Integer.parseInt(remindRealm.getId()), intent, 0);
+
+                        if (remindRealm.isShouldAlarm()) {
+                            am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), mAlarmSender);
+                        } else {
+                            am.cancel(mAlarmSender);
+                        }
+
+                    }
                 }
+            });
 
-            }
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
     }

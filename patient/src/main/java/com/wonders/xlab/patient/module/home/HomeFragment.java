@@ -18,6 +18,7 @@ import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.common.viewpager.LooperViewPager;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.dailyreport.DailyReportActivity;
 import com.wonders.xlab.patient.module.healthchart.HealthChartActivity;
 import com.wonders.xlab.patient.module.healthrecord.HealthRecordActivity;
@@ -27,8 +28,6 @@ import com.wonders.xlab.patient.module.home.bean.HomeBannerBean;
 import com.wonders.xlab.patient.module.home.top.HomeTopCircleFragment;
 import com.wonders.xlab.patient.module.home.top.HomeTopImageFragment;
 import com.wonders.xlab.patient.module.medicineremind.list.MedicineRemindActivity;
-import com.wonders.xlab.patient.mvp.presenter.IHomeTopPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.HomeTopPresenter;
 import com.wonders.xlab.patient.util.UmengEventId;
 
 import java.util.ArrayList;
@@ -42,7 +41,7 @@ import im.hua.uikit.viewpager.CirclePageIndicator;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeTopPresenterListener {
+public class HomeFragment extends BaseFragment implements HomePresenterContract.ViewListener {
 
     @Bind(R.id.view_pager_home)
     LooperViewPager mViewPagerHome;
@@ -54,8 +53,6 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
     private HomeRVAdapter homeRVAdapter;
 
     private HomeTopVPAdapter mHomeTopVPAdapter;
-
-    private IHomeTopPresenter mIHomeTopPresenter;
 
     private ArrayList<HomeItemBean> beanArrayList;
 
@@ -70,9 +67,25 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mIHomeTopPresenter = new HomeTopPresenter(this);
-        addPresenter(mIHomeTopPresenter);
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.home_fragment, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         if (null != beanArrayList) {
             beanArrayList.clear();
         } else {
@@ -112,20 +125,7 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
 
             beanArrayList.add(homeItemBean);
         }
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.home_fragment, container, false);
-        ButterKnife.bind(this, view);
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         mRecyclerViewHome.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
         mRecyclerViewHome.setItemAnimator(new DefaultItemAnimator());
         setupBottomFunctionView();
@@ -142,7 +142,14 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
 
         mIndicatorHome.setViewPager(mViewPagerHome);
 
-        mIHomeTopPresenter.getHomeBanner();
+        HomePresenterContract.Actions homePresenter = DaggerHomeComponent.builder()
+                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .homeModule(new HomeModule(this))
+                .build()
+                .getHomePresenter();
+
+        addPresenter(homePresenter);
+        homePresenter.getHomeBanner();
     }
 
     public void onResume() {
@@ -176,9 +183,6 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
                         case 3:
                             startActivity(new Intent(getActivity(), HealthChartActivity.class));
                             break;
-                        default:
-                            MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_MEDICINE_REMIND);
-                            showShortToast("即将开放，敬请期待...");
                     }
                 }
             });
@@ -192,7 +196,16 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
         super.onDestroyView();
         ButterKnife.unbind(this);
         mHomeTopVPAdapter = null;
-//        homeRVAdapter = null;
+        homeRVAdapter = null;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (null != beanArrayList) {
+            beanArrayList.clear();
+            beanArrayList = null;
+        }
     }
 
     @Override

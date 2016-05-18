@@ -54,12 +54,6 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.service_fragment, container, false);
         ButterKnife.bind(this, v);
-        servicePresenter = DaggerServiceComponent.builder()
-                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
-                .serviceModule(new ServiceModule(this))
-                .build()
-                .getServicePresenter();
-        addPresenter(servicePresenter);
         return v;
     }
 
@@ -90,6 +84,17 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
                 servicePresenter.getAllServices(true);
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        servicePresenter = DaggerServiceComponent.builder()
+                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .serviceModule(new ServiceModule(this))
+                .build()
+                .getServicePresenter();
+        addPresenter(servicePresenter);
         servicePresenter.getAllServices(true);
     }
 

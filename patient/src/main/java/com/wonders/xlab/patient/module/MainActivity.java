@@ -1,7 +1,10 @@
 package com.wonders.xlab.patient.module;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
@@ -13,10 +16,8 @@ import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 import com.wonders.xlab.common.flyco.TabEntity;
 import com.wonders.xlab.common.manager.OttoManager;
-import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.auth.login.LoginActivity;
 import com.wonders.xlab.patient.module.home.HomeFragment;
 import com.wonders.xlab.patient.module.me.MeFragment;
@@ -26,18 +27,15 @@ import com.wonders.xlab.patient.module.service.ServiceFragment;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.otto.MeNotifyCountOtto;
 import com.wonders.xlab.patient.service.XEMChatService;
+import com.wonders.xlab.patient.util.AlarmUtil;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.library.base.BaseActivity;
 import im.hua.utils.NotifyUtil;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 /**
  * 包含整个APP的入口，容纳Viewpager
@@ -51,7 +49,7 @@ public class MainActivity extends BaseActivity {
     @Bind(R.id.tab_main_bottom)
     CommonTabLayout mTabMainBottom;
 
-    private FragmentVPAdapter mFragmentVPAdapter;
+    private MainFragmentAdapter mFragmentAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,31 +68,18 @@ public class MainActivity extends BaseActivity {
 
         setContentView(R.layout.main_activity);
         ButterKnife.bind(MainActivity.this);
-
-        mFragmentVPAdapter = new FragmentVPAdapter(getFragmentManager());
-        mFragmentVPAdapter.addFragment(HomeFragment.getInstance());
-        mFragmentVPAdapter.addFragment(DoctorMyFragment.getInstance());
-        mFragmentVPAdapter.addFragment(ServiceFragment.getInstance());
-        mFragmentVPAdapter.addFragment(MeFragment.getInstance());
-        mViewPagerMain.setOffscreenPageLimit(4);
-        mViewPagerMain.setAdapter(mFragmentVPAdapter);
-
-        setupBottomTab();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Observable.just(null)
-                .delaySubscription(3000, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<Object>() {
-                    @Override
-                    public void call(Object o) {
-                        ((XApplication)getApplication()).getComponent().getAlarmUtil().scheduleMedicineRemindAlarm(MainActivity.this);
-                        startService(new Intent(MainActivity.this, XEMChatService.class));
-                    }
-                });
+        mFragmentAdapter = new MainFragmentAdapter(getFragmentManager());
+        mViewPagerMain.setAdapter(mFragmentAdapter);
+
+        setupBottomTab();
+
+        AlarmUtil.newInstance().scheduleMedicineRemindAlarm(MainActivity.this);
+        startService(new Intent(MainActivity.this, XEMChatService.class));
     }
 
     private void setupBottomTab() {
@@ -200,5 +185,37 @@ public class MainActivity extends BaseActivity {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);
+    }
+
+    class MainFragmentAdapter extends FragmentPagerAdapter{
+
+        public MainFragmentAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment = null;
+            switch (position) {
+                case 0:
+                    fragment = HomeFragment.getInstance();
+                    break;
+                case 1:
+                    fragment = DoctorMyFragment.getInstance();
+                    break;
+                case 2:
+                    fragment = ServiceFragment.getInstance();
+                    break;
+                case 3:
+                    fragment = MeFragment.getInstance();
+                    break;
+            }
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return 4;
+        }
     }
 }

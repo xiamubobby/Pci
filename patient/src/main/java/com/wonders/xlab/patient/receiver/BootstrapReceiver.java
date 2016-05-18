@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.wonders.xlab.patient.application.AIManager;
-import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.service.XEMChatService;
+import com.wonders.xlab.patient.util.AlarmUtil;
 
 
 public class BootstrapReceiver extends BroadcastReceiver {
@@ -17,8 +17,7 @@ public class BootstrapReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (AIManager.getInstance().hasLogin()) {
-//            AlarmUtil mAlarmUtil = AlarmUtil.newInstance();
-            ((XApplication) context.getApplicationContext()).getComponent().getAlarmUtil().scheduleMedicineRemindAlarm(context);
+            AlarmUtil.newInstance().scheduleMedicineRemindAlarm(context);
             context.startService(new Intent(context, XEMChatService.class));
         }
     }

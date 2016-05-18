@@ -26,6 +26,7 @@ import com.wonders.xlab.patient.module.medicineremind.searchmedicine.MedicineSea
 import com.wonders.xlab.patient.mvp.entity.MedicationUsagesEntity;
 import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
 import com.wonders.xlab.patient.mvp.presenter.MedicineRemindEditPresenterContract;
+import com.wonders.xlab.patient.util.AlarmUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -267,7 +268,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
 
     @Override
     public void saveSuccess(String message) {
-        ((XApplication)getApplication()).getComponent().getAlarmUtil().scheduleMedicineRemindAlarm(this);
+        AlarmUtil.newInstance().scheduleMedicineRemindAlarm(this);
         OttoManager.post(new SaveRemindSuccessOtto());
         showShortToast(message);
         finish();

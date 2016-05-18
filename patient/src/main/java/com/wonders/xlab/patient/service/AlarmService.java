@@ -35,7 +35,7 @@ import rx.functions.Func1;
 public class AlarmService extends Service implements MediaPlayer.OnPreparedListener{
     public final static String EXTRA_TIME = "time";
 
-    AlarmUtil mAlarmUtil;
+    AlarmUtil mAlarmUtil = AlarmUtil.newInstance();
 
     private AlertDialog.Builder builder;
 
@@ -53,7 +53,6 @@ public class AlarmService extends Service implements MediaPlayer.OnPreparedListe
     public void onCreate() {
         super.onCreate();
         initMediaPlayer();
-        mAlarmUtil = ((XApplication) getApplication()).getComponent().getAlarmUtil();
     }
 
     private void initMediaPlayer() {

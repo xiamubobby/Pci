@@ -1,33 +1,34 @@
-package com.wonders.xlab.patient.mvp.presenter.impl;
+package com.wonders.xlab.patient.module.home;
 
 import com.wonders.xlab.patient.module.home.bean.HomeBannerBean;
 import com.wonders.xlab.patient.mvp.entity.HomeBannerEntity;
-import com.wonders.xlab.patient.mvp.model.IHomeBannerModel;
-import com.wonders.xlab.patient.mvp.model.impl.HomeBannerModel;
-import com.wonders.xlab.patient.mvp.presenter.IHomeTopPresenter;
+import com.wonders.xlab.patient.mvp.model.HomeBannerModelContract;
+import com.wonders.xlab.patient.mvp.model.HomeBannerModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import im.hua.library.base.mvp.impl.BasePresenter;
-import im.hua.library.base.mvp.listener.BasePresenterListener;
 
 /**
  * Created by hua on 16/4/5.
  */
-public class HomeTopPresenter extends BasePresenter implements IHomeTopPresenter, HomeBannerModel.HomeBannerModelListener {
-    private HomeTopPresenterListener mListener;
-    private IHomeBannerModel mBannerModel;
+public class HomePresenter extends BasePresenter implements HomePresenterContract.Actions, HomeBannerModelContract.Callback {
+    private HomePresenterContract.ViewListener mListener;
+    private HomeBannerModelContract.Actions mBannerModel;
 
-    public HomeTopPresenter(HomeTopPresenterListener listener) {
+    @Inject
+    public HomePresenter(HomePresenterContract.ViewListener listener,HomeBannerModel homeBannerModel) {
         mListener = listener;
-        mBannerModel = new HomeBannerModel(this);
+        mBannerModel = homeBannerModel;
         addModel(mBannerModel);
     }
 
     @Override
     public void getHomeBanner() {
-        mBannerModel.getHomeBanner();
+        mBannerModel.getHomeBanner(this);
     }
 
     @Override
@@ -48,9 +49,5 @@ public class HomeTopPresenter extends BasePresenter implements IHomeTopPresenter
     public void onReceiveFailed(int code, String message) {
         mListener.hideLoading();
         mListener.showNetworkError(message);
-    }
-
-    public interface HomeTopPresenterListener extends BasePresenterListener {
-        void showHomeTopBanner(List<HomeBannerBean> homeBannerBeanList);
     }
 }
