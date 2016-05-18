@@ -109,7 +109,7 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
             public void onClick() {
                 mGroupAuthPresenter.getGroupMemberList(mDoctorId, mOwnerId);
             }
-        });
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
             public void onClick() {
                 mGroupAuthPresenter.getGroupMemberList(mDoctorId, mOwnerId);
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -129,7 +129,7 @@ public class GroupAuthActivity extends AppbarActivity implements GroupAuthPresen
             public void onClick() {
                 mGroupAuthPresenter.getGroupMemberList(mDoctorId, mOwnerId);
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

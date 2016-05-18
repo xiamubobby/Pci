@@ -111,7 +111,7 @@ public class MedicalRecordsActivity extends AppbarActivity implements MedicalRec
             public void onClick() {
                 mMedicalRecordsPresenter.getMedicalRecordsList(mPatientId, true);
             }
-        });
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class MedicalRecordsActivity extends AppbarActivity implements MedicalRec
             public void onClick() {
                 mMedicalRecordsPresenter.getMedicalRecordsList(mPatientId, true);
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -131,7 +131,7 @@ public class MedicalRecordsActivity extends AppbarActivity implements MedicalRec
             public void onClick() {
                 mMedicalRecordsPresenter.getMedicalRecordsList(mPatientId, true);
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

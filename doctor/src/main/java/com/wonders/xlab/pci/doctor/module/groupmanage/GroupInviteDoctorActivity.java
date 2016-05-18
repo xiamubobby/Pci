@@ -108,7 +108,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
         });
         mGroupInvitePresenter = new GroupDoctorInvitePresenter(this);
         addPresenter(mGroupInvitePresenter);
-        mRecyclerView.showEmptyView(null, true);
+        mRecyclerView.showEmptyView(null, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -171,17 +171,17 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
 
     @Override
     public void showNetworkError(String message) {
-        mRecyclerView.showNetworkErrorView(null);
+        mRecyclerView.showNetworkErrorView(null, im.hua.uikit.R.id.btn_common_network_error_retry);
     }
 
     @Override
     public void showServerError(String message) {
-        mRecyclerView.showServerErrorView(null);
+        mRecyclerView.showServerErrorView(null, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
     public void showEmptyView(String message) {
-        mRecyclerView.showEmptyView(null, true);
+        mRecyclerView.showEmptyView(null, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

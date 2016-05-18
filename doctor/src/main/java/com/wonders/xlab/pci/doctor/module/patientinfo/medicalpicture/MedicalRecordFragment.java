@@ -124,7 +124,7 @@ public class MedicalRecordFragment extends BaseFragment implements MedicalRecord
             public void onClick() {
                 mMedicalRecordPresenter.getMedicalRecordList(mPatientId);
             }
-        });
+        }, im.hua.uikit.R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -134,7 +134,7 @@ public class MedicalRecordFragment extends BaseFragment implements MedicalRecord
             public void onClick() {
                 mMedicalRecordPresenter.getMedicalRecordList(mPatientId);
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -144,7 +144,7 @@ public class MedicalRecordFragment extends BaseFragment implements MedicalRecord
             public void onClick() {
                 mMedicalRecordPresenter.getMedicalRecordList(mPatientId);
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

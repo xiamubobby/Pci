@@ -107,7 +107,7 @@ public class OrderListActivity extends AppbarActivity implements OrderListPresen
             public void onClick() {
                 mOrderListPresenter.getOrderList(mPatientId, true);
             }
-        });
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class OrderListActivity extends AppbarActivity implements OrderListPresen
             public void onClick() {
                 mOrderListPresenter.getOrderList(mPatientId, true);
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -127,7 +127,7 @@ public class OrderListActivity extends AppbarActivity implements OrderListPresen
             public void onClick() {
                 mOrderListPresenter.getOrderList(mPatientId, true);
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

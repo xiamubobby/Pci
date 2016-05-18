@@ -128,7 +128,7 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
             public void onClick() {
                 getActivity().startActivity(new Intent(getActivity(), SymptomActivity.class));
             }
-        }, false);
+        }, false, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
 
     }
 

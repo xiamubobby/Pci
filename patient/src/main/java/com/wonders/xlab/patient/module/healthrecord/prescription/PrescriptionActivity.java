@@ -110,7 +110,7 @@ public class PrescriptionActivity extends AppbarActivity implements Prescription
             public void onClick() {
                 mPrescriptionPresenter.getPrescriptionList(mPatientId, true);
             }
-        });
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -120,7 +120,7 @@ public class PrescriptionActivity extends AppbarActivity implements Prescription
             public void onClick() {
                 mPrescriptionPresenter.getPrescriptionList(mPatientId, true);
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class PrescriptionActivity extends AppbarActivity implements Prescription
             public void onClick() {
                 mPrescriptionPresenter.getPrescriptionList(mPatientId, true);
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

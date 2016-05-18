@@ -128,6 +128,7 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
         super.onViewCreated(view, savedInstanceState);
         mRecyclerViewHome.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
         mRecyclerViewHome.setItemAnimator(new DefaultItemAnimator());
+        setupBottomFunctionView();
 
         mHomeTopVPAdapter = new HomeTopVPAdapter(getFragmentManager());
         mHomeTopVPAdapter.registerDataSetObserver(new DataSetObserver() {
@@ -141,7 +142,6 @@ public class HomeFragment extends BaseFragment implements HomeTopPresenter.HomeT
 
         mIndicatorHome.setViewPager(mViewPagerHome);
 
-        setupBottomFunctionView();
         mIHomeTopPresenter.getHomeBanner();
     }
 

@@ -115,7 +115,7 @@ public class AllDoctorActivity extends AppbarActivity implements AllDoctorPresen
             public void onClick() {
                 mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
             }
-        }, true);
+        }, true, R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -135,7 +135,7 @@ public class AllDoctorActivity extends AppbarActivity implements AllDoctorPresen
             public void onClick() {
                 mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
             }
-        });
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -145,7 +145,7 @@ public class AllDoctorActivity extends AppbarActivity implements AllDoctorPresen
             public void onClick() {
                 mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

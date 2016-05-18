@@ -128,7 +128,7 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
             public void onClick() {
                 mPatientPresenter.getPatientList(AIManager.getInstance().getDoctorId());
             }
-        });
+        }, im.hua.uikit.R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -138,7 +138,7 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
             public void onClick() {
                 mPatientPresenter.getPatientList(AIManager.getInstance().getDoctorId());
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -148,7 +148,7 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
             public void onClick() {
                 mPatientPresenter.getPatientList(AIManager.getInstance().getDoctorId());
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

@@ -128,7 +128,7 @@ public class SurgicalHistoryFragment extends BaseFragment implements SurgicalHis
             public void onClick() {
                 mPresenter.getSurgicalHistory(mPatientId, true);
             }
-        });
+        }, im.hua.uikit.R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -138,7 +138,7 @@ public class SurgicalHistoryFragment extends BaseFragment implements SurgicalHis
             public void onClick() {
                 mPresenter.getSurgicalHistory(mPatientId, true);
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -148,7 +148,7 @@ public class SurgicalHistoryFragment extends BaseFragment implements SurgicalHis
             public void onClick() {
                 mPresenter.getSurgicalHistory(mPatientId, true);
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

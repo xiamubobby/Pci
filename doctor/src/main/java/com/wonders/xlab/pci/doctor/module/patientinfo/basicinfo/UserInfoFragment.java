@@ -115,7 +115,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoPresenter.
             public void onClick() {
                 mUserInfoPresenter.getUserInfo(mPatientId);
             }
-        });
+        }, im.hua.uikit.R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -125,7 +125,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoPresenter.
             public void onClick() {
                 mUserInfoPresenter.getUserInfo(mPatientId);
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -135,7 +135,7 @@ public class UserInfoFragment extends BaseFragment implements UserInfoPresenter.
             public void onClick() {
                 mUserInfoPresenter.getUserInfo(mPatientId);
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

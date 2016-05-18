@@ -218,7 +218,7 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
             public void onClick() {
 
             }
-        });
+        }, im.hua.uikit.R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -228,7 +228,7 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
             public void onClick() {
 
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -238,7 +238,7 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
             public void onClick() {
 
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

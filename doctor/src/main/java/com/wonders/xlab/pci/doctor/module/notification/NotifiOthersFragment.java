@@ -269,7 +269,7 @@ public class NotifiOthersFragment extends BaseFragment implements NotifiOthersPr
             public void onClick() {
                 mOthersPresenter.getOthersNotifi(true, AIManager.getInstance().getDoctorId());
             }
-        });
+        }, im.hua.uikit.R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -279,7 +279,7 @@ public class NotifiOthersFragment extends BaseFragment implements NotifiOthersPr
             public void onClick() {
                 mOthersPresenter.getOthersNotifi(true, AIManager.getInstance().getDoctorId());
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -289,7 +289,7 @@ public class NotifiOthersFragment extends BaseFragment implements NotifiOthersPr
             public void onClick() {
                 mOthersPresenter.getOthersNotifi(true, AIManager.getInstance().getDoctorId());
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

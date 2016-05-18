@@ -53,7 +53,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
          * 如果后面okhttp更新了，可去掉，而用square的
          */
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(40, TimeUnit.SECONDS);
+        builder.connectTimeout(30, TimeUnit.SECONDS);
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(logging);
@@ -177,7 +177,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
      * @param observable
      * @param callback
      */
-    protected <Entity extends BaseEntity> void request(@NonNull Observable<Response<Entity>> observable, final Callback<Entity> callback) {
+    protected <Entity extends BaseEntity> void request(@NonNull Observable<Response<Entity>> observable, @NonNull final Callback<Entity> callback) {
 
         Subscription subscribe = observable.subscribeOn(Schedulers.newThread())//一定要设置在新线程中进行网络请求
                 .observeOn(AndroidSchedulers.mainThread())
@@ -196,7 +196,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                             } else if (e instanceof JsonParseException || e instanceof MalformedJsonException) {
                                 callback.onFailed(ERROR_CODE_CLIENT_EXCEPTION, "数据解析出错，请稍候重试！");
                             } else {
-                                onFailed(ERROR_CODE_CLIENT_EXCEPTION, "请求失败，请检查网络后重试！");
+                                callback.onFailed(ERROR_CODE_CLIENT_EXCEPTION, "请求失败，请检查网络后重试！");
                             }
                         } else {
                             callback.onFailed(ERROR_CODE_CLIENT_EXCEPTION, "请求失败，请检查网络后重试！");

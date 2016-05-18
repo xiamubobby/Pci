@@ -68,7 +68,6 @@ public class ThirdServiceActivity extends AppbarActivity implements ServicePrese
             }
         });
 
-        recyclerView.setRefreshing(true);
         adapter = new ServiceRecyclerViewAdapter();
         adapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
             @Override
@@ -99,27 +98,42 @@ public class ThirdServiceActivity extends AppbarActivity implements ServicePrese
 
     @Override
     public void showLoading(String message) {
-
+        recyclerView.setRefreshing(true);
     }
 
     @Override
     public void showNetworkError(String message) {
-
+        recyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                servicePresenter.getAllServices(true);
+            }
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override
     public void showServerError(String message) {
-
+        recyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
+            @Override
+            public void onClick() {
+                servicePresenter.getAllServices(true);
+            }
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
     public void showEmptyView(String message) {
+        recyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+            @Override
+            public void onClick() {
 
+            }
+        },true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
     public void showErrorToast(String message) {
-
+        showShortToast(message);
     }
 
     @Override

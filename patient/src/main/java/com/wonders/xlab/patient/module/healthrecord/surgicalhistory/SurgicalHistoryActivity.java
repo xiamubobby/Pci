@@ -104,7 +104,7 @@ public class SurgicalHistoryActivity extends AppbarActivity implements SurgicalH
             public void onClick() {
                 mSurgicalHistoryPresenter.getSurgicalHistory(mPatientId, true);
             }
-        });
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class SurgicalHistoryActivity extends AppbarActivity implements SurgicalH
             public void onClick() {
                 mSurgicalHistoryPresenter.getSurgicalHistory(mPatientId, true);
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -124,7 +124,7 @@ public class SurgicalHistoryActivity extends AppbarActivity implements SurgicalH
             public void onClick() {
                 mSurgicalHistoryPresenter.getSurgicalHistory(mPatientId, true);
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

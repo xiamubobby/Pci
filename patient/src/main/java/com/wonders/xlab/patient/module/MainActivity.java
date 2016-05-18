@@ -58,14 +58,14 @@ public class MainActivity extends BaseActivity {
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         OttoManager.register(this);
-        if (!AIManager.getInstance().hasLogin()) {
+       /* if (!AIManager.getInstance().hasLogin()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
         }
         if (((XApplication) getApplication()).showSplash()) {
             startActivity(new Intent(this, SplashActivity.class));
-        }
+        }*/
 
         setContentView(R.layout.main_activity);
         ButterKnife.bind(MainActivity.this);
@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
         Observable.just(null)
-                .delaySubscription(5000, TimeUnit.MILLISECONDS)
+                .delaySubscription(3000, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Object>() {
                     @Override

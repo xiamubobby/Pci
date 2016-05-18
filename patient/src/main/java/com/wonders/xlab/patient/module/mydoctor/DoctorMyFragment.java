@@ -139,7 +139,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
             public void onClick() {
                 startActivity(new Intent(getActivity(), AllDoctorActivity.class));
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
         OttoManager.post(new DoctorTabChangeOtto(1));
     }
 
@@ -160,7 +160,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
             public void onClick() {
                 mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
             }
-        });
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -171,7 +171,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
                 mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
 
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Subscribe

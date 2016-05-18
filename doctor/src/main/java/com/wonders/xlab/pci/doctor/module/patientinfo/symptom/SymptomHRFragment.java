@@ -231,7 +231,7 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
             public void onClick() {
 
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -246,7 +246,7 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
             public void onClick() {
 
             }
-        });
+        }, im.hua.uikit.R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -256,7 +256,7 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
             public void onClick() {
 
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

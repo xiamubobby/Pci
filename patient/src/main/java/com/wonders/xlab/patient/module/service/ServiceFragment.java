@@ -90,12 +90,6 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
                 servicePresenter.getAllServices(true);
             }
         });
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         servicePresenter.getAllServices(true);
     }
 
@@ -138,22 +132,22 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
 
     @Override
     public void showNetworkError(String message) {
-        recyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+        recyclerView.showNetworkErrorView(new CommonRecyclerView.OnNetworkErrorViewClickListener() {
             @Override
             public void onClick() {
                 servicePresenter.getAllServices(true);
             }
-        }, true);
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override
     public void showServerError(String message) {
-        recyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+        recyclerView.showServerErrorView(new CommonRecyclerView.OnServerErrorViewClickListener() {
             @Override
             public void onClick() {
                 servicePresenter.getAllServices(true);
             }
-        }, true);
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -163,7 +157,7 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
             public void onClick() {
                 servicePresenter.getAllServices(true);
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

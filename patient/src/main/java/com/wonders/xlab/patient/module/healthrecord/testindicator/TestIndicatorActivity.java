@@ -108,7 +108,7 @@ public class TestIndicatorActivity extends AppbarActivity implements TestIndicat
             public void onClick() {
                 mTestIndicatorPresenter.getTestIndicatorList(mPatientId, true);
             }
-        });
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class TestIndicatorActivity extends AppbarActivity implements TestIndicat
             public void onClick() {
                 mTestIndicatorPresenter.getTestIndicatorList(mPatientId, true);
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -128,7 +128,7 @@ public class TestIndicatorActivity extends AppbarActivity implements TestIndicat
             public void onClick() {
                 mTestIndicatorPresenter.getTestIndicatorList(mPatientId, true);
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

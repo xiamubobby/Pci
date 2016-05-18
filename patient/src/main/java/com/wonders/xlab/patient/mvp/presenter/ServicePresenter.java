@@ -30,6 +30,7 @@ public class ServicePresenter extends BasePagePresenter implements ServicePresen
 
     @Override
     public void getAllServices(boolean isRefresh) {
+        serviceListener.showLoading("");
         serviceModel.getServiceList(new ServiceModelContract.Callback() {
             @Override
             public void onReceiveFailed(int code, String message) {
@@ -38,6 +39,11 @@ public class ServicePresenter extends BasePagePresenter implements ServicePresen
 
             @Override
             public void onReceiveServiceListSuccess(ServiceListEntity.RetValuesEntity retValuesEntity) {
+                if (retValuesEntity.getContent().size() == 0) {
+                    serviceListener.showEmptyView("");
+                    serviceListener.hideLoading();
+                    return;
+                }
                 final List<ServiceListCellDataUnit> units = Observable.from(retValuesEntity.getContent()).map(new Func1<ServiceListEntity.RetValuesEntity.Content, ServiceListCellDataUnit>() {
                     @Override
                     public ServiceListCellDataUnit call(ServiceListEntity.RetValuesEntity.Content content) {

@@ -10,7 +10,6 @@
 
     <include layout="@layout/appbar" />
 
-
     <im.hua.uikit.crv.CommonRecyclerView
         android:id="@+id/recycler_view_third_service"
         android:layout_width="match_parent"

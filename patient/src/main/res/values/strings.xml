@@ -126,5 +126,6 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_service_detail">服务详情</string>
+    <string name="btn_common_network_error_retry">点击重试</string>
 
 </resources>

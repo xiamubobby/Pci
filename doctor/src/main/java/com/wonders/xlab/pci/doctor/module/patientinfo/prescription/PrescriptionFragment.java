@@ -140,7 +140,7 @@ public class PrescriptionFragment extends BaseFragment implements PrescriptionPr
             public void onClick() {
                 mPresenter.getPrescriptionList(mPatientId, true);
             }
-        });
+        }, im.hua.uikit.R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -150,7 +150,7 @@ public class PrescriptionFragment extends BaseFragment implements PrescriptionPr
             public void onClick() {
                 mPresenter.getPrescriptionList(mPatientId, true);
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -160,7 +160,7 @@ public class PrescriptionFragment extends BaseFragment implements PrescriptionPr
             public void onClick() {
                 mPresenter.getPrescriptionList(mPatientId, true);
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

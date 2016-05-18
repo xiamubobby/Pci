@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,7 +59,7 @@ public class DailyReportActivity extends AppbarActivity {
 
     public final static String DEFAULT_SHOW_TAB_POSITION = "defaultShowTabPositiion";
 
-    private int mDefaultShowTabPosition = 0;
+    private int mDefaultShowTabPosition = -1;
 
     @Bind(R.id.view_pager_daily_record)
     ViewPager mViewPager;
@@ -88,9 +89,13 @@ public class DailyReportActivity extends AppbarActivity {
         }
         Intent intent = getIntent();
         if (null != intent) {
-            Bundle data = intent.getExtras();
-            if (null != data) {
-                mDefaultShowTabPosition = data.getInt(DEFAULT_SHOW_TAB_POSITION, 0);
+            mDefaultShowTabPosition = intent.getIntExtra(DEFAULT_SHOW_TAB_POSITION, -1);
+            Log.d("DailyReportActivity", "mDefaultShowTabPosition:" + mDefaultShowTabPosition);
+            if (-1 == mDefaultShowTabPosition) {
+                Bundle data = intent.getExtras();
+                if (null != data) {
+                    mDefaultShowTabPosition = data.getInt(DEFAULT_SHOW_TAB_POSITION, 0);
+                }
             }
         }
 

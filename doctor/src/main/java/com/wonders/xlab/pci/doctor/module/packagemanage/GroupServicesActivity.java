@@ -95,7 +95,7 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
             public void onClick() {
                 mGroupServicesPresenter.getPackages(mOwnerId);
             }
-        });
+        }, im.hua.uikit.R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
             public void onClick() {
                 mGroupServicesPresenter.getPackages(mOwnerId);
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -115,7 +115,7 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
             public void onClick() {
                 mGroupServicesPresenter.getPackages(mOwnerId);
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

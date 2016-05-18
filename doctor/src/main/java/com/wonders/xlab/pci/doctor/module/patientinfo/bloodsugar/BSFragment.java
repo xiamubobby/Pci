@@ -141,7 +141,7 @@ public class BSFragment extends BaseFragment implements BSPresenter.BSPresenterL
             public void onClick() {
                 mBSPresenter.getBSList(mPatientId,true);
             }
-        });
+        }, im.hua.uikit.R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -151,7 +151,7 @@ public class BSFragment extends BaseFragment implements BSPresenter.BSPresenterL
             public void onClick() {
                 mBSPresenter.getBSList(mPatientId,true);
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -161,7 +161,7 @@ public class BSFragment extends BaseFragment implements BSPresenter.BSPresenterL
             public void onClick() {
                 mBSPresenter.getBSList(mPatientId,true);
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

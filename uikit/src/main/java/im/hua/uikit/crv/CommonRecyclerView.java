@@ -3,6 +3,7 @@ package im.hua.uikit.crv;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -56,13 +57,18 @@ public class CommonRecyclerView extends FrameLayout {
     private boolean mIsLoadMore;
     private boolean mIsRefreshing;
 
-    private CircleImageView mCircleView;
-    private MaterialProgressDrawable mProgress;
     /**
-     * 加载更多view动画
-     * 正序
+     * 正在显示的View
      */
-    private long mLoadMoreAnimationDuration = 400;
+    private View mShowingView;
+
+    /**
+     *
+     */
+    public static final int HANDLE_VIEW_ID_NONE = -1;
+
+
+    private MaterialProgressDrawable mProgress;
     private TranslateAnimation showNoReverseAnimation = new TranslateAnimation(
             Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
             Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, -0.4f);
@@ -81,21 +87,30 @@ public class CommonRecyclerView extends FrameLayout {
 
     private Animation fadeIn = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
 
-    private Animation fadeOut = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_out);
-
     public CommonRecyclerView(Context context) {
         this(context, null);
     }
 
     public CommonRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CommonRecyclerView);
 
-        mEmptyView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_emptyView, R.layout.crv_empty), null, false);
-        mLoadingView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_loadingView, R.layout.crv_loading), null, false);
-        mNetworkErrorView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_networkErrorView, R.layout.crv_network_error), null, false);
-        mServerErrorView = LayoutInflater.from(context).inflate(array.getResourceId(R.styleable.CommonRecyclerView_serverErrorView, R.layout.crv_server_error), null, false);
+        int emptyResourceId = array.getResourceId(R.styleable.CommonRecyclerView_emptyView, -1);
+        if (emptyResourceId != -1) {
+            mEmptyView = LayoutInflater.from(context).inflate(emptyResourceId, null, false);
+        }
+        int loadingResId = array.getResourceId(R.styleable.CommonRecyclerView_loadingView, -1);
+        if (-1 != loadingResId) {
+            mLoadingView = LayoutInflater.from(context).inflate(loadingResId, null, false);
+        }
+        int netErrResId = array.getResourceId(R.styleable.CommonRecyclerView_networkErrorView, -1);
+        if (-1 != netErrResId) {
+            mNetworkErrorView = LayoutInflater.from(context).inflate(netErrResId, null, false);
+        }
+        int serverErrResId = array.getResourceId(R.styleable.CommonRecyclerView_serverErrorView, -1);
+        if (-1 != serverErrResId) {
+            mServerErrorView = LayoutInflater.from(context).inflate(serverErrResId, null, false);
+        }
         int loadMoreResId = array.getResourceId(R.styleable.CommonRecyclerView_loadMoreView, -1);
         if (-1 != loadMoreResId) {
             mLoadMoreView = LayoutInflater.from(context).inflate(loadMoreResId, null, false);
@@ -129,30 +144,10 @@ public class CommonRecyclerView extends FrameLayout {
             }
         }
 
-        if (null != mLoadingView) {
-            this.addView(mLoadingView);
-            mLoadingView.setVisibility(GONE);
-        }
-        if (null != mEmptyView) {
-            this.addView(mEmptyView);
-            mEmptyView.setVisibility(GONE);
-        }
-        if (null != mNetworkErrorView) {
-            this.addView(mNetworkErrorView);
-            mNetworkErrorView.setVisibility(GONE);
-        }
-        if (null != mServerErrorView) {
-            this.addView(mServerErrorView);
-            mServerErrorView.setVisibility(GONE);
-        }
         if (null != mRefreshView) {
             this.addView(mRefreshView);
             mShowingView = mRefreshView;
         }
-
-        setupLoadMoreView();
-
-        initLoadMoreAnimation();
     }
 
     private void setupLoadMoreView() {
@@ -184,23 +179,29 @@ public class CommonRecyclerView extends FrameLayout {
             mLoadMoreView.setTop(getMeasuredHeight());
         }
         mLoadMoreView.setLayoutParams(params);
+        initLoadMoreAnimation();
     }
 
     private void createProgressView() {
-        mCircleView = new CircleImageView(getContext(), CIRCLE_BG_LIGHT, CIRCLE_DIAMETER / 2);
+        CircleImageView circleView = new CircleImageView(getContext(), CIRCLE_BG_LIGHT, CIRCLE_DIAMETER / 2);
         mProgress = new MaterialProgressDrawable(getContext(), this);
         mProgress.updateSizes(MaterialProgressDrawable.DEFAULT);
         mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
-        mCircleView.setImageDrawable(mProgress);
-        mCircleView.setVisibility(View.VISIBLE);
+        circleView.setImageDrawable(mProgress);
+        circleView.setVisibility(View.VISIBLE);
 
         if (mLoadMoreView == null) {
-            mLoadMoreView = mCircleView;
+            mLoadMoreView = circleView;
         }
     }
 
     private void initLoadMoreAnimation() {
-        hideNoReverseAnimation.setDuration(mLoadMoreAnimationDuration);
+        /*
+      加载更多view动画
+      正序
+     */
+        long loadMoreAnimationDuration = 400;
+        hideNoReverseAnimation.setDuration(loadMoreAnimationDuration);
         hideNoReverseAnimation.setFillAfter(true);
         hideNoReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -221,7 +222,7 @@ public class CommonRecyclerView extends FrameLayout {
             }
         });
 
-        hideReverseAnimation.setDuration(mLoadMoreAnimationDuration);
+        hideReverseAnimation.setDuration(loadMoreAnimationDuration);
         hideReverseAnimation.setFillAfter(true);
         hideReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -242,7 +243,7 @@ public class CommonRecyclerView extends FrameLayout {
             }
         });
 
-        showNoReverseAnimation.setDuration(mLoadMoreAnimationDuration);
+        showNoReverseAnimation.setDuration(loadMoreAnimationDuration);
         showNoReverseAnimation.setFillAfter(true);
         showNoReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -262,7 +263,7 @@ public class CommonRecyclerView extends FrameLayout {
             }
         });
 
-        showReverseAnimation.setDuration(mLoadMoreAnimationDuration);
+        showReverseAnimation.setDuration(loadMoreAnimationDuration);
         showReverseAnimation.setFillAfter(true);
         showReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -329,7 +330,7 @@ public class CommonRecyclerView extends FrameLayout {
                 if (adapter.getItemCount() > 0) {
                     showContentView();
                 } else {
-                    showEmptyView(null, true);
+                    showEmptyView(null, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
                 }
             }
 
@@ -337,97 +338,136 @@ public class CommonRecyclerView extends FrameLayout {
         });
     }
 
-    public interface OnEmptyViewClickListener {
-        void onClick();
-    }
-
-    public interface OnNetworkErrorViewClickListener {
-        void onClick();
-    }
-
-    public interface OnServerErrorViewClickListener {
-        void onClick();
-    }
-
-    public void showNetworkErrorView(@Nullable final OnNetworkErrorViewClickListener listener) {
+    /**
+     * 显示网络错误界面
+     * @param listener
+     * @param handleViewId
+     */
+    public void showNetworkErrorView(@Nullable final OnNetworkErrorViewClickListener listener,@IdRes int handleViewId) {
         showView(mNetworkErrorView);
         if (null != listener && null != mNetworkErrorView) {
-            mNetworkErrorView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showLoadingView();
-                    listener.onClick();
+            if (handleViewId != HANDLE_VIEW_ID_NONE) {
+                View viewById = mNetworkErrorView.findViewById(handleViewId);
+                if (null == viewById) {
+                    throw new IllegalArgumentException("请确保NetworkErrorView中存在Id为handleViewId的View");
                 }
-            });
+                viewById.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showLoadingView();
+                        listener.onClick();
+                    }
+                });
+            } else {
+                mNetworkErrorView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showLoadingView();
+                        listener.onClick();
+                    }
+                });
+            }
         }
     }
 
-    public void showServerErrorView(@Nullable final OnServerErrorViewClickListener listener) {
+    /**
+     * 显示服务器错误界面
+     * @param listener
+     * @param handleViewId
+     */
+    public void showServerErrorView(@Nullable final OnServerErrorViewClickListener listener,@IdRes int handleViewId) {
         showView(mServerErrorView);
         if (null != listener && mServerErrorView != null) {
-            mServerErrorView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showLoadingView();
-                    listener.onClick();
+            if (handleViewId != HANDLE_VIEW_ID_NONE) {
+                View viewById = mServerErrorView.findViewById(handleViewId);
+                if (null == viewById) {
+                    throw new IllegalArgumentException("请确保ServerErrorView中存在Id为handleViewId的View");
                 }
-            });
+                viewById.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showLoadingView();
+                        listener.onClick();
+                    }
+                });
+            } else {
+                mServerErrorView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showLoadingView();
+                        listener.onClick();
+                    }
+                });
+            }
         }
     }
 
-    public void showEmptyView(@Nullable final OnEmptyViewClickListener listener, final boolean autoShowLoading) {
+    /**
+     * 显示空数据界面
+     * @param listener
+     * @param autoShowLoading
+     * @param handleViewId
+     */
+    public void showEmptyView(@Nullable final OnEmptyViewClickListener listener, final boolean autoShowLoading, @IdRes int handleViewId) {
         showView(mEmptyView);
         if (null != listener && null != mEmptyView) {
-            mEmptyView.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (autoShowLoading) {
-                        showLoadingView();
-                    }
-                    listener.onClick();
+            if (handleViewId != HANDLE_VIEW_ID_NONE) {
+                View viewById = mEmptyView.findViewById(handleViewId);
+                if (null == viewById) {
+                    throw new IllegalArgumentException("请确保EmptyView中存在Id为handleViewId的View");
                 }
-            });
+                viewById.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (autoShowLoading) {
+                            showLoadingView();
+                        }
+                        listener.onClick();
+                    }
+                });
+            } else {
+                mEmptyView.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (autoShowLoading) {
+                            showLoadingView();
+                        }
+                        listener.onClick();
+                    }
+                });
+            }
+
         }
     }
 
+    /**
+     * 显示RecyclerView
+     */
     public void showContentView() {
         showView(mRefreshView);
     }
 
+    /**
+     * 显示加载界面
+     */
     public void showLoadingView() {
         showView(mLoadingView);
     }
 
-    private View mShowingView;
-
     private synchronized void showView(final View view) {
-        if (mShowingView == view) {
+        if (null == mShowingView || null == view || mShowingView == view) {
             return;
         }
-        if (null != view && null != mShowingView) {
-            mShowingView.setVisibility(INVISIBLE);
-            view.setVisibility(VISIBLE);
-            view.startAnimation(fadeIn);
-            /*fadeOut.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    view.setVisibility(VISIBLE);
-                    view.startAnimation(fadeIn);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            mShowingView.startAnimation(fadeOut);*/
-            mShowingView = view;
+        if (mShowingView != mRefreshView) {
+            removeView(mShowingView);
         }
+        if (view != mRefreshView) {
+            mRefreshView.setVisibility(GONE);
+            addView(view);
+        }
+        view.setVisibility(VISIBLE);
+        view.startAnimation(fadeIn);
+        mShowingView = view;
     }
 
     public View getEmptyView() {
@@ -505,15 +545,13 @@ public class CommonRecyclerView extends FrameLayout {
 
     public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
         mOnLoadMoreListener = onLoadMoreListener;
+        if (null != onLoadMoreListener) {
+            setupLoadMoreView();
+        }
     }
 
     public boolean isRefreshing() {
         return mIsRefreshing;
-    }
-
-    public interface OnLoadMoreListener {
-        void onLoadMore();
-
     }
 
     public synchronized void hideLoadMore() {
@@ -546,5 +584,21 @@ public class CommonRecyclerView extends FrameLayout {
     public int dp2px(float dpVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 dpVal, getResources().getDisplayMetrics());
+    }
+
+    public interface OnEmptyViewClickListener {
+        void onClick();
+    }
+
+    public interface OnNetworkErrorViewClickListener {
+        void onClick();
+    }
+
+    public interface OnServerErrorViewClickListener {
+        void onClick();
+    }
+
+    public interface OnLoadMoreListener {
+        void onLoadMore();
     }
 }

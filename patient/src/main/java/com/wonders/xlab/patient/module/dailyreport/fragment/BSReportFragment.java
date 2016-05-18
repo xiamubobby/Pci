@@ -17,10 +17,10 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.dailyreport.adapter.BSReportAdapter;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportRealmBean;
-import com.wonders.xlab.patient.otto.BSSaveSuccessOtto;
-import com.wonders.xlab.patient.otto.ShowMeasureChooseDialogOtto;
 import com.wonders.xlab.patient.mvp.presenter.IBSReportPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.BSReportCachePresenter;
+import com.wonders.xlab.patient.otto.BSSaveSuccessOtto;
+import com.wonders.xlab.patient.otto.ShowMeasureChooseDialogOtto;
 import com.wonders.xlab.patient.util.UmengEventId;
 
 import java.util.List;
@@ -67,17 +67,6 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
         mRecyclerView.setRefreshEnable(false);
-        TextView tvMeasure = (TextView) mRecyclerView.findViewById(R.id.tv_bp_bs_report_empty_measure);
-        tvMeasure.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
-        tvMeasure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO umeng
-                MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_DAILY_RECORD_BLANK_MEASURE_BS);
-
-                OttoManager.post(new ShowMeasureChooseDialogOtto(ShowMeasureChooseDialogOtto.TYPE_BS));
-            }
-        });
 
         mBSReportPresenter.getBSCacheList(AIManager.getInstance().getPatientId());
     }
@@ -108,7 +97,18 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
         if (null == mRecyclerView) {
             return;
         }
-        mRecyclerView.showEmptyView(null, true);
+        mRecyclerView.showEmptyView(null, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
+        TextView tvMeasure = (TextView) mRecyclerView.getEmptyView().findViewById(R.id.tv_bp_bs_report_empty_measure);
+        tvMeasure.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        tvMeasure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO umeng
+                MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_DAILY_RECORD_BLANK_MEASURE_BS);
+
+                OttoManager.post(new ShowMeasureChooseDialogOtto(ShowMeasureChooseDialogOtto.TYPE_BS));
+            }
+        });
     }
 
     @Override

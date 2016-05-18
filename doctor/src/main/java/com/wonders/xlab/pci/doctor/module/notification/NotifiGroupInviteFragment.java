@@ -130,7 +130,7 @@ public class NotifiGroupInviteFragment extends BaseFragment implements NotifiGro
             public void onClick() {
                 mInvitePresenter.getInviteNotifications(AIManager.getInstance().getDoctorId());
             }
-        });
+        }, im.hua.uikit.R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -140,7 +140,7 @@ public class NotifiGroupInviteFragment extends BaseFragment implements NotifiGro
             public void onClick() {
                 mInvitePresenter.getInviteNotifications(AIManager.getInstance().getDoctorId());
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -150,7 +150,7 @@ public class NotifiGroupInviteFragment extends BaseFragment implements NotifiGro
             public void onClick() {
                 mInvitePresenter.getInviteNotifications(AIManager.getInstance().getDoctorId());
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override

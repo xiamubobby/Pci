@@ -164,7 +164,7 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
             public void onClick() {
                 mMedicineRemindPresenter.getMedicineReminds(true);
             }
-        });
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override
@@ -174,7 +174,7 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
             public void onClick() {
                 mMedicineRemindPresenter.getMedicineReminds(true);
             }
-        });
+        }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
@@ -184,7 +184,7 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
             public void onClick() {
                 mMedicineRemindPresenter.getMedicineReminds(true);
             }
-        }, true);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
