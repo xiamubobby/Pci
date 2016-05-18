@@ -114,7 +114,7 @@ public class GroupListActivity extends AppbarActivity implements GroupListPresen
             public void onClick() {
                 mGroupManagePresenter.getGroupList(true, AIManager.getInstance().getDoctorId());
             }
-        }, im.hua.uikit.R.id.btn_common_network_error_retry);
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override

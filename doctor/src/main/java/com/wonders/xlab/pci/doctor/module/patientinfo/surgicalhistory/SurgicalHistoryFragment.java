@@ -128,7 +128,7 @@ public class SurgicalHistoryFragment extends BaseFragment implements SurgicalHis
             public void onClick() {
                 mPresenter.getSurgicalHistory(mPatientId, true);
             }
-        }, im.hua.uikit.R.id.btn_common_network_error_retry);
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override

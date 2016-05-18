@@ -94,7 +94,7 @@ public class NotifiPackageApplyFragment extends BaseFragment implements NotifiPa
             public void onClick() {
                 mPresenter.getPackageApplyNotifications(AIManager.getInstance().getDoctorId());
             }
-        }, im.hua.uikit.R.id.btn_common_network_error_retry);
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override

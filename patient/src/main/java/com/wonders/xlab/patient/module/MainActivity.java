@@ -57,13 +57,14 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
+
         OttoManager.register(this);
-       /* if (!AIManager.getInstance().hasLogin()) {
+        if (!AIManager.getInstance().hasLogin()) {
             startActivity(new Intent(this, LoginActivity.class));
             finish();
             return;
         }
-        if (((XApplication) getApplication()).showSplash()) {
+       /* if (((XApplication) getApplication()).showSplash()) {
             startActivity(new Intent(this, SplashActivity.class));
         }*/
 

@@ -126,7 +126,7 @@ public class MedicalRecordsFragment extends BaseFragment implements MedicalRecor
             public void onClick() {
                 mPresenter.getMedicalRecordsList(mPatientId,true);
             }
-        }, im.hua.uikit.R.id.btn_common_network_error_retry);
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override

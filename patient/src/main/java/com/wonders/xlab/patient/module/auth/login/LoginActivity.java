@@ -15,7 +15,6 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.MainActivity;
-import com.wonders.xlab.patient.module.SplashActivity;
 import com.wonders.xlab.patient.module.auth.FinishLoginOtto;
 import com.wonders.xlab.patient.module.auth.register.RegisterActivity;
 import com.wonders.xlab.patient.mvp.presenter.LoginPresenterContract;
@@ -41,10 +40,10 @@ public class LoginActivity extends BaseActivity implements LoginPresenterContrac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        XApplication application = (XApplication) getApplication();
+       /* XApplication application = (XApplication) getApplication();
         if (application.showSplash()) {
             startActivity(new Intent(this, SplashActivity.class));
-        }
+        }*/
         setContentView(R.layout.login_activity);
         OttoManager.register(this);
         ButterKnife.bind(this);

@@ -130,7 +130,7 @@ public class NotifiGroupInviteFragment extends BaseFragment implements NotifiGro
             public void onClick() {
                 mInvitePresenter.getInviteNotifications(AIManager.getInstance().getDoctorId());
             }
-        }, im.hua.uikit.R.id.btn_common_network_error_retry);
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override

@@ -126,7 +126,7 @@ public class TestIndicatorFragment extends BaseFragment implements TestIndicator
             public void onClick() {
                 mPresenter.getTestIndicatorList(mPatientId, true);
             }
-        }, im.hua.uikit.R.id.btn_common_network_error_retry);
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override

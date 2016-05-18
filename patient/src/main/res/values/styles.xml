@@ -8,9 +8,8 @@
         <item name="background">@android:color/white</item>
     </style>
 
-    <style name="AppTheme.MaterialColdStart">
-        <item name="android:windowBackground">@drawable/window_background_statusbar_toolbar_tab
-        </item>
+    <style name="AppTheme.MaterialColdStart" parent="FullscreenTheme">
+        <item name="android:windowBackground">@drawable/pic_main_loading</item>
     </style>
 
     <style name="AppTheme.Light">

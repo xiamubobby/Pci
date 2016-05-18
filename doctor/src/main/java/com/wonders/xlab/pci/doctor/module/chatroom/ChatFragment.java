@@ -218,7 +218,7 @@ public class ChatFragment extends BaseFragment implements ChatRoomPresenter.Chat
             public void onClick() {
 
             }
-        }, im.hua.uikit.R.id.btn_common_network_error_retry);
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override

@@ -171,7 +171,7 @@ public class GroupInviteDoctorActivity extends AppbarActivity implements GroupDo
 
     @Override
     public void showNetworkError(String message) {
-        mRecyclerView.showNetworkErrorView(null, im.hua.uikit.R.id.btn_common_network_error_retry);
+        mRecyclerView.showNetworkErrorView(null, R.id.btn_common_network_error_retry);
     }
 
     @Override

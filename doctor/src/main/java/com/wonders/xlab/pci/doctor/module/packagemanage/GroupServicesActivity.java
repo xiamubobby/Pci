@@ -95,7 +95,7 @@ public class GroupServicesActivity extends AppbarActivity implements GroupServic
             public void onClick() {
                 mGroupServicesPresenter.getPackages(mOwnerId);
             }
-        }, im.hua.uikit.R.id.btn_common_network_error_retry);
+        }, R.id.btn_common_network_error_retry);
     }
 
     @Override
