@@ -1,43 +1,43 @@
-package com.wonders.xlab.patient.mvp.presenter.impl;
+package com.wonders.xlab.patient.module.mydoctor;
 
 import com.wonders.xlab.patient.module.mydoctor.adapter.MyDoctorItemBean;
 import com.wonders.xlab.patient.mvp.entity.DoctorMyEntity;
-import com.wonders.xlab.patient.mvp.model.IDoctorMyModel;
-import com.wonders.xlab.patient.mvp.model.impl.DoctorMyModel;
-import com.wonders.xlab.patient.mvp.presenter.IDoctorMyPresenter;
+import com.wonders.xlab.patient.mvp.model.DoctorMyModel;
+import com.wonders.xlab.patient.mvp.model.DoctorMyModelContract;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import im.hua.library.base.mvp.impl.BasePagePresenter;
-import im.hua.library.base.mvp.listener.BasePagePresenterListener;
 
 /**
  * Created by hua on 16/3/14.
  */
-public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPresenter, DoctorMyModel.DoctorMyModelListener {
-    private DoctorMyPresenterListener mDoctorMyListener;
-    private IDoctorMyModel mDoctorMyModel;
+public class DoctorMyPresenter extends BasePagePresenter implements DoctorMyPresenterContract.Actions, DoctorMyModelContract.Callback {
+    private DoctorMyPresenterContract.ViewListener mViewListener;
+    private DoctorMyModelContract.Actions mDoctorMyModel;
 
-    public DoctorMyPresenter(DoctorMyPresenterListener doctorMyListener) {
-        mDoctorMyListener = doctorMyListener;
-
-        mDoctorMyModel = new DoctorMyModel(this);
+    @Inject
+    public DoctorMyPresenter(DoctorMyModel doctorMyModel, DoctorMyPresenterContract.ViewListener viewListener) {
+        mDoctorMyModel = doctorMyModel;
+        mViewListener = viewListener;
         addModel(mDoctorMyModel);
     }
 
     @Override
     public void getMyDoctors(String patientId, boolean isRefresh) {
-        mDoctorMyListener.showLoading("");
+        mViewListener.showLoading("");
         if (isRefresh) {
             resetPageInfo();
         }
-        mDoctorMyModel.getMyDoctors(patientId, getNextPageIndex(), DEFAULT_PAGE_SIZE);
+        mDoctorMyModel.getMyDoctors(patientId, getNextPageIndex(), DEFAULT_PAGE_SIZE,this);
     }
 
     @Override
     public void onReceiveMyDoctorListSuccess(DoctorMyEntity.RetValuesEntity valuesEntity) {
-        mDoctorMyListener.hideLoading();
+        mViewListener.hideLoading();
 
         updatePageInfo(valuesEntity.getServiceFalse().getPage());
 
@@ -74,27 +74,21 @@ public class DoctorMyPresenter extends BasePagePresenter implements IDoctorMyPre
 
         if (shouldAppend()) {
             if (doctorItemBeanArrayList.size() <= 0) {
-                mDoctorMyListener.showReachTheLastPageNotice("没有更多数据了");
+                mViewListener.showReachTheLastPageNotice("没有更多数据了");
                 return;
             }
-            mDoctorMyListener.appendMyDoctorList(doctorItemBeanArrayList);
+            mViewListener.appendMyDoctorList(doctorItemBeanArrayList);
         } else {
             if (doctorItemBeanArrayList.size() <= 0) {
-                mDoctorMyListener.showEmptyView("");
+                mViewListener.showEmptyView("");
                 return;
             }
-            mDoctorMyListener.showMyDoctorList(doctorItemBeanArrayList);
+            mViewListener.showMyDoctorList(doctorItemBeanArrayList);
         }
     }
 
     @Override
     public void onReceiveFailed(int code, String message) {
-        showError(mDoctorMyListener,code,message);
-    }
-
-    public interface DoctorMyPresenterListener extends BasePagePresenterListener {
-        void showMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList);
-
-        void appendMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList);
+        showError(mViewListener,code,message);
     }
 }

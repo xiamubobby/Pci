@@ -9,7 +9,7 @@ import im.hua.library.base.mvp.listener.BaseModelListener;
 /**
  * Created by hua on 16/2/19.
  */
-public class PatientModel extends DoctorBaseModel<PatientEntity> {
+public class PatientModel extends DoctorBaseModel {
 
     private PatientModelListener mIPatientPresenter;
     private PatientAPI mPatientAPI;
@@ -20,17 +20,17 @@ public class PatientModel extends DoctorBaseModel<PatientEntity> {
     }
 
     public void getPatientList(String doctorId) {
-        request(mPatientAPI.getPatientList(doctorId), true);
-    }
+        request(mPatientAPI.getPatientList(doctorId), new Callback<PatientEntity>() {
+            @Override
+            public void onSuccess(PatientEntity response) {
+                mIPatientPresenter.onReceivePatientSuccess(response);
+            }
 
-    @Override
-    protected void onSuccess(PatientEntity response) {
-        mIPatientPresenter.onReceivePatientSuccess(response);
-    }
-
-    @Override
-    protected void onFailed(int code, String message) {
-        mIPatientPresenter.onReceiveFailed(code, message);
+            @Override
+            public void onFailed(int code, String message) {
+                mIPatientPresenter.onReceiveFailed(code, message);
+            }
+        });
     }
 
     public interface PatientModelListener extends BaseModelListener {

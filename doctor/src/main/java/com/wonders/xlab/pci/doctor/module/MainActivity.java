@@ -15,7 +15,6 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.viewpager.adapter.FragmentVPAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
-import com.wonders.xlab.pci.doctor.application.XApplication;
 import com.wonders.xlab.pci.doctor.module.login.LoginActivity;
 import com.wonders.xlab.pci.doctor.module.otto.MainBottomUnreadNotifyCountOtto;
 import com.wonders.xlab.pci.doctor.module.patientlist.PatientFragment;
@@ -49,12 +48,12 @@ public class MainActivity extends BaseActivity {
             finish();
             return;
         }
-        XApplication application = (XApplication) getApplication();
+       /* XApplication application = (XApplication) getApplication();
         if (application.showSplash()) {
             startActivity(new Intent(this, SplashActivity.class));
             application.setHasShowed(true);
 
-        }
+        }*/
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
 

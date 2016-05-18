@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.XApplication;
 import com.wonders.xlab.pci.doctor.module.MainActivity;
-import com.wonders.xlab.pci.doctor.module.SplashActivity;
 import com.wonders.xlab.pci.doctor.mvp.presenter.LoginPresenterContract;
 
 import butterknife.Bind;
@@ -40,11 +39,11 @@ public class LoginActivity extends BaseActivity implements LoginPresenterContrac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        XApplication application = (XApplication) getApplication();
+        /*XApplication application = (XApplication) getApplication();
         if (application.showSplash()) {
             startActivity(new Intent(this, SplashActivity.class));
             application.setHasShowed(true);
-        }
+        }*/
         setContentView(R.layout.login_activity);
         ButterKnife.bind(this);
 

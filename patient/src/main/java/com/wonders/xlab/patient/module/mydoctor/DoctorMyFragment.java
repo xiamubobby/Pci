@@ -16,12 +16,11 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.alldoctor.AllDoctorActivity;
 import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.patient.module.mydoctor.adapter.MyDoctorItemBean;
 import com.wonders.xlab.patient.module.mydoctor.adapter.MyDoctorRVAdapter;
-import com.wonders.xlab.patient.mvp.presenter.IDoctorMyPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.DoctorMyPresenter;
 import com.wonders.xlab.patient.otto.BuyPackageSuccessOtto;
 import com.wonders.xlab.patient.otto.DoctorTabChangeOtto;
 
@@ -35,14 +34,14 @@ import im.hua.uikit.crv.CommonRecyclerView;
 /**
  * 我的医生界面
  */
-public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.DoctorMyPresenterListener {
+public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterContract.ViewListener {
 
     @Bind(R.id.recycler_view_doctor_my)
     CommonRecyclerView mRecyclerView;
 
     private MyDoctorRVAdapter mMyDoctorRVAdapter;
 
-    private IDoctorMyPresenter mDoctorMyPresenter;
+    private DoctorMyPresenterContract.Actions mDoctorMyPresenter;
 
     public DoctorMyFragment() {
         // Required empty public constructor
@@ -56,7 +55,13 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenter.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         OttoManager.register(this);
-        mDoctorMyPresenter = new DoctorMyPresenter(this);
+
+        mDoctorMyPresenter = DaggerDoctorMyComponent.builder()
+                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .doctorMyModule(new DoctorMyModule(this))
+                .build()
+                .getDoctorMyPresenter();
+
         addPresenter(mDoctorMyPresenter);
     }
 
