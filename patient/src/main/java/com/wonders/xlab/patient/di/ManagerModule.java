@@ -1,5 +1,6 @@
 package com.wonders.xlab.patient.di;
 
+import com.wonders.xlab.patient.BuildConfig;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
@@ -30,7 +31,7 @@ public class ManagerModule {
     @Provides
     @Singleton
     Retrofit provideRetrofit() {
-        String endPoint = Constant.BASE_URL;//BuildConfig.DEBUG ? Constant.BASE_URL_DEBUG : Constant.BASE_URL;
+        String endPoint = BuildConfig.DEBUG ? Constant.BASE_URL_DEBUG : Constant.BASE_URL;
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(30, TimeUnit.SECONDS);
         /*if (BuildConfig.DEBUG) {

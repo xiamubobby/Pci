@@ -50,6 +50,8 @@ public class HomeFragment extends BaseFragment implements HomePresenterContract.
     @Bind(R.id.indicator_home)
     CirclePageIndicator mIndicatorHome;
 
+    private HomePresenterContract.Actions mHomePresenter;
+
     private HomeRVAdapter homeRVAdapter;
 
     private HomeTopVPAdapter mHomeTopVPAdapter;
@@ -67,6 +69,51 @@ public class HomeFragment extends BaseFragment implements HomePresenterContract.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mHomePresenter = DaggerHomeComponent.builder()
+                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .homeModule(new HomeModule(this))
+                .build()
+                .getHomePresenter();
+
+        addPresenter(mHomePresenter);
+
+        if (null == beanArrayList) {
+            beanArrayList = new ArrayList<>();
+            for (int i = 0; i < 4; i++) {
+                HomeItemBean homeItemBean = new HomeItemBean();
+                int drawableResId = R.drawable.ic_home_daily_record;
+                int backgroundDrawableId = R.drawable.shape_home_label_daily_record;
+                String title = null;
+
+                switch (i) {
+                    case 0:
+                        backgroundDrawableId = R.drawable.shape_home_label_daily_record;
+                        drawableResId = R.drawable.ic_home_daily_record;
+                        title = "每日记录";
+                        break;
+                    case 1:
+                        backgroundDrawableId = R.drawable.shape_home_label_medical_report;
+                        drawableResId = R.drawable.ic_home_medical_record;
+                        title = "健康档案";
+                        break;
+                    case 2:
+                        backgroundDrawableId = R.drawable.shape_home_label_medicine_remind;
+                        drawableResId = R.drawable.ic_home_medicine_remind;
+                        title = "用药提醒";
+                        break;
+                    case 3:
+                        backgroundDrawableId = R.drawable.shape_home_label_health_report;
+                        drawableResId = R.drawable.ic_home_health_report;
+                        title = "健康报表";
+                        break;
+                }
+                homeItemBean.setBackgroundDrawableId(backgroundDrawableId);
+                homeItemBean.setDrawableResId(drawableResId);
+                homeItemBean.setTitle(title);
+
+                beanArrayList.add(homeItemBean);
+            }
+        }
     }
 
     @Override
@@ -81,75 +128,30 @@ public class HomeFragment extends BaseFragment implements HomePresenterContract.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (null != beanArrayList) {
-            beanArrayList.clear();
-        } else {
-            beanArrayList = new ArrayList<>();
-        }
-        for (int i = 0; i < 4; i++) {
-            HomeItemBean homeItemBean = new HomeItemBean();
-            int drawableResId = R.drawable.ic_home_daily_record;
-            int backgroundDrawableId = R.drawable.shape_home_label_daily_record;
-            String title = null;
-
-            switch (i) {
-                case 0:
-                    backgroundDrawableId = R.drawable.shape_home_label_daily_record;
-                    drawableResId = R.drawable.ic_home_daily_record;
-                    title = "每日记录";
-                    break;
-                case 1:
-                    backgroundDrawableId = R.drawable.shape_home_label_medical_report;
-                    drawableResId = R.drawable.ic_home_medical_record;
-                    title = "健康档案";
-                    break;
-                case 2:
-                    backgroundDrawableId = R.drawable.shape_home_label_medicine_remind;
-                    drawableResId = R.drawable.ic_home_medicine_remind;
-                    title = "用药提醒";
-                    break;
-                case 3:
-                    backgroundDrawableId = R.drawable.shape_home_label_health_report;
-                    drawableResId = R.drawable.ic_home_health_report;
-                    title = "健康报表";
-                    break;
-            }
-            homeItemBean.setBackgroundDrawableId(backgroundDrawableId);
-            homeItemBean.setDrawableResId(drawableResId);
-            homeItemBean.setTitle(title);
-
-            beanArrayList.add(homeItemBean);
-        }
 
         mRecyclerViewHome.setLayoutManager(new GridLayoutManager(getActivity(), 2, LinearLayoutManager.VERTICAL, false));
         mRecyclerViewHome.setItemAnimator(new DefaultItemAnimator());
         setupBottomFunctionView();
 
-        mHomeTopVPAdapter = new HomeTopVPAdapter(getFragmentManager());
-        mHomeTopVPAdapter.registerDataSetObserver(new DataSetObserver() {
-            @Override
-            public void onChanged() {
-                super.onChanged();
-                mIndicatorHome.notifyDataSetChanged();
-            }
-        });
+        if (null == mHomeTopVPAdapter) {
+            mHomeTopVPAdapter = new HomeTopVPAdapter(getFragmentManager());
+            mHomeTopVPAdapter.registerDataSetObserver(new DataSetObserver() {
+                @Override
+                public void onChanged() {
+                    super.onChanged();
+                    mIndicatorHome.notifyDataSetChanged();
+                }
+            });
+        }
         mViewPagerHome.setAdapter(mHomeTopVPAdapter);
 
         mIndicatorHome.setViewPager(mViewPagerHome);
+    }
 
-        HomePresenterContract.Actions homePresenter = DaggerHomeComponent.builder()
-                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
-                .homeModule(new HomeModule(this))
-                .build()
-                .getHomePresenter();
-
-        addPresenter(homePresenter);
-        homePresenter.getHomeBanner();
+    @Override
+    public void onStart() {
+        super.onStart();
+        mHomePresenter.getHomeBanner();
     }
 
     public void onResume() {
@@ -200,8 +202,8 @@ public class HomeFragment extends BaseFragment implements HomePresenterContract.
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop() {
+        super.onStop();
         if (null != beanArrayList) {
             beanArrayList.clear();
             beanArrayList = null;

@@ -19,6 +19,11 @@ public class MedicineRemindAddOrModifyModel extends PatientBaseModel implements 
 
     private MedicineRemindAPI mMedicineRemindAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public MedicineRemindAddOrModifyModel(MedicineRemindAPI medicineRemindAPI) {
         mMedicineRemindAPI = medicineRemindAPI;

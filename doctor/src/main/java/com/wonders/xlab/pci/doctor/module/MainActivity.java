@@ -40,7 +40,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
         OttoManager.register(this);
         if (!AIManager.getInstance().hasLogin()) {
@@ -48,12 +47,6 @@ public class MainActivity extends BaseActivity {
             finish();
             return;
         }
-       /* XApplication application = (XApplication) getApplication();
-        if (application.showSplash()) {
-            startActivity(new Intent(this, SplashActivity.class));
-            application.setHasShowed(true);
-
-        }*/
         setContentView(R.layout.main_activity);
         ButterKnife.bind(this);
 

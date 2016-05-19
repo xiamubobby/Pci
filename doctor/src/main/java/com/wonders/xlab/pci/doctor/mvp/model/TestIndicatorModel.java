@@ -13,6 +13,11 @@ public class TestIndicatorModel extends DoctorBaseModel<TestIndicatorEntity> imp
 
     private TestIndicatorAPI mTestIndicatorAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public TestIndicatorModel(TestIndicatorAPI testIndicatorAPI) {
         mTestIndicatorAPI = testIndicatorAPI;

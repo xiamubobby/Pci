@@ -102,7 +102,11 @@ public class HomeTopCircleFragment extends BaseFragment implements HomeTopPresen
 
         mTvLeft.setLayoutParams(leftLp);
         mTvRight.setLayoutParams(rightLp);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
         refreshTopBP(null);
         refreshTopBS(null);
     }

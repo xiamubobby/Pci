@@ -12,6 +12,11 @@ import javax.inject.Inject;
 public class RealNameValidateModel extends PatientBaseModel implements RealNameValidateModelContract.Actions {
     private AuthAPI mAuthAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public RealNameValidateModel(AuthAPI authAPI) {
         mAuthAPI = authAPI;

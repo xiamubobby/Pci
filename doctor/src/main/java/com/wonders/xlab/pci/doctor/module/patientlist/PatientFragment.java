@@ -13,10 +13,10 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.pci.doctor.R;
 import com.wonders.xlab.pci.doctor.application.AIManager;
+import com.wonders.xlab.pci.doctor.application.XApplication;
 import com.wonders.xlab.pci.doctor.module.patientinfo.PatientInfoContainerActivity;
 import com.wonders.xlab.pci.doctor.module.patientlist.adapter.PatientRVAdapter;
 import com.wonders.xlab.pci.doctor.module.patientlist.bean.PatientBean;
-import com.wonders.xlab.pci.doctor.mvp.presenter.impl.PatientPresenter;
 
 import java.util.ArrayList;
 
@@ -28,9 +28,9 @@ import im.hua.uikit.crv.CommonRecyclerView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PatientFragment extends BaseFragment implements PatientPresenter.PatientPresenterListener {
+public class PatientFragment extends BaseFragment implements PatientPresenterContract.ViewListener {
 
-    private PatientPresenter mPatientPresenter;
+    private PatientPresenterContract.Actions mPatientPresenter;
 
     @Bind(R.id.recycler_view_patient)
     CommonRecyclerView mRecyclerView;
@@ -51,15 +51,24 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.patient_fragment, container, false);
         ButterKnife.bind(this, view);
-
-        mPatientPresenter = new PatientPresenter(this);
-        addPresenter(mPatientPresenter);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPatientPresenter = DaggerPatientComponent.builder()
+                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .patientModule(new PatientModule(this))
+                .build()
+                .getPatientPresenter();
+        addPresenter(mPatientPresenter);
+
         mRecyclerView.getRecyclerView().setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.getRecyclerView().addItemDecoration(new VerticalItemDecoration(getActivity(), getResources().getColor(R.color.divider), 1));
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -159,5 +168,10 @@ public class PatientFragment extends BaseFragment implements PatientPresenter.Pa
     @Override
     public void hideLoading() {
         mRecyclerView.hideRefreshOrLoadMore(true,true);
+    }
+
+    @Override
+    public void showReachTheLastPageNotice(String message) {
+
     }
 }

@@ -1,9 +1,7 @@
 <resources>
-    <string name="app_name">心管家医生</string>
+    <string name="app_name">全程心管家</string>
     <string name="title_activity_main">首页</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_chat">聊天</string>
     <string name="title_activity_blood_pressure">血压</string>
     <string name="title_activity_user_info">基本信息</string>
@@ -37,6 +35,5 @@
     <string name="login_et_password_hint">请输入密码</string>
     <string name="login_et_phone_hint">请输入手机号</string>
     <string name="text_click_to_see_more">点击查看更多</string>
-    <string name="title_activity_splash">\@string/app_name</string>
     <string name="btn_common_network_error_retry">点击重试</string>
 </resources>

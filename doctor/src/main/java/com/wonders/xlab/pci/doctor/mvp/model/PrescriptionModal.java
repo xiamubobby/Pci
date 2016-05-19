@@ -13,6 +13,11 @@ public class PrescriptionModal extends DoctorBaseModel<PrescriptionEntity> imple
 
     private PrescriptionAPI prescriptionAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public PrescriptionModal(PrescriptionAPI prescriptionAPI) {
         this.prescriptionAPI = prescriptionAPI;

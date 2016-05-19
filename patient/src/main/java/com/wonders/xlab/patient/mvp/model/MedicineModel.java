@@ -12,6 +12,11 @@ import javax.inject.Inject;
 public class MedicineModel extends PatientBaseModel implements MedicineModelContract.Actions {
     private MedicineRemindAPI mAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public MedicineModel(MedicineRemindAPI api) {
         mAPI = api;

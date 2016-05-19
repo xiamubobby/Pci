@@ -15,6 +15,11 @@ public class RegisterModel extends PatientBaseModel implements RegisterModelCont
 
     private AuthAPI mAuthAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public RegisterModel(AuthAPI authAPI) {
         mAuthAPI = authAPI;

@@ -13,6 +13,11 @@ import im.hua.library.base.mvp.entity.EmptyValueEntity;
 public class MedicineStateModifyModel extends PatientBaseModel implements MedicineStateModifyModelContract.Actions {
     private MedicineRemindAPI mAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public MedicineStateModifyModel(MedicineRemindAPI api) {
         mAPI = api;

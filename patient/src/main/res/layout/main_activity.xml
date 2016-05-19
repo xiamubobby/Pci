@@ -19,6 +19,7 @@
         app:title="@string/app_name"
         app:titleTextColor="@android:color/white"/>
 
-    <include layout="@layout/main_content"/>
+    <include layout="@layout/main_content"
+             android:layout_height="708dp"/>
 
 </LinearLayout>

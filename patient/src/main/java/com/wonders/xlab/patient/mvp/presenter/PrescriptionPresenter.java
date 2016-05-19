@@ -3,8 +3,8 @@ package com.wonders.xlab.patient.mvp.presenter;
 
 import com.wonders.xlab.patient.module.healthrecord.prescription.adapter.bean.PrescriptionBean;
 import com.wonders.xlab.patient.mvp.entity.PrescriptionEntity;
-import com.wonders.xlab.patient.mvp.model.PrescriptionModal;
-import com.wonders.xlab.patient.mvp.model.PrescriptionModalContract;
+import com.wonders.xlab.patient.mvp.model.PrescriptionModel;
+import com.wonders.xlab.patient.mvp.model.PrescriptionModelContract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,13 @@ public class PrescriptionPresenter extends BasePagePresenter implements Prescrip
 
     private PrescriptionPresenterContract.ViewListener mPrescriptionPresenter;
 
-    private PrescriptionModalContract.Actions mPrescriptionModal;
+    private PrescriptionModelContract.Actions mPrescriptionModal;
 
     @Inject
-    public PrescriptionPresenter(PrescriptionPresenterContract.ViewListener mPrescriptionPresenter, PrescriptionModal mPrescriptionModal) {
+    public PrescriptionPresenter(PrescriptionPresenterContract.ViewListener mPrescriptionPresenter, PrescriptionModel mPrescriptionModel) {
         this.mPrescriptionPresenter = mPrescriptionPresenter;
-        this.mPrescriptionModal = mPrescriptionModal;
-        addModel(mPrescriptionModal);
+        this.mPrescriptionModal = mPrescriptionModel;
+        addModel(mPrescriptionModel);
     }
 
 
@@ -36,7 +36,7 @@ public class PrescriptionPresenter extends BasePagePresenter implements Prescrip
         if (isRefresh) {
             resetPageInfo();
         }
-        mPrescriptionModal.getPrescriptionList(patientId, getNextPageIndex(), new PrescriptionModalContract.Callback() {
+        mPrescriptionModal.getPrescriptionList(patientId, getNextPageIndex(), new PrescriptionModelContract.Callback() {
             @Override
             public void getPrescriptionListSuccess(PrescriptionEntity entity) {
                 mPrescriptionPresenter.hideLoading();

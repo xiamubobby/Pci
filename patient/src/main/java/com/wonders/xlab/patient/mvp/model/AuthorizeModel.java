@@ -21,6 +21,11 @@ public class AuthorizeModel extends PatientBaseModel implements AuthorizeModelCo
 
     private AuthAPI mAuthAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public AuthorizeModel(AuthAPI authAPI) {
         mAuthAPI = authAPI;

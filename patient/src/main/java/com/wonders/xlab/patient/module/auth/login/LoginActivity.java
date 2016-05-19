@@ -40,10 +40,6 @@ public class LoginActivity extends BaseActivity implements LoginPresenterContrac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       /* XApplication application = (XApplication) getApplication();
-        if (application.showSplash()) {
-            startActivity(new Intent(this, SplashActivity.class));
-        }*/
         setContentView(R.layout.login_activity);
         OttoManager.register(this);
         ButterKnife.bind(this);

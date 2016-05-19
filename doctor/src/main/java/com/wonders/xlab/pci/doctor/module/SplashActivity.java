@@ -1,5 +1,6 @@
 package com.wonders.xlab.pci.doctor.module;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,6 +9,9 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.wonders.xlab.pci.doctor.R;
+import com.wonders.xlab.pci.doctor.application.AIManager;
+import com.wonders.xlab.pci.doctor.application.XApplication;
+import com.wonders.xlab.pci.doctor.module.login.LoginActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,28 +27,43 @@ import rx.functions.Action1;
  */
 public class SplashActivity extends AppCompatActivity {
 
-    private final int SPLASH_SHOW_TIME_IN_MILL = 2500;
+    public static final int DELAY = 1800;
     @Bind(R.id.container_splash)
     FrameLayout mContainerSplash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
+        XApplication application = (XApplication) getApplication();
+        if (!application.showSplash()) {
+            goToActivity();
+            return;
+        }
         setContentView(R.layout.splash_activity);
         ButterKnife.bind(this);
         setFullscreen(true);
         mContainerSplash.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        ButterKnife.bind(this);
+
+        ((XApplication) getApplication()).setHasShowed(true);
         Observable.just(null)
-                .delaySubscription(SPLASH_SHOW_TIME_IN_MILL, TimeUnit.MILLISECONDS)
+                .delaySubscription(DELAY, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<Object>() {
                     @Override
                     public void call(Object o) {
-                        finish();
+                        goToActivity();
                     }
                 });
+    }
 
+    private void goToActivity() {
+        if (!AIManager.getInstance().hasLogin()) {
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+        } else {
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        }
+        finish();
     }
 
     private void setFullscreen(boolean on) {

@@ -53,7 +53,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
 
         OttoManager.register(this);
@@ -62,9 +61,6 @@ public class MainActivity extends BaseActivity {
             finish();
             return;
         }
-       /* if (((XApplication) getApplication()).showSplash()) {
-            startActivity(new Intent(this, SplashActivity.class));
-        }*/
 
         setContentView(R.layout.main_activity);
         ButterKnife.bind(MainActivity.this);
@@ -73,13 +69,15 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mFragmentAdapter = new MainFragmentAdapter(getFragmentManager());
-        mViewPagerMain.setAdapter(mFragmentAdapter);
+        if (null == mFragmentAdapter) {
+            mFragmentAdapter = new MainFragmentAdapter(getFragmentManager());
+            mViewPagerMain.setOffscreenPageLimit(4);
+            mViewPagerMain.setAdapter(mFragmentAdapter);
+            setupBottomTab();
+            AlarmUtil.newInstance().scheduleMedicineRemindAlarm(MainActivity.this);
+            startService(new Intent(MainActivity.this, XEMChatService.class));
+        }
 
-        setupBottomTab();
-
-        AlarmUtil.newInstance().scheduleMedicineRemindAlarm(MainActivity.this);
-        startService(new Intent(MainActivity.this, XEMChatService.class));
     }
 
     private void setupBottomTab() {
@@ -159,6 +157,7 @@ public class MainActivity extends BaseActivity {
     public void onDestroy() {
         super.onDestroy();
         OttoManager.unregister(this);
+        mFragmentAdapter = null;
     }
 
     /**

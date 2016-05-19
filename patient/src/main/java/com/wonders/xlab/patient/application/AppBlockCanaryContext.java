@@ -12,7 +12,7 @@ public class AppBlockCanaryContext extends BlockCanaryContext {
     // this is default block threshold, you can set it by phone's performance
     @Override
     public int getConfigBlockThreshold() {
-        return 500;
+        return 800;
     }
 
     // if set true, notification will be shown, else only write log file

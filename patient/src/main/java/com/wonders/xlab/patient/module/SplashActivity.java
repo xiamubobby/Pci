@@ -1,15 +1,17 @@
 package com.wonders.xlab.patient.module;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
+import com.wonders.xlab.patient.module.auth.login.LoginActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -27,12 +29,16 @@ public class SplashActivity extends AppCompatActivity {
 
     @Bind(R.id.container_splash)
     FrameLayout mContainerSplash;
-    @Bind(R.id.imageView)
-    ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme_NoActionBar);
         super.onCreate(savedInstanceState);
+        XApplication application = (XApplication) getApplication();
+        if (!application.showSplash()) {
+            goToActivity();
+            return;
+        }
         setContentView(R.layout.splash_activity);
         ButterKnife.bind(this);
         setFullscreen(true);
@@ -45,10 +51,19 @@ public class SplashActivity extends AppCompatActivity {
                 .subscribe(new Action1<Object>() {
                     @Override
                     public void call(Object o) {
-                        finish();
+                        goToActivity();
                     }
                 });
 
+    }
+
+    private void goToActivity() {
+        if (!AIManager.getInstance().hasLogin()) {
+            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+        } else {
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+        }
+        finish();
     }
 
     private void setFullscreen(boolean on) {

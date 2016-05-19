@@ -49,6 +49,17 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
     private ServicePresenterContract.Actions servicePresenter;
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        servicePresenter = DaggerServiceComponent.builder()
+                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .serviceModule(new ServiceModule(this))
+                .build()
+                .getServicePresenter();
+        addPresenter(servicePresenter);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -89,12 +100,6 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
     @Override
     public void onStart() {
         super.onStart();
-        servicePresenter = DaggerServiceComponent.builder()
-                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
-                .serviceModule(new ServiceModule(this))
-                .build()
-                .getServicePresenter();
-        addPresenter(servicePresenter);
         servicePresenter.getAllServices(true);
     }
 

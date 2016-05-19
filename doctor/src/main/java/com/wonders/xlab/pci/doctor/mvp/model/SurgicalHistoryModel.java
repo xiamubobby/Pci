@@ -12,6 +12,11 @@ import javax.inject.Inject;
 public class SurgicalHistoryModel extends DoctorBaseModel<SurgicalHistoryEntity> implements SurgicalHistoryModelContract.Actions{
     private PatientRecordAPI mAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public SurgicalHistoryModel(PatientRecordAPI api) {
         mAPI = api;

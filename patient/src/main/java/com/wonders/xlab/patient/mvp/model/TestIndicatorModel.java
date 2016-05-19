@@ -15,6 +15,11 @@ public class TestIndicatorModel extends PatientBaseModel implements TestIndicato
 
     private TestIndicatorAPI mTestIndicatorAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public TestIndicatorModel(TestIndicatorAPI testIndicatorAPI) {
         mTestIndicatorAPI = testIndicatorAPI;

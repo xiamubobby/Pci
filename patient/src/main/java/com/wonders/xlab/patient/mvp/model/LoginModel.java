@@ -18,6 +18,11 @@ public class LoginModel extends PatientBaseModel implements LoginModelContract.A
 
     private LoginAPI mLoginAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     /**
      * 注入
      * 为避免人为的手动创建对象，构造函数不设为public

@@ -2,8 +2,8 @@ package com.wonders.xlab.patient.mvp.presenter;
 
 import com.wonders.xlab.patient.module.order.bean.OrderListBean;
 import com.wonders.xlab.patient.mvp.entity.OrderListEntity;
-import com.wonders.xlab.patient.mvp.model.OrderListModal;
-import com.wonders.xlab.patient.mvp.model.OrderListModalContract;
+import com.wonders.xlab.patient.mvp.model.OrderListModel;
+import com.wonders.xlab.patient.mvp.model.OrderListModelContract;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,14 +16,14 @@ import im.hua.library.base.mvp.impl.BasePagePresenter;
  * Created by jimmy on 16/5/9.
  */
 
-public class OrderListPresenter extends BasePagePresenter implements OrderListPresenterContract.Action, OrderListModalContract.Callback {
+public class OrderListPresenter extends BasePagePresenter implements OrderListPresenterContract.Action, OrderListModelContract.Callback {
 
 
     private OrderListPresenterContract.viewListener mViewListener;
-    private OrderListModalContract.Actions mOrderListModel;
+    private OrderListModelContract.Actions mOrderListModel;
 
     @Inject
-    public OrderListPresenter(OrderListPresenterContract.viewListener orderListPresenter, OrderListModal orderListModel) {
+    public OrderListPresenter(OrderListPresenterContract.viewListener orderListPresenter, OrderListModel orderListModel) {
         this.mViewListener = orderListPresenter;
         this.mOrderListModel = orderListModel;
         addModel(mOrderListModel);

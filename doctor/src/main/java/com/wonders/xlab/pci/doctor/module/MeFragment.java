@@ -58,10 +58,15 @@ public class MeFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         MeFragmentBinding binding = MeFragmentBinding.bind(view);
         binding.setHandler(this);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
         mTvMeName.setText(AIManager.getInstance().getDoctorName());
         mTvMeTel.setText(String.format("账号：%s", AIManager.getInstance().getDoctorTel()));
         ImageViewManager.setImageViewWithUrl(getActivity(), mIvMePortrait, AIManager.getInstance().getDoctorPortraitUrl(), R.drawable.ic_default_avatar_doctor);
+
     }
 
     @OnClick(R.id.btn_me_exit)

@@ -67,23 +67,55 @@ public class CommonRecyclerView extends FrameLayout {
      */
     public static final int HANDLE_VIEW_ID_NONE = -1;
 
+    private LayoutInflater mLayoutInflater;
+
 
     private MaterialProgressDrawable mProgress;
-    private TranslateAnimation showNoReverseAnimation = new TranslateAnimation(
-            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, -0.4f);
+    private TranslateAnimation showNoReverseAnimation;
 
-    private TranslateAnimation hideNoReverseAnimation = new TranslateAnimation(
-            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, -0.4f, Animation.RELATIVE_TO_SELF, 1.0f);
+    private TranslateAnimation hideNoReverseAnimation;
 
-    private TranslateAnimation showReverseAnimation = new TranslateAnimation(
-            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.4f);
+    private TranslateAnimation showReverseAnimation;
 
-    private TranslateAnimation hideReverseAnimation = new TranslateAnimation(
-            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-            Animation.RELATIVE_TO_SELF, 0.4f, Animation.RELATIVE_TO_SELF, -1.0f);
+    private TranslateAnimation hideReverseAnimation;
+
+    private int mEmptyResourceId;
+    private int mLoadingResId;
+    private int mNetErrResId;
+    private int mServerErrResId;
+
+
+    private void initShowNoReverseAnimation() {
+        if (null == showNoReverseAnimation) {
+            showNoReverseAnimation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 1.0f, Animation.RELATIVE_TO_SELF, -0.4f);
+        }
+    }
+
+    private void initHideNoReverseAnimation() {
+        if (null == hideNoReverseAnimation) {
+            hideNoReverseAnimation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, -0.4f, Animation.RELATIVE_TO_SELF, 1.0f);
+        }
+    }
+
+    private void initShowReverseAnimation() {
+        if (null == showReverseAnimation) {
+            showReverseAnimation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.4f);
+        }
+    }
+
+    private void initHideReverseAnimation() {
+        if (null == hideReverseAnimation) {
+            hideReverseAnimation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, 0.4f, Animation.RELATIVE_TO_SELF, -1.0f);
+        }
+    }
 
     private Animation fadeIn = AnimationUtils.loadAnimation(getContext(), android.R.anim.fade_in);
 
@@ -93,27 +125,21 @@ public class CommonRecyclerView extends FrameLayout {
 
     public CommonRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mLayoutInflater = LayoutInflater.from(context);
+
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.CommonRecyclerView);
 
-        int emptyResourceId = array.getResourceId(R.styleable.CommonRecyclerView_emptyView, -1);
-        if (emptyResourceId != -1) {
-            mEmptyView = LayoutInflater.from(context).inflate(emptyResourceId, null, false);
-        }
-        int loadingResId = array.getResourceId(R.styleable.CommonRecyclerView_loadingView, -1);
-        if (-1 != loadingResId) {
-            mLoadingView = LayoutInflater.from(context).inflate(loadingResId, null, false);
-        }
-        int netErrResId = array.getResourceId(R.styleable.CommonRecyclerView_networkErrorView, -1);
-        if (-1 != netErrResId) {
-            mNetworkErrorView = LayoutInflater.from(context).inflate(netErrResId, null, false);
-        }
-        int serverErrResId = array.getResourceId(R.styleable.CommonRecyclerView_serverErrorView, -1);
-        if (-1 != serverErrResId) {
-            mServerErrorView = LayoutInflater.from(context).inflate(serverErrResId, null, false);
-        }
+        mEmptyResourceId = array.getResourceId(R.styleable.CommonRecyclerView_emptyView, -1);
+
+        mLoadingResId = array.getResourceId(R.styleable.CommonRecyclerView_loadingView, -1);
+
+        mNetErrResId = array.getResourceId(R.styleable.CommonRecyclerView_networkErrorView, -1);
+
+        mServerErrResId = array.getResourceId(R.styleable.CommonRecyclerView_serverErrorView, -1);
+
         int loadMoreResId = array.getResourceId(R.styleable.CommonRecyclerView_loadMoreView, -1);
         if (-1 != loadMoreResId) {
-            mLoadMoreView = LayoutInflater.from(context).inflate(loadMoreResId, null, false);
+            mLoadMoreView = mLayoutInflater.inflate(loadMoreResId, null, false);
         }
         layoutManager = array.getInteger(R.styleable.CommonRecyclerView_crvLayoutManager, LAYOUT_MANGER_LINEAR);
         spanCount = array.getInteger(R.styleable.CommonRecyclerView_crvSpanCount, 1);
@@ -122,7 +148,7 @@ public class CommonRecyclerView extends FrameLayout {
 
         array.recycle();
 
-        mRefreshView = (SwipeRefreshLayout) LayoutInflater.from(context).inflate(R.layout.crv_recycler_view, null, false);
+        mRefreshView = (SwipeRefreshLayout) mLayoutInflater.inflate(R.layout.crv_recycler_view, null, false);
         mRecyclerView = (RecyclerView) mRefreshView.findViewById(R.id.recycler_view_crv);
 
         if (null != mRecyclerView) {
@@ -201,6 +227,7 @@ public class CommonRecyclerView extends FrameLayout {
       正序
      */
         long loadMoreAnimationDuration = 400;
+        initHideNoReverseAnimation();
         hideNoReverseAnimation.setDuration(loadMoreAnimationDuration);
         hideNoReverseAnimation.setFillAfter(true);
         hideNoReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -221,7 +248,7 @@ public class CommonRecyclerView extends FrameLayout {
 
             }
         });
-
+        initHideReverseAnimation();
         hideReverseAnimation.setDuration(loadMoreAnimationDuration);
         hideReverseAnimation.setFillAfter(true);
         hideReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -243,6 +270,7 @@ public class CommonRecyclerView extends FrameLayout {
             }
         });
 
+        initShowNoReverseAnimation();
         showNoReverseAnimation.setDuration(loadMoreAnimationDuration);
         showNoReverseAnimation.setFillAfter(true);
         showNoReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -262,7 +290,7 @@ public class CommonRecyclerView extends FrameLayout {
 
             }
         });
-
+        initShowReverseAnimation();
         showReverseAnimation.setDuration(loadMoreAnimationDuration);
         showReverseAnimation.setFillAfter(true);
         showReverseAnimation.setAnimationListener(new Animation.AnimationListener() {
@@ -340,10 +368,14 @@ public class CommonRecyclerView extends FrameLayout {
 
     /**
      * 显示网络错误界面
+     *
      * @param listener
      * @param handleViewId
      */
-    public void showNetworkErrorView(@Nullable final OnNetworkErrorViewClickListener listener,@IdRes int handleViewId) {
+    public void showNetworkErrorView(@Nullable final OnNetworkErrorViewClickListener listener, @IdRes int handleViewId) {
+        if (-1 != mNetErrResId && null == mNetworkErrorView) {
+            mNetworkErrorView = mLayoutInflater.inflate(mNetErrResId, null, false);
+        }
         showView(mNetworkErrorView);
         if (null != listener && null != mNetworkErrorView) {
             if (handleViewId != HANDLE_VIEW_ID_NONE) {
@@ -372,10 +404,14 @@ public class CommonRecyclerView extends FrameLayout {
 
     /**
      * 显示服务器错误界面
+     *
      * @param listener
      * @param handleViewId
      */
-    public void showServerErrorView(@Nullable final OnServerErrorViewClickListener listener,@IdRes int handleViewId) {
+    public void showServerErrorView(@Nullable final OnServerErrorViewClickListener listener, @IdRes int handleViewId) {
+        if (-1 != mServerErrResId && null == mServerErrorView) {
+            mServerErrorView = mLayoutInflater.inflate(mServerErrResId, null, false);
+        }
         showView(mServerErrorView);
         if (null != listener && mServerErrorView != null) {
             if (handleViewId != HANDLE_VIEW_ID_NONE) {
@@ -404,11 +440,15 @@ public class CommonRecyclerView extends FrameLayout {
 
     /**
      * 显示空数据界面
+     *
      * @param listener
      * @param autoShowLoading
      * @param handleViewId
      */
     public void showEmptyView(@Nullable final OnEmptyViewClickListener listener, final boolean autoShowLoading, @IdRes int handleViewId) {
+        if (mEmptyResourceId != -1 && null == mEmptyView) {
+            mEmptyView = mLayoutInflater.inflate(mEmptyResourceId, null, false);
+        }
         showView(mEmptyView);
         if (null != listener && null != mEmptyView) {
             if (handleViewId != HANDLE_VIEW_ID_NONE) {
@@ -451,6 +491,9 @@ public class CommonRecyclerView extends FrameLayout {
      * 显示加载界面
      */
     public void showLoadingView() {
+        if (-1 != mLoadingResId && null == mLoadingView) {
+            mLoadingView = mLayoutInflater.inflate(mLoadingResId, null, false);
+        }
         showView(mLoadingView);
     }
 
@@ -562,8 +605,10 @@ public class CommonRecyclerView extends FrameLayout {
             @Override
             public void run() {
                 if (reverseLayout) {
+                    initHideReverseAnimation();
                     mLoadMoreView.startAnimation(hideReverseAnimation);
                 } else {
+                    initHideNoReverseAnimation();
                     mLoadMoreView.startAnimation(hideNoReverseAnimation);
                 }
             }
@@ -575,8 +620,10 @@ public class CommonRecyclerView extends FrameLayout {
         mLoadMoreView.clearAnimation();
         setIsLoadMore(true);
         if (reverseLayout) {
+            initShowReverseAnimation();
             mLoadMoreView.startAnimation(showReverseAnimation);
         } else {
+            initShowNoReverseAnimation();
             mLoadMoreView.startAnimation(showNoReverseAnimation);
         }
     }

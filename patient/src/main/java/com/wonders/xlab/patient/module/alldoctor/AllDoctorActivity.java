@@ -65,6 +65,11 @@ public class AllDoctorActivity extends AppbarActivity implements AllDoctorPresen
         });
 
         mRecyclerView.setRefreshing(true);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
     }
 

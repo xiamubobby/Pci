@@ -13,6 +13,11 @@ import javax.inject.Inject;
 public class ServiceOrderModel extends PatientBaseModel implements ServiceOrderModelContract.Actions {
     private ServiceAPI mServiceAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public ServiceOrderModel(ServiceAPI serviceAPI) {
         this.mServiceAPI = serviceAPI;

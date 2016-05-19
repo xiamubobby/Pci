@@ -75,6 +75,11 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
         });
 
         mRecyclerView.setRefreshing(false);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         mMedicineRemindPresenter.getMedicineReminds(true);
     }
 

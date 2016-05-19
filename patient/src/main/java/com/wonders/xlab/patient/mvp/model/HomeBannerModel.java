@@ -12,6 +12,11 @@ import javax.inject.Inject;
 public class HomeBannerModel extends PatientBaseModel implements HomeBannerModelContract.Actions {
     private BannerAPI mBannerAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public HomeBannerModel(BannerAPI bannerAPI) {
         mBannerAPI = bannerAPI;

@@ -13,6 +13,11 @@ public class DoctorMyModel extends PatientBaseModel implements DoctorMyModelCont
 
     private DoctorAPI mDoctorAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public DoctorMyModel(DoctorAPI doctorAPI) {
         mDoctorAPI = doctorAPI;

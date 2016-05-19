@@ -8,7 +8,7 @@ import im.hua.library.base.mvp.listener.BaseModelListener;
 /**
  * Created by jimmy on 16/5/9.
  */
-public interface OrderListModalContract {
+public interface OrderListModelContract {
 
     interface Callback extends BaseModelListener {
         void getOrderListSuccess(OrderListEntity entity);

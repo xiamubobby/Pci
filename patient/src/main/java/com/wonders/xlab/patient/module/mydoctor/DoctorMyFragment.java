@@ -55,6 +55,13 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         OttoManager.register(this);
+        mDoctorMyPresenter = DaggerDoctorMyComponent.builder()
+                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .doctorMyModule(new DoctorMyModule(this))
+                .build()
+                .getDoctorMyPresenter();
+
+        addPresenter(mDoctorMyPresenter);
     }
 
     @Override
@@ -87,13 +94,6 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterC
     @Override
     public void onStart() {
         super.onStart();
-        mDoctorMyPresenter = DaggerDoctorMyComponent.builder()
-                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
-                .doctorMyModule(new DoctorMyModule(this))
-                .build()
-                .getDoctorMyPresenter();
-
-        addPresenter(mDoctorMyPresenter);
         mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
     }
 

@@ -9,17 +9,22 @@ import javax.inject.Inject;
 /**
  * Created by jimmy on 16/5/9.
  */
-public class OrderListModal extends PatientBaseModel implements OrderListModalContract.Actions {
+public class OrderListModel extends PatientBaseModel implements OrderListModelContract.Actions {
 
     private OrderListApi mOrderListAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
-    public OrderListModal(OrderListApi orderListAPI) {
+    public OrderListModel(OrderListApi orderListAPI) {
         this.mOrderListAPI = orderListAPI;
     }
 
     @Override
-    public void getOrderList(String patientId, int page, int size, final OrderListModalContract.Callback callback) {
+    public void getOrderList(String patientId, int page, int size, final OrderListModelContract.Callback callback) {
         request(mOrderListAPI.getOrderList(patientId,page,size), new Callback<OrderListEntity>() {
             @Override
             public void onSuccess(OrderListEntity response) {

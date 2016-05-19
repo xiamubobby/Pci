@@ -13,6 +13,11 @@ public class MedicalRecordsModel extends PatientBaseModel<MedicalRecordsEntity> 
 
     private MedicalRecordAPI medicalRecordAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public MedicalRecordsModel(MedicalRecordAPI medicalRecordAPI) {
         this.medicalRecordAPI = medicalRecordAPI;

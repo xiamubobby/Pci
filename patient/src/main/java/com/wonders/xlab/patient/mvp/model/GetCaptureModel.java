@@ -13,6 +13,11 @@ import im.hua.library.base.mvp.entity.SimpleEntity;
 public class GetCaptureModel extends PatientBaseModel implements GetCaptureModelContract.Actions {
     private AuthAPI mApi;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public GetCaptureModel(AuthAPI api) {
         mApi = api;

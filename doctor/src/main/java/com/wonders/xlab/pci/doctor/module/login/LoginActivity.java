@@ -39,11 +39,6 @@ public class LoginActivity extends BaseActivity implements LoginPresenterContrac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*XApplication application = (XApplication) getApplication();
-        if (application.showSplash()) {
-            startActivity(new Intent(this, SplashActivity.class));
-            application.setHasShowed(true);
-        }*/
         setContentView(R.layout.login_activity);
         ButterKnife.bind(this);
 

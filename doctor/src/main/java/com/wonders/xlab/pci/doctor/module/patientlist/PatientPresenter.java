@@ -1,33 +1,37 @@
-package com.wonders.xlab.pci.doctor.mvp.presenter.impl;
+package com.wonders.xlab.pci.doctor.module.patientlist;
 
-import com.wonders.xlab.pci.doctor.mvp.entity.PatientEntity;
-import com.wonders.xlab.pci.doctor.mvp.model.impl.PatientModel;
 import com.wonders.xlab.pci.doctor.module.patientlist.bean.PatientBean;
+import com.wonders.xlab.pci.doctor.mvp.entity.PatientEntity;
+import com.wonders.xlab.pci.doctor.mvp.model.PatientModel;
+import com.wonders.xlab.pci.doctor.mvp.model.PatientModelContract;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import im.hua.library.base.mvp.impl.BasePresenter;
-import im.hua.library.base.mvp.listener.BasePresenterListener;
 
 /**
  * Created by hua on 16/2/22.
  */
-public class PatientPresenter extends BasePresenter implements PatientModel.PatientModelListener {
-    private PatientPresenterListener mListener;
-    private PatientModel mPatientModel;
+public class PatientPresenter extends BasePresenter implements PatientPresenterContract.Actions,PatientModelContract.Callback {
+    private PatientPresenterContract.ViewListener mListener;
+    private PatientModelContract.Actions mPatientModel;
 
     private int mPageIndex = 0;
     private boolean mIsLast = false;
 
-    public PatientPresenter(PatientPresenterListener Listener) {
+    @Inject
+    public PatientPresenter(PatientPresenterContract.ViewListener Listener,PatientModel patientModel) {
         mListener = Listener;
-        mPatientModel = new PatientModel(this);
+        mPatientModel = patientModel;
         addModel(mPatientModel);
     }
 
+    @Override
     public void getPatientList(String doctorId) {
         mListener.showLoading("");
-        mPatientModel.getPatientList(doctorId);
+        mPatientModel.getPatientList(doctorId,this);
     }
 
     @Override
@@ -62,11 +66,5 @@ public class PatientPresenter extends BasePresenter implements PatientModel.Pati
     @Override
     public void onReceiveFailed(int code, String message) {
         showError(mListener, code, message);
-    }
-
-    public interface PatientPresenterListener extends BasePresenterListener {
-        void showPatientList(ArrayList<PatientBean> patientBeen);
-
-        void appendPatientList(ArrayList<PatientBean> patientBeen);
     }
 }

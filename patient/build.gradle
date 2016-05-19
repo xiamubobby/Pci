@@ -107,9 +107,4 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-
-    compile 'com.google.zxing:core:3.2.1'
-    compile 'cn.bingoogolapple:bga-qrcodecore:1.0.7@aar'
-    compile 'cn.bingoogolapple:bga-zxing:1.0.7@aar'
-//    compile 'cn.bingoogolapple:bga-zbar:1.0.7@aar'
 }

@@ -16,6 +16,11 @@ import im.hua.library.base.mvp.entity.EmptyValueEntity;
 public class UserInfoModel extends PatientBaseModel implements UserInfoModelContract.Actions {
     private UserInfoAPI mAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public UserInfoModel(UserInfoAPI api) {
         mAPI = api;

@@ -12,6 +12,12 @@ import javax.inject.Inject;
 public class ServiceContentDetailModel extends PatientBaseModel implements ServiceContentDetailModelContract.Actions {
 
     private ServiceAPI serviceAPI;
+
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public ServiceContentDetailModel(ServiceAPI api) {serviceAPI = api;}
 

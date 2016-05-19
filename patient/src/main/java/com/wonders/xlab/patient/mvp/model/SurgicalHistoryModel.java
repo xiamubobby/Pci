@@ -15,6 +15,11 @@ import im.hua.library.base.mvp.impl.BaseModel;
 public class SurgicalHistoryModel extends PatientBaseModel implements SurgicalHistoryModelContract.Actions{
     private PatientRecordAPI mAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     public SurgicalHistoryModel(PatientRecordAPI api) {
         mAPI = api;

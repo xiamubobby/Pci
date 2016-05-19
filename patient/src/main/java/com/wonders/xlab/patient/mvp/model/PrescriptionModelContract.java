@@ -9,7 +9,7 @@ import im.hua.library.base.mvp.listener.BaseModelListener;
 /**
  * Created by jimmy on 16/5/5.
  */
-public interface PrescriptionModalContract {
+public interface PrescriptionModelContract {
 
     interface Callback extends BaseModelListener {
         void getPrescriptionListSuccess(PrescriptionEntity entity);

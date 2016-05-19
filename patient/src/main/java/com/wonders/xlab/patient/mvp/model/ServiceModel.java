@@ -13,6 +13,11 @@ public class ServiceModel extends PatientBaseModel implements ServiceModelContra
 
     private ServiceAPI mServiceAPI;
 
+    @Override
+    public boolean useDagger() {
+        return true;
+    }
+
     @Inject
     ServiceModel(ServiceAPI serviceAPI) {
         this.mServiceAPI = serviceAPI;
