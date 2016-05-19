@@ -5,7 +5,7 @@ import android.app.FragmentManager;
 import android.content.Intent;
 import android.database.DataSetObserver;
 import android.os.Bundle;
-import android.support.v13.app.FragmentPagerAdapter;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -245,7 +245,7 @@ public class HomeFragment extends BaseFragment implements HomePresenterContract.
 
     }
 
-    class HomeTopVPAdapter extends FragmentPagerAdapter {
+    class HomeTopVPAdapter extends FragmentStatePagerAdapter {
         private List<HomeBannerBean> mHomeBannerBeanList = new ArrayList<>();
 
         public HomeTopVPAdapter(FragmentManager fm) {
@@ -275,7 +275,7 @@ public class HomeFragment extends BaseFragment implements HomePresenterContract.
 
         public void setHomeBannerBeanList(List<HomeBannerBean> homeBannerBeanList) {
             mHomeBannerBeanList.clear();
-            mHomeBannerBeanList = homeBannerBeanList;
+            mHomeBannerBeanList.addAll(homeBannerBeanList);
             notifyDataSetChanged();
         }
 

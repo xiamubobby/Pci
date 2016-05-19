@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="姓名"
+            android:text="@string/authorize_label_name"
             android:textColor="@color/text_color_primary_black"
             android:textSize="@dimen/text_size_large"/>
 
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:hint="请填写"
+            android:hint="@string/authorize_hint_please_input_something"
             android:textColor="@color/text_color_primary_gray"
             android:textSize="@dimen/text_size_large"/>
     </RelativeLayout>
@@ -48,7 +48,7 @@
             android:id="@+id/tv_authorize_id_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="身份证号码"
+            android:text="@string/authorize_label_id"
             android:textColor="@color/text_color_primary_black"
             android:textSize="@dimen/text_size_large"/>
 
@@ -59,7 +59,7 @@
             android:layout_alignParentRight="true"
             android:layout_toRightOf="@+id/tv_authorize_id_title"
             android:gravity="right"
-            android:hint="请填写"
+            android:hint="@string/authorize_hint_please_input_something"
             android:singleLine="true"
             android:textColor="@color/text_color_primary_gray"
             android:textSize="@dimen/text_size_large"/>
@@ -73,7 +73,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/item_interval_middle"
         android:paddingRight="@dimen/item_interval_middle"
-        android:text="身份证图片"
+        android:text="@string/authorize_label_id_image"
         android:textColor="@color/text_color_primary_black"
         android:textSize="@dimen/text_size_large"/>
 
@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:padding="@dimen/item_interval_middle"
-        android:text="示例参考"
+        android:text="@string/authorize_label_example"
         android:textColor="@color/colorAccent"/>
 
 </LinearLayout>

@@ -193,7 +193,9 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
     @Override
     public void authorizeSuccess(String message) {
         showShortToast(message);
-        finish();
+        mTvAuthorizeName.setText("");
+        mTvAuthorizeId.setText("");
+        ImageViewManager.setImageViewWithDrawableId(this,mIvAuthorizeAddPic,R.drawable.ic_group_member_add,ImageViewManager.PLACE_HOLDER_EMPTY);
     }
 
     @Override

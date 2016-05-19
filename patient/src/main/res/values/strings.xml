@@ -127,5 +127,10 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_service_detail">服务详情</string>
     <string name="btn_common_network_error_retry">点击重试</string>
+    <string name="authorize_hint_please_input_something">请填写</string>
+    <string name="authorize_label_name">姓名</string>
+    <string name="authorize_label_id">身份证号码</string>
+    <string name="authorize_label_id_image">身份证图片</string>
+    <string name="authorize_label_example">示例参考</string>
 
 </resources>
