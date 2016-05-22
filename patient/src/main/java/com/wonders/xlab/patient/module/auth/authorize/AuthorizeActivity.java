@@ -71,6 +71,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
                 .authorizeModule(new AuthorizeModule(this))
                 .build()
                 .getAuthorizePresenter();
+        addPresenter(mAuthorizePresenter);
     }
 
     @OnClick(R.id.tv_authorize_example)

@@ -35,13 +35,13 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
     }
 
     @Override
-    public void fetchDoctorDetailInfo(String patientId,String doctorId) {
-        mDoctorDetailModel.getDoctorDetailInfo(patientId,doctorId);
+    public void fetchDoctorDetailInfo(String patientId, String doctorId) {
+        mDoctorDetailModel.getDoctorDetailInfo(patientId, doctorId);
     }
 
     @Override
-    public void orderPackage(String patientId, String packageId) {
-        mOrderPackageServiceModel.orderPackage(patientId, packageId);
+    public void orderPackage(String patientId, String packageId, String paymentChannel) {
+        mOrderPackageServiceModel.orderPackage(patientId, packageId, paymentChannel);
     }
 
     @Override
@@ -111,13 +111,12 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
 
     @Override
     public void onReceiveFailed(int code, String message) {
-        mDoctorDetailListener.hideLoading();
-        mDoctorDetailListener.showNetworkError(message);
+        showError(mDoctorDetailListener, code, message);
     }
 
     @Override
-    public void onOrderPackageServiceSuccess(String message) {
-        mDoctorDetailListener.orderPackageSuccess(message);
+    public void onOrderPackageServiceSuccess(String charge) {
+        mDoctorDetailListener.orderPackageSuccess(charge);
     }
 
     public interface DoctorDetailPresenterListener extends BasePresenterListener {
@@ -131,6 +130,6 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
 
         void hideMemberOrGroupOfDoctorRV();
 
-        void orderPackageSuccess(String message);
+        void orderPackageSuccess(String charge);
     }
 }

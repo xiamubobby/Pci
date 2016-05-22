@@ -1,18 +1,20 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
+import com.google.gson.Gson;
 import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.OrderPackageServiceAPI;
+import com.wonders.xlab.patient.mvp.entity.GenerateOrderPaymentEntity;
 import com.wonders.xlab.patient.mvp.model.IOrderPackageServiceModel;
 
-import im.hua.library.base.mvp.entity.SimpleEntity;
 import im.hua.library.base.mvp.listener.BaseModelListener;
 
 /**
  * Created by hua on 16/3/21.
  */
-public class OrderPackageServiceModel extends PatientBaseModel<SimpleEntity> implements IOrderPackageServiceModel {
+public class OrderPackageServiceModel extends PatientBaseModel<GenerateOrderPaymentEntity> implements IOrderPackageServiceModel {
     private OrderPackageServiceAPI mPackageServiceAPI;
     private OrderPackageServiceModelListener mServiceModelListener;
+    private Gson gson = new Gson();
 
     public OrderPackageServiceModel(OrderPackageServiceModelListener serviceModelListener) {
         mServiceModelListener = serviceModelListener;
@@ -21,8 +23,8 @@ public class OrderPackageServiceModel extends PatientBaseModel<SimpleEntity> imp
     }
 
     @Override
-    protected void onSuccess(SimpleEntity response) {
-        mServiceModelListener.onOrderPackageServiceSuccess("购买成功！");
+    protected void onSuccess(GenerateOrderPaymentEntity response) {
+        mServiceModelListener.onOrderPackageServiceSuccess(gson.toJson(response.getRet_values().getCharge()));
     }
 
     @Override
@@ -31,11 +33,11 @@ public class OrderPackageServiceModel extends PatientBaseModel<SimpleEntity> imp
     }
 
     @Override
-    public void orderPackage(String patientId, String packageId) {
-        request(mPackageServiceAPI.orderPackage(patientId, packageId), true);
+    public void orderPackage(String patientId, String packageId, String paymentChannel) {
+        request(mPackageServiceAPI.generateOrderPayment(patientId, packageId, paymentChannel), true);
     }
 
     public interface OrderPackageServiceModelListener extends BaseModelListener {
-        void onOrderPackageServiceSuccess(String message);
+        void onOrderPackageServiceSuccess(String charge);
     }
 }

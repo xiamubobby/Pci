@@ -66,6 +66,7 @@ dependencies {
     compile project(':base')
     compile project(':common')
     compile project(':uikit')
+    compile project(':lib:pingpp')
 
     compile "com.google.dagger:dagger:$rootProject.ext.dagger"
     apt "com.google.dagger:dagger-compiler:$rootProject.ext.dagger"

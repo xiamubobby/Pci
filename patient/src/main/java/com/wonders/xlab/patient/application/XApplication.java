@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.application;
 import android.app.Application;
 
 import com.github.moduth.blockcanary.BlockCanary;
+import com.pingplusplus.android.PingppLog;
 import com.squareup.leakcanary.LeakCanary;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
@@ -28,6 +29,8 @@ public class XApplication extends Application {
         BlockCanary.install(this, new AppBlockCanaryContext()).start();
 
         component = ApplicationComponent.Initializer.init(this);
+
+        PingppLog.DEBUG = true;
 
         MobclickAgent.setDebugMode(false);
         UmengUpdateAgent.setUpdateOnlyWifi(false);

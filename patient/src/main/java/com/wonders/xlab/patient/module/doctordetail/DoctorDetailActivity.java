@@ -1,5 +1,7 @@
 package com.wonders.xlab.patient.module.doctordetail;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -15,9 +17,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pingplusplus.android.PaymentActivity;
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
@@ -45,7 +49,8 @@ import butterknife.ButterKnife;
 import im.hua.library.base.BaseActivity;
 
 /**
- *医生详情
+ * 医生详情
+ * 购买医生服务
  */
 public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDetailPresenter.DoctorGroupDetailPresenterListener, DoctorDetailPresenter.DoctorDetailPresenterListener {
     public final static int TYPE_DOCTOR = 0;
@@ -63,6 +68,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
      * 可能是小组id或者医生个人的id
      */
     public final static String EXTRA_ID = "extraId";
+    private static final int REQUEST_CODE_PAYMENT = 0x1234;
 
     private String title;
     private String doctorOrOwnerId;
@@ -178,6 +184,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
 
     /**
      * 点击套餐显示BottomSheet
+     *
      * @param packageList
      */
     @Override
@@ -195,10 +202,16 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
                     TextView price = (TextView) view.findViewById(R.id.tv_doctor_detail_bottom_sheet_price);
                     TextView desc = (TextView) view.findViewById(R.id.tv_doctor_detail_bottom_sheet_desc);
                     Button btnBuy = (Button) view.findViewById(R.id.btn_doctor_detail_bottom_sheet);
+                    TextView payChannel = (TextView) view.findViewById(R.id.textViewPayChannel);
+                    final RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.radioGroup);
+                    radioGroup.setVisibility(View.VISIBLE);
+                    payChannel.setVisibility(View.VISIBLE);
 
                     final int status = mPackageRVAdapter.getBean(position).orderStatus.get();
                     switch (status) {
                         case DoctorDetailPackageBean.STATUS_IN_SERVICE:
+                            radioGroup.setVisibility(View.GONE);
+                            payChannel.setVisibility(View.GONE);
                             btnBuy.setText("已购买");
                             btnBuy.setBackgroundColor(getResources().getColor(R.color.text_color_secondary_gray));
                             break;
@@ -215,13 +228,22 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
                             if (status == DoctorDetailPackageBean.STATUS_IN_SERVICE) {
                                 showShortToast("您已购买本套餐");
                             } else {
-                                showProgressDialog("","正在购买，请稍候...",null);
+                                showProgressDialog("", "正在购买，请稍候...", null);
+                                String paymentChannel = "wx";
+                                switch (radioGroup.getCheckedRadioButtonId()) {
+                                    case R.id.radioButtonWechat:
+                                        paymentChannel = "wx";
+                                        break;
+                                    case R.id.radioButtonAlipay:
+                                        paymentChannel = "alipay";
+                                        break;
+                                }
                                 switch (type) {
                                     case TYPE_DOCTOR:
-                                        mDoctorDetailPresenter.orderPackage(AIManager.getInstance().getPatientId(), packageList.get(position).packageId.get());
+                                        mDoctorDetailPresenter.orderPackage(AIManager.getInstance().getPatientId(), packageList.get(position).packageId.get(), paymentChannel);
                                         break;
                                     case TYPE_DOCTOR_GROUP:
-                                        mDoctorGroupDetailPresenter.orderPackage(AIManager.getInstance().getPatientId(), packageList.get(position).packageId.get());
+                                        mDoctorGroupDetailPresenter.orderPackage(AIManager.getInstance().getPatientId(), packageList.get(position).packageId.get(), paymentChannel);
                                         break;
                                 }
                             }
@@ -309,12 +331,56 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     }
 
     @Override
-    public void orderPackageSuccess(String message) {
-        showShortToast(message);
+    public void orderPackageSuccess(String charge) {
+
+        Intent intent = new Intent(this, PaymentActivity.class);
+        intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
+        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+
         dismissProgressDialog();
         requestData();
         dialog.dismiss();
-        OttoManager.post(new BuyPackageSuccessOtto());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //支付页面返回处理
+        if (requestCode == REQUEST_CODE_PAYMENT) {
+            if (resultCode == Activity.RESULT_OK) {
+                String result = data.getExtras().getString("pay_result");
+            /* 处理返回值
+             * "success" - 支付成功
+             * "fail"    - 支付失败
+             * "cancel"  - 取消支付
+             * "invalid" - 支付插件未安装（一般是微信客户端未安装的情况）
+             */
+                showMsg(result);
+            }
+        }
+    }
+
+    public void showMsg(String result) {
+        switch (result) {
+            case "success":
+                OttoManager.post(new BuyPackageSuccessOtto());
+                result = "支付成功";
+                break;
+            case "fail":
+                result = "支付失败";
+                break;
+            case "cancel":
+                result = "取消支付";
+                break;
+            case "invalid":
+                result = "未安装客户端";
+                break;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(result);
+        builder.setTitle("提示");
+        builder.setPositiveButton("确定", null);
+        builder.create().show();
     }
 
     @Override
@@ -324,26 +390,27 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
 
     @Override
     public void showNetworkError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        showShortToast(message);
     }
 
     @Override
     public void showServerError(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void showEmptyView(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void showErrorToast(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void hideLoading() {
+        dismissProgressDialog();
         mRefresh.post(new Runnable() {
             @Override
             public void run() {
@@ -357,6 +424,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_doctor_detail));
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_doctor_detail));

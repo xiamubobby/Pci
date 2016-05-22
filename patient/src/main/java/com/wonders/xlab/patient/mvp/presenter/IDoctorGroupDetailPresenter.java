@@ -8,5 +8,5 @@ import im.hua.library.base.mvp.IBasePresenter;
 public interface IDoctorGroupDetailPresenter extends IBasePresenter {
     void fetchDoctorGroupDetailInfo(String patientId,String ownerId);
 
-    void orderPackage(String patientId,String packageId);
+    void orderPackage(String patientId, String packageId, String paymentChannel);
 }
