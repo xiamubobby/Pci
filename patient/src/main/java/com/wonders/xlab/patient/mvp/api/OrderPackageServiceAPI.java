@@ -1,7 +1,6 @@
 package com.wonders.xlab.patient.mvp.api;
 
 import com.wonders.xlab.patient.mvp.entity.GenerateOrderPaymentEntity;
-import com.wonders.xlab.patient.mvp.entity.common.ChargeEntity;
 
 import im.hua.library.base.mvp.entity.SimpleEntity;
 import retrofit2.Response;
@@ -21,8 +20,4 @@ public interface OrderPackageServiceAPI {
     @FormUrlEncoded
     @POST("v1/orders/generateOrderPayment")
     Observable<Response<GenerateOrderPaymentEntity>> generateOrderPayment(@Field("userId") String patientId, @Field("packageId") String packageId, @Field("paymentChannel") String paymentChannel);
-
-    @FormUrlEncoded
-    @POST("v1/orders/generateOrderPayment")
-    Observable<Response<ChargeEntity>> generateOrderPayment1(@Field("userId") String patientId, @Field("packageId") String packageId, @Field("paymentChannel") String paymentChannel);
 }
