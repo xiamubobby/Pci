@@ -134,8 +134,8 @@ public class PrescriptionActivity extends AppbarActivity implements Prescription
     }
 
     @Override
-    public void showErrorToast(String message) {
-        showErrorToast(message);
+    public void showToast(String message) {
+        showToast(message);
     }
 
     @Override

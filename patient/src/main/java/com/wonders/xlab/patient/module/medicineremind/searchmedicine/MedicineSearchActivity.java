@@ -262,7 +262,7 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
 
     }
 

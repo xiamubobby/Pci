@@ -131,7 +131,7 @@ public class OrderListActivity extends AppbarActivity implements OrderListPresen
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
         showShortToast(message);
     }
 

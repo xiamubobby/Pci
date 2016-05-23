@@ -74,40 +74,68 @@ public class BSRVAdapter extends SimpleRVAdapter<BSBean> implements StickyRecycl
         BSBean bean = getBean(position);
         viewHolder.mBinding.setBs(bean);
 
+        int colorLow = ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent);
+        int colorHigh = ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.red_dark);
+        int colorNormal = ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.text_color_primary_black);
+        /**
+         * 0：偏低
+         * 1：正常
+         * 2：偏高
+         */
         if (bean.getBeforeDawnStandard() == 0) {
-            viewHolder.beforeSleepBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+            viewHolder.beforeSleepBS.setTextColor(colorLow);
         } else if (bean.getBeforeDawnStandard() == 2) {
-            viewHolder.beforeSleepBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
+            viewHolder.beforeSleepBS.setTextColor(colorHigh);
+        } else {
+            viewHolder.beforeSleepBS.setTextColor(colorNormal);
         }
+
         if (bean.getBreakfastAfterStandard() == 0) {
-            viewHolder.breakfastAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+            viewHolder.breakfastAfterBS.setTextColor(colorLow);
         } else if (bean.getBreakfastAfterStandard() == 2) {
-            viewHolder.breakfastAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
+            viewHolder.breakfastAfterBS.setTextColor(colorHigh);
+        } else {
+            viewHolder.breakfastAfterBS.setTextColor(colorNormal);
         }
+
         if (bean.getBreakfastBeforeStandard() == 0) {
-            viewHolder.breakfastBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+            viewHolder.breakfastBeforeBS.setTextColor(colorLow);
         } else if (bean.getBreakfastBeforeStandard() == 2) {
-            viewHolder.breakfastBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
+            viewHolder.breakfastBeforeBS.setTextColor(colorHigh);
+        } else {
+            viewHolder.breakfastBeforeBS.setTextColor(colorNormal);
         }
+
         if (bean.getDinnerAfterStandard() == 0) {
-            viewHolder.dinnerAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+            viewHolder.dinnerAfterBS.setTextColor(colorLow);
         } else if (bean.getDinnerAfterStandard() == 2) {
-            viewHolder.dinnerAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
+            viewHolder.dinnerAfterBS.setTextColor(colorHigh);
+        }else {
+            viewHolder.dinnerAfterBS.setTextColor(colorNormal);
         }
+
         if (bean.getDinnerBeforeStandard() == 0) {
-            viewHolder.dinnerBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+            viewHolder.dinnerBeforeBS.setTextColor(colorLow);
         } else if (bean.getDinnerBeforeStandard() == 2) {
-            viewHolder.dinnerBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
+            viewHolder.dinnerBeforeBS.setTextColor(colorHigh);
+        }else {
+            viewHolder.dinnerBeforeBS.setTextColor(colorNormal);
         }
+
         if (bean.getLunchAfterStandard() == 0) {
-            viewHolder.lunchAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+            viewHolder.lunchAfterBS.setTextColor(colorLow);
         } else if (bean.getLunchAfterStandard() == 2) {
-            viewHolder.lunchAfterBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
+            viewHolder.lunchAfterBS.setTextColor(colorHigh);
+        }else {
+            viewHolder.lunchAfterBS.setTextColor(colorNormal);
         }
+
         if (bean.getLunchBeforeStandard() == 0) {
-            viewHolder.lunchBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.colorAccent));
+            viewHolder.lunchBeforeBS.setTextColor(colorLow);
         } else if (bean.getLunchBeforeStandard() == 2) {
-            viewHolder.lunchBeforeBS.setTextColor(ContextCompat.getColor(viewHolder.itemView.getContext(), R.color.appYellow));
+            viewHolder.lunchBeforeBS.setTextColor(colorHigh);
+        }else {
+            viewHolder.lunchBeforeBS.setTextColor(colorNormal);
         }
 
     }

@@ -247,7 +247,7 @@ public class MedicalPictureActivity extends AppbarActivity implements MedicalRec
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
 
     }
 

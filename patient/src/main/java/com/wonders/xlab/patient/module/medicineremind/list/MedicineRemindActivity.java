@@ -194,7 +194,7 @@ public class MedicineRemindActivity extends AppbarActivity implements MedicineRe
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
         showShortToast(message);
     }
 

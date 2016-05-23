@@ -69,7 +69,7 @@ public class BasePresenter implements IBasePresenter {
         if (code == BaseModel.ERROR_CODE_CONNECT_EXCEPTION || code == BaseModel.ERROR_CODE_CLIENT_EXCEPTION) {
             listener.showNetworkError(message);
         } else if (code == -1) {
-            listener.showErrorToast(TextUtils.isEmpty(message) ? "请求出错，请重试！" : message);
+            listener.showToast(TextUtils.isEmpty(message) ? "请求出错，请重试！" : message);
         } else {
             listener.showServerError(message);
         }

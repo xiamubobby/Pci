@@ -227,7 +227,7 @@ public class BPHRFragment extends BaseFragment implements BloodPressurePresenter
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
 
     }
 

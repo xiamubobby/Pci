@@ -130,7 +130,7 @@ public class BPReportFragment extends BaseFragment implements BPReportCachePrese
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
 
     }
 

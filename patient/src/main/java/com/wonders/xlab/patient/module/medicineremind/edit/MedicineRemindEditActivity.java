@@ -295,7 +295,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
         showShortToast(message);
     }
 

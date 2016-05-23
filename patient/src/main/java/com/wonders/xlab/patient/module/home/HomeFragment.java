@@ -236,7 +236,7 @@ public class HomeFragment extends BaseFragment implements HomePresenterContract.
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
 
     }
 

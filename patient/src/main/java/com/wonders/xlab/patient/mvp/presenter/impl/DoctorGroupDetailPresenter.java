@@ -2,34 +2,38 @@ package com.wonders.xlab.patient.mvp.presenter.impl;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorBasicInfoBean;
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorDetailGroupMemberBean;
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorDetailGroupOfDoctorBean;
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorDetailPackageBean;
 import com.wonders.xlab.patient.mvp.entity.DoctorGroupDetailEntity;
+import com.wonders.xlab.patient.mvp.entity.GenerateOrderPaymentEntity;
 import com.wonders.xlab.patient.mvp.model.IDoctorGroupDetailModel;
 import com.wonders.xlab.patient.mvp.model.IOrderPackageServiceModel;
 import com.wonders.xlab.patient.mvp.model.impl.DoctorGroupDetailModel;
 import com.wonders.xlab.patient.mvp.model.impl.OrderPackageServiceModel;
+import com.wonders.xlab.patient.mvp.presenter.DoctorDetailContract;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorGroupDetailPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
-import im.hua.library.base.mvp.listener.BasePresenterListener;
 
 /**
  * Created by hua on 16/3/16.
  */
 public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctorGroupDetailPresenter, DoctorGroupDetailModel.DoctorGroupDetailModelListener, OrderPackageServiceModel.OrderPackageServiceModelListener {
 
-    private DoctorGroupDetailPresenterListener mDoctorDetailListener;
+    private DoctorDetailContract.ViewListener mDoctorDetailListener;
     private IDoctorGroupDetailModel mDoctorDetailModel;
     private IOrderPackageServiceModel mOrderPackageServiceModel;
 
-    public DoctorGroupDetailPresenter(DoctorGroupDetailPresenterListener doctorDetailListener) {
+    private Gson gson = new Gson();
+
+    public DoctorGroupDetailPresenter(DoctorDetailContract.ViewListener doctorDetailListener) {
         mDoctorDetailListener = doctorDetailListener;
 
         mDoctorDetailModel = new DoctorGroupDetailModel(this);
@@ -132,7 +136,6 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
             }
         }
 
-
     }
 
     @Override
@@ -141,23 +144,26 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
     }
 
     @Override
-    public void onOrderPackageServiceSuccess(String charge) {
-        mDoctorDetailListener.orderPackageSuccess(charge);
-    }
-
-    public interface DoctorGroupDetailPresenterListener extends BasePresenterListener {
-        void showBasicInfo(DoctorBasicInfoBean basicInfoBean);
-
-        void showPackageList(ArrayList<DoctorDetailPackageBean> packageList);
-
-        void showGroupMemberList(ArrayList<DoctorDetailGroupMemberBean> groupMemberList);
-
-        void showGroupOfDoctorList(ArrayList<DoctorDetailGroupOfDoctorBean> groupOfDoctorList);
-
-        void showMemberOrGroupOfDoctorRV();
-
-        void hideMemberOrGroupOfDoctorRV();
-
-        void orderPackageSuccess(String charge);
+    public void onOrderPackageServiceSuccess(GenerateOrderPaymentEntity paymentEntity) {
+        GenerateOrderPaymentEntity.RetValuesEntity retValues = paymentEntity.getRet_values();
+        if (null == retValues) {
+            mDoctorDetailListener.showToast(paymentEntity.getMessage());
+            return;
+        }
+        String charge;
+        Object chargeEntity = retValues.getCharge();
+        if (null == chargeEntity) {
+            charge = "";
+        } else {
+            charge = gson.toJson(chargeEntity);
+        }
+        if (TextUtils.isEmpty(charge)) {
+            mDoctorDetailListener.hideLoading();
+            mDoctorDetailListener.showToast("购买成功");
+            mDoctorDetailListener.refreshView();
+        } else {
+            mDoctorDetailListener.hideLoading();
+            mDoctorDetailListener.startPayment(charge);
+        }
     }
 }

@@ -153,7 +153,7 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
 
     }
 

@@ -82,7 +82,7 @@ public class MedicalRecordsPresenter extends BasePagePresenter implements Medica
 
                             @Override
                             public void onError(Throwable e) {
-                                mMedicalRecordsPresenter.showErrorToast("获取数据出错！");
+                                mMedicalRecordsPresenter.showToast("获取数据出错！");
                             }
 
                             @Override

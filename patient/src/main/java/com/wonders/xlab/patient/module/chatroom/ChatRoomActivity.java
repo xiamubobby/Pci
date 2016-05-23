@@ -329,7 +329,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
 
     }
 

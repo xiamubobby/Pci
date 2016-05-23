@@ -333,7 +333,7 @@ public class ServiceDetailActivity extends BaseActivity implements ServiceDetail
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
 
     }
 

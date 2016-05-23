@@ -222,7 +222,7 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
 
     }
 

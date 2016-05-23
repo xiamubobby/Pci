@@ -12,7 +12,7 @@ public interface BasePresenterListener {
 
     void showEmptyView(String message);
 
-    void showErrorToast(String message);
+    void showToast(String message);
 
     void hideLoading();
 }

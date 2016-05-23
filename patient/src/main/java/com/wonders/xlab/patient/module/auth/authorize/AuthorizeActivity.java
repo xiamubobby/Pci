@@ -220,7 +220,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
         showShortToast(message);
     }
 

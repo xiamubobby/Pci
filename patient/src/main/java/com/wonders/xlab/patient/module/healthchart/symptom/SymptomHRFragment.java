@@ -139,7 +139,7 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
 
     }
 

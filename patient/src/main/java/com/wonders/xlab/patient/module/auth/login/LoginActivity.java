@@ -121,7 +121,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenterContrac
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
 
     }
 

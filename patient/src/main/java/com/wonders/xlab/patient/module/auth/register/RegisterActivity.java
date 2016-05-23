@@ -145,7 +145,7 @@ public class RegisterActivity extends BaseActivity implements RegisterPresenterC
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
         showShortToast(message);
         mCountDownTimer.cancel();
         btnRegisterCap.setEnabled(true);

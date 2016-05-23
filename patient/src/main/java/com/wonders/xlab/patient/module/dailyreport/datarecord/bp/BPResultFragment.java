@@ -207,7 +207,7 @@ public class BPResultFragment extends BaseFragment implements IdealRangePresente
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
 
     }
 

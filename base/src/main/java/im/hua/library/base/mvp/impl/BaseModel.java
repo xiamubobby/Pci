@@ -99,7 +99,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                             } else if (e instanceof JsonParseException) {
                                 onFailed(ERROR_CODE_CLIENT_EXCEPTION, "数据解析出错，请稍候重试！");
                             } else {
-                                onFailed(ERROR_CODE_CLIENT_EXCEPTION, "请求失败，请检查网络后重试！");
+                                onFailed(ERROR_CODE_CLIENT_EXCEPTION, e.getMessage());
                             }
                         } else {
                             onFailed(ERROR_CODE_CLIENT_EXCEPTION, "请求失败，请检查网络后重试！");
@@ -206,7 +206,7 @@ public abstract class BaseModel<T extends BaseEntity> implements IBaseModel {
                             } else if (e instanceof JsonParseException || e instanceof MalformedJsonException) {
                                 callback.onFailed(ERROR_CODE_CLIENT_EXCEPTION, "数据解析出错，请稍候重试！");
                             } else {
-                                callback.onFailed(ERROR_CODE_CLIENT_EXCEPTION, "请求失败，请检查网络后重试！");
+                                callback.onFailed(ERROR_CODE_CLIENT_EXCEPTION, e.getMessage());
                             }
                         } else {
                             callback.onFailed(ERROR_CODE_CLIENT_EXCEPTION, "请求失败，请检查网络后重试！");

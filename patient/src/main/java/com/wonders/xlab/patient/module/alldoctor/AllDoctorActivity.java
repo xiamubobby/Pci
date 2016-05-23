@@ -65,12 +65,8 @@ public class AllDoctorActivity extends AppbarActivity implements AllDoctorPresen
         });
 
         mRecyclerView.setRefreshing(true);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
+
     }
 
     @Override
@@ -120,11 +116,11 @@ public class AllDoctorActivity extends AppbarActivity implements AllDoctorPresen
             public void onClick() {
                 mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
             }
-        }, true, R.id.btn_common_network_error_retry);
+        }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
         showShortToast(message);
     }
 

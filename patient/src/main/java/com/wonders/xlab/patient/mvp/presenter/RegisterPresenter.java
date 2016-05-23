@@ -31,7 +31,7 @@ public class RegisterPresenter extends BasePresenter implements RegisterPresente
     @Override
     public void getCaptcha(String mobile) {
         if (TextUtils.isEmpty(mobile) || mobile.length() != 11) {
-            mListener.showErrorToast("请填写11位的手机号！");
+            mListener.showToast("请填写11位的手机号！");
             return;
         }
         mGetCaptureModel.getCaptcha(mobile, new GetCaptureModelContract.Callback() {
@@ -50,15 +50,15 @@ public class RegisterPresenter extends BasePresenter implements RegisterPresente
     @Override
     public void register(String mobile, String password, String captcha) {
         if (TextUtils.isEmpty(mobile) || mobile.length() != 11) {
-            mListener.showErrorToast("请填写11位的手机号！");
+            mListener.showToast("请填写11位的手机号！");
             return;
         }
         if (TextUtils.isEmpty(captcha) || captcha.length() != 6) {
-            mListener.showErrorToast("请填写6位的数字验证码！");
+            mListener.showToast("请填写6位的数字验证码！");
             return;
         }
         if (TextUtils.isEmpty(password) || password.length() < 6) {
-            mListener.showErrorToast("密码长度必须大于等于6！");
+            mListener.showToast("密码长度必须大于等于6！");
             return;
         }
 

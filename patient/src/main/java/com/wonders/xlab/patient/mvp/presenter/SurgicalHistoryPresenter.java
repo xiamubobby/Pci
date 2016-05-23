@@ -72,7 +72,7 @@ public class SurgicalHistoryPresenter extends BasePagePresenter implements Surgi
 
                     @Override
                     public void onError(Throwable e) {
-                        mViewListener.showErrorToast("获取数据出错");
+                        mViewListener.showToast("获取数据出错");
                     }
 
                     @Override

@@ -1,6 +1,5 @@
 package com.wonders.xlab.patient.mvp.model.impl;
 
-import com.google.gson.Gson;
 import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.OrderPackageServiceAPI;
 import com.wonders.xlab.patient.mvp.entity.GenerateOrderPaymentEntity;
@@ -14,7 +13,6 @@ import im.hua.library.base.mvp.listener.BaseModelListener;
 public class OrderPackageServiceModel extends PatientBaseModel<GenerateOrderPaymentEntity> implements IOrderPackageServiceModel {
     private OrderPackageServiceAPI mPackageServiceAPI;
     private OrderPackageServiceModelListener mServiceModelListener;
-    private Gson gson = new Gson();
 
     public OrderPackageServiceModel(OrderPackageServiceModelListener serviceModelListener) {
         mServiceModelListener = serviceModelListener;
@@ -24,7 +22,7 @@ public class OrderPackageServiceModel extends PatientBaseModel<GenerateOrderPaym
 
     @Override
     protected void onSuccess(GenerateOrderPaymentEntity response) {
-        mServiceModelListener.onOrderPackageServiceSuccess(gson.toJson(response.getRet_values().getCharge()));
+        mServiceModelListener.onOrderPackageServiceSuccess(response);
     }
 
     @Override
@@ -38,6 +36,6 @@ public class OrderPackageServiceModel extends PatientBaseModel<GenerateOrderPaym
     }
 
     public interface OrderPackageServiceModelListener extends BaseModelListener {
-        void onOrderPackageServiceSuccess(String charge);
+        void onOrderPackageServiceSuccess(GenerateOrderPaymentEntity paymentEntity);
     }
 }

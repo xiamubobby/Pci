@@ -128,7 +128,7 @@ public class SurgicalHistoryActivity extends AppbarActivity implements SurgicalH
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
         showShortToast(message);
     }
 

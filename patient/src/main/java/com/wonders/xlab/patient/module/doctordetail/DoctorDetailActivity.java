@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +36,7 @@ import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorBasicInfo
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorDetailGroupMemberBean;
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorDetailGroupOfDoctorBean;
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorDetailPackageBean;
+import com.wonders.xlab.patient.mvp.presenter.DoctorDetailContract;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorDetailPresenter;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorGroupDetailPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.DoctorDetailPresenter;
@@ -52,7 +54,7 @@ import im.hua.library.base.BaseActivity;
  * 医生详情
  * 购买医生服务
  */
-public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDetailPresenter.DoctorGroupDetailPresenterListener, DoctorDetailPresenter.DoctorDetailPresenterListener {
+public class DoctorDetailActivity extends BaseActivity implements DoctorDetailContract.ViewListener {
     public final static int TYPE_DOCTOR = 0;
     public final static int TYPE_DOCTOR_GROUP = 1;
 
@@ -179,7 +181,6 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     public void showBasicInfo(DoctorBasicInfoBean basicInfoBean) {
         ImageViewManager.setImageViewWithUrl(this, mIvDoctorDetailPortrait, basicInfoBean.groupAvatar.get(), ImageViewManager.PLACE_HOLDER_EMPTY);
         binding.setBean(basicInfoBean);
-
     }
 
     /**
@@ -197,13 +198,14 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
                     if (null == dialog) {
                         dialog = new BottomSheetDialog(DoctorDetailActivity.this);
                     }
-                    View view = LayoutInflater.from(DoctorDetailActivity.this).inflate(R.layout.doctor_detail_bottom_sheet, null, false);
-                    TextView name = (TextView) view.findViewById(R.id.tv_doctor_detail_bottom_sheet_package_name);
-                    TextView price = (TextView) view.findViewById(R.id.tv_doctor_detail_bottom_sheet_price);
-                    TextView desc = (TextView) view.findViewById(R.id.tv_doctor_detail_bottom_sheet_desc);
-                    Button btnBuy = (Button) view.findViewById(R.id.btn_doctor_detail_bottom_sheet);
-                    TextView payChannel = (TextView) view.findViewById(R.id.textViewPayChannel);
-                    final RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.radioGroup);
+                    View contentView = LayoutInflater.from(DoctorDetailActivity.this).inflate(R.layout.doctor_detail_bottom_sheet, null, false);
+
+                    TextView name = (TextView) contentView.findViewById(R.id.tv_doctor_detail_bottom_sheet_package_name);
+                    TextView price = (TextView) contentView.findViewById(R.id.tv_doctor_detail_bottom_sheet_price);
+                    TextView desc = (TextView) contentView.findViewById(R.id.tv_doctor_detail_bottom_sheet_desc);
+                    Button btnBuy = (Button) contentView.findViewById(R.id.btn_doctor_detail_bottom_sheet);
+                    TextView payChannel = (TextView) contentView.findViewById(R.id.textViewPayChannel);
+                    final RadioGroup radioGroup = (RadioGroup) contentView.findViewById(R.id.radioGroup);
                     radioGroup.setVisibility(View.VISIBLE);
                     payChannel.setVisibility(View.VISIBLE);
 
@@ -255,7 +257,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
                     price.setText(bean.priceStr.get());
                     desc.setText(bean.description.get());
 
-                    dialog.setContentView(view);
+                    dialog.setContentView(contentView);
                     dialog.show();
 
                 }
@@ -331,15 +333,16 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     }
 
     @Override
-    public void orderPackageSuccess(String charge) {
-
+    public void startPayment(String charge) {
+        Log.d("DoctorDetailActivity", charge);
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
         startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+    }
 
-        dismissProgressDialog();
+    @Override
+    public void refreshView() {
         requestData();
-        dialog.dismiss();
     }
 
     @Override
@@ -349,6 +352,10 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
         if (requestCode == REQUEST_CODE_PAYMENT) {
             if (resultCode == Activity.RESULT_OK) {
                 String result = data.getExtras().getString("pay_result");
+                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
+                Log.d("DoctorDetailActivity", errorMsg);
+                Log.d("DoctorDetailActivity", extraMsg);
             /* 处理返回值
              * "success" - 支付成功
              * "fail"    - 支付失败
@@ -385,7 +392,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
 
     @Override
     public void showLoading(String message) {
-
+        super.setRefreshing(mRefresh, true);
     }
 
     @Override
@@ -404,19 +411,17 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorGroupDet
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
         showShortToast(message);
     }
 
     @Override
     public void hideLoading() {
         dismissProgressDialog();
-        mRefresh.post(new Runnable() {
-            @Override
-            public void run() {
-                mRefresh.setRefreshing(false);
-            }
-        });
+        if (null != dialog) {
+            dialog.dismiss();
+        }
+        super.setRefreshing(mRefresh, false);
     }
 
     public void onResume() {

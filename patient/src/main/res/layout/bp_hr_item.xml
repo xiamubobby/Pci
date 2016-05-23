@@ -5,17 +5,19 @@
 
         <variable
             name="bp"
-            type="com.wonders.xlab.patient.module.healthchart.bp.bean.BPListBean" />
+            type="com.wonders.xlab.patient.module.healthchart.bp.bean.BPListBean"/>
 
-        <import type="im.hua.utils.DateUtil" />
+        <import type="im.hua.utils.DateUtil"/>
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:minHeight="?attr/listPreferredItemHeightSmall"
-        android:orientation="horizontal">
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center"
+                  android:minHeight="?attr/listPreferredItemHeightSmall"
+                  android:orientation="horizontal"
+                  android:paddingLeft="@dimen/item_interval_small"
+                  android:paddingRight="@dimen/item_interval_small">
 
         <TextView
             android:layout_width="0dp"
@@ -25,7 +27,7 @@
             android:singleLine="true"
             android:text='@{DateUtil.format(bp.recordTimeInMill,"HH:mm")}'
             android:textColor="@color/text_color_primary_gray"
-            android:textSize="@dimen/text_size_middle" />
+            android:textSize="@dimen/text_size_middle"/>
 
         <TextView
             android:id="@+id/systolic"
@@ -36,7 +38,7 @@
             android:singleLine="true"
             android:text="@{bp.systolic}"
             android:textColor="@color/text_color_primary_black"
-            android:textSize="@dimen/text_size_middle" />
+            android:textSize="@dimen/text_size_middle"/>
 
         <TextView
             android:id="@+id/diastolic"
@@ -47,7 +49,7 @@
             android:singleLine="true"
             android:text="@{bp.diastolic}"
             android:textColor="@color/text_color_primary_black"
-            android:textSize="@dimen/text_size_middle" />
+            android:textSize="@dimen/text_size_middle"/>
 
         <TextView
             android:id="@+id/heartRate"
@@ -58,6 +60,6 @@
             android:singleLine="true"
             android:text="@{bp.heartRate}"
             android:textColor="@color/text_color_primary_black"
-            android:textSize="@dimen/text_size_middle" />
+            android:textSize="@dimen/text_size_middle"/>
     </LinearLayout>
 </layout>

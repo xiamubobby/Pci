@@ -153,7 +153,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterC
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
         showShortToast(message);
     }
 

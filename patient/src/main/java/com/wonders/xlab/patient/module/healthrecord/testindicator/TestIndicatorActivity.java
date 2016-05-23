@@ -132,7 +132,7 @@ public class TestIndicatorActivity extends AppbarActivity implements TestIndicat
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
         showShortToast(message);
     }
 

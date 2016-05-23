@@ -95,11 +95,6 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
                 servicePresenter.getAllServices(true);
             }
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         servicePresenter.getAllServices(true);
     }
 
@@ -171,7 +166,7 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
         showShortToast(message);
     }
 

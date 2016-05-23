@@ -27,15 +27,15 @@ public class AuthorizePresenter extends BasePresenter implements AuthorizePresen
     @Override
     public void authorize(String patientId, String name, String idNo, File idPic) {
         if (TextUtils.isEmpty(patientId)) {
-            mViewListener.showErrorToast("获取用户信息失败，请退出重新登录");
+            mViewListener.showToast("获取用户信息失败，请退出重新登录");
             return;
         }
         if (TextUtils.isEmpty(name)) {
-            mViewListener.showErrorToast("请先填写姓名");
+            mViewListener.showToast("请先填写姓名");
             return;
         }
         if (TextUtils.isEmpty(idNo)) {
-            mViewListener.showErrorToast("请先填写身份证号码");
+            mViewListener.showToast("请先填写身份证号码");
             return;
         }
         mViewListener.showLoading("正在保存，请稍候...");

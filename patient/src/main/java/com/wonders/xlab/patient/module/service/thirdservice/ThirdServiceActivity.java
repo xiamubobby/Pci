@@ -132,7 +132,7 @@ public class ThirdServiceActivity extends AppbarActivity implements ServicePrese
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
         showShortToast(message);
     }
 

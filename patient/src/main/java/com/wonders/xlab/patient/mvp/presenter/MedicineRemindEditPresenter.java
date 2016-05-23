@@ -52,7 +52,7 @@ public class MedicineRemindEditPresenter extends BasePresenter implements Medici
     @Override
     public void saveMedicineRemind(MedicineRemindEditBody body) {
         if (mIsSaving) {
-            mViewListener.showErrorToast("正在保存，请稍候重试...");
+            mViewListener.showToast("正在保存，请稍候重试...");
             return;
         }
         mViewListener.showLoading("正在保存，请稍候...");

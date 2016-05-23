@@ -182,7 +182,7 @@ public class HealthRecordActivity extends AppbarActivity implements HealthRecord
     }
 
     @Override
-    public void showErrorToast(String message) {
+    public void showToast(String message) {
         showShortToast(message);
     }
 

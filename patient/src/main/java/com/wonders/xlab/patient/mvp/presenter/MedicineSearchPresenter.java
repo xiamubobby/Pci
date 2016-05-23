@@ -85,7 +85,7 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
 
                     @Override
                     public void onError(Throwable e) {
-                        mViewListener.showErrorToast(e.getMessage());
+                        mViewListener.showToast(e.getMessage());
                     }
 
                     @Override
@@ -165,7 +165,7 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
 
                     @Override
                     public void onError(Throwable e) {
-                        mViewListener.showErrorToast(e.getMessage());
+                        mViewListener.showToast(e.getMessage());
                     }
 
                     @Override

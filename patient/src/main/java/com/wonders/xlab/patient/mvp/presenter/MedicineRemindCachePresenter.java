@@ -70,7 +70,7 @@ public class MedicineRemindCachePresenter extends BasePagePresenter implements M
 
                                     @Override
                                     public void onError(Throwable e) {
-                                        mViewListener.showErrorToast(e.getMessage());
+                                        mViewListener.showToast(e.getMessage());
                                     }
 
                                     @Override
