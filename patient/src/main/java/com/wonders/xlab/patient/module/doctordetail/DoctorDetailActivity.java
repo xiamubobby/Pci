@@ -5,7 +5,9 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -195,6 +198,9 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
             mPackageRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(final int position) {
+                    DoctorDetailPackageBean bean = mPackageRVAdapter.getBean(position);
+
+                    boolean showPayment = bean.showPayment.get();
                     if (null == dialog) {
                         dialog = new BottomSheetDialog(DoctorDetailActivity.this);
                     }
@@ -204,12 +210,19 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
                     TextView price = (TextView) contentView.findViewById(R.id.tv_doctor_detail_bottom_sheet_price);
                     TextView desc = (TextView) contentView.findViewById(R.id.tv_doctor_detail_bottom_sheet_desc);
                     Button btnBuy = (Button) contentView.findViewById(R.id.btn_doctor_detail_bottom_sheet);
+
                     TextView payChannel = (TextView) contentView.findViewById(R.id.textViewPayChannel);
                     final RadioGroup radioGroup = (RadioGroup) contentView.findViewById(R.id.radioGroup);
-                    radioGroup.setVisibility(View.VISIBLE);
-                    payChannel.setVisibility(View.VISIBLE);
 
-                    final int status = mPackageRVAdapter.getBean(position).orderStatus.get();
+                    if (showPayment) {
+                        radioGroup.setVisibility(View.VISIBLE);
+                        payChannel.setVisibility(View.VISIBLE);
+                    } else {
+                        radioGroup.setVisibility(View.GONE);
+                        payChannel.setVisibility(View.GONE);
+                    }
+
+                    final int status = bean.orderStatus.get();
                     switch (status) {
                         case DoctorDetailPackageBean.STATUS_IN_SERVICE:
                             radioGroup.setVisibility(View.GONE);
@@ -252,14 +265,19 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
                         }
                     });
 
-                    DoctorDetailPackageBean bean = mPackageRVAdapter.getBean(position);
                     name.setText(bean.name.get());
-                    price.setText(bean.priceStr.get());
+                    price.setText(bean.valueStr.get());
                     desc.setText(bean.description.get());
 
                     dialog.setContentView(contentView);
+                    View parent = (View) contentView.getParent();
+                    BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
+                    contentView.measure(0, 0);
+                    behavior.setPeekHeight(contentView.getMeasuredHeight());
+                    CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) parent.getLayoutParams();
+                    params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+                    parent.setLayoutParams(params);
                     dialog.show();
-
                 }
             });
         }
@@ -334,7 +352,6 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
 
     @Override
     public void startPayment(String charge) {
-        Log.d("DoctorDetailActivity", charge);
         Intent intent = new Intent(this, PaymentActivity.class);
         intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
         startActivityForResult(intent, REQUEST_CODE_PAYMENT);

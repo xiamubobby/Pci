@@ -185,6 +185,7 @@ public class DoctorDetailEntity extends BaseEntity {
             private String iconUrl;
             private String value;
             private String unit;
+            private int price;
             /**
              * 0 未购买 1 购买 2过期
              */
@@ -245,6 +246,14 @@ public class DoctorDetailEntity extends BaseEntity {
 
             public void setOrderStatus(int orderStatus) {
                 this.orderStatus = orderStatus;
+            }
+
+            public int getPrice() {
+                return price;
+            }
+
+            public void setPrice(int price) {
+                this.price = price;
             }
         }
     }

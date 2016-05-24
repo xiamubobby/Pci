@@ -18,10 +18,8 @@ public class DoctorDetailPackageBean {
      * 套餐图标
      */
     public ObservableField<String> iconUrl = new ObservableField<>(Constant.DEFAULT_PORTRAIT);
-    /**
-     * 套餐价格
-     */
-    public ObservableField<String> priceStr = new ObservableField<>();
+    public ObservableField<Boolean> showPayment = new ObservableField<>();
+    public ObservableField<String> valueStr = new ObservableField<>();
 
     /**
      * 简介

@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_doctor_detail_package_item_price"
-            android:text="@{bean.priceStr}"
+            android:text="@{bean.valueStr}"
             android:singleLine="true"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_size_middle"/>

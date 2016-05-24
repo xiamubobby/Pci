@@ -3,13 +3,16 @@ package com.wonders.xlab.patient.module.service.detail;
 import android.content.DialogInterface;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -187,34 +190,41 @@ public class ServiceDetailActivity extends BaseActivity implements ServiceDetail
                 if (null == dialog) {
                     dialog = new BottomSheetDialog(ServiceDetailActivity.this);
                 }
-                View view = LayoutInflater.from(ServiceDetailActivity.this).inflate(R.layout.bs_service_specifican, null, false);//layout pch
+                View contentView = LayoutInflater.from(ServiceDetailActivity.this).inflate(R.layout.bs_service_specifican, null, false);//layout pch
 
-                dgPrice = (TextView) view.findViewById(R.id.price);
-                Button dgConfirm = (Button) view.findViewById(R.id.confirm);
+                dgPrice = (TextView) contentView.findViewById(R.id.price);
+                Button dgConfirm = (Button) contentView.findViewById(R.id.confirm);
                 dgConfirm.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
                     }
                 });
-                dialog.setContentView(view);
-                dgPrice.setText("¥" + selectedSpecifican.getPrice());
-                purchasePriceView.setText("¥" + selectedSpecifican.getPrice());
+                dgPrice.setText(String.format("¥%d", selectedSpecifican.getPrice()));
+                purchasePriceView.setText(String.format("¥%d", selectedSpecifican.getPrice()));
                 specificanAdapter = new SpecificanAdapter();
                 specificanAdapter.setSelectedId(selectedSpecifican.getId());
                 specificanAdapter.setDatas(dataUnit.getSpecificanList());
-                ((CommonRecyclerView) view.findViewById(R.id.recycler)).setAdapter(specificanAdapter);
+                ((CommonRecyclerView) contentView.findViewById(R.id.recycler)).setAdapter(specificanAdapter);
 
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialog) {
                         if (tempSpecifican != null) {
                             selectedSpecifican = tempSpecifican;
-                            price.setText("¥" + selectedSpecifican.getPrice());
+                            price.setText(String.format("¥%d", selectedSpecifican.getPrice()));
                             selectedService.setText(selectedSpecifican.getName());
                         }
                     }
                 });
+                dialog.setContentView(contentView);
+                View parent = (View) contentView.getParent();
+                BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
+                contentView.measure(0, 0);
+                behavior.setPeekHeight(contentView.getMeasuredHeight());
+                CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) parent.getLayoutParams();
+                params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+                parent.setLayoutParams(params);
                 dialog.show();
             }
         });
