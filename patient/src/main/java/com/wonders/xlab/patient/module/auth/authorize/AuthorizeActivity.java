@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.lyft.android.scissors.CropView;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
@@ -28,8 +27,7 @@ import butterknife.OnClick;
 import me.iwf.photopicker.PhotoPickerActivity;
 import me.iwf.photopicker.utils.PhotoPickerIntent;
 import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
@@ -39,6 +37,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
     private final int REQUEST_CODE_NAME = 1236;
     private final int REQUEST_CODE_ID = 1237;
     private final int REQUEST_CODE_ID_PIC = 1238;
+    private final int REQUEST_CROP_IMAGE = 1239;
 
     @Bind(R.id.tv_authorize_name)
     TextView mTvAuthorizeName;
@@ -50,6 +49,8 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
     RelativeLayout mRlAuthorizeId;
     @Bind(R.id.iv_authorize_add_pic)
     ImageView mIvAuthorizeAddPic;
+
+    private List<String> mTmpImageFilePath = new ArrayList<>();
 
     private AuthorizePresenterContract.Actions mAuthorizePresenter;
     /**
@@ -131,7 +132,13 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
                         return;
                     }
 
-                    final Uri uri = Uri.fromFile(new File(photos.get(0)));
+                    String path = photos.get(0);
+
+                    Intent intent = new Intent(AuthorizeActivity.this, CropActivity.class);
+                    intent.putExtra(CropActivity.EXTRA_IMAGE_PATH, path);
+                    startActivityForResult(intent, REQUEST_CROP_IMAGE);
+
+                    /*final Uri uri = Uri.fromFile(new File(path));
                     ImageViewManager.setImageViewWithUri(this, mIvAuthorizeAddPic, uri, ImageViewManager.PLACE_HOLDER_EMPTY);
 
                     Observable.from(photos)
@@ -165,7 +172,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
 
                                 @Override
                                 public void onNext(File file) {
-                                    /*int i = FileUtil.getFileSizeInM(file) / 2;
+                                    *//*int i = FileUtil.getFileSizeInM(file) / 2;
                                     if (i <= 0) {
                                         i = 1;
                                     }
@@ -176,10 +183,19 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
                                             .crop()
                                             .quality(100 / i)
                                             .format(Bitmap.CompressFormat.JPEG)
-                                            .into(file);*/
+                                            .into(file);*//*
                                     fileList.add(file);
                                 }
-                            });
+                            });*/
+                    break;
+                case REQUEST_CROP_IMAGE:
+                    String imageFilePath = data.getStringExtra(CropActivity.RESULT_IMAGE_PATH);
+
+                    mTmpImageFilePath.add(imageFilePath);
+
+                    mPickedIdPicFile = new File(imageFilePath);
+                    Uri uri = Uri.fromFile(mPickedIdPicFile);
+                    ImageViewManager.setImageViewWithUri(this, mIvAuthorizeAddPic, uri, ImageViewManager.PLACE_HOLDER_EMPTY);
                     break;
             }
         }
@@ -207,10 +223,35 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
 
     @Override
     public void authorizeSuccess(String message) {
+        clearTmpImageFile();
+
         showShortToast(message);
         mTvAuthorizeName.setText("");
         mTvAuthorizeId.setText("");
         ImageViewManager.setImageViewWithDrawableId(this, mIvAuthorizeAddPic, R.drawable.ic_group_member_add, ImageViewManager.PLACE_HOLDER_EMPTY);
+    }
+
+    private void clearTmpImageFile() {
+        Observable.from(mTmpImageFilePath)
+                .subscribeOn(Schedulers.io())
+                .map(new Func1<String, File>() {
+                    @Override
+                    public File call(String s) {
+                        return new File(getCacheDir(), s);
+                    }
+                })
+                .filter(new Func1<File, Boolean>() {
+                    @Override
+                    public Boolean call(File file) {
+                        return file != null && file.exists();
+                    }
+                })
+                .subscribe(new Action1<File>() {
+                    @Override
+                    public void call(File file) {
+                        file.delete();
+                    }
+                });
     }
 
     @Override
@@ -241,5 +282,11 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
     @Override
     public void hideLoading() {
         dismissProgressDialog();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        clearTmpImageFile();
     }
 }

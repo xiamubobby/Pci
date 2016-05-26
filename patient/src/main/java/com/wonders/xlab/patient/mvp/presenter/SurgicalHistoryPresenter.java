@@ -46,6 +46,7 @@ public class SurgicalHistoryPresenter extends BasePagePresenter implements Surgi
 
     @Override
     public void onReceiveSurgicalHistorySuccess(SurgicalHistoryEntity entity) {
+        mViewListener.hideLoading();
         SurgicalHistoryEntity.RetValuesEntity retValues = entity.getRet_values();
         if (null == retValues) {
             mViewListener.showEmptyView("");

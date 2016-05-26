@@ -60,6 +60,7 @@ public class TextInputActivity extends AppbarActivity {
                 mEtTextInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
             }
         }
+        mEtTextInput.requestFocus();
     }
 
     @Override

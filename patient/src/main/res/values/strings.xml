@@ -132,6 +132,7 @@
     <string name="authorize_label_id">身份证号码</string>
     <string name="authorize_label_id_image">身份证图片</string>
     <string name="authorize_label_example">示例参考</string>
-    <string name="title_activity_hospital">HospitalActivity</string>
+    <string name="title_activity_hospital">选择医院</string>
+    <string name="title_activity_crop">裁剪</string>
 
 </resources>

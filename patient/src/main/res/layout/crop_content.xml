@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.wonders.xlab.patient.module.auth.authorize.CropActivity"
+    tools:showIn="@layout/crop_activity">
+
+    <com.lyft.android.scissors.CropView
+        android:id="@+id/cropView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cropviewViewportOverlayPadding="8dp"
+        android:scaleType="fitCenter"/>
+</RelativeLayout>

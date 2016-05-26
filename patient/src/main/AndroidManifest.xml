@@ -244,6 +244,7 @@
             android:name=".base.TextInputActivity"
             android:label="@string/title_activity_text_input"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".module.healthrecord.HealthRecordActivity"
@@ -279,7 +280,7 @@
             android:label="@string/title_activity_medicine_search"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".module.service.thirdservice.ThirdServiceActivity"
             android:screenOrientation="portrait"
@@ -310,6 +311,12 @@
         <activity
             android:name=".module.me.hospital.HospitalActivity"
             android:label="@string/title_activity_hospital"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".module.auth.authorize.CropActivity"
+            android:label="@string/title_activity_crop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>

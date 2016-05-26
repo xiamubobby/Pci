@@ -212,6 +212,9 @@
 -dontwarn cn.com.contec.jar.cmssxt.**
 -dontwarn com.contec.jar.**
 
+-keep class com.lyft.** {*;}
+-dontwarn com.lyft.**
+
 #ping++
 -dontwarn com.alipay.**
 -keep class com.alipay.** {*;}

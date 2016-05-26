@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -132,6 +133,12 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
                 .setTitle(bean.getMedicineName())
                 .setPositiveButton("确定", null)
                 .setNegativeButton("取消", null)
+                .setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        KeyboardUtil.hide(MedicineSearchActivity.this);
+                    }
+                })
                 .setView(linearLayout).create();
 
         alertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
@@ -155,12 +162,13 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
                         } else {
                             showShortToast("请输入每次服用剂量");
                         }
-                        editText.requestFocus();
                         showSoftInput(editText);
                     }
                 });
             }
         });
+        alertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        editText.requestFocus();
         alertDialog.show();
     }
 
