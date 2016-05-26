@@ -57,6 +57,7 @@ public class ManagerModule {
     @Provides
     @Singleton
     Realm provideRealm(XApplication application) {
+        // The realm file will be located in Context.getFilesDir() with name "default.realm"
         RealmConfiguration config = new RealmConfiguration.Builder(application).deleteRealmIfMigrationNeeded().build();
         Realm.setDefaultConfiguration(config);
         return Realm.getDefaultInstance();

@@ -33,6 +33,7 @@ import com.wonders.xlab.patient.mvp.presenter.ServiceDetailPresenterContract;
 import com.wonders.xlab.patient.util.ImageViewManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -183,7 +184,11 @@ public class ServiceDetailActivity extends BaseActivity implements ServiceDetail
     @Override
     public void showServiceDetail(final ServiceDetailDataUnit dataUnit) {
         binding.setData(dataUnit);
-        selectedSpecifican = dataUnit.getSpecificanList().get(0);
+        final List<ServiceDetailDataUnit.Specifican> specificanList = dataUnit.getSpecificanList();
+        if (null != specificanList && specificanList.size() > 0) {
+            selectedService.setText(specificanList.get(0).getName());
+            selectedSpecifican = specificanList.get(0);
+        }
         specifican.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,7 +209,7 @@ public class ServiceDetailActivity extends BaseActivity implements ServiceDetail
                 purchasePriceView.setText(String.format("¥%d", selectedSpecifican.getPrice()));
                 specificanAdapter = new SpecificanAdapter();
                 specificanAdapter.setSelectedId(selectedSpecifican.getId());
-                specificanAdapter.setDatas(dataUnit.getSpecificanList());
+                specificanAdapter.setDatas(specificanList);
                 ((CommonRecyclerView) contentView.findViewById(R.id.recycler)).setAdapter(specificanAdapter);
 
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {

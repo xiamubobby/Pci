@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.module.order.bean.OrderListBean;
@@ -34,9 +33,9 @@ public class OrderListAdapter extends SimpleRVAdapter<OrderListBean> {
         OrderListBean order = getBean(position);
         viewHolder.orgName.setText(order.getOrganizationName());
         viewHolder.serviceStatus.setText(order.getStatus());
-        viewHolder.orderNo.setText(order.getOrderId());
+        viewHolder.orderNo.setText(String.format("订单号：%s", order.getOrderId()));
         viewHolder.serviceDetail.setText(order.getTitle());
-        viewHolder.servicePrice.setText(order.getPrice());
+        viewHolder.servicePrice.setText(String.format("实付款：%s", order.getPrice()));
 
         ImageViewManager.setImageViewWithUrl(viewHolder.itemView.getContext(),
                 viewHolder.orgImageUrl,
@@ -68,7 +67,7 @@ public class OrderListAdapter extends SimpleRVAdapter<OrderListBean> {
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
         }
     }
 }
