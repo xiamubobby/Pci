@@ -211,6 +211,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="8dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -260,6 +261,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/selector_confirm_button_red"
                     android:gravity="center"
+                    android:padding="@dimen/item_interval_middle"
                     android:text="购买"
                     android:textColor="@android:color/white"
                     android:textSize="18sp"/>

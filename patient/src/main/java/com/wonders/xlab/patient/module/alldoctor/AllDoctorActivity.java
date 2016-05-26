@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 
+import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
@@ -15,6 +17,7 @@ import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.alldoctor.adapter.AllDoctorItemBean;
 import com.wonders.xlab.patient.module.alldoctor.adapter.AllDoctorRVAdapter;
 import com.wonders.xlab.patient.module.doctordetail.DoctorDetailActivity;
+import com.wonders.xlab.patient.module.doctordetail.DoctorGroupExpiredOtto;
 import com.wonders.xlab.patient.mvp.presenter.AllDoctorPresenterContract;
 
 import java.util.ArrayList;
@@ -39,6 +42,7 @@ public class AllDoctorActivity extends AppbarActivity implements AllDoctorPresen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OttoManager.register(this);
         ButterKnife.bind(this);
 
         mDoctorAllPresenter = DaggerAllDoctorComponent.builder()
@@ -69,9 +73,15 @@ public class AllDoctorActivity extends AppbarActivity implements AllDoctorPresen
 
     }
 
+    @Subscribe
+    public void refresh(DoctorGroupExpiredOtto otto) {
+        mDoctorAllPresenter.getAllDoctors(AIManager.getInstance().getPatientId(), true);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
+        OttoManager.unregister(this);
         mAllDoctorRVAdapter = null;
         ButterKnife.unbind(this);
     }

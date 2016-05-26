@@ -44,7 +44,7 @@ public class BaseActivity extends AppCompatActivity {
             mLongToast.cancel();
         }
 
-        if (!TextUtils.isEmpty(message)) {
+        if (!TextUtils.isEmpty(message) && !"null".equals(message)) {
             mShortToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
             mShortToast.show();
         }
@@ -58,7 +58,7 @@ public class BaseActivity extends AppCompatActivity {
             mLongToast.cancel();
         }
 
-        if (!TextUtils.isEmpty(message)) {
+        if (!TextUtils.isEmpty(message) && !"null".equals(message)) {
             mLongToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
             mLongToast.show();
         }

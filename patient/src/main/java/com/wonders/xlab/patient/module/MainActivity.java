@@ -64,20 +64,14 @@ public class MainActivity extends BaseActivity {
 
         setContentView(R.layout.main_activity);
         ButterKnife.bind(MainActivity.this);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (null == mFragmentAdapter) {
-            mFragmentAdapter = new MainFragmentAdapter(getFragmentManager());
-            mViewPagerMain.setOffscreenPageLimit(4);
-            mViewPagerMain.setAdapter(mFragmentAdapter);
-            setupBottomTab();
-            AlarmUtil.newInstance().scheduleMedicineRemindAlarm(MainActivity.this);
-            startService(new Intent(MainActivity.this, XEMChatService.class));
-        }
+        mFragmentAdapter = new MainFragmentAdapter(getFragmentManager());
+        mViewPagerMain.setOffscreenPageLimit(4);
+        mViewPagerMain.setAdapter(mFragmentAdapter);
+        setupBottomTab();
 
+        AlarmUtil.newInstance().scheduleMedicineRemindAlarm(MainActivity.this);
+        startService(new Intent(MainActivity.this, XEMChatService.class));
     }
 
     private void setupBottomTab() {

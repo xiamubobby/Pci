@@ -53,8 +53,16 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
     }
 
     @Override
-    public void onReceiveDoctorGroupDetailSuccess(DoctorGroupDetailEntity.RetValuesEntity valuesEntity) {
+    public void onReceiveDoctorGroupDetailSuccess(DoctorGroupDetailEntity groupDetailEntity) {
         mDoctorDetailListener.hideLoading();
+
+        DoctorGroupDetailEntity.RetValuesEntity valuesEntity = groupDetailEntity.getRet_values();
+
+        if (groupDetailEntity.getRet_code() == 1) {
+            //小组成员有变动，服务过期，需要重新获取列表，然后进入重新购买
+            mDoctorDetailListener.doctorGroupExpired(groupDetailEntity.getMessage());
+            return;
+        }
 
         List<DoctorGroupDetailEntity.RetValuesEntity.SPackageEntity> sPackage = valuesEntity.getSPackage();
         /**

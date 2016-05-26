@@ -29,5 +29,11 @@ public interface DoctorDetailContract {
         void startPayment(String charge);
 
         void refreshView();
+
+        /**
+         * 小组成员有变动，服务过期，需要重新获取列表，然后进入重新购买
+         * @param message
+         */
+        void doctorGroupExpired(String message);
     }
 }

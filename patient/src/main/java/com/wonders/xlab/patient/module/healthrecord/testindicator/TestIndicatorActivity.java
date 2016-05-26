@@ -60,13 +60,13 @@ public class TestIndicatorActivity extends AppbarActivity implements TestIndicat
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                mTestIndicatorPresenter.getTestIndicatorList(mPatientId, true);
+                mTestIndicatorPresenter.getTestIndicatorList(mPatientId, false);
             }
         });
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mTestIndicatorPresenter.getTestIndicatorList(mPatientId, false);
+                mTestIndicatorPresenter.getTestIndicatorList(mPatientId, true);
             }
         });
         mTestIndicatorPresenter.getTestIndicatorList(mPatientId, true);

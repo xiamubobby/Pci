@@ -32,6 +32,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.uikit.crv.CommonRecyclerView;
+import im.hua.utils.FileUtil;
 import im.hua.utils.KeyboardUtil;
 import me.iwf.photopicker.PhotoPagerActivity;
 import me.iwf.photopicker.PhotoPickerActivity;
@@ -116,7 +117,7 @@ public class MedicalPictureActivity extends AppbarActivity implements MedicalRec
 
                             boolean canUpload = true;
                             for (File file : fileList) {
-                                if (file.length() / 1024 / 1024 > 10) {
+                                if (FileUtil.getFileSizeInM(file) > 10) {
                                     showShortToast(file.getName() + "大小超过10M，请选择小一点的图片!");
                                     canUpload = false;
                                 }

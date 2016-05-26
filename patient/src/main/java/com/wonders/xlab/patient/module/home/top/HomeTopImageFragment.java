@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 import android.widget.ImageView;
 
 import com.umeng.analytics.MobclickAgent;
-import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.base.WebActivity;
+import com.wonders.xlab.patient.util.ImageViewManager;
 import com.wonders.xlab.patient.util.UmengEventId;
 
 import java.util.HashMap;
@@ -71,18 +72,20 @@ public class HomeTopImageFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ImageViewManager.setImageViewWithUrl(getActivity(), mIvHomeTopImage, mImageUrl, ImageViewManager.PLACE_HOLDER_EMPTY);
-        mIvHomeTopImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("title",mTitle);
-                MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_TOP_IMAGE, map);
+        if (URLUtil.isHttpUrl(mWebUrl) || URLUtil.isHttpsUrl(mWebUrl)) {
+            mIvHomeTopImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    HashMap<String,String> map = new HashMap<>();
+                    map.put("title",mTitle);
+                    MobclickAgent.onEvent(getActivity(), UmengEventId.HOME_TOP_IMAGE, map);
 
-                Intent intent = new Intent(getActivity(), WebActivity.class);
-                intent.putExtra(WebActivity.EXTRA_WEB_URL, mWebUrl);
-                startActivity(intent);
-            }
-        });
+                    Intent intent = new Intent(getActivity(), WebActivity.class);
+                    intent.putExtra(WebActivity.EXTRA_WEB_URL, mWebUrl);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     @Override

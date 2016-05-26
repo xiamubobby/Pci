@@ -40,12 +40,28 @@ public class SurgicalHistoryPresenter extends BasePagePresenter implements Surgi
             mViewListener.showReachTheLastPageNotice("没有数据了");
             return;
         }
+        mViewListener.showLoading("");
         mSurgicalHistoryModel.getSurgicalHistory(patientId, getNextPageIndex(), this);
     }
 
     @Override
     public void onReceiveSurgicalHistorySuccess(SurgicalHistoryEntity entity) {
-        Observable.from(entity.getRet_values().getData().getContent())
+        SurgicalHistoryEntity.RetValuesEntity retValues = entity.getRet_values();
+        if (null == retValues) {
+            mViewListener.showEmptyView("");
+            return;
+        }
+        SurgicalHistoryEntity.RetValuesEntity.DataEntity dataEntity = retValues.getData();
+        if (null == dataEntity) {
+            mViewListener.showEmptyView("");
+            return;
+        }
+        List<SurgicalHistoryEntity.RetValuesEntity.DataEntity.ContentEntity> contentEntityList = dataEntity.getContent();
+        if (null == contentEntityList) {
+            mViewListener.showEmptyView("");
+            return;
+        }
+        Observable.from(contentEntityList)
                 .flatMap(new Func1<SurgicalHistoryEntity.RetValuesEntity.DataEntity.ContentEntity, Observable<SurgicalHistoryBean>>() {
                     @Override
                     public Observable<SurgicalHistoryBean> call(SurgicalHistoryEntity.RetValuesEntity.DataEntity.ContentEntity contentEntity) {

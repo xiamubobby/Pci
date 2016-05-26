@@ -363,6 +363,13 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
     }
 
     @Override
+    public void doctorGroupExpired(String message) {
+        OttoManager.post(new DoctorGroupExpiredOtto());
+        showShortToast(message);
+        finish();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         //支付页面返回处理
@@ -388,6 +395,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
         switch (result) {
             case "success":
                 OttoManager.post(new BuyPackageSuccessOtto());
+                requestData();
                 result = "支付成功";
                 break;
             case "fail":

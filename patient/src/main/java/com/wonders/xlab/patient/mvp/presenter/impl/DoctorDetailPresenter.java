@@ -50,8 +50,14 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
     }
 
     @Override
-    public void onReceiveDoctorDetailSuccess(DoctorDetailEntity.RetValuesEntity valuesEntity) {
+    public void onReceiveDoctorDetailSuccess(DoctorDetailEntity doctorDetailEntity) {
         mDoctorDetailListener.hideLoading();
+
+        if (doctorDetailEntity.getRet_code() == 1) {
+            mDoctorDetailListener.doctorGroupExpired(doctorDetailEntity.getMessage());
+            return;
+        }
+        DoctorDetailEntity.RetValuesEntity valuesEntity = doctorDetailEntity.getRet_values();
 
         List<DoctorDetailEntity.RetValuesEntity.SPackageEntity> sPackage = valuesEntity.getSPackage();
         /**

@@ -89,12 +89,8 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterC
                 mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), false);
             }
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
+
     }
 
     @Override

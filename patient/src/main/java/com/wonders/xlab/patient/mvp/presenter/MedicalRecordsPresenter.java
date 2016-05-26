@@ -20,13 +20,13 @@ import rx.functions.Func1;
  */
 public class MedicalRecordsPresenter extends BasePagePresenter implements MedicalRecordsPresenterContract.Actions {
 
-    private MedicalRecordsPresenterContract.ViewListener mMedicalRecordsPresenter;
+    private MedicalRecordsPresenterContract.ViewListener mViewListener;
 
     private MedicalRecordsModelContract.Actions mMedicalRecordsModel;
 
     @Inject
-    public MedicalRecordsPresenter(MedicalRecordsPresenterContract.ViewListener medicalRecordsPresenter, MedicalRecordsModel medicalRecordsModel) {
-        this.mMedicalRecordsPresenter = medicalRecordsPresenter;
+    public MedicalRecordsPresenter(MedicalRecordsPresenterContract.ViewListener viewListener, MedicalRecordsModel medicalRecordsModel) {
+        this.mViewListener = viewListener;
         this.mMedicalRecordsModel = medicalRecordsModel;
         addModel(mMedicalRecordsModel);
     }
@@ -39,20 +39,34 @@ public class MedicalRecordsPresenter extends BasePagePresenter implements Medica
             mIsLast = false;
         }
         if (mIsLast) {
-            mMedicalRecordsPresenter.showReachTheLastPageNotice("没有更多数据了");
+            mViewListener.showReachTheLastPageNotice("没有更多数据了");
             return;
         }
+        mViewListener.showLoading("");
         mMedicalRecordsModel.getMedicalRecordsList(patientId, getNextPageIndex(), DEFAULT_PAGE_SIZE, new MedicalRecordsModelContract.Callback() {
 
             @Override
             public void onReceiveFailed(int code, String message) {
-                showError(mMedicalRecordsPresenter, code, message);
+                showError(mViewListener, code, message);
             }
+
             @Override
             public void onReceiveMedicalRecordsSuccess(MedicalRecordsEntity valuesEntity) {
-                mMedicalRecordsPresenter.hideLoading();
+                mViewListener.hideLoading();
+                if (null == valuesEntity.getRet_values()) {
+                    mViewListener.showEmptyView("");
+                    return;
+                }
                 MedicalRecordsEntity.RetValuesEntity.DataEntity dataEntity = valuesEntity.getRet_values().getData();
 
+                if (null == dataEntity) {
+                    mViewListener.showEmptyView("");
+                    return;
+                }
+                if (null == dataEntity.getContent()) {
+                    mViewListener.showEmptyView("");
+                    return;
+                }
                 updatePageInfo(dataEntity.getMore_params().getFlag(), dataEntity.isMore(), !dataEntity.isMore());
 
                 Observable.from(dataEntity.getContent())
@@ -74,15 +88,15 @@ public class MedicalRecordsPresenter extends BasePagePresenter implements Medica
                             @Override
                             public void onCompleted() {
                                 if (shouldAppend()) {
-                                    mMedicalRecordsPresenter.appendMedicalRecordsList(medicalRecordsBeanList);
+                                    mViewListener.appendMedicalRecordsList(medicalRecordsBeanList);
                                 } else {
-                                    mMedicalRecordsPresenter.showMedicalRecordsList(medicalRecordsBeanList);
+                                    mViewListener.showMedicalRecordsList(medicalRecordsBeanList);
                                 }
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                mMedicalRecordsPresenter.showToast("获取数据出错！");
+                                mViewListener.showToast("获取数据出错！");
                             }
 
                             @Override

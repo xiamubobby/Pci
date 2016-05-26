@@ -51,6 +51,7 @@ public class MedicalRecordsActivity extends AppbarActivity implements MedicalRec
                 .medicalRecordsModule(new MedicalRecordsModule(this))
                 .build()
                 .getMedicalRecordsPresenter();
+        addPresenter(mMedicalRecordsPresenter);
         mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {

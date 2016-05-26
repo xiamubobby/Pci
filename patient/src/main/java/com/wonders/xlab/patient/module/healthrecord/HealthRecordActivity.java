@@ -44,7 +44,6 @@ public class HealthRecordActivity extends AppbarActivity implements HealthRecord
 
     private HealthRecordPresenter mHealthRecordPresenter;
 
-
     @Override
     public int getContentLayout() {
         return R.layout.health_record_activity;
@@ -159,6 +158,38 @@ public class HealthRecordActivity extends AppbarActivity implements HealthRecord
     public void showValidateButton(boolean show) {
         mBtnAuthorize.setVisibility(show ? View.VISIBLE : View.GONE);
         mTvNotice.setVisibility(show ? View.VISIBLE : View.GONE);
+
+       /* if (show) {
+            int measuredHeight = mTvNotice.getMeasuredHeight();
+            mTvNotice.setTop(-measuredHeight);
+//            ObjectAnimator animator = ObjectAnimator.ofFloat();
+            TranslateAnimation translateAnimation = new TranslateAnimation(
+                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                    Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+            translateAnimation.setDuration(800);
+            translateAnimation.setFillEnabled(true);
+            translateAnimation.setFillAfter(true);
+            translateAnimation.setInterpolator(new AccelerateInterpolator());
+//            Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_down);
+            translateAnimation.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+                    mBtnAuthorize.setVisibility(View.VISIBLE);
+                    mTvNotice.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+            mTvNotice.startAnimation(translateAnimation);
+        }*/
     }
 
     @Override

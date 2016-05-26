@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lyft.android.scissors.CropView;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
@@ -76,7 +77,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
 
     @OnClick(R.id.tv_authorize_example)
     public void showGuide() {
-        startActivity(new Intent(this,AuthorizeGuideActivity.class));
+        startActivity(new Intent(this, AuthorizeGuideActivity.class));
     }
 
     @OnClick(R.id.rl_authorize_name)
@@ -130,7 +131,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
                         return;
                     }
 
-                    Uri uri = Uri.fromFile(new File(photos.get(0)));
+                    final Uri uri = Uri.fromFile(new File(photos.get(0)));
                     ImageViewManager.setImageViewWithUri(this, mIvAuthorizeAddPic, uri, ImageViewManager.PLACE_HOLDER_EMPTY);
 
                     Observable.from(photos)
@@ -149,6 +150,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
                             })
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(new Subscriber<File>() {
+                                CropView cropView = new CropView(AuthorizeActivity.this);
                                 final List<File> fileList = new ArrayList<>();
 
                                 @Override
@@ -158,11 +160,23 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
 
                                 @Override
                                 public void onError(Throwable e) {
-
+                                    showShortToast(e.getMessage());
                                 }
 
                                 @Override
                                 public void onNext(File file) {
+                                    /*int i = FileUtil.getFileSizeInM(file) / 2;
+                                    if (i <= 0) {
+                                        i = 1;
+                                    }
+
+                                    cropView.extensions()
+                                            .load(uri);
+                                    cropView.extensions()
+                                            .crop()
+                                            .quality(100 / i)
+                                            .format(Bitmap.CompressFormat.JPEG)
+                                            .into(file);*/
                                     fileList.add(file);
                                 }
                             });
@@ -196,7 +210,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
         showShortToast(message);
         mTvAuthorizeName.setText("");
         mTvAuthorizeId.setText("");
-        ImageViewManager.setImageViewWithDrawableId(this,mIvAuthorizeAddPic,R.drawable.ic_group_member_add,ImageViewManager.PLACE_HOLDER_EMPTY);
+        ImageViewManager.setImageViewWithDrawableId(this, mIvAuthorizeAddPic, R.drawable.ic_group_member_add, ImageViewManager.PLACE_HOLDER_EMPTY);
     }
 
     @Override

@@ -19,7 +19,6 @@
             android:paddingLeft="@dimen/item_interval_small"
             android:paddingRight="@dimen/item_interval_small"
             android:singleLine="true"
-            android:text="2016-01-22"
             android:textColor="#FF36AFE6" />
 
         <TextView
@@ -31,8 +30,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="6dp"
             android:textColor="@color/white_pressed"
-            android:paddingRight="6dp"
-            android:text="普通门诊" />
+            android:paddingRight="6dp"/>
 
     </LinearLayout>
 
@@ -45,8 +43,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/item_interval_small"
         android:paddingRight="@dimen/item_interval_small"
-        android:singleLine="true"
-        android:text="就诊医院：上海市闵行区卫生服务中心" />
+        android:singleLine="true"/>
 
     <TextView
         android:id="@+id/medical_records_item_department_name"
@@ -55,8 +52,7 @@
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/item_interval_small"
         android:paddingRight="@dimen/item_interval_small"
-        android:singleLine="true"
-        android:text="就诊科室：心血管内科" />
+        android:singleLine="true"/>
 
 
     <TextView
@@ -66,7 +62,7 @@
         android:lineSpacingExtra="10dp"
         android:paddingLeft="@dimen/item_interval_small"
         android:paddingRight="@dimen/item_interval_small"
-        android:text="就诊结果：果酸可以帮助消化，如果你消化不良,那我鼓励你饭后吃个水果。但如果你消化功能良好,饭后可能会帮倒忙.因为这不仅会加重消化负担。果酸可以帮助消化。如果你消化不良,那我鼓励你饭后吃个水果。\n但如果你消化功能良好,饭后可能会帮倒忙.因为这不仅会加重消化负担。" />
+        />
 
     <TextView
         android:id="@+id/medical_records_item_click_more"
@@ -74,8 +70,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/activity_horizontal_margin"
+        android:visibility="gone"
         android:drawableLeft="@drawable/ic_arrow_down"
         android:drawablePadding="5dp"
         android:text="点击查看更多" />
 
+    <include layout="@layout/divider_vertical_large"/>
 </LinearLayout>

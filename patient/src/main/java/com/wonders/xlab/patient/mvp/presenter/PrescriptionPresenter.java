@@ -18,13 +18,13 @@ import im.hua.library.base.mvp.impl.BasePagePresenter;
  */
 public class PrescriptionPresenter extends BasePagePresenter implements PrescriptionPresenterContract.Actions {
 
-    private PrescriptionPresenterContract.ViewListener mPrescriptionPresenter;
+    private PrescriptionPresenterContract.ViewListener mViewListener;
 
     private PrescriptionModelContract.Actions mPrescriptionModal;
 
     @Inject
     public PrescriptionPresenter(PrescriptionPresenterContract.ViewListener mPrescriptionPresenter, PrescriptionModel mPrescriptionModel) {
-        this.mPrescriptionPresenter = mPrescriptionPresenter;
+        this.mViewListener = mPrescriptionPresenter;
         this.mPrescriptionModal = mPrescriptionModel;
         addModel(mPrescriptionModel);
     }
@@ -32,16 +32,34 @@ public class PrescriptionPresenter extends BasePagePresenter implements Prescrip
 
     @Override
     public void getPrescriptionList(String patientId, boolean isRefresh) {
-        mPrescriptionPresenter.showLoading("");
+        mViewListener.showLoading("");
         if (isRefresh) {
             resetPageInfo();
         }
+        mViewListener.showLoading("");
         mPrescriptionModal.getPrescriptionList(patientId, getNextPageIndex(), new PrescriptionModelContract.Callback() {
             @Override
             public void getPrescriptionListSuccess(PrescriptionEntity entity) {
-                mPrescriptionPresenter.hideLoading();
+                mViewListener.hideLoading();
                 List<PrescriptionBean> prescriptionBeanList = new ArrayList<>();
-                List<PrescriptionEntity.RetValuesBean.DataBean.ContentBean> entityContent = entity.getRet_values().getData().getContent();
+                PrescriptionEntity.RetValuesBean retValues = entity.getRet_values();
+                if (null == retValues) {
+                    mViewListener.showEmptyView("");
+                    return;
+                }
+
+                PrescriptionEntity.RetValuesBean.DataBean dataBean = retValues.getData();
+                if (null == dataBean) {
+                    mViewListener.showEmptyView("");
+                    return;
+                }
+
+                List<PrescriptionEntity.RetValuesBean.DataBean.ContentBean> entityContent = dataBean.getContent();
+                if (null == entityContent) {
+                    mViewListener.showEmptyView("");
+                    return;
+                }
+
                 for (PrescriptionEntity.RetValuesBean.DataBean.ContentBean content : entityContent) {
                     PrescriptionBean bean = new PrescriptionBean();
                     bean.setRecordTime(content.getPrint_time());
@@ -55,15 +73,15 @@ public class PrescriptionPresenter extends BasePagePresenter implements Prescrip
                     prescriptionBeanList.add(bean);
                 }
                 if (shouldAppend()) {
-                    mPrescriptionPresenter.appendPrescriptionList(prescriptionBeanList);
+                    mViewListener.appendPrescriptionList(prescriptionBeanList);
                 }
-                mPrescriptionPresenter.showPrescriptionList(prescriptionBeanList);
+                mViewListener.showPrescriptionList(prescriptionBeanList);
 
             }
 
             @Override
             public void onReceiveFailed(int code, String message) {
-                showError(mPrescriptionPresenter, code, message);
+                showError(mViewListener, code, message);
             }
 
         });

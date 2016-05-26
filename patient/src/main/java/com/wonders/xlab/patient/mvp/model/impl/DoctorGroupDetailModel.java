@@ -21,7 +21,7 @@ public class DoctorGroupDetailModel extends PatientBaseModel<DoctorGroupDetailEn
 
     @Override
     protected void onSuccess(DoctorGroupDetailEntity response) {
-        mDetailModelListener.onReceiveDoctorGroupDetailSuccess(response.getRet_values());
+        mDetailModelListener.onReceiveDoctorGroupDetailSuccess(response);
     }
 
     @Override
@@ -35,6 +35,6 @@ public class DoctorGroupDetailModel extends PatientBaseModel<DoctorGroupDetailEn
     }
 
     public interface DoctorGroupDetailModelListener extends BaseModelListener {
-        void onReceiveDoctorGroupDetailSuccess(DoctorGroupDetailEntity.RetValuesEntity valuesEntity);
+        void onReceiveDoctorGroupDetailSuccess(DoctorGroupDetailEntity entity);
     }
 }

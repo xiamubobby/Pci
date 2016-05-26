@@ -18,40 +18,54 @@ import im.hua.library.base.mvp.impl.BasePagePresenter;
  */
 public class TestIndicatorPresenter extends BasePagePresenter implements TestIndicatorPresenterContract.Actions {
 
-    public TestIndicatorPresenterContract.ViewListener mTestIndicatorPresenter;
+    public TestIndicatorPresenterContract.ViewListener mViewListener;
     public TestIndicatorModelContract.Actions mTestIndicatorModel;
 
     @Inject
     public TestIndicatorPresenter(TestIndicatorPresenterContract.ViewListener iTestIndicatorPresenter, TestIndicatorModel testIndicatorModel) {
-        this.mTestIndicatorPresenter = iTestIndicatorPresenter;
+        this.mViewListener = iTestIndicatorPresenter;
         this.mTestIndicatorModel = testIndicatorModel;
         addModel(mTestIndicatorModel);
     }
 
     @Override
     public void getTestIndicatorList(String patientId, boolean isRefresh) {
-        mTestIndicatorPresenter.showLoading("");
+        mViewListener.showLoading("");
         if (isRefresh) {
             mCurrentIndex = 0;
             mIsFirst = true;
             mIsLast = false;
         }
 
+        mViewListener.showLoading("");
         mTestIndicatorModel.getTestIndicatorList(patientId, getNextPageIndex(), new TestIndicatorModelContract.Callback() {
             @Override
             public void onReceiveFailed(int code, String message) {
-                showError(mTestIndicatorPresenter, code, message);
+                showError(mViewListener, code, message);
             }
 
             @Override
             public void getTestIndicatorListSuccess(TestIndicatorEntity entity) {
-                mTestIndicatorPresenter.hideLoading();
-                TestIndicatorEntity.RetValuesBean.DataBean data = entity.getRet_values().getData();
+                mViewListener.hideLoading();
+                TestIndicatorEntity.RetValuesBean retValues = entity.getRet_values();
+                if (null == retValues) {
+                    mViewListener.showEmptyView("");
+                    return;
+                }
+                TestIndicatorEntity.RetValuesBean.DataBean data = retValues.getData();
+                if (null == data) {
+                    mViewListener.showEmptyView("");
+                    return;
+                }
                 updatePageInfo(Integer.parseInt(data.getMore_params().getFlag()), data.isMore(), !data.isMore());
 
-                List<TestIndicatorEntity.RetValuesBean.DataBean.ContentBean> contentBean = entity.getRet_values().getData().getContent();
+                List<TestIndicatorEntity.RetValuesBean.DataBean.ContentBean> contentBeanList =  data.getContent();
+                if (null == contentBeanList) {
+                    mViewListener.showEmptyView("");
+                    return;
+                }
                 List<TestIndicatorBean> testIndicatorBeanList = new ArrayList<>();
-                for (TestIndicatorEntity.RetValuesBean.DataBean.ContentBean content : contentBean) {
+                for (TestIndicatorEntity.RetValuesBean.DataBean.ContentBean content : contentBeanList) {
                     TestIndicatorBean bean = new TestIndicatorBean();
                     bean.setTestTimeInStr(content.getDate());
                     bean.setHospitalName(content.getHospital_name());
@@ -71,13 +85,13 @@ public class TestIndicatorPresenter extends BasePagePresenter implements TestInd
                 }
                 if (mCurrentIndex > 1) {
                     if (testIndicatorBeanList.size() == 0) {
-                        mTestIndicatorPresenter.showReachTheLastPageNotice("");
+                        mViewListener.showReachTheLastPageNotice("");
                         return;
                     }
-                    mTestIndicatorPresenter.appendTestIndicatorList(testIndicatorBeanList);
+                    mViewListener.appendTestIndicatorList(testIndicatorBeanList);
                     return;
                 }
-                mTestIndicatorPresenter.showTestIndicatorList(testIndicatorBeanList);
+                mViewListener.showTestIndicatorList(testIndicatorBeanList);
 
             }
         });
