@@ -4,10 +4,9 @@ import android.support.annotation.NonNull;
 
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.module.otto.MainBottomUnreadNotifyCountOtto;
 import com.wonders.xlab.patient.data.realm.UnReadMessageRealm;
+import com.wonders.xlab.patient.module.otto.MainBottomUnreadNotifyCountOtto;
 
-import io.realm.RealmResults;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 
 /**
@@ -33,12 +32,9 @@ public class UnReadMessageUtil {
     public static void readMessage(String imGroupId) {
         try {
             synchronized (object) {
-                XApplication.realm.beginTransaction();
-                RealmResults<UnReadMessageRealm> realmResults = XApplication.realm.where(UnReadMessageRealm.class)
+                RealmUtil.deleteRealmResults(XApplication.realm.where(UnReadMessageRealm.class)
                         .equalTo("imGroupId", imGroupId)
-                        .findAll();
-                realmResults.clear();
-                XApplication.realm.commitTransaction();
+                        .findAll());
                 OttoManager.post(new MainBottomUnreadNotifyCountOtto(imGroupId));
             }
 

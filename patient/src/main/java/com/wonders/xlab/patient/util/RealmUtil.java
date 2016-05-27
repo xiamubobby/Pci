@@ -14,4 +14,10 @@ public class RealmUtil {
         realmResults.deleteAllFromRealm();
         XApplication.realm.commitTransaction();
     }
+
+    public static void deleteRealmResults(RealmResults results) {
+        XApplication.realm.beginTransaction();
+        results.deleteAllFromRealm();
+        XApplication.realm.commitTransaction();
+    }
 }
