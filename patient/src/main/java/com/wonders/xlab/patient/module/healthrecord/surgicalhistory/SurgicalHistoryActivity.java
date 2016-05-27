@@ -53,12 +53,6 @@ public class SurgicalHistoryActivity extends AppbarActivity implements SurgicalH
         addPresenter(mSurgicalHistoryPresenter);
         mPatientId = AIManager.getInstance().getPatientId();
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 1));
-        mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                mSurgicalHistoryPresenter.getSurgicalHistory(mPatientId, false);
-            }
-        });
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

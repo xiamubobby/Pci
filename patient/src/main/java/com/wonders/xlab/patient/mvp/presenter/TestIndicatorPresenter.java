@@ -30,15 +30,14 @@ public class TestIndicatorPresenter extends BasePagePresenter implements TestInd
 
     @Override
     public void getTestIndicatorList(String patientId, boolean isRefresh) {
-        mViewListener.showLoading("");
-        if (isRefresh) {
+        /*if (isRefresh) {
             mCurrentIndex = 0;
             mIsFirst = true;
             mIsLast = false;
-        }
+        }*/
 
         mViewListener.showLoading("");
-        mTestIndicatorModel.getTestIndicatorList(patientId, getNextPageIndex(), new TestIndicatorModelContract.Callback() {
+        mTestIndicatorModel.getTestIndicatorList(patientId, 0, new TestIndicatorModelContract.Callback() {
             @Override
             public void onReceiveFailed(int code, String message) {
                 showError(mViewListener, code, message);
@@ -57,7 +56,6 @@ public class TestIndicatorPresenter extends BasePagePresenter implements TestInd
                     mViewListener.showEmptyView("");
                     return;
                 }
-                updatePageInfo(Integer.parseInt(data.getMore_params().getFlag()), data.isMore(), !data.isMore());
 
                 List<TestIndicatorEntity.RetValuesBean.DataBean.ContentBean> contentBeanList =  data.getContent();
                 if (null == contentBeanList) {

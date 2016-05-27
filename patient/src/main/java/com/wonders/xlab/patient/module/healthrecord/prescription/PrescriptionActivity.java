@@ -54,12 +54,6 @@ public class PrescriptionActivity extends AppbarActivity implements Prescription
         addPresenter(mPrescriptionPresenter);
 
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 10));
-        mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                mPrescriptionPresenter.getPrescriptionList(mPatientId, false);
-            }
-        });
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

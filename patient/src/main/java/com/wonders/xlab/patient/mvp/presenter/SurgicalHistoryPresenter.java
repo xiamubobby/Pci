@@ -33,13 +33,6 @@ public class SurgicalHistoryPresenter extends BasePagePresenter implements Surgi
 
     @Override
     public void getSurgicalHistory(String patientId, boolean isRefresh) {
-        if (isRefresh) {
-            resetPageInfo();
-        }
-        if (mIsLast) {
-            mViewListener.showReachTheLastPageNotice("没有数据了");
-            return;
-        }
         mViewListener.showLoading("");
         mSurgicalHistoryModel.getSurgicalHistory(patientId, getNextPageIndex(), this);
     }

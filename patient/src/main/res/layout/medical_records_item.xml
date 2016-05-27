@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/item_interval_small"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="@dimen/item_interval_small"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,22 +19,21 @@
             android:paddingLeft="@dimen/item_interval_small"
             android:paddingRight="@dimen/item_interval_small"
             android:singleLine="true"
-            android:textColor="#FF36AFE6" />
+            android:textColor="#FF36AFE6"/>
 
         <TextView
             android:id="@+id/medical_records_item_tag"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="wrap_content"
             android:layout_marginRight="16dp"
             android:background="@drawable/shape_rectangle_primary_solid_corner"
             android:gravity="center_vertical"
-            android:paddingLeft="6dp"
-            android:textColor="@color/white_pressed"
-            android:paddingRight="6dp"/>
+            android:padding="@dimen/item_interval_small"
+            android:textColor="@color/white_pressed"/>
 
     </LinearLayout>
 
-    <include layout="@layout/divider_vertical" />
+    <include layout="@layout/divider_vertical"/>
 
     <TextView
         android:id="@+id/medical_records_item_hospital_name"
@@ -70,10 +69,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:visibility="gone"
         android:drawableLeft="@drawable/ic_arrow_down"
         android:drawablePadding="5dp"
-        android:text="点击查看更多" />
+        android:text="点击查看更多"
+        android:visibility="gone"/>
 
     <include layout="@layout/divider_vertical_large"/>
 </LinearLayout>

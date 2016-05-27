@@ -1,6 +1,5 @@
 package com.wonders.xlab.patient.mvp.model;
 
-import com.wonders.xlab.patient.mvp.entity.HospitalAllEntity;
 import com.wonders.xlab.patient.mvp.entity.UserInfoEntity;
 import com.wonders.xlab.patient.mvp.entity.request.UserInfoBody;
 
@@ -16,15 +15,11 @@ public interface UserInfoModelContract {
         void onReceiveUserInfoSuccess(UserInfoEntity entity);
 
         void onModifyUserInfoSuccess(EmptyValueEntity entity);
-
-        void onReceiveHospitalsSuccess(HospitalAllEntity entity);
     }
 
     interface Actions extends IBaseModel {
         void getUserInfo(String patientId, Callback callback);
 
         void modifyUserInfo(UserInfoBody body, String patientId, Callback callback);
-
-        void getAllHospitals(Callback callback);
     }
 }

@@ -5,25 +5,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.DatePicker;
-import android.widget.SimpleAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.base.TextInputActivity;
+import com.wonders.xlab.patient.module.me.hospital.HospitalActivity;
 import com.wonders.xlab.patient.mvp.entity.UserInfoEntity;
 import com.wonders.xlab.patient.mvp.entity.request.UserInfoBody;
 import com.wonders.xlab.patient.mvp.presenter.UserInfoPresenter;
 import com.wonders.xlab.patient.mvp.presenter.UserInfoPresenterContract;
 
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -37,9 +32,10 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
     private final int REQUEST_CODE_NUMBER = REQUEST_CODE << 2;
     private final int REQUEST_CODE_HISTORY = REQUEST_CODE << 3;
     private final int REQUEST_CODE_ADDRESS = REQUEST_CODE << 4;
+    private final int REQUEST_CODE_HOSPITAL = REQUEST_CODE << 5;
 
-    @Bind(R.id.sp_user_info_hospital)
-    Spinner mSpUserInfoHospital;
+    @Bind(R.id.textViewHospital)
+    TextView mTextViewHospital;
     @Bind(R.id.tv_user_info_doctor)
     TextView mTvUserInfoDoctor;
     @Bind(R.id.tv_user_info_surgery_time)
@@ -64,26 +60,15 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        mSpUserInfoHospital.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mHospitalSpSelectedPosition = position;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         mPresenter = DaggerUserInfoComponent.builder()
                 .applicationComponent(((XApplication) getApplication()).getComponent())
                 .userInfoModule(new UserInfoModule(this))
                 .build()
                 .getUserInfoPresenter();
-
-        mPresenter.getAllHospitals();
-
         addPresenter(mPresenter);
+
+        mPresenter.getUserInfo();
+
     }
 
     @Override
@@ -97,18 +82,15 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
         mTvUserInfoNumber.setText(entity.getBracketNum());
         mTvUserInfoHistory.setText(entity.getCaseHistory());
         mTvUserInfoAddress.setText(entity.getAddress());
-
-        if (null != mDicEntityList) {
-            for (int i = 0; i < mDicEntityList.size(); i++) {
-                if (entity.getHospital().equals(mDicEntityList.get(i).get("name"))) {
-                    mSpUserInfoHospital.setSelection(i);
-                    break;
-                }
-            }
-        }
+        mTextViewHospital.setText(entity.getHospital());
     }
 
     private Calendar mCalendarSurgeryDate = Calendar.getInstance();
+
+    @OnClick(R.id.textViewHospital)
+    public void goToChooseHospital() {
+        startActivityForResult(new Intent(this, HospitalActivity.class),REQUEST_CODE_HOSPITAL);
+    }
 
     @OnClick(R.id.tv_user_info_surgery_time)
     public void pickSurgeryTime() {
@@ -163,19 +145,6 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
         showShortToast(message);
     }
 
-    /**
-     * 医院字典表数据
-     */
-    private List<HashMap<String, String>> mDicEntityList;
-
-    @Override
-    public void showHospitalList(List<HashMap<String, String>> dicEntityList) {
-        mDicEntityList = dicEntityList;
-        mSpUserInfoHospital.setAdapter(new SimpleAdapter(this, dicEntityList, R.layout.item_spinner_text, new String[]{"name"}, new int[]{R.id.tv_spinner}));
-
-        mPresenter.getUserInfo();
-    }
-
     @Override
     public void showLoading(String message) {
         showProgressDialog("", message, null);
@@ -183,17 +152,17 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
 
     @Override
     public void showNetworkError(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void showServerError(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void showEmptyView(String message) {
-
+        showShortToast(message);
     }
 
     @Override
@@ -216,17 +185,17 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_save:
-                if (null == mDicEntityList || mDicEntityList.size() <= mHospitalSpSelectedPosition) {
-                    showShortToast("请等待获取医院列表");
-                    break;
-                }
+
                 UserInfoBody body = new UserInfoBody();
                 body.setAddress(mTvUserInfoAddress.getText().toString());
                 body.setLastOperationDate(mCalendarSurgeryDate.getTimeInMillis());
                 body.setBracketNum(Integer.parseInt(mTvUserInfoNumber.getText().toString()));
                 body.setCaseHistory(mTvUserInfoHistory.getText().toString());
                 body.setSurgeon(mTvUserInfoDoctor.getText().toString());
-                body.setHospitalId(mDicEntityList.get(mHospitalSpSelectedPosition).get("id"));
+                Object hospitalId = mTextViewHospital.getTag();
+                if (hospitalId != null) {
+                    body.setHospitalId(String.valueOf(hospitalId));
+                }
 
                 mPresenter.modifyUserInfo(body);
                 break;
@@ -240,20 +209,28 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
         if (null == data) {
             return;
         }
-        String result = data.getStringExtra(TextInputActivity.EXTRA_RESULT);
-        switch (requestCode) {
-            case REQUEST_CODE_DOCTOR:
-                mTvUserInfoDoctor.setText(result);
-                break;
-            case REQUEST_CODE_ADDRESS:
-                mTvUserInfoAddress.setText(result);
-                break;
-            case REQUEST_CODE_HISTORY:
-                mTvUserInfoHistory.setText(result);
-                break;
-            case REQUEST_CODE_NUMBER:
-                mTvUserInfoNumber.setText(result);
-                break;
+        if (requestCode == REQUEST_CODE_HOSPITAL) {
+            String hospitalId = data.getStringExtra(HospitalActivity.EXTRA_RESULT_ID);
+            String hospitalName = data.getStringExtra(HospitalActivity.EXTRA_RESULT_NAME);
+            mTextViewHospital.setText(hospitalName);
+            mTextViewHospital.setTag(hospitalId);
+        } else {
+            String result = data.getStringExtra(TextInputActivity.EXTRA_RESULT);
+            switch (requestCode) {
+                case REQUEST_CODE_DOCTOR:
+                    mTvUserInfoDoctor.setText(result);
+                    break;
+                case REQUEST_CODE_ADDRESS:
+                    mTvUserInfoAddress.setText(result);
+                    break;
+                case REQUEST_CODE_HISTORY:
+                    mTvUserInfoHistory.setText(result);
+                    break;
+                case REQUEST_CODE_NUMBER:
+                    mTvUserInfoNumber.setText(result);
+                    break;
+
+            }
         }
     }
 

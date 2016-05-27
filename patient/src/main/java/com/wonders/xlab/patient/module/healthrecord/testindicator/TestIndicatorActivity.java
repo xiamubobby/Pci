@@ -24,7 +24,6 @@ import im.hua.uikit.crv.CommonRecyclerView;
  */
 public class TestIndicatorActivity extends AppbarActivity implements TestIndicatorPresenterContract.ViewListener {
 
-
     @Bind(R.id.recycler_view_test_indicator)
     CommonRecyclerView mRecyclerView;
 
@@ -57,12 +56,6 @@ public class TestIndicatorActivity extends AppbarActivity implements TestIndicat
         mPatientId = AIManager.getInstance().getPatientId();
 
         mRecyclerView.addItemDecoration(new VerticalItemDecoration(this, getResources().getColor(R.color.divider), 10));
-        mRecyclerView.setOnLoadMoreListener(new CommonRecyclerView.OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                mTestIndicatorPresenter.getTestIndicatorList(mPatientId, false);
-            }
-        });
         mRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

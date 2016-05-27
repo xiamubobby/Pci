@@ -37,7 +37,7 @@ public class XApplication extends Application {
 
     }
 
-    public ApplicationComponent getComponent() {
+    public static ApplicationComponent getComponent() {
         return component;
     }
 

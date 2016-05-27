@@ -3,9 +3,6 @@ package com.wonders.xlab.patient.mvp.presenter;
 import com.wonders.xlab.patient.mvp.entity.UserInfoEntity;
 import com.wonders.xlab.patient.mvp.entity.request.UserInfoBody;
 
-import java.util.HashMap;
-import java.util.List;
-
 import im.hua.library.base.mvp.IBasePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
 
@@ -17,15 +14,11 @@ public interface UserInfoPresenterContract {
         void showUserInfo(UserInfoEntity.RetValuesEntity entity);
 
         void modifyUserInfoSuccess(String message);
-
-        void showHospitalList(List<HashMap<String,String>> dicEntityList);
     }
 
     interface Actions extends IBasePresenter {
         void getUserInfo();
 
         void modifyUserInfo(UserInfoBody body);
-
-        void getAllHospitals();
     }
 }

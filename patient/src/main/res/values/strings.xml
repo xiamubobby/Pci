@@ -134,5 +134,6 @@
     <string name="authorize_label_example">示例参考</string>
     <string name="title_activity_hospital">选择医院</string>
     <string name="title_activity_crop">裁剪</string>
+    <string name="user_info_hint_nop">暂无</string>
 
 </resources>

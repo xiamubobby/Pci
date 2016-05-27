@@ -33,11 +33,7 @@ public class PrescriptionPresenter extends BasePagePresenter implements Prescrip
     @Override
     public void getPrescriptionList(String patientId, boolean isRefresh) {
         mViewListener.showLoading("");
-        if (isRefresh) {
-            resetPageInfo();
-        }
-        mViewListener.showLoading("");
-        mPrescriptionModal.getPrescriptionList(patientId, getNextPageIndex(), new PrescriptionModelContract.Callback() {
+        mPrescriptionModal.getPrescriptionList(patientId, 0, new PrescriptionModelContract.Callback() {
             @Override
             public void getPrescriptionListSuccess(PrescriptionEntity entity) {
                 mViewListener.hideLoading();

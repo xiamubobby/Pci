@@ -1,6 +1,5 @@
 package com.wonders.xlab.patient.mvp.api;
 
-import com.wonders.xlab.patient.mvp.entity.HospitalAllEntity;
 import com.wonders.xlab.patient.mvp.entity.UserInfoEntity;
 import com.wonders.xlab.patient.mvp.entity.request.UserInfoBody;
 
@@ -31,11 +30,4 @@ public interface UserInfoAPI {
      */
     @POST("v1/users/updateUser/{userId}")
     Observable<Response<EmptyValueEntity>> modifyUserInfo(@Body UserInfoBody body,@Path("userId") String userId);
-
-    /**
-     * 获取医院字典表
-     * @return
-     */
-    @GET("hospitals")
-    Observable<Response<HospitalAllEntity>> getHospitals();
 }
