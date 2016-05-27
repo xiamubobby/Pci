@@ -56,7 +56,7 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
 
     @Override
     public void getSearchHistory() {
-        RealmResults<MedicineSearchHistoryRealm> historyRealms = mRealm.allObjects(MedicineSearchHistoryRealm.class);
+        RealmResults<MedicineSearchHistoryRealm> historyRealms = mRealm.where(MedicineSearchHistoryRealm.class).findAll();
 
         Observable.from(historyRealms.subList(0, Math.min(2, historyRealms.size())))
                 .subscribeOn(Schedulers.io())
@@ -112,10 +112,9 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
     @Override
     public void removeSearchHistoryById(String id) {
         mRealm.beginTransaction();
-        mRealm.allObjects(MedicineSearchHistoryRealm.class)
-                .where()
+        mRealm.where(MedicineSearchHistoryRealm.class)
                 .equalTo("id", id)
-                .findAll().clear();
+                .findAll().deleteAllFromRealm();
         mRealm.commitTransaction();
     }
 

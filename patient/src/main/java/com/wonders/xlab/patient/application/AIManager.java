@@ -8,6 +8,7 @@ import com.wonders.xlab.patient.data.realm.MedicationUsagesRealm;
 import com.wonders.xlab.patient.data.realm.MedicineRemindRealm;
 import com.wonders.xlab.patient.data.realm.PatientInfoRealm;
 import com.wonders.xlab.patient.data.realm.UnReadMessageRealm;
+import com.wonders.xlab.patient.util.RealmUtil;
 
 /**
  * Created by hua on 15/12/17.
@@ -44,12 +45,10 @@ public class AIManager {
          */
         MobclickAgent.onProfileSignOff();
         synchronized (object) {
-            XApplication.realm.beginTransaction();
-            XApplication.realm.clear(PatientInfoRealm.class);
-            XApplication.realm.clear(UnReadMessageRealm.class);
-            XApplication.realm.clear(MedicineRemindRealm.class);
-            XApplication.realm.clear(MedicationUsagesRealm.class);
-            XApplication.realm.commitTransaction();
+            RealmUtil.deleteRealm(PatientInfoRealm.class);
+            RealmUtil.deleteRealm(UnReadMessageRealm.class);
+            RealmUtil.deleteRealm(MedicineRemindRealm.class);
+            RealmUtil.deleteRealm(MedicationUsagesRealm.class);
         }
 
     }
