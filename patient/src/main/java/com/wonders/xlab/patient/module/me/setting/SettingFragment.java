@@ -26,9 +26,14 @@ public class SettingFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.setting);
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         initMeasureDefaultSummary(preferences);
+
         preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
