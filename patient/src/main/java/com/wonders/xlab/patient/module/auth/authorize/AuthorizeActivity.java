@@ -3,8 +3,6 @@ package com.wonders.xlab.patient.module.auth.authorize;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -110,6 +108,14 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
         startActivityForResult(intent, REQUEST_CODE_ID_PIC);
     }
 
+    @OnClick(R.id.btn_authorize_submit)
+    public void submit() {
+        String name = mTvAuthorizeName.getText().toString();
+        String idNo = mTvAuthorizeId.getText().toString();
+
+        mAuthorizePresenter.authorize(AIManager.getInstance().getPatientId(), name, idNo, mPickedIdPicFile);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -202,24 +208,24 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_save, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_save:
-                String name = mTvAuthorizeName.getText().toString();
-                String idNo = mTvAuthorizeId.getText().toString();
-
-                mAuthorizePresenter.authorize(AIManager.getInstance().getPatientId(), name, idNo, mPickedIdPicFile);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_save, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.menu_save:
+//                String name = mTvAuthorizeName.getText().toString();
+//                String idNo = mTvAuthorizeId.getText().toString();
+//
+//                mAuthorizePresenter.authorize(AIManager.getInstance().getPatientId(), name, idNo, mPickedIdPicFile);
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void authorizeSuccess(String message) {

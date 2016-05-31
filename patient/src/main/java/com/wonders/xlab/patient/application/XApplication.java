@@ -1,6 +1,8 @@
 package com.wonders.xlab.patient.application;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.pingplusplus.android.PingppLog;
 import com.umeng.analytics.AnalyticsConfig;
@@ -35,6 +37,12 @@ public class XApplication extends Application {
         AnalyticsConfig.sEncrypt = true;
         MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式，这样将不会再自动统计Activity
 
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 
     public static ApplicationComponent getComponent() {

@@ -19,7 +19,7 @@ android {
         versionCode 5
         versionName AppVersion
         // Enabling multidex support.
-//        multiDexEnabled true
+        multiDexEnabled true
     }
     signingConfigs {
         debug {
