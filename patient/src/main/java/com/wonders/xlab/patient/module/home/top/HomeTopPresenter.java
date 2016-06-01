@@ -17,6 +17,7 @@ import io.realm.Sort;
  * Created by hua on 16/5/17.
  */
 public class HomeTopPresenter extends BasePresenter implements HomeTopPresenterContract.Actions {
+    public static final int RECENT_DATA_DAY_INTERVAL = 3;
     @Inject
     Realm mRealm;
 
@@ -30,7 +31,7 @@ public class HomeTopPresenter extends BasePresenter implements HomeTopPresenterC
     @Override
     public void getRecentBs() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, -3);
+        calendar.add(Calendar.DAY_OF_YEAR, -RECENT_DATA_DAY_INTERVAL);
 
         RealmResults<BSReportRealmBean> beanRealmResults = mRealm
                 .where(BSReportRealmBean.class)
@@ -49,7 +50,7 @@ public class HomeTopPresenter extends BasePresenter implements HomeTopPresenterC
     @Override
     public void getRecentBp() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_YEAR, -3);
+        calendar.add(Calendar.DAY_OF_YEAR, -RECENT_DATA_DAY_INTERVAL);
 
         RealmResults<BPReportRealmBean> beanRealmResults = mRealm
                 .where(BPReportRealmBean.class)

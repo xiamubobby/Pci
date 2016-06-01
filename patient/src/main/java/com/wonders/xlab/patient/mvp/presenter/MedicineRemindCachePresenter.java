@@ -39,8 +39,9 @@ public class MedicineRemindCachePresenter extends BasePagePresenter implements M
     @Override
     public void getMedicineReminds(boolean isRefresh) {
         mViewListener.showLoading("");
+        final long timeInMillis = Calendar.getInstance().getTimeInMillis();
         RealmResults<MedicineRemindRealm> allSorted = mRealm.where(MedicineRemindRealm.class)
-                .greaterThan("expireTimeInMill", Calendar.getInstance().getTimeInMillis())
+//                .greaterThan("expireTimeInMill", timeInMillis)
                 .findAllSorted("remindersTimeInMill", Sort.ASCENDING);
         Observable.from(allSorted)
                 .flatMap(new Func1<MedicineRemindRealm, Observable<MedicineRemindBean>>() {
@@ -50,6 +51,9 @@ public class MedicineRemindCachePresenter extends BasePagePresenter implements M
                         bean.id.set(medicineRemindRealm.getId());
                         String amOrPm = distinctAMOrPMFromTimeStr(medicineRemindRealm.getRemindersTime());
                         bean.amOrPmStr.set(amOrPm);
+                        if (medicineRemindRealm.getExpireTimeInMill() > timeInMillis) {
+                            bean.shouldAlarm.set(false);
+                        }
                         bean.timeInStr.set(DateUtil.format(medicineRemindRealm.getRemindersTimeInMill(), "hh:mm"));
                         Long endDate = medicineRemindRealm.getEndDate();
                         bean.expiredDateInStr.set(0 == endDate ? "长期" : DateUtil.format(endDate, "yyyy-MM-dd"));

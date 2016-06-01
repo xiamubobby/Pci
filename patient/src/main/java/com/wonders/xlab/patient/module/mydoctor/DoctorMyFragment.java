@@ -56,7 +56,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterC
         super.onCreate(savedInstanceState);
         OttoManager.register(this);
         mDoctorMyPresenter = DaggerDoctorMyComponent.builder()
-                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .applicationComponent(XApplication.getComponent())
                 .doctorMyModule(new DoctorMyModule(this))
                 .build()
                 .getDoctorMyPresenter();

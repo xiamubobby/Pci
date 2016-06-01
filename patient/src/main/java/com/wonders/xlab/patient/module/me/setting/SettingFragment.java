@@ -17,11 +17,13 @@ import im.hua.utils.NotifyUtil;
 /**
  * Created by hua on 15/11/16.
  */
-public class SettingFragment extends PreferenceFragment {
+public class SettingFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+    private SharedPreferences preferences;
 
     public static SettingFragment newInstance() {
         return new SettingFragment();
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,24 +33,30 @@ public class SettingFragment extends PreferenceFragment {
     @Override
     public void onStart() {
         super.onStart();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         initMeasureDefaultSummary(preferences);
 
-        preferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if (key.equals(getResources().getString(R.string.setting_pref_key_persistent_notification))) {
-                    boolean stayNotification = sharedPreferences.getBoolean(getResources().getString(R.string.setting_pref_key_persistent_notification), true);
-                    if (stayNotification) {
-                        getActivity().startService(new Intent(getActivity(), XEMChatService.class));
-                    } else {
-                        NotifyUtil.cancel(getActivity(), Constant.NOTIFY_ID_PERSISTENT);
-                    }
-                } else if(key.equals(getResources().getString(R.string.setting_pref_key_measure_default))){
-                    initMeasureDefaultSummary(sharedPreferences);
-                }
+        preferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        preferences.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getResources().getString(R.string.setting_pref_key_persistent_notification))) {
+            boolean stayNotification = sharedPreferences.getBoolean(getResources().getString(R.string.setting_pref_key_persistent_notification), true);
+            if (stayNotification) {
+                getActivity().startService(new Intent(getActivity(), XEMChatService.class));
+            } else {
+                NotifyUtil.cancel(getActivity(), Constant.NOTIFY_ID_PERSISTENT);
             }
-        });
+        } else if (key.equals(getResources().getString(R.string.setting_pref_key_measure_default))) {
+            initMeasureDefaultSummary(sharedPreferences);
+        }
     }
 
     private void initMeasureDefaultSummary(SharedPreferences sharedPreferences) {
@@ -69,6 +77,7 @@ public class SettingFragment extends PreferenceFragment {
         super.onResume();
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_setting));
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_setting));

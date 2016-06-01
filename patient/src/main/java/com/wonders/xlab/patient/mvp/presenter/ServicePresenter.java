@@ -30,7 +30,9 @@ public class ServicePresenter extends BasePagePresenter implements ServicePresen
 
     @Override
     public void getAllServices(boolean isRefresh) {
-        serviceListener.showLoading("");
+        if (isRefresh) {
+            serviceListener.showLoading("");
+        }
         serviceModel.getServiceList(new ServiceModelContract.Callback() {
             @Override
             public void onReceiveFailed(int code, String message) {

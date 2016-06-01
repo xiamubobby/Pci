@@ -13,11 +13,11 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.data.realm.UnReadMessageRealm;
+import com.wonders.xlab.patient.module.MainActivity;
 import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.patient.module.chatroom.otto.ChatRoomRecordInsertOtto;
-import com.wonders.xlab.patient.module.MainActivity;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
-import com.wonders.xlab.patient.data.realm.UnReadMessageRealm;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.io.UnsupportedEncodingException;
@@ -81,11 +81,6 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
              */
             UnReadMessageUtil.addNewUnread(new UnReadMessageRealm(ownerId, imGroupId));
 
-            /**
-             * post event, if the current chat is showing, then append this message to chat list, or update the mydoctor page
-             */
-            OttoManager.post(new ChatRoomRecordInsertOtto(ownerId, groupName, imGroupId, txtContent, fromWhoAvatarUrl, fromWhoName, message.getMsgTime()));
-
             Bundle data = new Bundle();
             data.putString(ChatRoomActivity.EXTRA_OWNER_ID, ownerId);
             data.putString(ChatRoomActivity.EXTRA_IM_GROUP_ID, imGroupId);
@@ -100,6 +95,10 @@ public class EMChatMessageBroadcastReceiver extends BroadcastReceiver {
             }
 
             NotifyUtil.showNotification(context, ChatRoomActivity.class, data, notifyId, groupName, fromWhoName + "：" + txtContent, R.drawable.ic_notification, true, true, true, notifyColor);
+            /**
+            * post event, if the current chat is showing, then append this message to chat list, or update the mydoctor page
+            */
+            OttoManager.post(new ChatRoomRecordInsertOtto(ownerId, groupName, imGroupId, txtContent, fromWhoAvatarUrl, fromWhoName, message.getMsgTime()));
 
         } else if (type == -1) {
             try {

@@ -146,12 +146,9 @@ public class HomeFragment extends BaseFragment implements HomePresenterContract.
         mViewPagerHome.setAdapter(mHomeTopVPAdapter);
 
         mIndicatorHome.setViewPager(mViewPagerHome);
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
         mHomePresenter.getHomeBanner();
+
     }
 
     public void onResume() {

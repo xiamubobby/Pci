@@ -10,7 +10,7 @@
 
     <style name="AppTheme.MaterialColdStart" parent="android:Theme.Light.NoTitleBar">
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@drawable/pic_main_loading</item>
+        <item name="android:windowBackground">@drawable/window_background_statusbar_toolbar_tab</item>
     </style>
 
     <style name="AppTheme.Light">
