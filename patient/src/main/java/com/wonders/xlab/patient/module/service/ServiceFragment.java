@@ -52,7 +52,7 @@ public class ServiceFragment extends BaseFragment implements ServicePresenterCon
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         servicePresenter = DaggerServiceComponent.builder()
-                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .applicationComponent(XApplication.getComponent())
                 .serviceModule(new ServiceModule(this))
                 .build()
                 .getServicePresenter();
