@@ -12,6 +12,9 @@ import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.base.TextInputActivity;
+import com.wonders.xlab.patient.module.auth.authorize.crop.CropActivity;
+import com.wonders.xlab.patient.module.auth.authorize.di.AuthorizeModule;
+import com.wonders.xlab.patient.module.auth.authorize.guide.AuthorizeGuideActivity;
 import com.wonders.xlab.patient.mvp.presenter.AuthorizePresenterContract;
 import com.wonders.xlab.patient.util.ImageViewManager;
 

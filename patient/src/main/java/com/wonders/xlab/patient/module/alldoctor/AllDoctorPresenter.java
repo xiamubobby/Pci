@@ -1,9 +1,7 @@
-package com.wonders.xlab.patient.mvp.presenter;
+package com.wonders.xlab.patient.module.alldoctor;
 
 import com.wonders.xlab.patient.module.alldoctor.adapter.AllDoctorItemBean;
 import com.wonders.xlab.patient.mvp.entity.DoctorAllEntity;
-import com.wonders.xlab.patient.mvp.model.AllDoctorModel;
-import com.wonders.xlab.patient.mvp.model.AllDoctorModelContract;
 
 import java.util.ArrayList;
 
@@ -15,13 +13,13 @@ import im.hua.library.base.mvp.impl.BasePagePresenter;
 /**
  * Created by hua on 16/3/15.
  */
-public class AllDoctorPresenter extends BasePagePresenter implements AllDoctorPresenterContract.Actions {
+public class AllDoctorPresenter extends BasePagePresenter implements AllDoctorContract.Presenter {
 
-    private AllDoctorPresenterContract.ViewListener mDoctorAllListener;
-    private AllDoctorModelContract.Actions mDoctorAllModel;
+    private AllDoctorContract.ViewListener mDoctorAllListener;
+    private AllDoctorContract.Model mDoctorAllModel;
 
     @Inject
-    AllDoctorPresenter(AllDoctorPresenterContract.ViewListener doctorAllListener, AllDoctorModel allDoctorModel) {
+    AllDoctorPresenter(AllDoctorContract.ViewListener doctorAllListener, AllDoctorModel allDoctorModel) {
         mDoctorAllListener = doctorAllListener;
         mDoctorAllModel = allDoctorModel;
         addModel(mDoctorAllModel);
@@ -36,13 +34,13 @@ public class AllDoctorPresenter extends BasePagePresenter implements AllDoctorPr
             mDoctorAllListener.showReachTheLastPageNotice("");
             return;
         }
-        mDoctorAllModel.getAllDoctorList(patientId, getNextPageIndex(), DEFAULT_PAGE_SIZE, new AllDoctorModelContract.Callback() {
+        mDoctorAllModel.getAllDoctorList(patientId, getNextPageIndex(), DEFAULT_PAGE_SIZE, new AllDoctorContract.Callback() {
             @Override
             public void onReceiveAllDoctorListSuccess(DoctorAllEntity valuesEntity) {
                 BasePageEntity.RetValuesEntity<DoctorAllEntity.ResultEntity> retValues = valuesEntity.getRet_values();
                 mDoctorAllListener.hideLoading();
 
-                updatePageInfo(retValues.getNumber(),retValues.isFirst(),retValues.isLast());
+                updatePageInfo(retValues.getNumber(), retValues.isFirst(), retValues.isLast());
 
                 ArrayList<AllDoctorItemBean> doctorItemBeanArrayList = new ArrayList<>();
 
@@ -88,7 +86,7 @@ public class AllDoctorPresenter extends BasePagePresenter implements AllDoctorPr
 
             @Override
             public void onReceiveFailed(int code, String message) {
-                showError(mDoctorAllListener,code,message);
+                showError(mDoctorAllListener, code, message);
             }
         });
     }

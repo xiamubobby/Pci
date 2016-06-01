@@ -1,8 +1,8 @@
-package com.wonders.xlab.patient.module.alldoctor;
+package com.wonders.xlab.patient.module.alldoctor.di;
 
 import com.wonders.xlab.patient.di.ApplicationComponent;
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
-import com.wonders.xlab.patient.mvp.presenter.AllDoctorPresenter;
+import com.wonders.xlab.patient.module.alldoctor.AllDoctorPresenter;
 
 import dagger.Component;
 

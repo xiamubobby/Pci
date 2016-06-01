@@ -16,9 +16,10 @@ import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.alldoctor.adapter.AllDoctorItemBean;
 import com.wonders.xlab.patient.module.alldoctor.adapter.AllDoctorRVAdapter;
+import com.wonders.xlab.patient.module.alldoctor.di.AllDoctorModule;
+import com.wonders.xlab.patient.module.alldoctor.di.DaggerAllDoctorComponent;
 import com.wonders.xlab.patient.module.doctordetail.DoctorDetailActivity;
 import com.wonders.xlab.patient.module.doctordetail.DoctorGroupExpiredOtto;
-import com.wonders.xlab.patient.mvp.presenter.AllDoctorPresenterContract;
 
 import java.util.ArrayList;
 
@@ -26,11 +27,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import im.hua.uikit.crv.CommonRecyclerView;
 
-public class AllDoctorActivity extends AppbarActivity implements AllDoctorPresenterContract.ViewListener {
+public class AllDoctorActivity extends AppbarActivity implements AllDoctorContract.ViewListener {
     @Bind(R.id.recycler_view_doctor_all)
     CommonRecyclerView mRecyclerView;
 
-    private AllDoctorPresenterContract.Actions mDoctorAllPresenter;
+    private AllDoctorContract.Presenter mDoctorAllPresenter;
 
     private AllDoctorRVAdapter mAllDoctorRVAdapter;
 
