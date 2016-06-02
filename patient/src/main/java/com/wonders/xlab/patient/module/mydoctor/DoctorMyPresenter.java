@@ -28,9 +28,14 @@ public class DoctorMyPresenter extends BasePagePresenter implements DoctorMyPres
 
     @Override
     public void getMyDoctors(String patientId, boolean isRefresh) {
-        mViewListener.showLoading("");
         if (isRefresh) {
+            mViewListener.showLoading("");
             resetPageInfo();
+        }
+        if (mIsLast) {
+            mViewListener.hideLoading();
+            mViewListener.showReachTheLastPageNotice("");
+            return;
         }
         mDoctorMyModel.getMyDoctors(patientId, getNextPageIndex(), DEFAULT_PAGE_SIZE,this);
     }
@@ -39,7 +44,11 @@ public class DoctorMyPresenter extends BasePagePresenter implements DoctorMyPres
     public void onReceiveMyDoctorListSuccess(DoctorMyEntity.RetValuesEntity valuesEntity) {
         mViewListener.hideLoading();
 
-        updatePageInfo(valuesEntity.getServiceFalse().getPage());
+        DoctorMyEntity.RetValuesEntity.ServiceFalseEntity serviceFalse = valuesEntity.getServiceFalse();
+        if (null == serviceFalse) {
+            return;
+        }
+        updatePageInfo(serviceFalse.getNumber(),serviceFalse.isFirst(),serviceFalse.isLast());
 
         ArrayList<MyDoctorItemBean> doctorItemBeanArrayList = new ArrayList<>();
 
@@ -57,7 +66,7 @@ public class DoctorMyPresenter extends BasePagePresenter implements DoctorMyPres
             doctorItemBeanArrayList.add(itemBean);
         }
 
-        DoctorMyEntity.RetValuesEntity.ServiceFalseEntity serviceFalseEntityList = valuesEntity.getServiceFalse();
+        DoctorMyEntity.RetValuesEntity.ServiceFalseEntity serviceFalseEntityList = serviceFalse;
         List<DoctorMyEntity.RetValuesEntity.ServiceFalseEntity.ContentEntity> contentEntityList = serviceFalseEntityList.getContent();
         for (DoctorMyEntity.RetValuesEntity.ServiceFalseEntity.ContentEntity entity : contentEntityList) {
             MyDoctorItemBean itemBean = new MyDoctorItemBean();
