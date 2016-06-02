@@ -24,9 +24,10 @@ public class Constant {
     /**
      * 内网地址
      */
-    public static String BASE_URL_DEBUG = "http://172.16.74.6:8080/pci-user/";
-//    public static String BASE_URL_DEBUG = "http://172.16.74.6:8888/pci-user/";
 //    public static String BASE_URL_DEBUG = "http://xlab-tech.com:45675/pci-user/";
+//    public final static String BASE_URL_DEBUG = "http://172.16.74.6:8080/pci-user/";
+    public final static String BASE_URL_DEBUG = "http://172.16.76.74:8080/";
+//    public static String BASE_URL_DEBUG = "http://172.16.74.6:8888/pci-user/";
 
     /**
      * 外网地址
