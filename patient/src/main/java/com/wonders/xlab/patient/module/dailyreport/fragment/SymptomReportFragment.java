@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.module.dailyreport.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,6 +10,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
@@ -21,7 +23,9 @@ import com.wonders.xlab.patient.module.dailyreport.adapter.bean.SymptomReportBea
 import com.wonders.xlab.patient.module.dailyreport.datarecord.symptom.SymptomActivity;
 import com.wonders.xlab.patient.mvp.presenter.ISymptomReportPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.SymptomReportPresenter;
+import com.wonders.xlab.patient.otto.ShowMeasureChooseDialogOtto;
 import com.wonders.xlab.patient.otto.SymptomSaveSuccessOtto;
+import com.wonders.xlab.patient.util.UmengEventId;
 
 import java.util.List;
 
@@ -123,13 +127,21 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
         if (null == mRecyclerView) {
             return;
         }
-        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+//        mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
+//            @Override
+//            public void onClick() {
+//                getActivity().startActivity(new Intent(getActivity(), SymptomActivity.class));
+//            }
+//        }, false, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
+        mRecyclerView.showEmptyView(null, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
+        TextView tvMeasure = (TextView) mRecyclerView.getEmptyView().findViewById(R.id.tv_symptom_report_empty_measure);
+        tvMeasure.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        tvMeasure.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick() {
+            public void onClick(View v) {
                 getActivity().startActivity(new Intent(getActivity(), SymptomActivity.class));
             }
-        }, false, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
-
+        });
     }
 
     @Override
