@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.auth.authorize;
+package com.wonders.xlab.patient.module.auth.authorize.di;
 
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
 import com.wonders.xlab.patient.mvp.api.AuthAPI;

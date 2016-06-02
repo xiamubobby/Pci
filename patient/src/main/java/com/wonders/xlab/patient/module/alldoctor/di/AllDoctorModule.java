@@ -1,8 +1,8 @@
-package com.wonders.xlab.patient.module.alldoctor;
+package com.wonders.xlab.patient.module.alldoctor.di;
 
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
+import com.wonders.xlab.patient.module.alldoctor.AllDoctorContract;
 import com.wonders.xlab.patient.mvp.api.DoctorAPI;
-import com.wonders.xlab.patient.mvp.presenter.AllDoctorPresenterContract;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,15 +13,15 @@ import retrofit2.Retrofit;
  */
 @Module
 public class AllDoctorModule {
-    private AllDoctorPresenterContract.ViewListener mViewListener;
+    private AllDoctorContract.ViewListener mViewListener;
 
-    public AllDoctorModule(AllDoctorPresenterContract.ViewListener viewListener) {
+    public AllDoctorModule(AllDoctorContract.ViewListener viewListener) {
         mViewListener = viewListener;
     }
 
     @Provides
     @ActivityScoped
-    AllDoctorPresenterContract.ViewListener provideAllDoctorViewListener() {
+    AllDoctorContract.ViewListener provideAllDoctorViewListener() {
         return mViewListener;
     }
 

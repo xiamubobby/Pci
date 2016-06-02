@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.auth.authorize;
+package com.wonders.xlab.patient.module.auth.authorize.guide;
 
 import android.os.Bundle;
 

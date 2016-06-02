@@ -296,7 +296,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".module.auth.authorize.AuthorizeGuideActivity"
+            android:name=".module.auth.authorize.guide.AuthorizeGuideActivity"
             android:label="@string/title_activity_authorize_guide"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -315,7 +315,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".module.auth.authorize.CropActivity"
+            android:name=".module.auth.authorize.crop.CropActivity"
             android:label="@string/title_activity_crop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">

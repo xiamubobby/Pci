@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.auth.authorize;
+package com.wonders.xlab.patient.module.auth.authorize.crop;
 
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;

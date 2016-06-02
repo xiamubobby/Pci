@@ -60,8 +60,35 @@ public class DoctorMyEntity extends BaseEntity {
         }
 
         public static class ServiceFalseEntity {
+            /**
+             * 数据库总条数
+             */
+            private int totalElements;
+            /**
+             * 是否是最后一页
+             */
+            private boolean last;
+            /**
+             * 总共的页数
+             */
+            private int totalPages;
+            /**
+             * 一页的大小
+             */
             private int size;
-            private int page;
+            /**
+             * 当前为第几页
+             */
+            private int number;
+            private Object sort;
+            /**
+             * 是否为第一页
+             */
+            private boolean first;
+            /**
+             * 当前页返回的条数
+             */
+            private int numberOfElements;
             /**
              * doctorGroupId : 1
              * imGroupId : 166710012339552740
@@ -81,12 +108,60 @@ public class DoctorMyEntity extends BaseEntity {
                 this.size = size;
             }
 
-            public int getPage() {
-                return page;
+            public int getTotalElements() {
+                return totalElements;
             }
 
-            public void setPage(int page) {
-                this.page = page;
+            public void setTotalElements(int totalElements) {
+                this.totalElements = totalElements;
+            }
+
+            public boolean isLast() {
+                return last;
+            }
+
+            public void setLast(boolean last) {
+                this.last = last;
+            }
+
+            public int getTotalPages() {
+                return totalPages;
+            }
+
+            public void setTotalPages(int totalPages) {
+                this.totalPages = totalPages;
+            }
+
+            public int getNumber() {
+                return number;
+            }
+
+            public void setNumber(int number) {
+                this.number = number;
+            }
+
+            public Object getSort() {
+                return sort;
+            }
+
+            public void setSort(Object sort) {
+                this.sort = sort;
+            }
+
+            public boolean isFirst() {
+                return first;
+            }
+
+            public void setFirst(boolean first) {
+                this.first = first;
+            }
+
+            public int getNumberOfElements() {
+                return numberOfElements;
+            }
+
+            public void setNumberOfElements(int numberOfElements) {
+                this.numberOfElements = numberOfElements;
             }
 
             public List<ContentEntity> getContent() {
