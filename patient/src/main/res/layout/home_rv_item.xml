@@ -32,7 +32,7 @@
             android:singleLine="true"
             android:text="@{home.title}"
             android:textColor="@color/text_color_primary_gray"
-            android:textSize="@dimen/text_size_middle"/>
+            android:textSize="@dimen/text_size_large"/>
 
     </LinearLayout>
 </layout>

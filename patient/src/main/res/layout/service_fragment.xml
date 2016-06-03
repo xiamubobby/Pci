@@ -41,8 +41,9 @@
                     android:layout_below="@id/doctor_pic"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
+                    android:textColor="@color/text_color_primary_black"
                     android:text="找医生"
-                    android:textSize="18sp"/>
+                    android:textSize="@dimen/text_size_large"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -66,7 +67,8 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="第三方服务"
-                    android:textSize="18sp"/>
+                    android:textColor="@color/text_color_primary_black"
+                    android:textSize="@dimen/text_size_large"/>
             </RelativeLayout>
 
         </LinearLayout>
@@ -77,7 +79,7 @@
             android:padding="@dimen/item_interval_small"
             android:text="推荐服务"
             android:textColor="@color/colorAccent"
-            android:textSize="@dimen/text_size_middle"/>
+            android:textSize="@dimen/text_size_large"/>
 
         <im.hua.uikit.crv.CommonRecyclerView
             android:id="@+id/recycler"

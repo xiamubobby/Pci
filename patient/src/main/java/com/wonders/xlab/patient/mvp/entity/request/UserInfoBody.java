@@ -14,12 +14,21 @@ public class UserInfoBody {
      * caseHistory : 病史
      */
 
+    private String addressCode;
     private String address;
     private int bracketNum;
     private long lastOperationDate;
     private String surgeon;
     private String hospitalId;
     private String caseHistory;
+
+    public String getAddressCode() {
+        return addressCode;
+    }
+
+    public void setAddressCode(String addressCode) {
+        this.addressCode = addressCode;
+    }
 
     public String getAddress() {
         return address;

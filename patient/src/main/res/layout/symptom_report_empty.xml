@@ -13,7 +13,7 @@
         android:layout_marginTop="50dp"
         android:text="今日暂无不适症状"
         android:textColor="@color/text_color_primary_gray"
-        android:textSize="@dimen/text_size_large"/>
+        android:textSize="@dimen/text_size_middle"/>
 
     <TextView
         android:id="@+id/tv_symptom_report_empty_measure"
@@ -23,7 +23,7 @@
         android:gravity="center"
         android:text="请点击添加"
         android:textColor="@color/colorAccent"
-        android:textSize="@dimen/text_size_large"/>
+        android:textSize="@dimen/text_size_middle"/>
 
     <ImageView
         android:layout_width="wrap_content"

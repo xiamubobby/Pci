@@ -3,6 +3,8 @@ package com.wonders.xlab.patient.module.chatroom;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -57,6 +59,9 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     private String imGroupId;
     private String groupName;
     private boolean canChat;
+
+    @Bind(R.id.rl_chat_room_deadline)
+    RelativeLayout mRlChatRoomDeadline;
 
     @Bind(R.id.rl_chat_room_input_area)
     RelativeLayout mRlChatRoomInputArea;
@@ -188,6 +193,11 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             mRlChatRoomInputArea.setVisibility(View.GONE);
             mBtnChatRoomBuyAgain.setVisibility(View.VISIBLE);
         }
+    }
+
+    @OnClick(R.id.icon_chat_room_hidden_deadline)
+    public void hiddenDeadline() {
+        mRlChatRoomDeadline.setVisibility(View.GONE);
     }
 
     @OnClick(R.id.btn_chat_room_buy_again)
@@ -336,6 +346,26 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     @Override
     public void hideLoading() {
         mRecyclerView.hideRefreshOrLoadMore(true, true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_chat_room, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.menu_chat_room_detail:
+                Intent intent = new Intent(ChatRoomActivity.this, DoctorDetailActivity.class);
+                intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, groupName);
+                intent.putExtra(DoctorDetailActivity.EXTRA_ID, ownerId);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

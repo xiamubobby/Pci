@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/item_interval_small"
                 android:text="@{data.provider}"
-                android:textColor="@color/text_color_primary_gray"
+                android:textColor="@color/text_color_primary_black"
                 android:textSize="@dimen/text_size_middle"/>
         </LinearLayout>
 
@@ -71,7 +71,7 @@
                     android:singleLine="true"
                     android:text="@{data.title}"
                     android:textColor="@color/text_color_primary_black"
-                    android:textSize="@dimen/text_size_middle"/>
+                    android:textSize="@dimen/text_size_large"/>
 
                 <TextView
                     android:id="@+id/content"
@@ -80,6 +80,7 @@
                     android:layout_marginTop="@dimen/item_interval_very_small"
                     android:maxLines="2"
                     android:text="@{data.brief}"
+                    android:textSize="@dimen/text_size_middle"
                     android:textColor="@color/text_color_primary_gray"/>
 
                 <TextView

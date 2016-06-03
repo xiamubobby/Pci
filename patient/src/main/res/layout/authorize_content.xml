@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/authorize_label_name"
                 android:textColor="@color/text_color_primary_black"
-                android:textSize="@dimen/text_size_large" />
+                android:textSize="@dimen/text_size_middle" />
 
             <TextView
                 android:id="@+id/tv_authorize_name"
@@ -38,7 +38,7 @@
                 android:layout_alignParentRight="true"
                 android:hint="@string/authorize_hint_please_input_something"
                 android:textColor="@color/text_color_primary_gray"
-                android:textSize="@dimen/text_size_large" />
+                android:textSize="@dimen/text_size_middle" />
         </RelativeLayout>
 
         <include layout="@layout/divider_vertical" />
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/authorize_label_id"
                 android:textColor="@color/text_color_primary_black"
-                android:textSize="@dimen/text_size_large" />
+                android:textSize="@dimen/text_size_middle" />
 
             <TextView
                 android:id="@+id/tv_authorize_id"
@@ -69,7 +69,7 @@
                 android:hint="@string/authorize_hint_please_input_something"
                 android:singleLine="true"
                 android:textColor="@color/text_color_primary_gray"
-                android:textSize="@dimen/text_size_large" />
+                android:textSize="@dimen/text_size_middle" />
         </RelativeLayout>
 
         <include layout="@layout/divider_vertical" />
@@ -82,7 +82,7 @@
             android:paddingRight="@dimen/item_interval_middle"
             android:text="@string/authorize_label_id_image"
             android:textColor="@color/text_color_primary_black"
-            android:textSize="@dimen/text_size_large" />
+            android:textSize="@dimen/text_size_middle" />
 
         <include layout="@layout/divider_vertical" />
 
@@ -101,6 +101,7 @@
             android:layout_gravity="right"
             android:padding="@dimen/item_interval_middle"
             android:text="@string/authorize_label_example"
+            android:textSize="@dimen/text_size_small"
             android:textColor="@color/colorAccent" />
     </LinearLayout>
 
@@ -110,5 +111,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/selector_confirm_button_red"
         android:text="@string/authorize_btn_submit"
+        android:textSize="@dimen/text_size_middle"
         android:textColor="@android:color/white" />
 </LinearLayout>

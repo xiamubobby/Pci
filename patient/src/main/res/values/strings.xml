@@ -26,6 +26,7 @@
     <string name="title_activity_my_order">我的订单</string>
     <string name="title_activity_web">网页</string>
     <string name="title_activity_doctor_detail">医生详情</string>
+    <string name="title_activity_address">住址</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -137,4 +138,8 @@
     <string name="title_activity_crop">裁剪</string>
     <string name="user_info_hint_nop">暂无</string>
 
+    <string name="address_hint_province">省、直辖市</string>
+    <string name="address_hint_city">市</string>
+    <string name="address_hint_area">区</string>
+    <string name="address_hint_detail">请输入详细地址</string>
 </resources>

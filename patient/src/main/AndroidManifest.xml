@@ -204,6 +204,10 @@
             android:label="@string/title_activity_setting"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".module.me.address.AddressActivity"
+            android:label="@string/title_activity_address"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
             android:screenOrientation="portrait"
             android:theme="@style/PhotoPickerTheme"/>

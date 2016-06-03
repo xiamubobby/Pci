@@ -12,6 +12,7 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.base.TextInputActivity;
+import com.wonders.xlab.patient.module.me.address.AddressActivity;
 import com.wonders.xlab.patient.module.me.hospital.HospitalActivity;
 import com.wonders.xlab.patient.mvp.entity.UserInfoEntity;
 import com.wonders.xlab.patient.mvp.entity.request.UserInfoBody;
@@ -51,6 +52,9 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
 
     private int mHospitalSpSelectedPosition = 0;
 
+    private String addressId;
+    private String address;
+
     @Override
     public int getContentLayout() {
         return R.layout.user_info_activity;
@@ -78,10 +82,12 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
         if (0 != entity.getLastOperationDate()) {
             timeStr = DateUtil.format(entity.getLastOperationDate(), "yyyy-MM-dd");
         }
+        address = entity.getAddress();
+        addressId = entity.getAddressCode();
         mTvUserInfoSurgeryTime.setText(timeStr);
         mTvUserInfoNumber.setText(entity.getBracketNum());
         mTvUserInfoHistory.setText(entity.getCaseHistory());
-        mTvUserInfoAddress.setText(entity.getAddress());
+        mTvUserInfoAddress.setText(address);
         mTextViewHospital.setText(entity.getHospital());
     }
 
@@ -128,7 +134,11 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
 
     @OnClick(R.id.tv_user_info_address)
     public void editAddress() {
-        goToTextInputActivity(mTvUserInfoAddress.getText().toString(), "请输入家庭住址", "住址", REQUEST_CODE_ADDRESS, false);
+        Intent intent = new Intent(this, AddressActivity.class);
+        intent.putExtra(AddressActivity.ADDRESS_ID,addressId);
+        intent.putExtra(AddressActivity.ADDRESS,address);
+        startActivityForResult(intent,REQUEST_CODE_ADDRESS);
+//        goToTextInputActivity(mTvUserInfoAddress.getText().toString(), "请输入家庭住址", "住址", REQUEST_CODE_ADDRESS, false);
     }
 
     private void goToTextInputActivity(String defaultValue, String hint, String title, int requestCode, boolean isNumber) {

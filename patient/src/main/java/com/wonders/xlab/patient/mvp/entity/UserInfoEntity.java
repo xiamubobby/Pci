@@ -27,12 +27,21 @@ public class UserInfoEntity extends BaseEntity {
     }
 
     public static class RetValuesEntity {
+        private String addressCode;
         private String address;
         private String bracketNum;
         private long lastOperationDate;
         private String hospital;
         private String surgeon;
         private String caseHistory;
+
+        public String getAddressCode() {
+            return addressCode;
+        }
+
+        public void setAddressCode(String addressCode) {
+            this.addressCode = addressCode;
+        }
 
         public String getAddress() {
             return address;

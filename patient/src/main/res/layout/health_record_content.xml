@@ -37,5 +37,6 @@
         android:visibility="gone"
         android:background="@drawable/selector_confirm_button_red"
         android:text="@string/health_record_btn_authorize"
+        android:textSize="@dimen/text_size_middle"
         android:textColor="@android:color/white"/>
 </RelativeLayout>
