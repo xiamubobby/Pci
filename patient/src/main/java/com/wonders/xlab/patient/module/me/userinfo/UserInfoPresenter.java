@@ -1,10 +1,10 @@
-package com.wonders.xlab.patient.mvp.presenter;
+package com.wonders.xlab.patient.module.me.userinfo;
 
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.mvp.entity.UserInfoEntity;
 import com.wonders.xlab.patient.mvp.entity.request.UserInfoBody;
-import com.wonders.xlab.patient.mvp.model.UserInfoModel;
-import com.wonders.xlab.patient.mvp.model.UserInfoModelContract;
+
+import java.io.File;
 
 import javax.inject.Inject;
 
@@ -14,14 +14,14 @@ import im.hua.library.base.mvp.impl.BasePresenter;
 /**
  * Created by hua on 16/5/11.
  */
-public class UserInfoPresenter extends BasePresenter implements UserInfoPresenterContract.Actions, UserInfoModelContract.Callback {
+public class UserInfoPresenter extends BasePresenter implements UserInfoContract.Presenter, UserInfoContract.Callback {
     @Inject
     AIManager mAIManager;
-    private UserInfoPresenterContract.ViewListener mViewListener;
-    private UserInfoModelContract.Actions mUserInfoModel;
+    private UserInfoContract.ViewListener mViewListener;
+    private UserInfoContract.Model mUserInfoModel;
 
     @Inject
-    public UserInfoPresenter(UserInfoPresenterContract.ViewListener viewListener, UserInfoModel userInfoModel) {
+    public UserInfoPresenter(UserInfoContract.ViewListener viewListener, UserInfoModel userInfoModel) {
         mViewListener = viewListener;
         mUserInfoModel = userInfoModel;
         addModel(mUserInfoModel);
@@ -40,6 +40,20 @@ public class UserInfoPresenter extends BasePresenter implements UserInfoPresente
     }
 
     @Override
+    public void uploadAvater(File userAvater) {
+        mViewListener.showLoading("图片上传，请稍后...");
+        mUserInfoModel.uploadAvater(userAvater, this);
+
+    }
+
+    @Override
+    public void modifyUserAvater(String userAvaterUrl) {
+        mViewListener.showLoading("正在保存，请稍后...");
+        mUserInfoModel.modifyUserAvater(mAIManager.getPatientId(), userAvaterUrl, this);
+
+    }
+
+    @Override
     public void onReceiveUserInfoSuccess(UserInfoEntity entity) {
         mViewListener.hideLoading();
         mViewListener.showUserInfo(entity.getRet_values());
@@ -49,6 +63,18 @@ public class UserInfoPresenter extends BasePresenter implements UserInfoPresente
     public void onModifyUserInfoSuccess(EmptyValueEntity entity) {
         mViewListener.hideLoading();
         mViewListener.modifyUserInfoSuccess("保存成功!");
+    }
+
+    @Override
+    public void onUploadUserAvaterSuccess(String url) {
+        mViewListener.hideLoading();
+        mViewListener.uploadUserAvaterSuccess(url);
+    }
+
+    @Override
+    public void onModifyUserAvaterSuccess(EmptyValueEntity entity) {
+        mViewListener.hideLoading();
+        mViewListener.modifyUserAvaterSuccess("保存成功!");
     }
 
     @Override

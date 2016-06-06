@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,6 +19,31 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/item_interval_middle"
+            android:paddingRight="@dimen/item_interval_middle">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="头像"
+                android:textColor="@color/text_color_primary_black"
+                android:textSize="@dimen/text_size_middle" />
+
+            <ImageView
+                android:id="@+id/iv_user_avatar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="fitXY"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="?listPreferredItemHeightSmall"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -32,17 +56,17 @@
                 android:singleLine="true"
                 android:text="手术医院"
                 android:textColor="@color/text_color_primary_black"
-                android:textSize="@dimen/text_size_middle"/>
+                android:textSize="@dimen/text_size_middle" />
 
             <TextView
                 android:id="@+id/textViewHospital"
                 android:layout_width="match_parent"
-                android:gravity="right|center_vertical"
-                android:textSize="@dimen/text_size_middle"
-                android:textColor="@color/text_color_primary_black"
                 android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
+                android:hint="@string/user_info_hint_nop"
                 android:singleLine="true"
-                android:hint="@string/user_info_hint_nop"/>
+                android:textColor="@color/text_color_primary_black"
+                android:textSize="@dimen/text_size_middle" />
         </LinearLayout>
 
         <LinearLayout
@@ -58,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:text="手术医生"
                 android:textColor="@color/text_color_primary_black"
-                android:textSize="@dimen/text_size_middle"/>
+                android:textSize="@dimen/text_size_middle" />
 
             <TextView
                 android:id="@+id/tv_user_info_doctor"
@@ -68,7 +92,7 @@
                 android:hint="@string/user_info_hint_nop"
                 android:singleLine="true"
                 android:textColor="@color/text_color_primary_gray"
-                android:textSize="@dimen/text_size_middle"/>
+                android:textSize="@dimen/text_size_middle" />
         </LinearLayout>
 
         <LinearLayout
@@ -84,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:text="最后手术时间"
                 android:textColor="@color/text_color_primary_black"
-                android:textSize="@dimen/text_size_middle"/>
+                android:textSize="@dimen/text_size_middle" />
 
             <TextView
                 android:id="@+id/tv_user_info_surgery_time"
@@ -94,7 +118,7 @@
                 android:hint="@string/user_info_hint_nop"
                 android:singleLine="true"
                 android:textColor="@color/text_color_primary_gray"
-                android:textSize="@dimen/text_size_middle"/>
+                android:textSize="@dimen/text_size_middle" />
         </LinearLayout>
 
         <LinearLayout
@@ -110,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:text="支架个数"
                 android:textColor="@color/text_color_primary_black"
-                android:textSize="@dimen/text_size_middle"/>
+                android:textSize="@dimen/text_size_middle" />
 
             <TextView
                 android:id="@+id/tv_user_info_number"
@@ -120,7 +144,7 @@
                 android:singleLine="true"
                 android:text="0"
                 android:textColor="@color/text_color_primary_gray"
-                android:textSize="@dimen/text_size_middle"/>
+                android:textSize="@dimen/text_size_middle" />
         </LinearLayout>
 
         <LinearLayout
@@ -136,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:text="病史"
                 android:textColor="@color/text_color_primary_black"
-                android:textSize="@dimen/text_size_middle"/>
+                android:textSize="@dimen/text_size_middle" />
 
             <TextView
                 android:id="@+id/tv_user_info_history"
@@ -147,7 +171,7 @@
                 android:hint="@string/user_info_hint_nop"
                 android:singleLine="true"
                 android:textColor="@color/text_color_primary_gray"
-                android:textSize="@dimen/text_size_middle"/>
+                android:textSize="@dimen/text_size_middle" />
         </LinearLayout>
 
         <LinearLayout
@@ -163,7 +187,7 @@
                 android:layout_height="wrap_content"
                 android:text="住址"
                 android:textColor="@color/text_color_primary_black"
-                android:textSize="@dimen/text_size_middle"/>
+                android:textSize="@dimen/text_size_middle" />
 
             <TextView
                 android:id="@+id/tv_user_info_address"
@@ -174,7 +198,7 @@
                 android:hint="@string/user_info_hint_nop"
                 android:singleLine="true"
                 android:textColor="@color/text_color_primary_gray"
-                android:textSize="@dimen/text_size_middle"/>
+                android:textSize="@dimen/text_size_middle" />
         </LinearLayout>
 
     </LinearLayout>

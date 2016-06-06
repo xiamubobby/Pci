@@ -1,8 +1,8 @@
 package com.wonders.xlab.patient.module.auth.authorize.di;
 
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
+import com.wonders.xlab.patient.module.auth.authorize.AuthorizeContract;
 import com.wonders.xlab.patient.mvp.api.AuthAPI;
-import com.wonders.xlab.patient.mvp.presenter.AuthorizePresenterContract;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,15 +13,15 @@ import retrofit2.Retrofit;
  */
 @Module
 public class AuthorizeModule {
-    private AuthorizePresenterContract.ViewListener mViewListener;
+    private AuthorizeContract.ViewListener mViewListener;
 
-    public AuthorizeModule(AuthorizePresenterContract.ViewListener viewListener) {
+    public AuthorizeModule(AuthorizeContract.ViewListener viewListener) {
         mViewListener = viewListener;
     }
 
     @Provides
     @ActivityScoped
-    AuthorizePresenterContract.ViewListener provideAuthorizePresenterViewListener() {
+    AuthorizeContract.ViewListener provideAuthorizePresenterViewListener() {
         return mViewListener;
     }
 

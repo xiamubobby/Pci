@@ -16,7 +16,6 @@ import com.wonders.xlab.patient.module.auth.authorize.crop.CropActivity;
 import com.wonders.xlab.patient.module.auth.authorize.di.AuthorizeModule;
 import com.wonders.xlab.patient.module.auth.authorize.di.DaggerAuthorizeComponent;
 import com.wonders.xlab.patient.module.auth.authorize.guide.AuthorizeGuideActivity;
-import com.wonders.xlab.patient.mvp.presenter.AuthorizePresenterContract;
 import com.wonders.xlab.patient.util.ImageViewManager;
 
 import java.io.File;
@@ -34,7 +33,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 
-public class AuthorizeActivity extends AppbarActivity implements AuthorizePresenterContract.ViewListener {
+public class AuthorizeActivity extends AppbarActivity implements AuthorizeContract.ViewListener {
 
     private final int REQUEST_CODE_NAME = 1236;
     private final int REQUEST_CODE_ID = 1237;
@@ -54,7 +53,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizePresen
 
     private List<String> mTmpImageFilePath = new ArrayList<>();
 
-    private AuthorizePresenterContract.Actions mAuthorizePresenter;
+    private AuthorizeContract.Presenter mAuthorizePresenter;
     /**
      * 保存选择的图片
      */

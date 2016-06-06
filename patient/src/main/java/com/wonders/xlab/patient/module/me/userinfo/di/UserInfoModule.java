@@ -1,8 +1,8 @@
-package com.wonders.xlab.patient.module.me.userinfo;
+package com.wonders.xlab.patient.module.me.userinfo.di;
 
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
+import com.wonders.xlab.patient.module.me.userinfo.UserInfoContract;
 import com.wonders.xlab.patient.mvp.api.UserInfoAPI;
-import com.wonders.xlab.patient.mvp.presenter.UserInfoPresenterContract;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,15 +13,15 @@ import retrofit2.Retrofit;
  */
 @Module
 public class UserInfoModule {
-    private UserInfoPresenterContract.ViewListener mViewListener;
+    private UserInfoContract.ViewListener mViewListener;
 
-    public UserInfoModule(UserInfoPresenterContract.ViewListener viewListener) {
+    public UserInfoModule(UserInfoContract.ViewListener viewListener) {
         mViewListener = viewListener;
     }
 
     @Provides
     @ActivityScoped
-    UserInfoPresenterContract.ViewListener provideViewListener() {
+    UserInfoContract.ViewListener provideViewListener() {
         return mViewListener;
     }
 

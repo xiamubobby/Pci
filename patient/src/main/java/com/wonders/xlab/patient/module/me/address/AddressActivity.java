@@ -9,7 +9,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +26,7 @@ import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.me.address.di.AddressModule;
 import com.wonders.xlab.patient.module.me.address.di.DaggerAddressComponent;
+import com.wonders.xlab.patient.mvp.entity.AddressEntity;
 import com.wonders.xlab.patient.mvp.entity.request.UserInfoBody;
 
 import java.io.BufferedReader;
@@ -68,7 +68,6 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
     private int provinceCode = -1;
     private int cityCode = -1;
     private int areaCode = -1;
-    private String selectedProvince, selectedCity, selectedArea;
     private AddressEntity addressEntity;
     private AddressContract.Presenter mAddressPresenter;
     private Dialog addressDialog;
@@ -93,7 +92,6 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
         if (null != data) {
             addressCode = data.getString(ADDRESS_ID, "");
             address = data.getString(ADDRESS, "");
-            addressCode = "123123123";
         }
         loadAddress();
         showAddress();
@@ -128,17 +126,14 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
             cityCode = Integer.parseInt(addressCode.substring(3, 6));
             areaCode = Integer.parseInt(addressCode.substring(6));
             List<AddressEntity.ProvinceEntity> provinces = addressEntity.getData();
-            Log.e("SSS","...................................................................................."+provinces.size());
             if (provinceCode < provinces.size() && provinceCode >= 0) {
                 mProvince = provinces.get(provinceCode).getName();
                 mTextProvince.setText(mProvince);
-                List<AddressEntity.ProvinceEntity.CityEntity> cities = addressEntity.getData().get(provinceCode).getCity();
-                Log.e("SSS","...................................................................................."+cities.size());
+                List<AddressEntity.ProvinceEntity.CityEntity> cities = provinces.get(provinceCode).getCity();
                 if (cityCode < cities.size() && cityCode >= 0) {
                     mCity = cities.get(cityCode).getName();
                     mTextCity.setText(mCity);
                     List<String> areas = addressEntity.getData().get(provinceCode).getCity().get(cityCode).getArea();
-                    Log.e("SSS","...................................................................................."+areas.size());
                     if (areaCode < areas.size() && areaCode >= 0) {
                         mArea = areas.get(areaCode);
                         mTextArea.setText(mArea);
@@ -189,8 +184,22 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
 
     }
 
+    private void initText(int level) {
+        if (level == 0) {
+            mTextProvince.setText("");
+            mTextCity.setText("");
+            mTextArea.setText("");
+        } else if (level == 1) {
+            mTextCity.setText("");
+            mTextArea.setText("");
+        } else if (level == 2) {
+            mTextArea.setText("");
+        }
+    }
+
     private void showSelectDialog(final int type) {
         selectedStr = "";
+        selectedPosition = -1;
         List<String> data = new ArrayList<>();
         if (type == 0) {
             for (AddressEntity.ProvinceEntity province : addressEntity.getData()) {
@@ -210,17 +219,31 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
             @Override
             public void onDismiss(DialogInterface dialog) {
                 if (type == 0) {
-                    provinceCode = selectedPosition;
-                    selectedProvince = selectedStr;
-                    mTextProvince.setText(selectedProvince);
+                    if (selectedPosition != -1) {
+                        provinceCode = selectedPosition;
+                        initText(1);
+                        if (!selectedStr.equals("")) {
+                            mProvince = selectedStr;
+                        }
+                        mTextProvince.setText(mProvince);
+                    }
                 } else if (type == 1) {
-                    cityCode = selectedPosition;
-                    selectedCity = selectedStr;
-                    mTextCity.setText(selectedCity);
+                    if (selectedPosition != -1) {
+                        cityCode = selectedPosition;
+                        initText(2);
+                        if (!selectedStr.equals("")) {
+                            mCity = selectedStr;
+                            mTextCity.setText(mCity);
+                        }
+                    }
                 } else if (type == 2) {
-                    areaCode = selectedPosition;
-                    selectedArea = selectedStr;
-                    mTextArea.setText(selectedArea);
+                    if (selectedPosition != -1) {
+                        areaCode = selectedPosition;
+                        if (!selectedStr.equals("")) {
+                            mArea = selectedStr;
+                            mTextArea.setText(mArea);
+                        }
+                    }
                 }
             }
         });
@@ -317,7 +340,6 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
                                 UserInfoBody body = new UserInfoBody();
                                 body.setAddress(address);
                                 body.setAddressCode(addressCode);
-                                showShortToast("....." + address + ",,,,,," + addressCode);
                                 mAddressPresenter.saveAddress(body);
                             }
                         }
@@ -329,15 +351,20 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
         return super.onOptionsItemSelected(item);
     }
 
-    private String changeCode(Integer code) {
+    private String changeCode(int code) {
         String newCode = "";
-        if (code.toString().length() == 1) {
-            newCode = "00" + provinceCode;
-        } else if (code.toString().length() == 2) {
-            newCode = "0" + provinceCode;
+        if (code > 0) {
+            if (code < 10) {
+                newCode = "00" + code;
+            } else if (code < 100 && code > 9) {
+                newCode = "0" + code;
+            } else {
+                newCode = "" + code;
+            }
         } else {
-            newCode = code.toString();
+            newCode = "000";
         }
+
         return newCode;
     }
 
@@ -353,6 +380,8 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
         String result = mProvince + mCity + mArea + mDetail;
         Intent intent = new Intent();
         intent.putExtra(ADDRESS_RESULT, result);
+        intent.putExtra(ADDRESS_ID, addressCode);
+        intent.putExtra(ADDRESS, address);
         setResult(RESULT_OK, intent);
         finish();
     }

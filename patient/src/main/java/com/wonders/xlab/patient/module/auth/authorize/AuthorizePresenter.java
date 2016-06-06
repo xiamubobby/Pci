@@ -1,9 +1,6 @@
-package com.wonders.xlab.patient.mvp.presenter;
+package com.wonders.xlab.patient.module.auth.authorize;
 
 import android.text.TextUtils;
-
-import com.wonders.xlab.patient.mvp.model.AuthorizeModel;
-import com.wonders.xlab.patient.mvp.model.AuthorizeModelContract;
 
 import java.io.File;
 
@@ -14,12 +11,12 @@ import im.hua.library.base.mvp.impl.BasePresenter;
 /**
  * Created by hua on 16/5/5.
  */
-public class AuthorizePresenter extends BasePresenter implements AuthorizePresenterContract.Actions {
-    private AuthorizePresenterContract.ViewListener mViewListener;
-    private AuthorizeModelContract.Actions mAuthorizeModel;
+public class AuthorizePresenter extends BasePresenter implements AuthorizeContract.Presenter {
+    private AuthorizeContract.ViewListener mViewListener;
+    private AuthorizeContract.Model mAuthorizeModel;
 
     @Inject
-    public AuthorizePresenter(AuthorizePresenterContract.ViewListener viewListener, AuthorizeModel authorizeModel) {
+    public AuthorizePresenter(AuthorizeContract.ViewListener viewListener, AuthorizeModel authorizeModel) {
         mViewListener = viewListener;
         mAuthorizeModel = authorizeModel;
     }
@@ -39,7 +36,7 @@ public class AuthorizePresenter extends BasePresenter implements AuthorizePresen
             return;
         }
         mViewListener.showLoading("正在保存，请稍候...");
-        mAuthorizeModel.authorize(patientId, name, idNo, idPic, new AuthorizeModelContract.Callback() {
+        mAuthorizeModel.authorize(patientId, name, idNo, idPic, new AuthorizeContract.Callback() {
             @Override
             public void authorizeSuccess(String message) {
                 mViewListener.hideLoading();

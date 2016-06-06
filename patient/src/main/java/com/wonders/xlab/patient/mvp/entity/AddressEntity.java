@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.me.address;
+package com.wonders.xlab.patient.mvp.entity;
 
 import java.util.List;
 

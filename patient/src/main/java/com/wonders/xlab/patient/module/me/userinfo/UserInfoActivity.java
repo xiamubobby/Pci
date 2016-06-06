@@ -2,40 +2,55 @@ package com.wonders.xlab.patient.module.me.userinfo;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.base.TextInputActivity;
+import com.wonders.xlab.patient.module.auth.authorize.crop.CropActivity;
 import com.wonders.xlab.patient.module.me.address.AddressActivity;
 import com.wonders.xlab.patient.module.me.hospital.HospitalActivity;
+import com.wonders.xlab.patient.module.me.userinfo.di.DaggerUserInfoComponent;
+import com.wonders.xlab.patient.module.me.userinfo.di.UserInfoModule;
 import com.wonders.xlab.patient.mvp.entity.UserInfoEntity;
 import com.wonders.xlab.patient.mvp.entity.request.UserInfoBody;
-import com.wonders.xlab.patient.mvp.presenter.UserInfoPresenter;
-import com.wonders.xlab.patient.mvp.presenter.UserInfoPresenterContract;
+import com.wonders.xlab.patient.util.ImageViewManager;
+import com.wonders.xlab.patient.util.MyAddressUtil;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import im.hua.utils.DateUtil;
+import me.iwf.photopicker.PhotoPickerActivity;
+import me.iwf.photopicker.utils.PhotoPickerIntent;
 
-public class UserInfoActivity extends AppbarActivity implements UserInfoPresenterContract.ViewListener {
+public class UserInfoActivity extends AppbarActivity implements UserInfoContract.ViewListener {
 
     private final int REQUEST_CODE = 1;
+
     private final int REQUEST_CODE_DOCTOR = REQUEST_CODE << 1;
     private final int REQUEST_CODE_NUMBER = REQUEST_CODE << 2;
     private final int REQUEST_CODE_HISTORY = REQUEST_CODE << 3;
     private final int REQUEST_CODE_ADDRESS = REQUEST_CODE << 4;
     private final int REQUEST_CODE_HOSPITAL = REQUEST_CODE << 5;
+    private final int REQUEST_CODE_PIC = REQUEST_CODE << 6;
+    private final int REQUEST_CROP_IMAGE = REQUEST_CODE << 7;
 
+    @Bind(R.id.iv_user_avatar)
+    ImageView mIvPortrait;
     @Bind(R.id.textViewHospital)
     TextView mTextViewHospital;
     @Bind(R.id.tv_user_info_doctor)
@@ -55,6 +70,13 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
 
     private String addressId;
     private String address;
+    private MyAddressUtil addressUtil;
+
+    private List<String> mTmpImageFilePath = new ArrayList<>();
+    /**
+     * 保存选择的图片
+     */
+    private File mPickedIdPicFile;
 
     @Override
     public int getContentLayout() {
@@ -71,7 +93,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
                 .build()
                 .getUserInfoPresenter();
         addPresenter(mPresenter);
-
+        addressUtil = new MyAddressUtil(this);
         mPresenter.getUserInfo();
 
     }
@@ -83,16 +105,24 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
         if (0 != entity.getLastOperationDate()) {
             timeStr = DateUtil.format(entity.getLastOperationDate(), "yyyy-MM-dd");
         }
+        ImageViewManager.setImageViewWithUrl(this, mIvPortrait, AIManager.getInstance().getPatientPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
         address = entity.getAddress();
         addressId = entity.getAddressCode();
         mTvUserInfoSurgeryTime.setText(timeStr);
         mTvUserInfoNumber.setText(entity.getBracketNum());
         mTvUserInfoHistory.setText(entity.getCaseHistory());
-        mTvUserInfoAddress.setText(address);
+        mTvUserInfoAddress.setText(addressUtil.getFrontAddress(addressId) + address);
         mTextViewHospital.setText(entity.getHospital());
     }
 
     private Calendar mCalendarSurgeryDate = Calendar.getInstance();
+
+    @OnClick(R.id.iv_user_avatar)
+    public void choosePic() {
+        PhotoPickerIntent intent = new PhotoPickerIntent(this);
+        intent.setPhotoCount(1);
+        startActivityForResult(intent, REQUEST_CODE_PIC);
+    }
 
     @OnClick(R.id.textViewHospital)
     public void goToChooseHospital() {
@@ -138,7 +168,6 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
         Intent intent = new Intent(this, AddressActivity.class);
         intent.putExtra(AddressActivity.ADDRESS_ID, addressId);
         intent.putExtra(AddressActivity.ADDRESS, address);
-        Log.i("sss", "......................." + address + "......................." + addressId);
         startActivityForResult(intent, REQUEST_CODE_ADDRESS);
 //        goToTextInputActivity(mTvUserInfoAddress.getText().toString(), "请输入家庭住址", "住址", REQUEST_CODE_ADDRESS, false);
     }
@@ -154,6 +183,16 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
 
     @Override
     public void modifyUserInfoSuccess(String message) {
+        showShortToast(message);
+    }
+
+    @Override
+    public void uploadUserAvaterSuccess(String url) {
+        mPresenter.modifyUserAvater(url);
+    }
+
+    @Override
+    public void modifyUserAvaterSuccess(String message) {
         showShortToast(message);
     }
 
@@ -226,14 +265,35 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
             String hospitalName = data.getStringExtra(HospitalActivity.EXTRA_RESULT_NAME);
             mTextViewHospital.setText(hospitalName);
             mTextViewHospital.setTag(hospitalId);
+        } else if (requestCode == REQUEST_CODE_ADDRESS) {
+            String addressResult = data.getStringExtra(AddressActivity.ADDRESS_RESULT);
+            mTvUserInfoAddress.setText(addressResult);
+            address = data.getStringExtra(AddressActivity.ADDRESS);
+            addressId = data.getStringExtra(AddressActivity.ADDRESS_ID);
+        } else if (requestCode == REQUEST_CODE_PIC) {
+            ArrayList<String> photos =
+                    data.getStringArrayListExtra(PhotoPickerActivity.KEY_SELECTED_PHOTOS);
+            if (null == photos || photos.size() <= 0) {
+                return;
+            }
+
+            String path = photos.get(0);
+
+            Intent intent = new Intent(this, CropActivity.class);
+            intent.putExtra(CropActivity.EXTRA_IMAGE_PATH, path);
+            startActivityForResult(intent, REQUEST_CROP_IMAGE);
+        } else if (requestCode == REQUEST_CROP_IMAGE) {
+            String imageFilePath = data.getStringExtra(CropActivity.RESULT_IMAGE_PATH);
+            mTmpImageFilePath.add(imageFilePath);
+            mPickedIdPicFile = new File(imageFilePath);
+            Uri uri = Uri.fromFile(mPickedIdPicFile);
+            ImageViewManager.setImageViewWithUri(this, mIvPortrait, uri, ImageViewManager.PLACE_HOLDER_EMPTY);
+            mPresenter.uploadAvater(mPickedIdPicFile);
         } else {
             String result = data.getStringExtra(TextInputActivity.EXTRA_RESULT);
             switch (requestCode) {
                 case REQUEST_CODE_DOCTOR:
                     mTvUserInfoDoctor.setText(result);
-                    break;
-                case REQUEST_CODE_ADDRESS:
-                    mTvUserInfoAddress.setText(result);
                     break;
                 case REQUEST_CODE_HISTORY:
                     mTvUserInfoHistory.setText(result);
@@ -245,5 +305,5 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
             }
         }
     }
-
 }
+

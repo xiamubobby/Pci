@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.model;
+package com.wonders.xlab.patient.module.auth.authorize;
 
 import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.AuthAPI;
@@ -17,7 +17,7 @@ import okhttp3.RequestBody;
  * Created by hua on 16/5/5.
  * 市民云认证
  */
-public class AuthorizeModel extends PatientBaseModel implements AuthorizeModelContract.Actions {
+public class AuthorizeModel extends PatientBaseModel implements AuthorizeContract.Model {
 
     private AuthAPI mAuthAPI;
 
@@ -32,7 +32,7 @@ public class AuthorizeModel extends PatientBaseModel implements AuthorizeModelCo
     }
 
     @Override
-    public void authorize(String patientId, String name, String idNo, File idPic, final AuthorizeModelContract.Callback callback) {
+    public void authorize(String patientId, String name, String idNo, File idPic, final AuthorizeContract.Callback callback) {
         RequestBody patientIdRB = RequestBody.create(MediaType.parse("text"), patientId);
         RequestBody nameRB = RequestBody.create(MediaType.parse("text"), name);
         RequestBody idNoRB = RequestBody.create(MediaType.parse("text"), idNo);
