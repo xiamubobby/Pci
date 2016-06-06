@@ -99,7 +99,7 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
         showAddress();
         initSelectDialog();
         mAddressPresenter = DaggerAddressComponent.builder()
-                .applicationComponent(((XApplication) getApplication()).getComponent())
+                .applicationComponent(XApplication.getComponent())
                 .addressModule(new AddressModule(this))
                 .build()
                 .getAddressPresenter();
