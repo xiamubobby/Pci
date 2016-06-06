@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.module.me.userinfo;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
@@ -95,7 +96,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
 
     @OnClick(R.id.textViewHospital)
     public void goToChooseHospital() {
-        startActivityForResult(new Intent(this, HospitalActivity.class),REQUEST_CODE_HOSPITAL);
+        startActivityForResult(new Intent(this, HospitalActivity.class), REQUEST_CODE_HOSPITAL);
     }
 
     @OnClick(R.id.tv_user_info_surgery_time)
@@ -135,9 +136,10 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoPresente
     @OnClick(R.id.tv_user_info_address)
     public void editAddress() {
         Intent intent = new Intent(this, AddressActivity.class);
-        intent.putExtra(AddressActivity.ADDRESS_ID,addressId);
-        intent.putExtra(AddressActivity.ADDRESS,address);
-        startActivityForResult(intent,REQUEST_CODE_ADDRESS);
+        intent.putExtra(AddressActivity.ADDRESS_ID, addressId);
+        intent.putExtra(AddressActivity.ADDRESS, address);
+        Log.i("sss", "......................." + address + "......................." + addressId);
+        startActivityForResult(intent, REQUEST_CODE_ADDRESS);
 //        goToTextInputActivity(mTvUserInfoAddress.getText().toString(), "请输入家庭住址", "住址", REQUEST_CODE_ADDRESS, false);
     }
 

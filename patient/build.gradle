@@ -16,7 +16,7 @@ android {
         applicationId "com.wonders.xlab.patient"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 8
+        versionCode 9
         versionName AppVersion
         // Enabling multidex support.
         multiDexEnabled true

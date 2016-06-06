@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,12 +65,16 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
 
     private String addressCode;
     private String address;
-    private Integer provinceCode, cityCode, areaCode;
+    private int provinceCode = -1;
+    private int cityCode = -1;
+    private int areaCode = -1;
+    private String selectedProvince, selectedCity, selectedArea;
     private AddressEntity addressEntity;
     private AddressContract.Presenter mAddressPresenter;
     private Dialog addressDialog;
     private AddressAdapter addressAdapter;
     private int selectedPosition;
+    private String selectedStr;
 
     @Override
     public int getContentLayout() {
@@ -88,6 +93,7 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
         if (null != data) {
             addressCode = data.getString(ADDRESS_ID, "");
             address = data.getString(ADDRESS, "");
+            addressCode = "123123123";
         }
         loadAddress();
         showAddress();
@@ -120,13 +126,27 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
         if (!addressCode.equals("")) {
             provinceCode = Integer.parseInt(addressCode.substring(0, 3));
             cityCode = Integer.parseInt(addressCode.substring(3, 6));
-            areaCode = Integer.parseInt(addressCode.substring(6, 9));
-            mProvince = addressEntity.getData().get(provinceCode).getName();
-            mTextProvince.setText(mProvince);
-            mCity = addressEntity.getData().get(provinceCode).getCity().get(cityCode).getName();
-            mTextCity.setText(mCity);
-            mArea = addressEntity.getData().get(provinceCode).getCity().get(cityCode).getArea().get(areaCode);
-            mTextArea.setText(mArea);
+            areaCode = Integer.parseInt(addressCode.substring(6));
+            List<AddressEntity.ProvinceEntity> provinces = addressEntity.getData();
+            Log.e("SSS","...................................................................................."+provinces.size());
+            if (provinceCode < provinces.size() && provinceCode >= 0) {
+                mProvince = provinces.get(provinceCode).getName();
+                mTextProvince.setText(mProvince);
+                List<AddressEntity.ProvinceEntity.CityEntity> cities = addressEntity.getData().get(provinceCode).getCity();
+                Log.e("SSS","...................................................................................."+cities.size());
+                if (cityCode < cities.size() && cityCode >= 0) {
+                    mCity = cities.get(cityCode).getName();
+                    mTextCity.setText(mCity);
+                    List<String> areas = addressEntity.getData().get(provinceCode).getCity().get(cityCode).getArea();
+                    Log.e("SSS","...................................................................................."+areas.size());
+                    if (areaCode < areas.size() && areaCode >= 0) {
+                        mArea = areas.get(areaCode);
+                        mTextArea.setText(mArea);
+                    }
+                }
+            }
+
+
         }
         if (!address.equals("")) {
             mEtTextDetail.setText(address);
@@ -140,7 +160,7 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
 
     @OnClick(R.id.tv_address_city)
     public void selectCity() {
-        if (provinceCode == null) {
+        if (provinceCode < 0) {
             showShortToast("请选择省份");
             return;
         }
@@ -149,7 +169,7 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
 
     @OnClick(R.id.tv_address_area)
     public void selectArea() {
-        if (cityCode == null) {
+        if (cityCode < 0) {
             showShortToast("请选择城市");
             return;
         }
@@ -170,16 +190,8 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
     }
 
     private void showSelectDialog(final int type) {
-        if (addressEntity == null) {
-            showShortToast("数据为空");
-        } else {
-            showShortToast("有数据");
-        }
+        selectedStr = "";
         List<String> data = new ArrayList<>();
-//        data.add("111");
-//        data.add("111");
-//        data.add("111");
-
         if (type == 0) {
             for (AddressEntity.ProvinceEntity province : addressEntity.getData()) {
                 data.add(province.getName());
@@ -199,10 +211,16 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
             public void onDismiss(DialogInterface dialog) {
                 if (type == 0) {
                     provinceCode = selectedPosition;
+                    selectedProvince = selectedStr;
+                    mTextProvince.setText(selectedProvince);
                 } else if (type == 1) {
                     cityCode = selectedPosition;
+                    selectedCity = selectedStr;
+                    mTextCity.setText(selectedCity);
                 } else if (type == 2) {
                     areaCode = selectedPosition;
+                    selectedArea = selectedStr;
+                    mTextArea.setText(selectedArea);
                 }
             }
         });
@@ -210,6 +228,7 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
             addressDialog.show();
         }
     }
+
 
     public class AddressCell extends RecyclerView.ViewHolder {
 
@@ -243,7 +262,7 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
         @Override
         public void onBindViewHolder(AddressCell holder, final int position) {
 
-            String name = data.get(position);
+            final String name = data.get(position);
             if (!TextUtils.isEmpty(name)) {
                 holder.name.setText(name);
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -251,6 +270,7 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
                     public void onClick(View v) {
                         addressDialog.dismiss();
                         selectedPosition = position;
+                        selectedStr = name;
                     }
                 });
             }
@@ -293,11 +313,12 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
                             if (TextUtils.isEmpty(mDetail)) {
                                 showShortToast("请填写详细地址");
                             } else {
+                                address = mDetail;
                                 UserInfoBody body = new UserInfoBody();
                                 body.setAddress(address);
                                 body.setAddressCode(addressCode);
+                                showShortToast("....." + address + ",,,,,," + addressCode);
                                 mAddressPresenter.saveAddress(body);
-
                             }
                         }
                     }
@@ -328,6 +349,7 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
 
     @Override
     public void saveAddressSuccess(String message) {
+        showShortToast(message);
         String result = mProvince + mCity + mArea + mDetail;
         Intent intent = new Intent();
         intent.putExtra(ADDRESS_RESULT, result);
@@ -336,37 +358,32 @@ public class AddressActivity extends AppbarActivity implements AddressContract.V
     }
 
     @Override
-    public void showReachTheLastPageNotice(String message) {
-
-    }
-
-    @Override
     public void showLoading(String message) {
-
+        showProgressDialog("", message, null);
     }
 
     @Override
     public void showNetworkError(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void showServerError(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void showEmptyView(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void showToast(String message) {
-
+        showShortToast(message);
     }
 
     @Override
     public void hideLoading() {
-
+        dismissProgressDialog();
     }
 }
