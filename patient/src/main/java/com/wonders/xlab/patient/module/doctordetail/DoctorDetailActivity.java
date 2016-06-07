@@ -15,7 +15,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -376,10 +375,6 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
         if (requestCode == REQUEST_CODE_PAYMENT) {
             if (resultCode == Activity.RESULT_OK) {
                 String result = data.getExtras().getString("pay_result");
-                String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
-                String extraMsg = data.getExtras().getString("extra_msg"); // 错误信息
-                Log.d("DoctorDetailActivity", errorMsg);
-                Log.d("DoctorDetailActivity", extraMsg);
             /* 处理返回值
              * "success" - 支付成功
              * "fail"    - 支付失败
