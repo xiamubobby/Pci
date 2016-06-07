@@ -68,7 +68,7 @@ public class RegisterPresenter extends BasePresenter implements RegisterPresente
             public void onRegisterSuccess(RegisterEntity entity) {
                 //TODO 保存注册信息
                 RegisterEntity.RetValuesEntity retValues = entity.getRet_values();
-                AIManager.getInstance().savePatientInfo(retValues.getId(),retValues.getTel(),retValues.getAvatarUrl(),retValues.getName());
+                AIManager.getInstance().savePatientInfo(retValues.getId(),retValues.getTel(),retValues.getAvatarUrl(),retValues.getName(),"","");
                 mListener.hideLoading();
                 mListener.onRegisterSuccess("注册成功");
             }

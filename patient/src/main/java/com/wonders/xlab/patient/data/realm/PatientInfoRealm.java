@@ -8,6 +8,8 @@ import io.realm.RealmObject;
 public class PatientInfoRealm extends RealmObject {
     private String patientId;
     private String patientName;
+    private String patientSex;
+    private String patientAge;
     private String patientPortraitUrl;
     private String patientPhoneNumber;
 
@@ -25,6 +27,22 @@ public class PatientInfoRealm extends RealmObject {
 
     public void setPatientName(String patientName) {
         this.patientName = patientName;
+    }
+
+    public String getPatientSex() {
+        return patientSex;
+    }
+
+    public void setPatientSex(String patientSex) {
+        this.patientSex = patientSex;
+    }
+
+    public String getPatientAge() {
+        return patientAge;
+    }
+
+    public void setPatientAge(String patientAge) {
+        this.patientAge = patientAge;
     }
 
     public String getPatientPortraitUrl() {

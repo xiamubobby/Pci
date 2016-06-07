@@ -142,4 +142,15 @@
     <string name="address_hint_city">市</string>
     <string name="address_hint_area">区</string>
     <string name="address_hint_detail">请输入详细地址</string>
+
+    <string name="about_us_sina">微博服务号：</string>
+    <string name="about_us_sina_name">全程心管家</string>
+    <string name="about_us_wechat">微信服务号：</string>
+    <string name="about_us_wechat_name">全程心管家</string>
+    <string name="about_us_organization">全程心管家介绍</string>
+    <string name="about_us_organization_introduce">全程心管家是由万达全程健康打造的一款冠心病支架术后康复管理平台，旨在帮助每一位冠心病支架术患者科学安排日常生活作息，提高生活质量。我们的医生团队由多家医院心内科专家医生，全程健康医生，健康护理师等组成。您的每一项身体数据都将由专业团队持续监控。医生的每一条专业建议将直接发送到您的手机中。</string>
+    <string name="about_us_app">APP产品介绍</string>
+    <string name="about_us_app_introduce">全程心管家是一款心脏支架术后自我管理的app，不仅可以为支架术后患者提供在线医生咨询，护理服务，还能实时监控数据指标。通过互联网+实现了主治医生与患者点对点沟通，解决了患者在家无人照看，无法管理的难题，真正的实现了患者在家自我监测，自我管理。</string>
+
+
 </resources>

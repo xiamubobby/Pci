@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by hua on 16/3/14.
  */
-public class MyDoctorItemBean extends BaseObservable{
+public class MyDoctorItemBean extends BaseObservable {
     public final static long TYPE_IN_SERVICE = 0;
     public final static long TYPE_OUT_OF_SERVICE = 1;
 
@@ -26,7 +26,7 @@ public class MyDoctorItemBean extends BaseObservable{
     private String imGroupId;
     /**
      * 因为这个type要用与{@link RecyclerView.Adapter}的分类HeaderId，所以必须要定义成long
-     *
+     * <p/>
      * {@link #TYPE_IN_SERVICE}：正在服务
      * {@link #TYPE_OUT_OF_SERVICE}：历史记录
      */
@@ -41,6 +41,10 @@ public class MyDoctorItemBean extends BaseObservable{
      * 最新一条聊天记录
      */
     private String latestChatMessage;
+
+    private String hospitalName;
+
+    private String deadline;
 
     public List<String> getPortraitUrl() {
         return portraitUrl;
@@ -110,5 +114,21 @@ public class MyDoctorItemBean extends BaseObservable{
 
     public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
+    }
+
+    public String getHospitalName() {
+        return hospitalName;
+    }
+
+    public void setHospitalName(String hospitalName) {
+        this.hospitalName = hospitalName;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 }

@@ -117,6 +117,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterC
                     intent.putExtra(ChatRoomActivity.EXTRA_IM_GROUP_ID, mMyDoctorRVAdapter.getBean(position).getImGroupId());
                     intent.putExtra(ChatRoomActivity.EXTRA_GROUP_NAME, mMyDoctorRVAdapter.getBean(position).getDoctorGroupName());
                     intent.putExtra(ChatRoomActivity.EXTRA_CAN_CHAT, MyDoctorItemBean.TYPE_IN_SERVICE == mMyDoctorRVAdapter.getBean(position).getType());
+                    intent.putExtra(ChatRoomActivity.EXTRA_DEADLINE,mMyDoctorRVAdapter.getBean(position).getDeadline());
                     startActivity(intent);
                 }
             });

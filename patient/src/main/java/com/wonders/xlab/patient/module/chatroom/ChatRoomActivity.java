@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
@@ -55,13 +56,19 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
      */
     public final static String EXTRA_CAN_CHAT = "canChat";
 
+    public final static String EXTRA_DEADLINE = "deadline";
+
     private String ownerId;
     private String imGroupId;
     private String groupName;
     private boolean canChat;
+    private String deadline;
 
     @Bind(R.id.rl_chat_room_deadline)
     RelativeLayout mRlChatRoomDeadline;
+
+    @Bind(R.id.tv_chat_room_deadline)
+    TextView mTvChatRoomDeadline;
 
     @Bind(R.id.rl_chat_room_input_area)
     RelativeLayout mRlChatRoomInputArea;
@@ -117,6 +124,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         }
         groupName = intent.getStringExtra(EXTRA_GROUP_NAME);
         canChat = intent.getBooleanExtra(EXTRA_CAN_CHAT, false);
+        deadline = intent.getStringExtra(EXTRA_DEADLINE);
 
         //如果有的话，移除通知栏对应的通知，以groupId为通知id
         NotifyUtil.cancel(this, (int) Long.parseLong(imGroupId));
@@ -189,9 +197,12 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         if (canChat) {
             mRlChatRoomInputArea.setVisibility(View.VISIBLE);
             mBtnChatRoomBuyAgain.setVisibility(View.GONE);
+            mRlChatRoomDeadline.setVisibility(View.VISIBLE);
+            mTvChatRoomDeadline.setText("您的服务到期时间为" + deadline);
         } else {
             mRlChatRoomInputArea.setVisibility(View.GONE);
             mBtnChatRoomBuyAgain.setVisibility(View.VISIBLE);
+            mRlChatRoomDeadline.setVisibility(View.GONE);
         }
     }
 

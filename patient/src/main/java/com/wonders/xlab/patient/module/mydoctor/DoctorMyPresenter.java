@@ -1,11 +1,15 @@
 package com.wonders.xlab.patient.module.mydoctor;
 
+import android.text.TextUtils;
+
 import com.wonders.xlab.patient.module.mydoctor.adapter.MyDoctorItemBean;
 import com.wonders.xlab.patient.mvp.entity.DoctorMyEntity;
 import com.wonders.xlab.patient.mvp.model.DoctorMyModel;
 import com.wonders.xlab.patient.mvp.model.DoctorMyModelContract;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -37,7 +41,7 @@ public class DoctorMyPresenter extends BasePagePresenter implements DoctorMyPres
             mViewListener.showReachTheLastPageNotice("");
             return;
         }
-        mDoctorMyModel.getMyDoctors(patientId, getNextPageIndex(), DEFAULT_PAGE_SIZE,this);
+        mDoctorMyModel.getMyDoctors(patientId, getNextPageIndex(), DEFAULT_PAGE_SIZE, this);
     }
 
     @Override
@@ -48,7 +52,7 @@ public class DoctorMyPresenter extends BasePagePresenter implements DoctorMyPres
         if (null == serviceFalse) {
             return;
         }
-        updatePageInfo(serviceFalse.getNumber(),serviceFalse.isFirst(),serviceFalse.isLast());
+        updatePageInfo(serviceFalse.getNumber(), serviceFalse.isFirst(), serviceFalse.isLast());
 
         ArrayList<MyDoctorItemBean> doctorItemBeanArrayList = new ArrayList<>();
 
@@ -58,6 +62,18 @@ public class DoctorMyPresenter extends BasePagePresenter implements DoctorMyPres
             itemBean.setType(MyDoctorItemBean.TYPE_IN_SERVICE);
             itemBean.setOwnerId(entity.getOwnerId());
             itemBean.setImGroupId(entity.getImGroupId());
+            itemBean.setHospitalName(entity.getHospitalName());
+            String deadline = "";
+            if (!TextUtils.isEmpty(entity.getExpirationTime())) {
+                long dTime = Long.parseLong(entity.getExpirationTime());
+                Date date = new Date(dTime);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                deadline = format.format(date);
+            } else {
+                deadline = "无期限";
+            }
+
+            itemBean.setDeadline(deadline);
             itemBean.setDoctorGroupName(entity.getName());
             itemBean.setLatestChatMessage(entity.getContent());
             itemBean.setTimeStr(entity.getTimeExp());
@@ -73,6 +89,18 @@ public class DoctorMyPresenter extends BasePagePresenter implements DoctorMyPres
             itemBean.setType(MyDoctorItemBean.TYPE_OUT_OF_SERVICE);
             itemBean.setImGroupId(entity.getImGroupId());
             itemBean.setOwnerId(entity.getOwnerId());
+            itemBean.setHospitalName(entity.getHospitalName());
+            String deadline = "";
+            if (!TextUtils.isEmpty(entity.getExpirationTime())) {
+                long dTime = Long.parseLong(entity.getExpirationTime());
+                Date date = new Date(dTime);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                deadline = format.format(date);
+            } else {
+                deadline = "无期限";
+            }
+
+            itemBean.setDeadline(deadline);
             itemBean.setDoctorGroupName(entity.getName());
             itemBean.setLatestChatMessage(entity.getContent());
             itemBean.setTimeStr(entity.getTimeExp());
@@ -98,6 +126,6 @@ public class DoctorMyPresenter extends BasePagePresenter implements DoctorMyPres
 
     @Override
     public void onReceiveFailed(int code, String message) {
-        showError(mViewListener,code,message);
+        showError(mViewListener, code, message);
     }
 }

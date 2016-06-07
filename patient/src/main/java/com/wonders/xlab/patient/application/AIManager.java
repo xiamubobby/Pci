@@ -93,11 +93,29 @@ public class AIManager {
         return patientInfo.getPatientName();
     }
 
-    public void savePatientInfo(String patientId, String tel, String portraitUrl, String patientName) {
+    public String getPatientSex() {
+        PatientInfoRealm patientInfo = getPatientInfo();
+        if (null == patientInfo) {
+            return "";
+        }
+        return patientInfo.getPatientSex();
+    }
+
+    public String getPatientAge() {
+        PatientInfoRealm patientInfo = getPatientInfo();
+        if (null == patientInfo) {
+            return "";
+        }
+        return patientInfo.getPatientAge();
+    }
+
+    public void savePatientInfo(String patientId, String tel, String portraitUrl, String patientName, String sex, String age) {
         XApplication.realm.beginTransaction();
         PatientInfoRealm patientInfoRealm = XApplication.realm.createObject(PatientInfoRealm.class);
         patientInfoRealm.setPatientId(patientId);
         patientInfoRealm.setPatientName(patientName);
+        patientInfoRealm.setPatientSex(sex);
+        patientInfoRealm.setPatientAge(age);
         patientInfoRealm.setPatientPhoneNumber(tel);
         patientInfoRealm.setPatientPortraitUrl(portraitUrl);
         XApplication.realm.commitTransaction();
