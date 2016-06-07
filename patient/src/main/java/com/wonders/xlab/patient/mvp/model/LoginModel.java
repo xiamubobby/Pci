@@ -26,6 +26,7 @@ public class LoginModel extends PatientBaseModel implements LoginModelContract.A
     /**
      * 注入
      * 为避免人为的手动创建对象，构造函数不设为public
+     *
      * @param loginAPI
      */
     @Inject
@@ -50,7 +51,7 @@ public class LoginModel extends PatientBaseModel implements LoginModelContract.A
                 /**
                  * save user info
                  */
-                AIManager.getInstance().savePatientInfo(retValues.getId(), retValues.getTel(), retValues.getAvatarUrl(), retValues.getName());
+                AIManager.getInstance().savePatientInfo(retValues.getId(), retValues.getTel(), retValues.getAvatarUrl(), retValues.getName(), retValues.getSex(), retValues.getAge());
 
                 callback.loginSuccess();
             }

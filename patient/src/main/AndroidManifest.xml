@@ -319,6 +319,18 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
+            android:name=".module.me.hospital.HospitalActivity"
+            android:label="@string/title_activity_hospital"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".module.me.about.AboutUsActivity"
+            android:label="@string/title_activity_hospital"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
             android:name=".module.auth.authorize.crop.CropActivity"
             android:label="@string/title_activity_crop"
             android:screenOrientation="portrait"

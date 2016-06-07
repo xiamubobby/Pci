@@ -175,6 +175,8 @@ public class DoctorMyEntity extends BaseEntity {
             public static class ContentEntity {
                 private String ownerId;
                 private String imGroupId;
+                private String hospitalName;
+                private String expirationTime;
                 private String name;
                 private String content;
                 private String timeExp;
@@ -186,6 +188,22 @@ public class DoctorMyEntity extends BaseEntity {
 
                 public void setImGroupId(String imGroupId) {
                     this.imGroupId = imGroupId;
+                }
+
+                public String getHospitalName() {
+                    return hospitalName;
+                }
+
+                public void setHospitalName(String hospitalName) {
+                    this.hospitalName = hospitalName;
+                }
+
+                public String getExpirationTime() {
+                    return expirationTime;
+                }
+
+                public void setExpirationTime(String expirationTime) {
+                    this.expirationTime = expirationTime;
                 }
 
                 public String getName() {
@@ -233,6 +251,8 @@ public class DoctorMyEntity extends BaseEntity {
         public static class ServiceTrueEntity {
             private String imGroupId;
             private String ownerId;
+            private String hospitalName;
+            private String expirationTime;
             private String name;
             private String content;
             private String timeExp;
@@ -244,6 +264,22 @@ public class DoctorMyEntity extends BaseEntity {
 
             public void setImGroupId(String imGroupId) {
                 this.imGroupId = imGroupId;
+            }
+
+            public String getHospitalName() {
+                return hospitalName;
+            }
+
+            public void setHospitalName(String hospitalName) {
+                this.hospitalName = hospitalName;
+            }
+
+            public String getExpirationTime() {
+                return expirationTime;
+            }
+
+            public void setExpirationTime(String expirationTime) {
+                this.expirationTime = expirationTime;
             }
 
             public String getName() {

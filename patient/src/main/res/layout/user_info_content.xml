@@ -54,12 +54,93 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:text="姓名"
+                android:textColor="@color/text_color_primary_black"
+                android:textSize="@dimen/text_size_middle" />
+
+            <TextView
+                android:id="@+id/tv_user_info_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
+                android:hint="@string/user_info_hint_nop"
+                android:singleLine="true"
+                android:textColor="@color/text_color_primary_black"
+                android:textSize="@dimen/text_size_middle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?listPreferredItemHeightSmall"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/item_interval_middle"
+            android:paddingRight="@dimen/item_interval_middle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="性别"
+                android:textColor="@color/text_color_primary_black"
+                android:textSize="@dimen/text_size_middle" />
+
+            <TextView
+                android:id="@+id/tv_user_info_sex"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
+                android:hint="@string/user_info_hint_nop"
+                android:singleLine="true"
+                android:textColor="@color/text_color_primary_black"
+                android:textSize="@dimen/text_size_middle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?listPreferredItemHeightSmall"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/item_interval_middle"
+            android:paddingRight="@dimen/item_interval_middle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="年龄"
+                android:textColor="@color/text_color_primary_black"
+                android:textSize="@dimen/text_size_middle" />
+
+            <TextView
+                android:id="@+id/tv_user_info_age"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right|center_vertical"
+                android:hint="@string/user_info_hint_nop"
+                android:singleLine="true"
+                android:textColor="@color/text_color_primary_black"
+                android:textSize="@dimen/text_size_middle" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?listPreferredItemHeightSmall"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/item_interval_middle"
+            android:paddingRight="@dimen/item_interval_middle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
                 android:text="手术医院"
                 android:textColor="@color/text_color_primary_black"
                 android:textSize="@dimen/text_size_middle" />
 
             <TextView
-                android:id="@+id/textViewHospital"
+                android:id="@+id/tv_user_info_hospital"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="right|center_vertical"

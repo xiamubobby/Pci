@@ -1,11 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:divider="@drawable/shape_line_divider_vertical"
-              android:orientation="vertical"
-              android:showDividers="middle"
-              tools:context=".module.me.MeFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:divider="@drawable/shape_line_divider_vertical"
+    android:orientation="vertical"
+    android:showDividers="middle"
+    tools:context=".module.me.MeFragment">
 
     <RelativeLayout
         android:id="@+id/rl_me_user_info"
@@ -24,7 +24,7 @@
             android:id="@+id/iv_me_portrait"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/tv_me_name"
@@ -33,21 +33,37 @@
             android:layout_marginLeft="@dimen/item_interval_middle"
             android:layout_toRightOf="@+id/iv_me_portrait"
             android:textColor="@color/text_color_primary_black"
-            android:textSize="@dimen/text_size_large"/>
+            android:textSize="@dimen/text_size_large" />
 
-        <TextView
-            android:id="@+id/tv_me_tel"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_me_name"
             android:layout_marginLeft="@dimen/item_interval_middle"
             android:layout_marginTop="@dimen/item_interval_small"
             android:layout_toRightOf="@+id/iv_me_portrait"
-            android:textColor="@color/text_color_primary_gray"
-            android:textSize="@dimen/text_size_middle"/>
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_me_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color_primary_gray"
+                android:textSize="@dimen/text_size_middle" />
+
+            <TextView
+                android:id="@+id/tv_me_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/item_interval_small"
+                android:textColor="@color/text_color_primary_gray"
+                android:textSize="@dimen/text_size_middle" />
+        </LinearLayout>
+
+
     </RelativeLayout>
 
-    <include layout="@layout/divider_vertical_large"/>
+    <include layout="@layout/divider_vertical_large" />
 
     <TextView
         android:layout_width="match_parent"
@@ -60,7 +76,7 @@
         android:text="个人资料"
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <TextView
         android:layout_width="match_parent"
@@ -73,7 +89,7 @@
         android:text="消息"
         android:textColor="@color/text_color_primary_gray"
         android:textSize="@dimen/text_size_middle"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_me_order"
@@ -85,7 +101,8 @@
         android:paddingRight="@dimen/item_interval_middle"
         android:text="@string/me_my_order"
         android:textColor="@color/text_color_primary_gray"
-        android:textSize="@dimen/text_size_middle"/>
+        android:textSize="@dimen/text_size_middle" />
+
 
     <TextView
         android:id="@+id/tv_me_setting"
@@ -97,9 +114,34 @@
         android:paddingRight="@dimen/item_interval_middle"
         android:text="@string/me_setting"
         android:textColor="@color/text_color_primary_gray"
-        android:textSize="@dimen/text_size_middle"/>
+        android:textSize="@dimen/text_size_middle" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/listPreferredItemHeightSmall"
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/item_interval_middle"
+        android:paddingRight="@dimen/item_interval_middle">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="客服热线"
+            android:textColor="@color/text_color_primary_gray"
+            android:textSize="@dimen/text_size_middle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="400-112-1881"
+            android:textColor="@color/text_color_primary_gray"
+            android:textSize="@dimen/text_size_middle" />
+    </RelativeLayout>
 
     <TextView
+        android:id="@+id/tv_me_about_us"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
@@ -107,9 +149,8 @@
         android:minHeight="@dimen/item_height_min"
         android:paddingLeft="@dimen/item_interval_middle"
         android:paddingRight="@dimen/item_interval_middle"
-        android:text="关于"
+        android:text="关于我们"
         android:textColor="@color/text_color_primary_gray"
-        android:textSize="@dimen/text_size_middle"
-        android:visibility="gone"/>
+        android:textSize="@dimen/text_size_middle" />
 
 </LinearLayout>
