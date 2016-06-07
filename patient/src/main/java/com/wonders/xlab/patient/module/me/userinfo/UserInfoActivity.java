@@ -57,11 +57,11 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
     ImageView mIvPortrait;
     @Bind(R.id.tv_user_info_name)
     TextView mTextViewName;
-    @Bind(R.id.tv_user_info_name)
+    @Bind(R.id.tv_user_info_sex)
     TextView mTextViewSex;
-    @Bind(R.id.tv_user_info_name)
+    @Bind(R.id.tv_user_info_age)
     TextView mTextViewAge;
-    @Bind(R.id.tv_user_info_history)
+    @Bind(R.id.tv_user_info_hospital)
     TextView mTextViewHospital;
     @Bind(R.id.tv_user_info_doctor)
     TextView mTvUserInfoDoctor;
@@ -99,7 +99,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         mPresenter = DaggerUserInfoComponent.builder()
-                .applicationComponent(((XApplication) getApplication()).getComponent())
+                .applicationComponent(XApplication.getComponent())
                 .userInfoModule(new UserInfoModule(this))
                 .build()
                 .getUserInfoPresenter();

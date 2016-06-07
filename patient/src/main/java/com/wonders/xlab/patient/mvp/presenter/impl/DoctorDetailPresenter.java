@@ -143,7 +143,7 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
         }
         if (TextUtils.isEmpty(charge)) {
             mDoctorDetailListener.hideLoading();
-            mDoctorDetailListener.showToast("购买成功");
+            mDoctorDetailListener.showToast(paymentEntity.getMessage());
             mDoctorDetailListener.refreshView();
         } else {
             mDoctorDetailListener.hideLoading();

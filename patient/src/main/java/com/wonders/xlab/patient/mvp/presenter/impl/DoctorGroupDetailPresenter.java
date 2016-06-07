@@ -168,7 +168,7 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
         }
         if (TextUtils.isEmpty(charge)) {
             mDoctorDetailListener.hideLoading();
-            mDoctorDetailListener.showToast("购买成功");
+            mDoctorDetailListener.showToast(paymentEntity.getMessage());
             mDoctorDetailListener.refreshView();
         } else {
             mDoctorDetailListener.hideLoading();
