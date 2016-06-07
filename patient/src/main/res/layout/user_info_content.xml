@@ -47,6 +47,7 @@
             android:layout_height="?listPreferredItemHeightSmall"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:visibility="gone"
             android:paddingLeft="@dimen/item_interval_middle"
             android:paddingRight="@dimen/item_interval_middle">
 

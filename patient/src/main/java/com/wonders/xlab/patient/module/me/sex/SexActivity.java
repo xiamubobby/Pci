@@ -51,10 +51,10 @@ public class SexActivity extends AppbarActivity {
     private void initBeanList() {
         sexBeanList = new ArrayList<>();
         SexBean female = new SexBean();
-        female.setId("0");
+        female.setId("Female");
         female.setName("女");
         SexBean male = new SexBean();
-        male.setId("1");
+        male.setId("Male");
         male.setName("男");
         sexBeanList.add(female);
         sexBeanList.add(male);

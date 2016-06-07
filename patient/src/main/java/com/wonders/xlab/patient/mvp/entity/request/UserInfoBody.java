@@ -14,6 +14,8 @@ public class UserInfoBody {
      * caseHistory : 病史
      */
 
+    private int age;
+    private String sex;
     private String addressCode;
     private String address;
     private int bracketNum;
@@ -21,6 +23,22 @@ public class UserInfoBody {
     private String surgeon;
     private String hospitalId;
     private String caseHistory;
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
     public String getAddressCode() {
         return addressCode;
