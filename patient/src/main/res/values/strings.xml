@@ -108,8 +108,10 @@
     <string name="title_activity_text_input">请输入</string>
     <string name="hint_please_text_something">请输入</string>
     <string name="title_activity_health_record">健康档案</string>
-    <string name="text_authorize_notice">您还未认证，请认证后查看您的健康档案数据。\n点击屏幕下方的实名认证完成认证。\n在未认证的状态下您可以点击补充上传图片和医生进行互动。</string>
-    <string name="health_record_btn_authorize">实名认证</string>
+    <string name="text_un_authorize_notice">您还未认证，请认证后查看您的健康档案数据。\n点击屏幕下方的实名认证完成认证。\n在未认证的状态下您可以点击补充上传图片和医生进行互动。</string>
+    <string name="text_authorized_notice">亲爱的用户您已认证成功。现在您可以在下方查看自己的健康数据了。</string>
+    <string name="health_record_btn_un_authorize">实名认证</string>
+    <string name="health_record_btn_authorized">已认证</string>
     <string name="title_activity_medicine_remind_edit">新增提醒</string>
     <string name="title_activity_medicine_search">搜索药品</string>
     <string name="medicine_remind_edit_end_date_default">长期</string>
@@ -135,6 +137,8 @@
     <string name="authorize_label_id_image">身份证图片</string>
     <string name="authorize_label_example">示例参考</string>
     <string name="title_activity_hospital">选择医院</string>
+    <string name="title_activity_about">关于我们</string>
+    <string name="title_activity_sex">选择性别</string>
     <string name="title_activity_crop">裁剪</string>
     <string name="user_info_hint_nop">暂无</string>
 
@@ -143,6 +147,7 @@
     <string name="address_hint_area">区</string>
     <string name="address_hint_detail">请输入详细地址</string>
 
+    <string name="about_us_app_version">全程心管家v%s</string>
     <string name="about_us_sina">微博服务号：</string>
     <string name="about_us_sina_name">全程心管家</string>
     <string name="about_us_wechat">微信服务号：</string>

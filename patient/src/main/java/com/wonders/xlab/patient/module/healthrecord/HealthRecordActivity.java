@@ -1,5 +1,6 @@
 package com.wonders.xlab.patient.module.healthrecord;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -8,10 +9,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.auth.authorize.AuthorizeActivity;
@@ -24,6 +28,7 @@ import com.wonders.xlab.patient.module.home.adapter.bean.HomeItemBean;
 import com.wonders.xlab.patient.module.medicalpicture.MedicalPictureActivity;
 import com.wonders.xlab.patient.mvp.presenter.HealthRecordPresenter;
 import com.wonders.xlab.patient.mvp.presenter.HealthRecordPresenterContract;
+import com.wonders.xlab.patient.util.ImageViewManager;
 
 import java.util.ArrayList;
 
@@ -31,6 +36,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+@SuppressLint("NewApi")
 public class HealthRecordActivity extends AppbarActivity implements HealthRecordPresenterContract.ViewListener {
 
     @Bind(R.id.recycler_view_health_record)
@@ -39,10 +45,17 @@ public class HealthRecordActivity extends AppbarActivity implements HealthRecord
     Button mBtnAuthorize;
     @Bind(R.id.tv_health_record_notice)
     TextView mTvNotice;
+    @Bind(R.id.rl_health_record_tips)
+    RelativeLayout mRlTips;
+    @Bind(R.id.iv_health_record_portrait)
+    ImageView mIvPortrait;
+
 
     private HomeRVAdapter homeRVAdapter;
 
     private HealthRecordPresenter mHealthRecordPresenter;
+
+    private boolean canAuthorize = true;
 
     @Override
     public int getContentLayout() {
@@ -53,6 +66,8 @@ public class HealthRecordActivity extends AppbarActivity implements HealthRecord
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+
+        ImageViewManager.setImageViewWithUrl(this, mIvPortrait, AIManager.getInstance().getPatientPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         setupBottomFunctionView();
@@ -64,12 +79,15 @@ public class HealthRecordActivity extends AppbarActivity implements HealthRecord
                 .getHealthRecordPresenter();
         addPresenter(mHealthRecordPresenter);
         mHealthRecordPresenter.getValidateResult();
+
     }
 
     @OnClick(R.id.btn_health_record_authorize)
     public void authorize() {
-        Intent intent = new Intent(HealthRecordActivity.this, AuthorizeActivity.class);
-        startActivity(intent);
+        if (canAuthorize){
+            Intent intent = new Intent(HealthRecordActivity.this, AuthorizeActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void setupBottomFunctionView() {
@@ -154,10 +172,20 @@ public class HealthRecordActivity extends AppbarActivity implements HealthRecord
         showShortToast(message);
     }
 
+
     @Override
     public void showValidateButton(boolean show) {
-        mBtnAuthorize.setVisibility(show ? View.VISIBLE : View.GONE);
+        if (show) {
+            canAuthorize = true;
+            mBtnAuthorize.setText(getString(R.string.health_record_btn_un_authorize));
+            mBtnAuthorize.setBackground(getDrawable(R.drawable.selector_confirm_button_red));
+        } else {
+            canAuthorize = false;
+            mBtnAuthorize.setText(getString(R.string.health_record_btn_authorized));
+            mBtnAuthorize.setBackground(getDrawable(R.drawable.selector_confirm_button_blue));
+        }
         mTvNotice.setVisibility(show ? View.VISIBLE : View.GONE);
+        mRlTips.setVisibility(show ? View.GONE : View.VISIBLE);
 
        /* if (show) {
             int measuredHeight = mTvNotice.getMeasuredHeight();

@@ -36,11 +36,7 @@ public class SettingActivity extends AppbarActivity {
                 .commitAllowingStateLoss();
     }
 
-    @OnClick(R.id.btn_setting_exit)
-    public void exit() {
-        OttoManager.post(new ForceExitOtto());
-        finish();
-    }
+
 
     @Override
     public void onDestroy() {

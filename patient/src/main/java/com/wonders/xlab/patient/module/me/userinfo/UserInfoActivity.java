@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
@@ -82,7 +83,6 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
     private String address;
     private MyAddressUtil addressUtil;
     private String sexId;
-    private String
     private List<String> mTmpImageFilePath = new ArrayList<>();
     /**
      * 保存选择的图片
@@ -151,8 +151,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
     public void goToCHooseSex() {
         startActivityForResult(new Intent(this, SexActivity.class), REQUEST_CODE_SEX);
     }
-
-    @OnClick(R.id.tv_user_info_number)
+    @OnClick(R.id.tv_user_info_age)
     public void editAge() {
         goToTextInputActivity(mTvUserInfoNumber.getText().toString(), "请输入年龄", "年龄", REQUEST_CODE_AGE, true);
     }
@@ -272,7 +271,9 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
 
                 UserInfoBody body = new UserInfoBody();
                 body.setSex(sexId);
-                body.setAge(Integer.parseInt(mTextViewAge.getText().toString()));
+                if (!TextUtils.isEmpty(mTextViewAge.getText().toString())){
+                    body.setAge(Integer.parseInt(mTextViewAge.getText().toString()));
+                }
                 body.setAddress(mTvUserInfoAddress.getText().toString());
                 body.setLastOperationDate(mCalendarSurgeryDate.getTimeInMillis());
                 body.setBracketNum(Integer.parseInt(mTvUserInfoNumber.getText().toString()));
