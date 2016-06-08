@@ -72,7 +72,7 @@ public class MeFragment extends BaseFragment {
             mTvMeSex.setText("性别：暂无");
         }
         if (!TextUtils.isEmpty(AIManager.getInstance().getPatientSex())) {
-            mTvMeAge.setText("年龄：" + AIManager.getInstance().getPatientSex());
+            mTvMeAge.setText("年龄：" + AIManager.getInstance().getPatientAge());
         } else {
             mTvMeAge.setText("年龄：暂无");
         }

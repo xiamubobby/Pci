@@ -38,8 +38,8 @@
     <!--血压、血糖界面-->
     <string name="text_measure_date">测量日期</string>
     <string name="text_measure_time">测量时间</string>
-    <string name="text_systolic_pressure">高压</string>
-    <string name="text_diastolic_pressure">低压</string>
+    <string name="text_systolic_pressure">收缩压</string>
+    <string name="text_diastolic_pressure">舒张压</string>
     <string name="_0">0</string>
     <string name="text_heart_rate">心率</string>
     <string name="text_measure_period">测量时段</string>

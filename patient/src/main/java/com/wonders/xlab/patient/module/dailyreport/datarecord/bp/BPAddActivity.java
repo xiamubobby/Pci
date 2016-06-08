@@ -76,8 +76,8 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
     }
 
     private void initView() {
-        mTvAddBpDate.setText(DateUtil.format(mCalendar.getTimeInMillis(),"yyyy.MM.dd"));
-        mTvAddBpTime.setText(DateUtil.format(mCalendar.getTimeInMillis(),"HH:mm"));
+        mTvAddBpDate.setText(DateUtil.format(mCalendar.getTimeInMillis(), "yyyy.MM.dd"));
+        mTvAddBpTime.setText(DateUtil.format(mCalendar.getTimeInMillis(), "HH:mm"));
     }
 
     private void save() {
@@ -92,7 +92,10 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
         if (TextUtils.isEmpty(systolicPressure)) {
             showShortToast("请输入高压");
             return;
-        }else if(TextUtils.isDigitsOnly(systolicPressure) && Integer.parseInt(systolicPressure) == 0){
+        } else if (TextUtils.isDigitsOnly(systolicPressure) && Integer.parseInt(systolicPressure) == 0) {
+            showShortToast("请输入正确的高压值");
+            return;
+        } else if (Integer.parseInt(systolicPressure) > 300 && Integer.parseInt(systolicPressure) < 50) {
             showShortToast("请输入正确的高压值");
             return;
         }
@@ -100,7 +103,10 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
         if (TextUtils.isEmpty(diastolicPressure)) {
             showShortToast("请输入低压");
             return;
-        }else if(TextUtils.isDigitsOnly(diastolicPressure) && Integer.parseInt(diastolicPressure) == 0){
+        } else if (TextUtils.isDigitsOnly(diastolicPressure) && Integer.parseInt(diastolicPressure) == 0) {
+            showShortToast("请输入正确的低压值");
+            return;
+        } else if (Integer.parseInt(diastolicPressure) > 200 && Integer.parseInt(diastolicPressure) < 10) {
             showShortToast("请输入正确的低压值");
             return;
         }
@@ -108,7 +114,7 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
         if (TextUtils.isEmpty(heartRate)) {
             showShortToast("请输入心率");
             return;
-        }else if(TextUtils.isDigitsOnly(heartRate) && Integer.parseInt(heartRate) == 0){
+        } else if (TextUtils.isDigitsOnly(heartRate) && Integer.parseInt(heartRate) == 0) {
             showShortToast("请输入正确的心率值");
             return;
         }
@@ -121,6 +127,7 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
     }
 
     private boolean mIsToday = true;
+
     @OnClick(R.id.tv_add_bp_date)
     public void onDateClick() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this,
@@ -128,9 +135,9 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar calendar = Calendar.getInstance();
-                        calendar.set(year,monthOfYear,dayOfMonth);
+                        calendar.set(year, monthOfYear, dayOfMonth);
                         mIsToday = DateUtils.isToday(calendar.getTimeInMillis());
-                        mTvAddBpDate.setText(DateUtil.format(calendar.getTimeInMillis(),"yyyy.MM.dd"));
+                        mTvAddBpDate.setText(DateUtil.format(calendar.getTimeInMillis(), "yyyy.MM.dd"));
                     }
                 },
                 mCalendar.get(Calendar.YEAR),
@@ -164,9 +171,9 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
                                 }
                             }
                         }
-                        calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        calendar.set(Calendar.MINUTE,minute);
-                        mTvAddBpTime.setText(DateUtil.format(calendar.getTimeInMillis(),"HH:mm"));
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendar.set(Calendar.MINUTE, minute);
+                        mTvAddBpTime.setText(DateUtil.format(calendar.getTimeInMillis(), "HH:mm"));
                     }
                 },
                 currentHour,
@@ -229,7 +236,7 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_save,menu);
+        getMenuInflater().inflate(R.menu.menu_save, menu);
         return true;
     }
 
@@ -248,6 +255,7 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_bp_add));
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_bp_add));

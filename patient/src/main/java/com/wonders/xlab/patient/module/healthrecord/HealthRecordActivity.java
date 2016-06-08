@@ -1,6 +1,5 @@
 package com.wonders.xlab.patient.module.healthrecord;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -36,7 +35,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-@SuppressLint("NewApi")
 public class HealthRecordActivity extends AppbarActivity implements HealthRecordPresenterContract.ViewListener {
 
     @Bind(R.id.recycler_view_health_record)
@@ -84,7 +82,7 @@ public class HealthRecordActivity extends AppbarActivity implements HealthRecord
 
     @OnClick(R.id.btn_health_record_authorize)
     public void authorize() {
-        if (canAuthorize){
+        if (canAuthorize) {
             Intent intent = new Intent(HealthRecordActivity.this, AuthorizeActivity.class);
             startActivity(intent);
         }
@@ -178,11 +176,14 @@ public class HealthRecordActivity extends AppbarActivity implements HealthRecord
         if (show) {
             canAuthorize = true;
             mBtnAuthorize.setText(getString(R.string.health_record_btn_un_authorize));
-            mBtnAuthorize.setBackground(getDrawable(R.drawable.selector_confirm_button_red));
+            mBtnAuthorize.setBackgroundResource(R.drawable.selector_confirm_button_red);
+//            mBtnAuthorize.setBackground(ContextCompat.getDrawable(this,R.drawable.selector_confirm_button_red));
+
         } else {
             canAuthorize = false;
             mBtnAuthorize.setText(getString(R.string.health_record_btn_authorized));
-            mBtnAuthorize.setBackground(getDrawable(R.drawable.selector_confirm_button_blue));
+            mBtnAuthorize.setBackgroundResource(R.drawable.selector_confirm_button_blue);
+//            mBtnAuthorize.setBackground(getDrawable(R.drawable.selector_confirm_button_blue));
         }
         mTvNotice.setVisibility(show ? View.VISIBLE : View.GONE);
         mRlTips.setVisibility(show ? View.GONE : View.VISIBLE);

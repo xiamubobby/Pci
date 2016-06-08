@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
@@ -83,6 +82,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
     private String address;
     private MyAddressUtil addressUtil;
     private String sexId;
+    private String sex;
     private List<String> mTmpImageFilePath = new ArrayList<>();
     /**
      * 保存选择的图片
@@ -117,12 +117,14 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
             timeStr = DateUtil.format(entity.getLastOperationDate(), "yyyy-MM-dd");
         }
         ImageViewManager.setImageViewWithUrl(this, mIvPortrait, AIManager.getInstance().getPatientPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
-        sexId = AIManager.getInstance().getPatientSex();
-        if (sexId.equals("Male")) {
-            mTextViewSex.setText("男");
-        } else if (sexId.equals("Female")) {
-            mTextViewSex.setText("女");
+        sex = AIManager.getInstance().getPatientSex();
+        if (sex.equals("男")) {
+            sexId = "Male";
+        } else {
+            sexId = "Female";
         }
+
+        mTextViewSex.setText(sex);
         mTextViewAge.setText(AIManager.getInstance().getPatientAge());
         address = entity.getAddress();
         addressId = entity.getAddressCode();
@@ -151,6 +153,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
     public void goToCHooseSex() {
         startActivityForResult(new Intent(this, SexActivity.class), REQUEST_CODE_SEX);
     }
+
     @OnClick(R.id.tv_user_info_age)
     public void editAge() {
         goToTextInputActivity(mTvUserInfoNumber.getText().toString(), "请输入年龄", "年龄", REQUEST_CODE_AGE, true);
@@ -235,16 +238,19 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
 
     @Override
     public void showNetworkError(String message) {
+
         showShortToast(message);
     }
 
     @Override
     public void showServerError(String message) {
+
         showShortToast(message);
     }
 
     @Override
     public void showEmptyView(String message) {
+
         showShortToast(message);
     }
 
@@ -271,9 +277,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
 
                 UserInfoBody body = new UserInfoBody();
                 body.setSex(sexId);
-                if (!TextUtils.isEmpty(mTextViewAge.getText().toString())){
-                    body.setAge(Integer.parseInt(mTextViewAge.getText().toString()));
-                }
+                body.setAge(Integer.parseInt(mTextViewAge.getText().toString()));
                 body.setAddress(mTvUserInfoAddress.getText().toString());
                 body.setLastOperationDate(mCalendarSurgeryDate.getTimeInMillis());
                 body.setBracketNum(Integer.parseInt(mTvUserInfoNumber.getText().toString()));
@@ -327,7 +331,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
             mPresenter.uploadAvater(mPickedIdPicFile);
         } else if (requestCode == REQUEST_CODE_SEX) {
             sexId = data.getStringExtra(SexActivity.EXTRA_SEX_ID);
-            String sex = data.getStringExtra(SexActivity.EXTRA_SEX_NAME);
+            sex = data.getStringExtra(SexActivity.EXTRA_SEX_NAME);
             mTextViewSex.setText(sex);
 
         } else {
@@ -335,8 +339,10 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
             switch (requestCode) {
                 case REQUEST_CODE_NAME:
                     mTextViewName.setText(result);
+                    break;
                 case REQUEST_CODE_AGE:
                     mTextViewAge.setText(result);
+                    break;
                 case REQUEST_CODE_DOCTOR:
                     mTvUserInfoDoctor.setText(result);
                     break;

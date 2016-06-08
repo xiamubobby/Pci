@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -50,7 +51,8 @@ public class MyAddressUtil {
 
     public String getFrontAddress(String addressCode) {
         frontAddress = "";
-        if (addressCode != null) {
+
+        if (!TextUtils.isEmpty(addressCode)) {
             int provinceCode = Integer.parseInt(addressCode.substring(0, 3));
             int cityCode = Integer.parseInt(addressCode.substring(3, 6));
             int areaCode = Integer.parseInt(addressCode.substring(6));

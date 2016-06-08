@@ -2,12 +2,20 @@ package com.wonders.xlab.patient.application;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.support.multidex.MultiDex;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.pingplusplus.android.PingppLog;
 import com.umeng.analytics.AnalyticsConfig;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengDialogButtonListener;
 import com.umeng.update.UmengUpdateAgent;
+import com.umeng.update.UmengUpdateListener;
+import com.umeng.update.UpdateResponse;
+import com.umeng.update.UpdateStatus;
+import com.wonders.xlab.patient.BuildConfig;
 import com.wonders.xlab.patient.di.ApplicationComponent;
 
 import io.realm.Realm;
@@ -33,7 +41,8 @@ public class XApplication extends Application {
         PingppLog.DEBUG = false;
 
         MobclickAgent.setDebugMode(false);
-        UmengUpdateAgent.setUpdateOnlyWifi(false);
+        UmengUpdateAgent.setUpdateOnlyWifi(true);
+
         AnalyticsConfig.sEncrypt = true;
         MobclickAgent.openActivityDurationTrack(false);//禁止默认的页面统计方式，这样将不会再自动统计Activity
 
