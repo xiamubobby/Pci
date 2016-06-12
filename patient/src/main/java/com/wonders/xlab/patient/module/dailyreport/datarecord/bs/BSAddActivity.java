@@ -151,6 +151,7 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
                                 hourOfDay = maxHour;
                                 if (minute > maxMinute) {
                                     minute = maxMinute;
+                                    showShortToast("不能选择大于当前的时间");
                                 }
                             }
                         }

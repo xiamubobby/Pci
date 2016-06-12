@@ -90,24 +90,24 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
 
         String systolicPressure = mEtAddBpSsy.getText().toString();
         if (TextUtils.isEmpty(systolicPressure)) {
-            showShortToast("请输入高压");
+            showShortToast("请输入收缩压");
             return;
         } else if (TextUtils.isDigitsOnly(systolicPressure) && Integer.parseInt(systolicPressure) == 0) {
-            showShortToast("请输入正确的高压值");
+            showShortToast("请输入正确的收缩压值");
             return;
         } else if (Integer.parseInt(systolicPressure) > 300 && Integer.parseInt(systolicPressure) < 50) {
-            showShortToast("请输入正确的高压值");
+            showShortToast("请输入正确的收缩压值");
             return;
         }
         String diastolicPressure = mEtAddBpSzy.getText().toString();
         if (TextUtils.isEmpty(diastolicPressure)) {
-            showShortToast("请输入低压");
+            showShortToast("请输入舒张压");
             return;
         } else if (TextUtils.isDigitsOnly(diastolicPressure) && Integer.parseInt(diastolicPressure) == 0) {
-            showShortToast("请输入正确的低压值");
+            showShortToast("请输入正确的舒张压值");
             return;
         } else if (Integer.parseInt(diastolicPressure) > 200 && Integer.parseInt(diastolicPressure) < 10) {
-            showShortToast("请输入正确的低压值");
+            showShortToast("请输入正确的舒张压值");
             return;
         }
         String heartRate = mEtAddBpRate.getText().toString();
@@ -168,6 +168,7 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
                                 hourOfDay = maxHour;
                                 if (minute > maxMinute) {
                                     minute = maxMinute;
+                                    showShortToast("不能选择大于当前的时间");
                                 }
                             }
                         }
