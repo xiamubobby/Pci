@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.module.auth.authorize;
 
 import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.AuthAPI;
+import com.wonders.xlab.patient.mvp.entity.AuthorizeValidateEntity;
 
 import java.io.File;
 
@@ -45,10 +46,10 @@ public class AuthorizeModel extends PatientBaseModel implements AuthorizeContrac
             return;
         }
 
-        request(mAuthAPI.authorize(patientIdRB, nameRB, idNoRB, builder.build()), new Callback<SimpleEntity>() {
+        request(mAuthAPI.authorize(patientIdRB, nameRB, idNoRB, builder.build()), new Callback<AuthorizeValidateEntity>() {
             @Override
-            public void onSuccess(SimpleEntity response) {
-                callback.authorizeSuccess(response.getMessage());
+            public void onSuccess(AuthorizeValidateEntity response) {
+                callback.authorizeSuccess(response);
             }
 
             @Override

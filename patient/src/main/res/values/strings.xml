@@ -110,8 +110,12 @@
     <string name="title_activity_health_record">健康档案</string>
     <string name="text_un_authorize_notice">您还未认证，请认证后查看您的健康档案数据。\n点击屏幕下方的实名认证完成认证。\n在未认证的状态下您可以点击补充上传图片和医生进行互动。</string>
     <string name="text_authorized_notice">亲爱的用户您已认证成功。现在您可以在下方查看自己的健康数据了。</string>
+    <string name="text_authorizing_notice">亲爱的用户您好，您的实名认证正在审核中，请耐心等待。</string>
+    <string name="text_authorized_fail_notice">亲爱的用户您好，您的实名认证失败，请重新填写正确资料后继续提交审核。</string>
     <string name="health_record_btn_un_authorize">实名认证</string>
     <string name="health_record_btn_authorized">已认证</string>
+    <string name="health_record_btn_authorizing">审核中</string>
+    <string name="health_record_btn_authorized_failed">重新认证</string>
     <string name="title_activity_medicine_remind_edit">新增提醒</string>
     <string name="title_activity_medicine_search">搜索药品</string>
     <string name="medicine_remind_edit_end_date_default">长期</string>

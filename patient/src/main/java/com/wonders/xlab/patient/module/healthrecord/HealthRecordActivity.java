@@ -37,14 +37,16 @@ import butterknife.OnClick;
 
 public class HealthRecordActivity extends AppbarActivity implements HealthRecordPresenterContract.ViewListener {
 
+    public static final int REQUEST_AUTHORIZE_CODE = 1 << 11;
+
     @Bind(R.id.recycler_view_health_record)
     RecyclerView mRecyclerView;
     @Bind(R.id.btn_health_record_authorize)
     Button mBtnAuthorize;
     @Bind(R.id.tv_health_record_notice)
-    TextView mTvNotice;
-    @Bind(R.id.rl_health_record_tips)
-    RelativeLayout mRlTips;
+    TextView mTvAuthorizeNotice;
+    @Bind(R.id.rl_health_record_authorized)
+    RelativeLayout mRlAuthorized;
     @Bind(R.id.iv_health_record_portrait)
     ImageView mIvPortrait;
 
@@ -84,7 +86,7 @@ public class HealthRecordActivity extends AppbarActivity implements HealthRecord
     public void authorize() {
         if (canAuthorize) {
             Intent intent = new Intent(HealthRecordActivity.this, AuthorizeActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_AUTHORIZE_CODE);
         }
     }
 
@@ -167,26 +169,13 @@ public class HealthRecordActivity extends AppbarActivity implements HealthRecord
 
     @Override
     public void showResultMessage(String message) {
-        showShortToast(message);
+
     }
 
 
     @Override
-    public void showValidateButton(boolean show) {
-        if (show) {
-            canAuthorize = true;
-            mBtnAuthorize.setText(getString(R.string.health_record_btn_un_authorize));
-            mBtnAuthorize.setBackgroundResource(R.drawable.selector_confirm_button_red);
-//            mBtnAuthorize.setBackground(ContextCompat.getDrawable(this,R.drawable.selector_confirm_button_red));
-
-        } else {
-            canAuthorize = false;
-            mBtnAuthorize.setText(getString(R.string.health_record_btn_authorized));
-            mBtnAuthorize.setBackgroundResource(R.drawable.selector_confirm_button_blue);
-//            mBtnAuthorize.setBackground(getDrawable(R.drawable.selector_confirm_button_blue));
-        }
-        mTvNotice.setVisibility(show ? View.VISIBLE : View.GONE);
-        mRlTips.setVisibility(show ? View.GONE : View.VISIBLE);
+    public void showValidateButton(int state) {
+        showStateView(state);
 
        /* if (show) {
             int measuredHeight = mTvNotice.getMeasuredHeight();
@@ -219,6 +208,46 @@ public class HealthRecordActivity extends AppbarActivity implements HealthRecord
             });
             mTvNotice.startAnimation(translateAnimation);
         }*/
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (null == data) {
+            return;
+        }
+        if (requestCode == REQUEST_AUTHORIZE_CODE) {
+            int state = data.getIntExtra(AuthorizeActivity.AUTHORIZE_STATE, 0);
+            showStateView(state);
+
+        }
+    }
+
+    private void showStateView(int state) {
+        if (state == 0) {
+            canAuthorize = true;
+            mBtnAuthorize.setText(getString(R.string.health_record_btn_un_authorize));
+            mBtnAuthorize.setBackgroundResource(R.drawable.selector_confirm_button_red);
+            mTvAuthorizeNotice.setText(getString(R.string.text_un_authorize_notice));
+            mTvAuthorizeNotice.setVisibility(View.VISIBLE);
+        } else if (state == 1) {
+            canAuthorize = false;
+            mBtnAuthorize.setText(getString(R.string.health_record_btn_authorized));
+            mBtnAuthorize.setBackgroundResource(R.drawable.selector_confirm_button_blue);
+            mRlAuthorized.setVisibility(View.VISIBLE);
+        } else if (state == 2) {
+            canAuthorize = false;
+            mBtnAuthorize.setText(getString(R.string.health_record_btn_authorizing));
+            mBtnAuthorize.setBackgroundResource(R.drawable.selector_confirm_button_blue);
+            mTvAuthorizeNotice.setText(getString(R.string.text_authorizing_notice));
+            mTvAuthorizeNotice.setVisibility(View.VISIBLE);
+        } else if (state == 3) {
+            canAuthorize = true;
+            mBtnAuthorize.setText(getString(R.string.health_record_btn_authorized_failed));
+            mBtnAuthorize.setBackgroundResource(R.drawable.selector_confirm_button_red);
+            mTvAuthorizeNotice.setText(getString(R.string.text_authorized_fail_notice));
+            mTvAuthorizeNotice.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

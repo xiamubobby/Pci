@@ -113,7 +113,9 @@
                 android:gravity="center_vertical|right"
                 android:inputType="numberDecimal"
                 android:maxLength="3"
-                android:text="0"
+                android:hint="0"
+                android:textColorHint="@color/colorAccent"
+                android:paddingRight="@dimen/item_interval_small"
                 android:singleLine="true"
                 android:textColor="@color/colorAccent"
                 android:textSize="@dimen/text_size_large"/>

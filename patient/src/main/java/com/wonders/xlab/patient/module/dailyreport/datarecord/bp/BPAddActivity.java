@@ -76,6 +76,7 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
     }
 
     private void initView() {
+
         mTvAddBpDate.setText(DateUtil.format(mCalendar.getTimeInMillis(), "yyyy.MM.dd"));
         mTvAddBpTime.setText(DateUtil.format(mCalendar.getTimeInMillis(), "HH:mm"));
     }
@@ -93,10 +94,10 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
             showShortToast("请输入收缩压");
             return;
         } else if (TextUtils.isDigitsOnly(systolicPressure) && Integer.parseInt(systolicPressure) == 0) {
-            showShortToast("请输入正确的收缩压值");
+            showShortToast("请输入正确的收缩压值(0~300)");
             return;
-        } else if (Integer.parseInt(systolicPressure) > 300 && Integer.parseInt(systolicPressure) < 50) {
-            showShortToast("请输入正确的收缩压值");
+        } else if (Integer.parseInt(systolicPressure) > 300 && Integer.parseInt(systolicPressure) < 0) {
+            showShortToast("请输入正确的收缩压值(0~300)");
             return;
         }
         String diastolicPressure = mEtAddBpSzy.getText().toString();
@@ -104,10 +105,13 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
             showShortToast("请输入舒张压");
             return;
         } else if (TextUtils.isDigitsOnly(diastolicPressure) && Integer.parseInt(diastolicPressure) == 0) {
-            showShortToast("请输入正确的舒张压值");
+            showShortToast("请输入正确的舒张压值(0~200)");
             return;
-        } else if (Integer.parseInt(diastolicPressure) > 200 && Integer.parseInt(diastolicPressure) < 10) {
-            showShortToast("请输入正确的舒张压值");
+        } else if (Integer.parseInt(diastolicPressure) > 200 || Integer.parseInt(diastolicPressure) < 0) {
+            showShortToast("请输入正确的舒张压值(0~200)");
+            return;
+        }else if (Integer.parseInt(systolicPressure) < Integer.parseInt(diastolicPressure)) {
+            showShortToast("收缩压不能小于舒张压");
             return;
         }
         String heartRate = mEtAddBpRate.getText().toString();
@@ -163,13 +167,14 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
                             int maxMinute = calendar.get(Calendar.MINUTE);
                             if (hourOfDay >= maxHour) {
                                 if (hourOfDay > maxHour) {
+                                    hourOfDay = maxHour;
                                     showShortToast("不能选择大于当前的时间");
                                 }
-                                hourOfDay = maxHour;
                                 if (minute > maxMinute) {
                                     minute = maxMinute;
                                     showShortToast("不能选择大于当前的时间");
                                 }
+
                             }
                         }
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
@@ -182,6 +187,7 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
                 true);
         dialog.show();
     }
+
 
     @Override
     public void onDestroy() {

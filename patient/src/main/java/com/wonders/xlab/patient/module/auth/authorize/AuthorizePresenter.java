@@ -2,6 +2,8 @@ package com.wonders.xlab.patient.module.auth.authorize;
 
 import android.text.TextUtils;
 
+import com.wonders.xlab.patient.mvp.entity.AuthorizeValidateEntity;
+
 import java.io.File;
 
 import javax.inject.Inject;
@@ -38,9 +40,10 @@ public class AuthorizePresenter extends BasePresenter implements AuthorizeContra
         mViewListener.showLoading("正在保存，请稍候...");
         mAuthorizeModel.authorize(patientId, name, idNo, idPic, new AuthorizeContract.Callback() {
             @Override
-            public void authorizeSuccess(String message) {
+            public void authorizeSuccess(AuthorizeValidateEntity entity) {
                 mViewListener.hideLoading();
-                mViewListener.authorizeSuccess(message);
+                mViewListener.showResultMessage(entity.getMessage());
+                mViewListener.showValidateState(entity.getRet_values());
             }
 
             @Override

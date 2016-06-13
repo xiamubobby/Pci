@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:id="@+id/rl_health_record_tips"
+            android:id="@+id/rl_health_record_authorized"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white"
@@ -36,7 +36,6 @@
                 android:scaleType="centerCrop" />
 
             <TextView
-                android:id="@+id/tv_health_record_tips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/item_interval_middle"
@@ -51,6 +50,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:padding="@dimen/item_interval_middle"
+            android:visibility="gone"
             android:text="@string/text_un_authorize_notice" />
     </LinearLayout>
 

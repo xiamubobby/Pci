@@ -160,14 +160,14 @@ public class BloodPressurePresenter extends BasePagePresenter implements IBloodP
                     for (int i = 0; i < systolicList.size(); i++) {
                         values.add(new Entry(systolicList.get(i).getValue(), i));
                     }
-                    label = "高压";
+                    label = "收缩压";
                     color = Color.parseColor("#69c88e");
                     break;
                 case 1:
                     for (int i = 0; i < diastolicList.size(); i++) {
                         values.add(new Entry(diastolicList.get(i).getValue(), i));
                     }
-                    label = "低压";
+                    label = "舒张压";
                     color = Color.parseColor("#12b9f8");
                     break;
             }
