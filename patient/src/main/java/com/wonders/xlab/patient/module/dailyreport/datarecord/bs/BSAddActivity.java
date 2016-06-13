@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.SimpleAdapter;
@@ -96,7 +95,10 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
             showShortToast("请输入血糖");
             return;
         } else if (TextUtils.isDigitsOnly(bloodSugar) && Integer.parseInt(bloodSugar) == 0) {
-            showShortToast("请输入正确的血糖值");
+            showShortToast("请输入正确的血糖值(0~50)");
+            return;
+        } else if (Integer.parseInt(bloodSugar) < 0 && Integer.parseInt(bloodSugar) > 50) {
+            showShortToast("请输入正确的血糖值(0~50)");
             return;
         }
 

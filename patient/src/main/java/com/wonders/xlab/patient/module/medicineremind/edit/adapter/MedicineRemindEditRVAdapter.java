@@ -1,6 +1,7 @@
 package com.wonders.xlab.patient.module.medicineremind.edit.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,12 +26,17 @@ public class MedicineRemindEditRVAdapter extends SimpleRVAdapter<MedicineRealmBe
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder,int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         final ItemViewHolder viewHolder = (ItemViewHolder) holder;
         MedicineRealmBean bean = getBean(position);
         viewHolder.mTvName.setText(bean.getMedicineName());
-        viewHolder.mTvDose.setText(String.format("%s%s", bean.getDose(), bean.getFormOfDrug()));
+        if (TextUtils.isEmpty(bean.getDose()) || bean.getDose().equals("0")) {
+            viewHolder.mTvDose.setText(String.format("%s%s", "0", bean.getFormOfDrug()));
+        } else {
+            viewHolder.mTvDose.setText(String.format("%s%s", bean.getDose(), bean.getFormOfDrug()));
+        }
+
         viewHolder.mIvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

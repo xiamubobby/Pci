@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.model;
+package com.wonders.xlab.patient.module.medicineremind.searchmedicine;
 
 import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.MedicineRemindAPI;
@@ -9,7 +9,7 @@ import javax.inject.Inject;
 /**
  * Created by hua on 16/5/10.
  */
-public class MedicineModel extends PatientBaseModel implements MedicineModelContract.Actions {
+public class MedicineModel extends PatientBaseModel implements MedicineSearchContract.Model {
     private MedicineRemindAPI mAPI;
 
     @Override
@@ -23,7 +23,7 @@ public class MedicineModel extends PatientBaseModel implements MedicineModelCont
     }
 
     @Override
-    public void search(String searchKey, final MedicineModelContract.Callback callback) {
+    public void search(String searchKey, final MedicineSearchContract.Callback callback) {
         request(mAPI.searchMedicineByName(searchKey), new Callback<MedicineListEntity>() {
             @Override
             public void onSuccess(MedicineListEntity response) {
@@ -38,7 +38,7 @@ public class MedicineModel extends PatientBaseModel implements MedicineModelCont
     }
 
     @Override
-    public void getAllMedicines(final MedicineModelContract.Callback callback) {
+    public void getAllMedicines(final MedicineSearchContract.Callback callback) {
         request(mAPI.getAllMedicines(), new Callback<MedicineListEntity>() {
             @Override
             public void onSuccess(MedicineListEntity response) {

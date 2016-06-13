@@ -1,11 +1,9 @@
-package com.wonders.xlab.patient.mvp.presenter;
+package com.wonders.xlab.patient.module.medicineremind.searchmedicine;
 
 import com.wonders.xlab.patient.data.realm.MedicineSearchHistoryRealm;
 import com.wonders.xlab.patient.module.medicineremind.MedicineRealmBean;
 import com.wonders.xlab.patient.mvp.entity.MedicineEntity;
 import com.wonders.xlab.patient.mvp.entity.MedicineListEntity;
-import com.wonders.xlab.patient.mvp.model.MedicineModel;
-import com.wonders.xlab.patient.mvp.model.MedicineModelContract;
 import com.wonders.xlab.patient.util.CharacterParser;
 
 import java.util.ArrayList;
@@ -28,15 +26,15 @@ import rx.schedulers.Schedulers;
 /**
  * Created by hua on 16/5/6.
  */
-public class MedicineSearchPresenter extends BasePagePresenter implements MedicineSearchPresenterContract.Actions, MedicineModelContract.Callback {
-    private MedicineSearchPresenterContract.ViewListener mViewListener;
-    private MedicineModelContract.Actions mSearchModel;
+public class MedicineSearchPresenter extends BasePagePresenter implements MedicineSearchContract.Presenter, MedicineSearchContract.Callback {
+    private MedicineSearchContract.ViewListener mViewListener;
+    private MedicineSearchContract.Model mSearchModel;
 
     @Inject
     Realm mRealm;
 
     @Inject
-    public MedicineSearchPresenter(MedicineSearchPresenterContract.ViewListener viewListener, MedicineModel searchModel) {
+    public MedicineSearchPresenter(MedicineSearchContract.ViewListener viewListener, MedicineModel searchModel) {
         mViewListener = viewListener;
         mSearchModel = searchModel;
         addModel(mSearchModel);

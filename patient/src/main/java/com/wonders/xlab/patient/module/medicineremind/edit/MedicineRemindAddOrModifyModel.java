@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.model;
+package com.wonders.xlab.patient.module.medicineremind.edit;
 
 import android.text.TextUtils;
 
@@ -15,7 +15,7 @@ import rx.Observable;
 /**
  * Created by WZH on 16/5/5.
  */
-public class MedicineRemindAddOrModifyModel extends PatientBaseModel implements MedicineRemindAddOrModifyModelContract.Actions {
+public class MedicineRemindAddOrModifyModel extends PatientBaseModel implements MedicineRemindEditContract.Model {
 
     private MedicineRemindAPI mMedicineRemindAPI;
 
@@ -31,10 +31,10 @@ public class MedicineRemindAddOrModifyModel extends PatientBaseModel implements 
 
 
     @Override
-    public void addOrModify(String patientId, MedicineRemindEditBody body, final MedicineRemindAddOrModifyModelContract.Callback callback) {
+    public void addOrModify(String patientId, MedicineRemindEditBody body, final MedicineRemindEditContract.Callback callback) {
         Observable<Response<EmptyValueEntity>> observable;
         if (TextUtils.isEmpty(body.getId())) {
-            observable = mMedicineRemindAPI.createMedicineRemind(patientId,body);
+            observable = mMedicineRemindAPI.createMedicineRemind(patientId, body);
         } else {
             observable = mMedicineRemindAPI.modifyMedicineRemind(body);
         }
@@ -50,4 +50,5 @@ public class MedicineRemindAddOrModifyModel extends PatientBaseModel implements 
             }
         });
     }
+
 }

@@ -16,6 +16,7 @@ import com.wonders.xlab.patient.module.auth.authorize.crop.CropActivity;
 import com.wonders.xlab.patient.module.auth.authorize.di.AuthorizeModule;
 import com.wonders.xlab.patient.module.auth.authorize.di.DaggerAuthorizeComponent;
 import com.wonders.xlab.patient.module.auth.authorize.guide.AuthorizeGuideActivity;
+import com.wonders.xlab.patient.module.healthrecord.HealthRecordActivity;
 import com.wonders.xlab.patient.util.ImageViewManager;
 
 import java.io.File;
@@ -300,8 +301,9 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizeContra
 
     @Override
     public void showValidateState(int state) {
-        Intent intent = new Intent();
+        Intent intent = new Intent(this, HealthRecordActivity.class);
         intent.putExtra(AUTHORIZE_STATE, state);
         setResult(RESULT_OK, intent);
+        finish();
     }
 }

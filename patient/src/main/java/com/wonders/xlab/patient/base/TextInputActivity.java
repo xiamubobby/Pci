@@ -62,6 +62,9 @@ public class TextInputActivity extends AppbarActivity {
                 filters[0] = new InputFilter.LengthFilter(3);
                 mEtTextInput.setFilters(filters);
             } else {
+                InputFilter[] filters = new InputFilter[1];
+                filters[0] = new InputFilter.LengthFilter(20);
+                mEtTextInput.setFilters(filters);
                 if (!TextUtils.isEmpty(mTextHint)) {
                     mEtTextInput.setHint(mTextHint);
                 }

@@ -1,8 +1,8 @@
-package com.wonders.xlab.patient.module.medicineremind.edit;
+package com.wonders.xlab.patient.module.medicineremind.edit.di;
 
 import com.wonders.xlab.patient.di.ApplicationComponent;
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
-import com.wonders.xlab.patient.mvp.presenter.MedicineRemindEditCachePresenter;
+import com.wonders.xlab.patient.module.medicineremind.edit.MedicineRemindEditCachePresenter;
 
 import dagger.Component;
 

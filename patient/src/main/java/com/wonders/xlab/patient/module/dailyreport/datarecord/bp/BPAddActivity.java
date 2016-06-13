@@ -110,7 +110,7 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
         } else if (Integer.parseInt(diastolicPressure) > 200 || Integer.parseInt(diastolicPressure) < 0) {
             showShortToast("请输入正确的舒张压值(0~200)");
             return;
-        }else if (Integer.parseInt(systolicPressure) < Integer.parseInt(diastolicPressure)) {
+        } else if (Integer.parseInt(systolicPressure) < Integer.parseInt(diastolicPressure)) {
             showShortToast("收缩压不能小于舒张压");
             return;
         }
@@ -119,7 +119,10 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
             showShortToast("请输入心率");
             return;
         } else if (TextUtils.isDigitsOnly(heartRate) && Integer.parseInt(heartRate) == 0) {
-            showShortToast("请输入正确的心率值");
+            showShortToast("请输入正确的心率值(0~300)");
+            return;
+        } else if (Integer.parseInt(heartRate) < 0 && Integer.parseInt(heartRate) > 300) {
+            showShortToast("请输入正确的心率值(0~300)");
             return;
         }
 

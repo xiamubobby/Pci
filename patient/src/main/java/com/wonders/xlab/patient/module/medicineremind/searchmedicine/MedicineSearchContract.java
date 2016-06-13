@@ -1,16 +1,29 @@
-package com.wonders.xlab.patient.mvp.presenter;
+package com.wonders.xlab.patient.module.medicineremind.searchmedicine;
 
 import com.wonders.xlab.patient.module.medicineremind.MedicineRealmBean;
+import com.wonders.xlab.patient.mvp.entity.MedicineListEntity;
 
 import java.util.List;
 
+import im.hua.library.base.mvp.IBaseModel;
 import im.hua.library.base.mvp.IBasePresenter;
+import im.hua.library.base.mvp.listener.BaseModelListener;
 import im.hua.library.base.mvp.listener.BasePagePresenterListener;
 
 /**
- * Created by hua on 16/5/6.
+ * Created by WZH on 16/6/13.
  */
-public interface MedicineSearchPresenterContract {
+public interface MedicineSearchContract {
+    interface Callback extends BaseModelListener {
+        void onReceiveMedicinesSuccess(MedicineListEntity entity);
+    }
+
+    interface Model extends IBaseModel {
+        void search(String searchKey, Callback callback);
+
+        void getAllMedicines(Callback callback);
+    }
+
     interface ViewListener extends BasePagePresenterListener {
         void showMedicineList(List<MedicineRealmBean> beanList, String[] sections);
 
@@ -19,7 +32,7 @@ public interface MedicineSearchPresenterContract {
         void showSearchHistoryList(List<MedicineRealmBean> beanList);
     }
 
-    interface Actions extends IBasePresenter {
+    interface Presenter extends IBasePresenter {
         void search(String medicineName);
 
         void getAllMedicines();
@@ -28,6 +41,7 @@ public interface MedicineSearchPresenterContract {
 
         /**
          * cache the search history
+         *
          * @param bean
          */
         void saveSearchHistory(MedicineRealmBean bean);

@@ -1,8 +1,8 @@
-package com.wonders.xlab.patient.module.medicineremind.searchmedicine;
+package com.wonders.xlab.patient.module.medicineremind.edit.di;
 
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
+import com.wonders.xlab.patient.module.medicineremind.edit.MedicineRemindEditContract;
 import com.wonders.xlab.patient.mvp.api.MedicineRemindAPI;
-import com.wonders.xlab.patient.mvp.presenter.MedicineSearchPresenterContract;
 
 import dagger.Module;
 import dagger.Provides;
@@ -12,16 +12,17 @@ import retrofit2.Retrofit;
  * Created by hua on 16/5/6.
  */
 @Module
-public class MedicineSearchModule {
-    private MedicineSearchPresenterContract.ViewListener mViewListener;
+public class MedicineRemindEditModule {
+    private MedicineRemindEditContract.ViewListener mViewListener;
 
-    public MedicineSearchModule(MedicineSearchPresenterContract.ViewListener viewListener) {
+
+    public MedicineRemindEditModule(MedicineRemindEditContract.ViewListener viewListener) {
         mViewListener = viewListener;
     }
 
     @Provides
     @ActivityScoped
-    MedicineSearchPresenterContract.ViewListener provideViewListener() {
+    MedicineRemindEditContract.ViewListener provideViewListener() {
         return mViewListener;
     }
 

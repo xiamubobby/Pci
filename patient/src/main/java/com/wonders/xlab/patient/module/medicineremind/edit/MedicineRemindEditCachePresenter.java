@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.presenter;
+package com.wonders.xlab.patient.module.medicineremind.edit;
 
 import android.text.TextUtils;
 
@@ -9,8 +9,6 @@ import com.wonders.xlab.patient.data.realm.MedicineRemindRealm;
 import com.wonders.xlab.patient.module.medicineremind.MedicineRealmBean;
 import com.wonders.xlab.patient.mvp.entity.MedicationUsagesEntity;
 import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
-import com.wonders.xlab.patient.mvp.model.MedicineRemindAddOrModifyModel;
-import com.wonders.xlab.patient.mvp.model.MedicineRemindAddOrModifyModelContract;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,19 +27,19 @@ import rx.functions.Func1;
 /**
  * Created by hua on 16/5/6.
  */
-public class MedicineRemindEditCachePresenter extends BasePresenter implements MedicineRemindEditPresenterContract.Actions, MedicineRemindAddOrModifyModelContract.Callback {
+public class MedicineRemindEditCachePresenter extends BasePresenter implements MedicineRemindEditContract.Presenter, MedicineRemindEditContract.Callback {
     @Inject
     Realm mRealm;
 
     @Inject
     AIManager mAIManager;
 
-    private MedicineRemindAddOrModifyModelContract.Actions mAddOrModifyModel;
+    private MedicineRemindEditContract.Model mAddOrModifyModel;
 
-    private MedicineRemindEditPresenterContract.ViewListener mViewListener;
+    private MedicineRemindEditContract.ViewListener mViewListener;
 
     @Inject
-    public MedicineRemindEditCachePresenter(MedicineRemindEditPresenterContract.ViewListener viewListener, MedicineRemindAddOrModifyModel modifyModel) {
+    public MedicineRemindEditCachePresenter(MedicineRemindEditContract.ViewListener viewListener, MedicineRemindAddOrModifyModel modifyModel) {
         mAddOrModifyModel = modifyModel;
         mViewListener = viewListener;
         addModel(modifyModel);
@@ -96,7 +94,7 @@ public class MedicineRemindEditCachePresenter extends BasePresenter implements M
 
     @Override
     public void saveMedicineRemind(MedicineRemindEditBody body) {
-        mAddOrModifyModel.addOrModify(mAIManager.getPatientId(),body,this);
+        mAddOrModifyModel.addOrModify(mAIManager.getPatientId(), body, this);
 
         final MedicineRemindRealm remindRealm;
         mRealm.beginTransaction();
