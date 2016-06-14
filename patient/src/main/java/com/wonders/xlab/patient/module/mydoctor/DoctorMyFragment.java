@@ -4,7 +4,6 @@ package com.wonders.xlab.patient.module.mydoctor;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +35,7 @@ import im.hua.uikit.crv.CommonRecyclerView;
  * 我的医生界面
  */
 public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterContract.ViewListener {
+
 
     @Bind(R.id.recycler_view_doctor_my)
     CommonRecyclerView mRecyclerView;
@@ -118,7 +118,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterC
                     intent.putExtra(ChatRoomActivity.EXTRA_IM_GROUP_ID, mMyDoctorRVAdapter.getBean(position).getImGroupId());
                     intent.putExtra(ChatRoomActivity.EXTRA_GROUP_NAME, mMyDoctorRVAdapter.getBean(position).getDoctorGroupName());
                     intent.putExtra(ChatRoomActivity.EXTRA_CAN_CHAT, MyDoctorItemBean.TYPE_IN_SERVICE == mMyDoctorRVAdapter.getBean(position).getType());
-                    intent.putExtra(ChatRoomActivity.EXTRA_DEADLINE,mMyDoctorRVAdapter.getBean(position).getDeadline());
+                    intent.putExtra(ChatRoomActivity.EXTRA_DEADLINE, mMyDoctorRVAdapter.getBean(position).getDeadline());
                     startActivity(intent);
                 }
             });
@@ -127,6 +127,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterC
             mRecyclerView.setAdapter(mMyDoctorRVAdapter);
         }
     }
+
 
     @Override
     public void appendMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList) {

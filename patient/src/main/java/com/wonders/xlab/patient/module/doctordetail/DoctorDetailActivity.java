@@ -125,6 +125,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
         binding = DataBindingUtil.setContentView(this, R.layout.doctor_detail_activity);
         //we'd better initial the bean here
 //        binding.setBean(new DoctorBasicInfoBean());
+        OttoManager.register(this);
         ButterKnife.bind(this);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -458,5 +459,14 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_doctor_detail));
         MobclickAgent.onPause(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMemberRVAdapter = null;
+        mGroupOfDoctorRVAdapter = null;
+        OttoManager.unregister(this);
+        ButterKnife.unbind(this);
     }
 }

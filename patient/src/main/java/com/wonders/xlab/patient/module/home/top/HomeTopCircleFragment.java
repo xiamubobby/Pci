@@ -201,6 +201,7 @@ public class HomeTopCircleFragment extends BaseFragment implements HomeTopPresen
         }
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();

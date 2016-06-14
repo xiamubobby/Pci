@@ -138,15 +138,22 @@ public class BSReportFragment extends BaseFragment implements BSReportCachePrese
 
     @Override
     public void hideLoading() {
-        mRecyclerView.hideRefreshOrLoadMore(true,true);
+        mRecyclerView.hideRefreshOrLoadMore(true, true);
     }
 
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_daily_report_bs));
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_daily_report_bs));
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+//        OttoManager.unregister(this);
     }
 }

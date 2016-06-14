@@ -406,4 +406,5 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
+
 }

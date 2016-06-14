@@ -156,8 +156,18 @@ public class MedicineSearchPresenter extends BasePagePresenter implements Medici
                         for (int i = 0; i < tmp.size(); i++) {
                             sections[i] = tmp.get(i);
                         }
-
-                        mViewListener.showMedicineList(beanList, sections);
+                        List<MedicineRealmBean> sortedBeanList = new ArrayList<>();
+                        for (int i = 0; i < sections.length; i++) {
+                            String temLetter = sections[i];
+                            for (MedicineRealmBean bean : beanList) {
+                                String curBeanFirstCH = bean.getMedicineName().substring(0, 1);
+                                String curBeanLetter = CharacterParser.getInstance().getSelling(curBeanFirstCH).substring(0, 1);
+                                if (curBeanLetter.toUpperCase().equals(temLetter)) {
+                                    sortedBeanList.add(bean);
+                                }
+                            }
+                        }
+                        mViewListener.showMedicineList(sortedBeanList, sections);
                     }
 
                     @Override

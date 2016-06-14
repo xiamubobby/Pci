@@ -97,7 +97,7 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
         } else if (TextUtils.isDigitsOnly(bloodSugar) && Integer.parseInt(bloodSugar) == 0) {
             showShortToast("请输入正确的血糖值(0~50)");
             return;
-        } else if (Integer.parseInt(bloodSugar) < 0 && Integer.parseInt(bloodSugar) > 50) {
+        } else if (Integer.parseInt(bloodSugar) < 0 || Integer.parseInt(bloodSugar) > 50) {
             showShortToast("请输入正确的血糖值(0~50)");
             return;
         }

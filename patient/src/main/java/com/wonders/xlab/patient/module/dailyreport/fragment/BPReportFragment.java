@@ -147,4 +147,8 @@ public class BPReportFragment extends BaseFragment implements BPReportCachePrese
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_daily_report_bp));
     }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

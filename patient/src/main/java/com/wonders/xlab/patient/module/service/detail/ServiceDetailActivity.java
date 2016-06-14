@@ -245,10 +245,9 @@ public class ServiceDetailActivity extends BaseActivity implements ServiceDetail
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
                 ImageView ret = new ImageView(ServiceDetailActivity.this);
-                ret.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                container.addView(ret);
                 ret.setLayoutParams(new ViewPager.LayoutParams());
                 ImageViewManager.setImageViewWithUrl(ServiceDetailActivity.this, ret, dataUnit.getBannerList().get(position).getImageUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
+                container.addView(ret);
                 return ret;
             }
 

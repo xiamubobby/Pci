@@ -358,12 +358,10 @@ public class DailyReportActivity extends AppbarActivity {
         OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
-
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);       //统计时长
     }
-
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

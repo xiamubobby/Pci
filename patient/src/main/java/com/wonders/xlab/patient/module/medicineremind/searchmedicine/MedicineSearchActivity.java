@@ -69,6 +69,7 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
     private MedicineSearchContract.Presenter mPresenter;
 
     private int index;
+    private boolean autoScrolling;
 
     @Override
     public int getContentLayout() {
@@ -211,6 +212,7 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
 
             @Override
             public void onTouchLetterSection(int sectionIndex, EasySection letterSection) {
+                autoScrolling = false;
                 mTvFloatView.setText(letterSection.letter);
                 goToPositionOfLetter(letterSection.letter);
             }
@@ -219,8 +221,10 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
         mAllRVAdapter.setDatas(beanList);
     }
 
+
     public void goToPositionOfLetter(String letter) {
         index = 0;
+        autoScrolling = true;
         for (int i = 0; i < mAllRVAdapter.getBeanList().size(); i++) {
             String firstChinese = mAllRVAdapter.getBeanList().get(i).getMedicineName().substring(0, 1);
             String letterTarget = CharacterParser.getInstance().getSelling(firstChinese).substring(0, 1).toUpperCase();
@@ -229,23 +233,26 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
                 break;
             }
         }
-        //        mRecyclerViewAllMedicine.getRecyclerView().scrollToPosition(index);
         mRecyclerViewAllMedicine.getRecyclerView().getLayoutManager().smoothScrollToPosition(mRecyclerViewAllMedicine.getRecyclerView(), null, index);
+
         mRecyclerViewAllMedicine.getRecyclerView().addOnScrollListener(new OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 switch (newState) {
                     case SCROLL_STATE_IDLE:
-                        int curPosition = ((LinearLayoutManager) mRecyclerViewAllMedicine.getRecyclerView().getLayoutManager()).findFirstCompletelyVisibleItemPosition();
-                        if (curPosition != index) {
-                            if (index < mAllRVAdapter.getBeanList().size() - 1) {
-//                                mRecyclerViewAllMedicine.getRecyclerView().scrollToPosition(index + 1);
-                                index += 1;
-                                mRecyclerViewAllMedicine.getRecyclerView().getLayoutManager().smoothScrollToPosition(mRecyclerViewAllMedicine.getRecyclerView(), null, index);
-                            }
+                        if (autoScrolling) {
+                            int curPosition = ((LinearLayoutManager) mRecyclerViewAllMedicine.getRecyclerView().getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                            if (curPosition != index) {
+                                if (index < mAllRVAdapter.getBeanList().size() - 1) {
+                                    index += 1;
+                                    mRecyclerViewAllMedicine.getRecyclerView().getLayoutManager().smoothScrollToPosition(mRecyclerViewAllMedicine.getRecyclerView(), null, index);
 
+                                }
+
+                            }
                         }
+
                         break;
                 }
             }

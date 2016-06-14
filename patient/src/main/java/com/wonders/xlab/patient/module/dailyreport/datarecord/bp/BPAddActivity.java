@@ -96,7 +96,7 @@ public class BPAddActivity extends AppbarActivity implements BPSavePresenter.Rec
         } else if (TextUtils.isDigitsOnly(systolicPressure) && Integer.parseInt(systolicPressure) == 0) {
             showShortToast("请输入正确的收缩压值(0~300)");
             return;
-        } else if (Integer.parseInt(systolicPressure) > 300 && Integer.parseInt(systolicPressure) < 0) {
+        } else if (Integer.parseInt(systolicPressure) > 300 || Integer.parseInt(systolicPressure) < 0) {
             showShortToast("请输入正确的收缩压值(0~300)");
             return;
         }
