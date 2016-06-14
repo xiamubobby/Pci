@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.mvp.presenter.impl;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorBasicInfoBean;
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorDetailGroupOfDoctorBean;
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorDetailPackageBean;
@@ -14,6 +15,7 @@ import com.wonders.xlab.patient.mvp.model.impl.DoctorDetailModel;
 import com.wonders.xlab.patient.mvp.model.impl.OrderPackageServiceModel;
 import com.wonders.xlab.patient.mvp.presenter.DoctorDetailContract;
 import com.wonders.xlab.patient.mvp.presenter.IDoctorDetailPresenter;
+import com.wonders.xlab.patient.otto.BuyPackageSuccessOtto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,6 +146,7 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
         if (TextUtils.isEmpty(charge)) {
             mDoctorDetailListener.hideLoading();
             mDoctorDetailListener.showToast(paymentEntity.getMessage());
+            mDoctorDetailListener.buyFreeSuccess();
             mDoctorDetailListener.refreshView();
         } else {
             mDoctorDetailListener.hideLoading();

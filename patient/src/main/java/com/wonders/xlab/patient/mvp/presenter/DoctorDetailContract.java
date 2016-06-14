@@ -13,7 +13,7 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
  * Created by hua on 16/5/23.
  */
 public interface DoctorDetailContract {
-    interface ViewListener extends BasePresenterListener{
+    interface ViewListener extends BasePresenterListener {
         void showBasicInfo(DoctorBasicInfoBean basicInfoBean);
 
         void showPackageList(ArrayList<DoctorDetailPackageBean> packageList);
@@ -26,12 +26,15 @@ public interface DoctorDetailContract {
 
         void hideMemberOrGroupOfDoctorRV();
 
+        void buyFreeSuccess();
+
         void startPayment(String charge);
 
         void refreshView();
 
         /**
          * 小组成员有变动，服务过期，需要重新获取列表，然后进入重新购买
+         *
          * @param message
          */
         void doctorGroupExpired(String message);

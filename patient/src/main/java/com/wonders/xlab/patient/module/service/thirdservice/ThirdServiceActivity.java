@@ -138,6 +138,9 @@ public class ThirdServiceActivity extends AppbarActivity implements ServicePrese
 
     @Override
     public void hideLoading() {
+        if (null == recyclerView) {
+            return;
+        }
         recyclerView.hideRefreshOrLoadMore(true, true);
     }
 }

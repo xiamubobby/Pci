@@ -229,7 +229,8 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
                 break;
             }
         }
-
+        //        mRecyclerViewAllMedicine.getRecyclerView().scrollToPosition(index);
+        mRecyclerViewAllMedicine.getRecyclerView().getLayoutManager().smoothScrollToPosition(mRecyclerViewAllMedicine.getRecyclerView(), null, index);
         mRecyclerViewAllMedicine.getRecyclerView().addOnScrollListener(new OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -239,7 +240,9 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
                         int curPosition = ((LinearLayoutManager) mRecyclerViewAllMedicine.getRecyclerView().getLayoutManager()).findFirstCompletelyVisibleItemPosition();
                         if (curPosition != index) {
                             if (index < mAllRVAdapter.getBeanList().size() - 1) {
-                                mRecyclerViewAllMedicine.getRecyclerView().scrollToPosition(index + 1);
+//                                mRecyclerViewAllMedicine.getRecyclerView().scrollToPosition(index + 1);
+                                index += 1;
+                                mRecyclerViewAllMedicine.getRecyclerView().getLayoutManager().smoothScrollToPosition(mRecyclerViewAllMedicine.getRecyclerView(), null, index);
                             }
 
                         }
@@ -252,7 +255,8 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
-        mRecyclerViewAllMedicine.getRecyclerView().scrollToPosition(index);
+
+
     }
 
     @Override
@@ -314,6 +318,9 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
 
     @Override
     public void hideLoading() {
-
+        if (null == mRecyclerViewAllMedicine) {
+            return;
+        }
+        mRecyclerViewAllMedicine.hideRefreshOrLoadMore(true, true);
     }
 }

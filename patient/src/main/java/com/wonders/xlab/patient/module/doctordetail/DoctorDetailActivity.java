@@ -59,7 +59,6 @@ import im.hua.library.base.BaseActivity;
 public class DoctorDetailActivity extends BaseActivity implements DoctorDetailContract.ViewListener {
     public final static int TYPE_DOCTOR = 0;
     public final static int TYPE_DOCTOR_GROUP = 1;
-
     public final static String EXTRA_TITLE = "title";
 
     /**
@@ -347,6 +346,11 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
         if (null != mRecyclerViewDoctorDetailMemberOrGroup) {
             mRecyclerViewDoctorDetailMemberOrGroup.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void buyFreeSuccess() {
+        OttoManager.post(new BuyPackageSuccessOtto());
     }
 
     @Override

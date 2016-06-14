@@ -31,6 +31,7 @@ public class AllDoctorPresenter extends BasePagePresenter implements AllDoctorCo
             resetPageInfo();
         }
         if (noMoreData()) {
+            mDoctorAllListener.hideLoading();
             mDoctorAllListener.showReachTheLastPageNotice("");
             return;
         }

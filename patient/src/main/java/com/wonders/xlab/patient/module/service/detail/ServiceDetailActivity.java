@@ -186,7 +186,6 @@ public class ServiceDetailActivity extends BaseActivity implements ServiceDetail
     public void showServiceDetail(final ServiceDetailDataUnit dataUnit) {
         binding.setData(dataUnit);
         final List<ServiceDetailDataUnit.Specifican> specificanList = dataUnit.getSpecificanList();
-        Log.i("PPPP", "............................." + dataUnit.getBannerList().size());
         if (null != specificanList && specificanList.size() > 0) {
             selectedService.setText(specificanList.get(0).getName());
             selectedSpecifican = specificanList.get(0);
