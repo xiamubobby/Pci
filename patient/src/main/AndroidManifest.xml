@@ -62,7 +62,7 @@
         <!-- 银联支付 -->
         <activity android:name="com.unionpay.uppay.PayActivity"/>
 
-        <receiver android:name=".appwidget.HealthMeasureAppWidgetProvider">
+       <!-- <receiver android:name=".appwidget.HealthMeasureAppWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
             </intent-filter>
@@ -70,7 +70,7 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/health_measure_appwidget_info"/>
-        </receiver>
+        </receiver>-->
 
         <!-- 设置环信应用的appkey -->
         <meta-data
@@ -312,12 +312,6 @@
             android:exported="false">
         </service>
 
-        <activity
-            android:name=".module.me.hospital.HospitalActivity"
-            android:label="@string/title_activity_hospital"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
         <activity
             android:name=".module.me.hospital.HospitalActivity"
             android:label="@string/title_activity_hospital"
