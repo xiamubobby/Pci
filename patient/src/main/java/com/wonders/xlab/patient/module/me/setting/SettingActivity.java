@@ -3,13 +3,10 @@ package com.wonders.xlab.patient.module.me.setting;
 import android.os.Bundle;
 
 import com.umeng.analytics.MobclickAgent;
-import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.base.AppbarActivity;
-import com.wonders.xlab.patient.otto.ForceExitOtto;
 
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by hua on 16/1/26.
@@ -36,11 +33,6 @@ public class SettingActivity extends AppbarActivity {
                 .commitAllowingStateLoss();
     }
 
-    @OnClick(R.id.btn_setting_exit)
-    public void exit() {
-        OttoManager.post(new ForceExitOtto());
-        finish();
-    }
 
     @Override
     public void onDestroy() {
@@ -52,6 +44,7 @@ public class SettingActivity extends AppbarActivity {
         super.onResume();
         MobclickAgent.onResume(this);       //统计时长
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPause(this);

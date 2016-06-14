@@ -78,14 +78,13 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
 
     private void initView() {
         Calendar mCalendar = Calendar.getInstance();
-        mTvAddBsDate.setText(DateUtil.format(mCalendar.getTimeInMillis(),"yyyy.MM.dd"));
-        mTvAddBsTime.setText(DateUtil.format(mCalendar.getTimeInMillis(),"HH:mm"));
+        mTvAddBsDate.setText(DateUtil.format(mCalendar.getTimeInMillis(), "yyyy.MM.dd"));
+        mTvAddBsTime.setText(DateUtil.format(mCalendar.getTimeInMillis(), "HH:mm"));
     }
 
     public void save() {
 
         KeyboardUtil.hide(this);
-
         String dateStr = mTvAddBsDate.getText().toString();
         String timeStr = mTvAddBsTime.getText().toString();
 
@@ -95,8 +94,11 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
         if (TextUtils.isEmpty(bloodSugar)) {
             showShortToast("请输入血糖");
             return;
-        } else if(TextUtils.isDigitsOnly(bloodSugar) && Integer.parseInt(bloodSugar) == 0){
-            showShortToast("请输入正确的血糖值");
+        } else if (TextUtils.isDigitsOnly(bloodSugar) && Integer.parseInt(bloodSugar) == 0) {
+            showShortToast("请输入正确的血糖值(0~50)");
+            return;
+        } else if (Integer.parseInt(bloodSugar) < 0 && Integer.parseInt(bloodSugar) > 50) {
+            showShortToast("请输入正确的血糖值(0~50)");
             return;
         }
 
@@ -109,6 +111,7 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
     }
 
     private boolean mIsToday = true;
+
     @OnClick(R.id.tv_add_date)
     public void onDateClick() {
         Calendar mCalendar = Calendar.getInstance();
@@ -117,9 +120,9 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         Calendar calendar = Calendar.getInstance();
-                        calendar.set(year,monthOfYear,dayOfMonth);
+                        calendar.set(year, monthOfYear, dayOfMonth);
                         mIsToday = DateUtils.isToday(calendar.getTimeInMillis());
-                        mTvAddBsDate.setText(DateUtil.format(calendar.getTimeInMillis(),"yyyy.MM.dd"));
+                        mTvAddBsDate.setText(DateUtil.format(calendar.getTimeInMillis(), "yyyy.MM.dd"));
                     }
                 },
                 mCalendar.get(Calendar.YEAR),
@@ -146,17 +149,18 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
                             int maxMinute = calendar.get(Calendar.MINUTE);
                             if (hourOfDay >= maxHour) {
                                 if (hourOfDay > maxHour) {
+                                    hourOfDay = maxHour;
                                     showShortToast("不能选择大于当前的时间");
                                 }
-                                hourOfDay = maxHour;
                                 if (minute > maxMinute) {
                                     minute = maxMinute;
+                                    showShortToast("不能选择大于当前的时间");
                                 }
                             }
                         }
-                        calendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        calendar.set(Calendar.MINUTE,minute);
-                        mTvAddBsTime.setText(DateUtil.format(calendar.getTimeInMillis(),"HH:mm"));
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendar.set(Calendar.MINUTE, minute);
+                        mTvAddBsTime.setText(DateUtil.format(calendar.getTimeInMillis(), "HH:mm"));
                     }
                 },
                 currentHour,
@@ -164,6 +168,7 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
                 true);
         dialog.show();
     }
+
 
     @Override
     public void onDestroy() {
@@ -235,7 +240,7 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_save,menu);
+        getMenuInflater().inflate(R.menu.menu_save, menu);
         return true;
     }
 
@@ -254,6 +259,7 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_bs_add));
         MobclickAgent.onResume(this);
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_bs_add));

@@ -10,7 +10,7 @@ public interface HealthRecordPresenterContract {
     interface ViewListener extends BasePresenterListener {
         void showResultMessage(String message);
 
-        void showValidateButton(boolean show);
+        void showValidateButton(int state);
     }
 
     interface Actions extends IBasePresenter {

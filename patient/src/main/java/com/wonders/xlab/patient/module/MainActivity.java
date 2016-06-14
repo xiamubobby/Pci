@@ -72,6 +72,7 @@ public class MainActivity extends BaseActivity {
 
         AlarmUtil.newInstance().scheduleMedicineRemindAlarm(MainActivity.this);
         startService(new Intent(MainActivity.this, XEMChatService.class));
+        UmengUpdateAgent.update(MainActivity.this);
     }
 
     private void setupBottomTab() {
@@ -171,7 +172,6 @@ public class MainActivity extends BaseActivity {
 
     public void onResume() {
         super.onResume();
-        UmengUpdateAgent.update(MainActivity.this);
         MobclickAgent.onResume(this);       //统计时长
     }
 

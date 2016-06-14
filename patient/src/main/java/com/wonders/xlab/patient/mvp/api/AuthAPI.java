@@ -1,5 +1,6 @@
 package com.wonders.xlab.patient.mvp.api;
 
+import com.wonders.xlab.patient.mvp.entity.AuthorizeValidateEntity;
 import com.wonders.xlab.patient.mvp.entity.RealNameValidateEntity;
 import com.wonders.xlab.patient.mvp.entity.RegisterEntity;
 
@@ -49,7 +50,7 @@ public interface AuthAPI {
      */
     @Multipart
     @POST("idCardValidates/validate")
-    Observable<Response<SimpleEntity>> authorize(@Part("userId") RequestBody patientId,@Part("name") RequestBody name, @Part("idCardNum") RequestBody idCardNum, @Part("file") MultipartBody idCardPic);
+    Observable<Response<AuthorizeValidateEntity>> authorize(@Part("userId") RequestBody patientId, @Part("name") RequestBody name, @Part("idCardNum") RequestBody idCardNum, @Part("file") MultipartBody idCardPic);
 
     /**
      * 获取市民云实名认证审核结果

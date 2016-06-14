@@ -176,7 +176,7 @@ public class DoctorMyEntity extends BaseEntity {
                 private String ownerId;
                 private String imGroupId;
                 private String hospitalName;
-                private String expirationTime;
+                private long expirationTime;
                 private String name;
                 private String content;
                 private String timeExp;
@@ -198,11 +198,11 @@ public class DoctorMyEntity extends BaseEntity {
                     this.hospitalName = hospitalName;
                 }
 
-                public String getExpirationTime() {
+                public long getExpirationTime() {
                     return expirationTime;
                 }
 
-                public void setExpirationTime(String expirationTime) {
+                public void setExpirationTime(long expirationTime) {
                     this.expirationTime = expirationTime;
                 }
 
@@ -252,7 +252,7 @@ public class DoctorMyEntity extends BaseEntity {
             private String imGroupId;
             private String ownerId;
             private String hospitalName;
-            private String expirationTime;
+            private long expirationTime;
             private String name;
             private String content;
             private String timeExp;
@@ -274,11 +274,11 @@ public class DoctorMyEntity extends BaseEntity {
                 this.hospitalName = hospitalName;
             }
 
-            public String getExpirationTime() {
+            public long getExpirationTime() {
                 return expirationTime;
             }
 
-            public void setExpirationTime(String expirationTime) {
+            public void setExpirationTime(long expirationTime) {
                 this.expirationTime = expirationTime;
             }
 

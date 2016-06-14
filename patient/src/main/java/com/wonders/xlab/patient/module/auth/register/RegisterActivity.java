@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -81,6 +82,18 @@ public class RegisterActivity extends BaseActivity implements RegisterPresenterC
         String pwd = registerPassword.getText().toString();
         String cap = etRegisterCap.getText().toString();
 
+        if (TextUtils.isEmpty(tel)&&tel.equals("")) {
+            showShortToast("请填写11位的手机号！");
+            return;
+        }
+        if (TextUtils.isEmpty(cap)&&cap.equals("")) {
+            showShortToast("请填写验证码！");
+            return;
+        }
+        if (TextUtils.isEmpty(pwd)&&pwd.equals("")) {
+            showShortToast("请填写您的密码！");
+            return;
+        }
         mRegisterPresenter.register(tel, pwd, cap);
     }
 

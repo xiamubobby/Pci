@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -185,6 +186,7 @@ public class ServiceDetailActivity extends BaseActivity implements ServiceDetail
     public void showServiceDetail(final ServiceDetailDataUnit dataUnit) {
         binding.setData(dataUnit);
         final List<ServiceDetailDataUnit.Specifican> specificanList = dataUnit.getSpecificanList();
+        Log.i("PPPP", "............................." + dataUnit.getBannerList().size());
         if (null != specificanList && specificanList.size() > 0) {
             selectedService.setText(specificanList.get(0).getName());
             selectedSpecifican = specificanList.get(0);

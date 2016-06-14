@@ -1,7 +1,5 @@
 package com.wonders.xlab.patient.module.mydoctor;
 
-import android.text.TextUtils;
-
 import com.wonders.xlab.patient.module.mydoctor.adapter.MyDoctorItemBean;
 import com.wonders.xlab.patient.mvp.entity.DoctorMyEntity;
 import com.wonders.xlab.patient.mvp.model.DoctorMyModel;
@@ -63,15 +61,9 @@ public class DoctorMyPresenter extends BasePagePresenter implements DoctorMyPres
             itemBean.setOwnerId(entity.getOwnerId());
             itemBean.setImGroupId(entity.getImGroupId());
             itemBean.setHospitalName(entity.getHospitalName());
-            String deadline = "";
-            if (!TextUtils.isEmpty(entity.getExpirationTime())) {
-                long dTime = Long.parseLong(entity.getExpirationTime());
-                Date date = new Date(dTime);
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                deadline = format.format(date);
-            } else {
-                deadline = "无期限";
-            }
+            Date date = new Date(entity.getExpirationTime());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String deadline = format.format(date);
 
             itemBean.setDeadline(deadline);
             itemBean.setDoctorGroupName(entity.getName());
@@ -90,15 +82,10 @@ public class DoctorMyPresenter extends BasePagePresenter implements DoctorMyPres
             itemBean.setImGroupId(entity.getImGroupId());
             itemBean.setOwnerId(entity.getOwnerId());
             itemBean.setHospitalName(entity.getHospitalName());
-            String deadline = "";
-            if (!TextUtils.isEmpty(entity.getExpirationTime())) {
-                long dTime = Long.parseLong(entity.getExpirationTime());
-                Date date = new Date(dTime);
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                deadline = format.format(date);
-            } else {
-                deadline = "无期限";
-            }
+
+            Date date = new Date(entity.getExpirationTime());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String deadline = format.format(date);
 
             itemBean.setDeadline(deadline);
             itemBean.setDoctorGroupName(entity.getName());

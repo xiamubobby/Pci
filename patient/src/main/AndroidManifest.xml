@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
     <!-- Required -->
     <uses-permission android:name="android.permission.VIBRATE"/>
@@ -62,15 +63,15 @@
         <!-- 银联支付 -->
         <activity android:name="com.unionpay.uppay.PayActivity"/>
 
-       <!-- <receiver android:name=".appwidget.HealthMeasureAppWidgetProvider">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-            </intent-filter>
+        <!-- <receiver android:name=".appwidget.HealthMeasureAppWidgetProvider">
+             <intent-filter>
+                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+             </intent-filter>
 
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/health_measure_appwidget_info"/>
-        </receiver>-->
+             <meta-data
+                 android:name="android.appwidget.provider"
+                 android:resource="@xml/health_measure_appwidget_info"/>
+         </receiver>-->
 
         <!-- 设置环信应用的appkey -->
         <meta-data
@@ -248,8 +249,8 @@
             android:name=".base.TextInputActivity"
             android:label="@string/title_activity_text_input"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible"/>
         <activity
             android:name=".module.healthrecord.HealthRecordActivity"
             android:label="@string/title_activity_health_record"
@@ -297,39 +298,38 @@
             android:name=".module.me.userinfo.UserInfoActivity"
             android:label="@string/title_activity_user_info"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".module.auth.authorize.guide.AuthorizeGuideActivity"
             android:label="@string/title_activity_authorize_guide"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <service
             android:name=".service.AlarmService"
             android:enabled="true"
-            android:exported="false">
-        </service>
+            android:exported="false"/>
 
         <activity
             android:name=".module.me.hospital.HospitalActivity"
             android:label="@string/title_activity_hospital"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".module.me.sex.SexActivity"
+            android:label="@string/title_activity_sex"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".module.me.about.AboutUsActivity"
-            android:label="@string/title_activity_hospital"
+            android:label="@string/title_activity_about"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".module.auth.authorize.crop.CropActivity"
             android:label="@string/title_activity_crop"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

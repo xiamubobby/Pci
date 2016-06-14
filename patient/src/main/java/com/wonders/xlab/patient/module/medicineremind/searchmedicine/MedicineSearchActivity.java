@@ -30,7 +30,8 @@ import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.medicineremind.MedicineRealmBean;
 import com.wonders.xlab.patient.module.medicineremind.searchmedicine.adapter.MedicineSearchAllRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.searchmedicine.adapter.MedicineSearchHistoryRVAdapter;
-import com.wonders.xlab.patient.mvp.presenter.MedicineSearchPresenterContract;
+import com.wonders.xlab.patient.module.medicineremind.searchmedicine.di.DaggerMedicineSearchComponent;
+import com.wonders.xlab.patient.module.medicineremind.searchmedicine.di.MedicineSearchModule;
 import com.wonders.xlab.patient.util.CharacterParser;
 
 import java.util.List;
@@ -41,10 +42,13 @@ import butterknife.OnClick;
 import im.hua.uikit.crv.CommonRecyclerView;
 import im.hua.utils.KeyboardUtil;
 
+import static android.support.v7.widget.RecyclerView.OnScrollListener;
+import static android.support.v7.widget.RecyclerView.SCROLL_STATE_IDLE;
+
 /**
  * 如果需要接收选择的结果，通过注册otto监听{@link MedicineRealmBean}即可
  */
-public class MedicineSearchActivity extends AppbarActivity implements MedicineSearchPresenterContract.ViewListener {
+public class MedicineSearchActivity extends AppbarActivity implements MedicineSearchContract.ViewListener {
 
     @Bind(R.id.et_medicine_search_name)
     EditText mEtMedicineSearchName;
@@ -62,7 +66,9 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
     private MedicineSearchAllRVAdapter mAllRVAdapter;
     private MedicineSearchHistoryRVAdapter mHistoryRVAdapter;
 
-    private MedicineSearchPresenterContract.Actions mPresenter;
+    private MedicineSearchContract.Presenter mPresenter;
+
+    private int index;
 
     @Override
     public int getContentLayout() {
@@ -149,19 +155,27 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
                     @Override
                     public void onClick(View v) {
                         String dose = editText.getText().toString();
-                        if (!TextUtils.isEmpty(dose) || dose.equals("0")) {
-                            mPresenter.saveSearchHistory(bean);
-                            /**
-                             * post threw the otto event bus
-                             */
+//                        if (!TextUtils.isEmpty(dose) ) {
+//                            mPresenter.saveSearchHistory(bean);
+//                            /**
+//                             * post threw the otto event bus
+//                             */
+//                            bean.setDose(dose);
+//                            OttoManager.post(bean);
+//                            alertDialog.dismiss();
+//                            KeyboardUtil.hide(MedicineSearchActivity.this);
+//                            MedicineSearchActivity.this.finish();
+//                        } else {
+//                            showShortToast("请输入每次服用剂量");
+//                        }
+                        if (!TextUtils.isEmpty(dose)) {
                             bean.setDose(dose);
-                            OttoManager.post(bean);
-                            alertDialog.dismiss();
-                            KeyboardUtil.hide(MedicineSearchActivity.this);
-                            MedicineSearchActivity.this.finish();
-                        } else {
-                            showShortToast("请输入每次服用剂量");
                         }
+
+                        OttoManager.post(bean);
+                        alertDialog.dismiss();
+                        KeyboardUtil.hide(MedicineSearchActivity.this);
+                        MedicineSearchActivity.this.finish();
                         showSoftInput(editText);
                     }
                 });
@@ -206,14 +220,38 @@ public class MedicineSearchActivity extends AppbarActivity implements MedicineSe
     }
 
     public void goToPositionOfLetter(String letter) {
-        int index = 0;
-        for (int i = 0;i<mAllRVAdapter.getBeanList().size();i++) {
-            String letterTarget = CharacterParser.getInstance().getSelling(mAllRVAdapter.getBeanList().get(i).getMedicineName()).substring(0, 1).toUpperCase();
-            if (letterTarget.toUpperCase().equals(letter)) {
+        index = 0;
+        for (int i = 0; i < mAllRVAdapter.getBeanList().size(); i++) {
+            String firstChinese = mAllRVAdapter.getBeanList().get(i).getMedicineName().substring(0, 1);
+            String letterTarget = CharacterParser.getInstance().getSelling(firstChinese).substring(0, 1).toUpperCase();
+            if (letterTarget.equals(letter)) {
                 index = i;
                 break;
             }
         }
+
+        mRecyclerViewAllMedicine.getRecyclerView().addOnScrollListener(new OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                switch (newState) {
+                    case SCROLL_STATE_IDLE:
+                        int curPosition = ((LinearLayoutManager) mRecyclerViewAllMedicine.getRecyclerView().getLayoutManager()).findFirstCompletelyVisibleItemPosition();
+                        if (curPosition != index) {
+                            if (index < mAllRVAdapter.getBeanList().size() - 1) {
+                                mRecyclerViewAllMedicine.getRecyclerView().scrollToPosition(index + 1);
+                            }
+
+                        }
+                        break;
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
         mRecyclerViewAllMedicine.getRecyclerView().scrollToPosition(index);
     }
 

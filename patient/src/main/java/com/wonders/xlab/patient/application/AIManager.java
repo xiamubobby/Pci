@@ -121,4 +121,33 @@ public class AIManager {
         XApplication.realm.commitTransaction();
     }
 
+    public void modifyPatientName(String patientName) {
+        modifyPatientInfo(null, null, null, patientName, null, null);
+    }
+
+    public void modifyPatientInfo(String patientId, String tel, String portraitUrl, String patientName, String sex, String age) {
+        XApplication.realm.beginTransaction();
+        PatientInfoRealm patientInfoRealm = getPatientInfo();
+        if (patientInfoRealm != null) {
+            if (patientId != null) {
+                patientInfoRealm.setPatientId(patientId);
+            }
+            if (patientName != null) {
+                patientInfoRealm.setPatientName(patientName);
+            }
+            if (sex != null) {
+                patientInfoRealm.setPatientSex(sex);
+            }
+            if (age != null) {
+                patientInfoRealm.setPatientAge(age);
+            }
+            if (tel != null) {
+                patientInfoRealm.setPatientPhoneNumber(tel);
+            }
+            if (portraitUrl != null) {
+                patientInfoRealm.setPatientPortraitUrl(portraitUrl);
+            }
+        }
+        XApplication.realm.commitTransaction();
+    }
 }

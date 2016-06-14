@@ -22,10 +22,11 @@ import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.base.TextInputActivity;
 import com.wonders.xlab.patient.module.medicineremind.MedicineRealmBean;
 import com.wonders.xlab.patient.module.medicineremind.edit.adapter.MedicineRemindEditRVAdapter;
+import com.wonders.xlab.patient.module.medicineremind.edit.di.DaggerMedicineRemindEditComponent;
+import com.wonders.xlab.patient.module.medicineremind.edit.di.MedicineRemindEditModule;
 import com.wonders.xlab.patient.module.medicineremind.searchmedicine.MedicineSearchActivity;
 import com.wonders.xlab.patient.mvp.entity.MedicationUsagesEntity;
 import com.wonders.xlab.patient.mvp.entity.request.MedicineRemindEditBody;
-import com.wonders.xlab.patient.mvp.presenter.MedicineRemindEditPresenterContract;
 import com.wonders.xlab.patient.util.AlarmUtil;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
 
-public class MedicineRemindEditActivity extends AppbarActivity implements MedicineRemindEditPresenterContract.ViewListener {
+public class MedicineRemindEditActivity extends AppbarActivity implements MedicineRemindEditContract.ViewListener {
 
     public static final String EXTRA_MEDICINE_REMIND_ID = "medicineRemindId";
     private String mMedicineRemindId;
@@ -63,7 +64,7 @@ public class MedicineRemindEditActivity extends AppbarActivity implements Medici
 
     private MedicineRemindEditRVAdapter mRVAdapter;
 
-    private MedicineRemindEditPresenterContract.Actions mPresenter;
+    private MedicineRemindEditContract.Presenter mPresenter;
 
     @Override
     public int getContentLayout() {

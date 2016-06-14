@@ -18,6 +18,7 @@ import com.wonders.xlab.patient.base.TextInputActivity;
 import com.wonders.xlab.patient.module.auth.authorize.crop.CropActivity;
 import com.wonders.xlab.patient.module.me.address.AddressActivity;
 import com.wonders.xlab.patient.module.me.hospital.HospitalActivity;
+import com.wonders.xlab.patient.module.me.sex.SexActivity;
 import com.wonders.xlab.patient.module.me.userinfo.di.DaggerUserInfoComponent;
 import com.wonders.xlab.patient.module.me.userinfo.di.UserInfoModule;
 import com.wonders.xlab.patient.mvp.entity.UserInfoEntity;
@@ -48,6 +49,9 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
     private final int REQUEST_CODE_HOSPITAL = REQUEST_CODE << 5;
     private final int REQUEST_CODE_PIC = REQUEST_CODE << 6;
     private final int REQUEST_CROP_IMAGE = REQUEST_CODE << 7;
+    private final int REQUEST_CODE_NAME = REQUEST_CODE << 8;
+    private final int REQUEST_CODE_SEX = REQUEST_CODE << 9;
+    private final int REQUEST_CODE_AGE = REQUEST_CODE << 10;
 
     @Bind(R.id.iv_user_avatar)
     ImageView mIvPortrait;
@@ -77,7 +81,8 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
     private String addressId;
     private String address;
     private MyAddressUtil addressUtil;
-
+    private String sexId;
+    private String sex;
     private List<String> mTmpImageFilePath = new ArrayList<>();
     /**
      * 保存选择的图片
@@ -112,6 +117,15 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
             timeStr = DateUtil.format(entity.getLastOperationDate(), "yyyy-MM-dd");
         }
         ImageViewManager.setImageViewWithUrl(this, mIvPortrait, AIManager.getInstance().getPatientPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
+        sex = AIManager.getInstance().getPatientSex();
+        if (sex.equals("男")) {
+            sexId = "Male";
+        } else {
+            sexId = "Female";
+        }
+
+        mTextViewSex.setText(sex);
+        mTextViewAge.setText(AIManager.getInstance().getPatientAge());
         address = entity.getAddress();
         addressId = entity.getAddressCode();
         mTvUserInfoSurgeryTime.setText(timeStr);
@@ -128,6 +142,21 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
         PhotoPickerIntent intent = new PhotoPickerIntent(this);
         intent.setPhotoCount(1);
         startActivityForResult(intent, REQUEST_CODE_PIC);
+    }
+
+    @OnClick(R.id.tv_user_info_name)
+    public void editName() {
+        goToTextInputActivity(mTvUserInfoDoctor.getText().toString(), "请输入姓名", "姓名", REQUEST_CODE_NAME, false);
+    }
+
+    @OnClick(R.id.tv_user_info_sex)
+    public void goToCHooseSex() {
+        startActivityForResult(new Intent(this, SexActivity.class), REQUEST_CODE_SEX);
+    }
+
+    @OnClick(R.id.tv_user_info_age)
+    public void editAge() {
+        goToTextInputActivity(mTvUserInfoNumber.getText().toString(), "请输入年龄", "年龄", REQUEST_CODE_AGE, true);
     }
 
     @OnClick(R.id.tv_user_info_hospital)
@@ -209,16 +238,19 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
 
     @Override
     public void showNetworkError(String message) {
+
         showShortToast(message);
     }
 
     @Override
     public void showServerError(String message) {
+
         showShortToast(message);
     }
 
     @Override
     public void showEmptyView(String message) {
+
         showShortToast(message);
     }
 
@@ -244,6 +276,8 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
             case R.id.menu_save:
 
                 UserInfoBody body = new UserInfoBody();
+                body.setSex(sexId);
+                body.setAge(Integer.parseInt(mTextViewAge.getText().toString()));
                 body.setAddress(mTvUserInfoAddress.getText().toString());
                 body.setLastOperationDate(mCalendarSurgeryDate.getTimeInMillis());
                 body.setBracketNum(Integer.parseInt(mTvUserInfoNumber.getText().toString()));
@@ -295,9 +329,20 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
             Uri uri = Uri.fromFile(mPickedIdPicFile);
             ImageViewManager.setImageViewWithUri(this, mIvPortrait, uri, ImageViewManager.PLACE_HOLDER_EMPTY);
             mPresenter.uploadAvater(mPickedIdPicFile);
+        } else if (requestCode == REQUEST_CODE_SEX) {
+            sexId = data.getStringExtra(SexActivity.EXTRA_SEX_ID);
+            sex = data.getStringExtra(SexActivity.EXTRA_SEX_NAME);
+            mTextViewSex.setText(sex);
+
         } else {
             String result = data.getStringExtra(TextInputActivity.EXTRA_RESULT);
             switch (requestCode) {
+                case REQUEST_CODE_NAME:
+                    mTextViewName.setText(result);
+                    break;
+                case REQUEST_CODE_AGE:
+                    mTextViewAge.setText(result);
+                    break;
                 case REQUEST_CODE_DOCTOR:
                     mTvUserInfoDoctor.setText(result);
                     break;

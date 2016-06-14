@@ -1,5 +1,7 @@
 package com.wonders.xlab.patient.module.auth.authorize;
 
+import com.wonders.xlab.patient.mvp.entity.AuthorizeValidateEntity;
+
 import java.io.File;
 
 import im.hua.library.base.mvp.IBaseModel;
@@ -12,7 +14,7 @@ import im.hua.library.base.mvp.listener.BasePresenterListener;
  */
 public interface AuthorizeContract {
     interface Callback extends BaseModelListener {
-        void authorizeSuccess(String message);
+        void authorizeSuccess(AuthorizeValidateEntity response);
     }
 
     interface Model extends IBaseModel {
@@ -20,7 +22,10 @@ public interface AuthorizeContract {
     }
 
     interface ViewListener extends BasePresenterListener {
-        void authorizeSuccess(String message);
+        void showResultMessage(String message);
+
+        void showValidateState(int state);
+
     }
 
     interface Presenter extends IBasePresenter {

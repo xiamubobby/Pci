@@ -31,8 +31,8 @@ public class BPReportAdapter extends SimpleRVAdapter<BPReportRealmBean> {
         super.onBindViewHolder(holder, position);
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         BPReportRealmBean bean = getBean(position);
-        viewHolder.mTvHigh.setText(String.format("高压：%smmHg", bean.getHighPressure()));
-        viewHolder.mTvLow.setText(String.format("低压：%smmHg", bean.getLowPressure()));
+        viewHolder.mTvHigh.setText(String.format("收缩压：%smmHg", bean.getHighPressure()));
+        viewHolder.mTvLow.setText(String.format("舒张压：%smmHg", bean.getLowPressure()));
         viewHolder.mTvHeartRate.setText(String.format("心率：%s次/分", bean.getHeartRate()));
         viewHolder.mTvTime.setText(String.format("记录时间：%s", DateUtil.format(bean.getRecordTimeInMill(), "HH:mm")));
         viewHolder.mTvHighRange.setText(bean.getHighPressureRange());

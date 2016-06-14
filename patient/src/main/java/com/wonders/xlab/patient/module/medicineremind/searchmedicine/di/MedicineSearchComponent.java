@@ -1,8 +1,8 @@
-package com.wonders.xlab.patient.module.medicineremind.searchmedicine;
+package com.wonders.xlab.patient.module.medicineremind.searchmedicine.di;
 
 import com.wonders.xlab.patient.di.ApplicationComponent;
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
-import com.wonders.xlab.patient.mvp.presenter.MedicineSearchPresenter;
+import com.wonders.xlab.patient.module.medicineremind.searchmedicine.MedicineSearchPresenter;
 
 import dagger.Component;
 

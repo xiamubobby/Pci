@@ -33,7 +33,7 @@ public class HealthRecordPresenter extends BasePresenter implements HealthRecord
     @Override
     public void onReceiveValidateResultSuccess(RealNameValidateEntity entity) {
         mViewListener.showResultMessage(entity.getMessage());
-        mViewListener.showValidateButton(entity.getRet_values() == 0 || entity.getRet_values() == 3);
+        mViewListener.showValidateButton(entity.getRet_values());
     }
 
     @Override

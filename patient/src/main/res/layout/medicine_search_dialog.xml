@@ -23,6 +23,7 @@
         android:gravity="center"
         android:inputType="numberDecimal"
         android:maxLength="6"
+        android:hint="0"
         android:minWidth="64dp"
         android:padding="@dimen/item_interval_middle"
         android:singleLine="true"/>

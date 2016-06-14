@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.base;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,14 +51,26 @@ public class TextInputActivity extends AppbarActivity {
             if (!TextUtils.isEmpty(mTextTitle)) {
                 setToolbarTitle(mTextTitle);
             }
-            if (!TextUtils.isEmpty(mTextHint)) {
-                mEtTextInput.setHint(mTextHint);
-            }
-            if (!TextUtils.isEmpty(mTextDefault)) {
-                mEtTextInput.setText(mTextDefault);
-            }
+
             if (data.getBoolean(EXTRA_INPUT_TYPE_NUMBER, false)) {
                 mEtTextInput.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+                mEtTextInput.setHint("0");
+                if (!TextUtils.isEmpty(mTextDefault) && Integer.parseInt(mTextDefault) != 0) {
+                    mEtTextInput.setText(mTextDefault);
+                }
+                InputFilter[] filters = new InputFilter[1];
+                filters[0] = new InputFilter.LengthFilter(3);
+                mEtTextInput.setFilters(filters);
+            } else {
+                InputFilter[] filters = new InputFilter[1];
+                filters[0] = new InputFilter.LengthFilter(20);
+                mEtTextInput.setFilters(filters);
+                if (!TextUtils.isEmpty(mTextHint)) {
+                    mEtTextInput.setHint(mTextHint);
+                }
+                if (!TextUtils.isEmpty(mTextDefault)) {
+                    mEtTextInput.setText(mTextDefault);
+                }
             }
         }
         mEtTextInput.requestFocus();
@@ -75,7 +88,7 @@ public class TextInputActivity extends AppbarActivity {
             case R.id.menu_save:
                 String result = mEtTextInput.getText().toString();
                 Intent intent = new Intent();
-                intent.putExtra(EXTRA_RESULT,result);
+                intent.putExtra(EXTRA_RESULT, result);
                 setResult(RESULT_OK, intent);
 
                 finish();

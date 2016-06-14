@@ -16,6 +16,7 @@ import com.wonders.xlab.patient.module.auth.authorize.crop.CropActivity;
 import com.wonders.xlab.patient.module.auth.authorize.di.AuthorizeModule;
 import com.wonders.xlab.patient.module.auth.authorize.di.DaggerAuthorizeComponent;
 import com.wonders.xlab.patient.module.auth.authorize.guide.AuthorizeGuideActivity;
+import com.wonders.xlab.patient.module.healthrecord.HealthRecordActivity;
 import com.wonders.xlab.patient.util.ImageViewManager;
 
 import java.io.File;
@@ -40,6 +41,8 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizeContra
     private final int REQUEST_CODE_ID_PIC = 1238;
     private final int REQUEST_CROP_IMAGE = 1239;
 
+    public static final String AUTHORIZE_STATE = "state";
+
     @Bind(R.id.tv_authorize_name)
     TextView mTvAuthorizeName;
     @Bind(R.id.rl_authorize_name)
@@ -54,6 +57,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizeContra
     private List<String> mTmpImageFilePath = new ArrayList<>();
 
     private AuthorizeContract.Presenter mAuthorizePresenter;
+    private String mPickedIdName;
     /**
      * 保存选择的图片
      */
@@ -130,6 +134,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizeContra
             switch (requestCode) {
                 case REQUEST_CODE_NAME:
                     mTvAuthorizeName.setText(data.getStringExtra(TextInputActivity.EXTRA_RESULT));
+                    mPickedIdName = data.getStringExtra(TextInputActivity.EXTRA_RESULT);
                     break;
                 case REQUEST_CODE_ID:
                     mTvAuthorizeId.setText(data.getStringExtra(TextInputActivity.EXTRA_RESULT));
@@ -211,34 +216,19 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizeContra
 
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu_save, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.menu_save:
-//                String name = mTvAuthorizeName.getText().toString();
-//                String idNo = mTvAuthorizeId.getText().toString();
-//
-//                mAuthorizePresenter.authorize(AIManager.getInstance().getPatientId(), name, idNo, mPickedIdPicFile);
-//                break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
-    @Override
-    public void authorizeSuccess(String message) {
-        clearTmpImageFile();
-
-        showShortToast(message);
-        mTvAuthorizeName.setText("");
-        mTvAuthorizeId.setText("");
-        ImageViewManager.setImageViewWithDrawableId(this, mIvAuthorizeAddPic, R.drawable.ic_group_member_add, ImageViewManager.PLACE_HOLDER_EMPTY);
-    }
+//    @Override
+//    public void show(String message) {
+//        clearTmpImageFile();
+//        showShortToast(message);
+//        mTvAuthorizeName.setText("");
+//        mTvAuthorizeId.setText("");
+//        AIManager.getInstance().modifyPatientName(mPickedIdName);
+//        ImageViewManager.setImageViewWithDrawableId(this, mIvAuthorizeAddPic, R.drawable.ic_group_member_add, ImageViewManager.PLACE_HOLDER_EMPTY);
+//        Intent intent = new Intent();
+//        intent.putExtra(AUTHORIZE_STATE,1);
+//        setResult(RESULT_OK, intent);
+//    }
 
     private void clearTmpImageFile() {
         Observable.from(mTmpImageFilePath)
@@ -297,5 +287,23 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizeContra
     public void onDestroy() {
         super.onDestroy();
         clearTmpImageFile();
+    }
+
+    @Override
+    public void showResultMessage(String message) {
+        clearTmpImageFile();
+        showShortToast(message);
+        mTvAuthorizeName.setText("");
+        mTvAuthorizeId.setText("");
+        AIManager.getInstance().modifyPatientName(mPickedIdName);
+        ImageViewManager.setImageViewWithDrawableId(this, mIvAuthorizeAddPic, R.drawable.ic_group_member_add, ImageViewManager.PLACE_HOLDER_EMPTY);
+    }
+
+    @Override
+    public void showValidateState(int state) {
+        Intent intent = new Intent(this, HealthRecordActivity.class);
+        intent.putExtra(AUTHORIZE_STATE, state);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }
