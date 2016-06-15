@@ -351,7 +351,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
 
     @Override
     public void buyFreeSuccess() {
-        sendOtto(false);
+        OttoManager.post(new BuyPackageSuccessOtto());
     }
 
     @Override
@@ -368,7 +368,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
 
     @Override
     public void doctorGroupExpired(String message) {
-        sendOtto(true);
+        OttoManager.post(new DoctorGroupExpiredOtto());
         showShortToast(message);
         finish();
     }
@@ -394,7 +394,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
     public void showMsg(String result) {
         switch (result) {
             case "success":
-                sendOtto(false);
+                OttoManager.post(new BuyPackageSuccessOtto());
                 requestData();
                 result = "支付成功";
                 break;
@@ -415,19 +415,6 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
         builder.create().show();
     }
 
-    private void sendOtto(final boolean isGroup) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (isGroup){
-                    OttoManager.post(new DoctorGroupExpiredOtto());
-                }else {
-                    OttoManager.post(new BuyPackageSuccessOtto());
-                }
-
-            }
-        }, 400);
-    }
 
     @Override
     public void showLoading(String message) {

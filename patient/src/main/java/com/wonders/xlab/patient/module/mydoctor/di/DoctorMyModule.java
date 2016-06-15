@@ -1,6 +1,7 @@
-package com.wonders.xlab.patient.module.mydoctor;
+package com.wonders.xlab.patient.module.mydoctor.di;
 
 import com.wonders.xlab.patient.di.scope.FragmentScoped;
+import com.wonders.xlab.patient.module.mydoctor.DoctorMyContract;
 import com.wonders.xlab.patient.mvp.api.DoctorAPI;
 
 import dagger.Module;
@@ -12,15 +13,15 @@ import retrofit2.Retrofit;
  */
 @Module
 public class DoctorMyModule {
-    private DoctorMyPresenterContract.ViewListener mViewListener;
+    private DoctorMyContract.ViewListener mViewListener;
 
-    public DoctorMyModule(DoctorMyPresenterContract.ViewListener viewListener) {
+    public DoctorMyModule(DoctorMyContract.ViewListener viewListener) {
         mViewListener = viewListener;
     }
 
     @Provides
     @FragmentScoped
-    DoctorMyPresenterContract.ViewListener provideViewListener() {
+    DoctorMyContract.ViewListener provideViewListener() {
         return mViewListener;
     }
 

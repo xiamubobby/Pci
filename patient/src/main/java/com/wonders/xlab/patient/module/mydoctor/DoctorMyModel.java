@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.model;
+package com.wonders.xlab.patient.module.mydoctor;
 
 import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.DoctorAPI;
@@ -9,7 +9,7 @@ import javax.inject.Inject;
 /**
  * Created by hua on 16/3/17.
  */
-public class DoctorMyModel extends PatientBaseModel implements DoctorMyModelContract.Actions {
+public class DoctorMyModel extends PatientBaseModel implements DoctorMyContract.Model {
 
     private DoctorAPI mDoctorAPI;
 
@@ -24,7 +24,7 @@ public class DoctorMyModel extends PatientBaseModel implements DoctorMyModelCont
     }
 
     @Override
-    public void getMyDoctors(String patientId, int page, int pageSize, final DoctorMyModelContract.Callback callback) {
+    public void getMyDoctors(String patientId, int page, int pageSize, final DoctorMyContract.Callback callback) {
         request(mDoctorAPI.getMyDoctors(patientId, page, pageSize), new Callback<DoctorMyEntity>() {
             @Override
             public void onSuccess(DoctorMyEntity response) {

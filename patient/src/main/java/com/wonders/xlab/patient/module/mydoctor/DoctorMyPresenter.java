@@ -2,8 +2,6 @@ package com.wonders.xlab.patient.module.mydoctor;
 
 import com.wonders.xlab.patient.module.mydoctor.adapter.MyDoctorItemBean;
 import com.wonders.xlab.patient.mvp.entity.DoctorMyEntity;
-import com.wonders.xlab.patient.mvp.model.DoctorMyModel;
-import com.wonders.xlab.patient.mvp.model.DoctorMyModelContract;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -17,12 +15,12 @@ import im.hua.library.base.mvp.impl.BasePagePresenter;
 /**
  * Created by hua on 16/3/14.
  */
-public class DoctorMyPresenter extends BasePagePresenter implements DoctorMyPresenterContract.Actions, DoctorMyModelContract.Callback {
-    private DoctorMyPresenterContract.ViewListener mViewListener;
-    private DoctorMyModelContract.Actions mDoctorMyModel;
+public class DoctorMyPresenter extends BasePagePresenter implements DoctorMyContract.Presenter, DoctorMyContract.Callback {
+    private DoctorMyContract.ViewListener mViewListener;
+    private DoctorMyContract.Model mDoctorMyModel;
 
     @Inject
-    public DoctorMyPresenter(DoctorMyModel doctorMyModel, DoctorMyPresenterContract.ViewListener viewListener) {
+    public DoctorMyPresenter(DoctorMyModel doctorMyModel, DoctorMyContract.ViewListener viewListener) {
         mDoctorMyModel = doctorMyModel;
         mViewListener = viewListener;
         addModel(mDoctorMyModel);

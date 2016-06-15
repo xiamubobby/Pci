@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.module.mydoctor;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,8 @@ import com.wonders.xlab.patient.module.alldoctor.AllDoctorActivity;
 import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.patient.module.mydoctor.adapter.MyDoctorItemBean;
 import com.wonders.xlab.patient.module.mydoctor.adapter.MyDoctorRVAdapter;
+import com.wonders.xlab.patient.module.mydoctor.di.DaggerDoctorMyComponent;
+import com.wonders.xlab.patient.module.mydoctor.di.DoctorMyModule;
 import com.wonders.xlab.patient.otto.BuyPackageSuccessOtto;
 import com.wonders.xlab.patient.otto.DoctorTabChangeOtto;
 
@@ -34,7 +37,7 @@ import im.hua.uikit.crv.CommonRecyclerView;
 /**
  * 我的医生界面
  */
-public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterContract.ViewListener {
+public class DoctorMyFragment extends BaseFragment implements DoctorMyContract.ViewListener {
 
 
     @Bind(R.id.recycler_view_doctor_my)
@@ -42,7 +45,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterC
 
     private MyDoctorRVAdapter mMyDoctorRVAdapter;
 
-    private DoctorMyPresenterContract.Actions mDoctorMyPresenter;
+    private DoctorMyContract.Presenter mDoctorMyPresenter;
 
     public DoctorMyFragment() {
         // Required empty public constructor
@@ -94,6 +97,17 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterC
 
     }
 
+    @Subscribe
+    public void buyPackageSuccess(BuyPackageSuccessOtto otto) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showLongToast("数据刷新");
+                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
+            }
+        }, 5000);
+
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -182,10 +196,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterC
         }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
 
-    @Subscribe
-    public void buyPackageSuccess(BuyPackageSuccessOtto otto) {
-        mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
-    }
+
 
     @Override
     public void hideLoading() {
@@ -203,10 +214,5 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterC
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_doctors_my));
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 }

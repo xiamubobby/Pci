@@ -27,6 +27,7 @@ import com.wonders.xlab.patient.module.chatroom.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.patient.module.doctordetail.DoctorDetailActivity;
 import com.wonders.xlab.patient.mvp.presenter.IChatRoomPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.ChatRoomPresenter;
+import com.wonders.xlab.patient.otto.BuyPackageSuccessOtto;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.util.Calendar;
