@@ -47,7 +47,7 @@ public class AIManager {
         synchronized (object) {
             RealmUtil.deleteRealm(PatientInfoRealm.class);
             RealmUtil.deleteRealm(UnReadMessageRealm.class);
-            RealmUtil.deleteRealm(MedicineRemindRealm.class);
+//            RealmUtil.deleteRealm(MedicineRemindRealm.class);
             RealmUtil.deleteRealm(MedicationUsagesRealm.class);
         }
 

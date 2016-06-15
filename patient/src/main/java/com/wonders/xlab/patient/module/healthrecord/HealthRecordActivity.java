@@ -230,23 +230,27 @@ public class HealthRecordActivity extends AppbarActivity implements HealthRecord
             mBtnAuthorize.setBackgroundResource(R.drawable.selector_confirm_button_red);
             mTvAuthorizeNotice.setText(getString(R.string.text_un_authorize_notice));
             mTvAuthorizeNotice.setVisibility(View.VISIBLE);
+            mRlAuthorized.setVisibility(View.GONE);
         } else if (state == 1) {
             canAuthorize = false;
             mBtnAuthorize.setText(getString(R.string.health_record_btn_authorized));
             mBtnAuthorize.setBackgroundResource(R.drawable.selector_confirm_button_blue);
             mRlAuthorized.setVisibility(View.VISIBLE);
+            mTvAuthorizeNotice.setVisibility(View.GONE);
         } else if (state == 2) {
             canAuthorize = false;
             mBtnAuthorize.setText(getString(R.string.health_record_btn_authorizing));
             mBtnAuthorize.setBackgroundResource(R.drawable.selector_confirm_button_blue);
             mTvAuthorizeNotice.setText(getString(R.string.text_authorizing_notice));
             mTvAuthorizeNotice.setVisibility(View.VISIBLE);
+            mTvAuthorizeNotice.setVisibility(View.GONE);
         } else if (state == 3) {
             canAuthorize = true;
             mBtnAuthorize.setText(getString(R.string.health_record_btn_authorized_failed));
             mBtnAuthorize.setBackgroundResource(R.drawable.selector_confirm_button_red);
             mTvAuthorizeNotice.setText(getString(R.string.text_authorized_fail_notice));
             mTvAuthorizeNotice.setVisibility(View.VISIBLE);
+            mTvAuthorizeNotice.setVisibility(View.GONE);
         }
     }
 

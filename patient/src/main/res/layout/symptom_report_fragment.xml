@@ -8,4 +8,4 @@
     app:emptyView="@layout/symptom_report_empty"
     app:layoutManager="LinearLayoutManager"
     app:reverseLayout="false"
-    tools:context=".module.dailyreport.fragment.SymptomReportFragment"/>
+    tools:context=".module.dailyreport.fragment.symptom.SymptomReportFragment"/>

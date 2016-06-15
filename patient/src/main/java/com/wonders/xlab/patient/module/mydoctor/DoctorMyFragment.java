@@ -208,6 +208,5 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyPresenterC
     @Override
     public void onDestroy() {
         super.onDestroy();
-        OttoManager.unregister(this);
     }
 }

@@ -27,13 +27,32 @@ public class UserInfoEntity extends BaseEntity {
     }
 
     public static class RetValuesEntity {
+        private String sex;
+        private String age;
         private String addressCode;
         private String address;
         private String bracketNum;
         private long lastOperationDate;
         private String hospital;
+        private String hospitalId;
         private String surgeon;
         private String caseHistory;
+
+        public String getSex() {
+            return sex;
+        }
+
+        public void setSex(String sex) {
+            this.sex = sex;
+        }
+
+        public String getAge() {
+            return age;
+        }
+
+        public void setAge(String age) {
+            this.age = age;
+        }
 
         public String getAddressCode() {
             return addressCode;
@@ -73,6 +92,14 @@ public class UserInfoEntity extends BaseEntity {
 
         public void setHospital(String hospital) {
             this.hospital = hospital;
+        }
+
+        public String getHospitalId() {
+            return hospitalId;
+        }
+
+        public void setHospitalId(String hospitalId) {
+            this.hospitalId = hospitalId;
         }
 
         public String getSurgeon() {

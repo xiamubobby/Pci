@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
@@ -127,7 +128,6 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
 //        binding.setBean(new DoctorBasicInfoBean());
         OttoManager.register(this);
         ButterKnife.bind(this);
-
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -351,7 +351,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
 
     @Override
     public void buyFreeSuccess() {
-        OttoManager.post(new BuyPackageSuccessOtto());
+        sendOtto(false);
     }
 
     @Override
@@ -368,7 +368,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
 
     @Override
     public void doctorGroupExpired(String message) {
-        OttoManager.post(new DoctorGroupExpiredOtto());
+        sendOtto(true);
         showShortToast(message);
         finish();
     }
@@ -394,7 +394,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
     public void showMsg(String result) {
         switch (result) {
             case "success":
-                OttoManager.post(new BuyPackageSuccessOtto());
+                sendOtto(false);
                 requestData();
                 result = "支付成功";
                 break;
@@ -413,6 +413,20 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
         builder.setTitle("提示");
         builder.setPositiveButton("确定", null);
         builder.create().show();
+    }
+
+    private void sendOtto(final boolean isGroup) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isGroup){
+                    OttoManager.post(new DoctorGroupExpiredOtto());
+                }else {
+                    OttoManager.post(new BuyPackageSuccessOtto());
+                }
+
+            }
+        }, 400);
     }
 
     @Override
@@ -466,7 +480,6 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
         super.onDestroy();
         mMemberRVAdapter = null;
         mGroupOfDoctorRVAdapter = null;
-        OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
 }

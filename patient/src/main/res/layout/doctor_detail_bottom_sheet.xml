@@ -38,6 +38,7 @@
     <TextView
         android:id="@+id/tv_doctor_detail_bottom_sheet_desc"
         android:layout_width="wrap_content"
+        android:minHeight="@dimen/item_height_min"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tv_doctor_detail_bottom_sheet_package_name"

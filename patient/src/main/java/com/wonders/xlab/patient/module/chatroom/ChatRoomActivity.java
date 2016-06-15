@@ -394,7 +394,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         super.onPause();
         mIsPaused = true;
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_chat_room));
-
         MobclickAgent.onPause(this);
 
     }
@@ -403,7 +402,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     public void onDestroy() {
         super.onDestroy();
         mChatRoomRVAdapter = null;
-        OttoManager.unregister(this);
         ButterKnife.unbind(this);
     }
 

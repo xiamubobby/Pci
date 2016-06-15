@@ -97,7 +97,7 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
         } else if (TextUtils.isDigitsOnly(bloodSugar) && Integer.parseInt(bloodSugar) == 0) {
             showShortToast("请输入正确的血糖值(0~50)");
             return;
-        } else if (Integer.parseInt(bloodSugar) < 0 || Integer.parseInt(bloodSugar) > 50) {
+        } else if (isSugarAvailable(bloodSugar)) {
             showShortToast("请输入正确的血糖值(0~50)");
             return;
         }
@@ -108,6 +108,13 @@ public class BSAddActivity extends AppbarActivity implements BSSavePresenter.BSS
         dialog.setMessage("正在保存，请稍候...");
         dialog.show();
         mRecordSavePresenter.saveBSSingle(AIManager.getInstance().getPatientId(), date, periodIndex, Float.parseFloat(bloodSugar));
+    }
+
+    private boolean isSugarAvailable(String sugar) {
+        Float f = Float.parseFloat(sugar);
+        int ret1 = Float.compare(f, 0f);
+        int ret2 = Float.compare(f, 50f);
+        return ret1 < 0 || ret2 > 0;
     }
 
     private boolean mIsToday = true;

@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.dailyreport.fragment;
+package com.wonders.xlab.patient.module.dailyreport.fragment.bp;
 
 
 import android.graphics.Paint;

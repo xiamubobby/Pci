@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.dailyreport.fragment;
+package com.wonders.xlab.patient.module.dailyreport.fragment.symptom;
 
 
 import android.content.Intent;
@@ -23,9 +23,7 @@ import com.wonders.xlab.patient.module.dailyreport.adapter.bean.SymptomReportBea
 import com.wonders.xlab.patient.module.dailyreport.datarecord.symptom.SymptomActivity;
 import com.wonders.xlab.patient.mvp.presenter.ISymptomReportPresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.SymptomReportPresenter;
-import com.wonders.xlab.patient.otto.ShowMeasureChooseDialogOtto;
 import com.wonders.xlab.patient.otto.SymptomSaveSuccessOtto;
-import com.wonders.xlab.patient.util.UmengEventId;
 
 import java.util.List;
 

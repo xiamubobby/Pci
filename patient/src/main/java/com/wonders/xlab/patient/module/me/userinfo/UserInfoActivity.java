@@ -83,6 +83,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
     private MyAddressUtil addressUtil;
     private String sexId;
     private String sex;
+    private String hospitalId;
     private List<String> mTmpImageFilePath = new ArrayList<>();
     /**
      * 保存选择的图片
@@ -117,15 +118,16 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
             timeStr = DateUtil.format(entity.getLastOperationDate(), "yyyy-MM-dd");
         }
         ImageViewManager.setImageViewWithUrl(this, mIvPortrait, AIManager.getInstance().getPatientPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
-        sex = AIManager.getInstance().getPatientSex();
+        sex = entity.getSex();
         if (sex.equals("男")) {
             sexId = "Male";
         } else {
             sexId = "Female";
         }
 
+        hospitalId = entity.getHospitalId();
         mTextViewSex.setText(sex);
-        mTextViewAge.setText(AIManager.getInstance().getPatientAge());
+        mTextViewAge.setText(entity.getAge());
         address = entity.getAddress();
         addressId = entity.getAddressCode();
         mTvUserInfoSurgeryTime.setText(timeStr);
@@ -283,11 +285,11 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
                 body.setBracketNum(Integer.parseInt(mTvUserInfoNumber.getText().toString()));
                 body.setCaseHistory(mTvUserInfoHistory.getText().toString());
                 body.setSurgeon(mTvUserInfoDoctor.getText().toString());
-                Object hospitalId = mTextViewHospital.getTag();
-                if (hospitalId != null) {
-                    body.setHospitalId(String.valueOf(hospitalId));
+                Object tempId = mTextViewHospital.getTag();
+                if (tempId != null) {
+                    hospitalId = String.valueOf(tempId);
                 }
-
+                body.setHospitalId(hospitalId);
                 mPresenter.modifyUserInfo(body);
                 break;
         }

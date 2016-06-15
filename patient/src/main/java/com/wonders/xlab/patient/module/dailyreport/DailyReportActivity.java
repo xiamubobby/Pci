@@ -32,9 +32,9 @@ import com.wonders.xlab.patient.module.dailyreport.datarecord.bp.BPGuideActivity
 import com.wonders.xlab.patient.module.dailyreport.datarecord.bs.BSAddActivity;
 import com.wonders.xlab.patient.module.dailyreport.datarecord.bs.BSGuideActivity;
 import com.wonders.xlab.patient.module.dailyreport.datarecord.symptom.SymptomActivity;
-import com.wonders.xlab.patient.module.dailyreport.fragment.BPReportFragment;
-import com.wonders.xlab.patient.module.dailyreport.fragment.BSReportFragment;
-import com.wonders.xlab.patient.module.dailyreport.fragment.SymptomReportFragment;
+import com.wonders.xlab.patient.module.dailyreport.fragment.bp.BPReportFragment;
+import com.wonders.xlab.patient.module.dailyreport.fragment.bs.BSReportFragment;
+import com.wonders.xlab.patient.module.dailyreport.fragment.symptom.SymptomReportFragment;
 import com.wonders.xlab.patient.otto.BPSaveSuccessOtto;
 import com.wonders.xlab.patient.otto.BSSaveSuccessOtto;
 import com.wonders.xlab.patient.otto.ShowMeasureChooseDialogOtto;

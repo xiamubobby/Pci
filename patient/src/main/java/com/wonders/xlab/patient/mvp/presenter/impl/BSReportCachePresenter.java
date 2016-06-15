@@ -42,8 +42,8 @@ public class BSReportCachePresenter extends BasePresenter implements IBSReportPr
                 .equalTo("patientId", patientId)
                 .between("recordTimeInMill", beginTime.getTimeInMillis(), endTime.getTimeInMillis());
 
-        RealmResults<BSReportRealmBean> results = query.findAll();
-        results.sort("recordTimeInMill", Sort.DESCENDING);
+        RealmResults<BSReportRealmBean> results = query.findAll().sort("recordTimeInMill", Sort.DESCENDING);//排序单独操作无效，排序操作是异步的
+//        results.sort("recordTimeInMill", Sort.DESCENDING);
         if (results.size() <= 0) {
             listener.showEmptyView();
             return;

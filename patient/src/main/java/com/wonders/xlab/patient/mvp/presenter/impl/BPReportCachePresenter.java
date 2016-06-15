@@ -31,8 +31,7 @@ public class BPReportCachePresenter extends BasePresenter implements IBPReportPr
                 .equalTo("patientId", patientId)
                 .between("recordTimeInMill", DateUtil.getStartTimeInMillOfToday(), DateUtil.getEndTimeInMillOfToday());
 
-        RealmResults<BPReportRealmBean> results = query.findAll();
-        results.sort("recordTimeInMill", Sort.DESCENDING);
+        RealmResults<BPReportRealmBean> results = query.findAll().sort("recordTimeInMill", Sort.DESCENDING);
 
         if (results.size() <= 0) {
             listener.showEmptyView();
