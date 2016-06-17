@@ -2,7 +2,6 @@ package com.wonders.xlab.patient.module.auth.login;
 
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
 import com.wonders.xlab.patient.mvp.api.LoginAPI;
-import com.wonders.xlab.patient.mvp.presenter.LoginPresenterContract;
 
 import dagger.Module;
 import dagger.Provides;
@@ -14,19 +13,19 @@ import retrofit2.Retrofit;
  */
 @Module
 public class LoginModule {
-    private LoginPresenterContract.ViewListener mLoginPresenterListener;
+    private LoginContract.ViewListener mLoginPresenterListener;
 
-    public LoginModule(LoginPresenterContract.ViewListener loginPresenterListener) {
+    public LoginModule(LoginContract.ViewListener loginPresenterListener) {
         mLoginPresenterListener = loginPresenterListener;
     }
 
     /**
-     * @ActivityScoped 必须与其所在的Component一致
      * @return
+     * @ActivityScoped 必须与其所在的Component一致
      */
     @Provides
     @ActivityScoped
-    LoginPresenterContract.ViewListener provideLoginPresenterListener() {
+    LoginContract.ViewListener provideLoginPresenterListener() {
         return mLoginPresenterListener;
     }
 

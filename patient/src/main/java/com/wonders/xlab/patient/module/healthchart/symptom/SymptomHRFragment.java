@@ -13,8 +13,8 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.SymptomReportBean;
-import com.wonders.xlab.patient.mvp.presenter.ISymptomReportPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.SymptomReportPresenter;
+import com.wonders.xlab.patient.module.dailyreport.fragment.symptom.ISymptomReportPresenter;
+import com.wonders.xlab.patient.module.dailyreport.fragment.symptom.SymptomReportPresenter;
 import com.wonders.xlab.patient.otto.SymptomSaveSuccessOtto;
 
 import java.util.Calendar;

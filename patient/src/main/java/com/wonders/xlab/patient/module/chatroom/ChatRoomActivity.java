@@ -18,16 +18,16 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.adapter.multi.MultiRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.chatroom.adapter.ChatRoomRVAdapter;
 import com.wonders.xlab.patient.module.chatroom.bean.ChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.MeChatRoomBean;
 import com.wonders.xlab.patient.module.chatroom.bean.OthersChatRoomBean;
+import com.wonders.xlab.patient.module.chatroom.di.ChatRoomModule;
+import com.wonders.xlab.patient.module.chatroom.di.DaggerChatRoomComponent;
 import com.wonders.xlab.patient.module.chatroom.otto.ChatRoomRecordInsertOtto;
 import com.wonders.xlab.patient.module.doctordetail.DoctorDetailActivity;
-import com.wonders.xlab.patient.mvp.presenter.IChatRoomPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.ChatRoomPresenter;
-import com.wonders.xlab.patient.otto.BuyPackageSuccessOtto;
 import com.wonders.xlab.patient.util.UnReadMessageUtil;
 
 import java.util.Calendar;
@@ -46,7 +46,7 @@ import im.hua.utils.NotifyUtil;
 /**
  * 聊天界面
  */
-public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresenter.ChatRoomPresenterListener {
+public class ChatRoomActivity extends AppbarActivity implements ChatRoomContract.ViewListener {
     public final static String EXTRA_GROUP_NAME = "groupName";
 
     public final static String EXTRA_OWNER_ID = "ownerId";
@@ -80,7 +80,7 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
     @Bind(R.id.et_chat_room_input)
     EditText mEtChatRoomInput;
 
-    private IChatRoomPresenter mChatRoomPresenter;
+    private ChatRoomContract.Presenter mChatRoomPresenter;
 
     @Bind(R.id.recycler_view_chat_room)
     CommonRecyclerView mRecyclerView;
@@ -155,14 +155,19 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
             }
         });
 
-        mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance().getPatientId());
+//        mChatRoomPresenter = new ChatRoomPresenter(this, AIManager.getInstance().getPatientId());
+        mChatRoomPresenter = DaggerChatRoomComponent.builder()
+                .applicationComponent(XApplication.getComponent())
+                .chatRoomModule(new ChatRoomModule(this))
+                .build()
+                .getChatRoomPresenter();
         addPresenter(mChatRoomPresenter);
 
         mRecyclerView.showLoadMore();
         mChatRoomPresenter.getChatList(imGroupId, true);
     }
 
-  /*  @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_chat_room, menu);
         return true;
@@ -170,13 +175,14 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         switch (item.getItemId()) {
             case R.id.menu_chat_room_detail:
                 goToDoctorDetailActivity();
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }*/
+    }
 
     private void goToDoctorDetailActivity() {
         if (!TextUtils.isEmpty(groupName) && !TextUtils.isEmpty(ownerId)) {
@@ -360,25 +366,6 @@ public class ChatRoomActivity extends AppbarActivity implements ChatRoomPresente
         mRecyclerView.hideRefreshOrLoadMore(true, true);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_chat_room, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.menu_chat_room_detail:
-                Intent intent = new Intent(ChatRoomActivity.this, DoctorDetailActivity.class);
-                intent.putExtra(DoctorDetailActivity.EXTRA_TITLE, groupName);
-                intent.putExtra(DoctorDetailActivity.EXTRA_ID, ownerId);
-                startActivity(intent);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onResume() {

@@ -21,8 +21,6 @@ import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.dailyreport.adapter.SymptomReportAdapter;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.SymptomReportBean;
 import com.wonders.xlab.patient.module.dailyreport.datarecord.symptom.SymptomActivity;
-import com.wonders.xlab.patient.mvp.presenter.ISymptomReportPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.SymptomReportPresenter;
 import com.wonders.xlab.patient.otto.SymptomSaveSuccessOtto;
 
 import java.util.List;

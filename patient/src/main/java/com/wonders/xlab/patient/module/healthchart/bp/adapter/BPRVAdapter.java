@@ -1,7 +1,9 @@
 package com.wonders.xlab.patient.module.healthchart.bp.adapter;
 
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,15 +78,15 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
         ItemViewHolder viewHolder = (ItemViewHolder) holder;
         viewHolder.mBinding.setBp(getBean(position));
         BPListBean bean = getBean(position);
-
-        Drawable drawableUp = viewHolder.itemView.getContext().getResources().getDrawable(R.drawable.pic_arrow_up);
+        Drawable drawableUp = ContextCompat.getDrawable(viewHolder.itemView.getContext(),R.drawable.pic_arrow_up);
         if (drawableUp != null) {
             drawableUp.setBounds(0, 0, drawableUp.getMinimumWidth(), drawableUp.getMinimumHeight());
         }
-        Drawable drawableDown = viewHolder.itemView.getContext().getResources().getDrawable(R.drawable.pic_arrow_down);
+        Drawable drawableDown = ContextCompat.getDrawable(viewHolder.itemView.getContext(),R.drawable.pic_arrow_down);
         if (drawableDown != null) {
             drawableDown.setBounds(0, 0, drawableDown.getMinimumWidth(), drawableDown.getMinimumHeight());
         }
+
 
         if (bean.getDiastolicStandard() == 0) {
             viewHolder.diastolic.setCompoundDrawables(null, null, drawableDown, null);
@@ -95,18 +97,19 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
         }
         if (bean.getHeartStandard() == 0) {
             viewHolder.heartRate.setCompoundDrawables(null, null, drawableDown, null);
-        } else if (bean.getDiastolicStandard() == 2) {
+        } else if (bean.getHeartStandard() == 2) {
             viewHolder.heartRate.setCompoundDrawables(null, null, drawableUp, null);
         } else {
             viewHolder.heartRate.setCompoundDrawables(null, null, null, null);
         }
         if (bean.getSystolicStandard() == 0) {
             viewHolder.systolic.setCompoundDrawables(null, null, drawableDown, null);
-        } else if (bean.getDiastolicStandard() == 2) {
+        } else if (bean.getSystolicStandard() == 2) {
             viewHolder.systolic.setCompoundDrawables(null, null, drawableUp, null);
         } else {
             viewHolder.systolic.setCompoundDrawables(null, null, null, null);
         }
+
     }
 
     @Override
@@ -147,7 +150,7 @@ public class BPRVAdapter extends SimpleRVAdapter<BPListBean> implements StickyRe
 
         public ItemViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             mBinding = BpHrItemBinding.bind(itemView);
             ButterKnife.bind(this, itemView);
         }

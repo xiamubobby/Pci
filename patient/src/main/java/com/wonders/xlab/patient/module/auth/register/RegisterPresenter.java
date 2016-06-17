@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.presenter;
+package com.wonders.xlab.patient.module.auth.register;
 
 import android.text.TextUtils;
 
@@ -6,8 +6,6 @@ import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.mvp.entity.RegisterEntity;
 import com.wonders.xlab.patient.mvp.model.GetCaptureModel;
 import com.wonders.xlab.patient.mvp.model.GetCaptureModelContract;
-import com.wonders.xlab.patient.mvp.model.RegisterModel;
-import com.wonders.xlab.patient.mvp.model.RegisterModelContract;
 
 import javax.inject.Inject;
 
@@ -16,13 +14,13 @@ import im.hua.library.base.mvp.impl.BasePresenter;
 /**
  * Created by hua on 16/5/4.
  */
-public class RegisterPresenter extends BasePresenter implements RegisterPresenterContract.Actions {
-    private RegisterPresenterContract.ViewListener mListener;
+public class RegisterPresenter extends BasePresenter implements RegisterContract.Presenter {
+    private RegisterContract.ViewListener mListener;
     private GetCaptureModelContract.Actions mGetCaptureModel;
-    private RegisterModelContract.Actions mRegisterModel;
+    private RegisterContract.Model mRegisterModel;
 
     @Inject
-    public RegisterPresenter(RegisterPresenterContract.ViewListener listener, GetCaptureModel getCaptureModel, RegisterModel registerModel) {
+    public RegisterPresenter(RegisterContract.ViewListener listener, GetCaptureModel getCaptureModel, RegisterModel registerModel) {
         mListener = listener;
         mGetCaptureModel = getCaptureModel;
         mRegisterModel = registerModel;
@@ -63,12 +61,12 @@ public class RegisterPresenter extends BasePresenter implements RegisterPresente
         }
 
         mListener.showLoading("正在注册，请稍候...");
-        mRegisterModel.register(mobile, password, captcha, new RegisterModelContract.Callback() {
+        mRegisterModel.register(mobile, password, captcha, new RegisterContract.Callback() {
             @Override
             public void onRegisterSuccess(RegisterEntity entity) {
                 //TODO 保存注册信息
                 RegisterEntity.RetValuesEntity retValues = entity.getRet_values();
-                AIManager.getInstance().savePatientInfo(retValues.getId(),retValues.getTel(),retValues.getAvatarUrl(),retValues.getName(),"","");
+                AIManager.getInstance().savePatientInfo(retValues.getId(), retValues.getTel(), retValues.getAvatarUrl(), retValues.getName(), "", "");
                 mListener.hideLoading();
                 mListener.onRegisterSuccess("注册成功");
             }

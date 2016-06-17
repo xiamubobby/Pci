@@ -16,8 +16,8 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.MainActivity;
 import com.wonders.xlab.patient.module.auth.FinishLoginOtto;
+import com.wonders.xlab.patient.module.auth.login.di.DaggerLoginComponent;
 import com.wonders.xlab.patient.module.auth.register.RegisterActivity;
-import com.wonders.xlab.patient.mvp.presenter.LoginPresenterContract;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -26,7 +26,7 @@ import im.hua.library.base.BaseActivity;
 import im.hua.utils.KeyboardUtil;
 import im.hua.utils.ViewHelper;
 
-public class LoginActivity extends BaseActivity implements LoginPresenterContract.ViewListener, TextView.OnEditorActionListener {
+public class LoginActivity extends BaseActivity implements LoginContract.ViewListener, TextView.OnEditorActionListener {
 
     @Bind(R.id.login_phone_number)
     EditText mEtPhoneNumber;
@@ -35,7 +35,7 @@ public class LoginActivity extends BaseActivity implements LoginPresenterContrac
     @Bind(R.id.container)
     LinearLayout mContainer;
 
-    private LoginPresenterContract.Actions mLoginPresenter;
+    private LoginContract.Presenter mLoginPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

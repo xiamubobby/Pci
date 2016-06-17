@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.model;
+package com.wonders.xlab.patient.module.dailyreport.fragment.symptom;
 
 import im.hua.library.base.mvp.IBaseModel;
 

@@ -15,10 +15,12 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.application.XApplication;
+import com.wonders.xlab.patient.module.alldoctor.di.AllDoctorModule;
 import com.wonders.xlab.patient.module.dailyreport.adapter.BPReportAdapter;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportRealmBean;
-import com.wonders.xlab.patient.mvp.presenter.IBPReportPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.BPReportCachePresenter;
+import com.wonders.xlab.patient.module.dailyreport.fragment.bp.di.BPReportModule;
+import com.wonders.xlab.patient.module.dailyreport.fragment.bp.di.DaggerBPReportComponent;
 import com.wonders.xlab.patient.otto.BPSaveSuccessOtto;
 import com.wonders.xlab.patient.otto.ShowMeasureChooseDialogOtto;
 import com.wonders.xlab.patient.util.UmengEventId;
@@ -33,9 +35,9 @@ import im.hua.uikit.crv.CommonRecyclerView;
 /**
  * 今日血压
  */
-public class BPReportFragment extends BaseFragment implements BPReportCachePresenter.BPReportCachePresenterListener {
+public class BPReportFragment extends BaseFragment implements BPReportContract.ViewListener {
 
-    private IBPReportPresenter mBPReportPresenter;
+    private BPReportContract.Presenter mBPReportPresenter;
 
     @Bind(R.id.recycler_view_blood_pressure_report)
     CommonRecyclerView mRecyclerView;
@@ -57,7 +59,12 @@ public class BPReportFragment extends BaseFragment implements BPReportCachePrese
         View view = inflater.inflate(R.layout.bp_report_fragment, container, false);
         ButterKnife.bind(this, view);
 
-        mBPReportPresenter = new BPReportCachePresenter(this);
+        mBPReportPresenter = DaggerBPReportComponent.builder()
+                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .bPReportModule(new BPReportModule(this))
+                .build()
+                .getBPReportCachePresenter();
+//        mBPReportPresenter = new BPReportCachePresenter(this);
         addPresenter(mBPReportPresenter);
         return view;
     }

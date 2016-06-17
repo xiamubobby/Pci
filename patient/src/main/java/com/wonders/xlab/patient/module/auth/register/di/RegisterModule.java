@@ -1,8 +1,8 @@
-package com.wonders.xlab.patient.module.auth.register;
+package com.wonders.xlab.patient.module.auth.register.di;
 
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
+import com.wonders.xlab.patient.module.auth.register.RegisterContract;
 import com.wonders.xlab.patient.mvp.api.AuthAPI;
-import com.wonders.xlab.patient.mvp.presenter.RegisterPresenterContract;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,15 +13,15 @@ import retrofit2.Retrofit;
  */
 @Module
 public class RegisterModule {
-    private RegisterPresenterContract.ViewListener mViewListener;
+    private RegisterContract.ViewListener mViewListener;
 
-    public RegisterModule(RegisterPresenterContract.ViewListener viewListener) {
+    public RegisterModule(RegisterContract.ViewListener viewListener) {
         mViewListener = viewListener;
     }
 
     @Provides
     @ActivityScoped
-    RegisterPresenterContract.ViewListener provideRegisterPresenterListener() {
+    RegisterContract.ViewListener provideRegisterPresenterListener() {
         return mViewListener;
     }
 

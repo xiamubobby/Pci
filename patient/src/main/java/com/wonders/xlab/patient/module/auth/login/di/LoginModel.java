@@ -1,7 +1,8 @@
-package com.wonders.xlab.patient.mvp.model;
+package com.wonders.xlab.patient.module.auth.login.di;
 
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.base.PatientBaseModel;
+import com.wonders.xlab.patient.module.auth.login.LoginContract;
 import com.wonders.xlab.patient.mvp.api.LoginAPI;
 import com.wonders.xlab.patient.mvp.entity.LoginEntity;
 
@@ -14,7 +15,7 @@ import im.hua.utils.MD5Util;
 /**
  * Created by hua on 15/12/17.
  */
-public class LoginModel extends PatientBaseModel implements LoginModelContract.Actions {
+public class LoginModel extends PatientBaseModel implements LoginContract.Model {
 
     private LoginAPI mLoginAPI;
 
@@ -35,7 +36,7 @@ public class LoginModel extends PatientBaseModel implements LoginModelContract.A
     }
 
     @Override
-    public void login(String tel, String password, final LoginModelContract.Callback callback) {
+    public void login(String tel, String password, final LoginContract.Callback callback) {
         HashMap<String, String> body = new HashMap<>();
         body.put("tel", tel);
         body.put("password", new MD5Util().encrypt(password));

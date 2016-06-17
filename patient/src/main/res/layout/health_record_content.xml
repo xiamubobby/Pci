@@ -70,6 +70,7 @@
         android:layout_alignParentBottom="true"
         android:text="@string/health_record_btn_un_authorize"
         android:textColor="@android:color/white"
+        android:background="@drawable/selector_confirm_button_red"
         android:textSize="@dimen/text_size_middle" />
 
 </RelativeLayout>

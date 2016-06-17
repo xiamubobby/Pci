@@ -1,8 +1,8 @@
-package com.wonders.xlab.patient.module.auth.register;
+package com.wonders.xlab.patient.module.auth.register.di;
 
 import com.wonders.xlab.patient.di.ApplicationComponent;
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
-import com.wonders.xlab.patient.mvp.presenter.RegisterPresenter;
+import com.wonders.xlab.patient.module.auth.register.RegisterPresenter;
 
 import dagger.Component;
 

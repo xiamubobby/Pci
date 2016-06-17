@@ -1,15 +1,15 @@
-package com.wonders.xlab.patient.mvp.presenter.impl;
+package com.wonders.xlab.patient.module.dailyreport.fragment.bs;
 
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportRealmBean;
-import com.wonders.xlab.patient.mvp.presenter.IBSReportPresenter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import im.hua.library.base.mvp.impl.BasePresenter;
-import im.hua.library.base.mvp.listener.BasePresenterListener;
 import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -17,13 +17,13 @@ import io.realm.Sort;
 /**
  * Created by hua on 16/3/21.
  */
-public class BSReportCachePresenter extends BasePresenter implements IBSReportPresenter {
-    private BPReportCachePresenterListener listener;
+public class BSReportCachePresenter extends BasePresenter implements BSReportContract.Presenter {
+    private BSReportContract.ViewListener listener;
 
     private Calendar beginTime = Calendar.getInstance();
     private Calendar endTime = Calendar.getInstance();
-
-    public BSReportCachePresenter(BPReportCachePresenterListener listener) {
+    @Inject
+    public BSReportCachePresenter(BSReportContract.ViewListener listener) {
         this.listener = listener;
 
         beginTime.set(Calendar.HOUR_OF_DAY, 0);
@@ -57,9 +57,4 @@ public class BSReportCachePresenter extends BasePresenter implements IBSReportPr
         listener.showBSList(BSReportRealmBeanList);
     }
 
-    public interface BPReportCachePresenterListener extends BasePresenterListener {
-        void showBSList(List<BSReportRealmBean> beanList);
-
-        void showEmptyView();
-    }
 }

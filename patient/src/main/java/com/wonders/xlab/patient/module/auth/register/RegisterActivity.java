@@ -15,7 +15,8 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.MainActivity;
 import com.wonders.xlab.patient.module.auth.FinishLoginOtto;
-import com.wonders.xlab.patient.mvp.presenter.RegisterPresenterContract;
+import com.wonders.xlab.patient.module.auth.register.di.DaggerRegisterComponent;
+import com.wonders.xlab.patient.module.auth.register.di.RegisterModule;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,7 +24,7 @@ import butterknife.OnClick;
 import im.hua.library.base.BaseActivity;
 import im.hua.utils.KeyboardUtil;
 
-public class RegisterActivity extends BaseActivity implements RegisterPresenterContract.ViewListener {
+public class RegisterActivity extends BaseActivity implements RegisterContract.ViewListener {
 
     @Bind(R.id.login_phone_number)
     EditText loginPhoneNumber;
@@ -36,7 +37,7 @@ public class RegisterActivity extends BaseActivity implements RegisterPresenterC
     @Bind(R.id.btn_register)
     Button btnRegister;
 
-    private RegisterPresenterContract.Actions mRegisterPresenter;
+    private RegisterContract.Presenter mRegisterPresenter;
 
     CountDownTimer mCountDownTimer;
 

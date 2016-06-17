@@ -17,8 +17,6 @@ import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.dailyreport.adapter.BSReportAdapter;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportRealmBean;
-import com.wonders.xlab.patient.mvp.presenter.IBSReportPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.BSReportCachePresenter;
 import com.wonders.xlab.patient.otto.BSSaveSuccessOtto;
 import com.wonders.xlab.patient.otto.ShowMeasureChooseDialogOtto;
 import com.wonders.xlab.patient.util.UmengEventId;
@@ -33,8 +31,8 @@ import im.hua.uikit.crv.CommonRecyclerView;
 /**
  * 今日血糖
  */
-public class BSReportFragment extends BaseFragment implements BSReportCachePresenter.BPReportCachePresenterListener {
-    private IBSReportPresenter mBSReportPresenter;
+public class BSReportFragment extends BaseFragment implements BSReportContract.ViewListener {
+    private BSReportContract.Presenter mBSReportPresenter;
 
     @Bind(R.id.recycler_view_blood_sugar_report)
     CommonRecyclerView mRecyclerView;

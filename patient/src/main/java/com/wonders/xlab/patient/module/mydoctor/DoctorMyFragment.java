@@ -102,7 +102,6 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyContract.V
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                showLongToast("数据刷新");
                 mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
             }
         }, 5000);
