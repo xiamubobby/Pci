@@ -12,11 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.me.about.AboutUsActivity;
+import com.wonders.xlab.patient.module.me.otto.UserInfoChangeOtto;
 import com.wonders.xlab.patient.module.me.setting.SettingActivity;
 import com.wonders.xlab.patient.module.me.userinfo.UserInfoActivity;
 import com.wonders.xlab.patient.module.order.OrderListActivity;
@@ -57,6 +59,7 @@ public class MeFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.me_fragment, container, false);
+        OttoManager.register(this);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -64,6 +67,11 @@ public class MeFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        showUserInfo();
+
+    }
+
+    private void showUserInfo() {
         ImageViewManager.setImageViewWithUrl(getActivity(), mIvMePortrait, AIManager.getInstance().getPatientPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
         mTvMeName.setText(AIManager.getInstance().getPatientName());
         if (!TextUtils.isEmpty(AIManager.getInstance().getPatientSex())) {
@@ -76,7 +84,11 @@ public class MeFragment extends BaseFragment {
         } else {
             mTvMeAge.setText("年龄：暂无");
         }
+    }
 
+    @Subscribe
+    public void refreshUserInfo(UserInfoChangeOtto otto) {
+        showUserInfo();
     }
 
     @OnClick(R.id.rl_me_user_info)

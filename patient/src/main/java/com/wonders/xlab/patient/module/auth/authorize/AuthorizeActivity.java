@@ -204,9 +204,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizeContra
                     break;
                 case REQUEST_CROP_IMAGE:
                     String imageFilePath = data.getStringExtra(CropActivity.RESULT_IMAGE_PATH);
-
                     mTmpImageFilePath.add(imageFilePath);
-
                     mPickedIdPicFile = new File(imageFilePath);
                     Uri uri = Uri.fromFile(mPickedIdPicFile);
                     ImageViewManager.setImageViewWithUri(this, mIvAuthorizeAddPic, uri, ImageViewManager.PLACE_HOLDER_EMPTY);
