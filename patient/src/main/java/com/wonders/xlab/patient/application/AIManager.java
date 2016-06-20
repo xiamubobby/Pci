@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.Constant;
 import com.wonders.xlab.patient.data.realm.MedicationUsagesRealm;
-import com.wonders.xlab.patient.data.realm.MedicineRemindRealm;
 import com.wonders.xlab.patient.data.realm.PatientInfoRealm;
 import com.wonders.xlab.patient.data.realm.UnReadMessageRealm;
 import com.wonders.xlab.patient.util.RealmUtil;
@@ -48,7 +47,7 @@ public class AIManager {
             RealmUtil.deleteRealm(PatientInfoRealm.class);
             RealmUtil.deleteRealm(UnReadMessageRealm.class);
 //            RealmUtil.deleteRealm(MedicineRemindRealm.class);
-            RealmUtil.deleteRealm(MedicationUsagesRealm.class);
+//            RealmUtil.deleteRealm(MedicationUsagesRealm.class);
         }
 
     }
@@ -119,10 +118,6 @@ public class AIManager {
         patientInfoRealm.setPatientPhoneNumber(tel);
         patientInfoRealm.setPatientPortraitUrl(portraitUrl);
         XApplication.realm.commitTransaction();
-    }
-
-    public void modifyPatientName(String patientName) {
-        modifyPatientInfo(null, null, null, patientName, null, null);
     }
 
     public void modifyPatientInfo(String patientId, String tel, String portraitUrl, String patientName, String sex, String age) {

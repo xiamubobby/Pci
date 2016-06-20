@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
@@ -18,6 +19,8 @@ import com.wonders.xlab.patient.base.TextInputActivity;
 import com.wonders.xlab.patient.module.auth.authorize.crop.CropActivity;
 import com.wonders.xlab.patient.module.me.address.AddressActivity;
 import com.wonders.xlab.patient.module.me.hospital.HospitalActivity;
+import com.wonders.xlab.patient.module.me.otto.UserIconUpdateOtto;
+import com.wonders.xlab.patient.module.me.otto.UserInfoUpdateOtto;
 import com.wonders.xlab.patient.module.me.sex.SexActivity;
 import com.wonders.xlab.patient.module.me.userinfo.di.DaggerUserInfoComponent;
 import com.wonders.xlab.patient.module.me.userinfo.di.UserInfoModule;
@@ -29,7 +32,6 @@ import com.wonders.xlab.patient.util.MyAddressUtil;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -49,14 +51,11 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
     private final int REQUEST_CODE_HOSPITAL = REQUEST_CODE << 5;
     private final int REQUEST_CODE_PIC = REQUEST_CODE << 6;
     private final int REQUEST_CROP_IMAGE = REQUEST_CODE << 7;
-    private final int REQUEST_CODE_NAME = REQUEST_CODE << 8;
-    private final int REQUEST_CODE_SEX = REQUEST_CODE << 9;
-    private final int REQUEST_CODE_AGE = REQUEST_CODE << 10;
+    private final int REQUEST_CODE_SEX = REQUEST_CODE << 8;
+    private final int REQUEST_CODE_AGE = REQUEST_CODE << 9;
 
     @Bind(R.id.iv_user_avatar)
     ImageView mIvPortrait;
-    @Bind(R.id.tv_user_info_name)
-    TextView mTextViewName;
     @Bind(R.id.tv_user_info_sex)
     TextView mTextViewSex;
     @Bind(R.id.tv_user_info_age)
@@ -76,15 +75,14 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
 
     private UserInfoPresenter mPresenter;
 
-    private int mHospitalSpSelectedPosition = 0;
-
     private String addressId;
     private String address;
     private MyAddressUtil addressUtil;
     private String sexId;
     private String sex;
+    private String age;
     private String hospitalId;
-    private List<String> mTmpImageFilePath = new ArrayList<>();
+    private String imageFilePath;
     /**
      * 保存选择的图片
      */
@@ -98,6 +96,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OttoManager.register(this);
         ButterKnife.bind(this);
         mPresenter = DaggerUserInfoComponent.builder()
                 .applicationComponent(XApplication.getComponent())
@@ -112,6 +111,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
 
     @Override
     public void showUserInfo(UserInfoEntity.RetValuesEntity entity) {
+
         mTvUserInfoDoctor.setText(entity.getSurgeon());
         String timeStr = "";
         if (0 != entity.getLastOperationDate()) {
@@ -127,7 +127,8 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
 
         hospitalId = entity.getHospitalId();
         mTextViewSex.setText(sex);
-        mTextViewAge.setText(entity.getAge());
+        age = entity.getAge();
+        mTextViewAge.setText(age);
         address = entity.getAddress();
         addressId = entity.getAddressCode();
         mTvUserInfoSurgeryTime.setText(timeStr);
@@ -135,6 +136,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
         mTvUserInfoHistory.setText(entity.getCaseHistory());
         mTvUserInfoAddress.setText(addressUtil.getFrontAddress(addressId) + address);
         mTextViewHospital.setText(entity.getHospital());
+        AIManager.getInstance().modifyPatientInfo(null, null, null, null, sex, age);
     }
 
     private Calendar mCalendarSurgeryDate = Calendar.getInstance();
@@ -146,13 +148,8 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
         startActivityForResult(intent, REQUEST_CODE_PIC);
     }
 
-    @OnClick(R.id.tv_user_info_name)
-    public void editName() {
-        goToTextInputActivity(mTvUserInfoDoctor.getText().toString(), "请输入姓名", "姓名", REQUEST_CODE_NAME, false);
-    }
-
     @OnClick(R.id.tv_user_info_sex)
-    public void goToCHooseSex() {
+    public void goToChooseSex() {
         startActivityForResult(new Intent(this, SexActivity.class), REQUEST_CODE_SEX);
     }
 
@@ -220,6 +217,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
 
     @Override
     public void modifyUserInfoSuccess(String message) {
+        OttoManager.post(new UserInfoUpdateOtto(sex, age));
         showShortToast(message);
     }
 
@@ -230,6 +228,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
 
     @Override
     public void modifyUserAvaterSuccess(String message) {
+        OttoManager.post(new UserIconUpdateOtto(imageFilePath));
         showShortToast(message);
     }
 
@@ -325,8 +324,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
             intent.putExtra(CropActivity.EXTRA_IMAGE_PATH, path);
             startActivityForResult(intent, REQUEST_CROP_IMAGE);
         } else if (requestCode == REQUEST_CROP_IMAGE) {
-            String imageFilePath = data.getStringExtra(CropActivity.RESULT_IMAGE_PATH);
-            mTmpImageFilePath.add(imageFilePath);
+            imageFilePath = data.getStringExtra(CropActivity.RESULT_IMAGE_PATH);
             mPickedIdPicFile = new File(imageFilePath);
             Uri uri = Uri.fromFile(mPickedIdPicFile);
             ImageViewManager.setImageViewWithUri(this, mIvPortrait, uri, ImageViewManager.PLACE_HOLDER_EMPTY);
@@ -339,10 +337,8 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
         } else {
             String result = data.getStringExtra(TextInputActivity.EXTRA_RESULT);
             switch (requestCode) {
-                case REQUEST_CODE_NAME:
-                    mTextViewName.setText(result);
-                    break;
                 case REQUEST_CODE_AGE:
+                    age = result;
                     mTextViewAge.setText(result);
                     break;
                 case REQUEST_CODE_DOCTOR:

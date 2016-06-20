@@ -293,7 +293,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizeContra
         showShortToast(message);
         mTvAuthorizeName.setText("");
         mTvAuthorizeId.setText("");
-        AIManager.getInstance().modifyPatientName(mPickedIdName);
+        AIManager.getInstance().modifyPatientInfo(null, null, null, mPickedIdName, null, null);
         ImageViewManager.setImageViewWithDrawableId(this, mIvAuthorizeAddPic, R.drawable.ic_group_member_add, ImageViewManager.PLACE_HOLDER_EMPTY);
     }
 

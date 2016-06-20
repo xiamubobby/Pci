@@ -155,7 +155,6 @@ public class AlarmService extends Service implements MediaPlayer.OnPreparedListe
             //play music
             initMediaPlayer();
             mMediaPlayer.prepareAsync();
-
             mAlarmUtil.scheduleMedicineRemindAlarm(this);
         } catch (ArrayIndexOutOfBoundsException e) {
             e.printStackTrace();

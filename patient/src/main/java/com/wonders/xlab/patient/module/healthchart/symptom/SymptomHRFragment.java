@@ -12,9 +12,11 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.SymptomReportBean;
-import com.wonders.xlab.patient.module.dailyreport.fragment.symptom.ISymptomReportPresenter;
-import com.wonders.xlab.patient.module.dailyreport.fragment.symptom.SymptomReportPresenter;
+import com.wonders.xlab.patient.module.dailyreport.fragment.symptom.SymptomReportContract;
+import com.wonders.xlab.patient.module.dailyreport.fragment.symptom.di.DaggerSymptomReportComponent;
+import com.wonders.xlab.patient.module.dailyreport.fragment.symptom.di.SymptomReportModule;
 import com.wonders.xlab.patient.otto.SymptomSaveSuccessOtto;
 
 import java.util.Calendar;
@@ -26,13 +28,13 @@ import im.hua.library.base.BaseFragment;
 import im.hua.uikit.crv.CommonRecyclerView;
 import im.hua.utils.DateUtil;
 
-public class SymptomHRFragment extends BaseFragment implements SymptomReportPresenter.SymptomReportPresenterListener {
+public class SymptomHRFragment extends BaseFragment implements SymptomReportContract.ViewListener {
     @Bind(R.id.recycler_view_symptom_health_report)
     CommonRecyclerView mRecyclerView;
 
     private SymptomHRAdapter adapter;
 
-    private ISymptomReportPresenter mSymptomReportPresenter;
+    private SymptomReportContract.Presenter mSymptomReportPresenter;
 
     public SymptomHRFragment() {
         // Required empty public constructor
@@ -49,7 +51,11 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
         View view = inflater.inflate(R.layout.symptom_health_report_fragment, container, false);
         ButterKnife.bind(this, view);
 
-        mSymptomReportPresenter = new SymptomReportPresenter(this);
+        mSymptomReportPresenter = DaggerSymptomReportComponent.builder()
+                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .symptomReportModule(new SymptomReportModule(this))
+                .build()
+                .getSymptomReportPresenter();
         addPresenter(mSymptomReportPresenter);
         return view;
     }
@@ -148,13 +154,14 @@ public class SymptomHRFragment extends BaseFragment implements SymptomReportPres
         if (null == mRecyclerView) {
             return;
         }
-        mRecyclerView.hideRefreshOrLoadMore(true,true);
+        mRecyclerView.hideRefreshOrLoadMore(true, true);
     }
 
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_symptomhr));
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_symptomhr));

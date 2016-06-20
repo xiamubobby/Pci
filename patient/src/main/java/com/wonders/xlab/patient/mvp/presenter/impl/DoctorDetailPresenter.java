@@ -1,6 +1,7 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.wonders.xlab.common.manager.OttoManager;
@@ -54,7 +55,6 @@ public class DoctorDetailPresenter extends BasePresenter implements IDoctorDetai
     @Override
     public void onReceiveDoctorDetailSuccess(DoctorDetailEntity doctorDetailEntity) {
         mDoctorDetailListener.hideLoading();
-
         if (doctorDetailEntity.getRet_code() == 1) {
             mDoctorDetailListener.doctorGroupExpired(doctorDetailEntity.getMessage());
             return;

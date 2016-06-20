@@ -1,6 +1,7 @@
 package com.wonders.xlab.patient.mvp.presenter.impl;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.wonders.xlab.patient.Constant;
@@ -55,7 +56,6 @@ public class DoctorGroupDetailPresenter extends BasePresenter implements IDoctor
     @Override
     public void onReceiveDoctorGroupDetailSuccess(DoctorGroupDetailEntity groupDetailEntity) {
         mDoctorDetailListener.hideLoading();
-
         DoctorGroupDetailEntity.RetValuesEntity valuesEntity = groupDetailEntity.getRet_values();
 
         if (groupDetailEntity.getRet_code() == 1) {

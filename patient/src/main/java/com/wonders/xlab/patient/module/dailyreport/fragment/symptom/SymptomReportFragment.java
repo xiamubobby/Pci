@@ -18,9 +18,12 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.dailyreport.adapter.SymptomReportAdapter;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.SymptomReportBean;
 import com.wonders.xlab.patient.module.dailyreport.datarecord.symptom.SymptomActivity;
+import com.wonders.xlab.patient.module.dailyreport.fragment.symptom.di.DaggerSymptomReportComponent;
+import com.wonders.xlab.patient.module.dailyreport.fragment.symptom.di.SymptomReportModule;
 import com.wonders.xlab.patient.otto.SymptomSaveSuccessOtto;
 
 import java.util.List;
@@ -35,14 +38,14 @@ import im.hua.utils.DateUtil;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SymptomReportFragment extends BaseFragment implements SymptomReportPresenter.SymptomReportPresenterListener {
+public class SymptomReportFragment extends BaseFragment implements SymptomReportContract.ViewListener {
 
     @Bind(R.id.recycler_view_symptom_report)
     CommonRecyclerView mRecyclerView;
 
     private SymptomReportAdapter adapter;
 
-    private ISymptomReportPresenter mSymptomReportPresenter;
+    private SymptomReportContract.Presenter mSymptomReportPresenter;
 
     public SymptomReportFragment() {
         // Required empty public constructor
@@ -59,7 +62,11 @@ public class SymptomReportFragment extends BaseFragment implements SymptomReport
         View view = inflater.inflate(R.layout.symptom_report_fragment, container, false);
         ButterKnife.bind(this, view);
 
-        mSymptomReportPresenter = new SymptomReportPresenter(this);
+        mSymptomReportPresenter = DaggerSymptomReportComponent.builder()
+                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .symptomReportModule(new SymptomReportModule(this))
+                .build()
+                .getSymptomReportPresenter();
         addPresenter(mSymptomReportPresenter);
         return view;
     }

@@ -18,12 +18,15 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.me.about.AboutUsActivity;
-import com.wonders.xlab.patient.module.me.otto.UserInfoChangeOtto;
+import com.wonders.xlab.patient.module.me.otto.UserIconUpdateOtto;
+import com.wonders.xlab.patient.module.me.otto.UserInfoUpdateOtto;
 import com.wonders.xlab.patient.module.me.setting.SettingActivity;
 import com.wonders.xlab.patient.module.me.userinfo.UserInfoActivity;
 import com.wonders.xlab.patient.module.order.OrderListActivity;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.util.ImageViewManager;
+
+import java.io.File;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -87,8 +90,24 @@ public class MeFragment extends BaseFragment {
     }
 
     @Subscribe
-    public void refreshUserInfo(UserInfoChangeOtto otto) {
-        showUserInfo();
+    public void refreshUserInfo(UserInfoUpdateOtto otto) {
+        if (!TextUtils.isEmpty(otto.getSex())) {
+            mTvMeSex.setText("性别：" + AIManager.getInstance().getPatientSex());
+        } else {
+            mTvMeSex.setText("性别：暂无");
+        }
+        if (!TextUtils.isEmpty(otto.getAge())) {
+            mTvMeAge.setText("年龄：" + AIManager.getInstance().getPatientAge());
+        } else {
+            mTvMeAge.setText("年龄：暂无");
+        }
+    }
+
+    @Subscribe
+    public void refreshUserIcon(UserIconUpdateOtto otto) {
+        File mPickedIdPicFile = new File(otto.getUri());
+        Uri uri = Uri.fromFile(mPickedIdPicFile);
+        ImageViewManager.setImageViewWithUri(getActivity(), mIvMePortrait, uri, ImageViewManager.PLACE_HOLDER_EMPTY);
     }
 
     @OnClick(R.id.rl_me_user_info)
