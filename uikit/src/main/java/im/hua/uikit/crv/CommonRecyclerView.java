@@ -438,6 +438,7 @@ public class CommonRecyclerView extends FrameLayout {
         }
     }
 
+
     /**
      * 显示空数据界面
      *
@@ -648,4 +649,6 @@ public class CommonRecyclerView extends FrameLayout {
     public interface OnLoadMoreListener {
         void onLoadMore();
     }
+
+
 }

@@ -18,13 +18,13 @@ import io.realm.Sort;
  * Created by hua on 16/3/21.
  */
 public class BSReportCachePresenter extends BasePresenter implements BSReportContract.Presenter {
-    private BSReportContract.ViewListener listener;
+    private BSReportContract.ViewListener mViewListener;
 
     private Calendar beginTime = Calendar.getInstance();
     private Calendar endTime = Calendar.getInstance();
     @Inject
     public BSReportCachePresenter(BSReportContract.ViewListener listener) {
-        this.listener = listener;
+        mViewListener = listener;
 
         beginTime.set(Calendar.HOUR_OF_DAY, 0);
         beginTime.set(Calendar.MINUTE, 0);
@@ -45,7 +45,7 @@ public class BSReportCachePresenter extends BasePresenter implements BSReportCon
         RealmResults<BSReportRealmBean> results = query.findAll().sort("recordTimeInMill", Sort.DESCENDING);//排序单独操作无效，排序操作是异步的
 //        results.sort("recordTimeInMill", Sort.DESCENDING);
         if (results.size() <= 0) {
-            listener.showEmptyView();
+            mViewListener.showEmptyView();
             return;
         }
 
@@ -54,7 +54,7 @@ public class BSReportCachePresenter extends BasePresenter implements BSReportCon
             BSReportRealmBeanList.add(bean);
         }
 
-        listener.showBSList(BSReportRealmBeanList);
+        mViewListener.showBSList(BSReportRealmBeanList);
     }
 
 }

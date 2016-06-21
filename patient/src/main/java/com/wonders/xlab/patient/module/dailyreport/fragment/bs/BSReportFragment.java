@@ -15,8 +15,11 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.dailyreport.adapter.BSReportAdapter;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BSReportRealmBean;
+import com.wonders.xlab.patient.module.dailyreport.fragment.bs.di.BSReportModule;
+import com.wonders.xlab.patient.module.dailyreport.fragment.bs.di.DaggerBSReportComponent;
 import com.wonders.xlab.patient.otto.BSSaveSuccessOtto;
 import com.wonders.xlab.patient.otto.ShowMeasureChooseDialogOtto;
 import com.wonders.xlab.patient.util.UmengEventId;
@@ -54,7 +57,12 @@ public class BSReportFragment extends BaseFragment implements BSReportContract.V
         View view = inflater.inflate(R.layout.bs_report_fragment, container, false);
         ButterKnife.bind(this, view);
 
-        mBSReportPresenter = new BSReportCachePresenter(this);
+//        mBSReportPresenter = new BSReportCachePresenter(this);
+        mBSReportPresenter = DaggerBSReportComponent.builder()
+                .applicationComponent(((XApplication) getActivity().getApplication()).getComponent())
+                .bSReportModule(new BSReportModule(this))
+                .build()
+                .getBSReportCachePresenter();
         addPresenter(mBSReportPresenter);
         return view;
     }

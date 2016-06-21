@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -192,6 +193,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
      */
     @Override
     public void showPackageList(final ArrayList<DoctorDetailPackageBean> packageList) {
+
         if (null == mPackageRVAdapter) {
             mPackageRVAdapter = new DoctorDetailPackageRVAdapter();
             mPackageRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {

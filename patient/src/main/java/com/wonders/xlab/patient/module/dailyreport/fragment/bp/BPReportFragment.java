@@ -16,7 +16,6 @@ import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.module.alldoctor.di.AllDoctorModule;
 import com.wonders.xlab.patient.module.dailyreport.adapter.BPReportAdapter;
 import com.wonders.xlab.patient.module.dailyreport.adapter.bean.BPReportRealmBean;
 import com.wonders.xlab.patient.module.dailyreport.fragment.bp.di.BPReportModule;
@@ -143,17 +142,19 @@ public class BPReportFragment extends BaseFragment implements BPReportContract.V
 
     @Override
     public void hideLoading() {
-        mRecyclerView.hideRefreshOrLoadMore(true,true);
+        mRecyclerView.hideRefreshOrLoadMore(true, true);
     }
 
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart(getResources().getString(R.string.umeng_page_title_daily_report_bp));
     }
+
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(getResources().getString(R.string.umeng_page_title_daily_report_bp));
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();

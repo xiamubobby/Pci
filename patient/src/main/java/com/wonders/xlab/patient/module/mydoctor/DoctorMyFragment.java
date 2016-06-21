@@ -18,14 +18,12 @@ import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
-import com.wonders.xlab.patient.module.alldoctor.AllDoctorActivity;
 import com.wonders.xlab.patient.module.chatroom.ChatRoomActivity;
 import com.wonders.xlab.patient.module.mydoctor.adapter.MyDoctorItemBean;
 import com.wonders.xlab.patient.module.mydoctor.adapter.MyDoctorRVAdapter;
 import com.wonders.xlab.patient.module.mydoctor.di.DaggerDoctorMyComponent;
 import com.wonders.xlab.patient.module.mydoctor.di.DoctorMyModule;
 import com.wonders.xlab.patient.otto.BuyPackageSuccessOtto;
-import com.wonders.xlab.patient.otto.DoctorTabChangeOtto;
 
 import java.util.ArrayList;
 
@@ -46,6 +44,10 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyContract.V
     private MyDoctorRVAdapter mMyDoctorRVAdapter;
 
     private DoctorMyContract.Presenter mDoctorMyPresenter;
+
+    private Handler handler = null;
+    private Runnable updateCallback;
+    private int updateRec;
 
     public DoctorMyFragment() {
         // Required empty public constructor
@@ -99,14 +101,10 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyContract.V
 
     @Subscribe
     public void buyPackageSuccess(BuyPackageSuccessOtto otto) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
-            }
-        }, 5000);
+        mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
 
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -116,6 +114,7 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyContract.V
 
     @Override
     public void showMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList) {
+        mRecyclerView.showContentView();
         initMyDoctorAdapter();
         mMyDoctorRVAdapter.setDatas(myDoctorBeanList);
     }
@@ -155,13 +154,16 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyContract.V
 
     @Override
     public void showEmptyView(String message) {
+
         mRecyclerView.showEmptyView(new CommonRecyclerView.OnEmptyViewClickListener() {
             @Override
             public void onClick() {
-                startActivity(new Intent(getActivity(), AllDoctorActivity.class));
+                mRecyclerView.showContentView();
+                mRecyclerView.isRefreshing();
+                mRecyclerView.showLoadingView();
+                mDoctorMyPresenter.getMyDoctors(AIManager.getInstance().getPatientId(), true);
             }
         }, true, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
-        OttoManager.post(new DoctorTabChangeOtto(1));
     }
 
     @Override
@@ -194,7 +196,6 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyContract.V
             }
         }, CommonRecyclerView.HANDLE_VIEW_ID_NONE);
     }
-
 
 
     @Override
