@@ -21,7 +21,7 @@ public class ChatRoomModule {
 
     @Provides
     @ActivityScoped
-    ChatRoomContract.ViewListener provideViewListener() {
+    ChatRoomContract.ViewListener provideChatRoomViewListener() {
         return mViewListener;
     }
 

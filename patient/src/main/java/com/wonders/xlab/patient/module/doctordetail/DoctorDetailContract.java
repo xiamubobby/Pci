@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.presenter;
+package com.wonders.xlab.patient.module.doctordetail;
 
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorBasicInfoBean;
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorDetailGroupMemberBean;

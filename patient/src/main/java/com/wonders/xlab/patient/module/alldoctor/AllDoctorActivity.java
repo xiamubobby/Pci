@@ -19,7 +19,7 @@ import com.wonders.xlab.patient.module.alldoctor.adapter.AllDoctorRVAdapter;
 import com.wonders.xlab.patient.module.alldoctor.di.AllDoctorModule;
 import com.wonders.xlab.patient.module.alldoctor.di.DaggerAllDoctorComponent;
 import com.wonders.xlab.patient.module.doctordetail.DoctorDetailActivity;
-import com.wonders.xlab.patient.module.doctordetail.DoctorGroupExpiredOtto;
+import com.wonders.xlab.patient.module.doctordetail.otto.DoctorGroupExpiredOtto;
 
 import java.util.ArrayList;
 

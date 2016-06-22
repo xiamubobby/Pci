@@ -92,12 +92,12 @@ public class MeFragment extends BaseFragment {
     @Subscribe
     public void refreshUserInfo(UserInfoUpdateOtto otto) {
         if (!TextUtils.isEmpty(otto.getSex())) {
-            mTvMeSex.setText("性别：" + AIManager.getInstance().getPatientSex());
+            mTvMeSex.setText("性别：" + otto.getSex());
         } else {
             mTvMeSex.setText("性别：暂无");
         }
         if (!TextUtils.isEmpty(otto.getAge())) {
-            mTvMeAge.setText("年龄：" + AIManager.getInstance().getPatientAge());
+            mTvMeAge.setText("年龄：" + otto.getAge());
         } else {
             mTvMeAge.setText("年龄：暂无");
         }

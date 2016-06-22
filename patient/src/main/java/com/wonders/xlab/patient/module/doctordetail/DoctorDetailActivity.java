@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
@@ -16,7 +15,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +30,7 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.common.recyclerview.adapter.simple.SimpleRVAdapter;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
+import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.databinding.DoctorDetailActivityBinding;
 import com.wonders.xlab.patient.module.doctordetail.adapter.DoctorDetailGroupOfDoctorRVAdapter;
 import com.wonders.xlab.patient.module.doctordetail.adapter.DoctorDetailMemberRVAdapter;
@@ -40,11 +39,9 @@ import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorBasicInfo
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorDetailGroupMemberBean;
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorDetailGroupOfDoctorBean;
 import com.wonders.xlab.patient.module.doctordetail.adapter.bean.DoctorDetailPackageBean;
-import com.wonders.xlab.patient.mvp.presenter.DoctorDetailContract;
-import com.wonders.xlab.patient.mvp.presenter.IDoctorDetailPresenter;
-import com.wonders.xlab.patient.mvp.presenter.IDoctorGroupDetailPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.DoctorDetailPresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.DoctorGroupDetailPresenter;
+import com.wonders.xlab.patient.module.doctordetail.di.DaggerDoctorDetailComponent;
+import com.wonders.xlab.patient.module.doctordetail.di.DoctorDetailModule;
+import com.wonders.xlab.patient.module.doctordetail.otto.DoctorGroupExpiredOtto;
 import com.wonders.xlab.patient.otto.BuyPackageSuccessOtto;
 import com.wonders.xlab.patient.util.ImageViewManager;
 
@@ -58,7 +55,7 @@ import im.hua.library.base.BaseActivity;
  * 医生详情
  * 购买医生服务
  */
-public class DoctorDetailActivity extends BaseActivity implements DoctorDetailContract.ViewListener {
+public class DoctorDetailActivity extends BaseActivity implements DoctorDetailOrGroupDetailContract.ViewListener {
     public final static int TYPE_DOCTOR = 0;
     public final static int TYPE_DOCTOR_GROUP = 1;
     public final static String EXTRA_TITLE = "title";
@@ -96,8 +93,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
     private DoctorDetailMemberRVAdapter mMemberRVAdapter;
     private DoctorDetailGroupOfDoctorRVAdapter mGroupOfDoctorRVAdapter;
 
-    private IDoctorGroupDetailPresenter mDoctorGroupDetailPresenter;
-    private IDoctorDetailPresenter mDoctorDetailPresenter;
+    private DoctorDetailOrGroupDetailContract.Presenter mDoctorDetailOrGroupDetailPresenter;
 
     private DoctorDetailActivityBinding binding;
 
@@ -142,17 +138,22 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
         mRecyclerViewDoctorDetailPackage.setItemAnimator(new DefaultItemAnimator());
         mRecyclerViewDoctorDetailMemberOrGroup.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mRecyclerViewDoctorDetailMemberOrGroup.setItemAnimator(new DefaultItemAnimator());
-
-        switch (type) {
-            case TYPE_DOCTOR:
-                mDoctorDetailPresenter = new DoctorDetailPresenter(this);
-                addPresenter(mDoctorDetailPresenter);
-                break;
-            case TYPE_DOCTOR_GROUP:
-                mDoctorGroupDetailPresenter = new DoctorGroupDetailPresenter(this);
-                addPresenter(mDoctorGroupDetailPresenter);
-                break;
-        }
+        mDoctorDetailOrGroupDetailPresenter = DaggerDoctorDetailComponent.builder()
+                .applicationComponent(XApplication.getComponent())
+                .doctorDetailModule(new DoctorDetailModule(this))
+                .build()
+                .getDoctorDetailOrGroupDetailPresenter();
+        addPresenter(mDoctorDetailOrGroupDetailPresenter);
+//        switch (type) {
+//            case TYPE_DOCTOR:
+//                mDoctorDetailPresenter = new DoctorDetailPresenter(this);
+//                addPresenter(mDoctorDetailPresenter);
+//                break;
+//            case TYPE_DOCTOR_GROUP:
+//                mDoctorGroupDetailPresenter = new DoctorGroupDetailPresenter(this);
+//                addPresenter(mDoctorGroupDetailPresenter);
+//                break;
+//        }
 
         mRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -172,10 +173,10 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
     private void requestData() {
         switch (type) {
             case TYPE_DOCTOR:
-                mDoctorDetailPresenter.fetchDoctorDetailInfo(AIManager.getInstance().getPatientId(), doctorOrOwnerId);
+                mDoctorDetailOrGroupDetailPresenter.fetchDoctorDetailInfo(AIManager.getInstance().getPatientId(), doctorOrOwnerId);
                 break;
             case TYPE_DOCTOR_GROUP:
-                mDoctorGroupDetailPresenter.fetchDoctorGroupDetailInfo(AIManager.getInstance().getPatientId(), doctorOrOwnerId);
+                mDoctorDetailOrGroupDetailPresenter.fetchDoctorGroupDetailInfo(AIManager.getInstance().getPatientId(), doctorOrOwnerId);
                 break;
         }
     }
@@ -256,10 +257,10 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailCo
                                 }
                                 switch (type) {
                                     case TYPE_DOCTOR:
-                                        mDoctorDetailPresenter.orderPackage(AIManager.getInstance().getPatientId(), packageList.get(position).packageId.get(), paymentChannel);
+                                        mDoctorDetailOrGroupDetailPresenter.orderPackage(AIManager.getInstance().getPatientId(), packageList.get(position).packageId.get(), paymentChannel);
                                         break;
                                     case TYPE_DOCTOR_GROUP:
-                                        mDoctorGroupDetailPresenter.orderPackage(AIManager.getInstance().getPatientId(), packageList.get(position).packageId.get(), paymentChannel);
+                                        mDoctorDetailOrGroupDetailPresenter.orderPackage(AIManager.getInstance().getPatientId(), packageList.get(position).packageId.get(), paymentChannel);
                                         break;
                                 }
                             }

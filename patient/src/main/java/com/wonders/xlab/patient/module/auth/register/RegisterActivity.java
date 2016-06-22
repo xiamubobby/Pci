@@ -34,8 +34,6 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
     Button btnRegisterCap;
     @Bind(R.id.register_password)
     EditText registerPassword;
-    @Bind(R.id.btn_register)
-    Button btnRegister;
 
     private RegisterContract.Presenter mRegisterPresenter;
 
@@ -83,15 +81,15 @@ public class RegisterActivity extends BaseActivity implements RegisterContract.V
         String pwd = registerPassword.getText().toString();
         String cap = etRegisterCap.getText().toString();
 
-        if (TextUtils.isEmpty(tel)&&tel.equals("")) {
+        if (TextUtils.isEmpty(tel) && tel.equals("")) {
             showShortToast("请填写11位的手机号！");
             return;
         }
-        if (TextUtils.isEmpty(cap)&&cap.equals("")) {
+        if (TextUtils.isEmpty(cap) && cap.equals("")) {
             showShortToast("请填写验证码！");
             return;
         }
-        if (TextUtils.isEmpty(pwd)&&pwd.equals("")) {
+        if (TextUtils.isEmpty(pwd) && pwd.equals("")) {
             showShortToast("请填写您的密码！");
             return;
         }
