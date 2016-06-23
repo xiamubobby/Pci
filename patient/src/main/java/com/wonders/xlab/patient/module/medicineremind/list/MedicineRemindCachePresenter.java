@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.presenter;
+package com.wonders.xlab.patient.module.medicineremind.list;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;

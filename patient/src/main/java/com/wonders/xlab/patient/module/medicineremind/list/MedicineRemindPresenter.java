@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.presenter;
+package com.wonders.xlab.patient.module.medicineremind.list;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -8,8 +8,6 @@ import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.medicineremind.list.bean.MedicineRemindBean;
 import com.wonders.xlab.patient.mvp.entity.MedicationUsagesEntity;
 import com.wonders.xlab.patient.mvp.entity.MedicineRemindListEntity;
-import com.wonders.xlab.patient.mvp.model.MedicineRemindListModel;
-import com.wonders.xlab.patient.mvp.model.MedicineRemindListModelContract;
 import com.wonders.xlab.patient.mvp.model.MedicineStateModifyModel;
 import com.wonders.xlab.patient.mvp.model.MedicineStateModifyModelContract;
 

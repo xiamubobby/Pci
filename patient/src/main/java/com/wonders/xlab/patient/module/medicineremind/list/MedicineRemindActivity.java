@@ -18,7 +18,6 @@ import com.wonders.xlab.patient.module.medicineremind.edit.MedicineRemindEditAct
 import com.wonders.xlab.patient.module.medicineremind.edit.SaveRemindSuccessOtto;
 import com.wonders.xlab.patient.module.medicineremind.list.adapter.MedicineRemindRVAdapter;
 import com.wonders.xlab.patient.module.medicineremind.list.bean.MedicineRemindBean;
-import com.wonders.xlab.patient.mvp.presenter.MedicineRemindPresenterContract;
 import com.wonders.xlab.patient.util.AlarmUtil;
 
 import java.util.List;

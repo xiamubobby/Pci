@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.model;
+package com.wonders.xlab.patient.module.medicineremind.list;
 
 import com.wonders.xlab.patient.mvp.entity.MedicineRemindListEntity;
 

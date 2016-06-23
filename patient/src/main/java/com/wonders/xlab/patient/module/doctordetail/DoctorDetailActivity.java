@@ -2,6 +2,7 @@ package com.wonders.xlab.patient.module.doctordetail;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -97,7 +98,9 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailOr
 
     private DoctorDetailActivityBinding binding;
 
-    private BottomSheetDialog dialog;
+    private AlertDialog accessDialog;
+
+    private BottomSheetDialog payDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,11 +203,12 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailOr
             mPackageRVAdapter.setOnClickListener(new SimpleRVAdapter.OnClickListener() {
                 @Override
                 public void onItemClick(final int position) {
+
                     DoctorDetailPackageBean bean = mPackageRVAdapter.getBean(position);
 
                     boolean showPayment = bean.showPayment.get();
-                    if (null == dialog) {
-                        dialog = new BottomSheetDialog(DoctorDetailActivity.this);
+                    if (null == payDialog) {
+                        payDialog = new BottomSheetDialog(DoctorDetailActivity.this);
                     }
                     View contentView = LayoutInflater.from(DoctorDetailActivity.this).inflate(R.layout.doctor_detail_bottom_sheet, null, false);
 
@@ -271,7 +275,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailOr
                     price.setText(bean.valueStr.get());
                     desc.setText(bean.description.get());
 
-                    dialog.setContentView(contentView);
+                    payDialog.setContentView(contentView);
                     View parent = (View) contentView.getParent();
                     BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
                     contentView.measure(0, 0);
@@ -279,12 +283,35 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailOr
                     CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) parent.getLayoutParams();
                     params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
                     parent.setLayoutParams(params);
-                    dialog.show();
+
+                    showAccessDialog();
                 }
             });
         }
         mPackageRVAdapter.setDatas(packageList);
         mRecyclerViewDoctorDetailPackage.setAdapter(mPackageRVAdapter);
+    }
+
+    private void showAccessDialog() {
+        View container = LayoutInflater.from(this).inflate(R.layout.doctor_detail_access_dialog, null, false);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setMessage("温馨提示：")
+                .setView(container)
+                .setPositiveButton("授权并购买", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        payDialog.show();
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+        accessDialog = builder.create();
+        accessDialog.show();
+
     }
 
     @Override
@@ -447,8 +474,11 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailOr
     @Override
     public void hideLoading() {
         dismissProgressDialog();
-        if (null != dialog) {
-            dialog.dismiss();
+        if (null != payDialog) {
+            payDialog.dismiss();
+        }
+        if (null != accessDialog) {
+            accessDialog.dismiss();
         }
         super.setRefreshing(mRefresh, false);
     }

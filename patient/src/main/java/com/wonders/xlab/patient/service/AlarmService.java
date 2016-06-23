@@ -4,15 +4,18 @@ import android.app.AlertDialog;
 import android.app.Service;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.databinding.tool.reflection.SdkUtil;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
@@ -32,7 +35,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func1;
 
-public class AlarmService extends Service implements MediaPlayer.OnPreparedListener{
+public class AlarmService extends Service implements MediaPlayer.OnPreparedListener {
     public final static String EXTRA_TIME = "time";
 
     AlarmUtil mAlarmUtil = AlarmUtil.newInstance();
@@ -146,7 +149,12 @@ public class AlarmService extends Service implements MediaPlayer.OnPreparedListe
                         }
                     }
                 });
-                ad.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    ad.getWindow().setType(WindowManager.LayoutParams.TYPE_TOAST);
+                } else {
+                    ad.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+                }
+
             }
             ad.setCanceledOnTouchOutside(false);
             ad.setTitle(medicineRemindRealm.getRemindersDesc());

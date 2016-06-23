@@ -2,7 +2,6 @@ package com.wonders.xlab.patient.module.medicineremind.list;
 
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
 import com.wonders.xlab.patient.mvp.api.MedicineRemindAPI;
-import com.wonders.xlab.patient.mvp.presenter.MedicineRemindPresenterContract;
 
 import dagger.Module;
 import dagger.Provides;
