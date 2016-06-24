@@ -155,7 +155,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
 
     @OnClick(R.id.tv_user_info_age)
     public void editAge() {
-        goToTextInputActivity(mTvUserInfoNumber.getText().toString(), "请输入年龄", "年龄", REQUEST_CODE_AGE, true);
+        goToTextInputActivity(mTextViewAge.getText().toString(), "请输入年龄", "年龄", REQUEST_CODE_AGE, true);
     }
 
     @OnClick(R.id.tv_user_info_hospital)

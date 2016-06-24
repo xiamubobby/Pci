@@ -2,7 +2,6 @@ package com.wonders.xlab.patient.module.doctordetail;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -98,7 +97,7 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailOr
 
     private DoctorDetailActivityBinding binding;
 
-    private AlertDialog accessDialog;
+//    private AlertDialog accessDialog;
 
     private BottomSheetDialog payDialog;
 
@@ -283,8 +282,8 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailOr
                     CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) parent.getLayoutParams();
                     params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
                     parent.setLayoutParams(params);
-
-                    showAccessDialog();
+                    payDialog.show();
+//                    showAccessDialog();
                 }
             });
         }
@@ -292,27 +291,27 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailOr
         mRecyclerViewDoctorDetailPackage.setAdapter(mPackageRVAdapter);
     }
 
-    private void showAccessDialog() {
-        View container = LayoutInflater.from(this).inflate(R.layout.doctor_detail_access_dialog, null, false);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setMessage("温馨提示：")
-                .setView(container)
-                .setPositiveButton("授权并购买", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        payDialog.show();
-                    }
-                })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-        accessDialog = builder.create();
-        accessDialog.show();
-
-    }
+//    private void showAccessDialog() {
+//        View container = LayoutInflater.from(this).inflate(R.layout.doctor_detail_access_dialog, null, false);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+//                .setMessage("温馨提示：")
+//                .setView(container)
+//                .setPositiveButton("授权并购买", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        payDialog.show();
+//                    }
+//                })
+//                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                });
+//        accessDialog = builder.create();
+//        accessDialog.show();
+//
+//    }
 
     @Override
     public void showGroupMemberList(ArrayList<DoctorDetailGroupMemberBean> groupMemberList) {
@@ -477,9 +476,9 @@ public class DoctorDetailActivity extends BaseActivity implements DoctorDetailOr
         if (null != payDialog) {
             payDialog.dismiss();
         }
-        if (null != accessDialog) {
-            accessDialog.dismiss();
-        }
+//        if (null != accessDialog) {
+//            accessDialog.dismiss();
+//        }
         super.setRefreshing(mRefresh, false);
     }
 

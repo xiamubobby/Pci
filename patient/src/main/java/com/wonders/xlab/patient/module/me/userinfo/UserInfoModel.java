@@ -87,7 +87,7 @@ public class UserInfoModel extends PatientBaseModel implements UserInfoContract.
 
     @Override
     public void modifyUserAvater(String patientId, String userAvaterUrl, final UserInfoContract.Callback callback) {
-        request(mAPI.modifyUserAvater(userAvaterUrl, patientId), new Callback<EmptyValueEntity>() {
+        request(mAPI.modifyUserAvater(patientId, userAvaterUrl), new Callback<EmptyValueEntity>() {
             @Override
             public void onSuccess(EmptyValueEntity response) {
                 callback.onModifyUserAvaterSuccess(response);

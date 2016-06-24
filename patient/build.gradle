@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'realm-android'
 
-def AppVersion = "0.5"
+def AppVersion = "0.6"
 
 android {
     compileSdkVersion 23
@@ -16,7 +16,7 @@ android {
         applicationId "com.wonders.xlab.patient"
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 9
+        versionCode 10
         versionName AppVersion
         // Enabling multidex support.
         multiDexEnabled true

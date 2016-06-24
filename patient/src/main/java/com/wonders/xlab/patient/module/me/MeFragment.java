@@ -92,14 +92,14 @@ public class MeFragment extends BaseFragment {
     @Subscribe
     public void refreshUserInfo(UserInfoUpdateOtto otto) {
         if (!TextUtils.isEmpty(otto.getSex())) {
-            mTvMeSex.setText("性别：" + otto.getSex());
-        } else {
-            mTvMeSex.setText("性别：暂无");
+            if (mTvMeSex != null) {
+                mTvMeSex.setText("性别：" + otto.getSex());
+            }
         }
         if (!TextUtils.isEmpty(otto.getAge())) {
-            mTvMeAge.setText("年龄：" + otto.getAge());
-        } else {
-            mTvMeAge.setText("年龄：暂无");
+            if (mTvMeAge != null) {
+                mTvMeAge.setText("年龄：" + otto.getAge());
+            }
         }
     }
 

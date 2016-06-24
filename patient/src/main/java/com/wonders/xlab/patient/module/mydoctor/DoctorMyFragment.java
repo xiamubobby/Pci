@@ -114,7 +114,9 @@ public class DoctorMyFragment extends BaseFragment implements DoctorMyContract.V
 
     @Override
     public void showMyDoctorList(ArrayList<MyDoctorItemBean> myDoctorBeanList) {
-        mRecyclerView.showContentView();
+        if (mRecyclerView != null) {
+            mRecyclerView.showContentView();
+        }
         initMyDoctorAdapter();
         mMyDoctorRVAdapter.setDatas(myDoctorBeanList);
     }

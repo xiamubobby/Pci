@@ -40,6 +40,7 @@ public interface UserInfoAPI {
 
     /**
      * 上传头像到七牛
+     *
      * @param userAvater
      * @return
      */
@@ -49,11 +50,12 @@ public interface UserInfoAPI {
 
     /**
      * 保存头像地址
+     *
      * @param avatarUrl
      * @param userId
      * @return
      */
     @POST("v1/users/updateUserAvatarUrl/{userId}")
-    Observable<Response<EmptyValueEntity>> modifyUserAvater(@Query("avatarUrl") String avatarUrl, @Path("userId") String userId);
+    Observable<Response<EmptyValueEntity>> modifyUserAvater(@Path("userId") String userId, @Query("avatarUrl") String avatarUrl);
 
 }
