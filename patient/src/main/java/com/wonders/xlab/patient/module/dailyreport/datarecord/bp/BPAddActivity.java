@@ -20,8 +20,6 @@ import com.umeng.analytics.MobclickAgent;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.base.AppbarActivity;
-import com.wonders.xlab.patient.mvp.presenter.IBPSavePresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.BPSavePresenter;
 
 import java.util.Calendar;
 

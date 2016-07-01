@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.module.auth.login.di;
+package com.wonders.xlab.patient.module.auth.login;
 
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.base.PatientBaseModel;

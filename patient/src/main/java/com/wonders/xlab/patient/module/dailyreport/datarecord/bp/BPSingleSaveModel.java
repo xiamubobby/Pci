@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.model.impl;
+package com.wonders.xlab.patient.module.dailyreport.datarecord.bp;
 
 
 import com.wonders.xlab.patient.application.XApplication;

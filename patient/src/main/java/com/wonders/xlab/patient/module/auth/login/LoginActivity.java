@@ -17,6 +17,7 @@ import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.module.MainActivity;
 import com.wonders.xlab.patient.module.auth.FinishLoginOtto;
 import com.wonders.xlab.patient.module.auth.login.di.DaggerLoginComponent;
+import com.wonders.xlab.patient.module.auth.login.di.LoginModule;
 import com.wonders.xlab.patient.module.auth.register.RegisterActivity;
 
 import butterknife.Bind;
@@ -112,7 +113,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.ViewLis
 
     @Override
     public void showServerError(String message) {
-
+        showShortToast(message);
     }
 
     @Override

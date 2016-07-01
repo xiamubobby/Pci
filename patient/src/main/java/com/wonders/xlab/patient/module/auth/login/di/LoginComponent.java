@@ -2,7 +2,6 @@ package com.wonders.xlab.patient.module.auth.login.di;
 
 import com.wonders.xlab.patient.di.ApplicationComponent;
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
-import com.wonders.xlab.patient.module.auth.login.LoginModule;
 import com.wonders.xlab.patient.module.auth.login.LoginPresenter;
 
 import dagger.Component;

@@ -25,9 +25,7 @@ import com.wonders.xlab.patient.assist.deviceconnection.otto.ConnStatusOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.EmptyDataOtto;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.RequestDataFailed;
 import com.wonders.xlab.patient.assist.deviceconnection.otto.ScanStartOtto;
-import com.wonders.xlab.patient.mvp.presenter.IBPSavePresenter;
 import com.wonders.xlab.patient.mvp.presenter.IIdealRangePresenter;
-import com.wonders.xlab.patient.mvp.presenter.impl.BPSavePresenter;
 import com.wonders.xlab.patient.mvp.presenter.impl.IdealRangePresenter;
 import com.wonders.xlab.patient.util.UmengEventId;
 

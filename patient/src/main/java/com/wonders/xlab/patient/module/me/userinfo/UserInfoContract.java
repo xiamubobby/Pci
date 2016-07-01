@@ -8,7 +8,6 @@ import java.io.File;
 import im.hua.library.base.mvp.IBaseModel;
 import im.hua.library.base.mvp.IBasePresenter;
 import im.hua.library.base.mvp.entity.EmptyValueEntity;
-import im.hua.library.base.mvp.entity.SimpleEntity;
 import im.hua.library.base.mvp.listener.BaseModelListener;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
 
@@ -53,6 +52,6 @@ public interface UserInfoContract {
 
         void uploadAvater(File userAvater);
 
-        void modifyUserAvater( String userAvaterUrl);
+        void modifyUserAvater(String userAvaterUrl);
     }
 }

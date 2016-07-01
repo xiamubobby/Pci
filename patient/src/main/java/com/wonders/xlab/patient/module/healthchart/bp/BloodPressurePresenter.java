@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.presenter.impl;
+package com.wonders.xlab.patient.module.healthchart.bp;
 
 import android.graphics.Color;
 
@@ -12,9 +12,6 @@ import com.github.mikephil.charting.data.ScatterDataSet;
 import com.wonders.xlab.patient.module.healthchart.bp.bean.BPChartBean;
 import com.wonders.xlab.patient.module.healthchart.bp.bean.BPListBean;
 import com.wonders.xlab.patient.mvp.entity.BloodPressureEntity;
-import com.wonders.xlab.patient.mvp.model.IBloodPressureModel;
-import com.wonders.xlab.patient.mvp.model.impl.BloodPressureModel;
-import com.wonders.xlab.patient.mvp.presenter.IBloodPressurePresenter;
 
 import java.util.ArrayList;
 import java.util.Calendar;

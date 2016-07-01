@@ -1,6 +1,7 @@
-package com.wonders.xlab.patient.module.auth.login;
+package com.wonders.xlab.patient.module.auth.login.di;
 
 import com.wonders.xlab.patient.di.scope.ActivityScoped;
+import com.wonders.xlab.patient.module.auth.login.LoginContract;
 import com.wonders.xlab.patient.mvp.api.LoginAPI;
 
 import dagger.Module;

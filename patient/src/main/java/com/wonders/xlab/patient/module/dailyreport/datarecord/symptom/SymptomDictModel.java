@@ -1,10 +1,10 @@
-package com.wonders.xlab.patient.mvp.model.impl;
+package com.wonders.xlab.patient.module.dailyreport.datarecord.symptom;
 
 
 import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.SymptomAPI;
 import com.wonders.xlab.patient.mvp.entity.SymptomEntity;
-import com.wonders.xlab.patient.mvp.model.ISymptomDictModel;
+import com.wonders.xlab.patient.module.dailyreport.datarecord.symptom.ISymptomDictModel;
 
 import im.hua.library.base.mvp.listener.BaseModelListener;
 

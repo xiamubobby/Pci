@@ -1,4 +1,4 @@
-package com.wonders.xlab.patient.mvp.presenter;
+package com.wonders.xlab.patient.module.dailyreport.datarecord.bp;
 
 import com.wonders.xlab.patient.assist.deviceconnection.entity.BPEntityList;
 

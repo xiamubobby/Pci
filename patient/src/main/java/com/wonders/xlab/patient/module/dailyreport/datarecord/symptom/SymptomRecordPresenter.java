@@ -1,13 +1,8 @@
-package com.wonders.xlab.patient.mvp.presenter.impl;
+package com.wonders.xlab.patient.module.dailyreport.datarecord.symptom;
 
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.otto.SymptomSaveSuccessOtto;
 import com.wonders.xlab.patient.mvp.entity.SymptomEntity;
-import com.wonders.xlab.patient.mvp.model.ISymptomDictModel;
-import com.wonders.xlab.patient.mvp.model.ISymptomSaveModel;
-import com.wonders.xlab.patient.mvp.model.impl.SymptomDictModel;
-import com.wonders.xlab.patient.mvp.model.impl.SymptomSaveModel;
-import com.wonders.xlab.patient.mvp.presenter.ISymptomPresenter;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;

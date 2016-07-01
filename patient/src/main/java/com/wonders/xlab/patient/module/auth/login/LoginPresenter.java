@@ -1,7 +1,5 @@
 package com.wonders.xlab.patient.module.auth.login;
 
-import com.wonders.xlab.patient.module.auth.login.di.LoginModel;
-
 import javax.inject.Inject;
 
 import im.hua.library.base.mvp.impl.BasePresenter;

@@ -1,11 +1,9 @@
-package com.wonders.xlab.patient.mvp.presenter.impl;
+package com.wonders.xlab.patient.module.dailyreport.datarecord.bp;
 
 import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.assist.deviceconnection.entity.BPEntityList;
 import com.wonders.xlab.patient.otto.BPSaveSuccessOtto;
 import com.wonders.xlab.patient.mvp.model.impl.BPMultiSaveModel;
-import com.wonders.xlab.patient.mvp.model.impl.BPSingleSaveModel;
-import com.wonders.xlab.patient.mvp.presenter.IBPSavePresenter;
 
 import im.hua.library.base.mvp.impl.BasePresenter;
 import im.hua.library.base.mvp.listener.BasePresenterListener;
