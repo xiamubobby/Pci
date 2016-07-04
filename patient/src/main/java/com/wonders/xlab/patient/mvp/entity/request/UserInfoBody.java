@@ -14,6 +14,7 @@ public class UserInfoBody {
      * caseHistory : 病史
      */
 
+    private String name;
     private int age;
     private String sex;
     private String addressCode;
@@ -23,6 +24,14 @@ public class UserInfoBody {
     private String surgeon;
     private String hospitalId;
     private String caseHistory;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getAge() {
         return age;

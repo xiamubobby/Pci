@@ -27,6 +27,7 @@ public class UserInfoEntity extends BaseEntity {
     }
 
     public static class RetValuesEntity {
+        private String name;
         private String sex;
         private String age;
         private String addressCode;
@@ -37,6 +38,14 @@ public class UserInfoEntity extends BaseEntity {
         private String hospitalId;
         private String surgeon;
         private String caseHistory;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
 
         public String getSex() {
             return sex;

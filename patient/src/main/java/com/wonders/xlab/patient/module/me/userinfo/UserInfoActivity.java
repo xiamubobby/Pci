@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
@@ -53,9 +54,12 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
     private final int REQUEST_CROP_IMAGE = REQUEST_CODE << 7;
     private final int REQUEST_CODE_SEX = REQUEST_CODE << 8;
     private final int REQUEST_CODE_AGE = REQUEST_CODE << 9;
+    private final int REQUEST_CODE_NAME = REQUEST_CODE << 10;
 
     @Bind(R.id.iv_user_avatar)
     ImageView mIvPortrait;
+    @Bind(R.id.tv_user_info_name)
+    TextView mTextViewName;
     @Bind(R.id.tv_user_info_sex)
     TextView mTextViewSex;
     @Bind(R.id.tv_user_info_age)
@@ -75,14 +79,14 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
 
     private UserInfoPresenter mPresenter;
 
-    private String addressId;
-    private String address;
-    private MyAddressUtil addressUtil;
+    private String imageFilePath;
     private String sexId;
     private String sex;
     private String age;
     private String hospitalId;
-    private String imageFilePath;
+    private String addressId;
+    private String address;
+    private MyAddressUtil addressUtil;
     /**
      * 保存选择的图片
      */
@@ -118,6 +122,12 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
             timeStr = DateUtil.format(entity.getLastOperationDate(), "yyyy-MM-dd");
         }
         ImageViewManager.setImageViewWithUrl(this, mIvPortrait, AIManager.getInstance().getPatientPortraitUrl(), ImageViewManager.PLACE_HOLDER_EMPTY);
+        if (!TextUtils.isEmpty(entity.getName())) {
+            mTextViewName.setText(entity.getName());
+        } else {
+            mTextViewName.setText(AIManager.getInstance().getPatientName());
+        }
+
         sex = entity.getSex();
         if (sex.equals("男")) {
             sexId = "Male";
@@ -146,6 +156,11 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
         PhotoPickerIntent intent = new PhotoPickerIntent(this);
         intent.setPhotoCount(1);
         startActivityForResult(intent, REQUEST_CODE_PIC);
+    }
+
+    @OnClick(R.id.tv_user_info_name)
+    public void editName() {
+        goToTextInputActivity(mTvUserInfoDoctor.getText().toString(), "请输入手术医生姓名", "手术医生", REQUEST_CODE_NAME, false);
     }
 
     @OnClick(R.id.tv_user_info_sex)
@@ -277,6 +292,7 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
             case R.id.menu_save:
 
                 UserInfoBody body = new UserInfoBody();
+                body.setName(mTextViewName.getText().toString());
                 body.setSex(sexId);
                 body.setAge(Integer.parseInt(mTextViewAge.getText().toString()));
                 body.setAddress(mTvUserInfoAddress.getText().toString());
@@ -349,6 +365,9 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
                     break;
                 case REQUEST_CODE_NUMBER:
                     mTvUserInfoNumber.setText(result);
+                    break;
+                case REQUEST_CODE_NAME:
+                    mTextViewName.setText(result);
                     break;
 
             }

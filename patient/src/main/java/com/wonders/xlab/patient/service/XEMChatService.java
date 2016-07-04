@@ -58,14 +58,6 @@ public class XEMChatService extends Service {
         initBroadcastReceiver();
     }
 
-    private void initEMChat() {
-        EMChat.getInstance().init(getApplication());
-        EMChatManager.getInstance().getChatOptions().setNotifyBySoundAndVibrate(false);//不发通知，而是走广播
-        EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);
-        //TODO 在做打包混淆时，要关闭debug模式，避免消耗不必要的资源
-        EMChat.getInstance().setDebugMode(false);
-    }
-
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.
@@ -80,6 +72,14 @@ public class XEMChatService extends Service {
             startForeground(Constant.NOTIFY_ID_PERSISTENT, notification);
         }
         return START_STICKY;
+    }
+
+    private void initEMChat() {
+        EMChat.getInstance().init(getApplication());
+        EMChatManager.getInstance().getChatOptions().setNotifyBySoundAndVibrate(false);//不发通知，而是走广播
+        EMChatManager.getInstance().getChatOptions().setShowNotificationInBackgroud(false);
+        //TODO 在做打包混淆时，要关闭debug模式，避免消耗不必要的资源
+        EMChat.getInstance().setDebugMode(false);
     }
 
     private void initBroadcastReceiver() {
