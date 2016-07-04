@@ -105,14 +105,11 @@ public class MeFragment extends BaseFragment {
 
     @Subscribe
     public void refreshUserIcon(UserIconUpdateOtto otto) {
-        if (mIvMePortrait != null) {
-            File mPickedIdPicFile = new File(otto.getUri());
-            Uri uri = Uri.fromFile(mPickedIdPicFile);
-            ImageViewManager.setImageViewWithUri(getActivity(), mIvMePortrait, uri, ImageViewManager.PLACE_HOLDER_EMPTY);
-        }
-
+        if (mIvMePortrait == null) return;
+        File mPickedIdPicFile = new File(otto.getUri());
+        Uri uri = Uri.fromFile(mPickedIdPicFile);
+        ImageViewManager.setImageViewWithUri(getActivity(), mIvMePortrait, uri, ImageViewManager.PLACE_HOLDER_EMPTY);
     }
-
     @OnClick(R.id.rl_me_user_info)
     public void goToUserInfoActivity() {
         startActivity(new Intent(getActivity(), UserInfoActivity.class));

@@ -17,7 +17,7 @@ import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.base.TextInputActivity;
-import com.wonders.xlab.patient.module.auth.authorize.crop.CropActivity;
+import com.wonders.xlab.patient.module.auth.authorize.crop.CropActivity2;
 import com.wonders.xlab.patient.module.me.address.AddressActivity;
 import com.wonders.xlab.patient.module.me.hospital.HospitalActivity;
 import com.wonders.xlab.patient.module.me.otto.UserIconUpdateOtto;
@@ -91,6 +91,8 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
      * 保存选择的图片
      */
     private File mPickedIdPicFile;
+    private Uri handlingImageUri;
+    private String imageFileUrl;
 
     @Override
     public int getContentLayout() {
@@ -238,12 +240,14 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
 
     @Override
     public void uploadUserAvaterSuccess(String url) {
+        imageFileUrl = url;
         mPresenter.modifyUserAvater(url);
     }
 
     @Override
     public void modifyUserAvaterSuccess(String message) {
         OttoManager.post(new UserIconUpdateOtto(imageFilePath));
+        AIManager.getInstance().modifyPatientAvatar(imageFileUrl);
         showShortToast(message);
     }
 
@@ -336,14 +340,23 @@ public class UserInfoActivity extends AppbarActivity implements UserInfoContract
 
             String path = photos.get(0);
 
-            Intent intent = new Intent(this, CropActivity.class);
-            intent.putExtra(CropActivity.EXTRA_IMAGE_PATH, path);
-            startActivityForResult(intent, REQUEST_CROP_IMAGE);
+//            Intent intent = new Intent(this, CropActivity.class);
+//            intent.putExtra(CropActivity.EXTRA_IMAGE_PATH, path);
+//            startActivityForResult(intent, REQUEST_CROP_IMAGE);
+            final Intent editIntent = new Intent(Intent.ACTION_EDIT);
+            final File photo = new File(photos.get(0));
+            handlingImageUri = Uri.fromFile(photo);
+            editIntent.setDataAndType(handlingImageUri, "image/*");
+            editIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivityForResult(Intent.createChooser(editIntent, "请选择裁剪软件"), REQUEST_CROP_IMAGE);
         } else if (requestCode == REQUEST_CROP_IMAGE) {
-            imageFilePath = data.getStringExtra(CropActivity.RESULT_IMAGE_PATH);
-            mPickedIdPicFile = new File(imageFilePath);
-            Uri uri = Uri.fromFile(mPickedIdPicFile);
-            ImageViewManager.setImageViewWithUri(this, mIvPortrait, uri, ImageViewManager.PLACE_HOLDER_EMPTY);
+//            imageFilePath = data.getStringExtra(CropActivity.RESULT_IMAGE_PATH);
+//            mPickedIdPicFile = new File(imageFilePath);
+//            Uri uri = Uri.fromFile(mPickedIdPicFile);
+            Uri dataUri = data.getData();
+            ImageViewManager.setImageViewWithUri(this, mIvPortrait, dataUri, ImageViewManager.PLACE_HOLDER_EMPTY);
+            imageFilePath = dataUri.getPath();
+            mPickedIdPicFile = new File(dataUri.getPath());
             mPresenter.uploadAvater(mPickedIdPicFile);
         } else if (requestCode == REQUEST_CODE_SEX) {
             sexId = data.getStringExtra(SexActivity.EXTRA_SEX_ID);

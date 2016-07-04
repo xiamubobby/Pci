@@ -145,4 +145,8 @@ public class AIManager {
         }
         XApplication.realm.commitTransaction();
     }
+
+    public void modifyPatientAvatar(String newUrl) {
+        modifyPatientInfo(getPatientId(), getPatientTel(), newUrl, getPatientName(), getPatientSex(), getPatientAge());
+    }
 }

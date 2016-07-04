@@ -27,7 +27,7 @@ import static android.graphics.Bitmap.CompressFormat.JPEG;
 import static rx.android.schedulers.AndroidSchedulers.mainThread;
 import static rx.schedulers.Schedulers.io;
 
-public class CropActivity extends AppbarActivity {
+public class CropActivity2 extends AppbarActivity {
     public final static String EXTRA_IMAGE_PATH = "imagePath";
     public final static String RESULT_IMAGE_PATH = "cropImagePath";
 

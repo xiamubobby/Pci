@@ -12,7 +12,7 @@ import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.base.TextInputActivity;
-import com.wonders.xlab.patient.module.auth.authorize.crop.CropActivity;
+//import com.wonders.xlab.patient.module.auth.authorize.crop.CropActivity;
 import com.wonders.xlab.patient.module.auth.authorize.di.AuthorizeModule;
 import com.wonders.xlab.patient.module.auth.authorize.di.DaggerAuthorizeComponent;
 import com.wonders.xlab.patient.module.auth.authorize.guide.AuthorizeGuideActivity;
@@ -62,6 +62,7 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizeContra
      * 保存选择的图片
      */
     private File mPickedIdPicFile;
+    private Uri handlingImageUri;
 
     @Override
     public int getContentLayout() {
@@ -148,66 +149,27 @@ public class AuthorizeActivity extends AppbarActivity implements AuthorizeContra
 
                     String path = photos.get(0);
 
-                    Intent intent = new Intent(AuthorizeActivity.this, CropActivity.class);
-                    intent.putExtra(CropActivity.EXTRA_IMAGE_PATH, path);
-                    startActivityForResult(intent, REQUEST_CROP_IMAGE);
+//                    Intent intent = new Intent(AuthorizeActivity.this, CropActivity.class);
+//                    intent.putExtra(CropActivity.EXTRA_IMAGE_PATH, path);
+//                    startActivityForResult(intent, REQUEST_CROP_IMAGE);
 
-                    /*final Uri uri = Uri.fromFile(new File(path));
-                    ImageViewManager.setImageViewWithUri(this, mIvAuthorizeAddPic, uri, ImageViewManager.PLACE_HOLDER_EMPTY);
+                    final Intent editIntent = new Intent(Intent.ACTION_EDIT);
+                    final File photo = new File(photos.get(0));
+                    handlingImageUri = Uri.fromFile(photo);
+                    editIntent.setDataAndType(handlingImageUri, "image/*");
+                    editIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    startActivityForResult(Intent.createChooser(editIntent, "请选择裁剪软件"), REQUEST_CROP_IMAGE);
 
-                    Observable.from(photos)
-                            .subscribeOn(Schedulers.io())
-                            .map(new Func1<String, File>() {
-                                @Override
-                                public File call(String s) {
-                                    return new File(s);
-                                }
-                            })
-                            .filter(new Func1<File, Boolean>() {
-                                @Override
-                                public Boolean call(File file) {
-                                    return null != file;
-                                }
-                            })
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new Subscriber<File>() {
-                                CropView cropView = new CropView(AuthorizeActivity.this);
-                                final List<File> fileList = new ArrayList<>();
-
-                                @Override
-                                public void onCompleted() {
-                                    mPickedIdPicFile = fileList.get(0);
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-                                    showShortToast(e.getMessage());
-                                }
-
-                                @Override
-                                public void onNext(File file) {
-                                    *//*int i = FileUtil.getFileSizeInM(file) / 2;
-                                    if (i <= 0) {
-                                        i = 1;
-                                    }
-
-                                    cropView.extensions()
-                                            .load(uri);
-                                    cropView.extensions()
-                                            .crop()
-                                            .quality(100 / i)
-                                            .format(Bitmap.CompressFormat.JPEG)
-                                            .into(file);*//*
-                                    fileList.add(file);
-                                }
-                            });*/
                     break;
                 case REQUEST_CROP_IMAGE:
-                    String imageFilePath = data.getStringExtra(CropActivity.RESULT_IMAGE_PATH);
-                    mTmpImageFilePath.add(imageFilePath);
-                    mPickedIdPicFile = new File(imageFilePath);
-                    Uri uri = Uri.fromFile(mPickedIdPicFile);
-                    ImageViewManager.setImageViewWithUri(this, mIvAuthorizeAddPic, uri, ImageViewManager.PLACE_HOLDER_EMPTY);
+//                    String imageFilePath = data.getStringExtra(CropActivity.RESULT_IMAGE_PATH);
+//                    mTmpImageFilePath.add(imageFilePath);
+//                    mPickedIdPicFile = new File(imageFilePath);
+//                    Uri uri = Uri.fromFile(mPickedIdPicFile);
+//                    ImageViewManager.setImageViewWithUri(this, mIvAuthorizeAddPic, uri, ImageViewManager.PLACE_HOLDER_EMPTY);
+                    mTmpImageFilePath.add(handlingImageUri.getPath());
+                    mPickedIdPicFile = new File(handlingImageUri.getPath());
+                    ImageViewManager.setImageViewWithUri(this, mIvAuthorizeAddPic, handlingImageUri, ImageViewManager.PLACE_HOLDER_EMPTY);
                     break;
             }
         }
