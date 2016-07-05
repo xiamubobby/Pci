@@ -1,1 +1,1 @@
-include ':common', ':uikit', ':utils', ':base', ':patient', ':lib:pingpp'
+include ':common', ':uikit', ':utils', ':base', ':patient', ':lib:pingpp', ':LibMarsDaemon'

@@ -69,7 +69,7 @@ public class XEMChatService extends Service {
         String key = getResources().getString(R.string.setting_pref_key_persistent_notification);
         if (SPManager.get(this).getBoolean(key, true)) {
             Notification notification = NotifyUtil.generateNotification(this, MainActivity.class, null, getResources().getString(R.string.app_name), "正在运行", R.drawable.ic_notification, false, false, false, 0xff30bdf2);
-            startForeground(Constant.NOTIFY_ID_PERSISTENT, notification);
+//            start(Constant.NOTIFY_ID_PERSISTENT, notification);
         }
         return START_STICKY;
     }

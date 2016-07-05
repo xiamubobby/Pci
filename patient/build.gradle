@@ -67,6 +67,7 @@ dependencies {
     compile project(':common')
     compile project(':uikit')
     compile project(':lib:pingpp')
+    compile project(':LibMarsDaemon')
 
     compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     compile "com.android.support:design:$rootProject.supportLibraryVersion"
