@@ -23,6 +23,7 @@ import com.wonders.xlab.patient.module.home.HomeFragment;
 import com.wonders.xlab.patient.module.me.MeFragment;
 import com.wonders.xlab.patient.module.mydoctor.DoctorMyFragment;
 import com.wonders.xlab.patient.module.otto.MainBottomUnreadNotifyCountOtto;
+import com.wonders.xlab.patient.module.scan.ScannerActivity;
 import com.wonders.xlab.patient.module.service.ServiceFragment;
 import com.wonders.xlab.patient.otto.ForceExitOtto;
 import com.wonders.xlab.patient.otto.MeNotifyCountOtto;
@@ -54,7 +55,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+//        startActivity(new Intent(this, ScannerActivity.class));
         OttoManager.register(this);
         if (!AIManager.getInstance().hasLogin()) {
             startActivity(new Intent(this, LoginActivity.class));

@@ -3,6 +3,7 @@ package com.wonders.xlab.patient.mvp.api;
 import com.wonders.xlab.patient.mvp.entity.DoctorAllEntity;
 import com.wonders.xlab.patient.mvp.entity.DoctorDetailEntity;
 import com.wonders.xlab.patient.mvp.entity.DoctorGroupDetailEntity;
+import com.wonders.xlab.patient.mvp.entity.DoctorListEntity;
 import com.wonders.xlab.patient.mvp.entity.DoctorMyEntity;
 
 import retrofit2.Response;
@@ -50,4 +51,8 @@ public interface DoctorAPI {
      */
     @GET("v1/doctors/retrieveDoctorInfo/{patientId}/{doctorId}")
     Observable<Response<DoctorDetailEntity>> getDoctorDetailInfo(@Path("patientId") String patientId,@Path("doctorId") String doctorId);
+
+    //v2
+    @GET("/doctorPatient/getDoctorList/{userId}")
+    Observable<Response<DoctorListEntity>> getDoctorList(@Path("userId") String patientId);
 }
