@@ -18,6 +18,7 @@ import com.wonders.xlab.common.manager.OttoManager;
 import com.wonders.xlab.patient.R;
 import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.module.me.about.AboutUsActivity;
+import com.wonders.xlab.patient.module.me.doctor.MyDoctorActivity;
 import com.wonders.xlab.patient.module.me.otto.UserIconUpdateOtto;
 import com.wonders.xlab.patient.module.me.otto.UserInfoUpdateOtto;
 import com.wonders.xlab.patient.module.me.setting.SettingActivity;
@@ -141,6 +142,11 @@ public class MeFragment extends BaseFragment {
     public void exit() {
         OttoManager.post(new ForceExitOtto());
         getActivity().finish();
+    }
+
+    @OnClick(R.id.textViewMyDoctor)
+    public void listDoctor() {
+        startActivity(new Intent(getActivity(), MyDoctorActivity.class));
     }
 
     @Override

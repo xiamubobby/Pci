@@ -109,6 +109,18 @@
 
 
         <TextView
+            android:id="@+id/textViewMyDoctor"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/listPreferredItemHeightSmall"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/item_interval_middle"
+            android:paddingRight="@dimen/item_interval_middle"
+            android:text="@string/me_my_doctor"
+            android:textColor="@color/text_color_primary_gray"
+            android:textSize="@dimen/text_size_middle" />
+
+        <TextView
             android:id="@+id/tv_me_setting"
             android:layout_width="match_parent"
             android:layout_height="?attr/listPreferredItemHeightSmall"

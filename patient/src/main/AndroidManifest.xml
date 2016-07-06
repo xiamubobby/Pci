@@ -331,7 +331,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".module.auth.authorize.crop.CropActivity"
+            android:name=".module.auth.authorize.crop.CropActivity2"
             android:label="@string/title_activity_crop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
@@ -340,6 +340,10 @@
             android:label="二维码扫描"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".module.me.doctor.MyDoctorActivity"
+            android:label="我的医生"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <service android:name=".immortalize.Service1" android:process=":process1"/>
         <receiver android:name=".immortalize.Receiver1" android:process=":process1"/>
         <service android:name=".immortalize.Service2" android:process=":process2"/>
