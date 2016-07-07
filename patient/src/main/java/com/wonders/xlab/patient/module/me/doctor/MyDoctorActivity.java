@@ -2,11 +2,14 @@ package com.wonders.xlab.patient.module.me.doctor;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.wonders.xlab.common.recyclerview.VerticalItemDecoration;
 import com.wonders.xlab.patient.R;
+import com.wonders.xlab.patient.application.AIManager;
 import com.wonders.xlab.patient.application.XApplication;
 import com.wonders.xlab.patient.base.AppbarActivity;
 import com.wonders.xlab.patient.module.healthrecord.DaggerHealthRecordComponent;
@@ -63,12 +66,8 @@ public class MyDoctorActivity extends AppbarActivity implements DoctorListPresen
                 .build()
                 .getDoctorListPresenter();
         ButterKnife.bind(this);
-//        getToolbar().getMenu().getItem(0).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-//            @Override
-//            public boolean onMenuItemClick(MenuItem item) {
-//                return false;
-//            }
-//        })
+        commonRecyclerView.addItemDecoration(new VerticalItemDecoration(this, ContextCompat.getColor(this, R.color.divider), 4));
+        doctorListPresenter.getDoctorList(AIManager.getInstance().getPatientId());
     }
 
     @Override
@@ -83,7 +82,9 @@ public class MyDoctorActivity extends AppbarActivity implements DoctorListPresen
 
     @Override
     public void showDoctorList(List<DoctorListEntity.DoctorPatientRelationDoctorList.DoctorPatientRelationDoctor> list) {
-
+        DoctorListAdapter adapter = new DoctorListAdapter();
+        adapter.setDatas(list);
+        commonRecyclerView.setAdapter(adapter);
     }
 
     @Override

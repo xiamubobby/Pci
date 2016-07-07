@@ -1,5 +1,7 @@
 package com.wonders.xlab.patient.mvp.model;
 
+import android.util.Log;
+
 import com.wonders.xlab.patient.base.PatientBaseModel;
 import com.wonders.xlab.patient.mvp.api.DoctorAPI;
 import com.wonders.xlab.patient.mvp.entity.DoctorListEntity;
@@ -28,15 +30,18 @@ public class DoctorListModel extends PatientBaseModel implements DoctorListModel
 
     @Override
     public void getDoctorList(String patientId, final DoctorListModelContract.Callback callback) {
+        Log.d("patientId", patientId);
         request(doctorAPI.getDoctorList(patientId), new Callback<DoctorListEntity>() {
 
             @Override
             public void onSuccess(DoctorListEntity response) {
+                DoctorListEntity en = response;
                 callback.onDoctorListReceiveSucceed(response);
             }
 
             @Override
             public void onFailed(int code, String message) {
+                Log.e(code+"", message);
                 callback.onReceiveFailed(code, message);
             }
         });

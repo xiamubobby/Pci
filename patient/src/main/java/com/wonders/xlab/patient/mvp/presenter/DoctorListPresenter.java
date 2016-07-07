@@ -29,7 +29,8 @@ public class DoctorListPresenter extends BasePresenter implements DoctorListPres
         model.getDoctorList(patientId, new DoctorListModelContract.Callback() {
             @Override
             public void onDoctorListReceiveSucceed(DoctorListEntity entity) {
-                listener.showDoctorList(entity.getDoctorPatientRelationDoctorList().getDoctorPatientRelationDoctorList());
+                DoctorListEntity et = entity;
+                listener.showDoctorList(entity.getRet_values().getDoctorPatientRelationDoctorList());
             }
 
             @Override

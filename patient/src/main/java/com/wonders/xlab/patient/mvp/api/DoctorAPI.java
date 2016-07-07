@@ -53,6 +53,6 @@ public interface DoctorAPI {
     Observable<Response<DoctorDetailEntity>> getDoctorDetailInfo(@Path("patientId") String patientId,@Path("doctorId") String doctorId);
 
     //v2
-    @GET("/doctorPatient/getDoctorList/{userId}")
+    @GET("doctorPatient/getDoctorList/{userId}")
     Observable<Response<DoctorListEntity>> getDoctorList(@Path("userId") String patientId);
 }

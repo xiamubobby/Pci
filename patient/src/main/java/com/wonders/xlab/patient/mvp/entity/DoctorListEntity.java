@@ -11,14 +11,14 @@ import im.hua.library.base.mvp.entity.BaseEntity;
 
 public class DoctorListEntity extends BaseEntity {
 
-    private DoctorPatientRelationDoctorList doctorPatientRelationDoctorList;
+    private DoctorPatientRelationDoctorList ret_values;
 
-    public DoctorPatientRelationDoctorList getDoctorPatientRelationDoctorList() {
-        return doctorPatientRelationDoctorList;
+    public DoctorPatientRelationDoctorList getRet_values() {
+        return ret_values;
     }
 
-    public void setDoctorPatientRelationDoctorList(DoctorPatientRelationDoctorList doctorPatientRelationDoctorList) {
-        this.doctorPatientRelationDoctorList = doctorPatientRelationDoctorList;
+    public void setRet_values(DoctorPatientRelationDoctorList ret_values) {
+        this.ret_values = ret_values;
     }
 
     public class DoctorPatientRelationDoctorList {

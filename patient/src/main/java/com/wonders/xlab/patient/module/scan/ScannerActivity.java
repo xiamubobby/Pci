@@ -6,6 +6,7 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.TextureView;
 
@@ -63,21 +64,37 @@ public class ScannerActivity extends BaseActivity {
         parameters.setPreviewSize(candidate.width, candidate.height);
         parameters.setPreviewFormat(ImageFormat.NV21);
         camera.setParameters(parameters);
-        try {
-            camera.setPreviewDisplay(theViewScope.getHolder());
-        } catch (IOException e) {
-            // TODO: 16/7/5 preview failure
-            e.printStackTrace();
-            return;
-        }
         final int[] i = {1};
-        camera.setOneShotPreviewCallback(new Camera.PreviewCallback() {
+        theViewScope.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
-            public void onPreviewFrame(byte[] data, Camera camera) {
-                Log.d("atest", ""+i[0]++);
-                Log.d("adata", data.toString());
+            public void surfaceCreated(SurfaceHolder surfaceHolder) {
+                try {
+                    camera.setPreviewDisplay(theViewScope.getHolder());
+                    camera.setOneShotPreviewCallback(new Camera.PreviewCallback() {
+                        @Override
+                        public void onPreviewFrame(byte[] data, Camera camera) {
+                            Log.d("atest", ""+i[0]++);
+                            Log.d("adata", data.toString());
+                        }
+                    });
+                } catch (IOException e) {
+                    // TODO: 16/7/5 preview failure
+                    e.printStackTrace();
+                    return;
+                }
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+
             }
         });
+
         camera.startPreview();
     }
 
